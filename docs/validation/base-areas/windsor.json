@@ -1,0 +1,634 @@
+{
+  "schemaVersion": 1,
+  "cityId": "windsor",
+  "reviewedLocalDate": "2026-11-02",
+  "assessment": "estimated",
+  "imagery": {
+    "provider": "Esri World Imagery",
+    "tileUrl": "https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}",
+    "vintage": "not independently verified",
+    "method": "Reviewed zoom-19 screenshots; manually selected building/parking/apron polygon enclosed in an aligned rectangle with a 3m margin."
+  },
+  "roads": {
+    "file": "cities/windsor/roads.geojson.gz",
+    "url": "https://download.geofabrik.de/north-america/canada/ontario.html",
+    "timestamp": "2026-09-27T20:23:36Z",
+    "sha256": "ebb50b39682d2381ad3c1d21e005b48cec3397e15da0d72c5d76c7d20d8dd249",
+    "license": "ODbL-1.0",
+    "attribution": "OpenStreetMap contributors"
+  },
+  "limits": [
+    "Image-derived dimensions and modeled spawn points are estimates, not surveyed parcels or verified apparatus entrances.",
+    "A rectangle may include intervening lawn at irregular sites.",
+    "Canonical source coordinates and IDs are preserved."
+  ],
+  "bases": [
+    {
+      "baseId": "windsor-fire-1",
+      "name": "Fire Station 1",
+      "address": "815 Goyeau St, Windsor, Ontario",
+      "sourcePoint": {
+        "lat": 42.3118656218,
+        "lng": -83.0334707359
+      },
+      "drivingArea": {
+        "center": {
+          "lat": 42.311951694395695,
+          "lng": -83.03345358312768
+        },
+        "widthMetres": 39,
+        "lengthMetres": 100,
+        "rotationDegrees": 24,
+        "spawn": {
+          "lat": 42.3117664481564,
+          "lng": -83.03321056162555,
+          "headingDegrees": 66
+        }
+      },
+      "assessment": "estimated",
+      "observations": "Narrow station complex, rear/side parking and Goyeau frontage apron; adjacent western building excluded.",
+      "screenshot": "artifacts/release-qa/base-fit-windsor/windsor-fire-1.png",
+      "imageReview": {
+        "viewport": [
+          1120,
+          860
+        ],
+        "zoom": 19,
+        "metresPerPixel": 0.22055194423034713,
+        "polygonPixels": [
+          [
+            420,
+            220
+          ],
+          [
+            550,
+            170
+          ],
+          [
+            720,
+            550
+          ],
+          [
+            585,
+            610
+          ]
+        ],
+        "spawnPixel": [
+          657,
+          480
+        ],
+        "marginMetres": 3
+      }
+    },
+    {
+      "baseId": "windsor-fire-2",
+      "name": "Fire Station 2",
+      "address": "3121 Milloy St, Windsor, Ontario",
+      "sourcePoint": {
+        "lat": 42.3068574912,
+        "lng": -82.9869316883
+      },
+      "drivingArea": {
+        "center": {
+          "lat": 42.306822777680765,
+          "lng": -82.98678416680418
+        },
+        "widthMetres": 78,
+        "lengthMetres": 87,
+        "rotationDegrees": 24,
+        "spawn": {
+          "lat": 42.307115362458006,
+          "lng": -82.98669028948866,
+          "headingDegrees": 336
+        }
+      },
+      "assessment": "estimated",
+      "observations": "Station roof, western parking and north/east drive-through apron; northern mapped service approach.",
+      "screenshot": "artifacts/release-qa/base-fit-windsor/windsor-fire-2.png",
+      "imageReview": {
+        "viewport": [
+          1120,
+          860
+        ],
+        "zoom": 19,
+        "metresPerPixel": 0.22056949355312166,
+        "polygonPixels": [
+          [
+            400,
+            350
+          ],
+          [
+            690,
+            215
+          ],
+          [
+            825,
+            550
+          ],
+          [
+            540,
+            680
+          ]
+        ],
+        "spawnPixel": [
+          650,
+          300
+        ],
+        "marginMetres": 3
+      }
+    },
+    {
+      "baseId": "windsor-fire-3",
+      "name": "Fire Station 3",
+      "address": "2750 Ouellette Ave, Windsor, Ontario",
+      "sourcePoint": {
+        "lat": 42.2821369617,
+        "lng": -83.0156976202
+      },
+      "drivingArea": {
+        "center": {
+          "lat": 42.28204270225487,
+          "lng": -83.01577138094792
+        },
+        "widthMetres": 73,
+        "lengthMetres": 60,
+        "rotationDegrees": 24,
+        "spawn": {
+          "lat": 42.28212307084326,
+          "lng": -83.01543744592557,
+          "headingDegrees": 156
+        }
+      },
+      "assessment": "estimated",
+      "observations": "Station building and its two street approaches; larger northern campus buildings excluded.",
+      "screenshot": "artifacts/release-qa/base-fit-windsor/windsor-fire-3.png",
+      "imageReview": {
+        "viewport": [
+          1120,
+          860
+        ],
+        "zoom": 19,
+        "metresPerPixel": 0.22065608920216198,
+        "polygonPixels": [
+          [
+            350,
+            435
+          ],
+          [
+            620,
+            305
+          ],
+          [
+            715,
+            520
+          ],
+          [
+            445,
+            650
+          ]
+        ],
+        "spawnPixel": [
+          657,
+          437
+        ],
+        "marginMetres": 3
+      }
+    },
+    {
+      "baseId": "windsor-fire-4",
+      "name": "Fire Station 4",
+      "address": "2600 College Ave, Windsor, Ontario",
+      "sourcePoint": {
+        "lat": 42.2999231242,
+        "lng": -83.0628378772
+      },
+      "drivingArea": {
+        "center": {
+          "lat": 42.29976712461042,
+          "lng": -83.06308407962878
+        },
+        "widthMetres": 71,
+        "lengthMetres": 77,
+        "rotationDegrees": 32,
+        "spawn": {
+          "lat": 42.29962554635493,
+          "lng": -83.06290493242537,
+          "headingDegrees": 148
+        }
+      },
+      "assessment": "estimated",
+      "observations": "Station roof, rear parking and College Avenue apron; rail corridor and northern industrial yard excluded.",
+      "screenshot": "artifacts/release-qa/base-fit-windsor/windsor-fire-4.png",
+      "imageReview": {
+        "viewport": [
+          1120,
+          860
+        ],
+        "zoom": 19,
+        "metresPerPixel": 0.22059379109635346,
+        "polygonPixels": [
+          [
+            260,
+            450
+          ],
+          [
+            480,
+            320
+          ],
+          [
+            675,
+            565
+          ],
+          [
+            440,
+            715
+          ]
+        ],
+        "spawnPixel": [
+          535,
+          580
+        ],
+        "marginMetres": 3
+      }
+    },
+    {
+      "baseId": "windsor-fire-5",
+      "name": "Fire Station 5",
+      "address": "2650 Northwood St, Windsor, Ontario",
+      "sourcePoint": {
+        "lat": 42.2762796951,
+        "lng": -83.0491384623
+      },
+      "drivingArea": {
+        "center": {
+          "lat": 42.27617201875794,
+          "lng": -83.04922280241873
+        },
+        "widthMetres": 82,
+        "lengthMetres": 92,
+        "rotationDegrees": 24,
+        "spawn": {
+          "lat": 42.27650792280725,
+          "lng": -83.0490311739394,
+          "headingDegrees": 336
+        }
+      },
+      "assessment": "estimated",
+      "observations": "Station roof, western parking and northern/eastern apron loop; forest outside facility excluded as far as rectangular fitting permits.",
+      "screenshot": "artifacts/release-qa/base-fit-windsor/windsor-fire-5.png",
+      "imageReview": {
+        "viewport": [
+          1120,
+          860
+        ],
+        "zoom": 19,
+        "metresPerPixel": 0.22067660423979363,
+        "polygonPixels": [
+          [
+            300,
+            390
+          ],
+          [
+            600,
+            240
+          ],
+          [
+            760,
+            585
+          ],
+          [
+            465,
+            725
+          ]
+        ],
+        "spawnPixel": [
+          600,
+          315
+        ],
+        "marginMetres": 3
+      }
+    },
+    {
+      "baseId": "windsor-fire-6",
+      "name": "Fire Station 6",
+      "address": "1587 Provincial Rd, Windsor, Ontario",
+      "sourcePoint": {
+        "lat": 42.2575378353,
+        "lng": -82.9773143693
+      },
+      "drivingArea": {
+        "center": {
+          "lat": 42.257606976358254,
+          "lng": -82.97734772355884
+        },
+        "widthMetres": 75,
+        "lengthMetres": 78,
+        "rotationDegrees": 327,
+        "spawn": {
+          "lat": 42.25794876672995,
+          "lng": -82.97735460243523,
+          "headingDegrees": 33
+        }
+      },
+      "assessment": "estimated",
+      "observations": "Roof and surrounding parking/drive apron with Provincial Road approach; neighbouring storage yard excluded.",
+      "screenshot": "artifacts/release-qa/base-fit-windsor/windsor-fire-6.png",
+      "imageReview": {
+        "viewport": [
+          1120,
+          860
+        ],
+        "zoom": 19,
+        "metresPerPixel": 0.22074221907982738,
+        "polygonPixels": [
+          [
+            343,
+            425
+          ],
+          [
+            520,
+            185
+          ],
+          [
+            760,
+            345
+          ],
+          [
+            590,
+            615
+          ]
+        ],
+        "spawnPixel": [
+          545,
+          223
+        ],
+        "marginMetres": 3
+      }
+    },
+    {
+      "baseId": "windsor-fire-7",
+      "name": "Fire Station 7",
+      "address": "1380 Matthew Brady Blvd, Windsor, Ontario",
+      "sourcePoint": {
+        "lat": 42.3215477936,
+        "lng": -82.9386634271
+      },
+      "drivingArea": {
+        "center": {
+          "lat": 42.321477587336155,
+          "lng": -82.93870895167699
+        },
+        "widthMetres": 102,
+        "lengthMetres": 66,
+        "rotationDegrees": 350,
+        "spawn": {
+          "lat": 42.3215973727346,
+          "lng": -82.93831473992806,
+          "headingDegrees": 100
+        }
+      },
+      "assessment": "estimated",
+      "observations": "Station building, western parking and east road apron; rectangular fit includes some intervening lawn.",
+      "screenshot": "artifacts/release-qa/base-fit-windsor/windsor-fire-7.png",
+      "imageReview": {
+        "viewport": [
+          1120,
+          860
+        ],
+        "zoom": 19,
+        "metresPerPixel": 0.22051801933250814,
+        "polygonPixels": [
+          [
+            330,
+            425
+          ],
+          [
+            480,
+            330
+          ],
+          [
+            780,
+            370
+          ],
+          [
+            740,
+            500
+          ],
+          [
+            500,
+            595
+          ],
+          [
+            425,
+            560
+          ]
+        ],
+        "spawnPixel": [
+          690,
+          405
+        ],
+        "marginMetres": 3
+      }
+    },
+    {
+      "baseId": "windsor-ems-mercer",
+      "name": "Mercer Street Base",
+      "address": "920 Mercer Street, Windsor, Ontario",
+      "sourcePoint": {
+        "lat": 42.31241268511508,
+        "lng": -83.0282837673729
+      },
+      "drivingArea": {
+        "center": {
+          "lat": 42.3123875411289,
+          "lng": -83.02832682211523
+        },
+        "widthMetres": 74,
+        "lengthMetres": 92,
+        "rotationDegrees": 24,
+        "spawn": {
+          "lat": 42.312527725346015,
+          "lng": -83.02863245454482,
+          "headingDegrees": 246
+        }
+      },
+      "assessment": "estimated",
+      "observations": "Facility roof, northern parking and southern apron; Mercer-side modeled driveway spawn.",
+      "screenshot": "artifacts/release-qa/base-fit-windsor/windsor-ems-mercer.png",
+      "imageReview": {
+        "viewport": [
+          1120,
+          860
+        ],
+        "zoom": 19,
+        "metresPerPixel": 0.22055003291093275,
+        "polygonPixels": [
+          [
+            350,
+            385
+          ],
+          [
+            565,
+            220
+          ],
+          [
+            760,
+            550
+          ],
+          [
+            490,
+            680
+          ]
+        ],
+        "spawnPixel": [
+          430,
+          372
+        ],
+        "marginMetres": 3
+      }
+    },
+    {
+      "baseId": "windsor-ems-dougall",
+      "name": "Dougall Avenue Base",
+      "address": "2620 Dougall Avenue, Windsor, Ontario",
+      "sourcePoint": {
+        "lat": 42.27801085342566,
+        "lng": -83.01677674005461
+      },
+      "drivingArea": {
+        "center": {
+          "lat": 42.27777972270366,
+          "lng": -83.01665076686905
+        },
+        "widthMetres": 110,
+        "lengthMetres": 69,
+        "rotationDegrees": 327,
+        "spawn": {
+          "lat": 42.27813191011728,
+          "lng": -83.01695108364058,
+          "headingDegrees": 250
+        }
+      },
+      "assessment": "estimated",
+      "observations": "Building and paved parcel around it, with northern loop to Dougall; rail corridor excluded.",
+      "screenshot": "artifacts/release-qa/base-fit-windsor/windsor-ems-dougall.png",
+      "imageReview": {
+        "viewport": [
+          1120,
+          860
+        ],
+        "zoom": 19,
+        "metresPerPixel": 0.22067053733431188,
+        "polygonPixels": [
+          [
+            430,
+            390
+          ],
+          [
+            530,
+            330
+          ],
+          [
+            880,
+            555
+          ],
+          [
+            545,
+            675
+          ]
+        ],
+        "spawnPixel": [
+          495,
+          369
+        ],
+        "marginMetres": 3
+      }
+    },
+    {
+      "baseId": "windsor-ems-jefferson",
+      "name": "Jefferson Boulevard Base",
+      "address": "3180 Jefferson Boulevard, Windsor, Ontario",
+      "sourcePoint": {
+        "lat": 42.29488961608553,
+        "lng": -82.94143696414964
+      },
+      "drivingArea": {
+        "center": {
+          "lat": 42.29485067441908,
+          "lng": -82.941627319567
+        },
+        "widthMetres": 74,
+        "lengthMetres": 46,
+        "rotationDegrees": 24,
+        "spawn": {
+          "lat": 42.29485985598565,
+          "lng": -82.94200022804277,
+          "headingDegrees": 246
+        }
+      },
+      "assessment": "estimated",
+      "observations": "Small source-address facility and its southwest parking/driveway, excluding the separate northern parking lot. Spawn on its visible Jefferson approach avoids snapping to the neighbouring isolated lot.",
+      "screenshot": "artifacts/release-qa/base-fit-windsor/windsor-ems-jefferson.png",
+      "imageReview": {
+        "viewport": [
+          1120,
+          860
+        ],
+        "zoom": 19,
+        "metresPerPixel": 0.22061142313886165,
+        "polygonPixels": [
+          [
+            315,
+            435
+          ],
+          [
+            470,
+            360
+          ],
+          [
+            582,
+            350
+          ],
+          [
+            630,
+            390
+          ],
+          [
+            585,
+            505
+          ],
+          [
+            460,
+            550
+          ],
+          [
+            405,
+            480
+          ]
+        ],
+        "spawnPixel": [
+          350,
+          445
+        ],
+        "marginMetres": 3
+      }
+    }
+  ],
+  "runtimeVerification": {
+    "checkedDate": "2026-11-02",
+    "tool": "tools/check-base-driving-areas.cjs",
+    "artifact": "artifacts/release-qa/base-fit/windsor-driving-area-checks.json",
+    "bases": 10,
+    "continuousExits": 10,
+    "blockedMoves": 0,
+    "method": "Collision API advances along a real call route until at least ten metres beyond the fitted yard; not a sustained physical-device drive."
+  },
+  "workflowVerification": {
+    "artifact": "artifacts/release-qa/all-city-dispatch/windsor/dispatch-browser.json",
+    "mobileServices": [
+      "fire",
+      "ems"
+    ],
+    "limitations": "Real touch input for short movement; controlled position fixtures complete long response and hospital legs."
+  }
+}

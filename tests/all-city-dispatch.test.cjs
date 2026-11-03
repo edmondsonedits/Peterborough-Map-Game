@@ -10,7 +10,16 @@ for(const city of registry.window.PTBO_CITIES)test(city.id+' has a complete loca
  vm.runInContext(read(`cities/${city.id}/package.js`),c);await c.PTBO_CITY_PACKAGE_READY;
  const p=c.PTBO_CITY_PACKAGE;assert.equal(p.id,city.id);for(const key of ['dispatch','roadBoundaries','routeGuidance','hospitalTransport'])assert.equal(p.features[key],true,key);
  const h=p.serviceConfig.hospital;assert.ok(h?.id&&h.name&&Number.isFinite(h.lat)&&Number.isFinite(h.lng)&&!h.disabled,'hospital site');
- for(const service of ['fire','ems'])assert.ok(p.serviceConfig.profiles[service].bases.length>0,service+' bases');
+ for(const service of ['fire','ems']){
+   assert.ok(p.serviceConfig.profiles[service].bases.length>0,service+' bases');
+   for(const base of p.serviceConfig.profiles[service].bases){
+     if(!base.drivingArea)continue;
+     for(const key of ['lat','lng','yardWidth','yardLength','yardRotation','spawnLat','spawnLng']){
+       assert.ok(Number.isFinite(base.drivingArea[key]),`${base.id}: fitted ${key} is explicit`);
+       assert.equal(base[key],base.drivingArea[key],`${base.id}: fitted ${key} is applied to runtime`);
+     }
+   }
+ }
  assert.equal(c.PTBO_ROUTE_REVEAL,undefined,'real route runtime must be allowed to load');
  if(city.id!=='peterborough'){assert.equal(p.status,'dispatch-demo');assert.ok(fs.existsSync(`cities/${city.id}/roads.geojson.gz`));assert.equal(events.find(e=>e.type==='ptbo-city-package-data-ready').detail.dispatch,true);}
 });

@@ -1,0 +1,2693 @@
+{
+  "schemaVersion": 1,
+  "cityId": "mississauga",
+  "reviewedLocalDate": "2026-11-02",
+  "assessment": "estimated",
+  "imagery": {
+    "provider": "Esri World Imagery",
+    "tileUrl": "https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}",
+    "capturedLocalDate": "2026-11-02",
+    "captureTimestamp": "2026-11-03T02:51:38.751Z",
+    "zoom": 19,
+    "vintage": "not supplied by tile response",
+    "method": "Reviewed independent Leaflet satellite captures for all 36 active sites; measured scale is approximately 0.21597969983351006 m/pixel. Building, parking/apron and visible access extents are estimates from imagery.",
+    "captureDirectory": "artifacts/release-qa/base-fit-mississauga/"
+  },
+  "roads": {
+    "file": "cities/mississauga/roads.geojson.gz",
+    "source": "OpenStreetMap via Geofabrik Ontario extract",
+    "sourceUrl": "https://download.geofabrik.de/north-america/canada/ontario.html",
+    "sourceTimestamp": "2026-09-27T20:23:36Z",
+    "snapshotBuiltAt": "2026-10-29T04:13:15.772Z",
+    "roadSourceSha256": "ebb50b39682d2381ad3c1d21e005b48cec3397e15da0d72c5d76c7d20d8dd249",
+    "packagedFileSha256": "764cdfb564d9e227a7db8543c73a162301e82b4ccc2ce58187f32859acece6ff",
+    "attribution": "© OpenStreetMap contributors"
+  },
+  "limits": [
+    "No official parcel or building-footprint polygons were used.",
+    "Dimensions, area centers and spawns are imagery/road-geometry estimates, not surveyed measurements.",
+    "Imagery does not independently verify apparatus doors, gates, access controls, current pavement, or current building occupancy.",
+    "Canonical station source coordinates and IDs remain unchanged.",
+    "Continuous-exit QA follows an actual city route from each spawn until at least 10 m beyond the fitted yard, then resolves movement in 1.5 m steps; it verifies the modeled collision transition but not a sustained manual drive or real-world dispatch suitability."
+  ],
+  "bases": [
+    {
+      "baseId": "mississauga-fire-119",
+      "name": "Airport Fire Station #119",
+      "address": "6375 Airport Rd, Mississauga, ON",
+      "sourcePoint": {
+        "lat": 43.69232288253442,
+        "lng": -79.62549081534043
+      },
+      "drivingArea": {
+        "center": {
+          "lat": 43.69232288253442,
+          "lng": -79.62549081534043
+        },
+        "widthMetres": 70,
+        "lengthMetres": 85,
+        "rotationDegrees": 45,
+        "spawn": {
+          "lat": 43.69232288253442,
+          "lng": -79.62549081534043,
+          "headingDegrees": 0
+        },
+        "spawnOffsetFromCanonicalMetres": {
+          "east": 0,
+          "north": 0
+        }
+      },
+      "assessment": "estimated",
+      "observation": "Estimated from Esri imagery: Airport Fire Station building, its immediate marked parking/apron, and the visible paved circulation aisle. The larger airport/industrial parcel is excluded; exact apparatus bay and entrance are unverified.",
+      "runtimeCollision": {
+        "spawnInside": true,
+        "areaRoadAccess": true,
+        "spawnInitiallyDrivable": true,
+        "nearestRoad": {
+          "name": "Unnamed road",
+          "highway": "service",
+          "distanceMetres": 8.63
+        },
+        "exitStarted": true,
+        "exitCompleted": true,
+        "blockedMoves": 0,
+        "movementSteps": 63,
+        "outsideExpandedDrivingArea": true
+      },
+      "dispatchRouteCoverage": {
+        "calls": 8,
+        "reachable": 8,
+        "responseRouteFailures": 0,
+        "transportRouteFailures": 0
+      }
+    },
+    {
+      "baseId": "mississauga-fire-109",
+      "name": "Britannia Fire Station #109",
+      "address": "1735 Britannia Rd E, Mississauga, ON",
+      "sourcePoint": {
+        "lat": 43.660875013090454,
+        "lng": -79.64199766122027
+      },
+      "drivingArea": {
+        "center": {
+          "lat": 43.660875013090454,
+          "lng": -79.64199766122027
+        },
+        "widthMetres": 75,
+        "lengthMetres": 90,
+        "rotationDegrees": 45,
+        "spawn": {
+          "lat": 43.660875013090454,
+          "lng": -79.64199766122027,
+          "headingDegrees": 0
+        },
+        "spawnOffsetFromCanonicalMetres": {
+          "east": 0,
+          "north": 0
+        }
+      },
+      "assessment": "estimated",
+      "observation": "Estimated from Esri imagery: Britannia station building, the paved parking/apron around it, and the local access aisle. The broader industrial yards are excluded where visible edges allow; exact apparatus entrance is unverified.",
+      "runtimeCollision": {
+        "spawnInside": true,
+        "areaRoadAccess": true,
+        "spawnInitiallyDrivable": true,
+        "nearestRoad": {
+          "name": "Unnamed road",
+          "highway": "service",
+          "distanceMetres": 17.94
+        },
+        "exitStarted": true,
+        "exitCompleted": true,
+        "blockedMoves": 0,
+        "movementSteps": 79,
+        "outsideExpandedDrivingArea": true
+      },
+      "dispatchRouteCoverage": {
+        "calls": 8,
+        "reachable": 8,
+        "responseRouteFailures": 0,
+        "transportRouteFailures": 0
+      }
+    },
+    {
+      "baseId": "mississauga-fire-122",
+      "name": "Churchill Meadows Fire Station #122",
+      "address": "3600 Thomas St, Mississauga, ON",
+      "sourcePoint": {
+        "lat": 43.557608368868195,
+        "lng": -79.74178443119864
+      },
+      "drivingArea": {
+        "center": {
+          "lat": 43.55783453134332,
+          "lng": -79.74161088806825
+        },
+        "widthMetres": 76,
+        "lengthMetres": 92,
+        "rotationDegrees": 45,
+        "spawn": {
+          "lat": 43.557608368868195,
+          "lng": -79.74178443119864,
+          "headingDegrees": 0
+        },
+        "spawnOffsetFromCanonicalMetres": {
+          "east": 0,
+          "north": 0
+        }
+      },
+      "assessment": "estimated",
+      "observation": "Estimated from Esri imagery: the station-like building and its adjoining apron/parking on the north-east side of the source point, including visible site circulation. Exact building use, apparatus bay and entrance are not independently verified.",
+      "runtimeCollision": {
+        "spawnInside": true,
+        "areaRoadAccess": true,
+        "spawnInitiallyDrivable": true,
+        "nearestRoad": {
+          "name": "Unnamed road",
+          "highway": "service",
+          "distanceMetres": 39.32
+        },
+        "exitStarted": true,
+        "exitCompleted": true,
+        "blockedMoves": 0,
+        "movementSteps": 74,
+        "outsideExpandedDrivingArea": true
+      },
+      "dispatchRouteCoverage": {
+        "calls": 8,
+        "reachable": 8,
+        "responseRouteFailures": 0,
+        "transportRouteFailures": 0
+      }
+    },
+    {
+      "baseId": "mississauga-fire-103",
+      "name": "Clarkson Fire Station #103",
+      "address": "2035 Lushes Ave, Mississauga, ON",
+      "sourcePoint": {
+        "lat": 43.5105001498287,
+        "lng": -79.6284397825271
+      },
+      "drivingArea": {
+        "center": {
+          "lat": 43.5105001498287,
+          "lng": -79.6284397825271
+        },
+        "widthMetres": 65,
+        "lengthMetres": 80,
+        "rotationDegrees": 35,
+        "spawn": {
+          "lat": 43.5105001498287,
+          "lng": -79.6284397825271,
+          "headingDegrees": 0
+        },
+        "spawnOffsetFromCanonicalMetres": {
+          "east": 0,
+          "north": 0
+        }
+      },
+      "assessment": "estimated",
+      "observation": "Estimated from Esri imagery: Clarkson station building, immediate parking/apron and the short visible drive to the surrounding street network. Exact apparatus entrance is unverified.",
+      "runtimeCollision": {
+        "spawnInside": true,
+        "areaRoadAccess": true,
+        "spawnInitiallyDrivable": true,
+        "nearestRoad": {
+          "name": "Unnamed road",
+          "highway": "service",
+          "distanceMetres": 12.32
+        },
+        "exitStarted": true,
+        "exitCompleted": true,
+        "blockedMoves": 0,
+        "movementSteps": 105,
+        "outsideExpandedDrivingArea": true
+      },
+      "dispatchRouteCoverage": {
+        "calls": 8,
+        "reachable": 8,
+        "responseRouteFailures": 0,
+        "transportRouteFailures": 0
+      }
+    },
+    {
+      "baseId": "mississauga-fire-101",
+      "name": "Cooksville Fire Station 101, Hq",
+      "address": "15 Fairview Rd W, Mississauga, ON",
+      "sourcePoint": {
+        "lat": 43.587382131667695,
+        "lng": -79.62751889887176
+      },
+      "drivingArea": {
+        "center": {
+          "lat": 43.587382131667695,
+          "lng": -79.62751889887176
+        },
+        "widthMetres": 90,
+        "lengthMetres": 105,
+        "rotationDegrees": 45,
+        "spawn": {
+          "lat": 43.587382131667695,
+          "lng": -79.62751889887176,
+          "headingDegrees": 0
+        },
+        "spawnOffsetFromCanonicalMetres": {
+          "east": 0,
+          "north": 0
+        }
+      },
+      "assessment": "estimated",
+      "observation": "Estimated from Esri imagery: Fire Headquarters building, surrounding apparatus apron/parking and the connected paved circulation within the site. Neighboring property is excluded where visible; exact bay/entrance is unverified.",
+      "runtimeCollision": {
+        "spawnInside": true,
+        "areaRoadAccess": true,
+        "spawnInitiallyDrivable": true,
+        "nearestRoad": {
+          "name": "Unnamed road",
+          "highway": "service",
+          "distanceMetres": 17.63
+        },
+        "exitStarted": true,
+        "exitCompleted": true,
+        "blockedMoves": 0,
+        "movementSteps": 56,
+        "outsideExpandedDrivingArea": true
+      },
+      "dispatchRouteCoverage": {
+        "calls": 8,
+        "reachable": 8,
+        "responseRouteFailures": 0,
+        "transportRouteFailures": 0
+      }
+    },
+    {
+      "baseId": "mississauga-fire-112",
+      "name": "Creditview Fire Station #112",
+      "address": "4090 Creditview Rd, Mississauga, ON",
+      "sourcePoint": {
+        "lat": 43.56906387207096,
+        "lng": -79.66749599044324
+      },
+      "drivingArea": {
+        "center": {
+          "lat": 43.56906387207096,
+          "lng": -79.66749599044324
+        },
+        "widthMetres": 90,
+        "lengthMetres": 100,
+        "rotationDegrees": 30,
+        "spawn": {
+          "lat": 43.56906387207096,
+          "lng": -79.66749599044324,
+          "headingDegrees": 0
+        },
+        "spawnOffsetFromCanonicalMetres": {
+          "east": 0,
+          "north": 0
+        }
+      },
+      "assessment": "estimated",
+      "observation": "Estimated from Esri imagery: Creditview station building cluster, its visible paved parking/apron and the site drive toward the adjoining public road. Exact apparatus entrance is unverified.",
+      "runtimeCollision": {
+        "spawnInside": true,
+        "areaRoadAccess": true,
+        "spawnInitiallyDrivable": true,
+        "nearestRoad": {
+          "name": "Unnamed road",
+          "highway": "service",
+          "distanceMetres": 35.96
+        },
+        "exitStarted": true,
+        "exitCompleted": true,
+        "blockedMoves": 0,
+        "movementSteps": 50,
+        "outsideExpandedDrivingArea": true
+      },
+      "dispatchRouteCoverage": {
+        "calls": 8,
+        "reachable": 8,
+        "responseRouteFailures": 0,
+        "transportRouteFailures": 0
+      }
+    },
+    {
+      "baseId": "mississauga-fire-106",
+      "name": "Dixie Fire Station #106",
+      "address": "1355 Winding Tr, Mississauga, ON",
+      "sourcePoint": {
+        "lat": 43.61934820782642,
+        "lng": -79.59965644609916
+      },
+      "drivingArea": {
+        "center": {
+          "lat": 43.61934820782642,
+          "lng": -79.59965644609916
+        },
+        "widthMetres": 90,
+        "lengthMetres": 100,
+        "rotationDegrees": 45,
+        "spawn": {
+          "lat": 43.61934820782642,
+          "lng": -79.59965644609916,
+          "headingDegrees": 0
+        },
+        "spawnOffsetFromCanonicalMetres": {
+          "east": 0,
+          "north": 0
+        }
+      },
+      "assessment": "estimated",
+      "observation": "Estimated from Esri imagery: Dixie station building, immediate parking/apron and the visible access aisle toward Winding Trail. The adjacent residential lots are excluded; exact apparatus entrance is unverified.",
+      "runtimeCollision": {
+        "spawnInside": true,
+        "areaRoadAccess": true,
+        "spawnInitiallyDrivable": true,
+        "nearestRoad": {
+          "name": "Unnamed road",
+          "highway": "service",
+          "distanceMetres": 13.15
+        },
+        "exitStarted": true,
+        "exitCompleted": true,
+        "blockedMoves": 0,
+        "movementSteps": 139,
+        "outsideExpandedDrivingArea": true
+      },
+      "dispatchRouteCoverage": {
+        "calls": 8,
+        "reachable": 8,
+        "responseRouteFailures": 0,
+        "transportRouteFailures": 0
+      }
+    },
+    {
+      "baseId": "mississauga-fire-118",
+      "name": "East Credit Fire Station #118",
+      "address": "1045 Bristol Rd W, Mississauga, ON",
+      "sourcePoint": {
+        "lat": 43.594741846104014,
+        "lng": -79.68660711705076
+      },
+      "drivingArea": {
+        "center": {
+          "lat": 43.594741846104014,
+          "lng": -79.68660711705076
+        },
+        "widthMetres": 70,
+        "lengthMetres": 82,
+        "rotationDegrees": 45,
+        "spawn": {
+          "lat": 43.594741846104014,
+          "lng": -79.68660711705076,
+          "headingDegrees": 0
+        },
+        "spawnOffsetFromCanonicalMetres": {
+          "east": 0,
+          "north": 0
+        }
+      },
+      "assessment": "estimated",
+      "observation": "Estimated from Esri imagery: East Credit station structure, its compact apron/parking and the visible approach to the adjoining street. Exact bay and driveway throat are unverified.",
+      "runtimeCollision": {
+        "spawnInside": true,
+        "areaRoadAccess": true,
+        "spawnInitiallyDrivable": true,
+        "nearestRoad": {
+          "name": "Unnamed road",
+          "highway": "service",
+          "distanceMetres": 15.11
+        },
+        "exitStarted": true,
+        "exitCompleted": true,
+        "blockedMoves": 0,
+        "movementSteps": 101,
+        "outsideExpandedDrivingArea": true
+      },
+      "dispatchRouteCoverage": {
+        "calls": 8,
+        "reachable": 8,
+        "responseRouteFailures": 0,
+        "transportRouteFailures": 0
+      }
+    },
+    {
+      "baseId": "mississauga-fire-120",
+      "name": "Eglinton Fire Station #120",
+      "address": "125 Eglinton Ave W, Mississauga, ON",
+      "sourcePoint": {
+        "lat": 43.60442917778942,
+        "lng": -79.65626287269072
+      },
+      "drivingArea": {
+        "center": {
+          "lat": 43.60442917778942,
+          "lng": -79.65626287269072
+        },
+        "widthMetres": 65,
+        "lengthMetres": 78,
+        "rotationDegrees": 35,
+        "spawn": {
+          "lat": 43.60442917778942,
+          "lng": -79.65626287269072,
+          "headingDegrees": 0
+        },
+        "spawnOffsetFromCanonicalMetres": {
+          "east": 0,
+          "north": 0
+        }
+      },
+      "assessment": "estimated",
+      "observation": "Estimated from Esri imagery: Eglinton station building, the paved loop/apron and immediate parking within the small site. The surrounding park and courts are excluded; exact entrance is unverified.",
+      "runtimeCollision": {
+        "spawnInside": true,
+        "areaRoadAccess": true,
+        "spawnInitiallyDrivable": true,
+        "nearestRoad": {
+          "name": "Unnamed road",
+          "highway": "service",
+          "distanceMetres": 4.43
+        },
+        "exitStarted": true,
+        "exitCompleted": true,
+        "blockedMoves": 0,
+        "movementSteps": 78,
+        "outsideExpandedDrivingArea": true
+      },
+      "dispatchRouteCoverage": {
+        "calls": 8,
+        "reachable": 8,
+        "responseRouteFailures": 0,
+        "transportRouteFailures": 0
+      }
+    },
+    {
+      "baseId": "mississauga-fire-115",
+      "name": "Erin Mills Fire Station #115",
+      "address": "4595 Glen Erin Dr, Mississauga, ON",
+      "sourcePoint": {
+        "lat": 43.553544830985814,
+        "lng": -79.70955767628577
+      },
+      "drivingArea": {
+        "center": {
+          "lat": 43.553544830985814,
+          "lng": -79.70955767628577
+        },
+        "widthMetres": 75,
+        "lengthMetres": 85,
+        "rotationDegrees": 0,
+        "spawn": {
+          "lat": 43.553544830985814,
+          "lng": -79.70955767628577,
+          "headingDegrees": 0
+        },
+        "spawnOffsetFromCanonicalMetres": {
+          "east": 0,
+          "north": 0
+        }
+      },
+      "assessment": "estimated",
+      "observation": "Estimated from Esri imagery: Erin Mills station building, immediate parking/apron and the visible southern access aisle toward Glen Erin Drive. Adjacent recreation land is excluded; exact apparatus door is unverified.",
+      "runtimeCollision": {
+        "spawnInside": true,
+        "areaRoadAccess": true,
+        "spawnInitiallyDrivable": true,
+        "nearestRoad": {
+          "name": "Unnamed road",
+          "highway": "service",
+          "distanceMetres": 11.36
+        },
+        "exitStarted": true,
+        "exitCompleted": true,
+        "blockedMoves": 0,
+        "movementSteps": 54,
+        "outsideExpandedDrivingArea": true
+      },
+      "dispatchRouteCoverage": {
+        "calls": 8,
+        "reachable": 8,
+        "responseRouteFailures": 0,
+        "transportRouteFailures": 0
+      }
+    },
+    {
+      "baseId": "mississauga-fire-107",
+      "name": "Erindale Fire Station #107",
+      "address": "1965 Dundas St W, Mississauga, ON",
+      "sourcePoint": {
+        "lat": 43.53904732487184,
+        "lng": -79.66446591929656
+      },
+      "drivingArea": {
+        "center": {
+          "lat": 43.53904732487184,
+          "lng": -79.66446591929656
+        },
+        "widthMetres": 72,
+        "lengthMetres": 86,
+        "rotationDegrees": 45,
+        "spawn": {
+          "lat": 43.53904732487184,
+          "lng": -79.66446591929656,
+          "headingDegrees": 0
+        },
+        "spawnOffsetFromCanonicalMetres": {
+          "east": 0,
+          "north": 0
+        }
+      },
+      "assessment": "estimated",
+      "observation": "Estimated from Esri imagery: Erindale station building and its paved apron/parking on the corner parcel, including the visible access toward Dundas Street West. Exact apparatus entrance is unverified.",
+      "runtimeCollision": {
+        "spawnInside": true,
+        "areaRoadAccess": true,
+        "spawnInitiallyDrivable": true,
+        "nearestRoad": {
+          "name": "Unnamed road",
+          "highway": "service",
+          "distanceMetres": 10.43
+        },
+        "exitStarted": true,
+        "exitCompleted": true,
+        "blockedMoves": 0,
+        "movementSteps": 60,
+        "outsideExpandedDrivingArea": true
+      },
+      "dispatchRouteCoverage": {
+        "calls": 8,
+        "reachable": 8,
+        "responseRouteFailures": 0,
+        "transportRouteFailures": 0
+      }
+    },
+    {
+      "baseId": "mississauga-fire-125",
+      "name": "Fire Station #125",
+      "address": "6627 Tenth Line West, Mississauga, ON",
+      "sourcePoint": {
+        "lat": 43.579689750254154,
+        "lng": -79.76983208789494
+      },
+      "drivingArea": {
+        "center": {
+          "lat": 43.579689750254154,
+          "lng": -79.76983208789494
+        },
+        "widthMetres": 72,
+        "lengthMetres": 86,
+        "rotationDegrees": 45,
+        "spawn": {
+          "lat": 43.579689750254154,
+          "lng": -79.76983208789494,
+          "headingDegrees": 0
+        },
+        "spawnOffsetFromCanonicalMetres": {
+          "east": 0,
+          "north": 0
+        }
+      },
+      "assessment": "estimated",
+      "observation": "Estimated from Esri imagery: Fire Station 125 building, its curved apron/parking and the visible driveway connection to Tenth Line West. The adjacent recreation field is excluded; exact entrance is unverified.",
+      "runtimeCollision": {
+        "spawnInside": true,
+        "areaRoadAccess": true,
+        "spawnInitiallyDrivable": true,
+        "nearestRoad": {
+          "name": "Unnamed road",
+          "highway": "service",
+          "distanceMetres": 32.4
+        },
+        "exitStarted": true,
+        "exitCompleted": true,
+        "blockedMoves": 0,
+        "movementSteps": 85,
+        "outsideExpandedDrivingArea": true
+      },
+      "dispatchRouteCoverage": {
+        "calls": 8,
+        "reachable": 8,
+        "responseRouteFailures": 0,
+        "transportRouteFailures": 0
+      }
+    },
+    {
+      "baseId": "mississauga-fire-114",
+      "name": "Heartland Fire Station #114",
+      "address": "5845 Falbourne St, Mississauga, ON",
+      "sourcePoint": {
+        "lat": 43.61751727203088,
+        "lng": -79.68086369188565
+      },
+      "drivingArea": {
+        "center": {
+          "lat": 43.61751727203088,
+          "lng": -79.68086369188565
+        },
+        "widthMetres": 90,
+        "lengthMetres": 105,
+        "rotationDegrees": 0,
+        "spawn": {
+          "lat": 43.61751727203088,
+          "lng": -79.68086369188565,
+          "headingDegrees": 0
+        },
+        "spawnOffsetFromCanonicalMetres": {
+          "east": 0,
+          "north": 0
+        }
+      },
+      "assessment": "estimated",
+      "observation": "Estimated from Esri imagery: Heartland station building, its surrounding equipment apron/parking and the connected service aisle. The neighboring industrial buildings and pond are excluded; exact apparatus entrance is unverified.",
+      "runtimeCollision": {
+        "spawnInside": true,
+        "areaRoadAccess": true,
+        "spawnInitiallyDrivable": true,
+        "nearestRoad": {
+          "name": "Unnamed road",
+          "highway": "service",
+          "distanceMetres": 13.22
+        },
+        "exitStarted": true,
+        "exitCompleted": true,
+        "blockedMoves": 0,
+        "movementSteps": 113,
+        "outsideExpandedDrivingArea": true
+      },
+      "dispatchRouteCoverage": {
+        "calls": 8,
+        "reachable": 8,
+        "responseRouteFailures": 0,
+        "transportRouteFailures": 0
+      }
+    },
+    {
+      "baseId": "mississauga-fire-102",
+      "name": "Lakeview Fire Station #102",
+      "address": "710 Third St, Mississauga, ON",
+      "sourcePoint": {
+        "lat": 43.57160303302384,
+        "lng": -79.56814678179992
+      },
+      "drivingArea": {
+        "center": {
+          "lat": 43.57160303302384,
+          "lng": -79.56814678179992
+        },
+        "widthMetres": 70,
+        "lengthMetres": 80,
+        "rotationDegrees": 45,
+        "spawn": {
+          "lat": 43.57160303302384,
+          "lng": -79.56814678179992,
+          "headingDegrees": 0
+        },
+        "spawnOffsetFromCanonicalMetres": {
+          "east": 0,
+          "north": 0
+        }
+      },
+      "assessment": "estimated",
+      "observation": "Estimated from Esri imagery: Lakeview station building, its immediate paved apron/parking and the short access drive to Third Street. Nearby residential lots are excluded; exact apparatus entrance is unverified.",
+      "runtimeCollision": {
+        "spawnInside": true,
+        "areaRoadAccess": true,
+        "spawnInitiallyDrivable": true,
+        "nearestRoad": {
+          "name": "Unnamed road",
+          "highway": "service",
+          "distanceMetres": 9.21
+        },
+        "exitStarted": true,
+        "exitCompleted": true,
+        "blockedMoves": 0,
+        "movementSteps": 60,
+        "outsideExpandedDrivingArea": true
+      },
+      "dispatchRouteCoverage": {
+        "calls": 8,
+        "reachable": 8,
+        "responseRouteFailures": 0,
+        "transportRouteFailures": 0
+      }
+    },
+    {
+      "baseId": "mississauga-fire-105",
+      "name": "Malton Fire Station #105",
+      "address": "7101 Goreway Dr, Mississauga, ON",
+      "sourcePoint": {
+        "lat": 43.715844557595794,
+        "lng": -79.63385559958235
+      },
+      "drivingArea": {
+        "center": {
+          "lat": 43.715844557595794,
+          "lng": -79.63385559958235
+        },
+        "widthMetres": 80,
+        "lengthMetres": 90,
+        "rotationDegrees": 45,
+        "spawn": {
+          "lat": 43.715844557595794,
+          "lng": -79.63385559958235,
+          "headingDegrees": 0
+        },
+        "spawnOffsetFromCanonicalMetres": {
+          "east": 0,
+          "north": 0
+        }
+      },
+      "assessment": "estimated",
+      "observation": "Estimated from Esri imagery: Malton station building, adjoining parking/apron and visible access to Goreway Drive. Neighboring commercial yards are excluded where visible; exact apparatus entrance is unverified.",
+      "runtimeCollision": {
+        "spawnInside": true,
+        "areaRoadAccess": true,
+        "spawnInitiallyDrivable": true,
+        "nearestRoad": {
+          "name": "Unnamed road",
+          "highway": "service",
+          "distanceMetres": 14.97
+        },
+        "exitStarted": true,
+        "exitCompleted": true,
+        "blockedMoves": 0,
+        "movementSteps": 93,
+        "outsideExpandedDrivingArea": true
+      },
+      "dispatchRouteCoverage": {
+        "calls": 8,
+        "reachable": 8,
+        "responseRouteFailures": 0,
+        "transportRouteFailures": 0
+      }
+    },
+    {
+      "baseId": "mississauga-fire-111",
+      "name": "Meadowvale Fire Station #111",
+      "address": "2740 Derry Rd W, Mississauga, ON",
+      "sourcePoint": {
+        "lat": 43.59342463019995,
+        "lng": -79.76443886318408
+      },
+      "drivingArea": {
+        "center": {
+          "lat": 43.59342463019995,
+          "lng": -79.76443886318408
+        },
+        "widthMetres": 75,
+        "lengthMetres": 90,
+        "rotationDegrees": 45,
+        "spawn": {
+          "lat": 43.59342463019995,
+          "lng": -79.76443886318408,
+          "headingDegrees": 0
+        },
+        "spawnOffsetFromCanonicalMetres": {
+          "east": 0,
+          "north": 0
+        }
+      },
+      "assessment": "estimated",
+      "observation": "Estimated from Esri imagery: Meadowvale station building, its parking/apron and the visible paved access toward Derry Road West. The neighboring residential parcel is excluded; exact apparatus entrance is unverified.",
+      "runtimeCollision": {
+        "spawnInside": true,
+        "areaRoadAccess": true,
+        "spawnInitiallyDrivable": true,
+        "nearestRoad": {
+          "name": "Unnamed road",
+          "highway": "service",
+          "distanceMetres": 10.2
+        },
+        "exitStarted": true,
+        "exitCompleted": true,
+        "blockedMoves": 0,
+        "movementSteps": 43,
+        "outsideExpandedDrivingArea": true
+      },
+      "dispatchRouteCoverage": {
+        "calls": 8,
+        "reachable": 8,
+        "responseRouteFailures": 0,
+        "transportRouteFailures": 0
+      }
+    },
+    {
+      "baseId": "mississauga-fire-121",
+      "name": "Meadowvale Village Fire Station #121",
+      "address": "6745 Mavis Rd, Mississauga, ON",
+      "sourcePoint": {
+        "lat": 43.625682527507635,
+        "lng": -79.7136871523643
+      },
+      "drivingArea": {
+        "center": {
+          "lat": 43.625682527507635,
+          "lng": -79.7136871523643
+        },
+        "widthMetres": 70,
+        "lengthMetres": 85,
+        "rotationDegrees": 45,
+        "spawn": {
+          "lat": 43.625682527507635,
+          "lng": -79.7136871523643,
+          "headingDegrees": 0
+        },
+        "spawnOffsetFromCanonicalMetres": {
+          "east": 0,
+          "north": 0
+        }
+      },
+      "assessment": "estimated",
+      "observation": "Estimated from Esri imagery: Meadowvale Village station building, immediate apron/parking and the visible access aisle to Mavis Road. Exact apparatus entrance is unverified.",
+      "runtimeCollision": {
+        "spawnInside": true,
+        "areaRoadAccess": true,
+        "spawnInitiallyDrivable": true,
+        "nearestRoad": {
+          "name": "Unnamed road",
+          "highway": "service",
+          "distanceMetres": 17.53
+        },
+        "exitStarted": true,
+        "exitCompleted": true,
+        "blockedMoves": 0,
+        "movementSteps": 60,
+        "outsideExpandedDrivingArea": true
+      },
+      "dispatchRouteCoverage": {
+        "calls": 8,
+        "reachable": 8,
+        "responseRouteFailures": 0,
+        "transportRouteFailures": 0
+      }
+    },
+    {
+      "baseId": "mississauga-fire-117",
+      "name": "North Dixie Fire Station #117",
+      "address": "1090 Nuvik Crt, Mississauga, ON",
+      "sourcePoint": {
+        "lat": 43.62891640148946,
+        "lng": -79.63052004794118
+      },
+      "drivingArea": {
+        "center": {
+          "lat": 43.62891640148946,
+          "lng": -79.63052004794118
+        },
+        "widthMetres": 85,
+        "lengthMetres": 100,
+        "rotationDegrees": 45,
+        "spawn": {
+          "lat": 43.62891640148946,
+          "lng": -79.63052004794118,
+          "headingDegrees": 0
+        },
+        "spawnOffsetFromCanonicalMetres": {
+          "east": 0,
+          "north": 0
+        }
+      },
+      "assessment": "estimated",
+      "observation": "Estimated from Esri imagery: North Dixie station building, its adjacent paved parking/apron and visible site circulation. The larger surrounding industrial yard is excluded where visible edges allow; exact entrance is unverified.",
+      "runtimeCollision": {
+        "spawnInside": true,
+        "areaRoadAccess": true,
+        "spawnInitiallyDrivable": true,
+        "nearestRoad": {
+          "name": "Unnamed road",
+          "highway": "service",
+          "distanceMetres": 10.36
+        },
+        "exitStarted": true,
+        "exitCompleted": true,
+        "blockedMoves": 0,
+        "movementSteps": 43,
+        "outsideExpandedDrivingArea": true
+      },
+      "dispatchRouteCoverage": {
+        "calls": 8,
+        "reachable": 8,
+        "responseRouteFailures": 0,
+        "transportRouteFailures": 0
+      }
+    },
+    {
+      "baseId": "mississauga-fire-104",
+      "name": "Port Credit Fire Station #104",
+      "address": "62 Port St W, Mississauga, ON",
+      "sourcePoint": {
+        "lat": 43.54779386509825,
+        "lng": -79.58834485481647
+      },
+      "drivingArea": {
+        "center": {
+          "lat": 43.54779386509825,
+          "lng": -79.58834485481647
+        },
+        "widthMetres": 78,
+        "lengthMetres": 90,
+        "rotationDegrees": 45,
+        "spawn": {
+          "lat": 43.54779386509825,
+          "lng": -79.58834485481647,
+          "headingDegrees": 0
+        },
+        "spawnOffsetFromCanonicalMetres": {
+          "east": 0,
+          "north": 0
+        }
+      },
+      "assessment": "estimated",
+      "observation": "Estimated from Esri imagery: Port Credit station building, its compact paved apron/parking and the access aisle to Port Street West. Surrounding commercial parcels are excluded; exact apparatus entrance is unverified.",
+      "runtimeCollision": {
+        "spawnInside": true,
+        "areaRoadAccess": true,
+        "spawnInitiallyDrivable": true,
+        "nearestRoad": {
+          "name": "Unnamed road",
+          "highway": "service",
+          "distanceMetres": 8.89
+        },
+        "exitStarted": true,
+        "exitCompleted": true,
+        "blockedMoves": 0,
+        "movementSteps": 109,
+        "outsideExpandedDrivingArea": true
+      },
+      "dispatchRouteCoverage": {
+        "calls": 8,
+        "reachable": 8,
+        "responseRouteFailures": 0,
+        "transportRouteFailures": 0
+      }
+    },
+    {
+      "baseId": "mississauga-fire-110",
+      "name": "Queensway Fire Station #110",
+      "address": "2316 Hurontario St, Mississauga, ON",
+      "sourcePoint": {
+        "lat": 43.57432726508527,
+        "lng": -79.60893497710565
+      },
+      "drivingArea": {
+        "center": {
+          "lat": 43.57432726508527,
+          "lng": -79.60893497710565
+        },
+        "widthMetres": 82,
+        "lengthMetres": 96,
+        "rotationDegrees": 45,
+        "spawn": {
+          "lat": 43.57432726508527,
+          "lng": -79.60893497710565,
+          "headingDegrees": 0
+        },
+        "spawnOffsetFromCanonicalMetres": {
+          "east": 0,
+          "north": 0
+        }
+      },
+      "assessment": "estimated",
+      "observation": "Estimated from Esri imagery: Queensway station building, its immediate paved parking/apron and visible circulation toward Hurontario Street. The adjacent large commercial lots are excluded; exact apparatus entrance is unverified.",
+      "runtimeCollision": {
+        "spawnInside": true,
+        "areaRoadAccess": true,
+        "spawnInitiallyDrivable": true,
+        "nearestRoad": {
+          "name": "Unnamed road",
+          "highway": "service",
+          "distanceMetres": 13.93
+        },
+        "exitStarted": true,
+        "exitCompleted": true,
+        "blockedMoves": 0,
+        "movementSteps": 85,
+        "outsideExpandedDrivingArea": true
+      },
+      "dispatchRouteCoverage": {
+        "calls": 8,
+        "reachable": 8,
+        "responseRouteFailures": 0,
+        "transportRouteFailures": 0
+      }
+    },
+    {
+      "baseId": "mississauga-fire-108",
+      "name": "Streetsville Fire Station #108",
+      "address": "2267 Britannia Rd W, Mississauga, ON",
+      "sourcePoint": {
+        "lat": 43.58337825791245,
+        "lng": -79.72864527914354
+      },
+      "drivingArea": {
+        "center": {
+          "lat": 43.58337825791245,
+          "lng": -79.72864527914354
+        },
+        "widthMetres": 82,
+        "lengthMetres": 95,
+        "rotationDegrees": 45,
+        "spawn": {
+          "lat": 43.58337825791245,
+          "lng": -79.72864527914354,
+          "headingDegrees": 0
+        },
+        "spawnOffsetFromCanonicalMetres": {
+          "east": 0,
+          "north": 0
+        }
+      },
+      "assessment": "estimated",
+      "observation": "Estimated from Esri imagery: Streetsville station building, its apron and marked parking within the immediate site, including the access aisle to Britannia Road West. Exact bay/entrance is unverified.",
+      "runtimeCollision": {
+        "spawnInside": true,
+        "areaRoadAccess": true,
+        "spawnInitiallyDrivable": true,
+        "nearestRoad": {
+          "name": "Unnamed road",
+          "highway": "service",
+          "distanceMetres": 14.99
+        },
+        "exitStarted": true,
+        "exitCompleted": true,
+        "blockedMoves": 0,
+        "movementSteps": 78,
+        "outsideExpandedDrivingArea": true
+      },
+      "dispatchRouteCoverage": {
+        "calls": 8,
+        "reachable": 8,
+        "responseRouteFailures": 0,
+        "transportRouteFailures": 0
+      }
+    },
+    {
+      "baseId": "mississauga-fire-116",
+      "name": "West Malton Fire Station #116",
+      "address": "6825 Tomken Rd, Mississauga, ON",
+      "sourcePoint": {
+        "lat": 43.66274760742942,
+        "lng": -79.67939843663078
+      },
+      "drivingArea": {
+        "center": {
+          "lat": 43.66274760742942,
+          "lng": -79.67939843663078
+        },
+        "widthMetres": 100,
+        "lengthMetres": 110,
+        "rotationDegrees": 0,
+        "spawn": {
+          "lat": 43.66274760742942,
+          "lng": -79.67939843663078,
+          "headingDegrees": 0
+        },
+        "spawnOffsetFromCanonicalMetres": {
+          "east": 0,
+          "north": 0
+        }
+      },
+      "assessment": "estimated",
+      "observation": "Estimated from Esri imagery: West Malton station building and its surrounding paved parking/apron on the industrial parcel. The adjacent industrial units are excluded; exact apparatus entrance is unverified.",
+      "runtimeCollision": {
+        "spawnInside": true,
+        "areaRoadAccess": true,
+        "spawnInitiallyDrivable": true,
+        "nearestRoad": {
+          "name": "Unnamed road",
+          "highway": "service",
+          "distanceMetres": 11.47
+        },
+        "exitStarted": true,
+        "exitCompleted": true,
+        "blockedMoves": 0,
+        "movementSteps": 51,
+        "outsideExpandedDrivingArea": true
+      },
+      "dispatchRouteCoverage": {
+        "calls": 8,
+        "reachable": 8,
+        "responseRouteFailures": 0,
+        "transportRouteFailures": 0
+      }
+    },
+    {
+      "baseId": "mississauga-fire-123",
+      "name": "Fire Station 123",
+      "address": "3050 The Collegeway, Mississauga, ON",
+      "sourcePoint": {
+        "lat": 43.52965134117872,
+        "lng": -79.6936699302189
+      },
+      "drivingArea": {
+        "center": {
+          "lat": 43.52965134117872,
+          "lng": -79.6936699302189
+        },
+        "widthMetres": 82,
+        "lengthMetres": 92,
+        "rotationDegrees": 45,
+        "spawn": {
+          "lat": 43.52965134117872,
+          "lng": -79.6936699302189,
+          "headingDegrees": 0
+        },
+        "spawnOffsetFromCanonicalMetres": {
+          "east": 0,
+          "north": 0
+        }
+      },
+      "assessment": "estimated",
+      "observation": "Estimated from Esri imagery: the building and visible work/apron area at the mapped Station 123 site. Capture imagery shows active construction or site work; current operational entrance and final pavement are unverified.",
+      "runtimeCollision": {
+        "spawnInside": true,
+        "areaRoadAccess": true,
+        "spawnInitiallyDrivable": true,
+        "nearestRoad": {
+          "name": "Unnamed road",
+          "highway": "service",
+          "distanceMetres": 34.47
+        },
+        "exitStarted": true,
+        "exitCompleted": true,
+        "blockedMoves": 0,
+        "movementSteps": 37,
+        "outsideExpandedDrivingArea": true
+      },
+      "dispatchRouteCoverage": {
+        "calls": 8,
+        "reachable": 8,
+        "responseRouteFailures": 0,
+        "transportRouteFailures": 0
+      }
+    },
+    {
+      "baseId": "mississauga-ems-streetsville",
+      "name": "Streetsville Paramedic Reporting Station",
+      "address": "2492 Thomas Street, Mississauga, ON",
+      "sourcePoint": {
+        "lat": 43.57001087804101,
+        "lng": -79.72198885814917
+      },
+      "drivingArea": {
+        "center": {
+          "lat": 43.57001087804101,
+          "lng": -79.72186487324744
+        },
+        "widthMetres": 70,
+        "lengthMetres": 88,
+        "rotationDegrees": 45,
+        "spawn": {
+          "lat": 43.57001087804101,
+          "lng": -79.72198885814917,
+          "headingDegrees": 0
+        },
+        "spawnOffsetFromCanonicalMetres": {
+          "east": 0,
+          "north": 0
+        }
+      },
+      "assessment": "estimated",
+      "observation": "Estimated from Esri imagery: Streetsville paramedic building area, immediate apron/parking and its visible circulation within the larger property. EMS-only parcel or door is not independently verified.",
+      "runtimeCollision": {
+        "spawnInside": true,
+        "areaRoadAccess": true,
+        "spawnInitiallyDrivable": true,
+        "nearestRoad": {
+          "name": "Thomas Street",
+          "highway": "tertiary",
+          "distanceMetres": 16.86
+        },
+        "exitStarted": true,
+        "exitCompleted": true,
+        "blockedMoves": 0,
+        "movementSteps": 56,
+        "outsideExpandedDrivingArea": true
+      },
+      "dispatchRouteCoverage": {
+        "calls": 6,
+        "reachable": 6,
+        "responseRouteFailures": 0,
+        "transportRouteFailures": 0
+      }
+    },
+    {
+      "baseId": "mississauga-ems-tomken",
+      "name": "Tomken Paramedic Reporting Station",
+      "address": "6825 Tomken Road, Mississauga, ON",
+      "sourcePoint": {
+        "lat": 43.66262897274311,
+        "lng": -79.67904481282103
+      },
+      "drivingArea": {
+        "center": {
+          "lat": 43.66262897274311,
+          "lng": -79.67904481282103
+        },
+        "widthMetres": 85,
+        "lengthMetres": 95,
+        "rotationDegrees": 0,
+        "spawn": {
+          "lat": 43.66262897274311,
+          "lng": -79.67904481282103,
+          "headingDegrees": 0
+        },
+        "spawnOffsetFromCanonicalMetres": {
+          "east": 0,
+          "north": 0
+        }
+      },
+      "assessment": "estimated",
+      "observation": "Co-located with West Malton Fire Station #116. Estimated from imagery: shared building, immediate parking/apron and circulation; no EMS-only entrance is claimed.",
+      "runtimeCollision": {
+        "spawnInside": true,
+        "areaRoadAccess": true,
+        "spawnInitiallyDrivable": true,
+        "nearestRoad": {
+          "name": "Unnamed road",
+          "highway": "service",
+          "distanceMetres": 11.07
+        },
+        "exitStarted": true,
+        "exitCompleted": true,
+        "blockedMoves": 0,
+        "movementSteps": 67,
+        "outsideExpandedDrivingArea": true
+      },
+      "dispatchRouteCoverage": {
+        "calls": 6,
+        "reachable": 6,
+        "responseRouteFailures": 0,
+        "transportRouteFailures": 0
+      }
+    },
+    {
+      "baseId": "mississauga-ems-airport",
+      "name": "Airport Satellite Station",
+      "address": "6375 Airport Road, Mississauga, ON",
+      "sourcePoint": {
+        "lat": 43.69189316229567,
+        "lng": -79.62576528456621
+      },
+      "drivingArea": {
+        "center": {
+          "lat": 43.692182650263824,
+          "lng": -79.62566589529318
+        },
+        "widthMetres": 70,
+        "lengthMetres": 85,
+        "rotationDegrees": 45,
+        "spawn": {
+          "lat": 43.69189316229567,
+          "lng": -79.62576528456621,
+          "headingDegrees": 0
+        },
+        "spawnOffsetFromCanonicalMetres": {
+          "east": 0,
+          "north": 0
+        }
+      },
+      "assessment": "estimated",
+      "observation": "Co-located at the Airport Road facility with Fire Station #119. Estimated from imagery: the visible station building, its immediate parking/apron and site aisle; no EMS-only door or parcel is verified.",
+      "runtimeCollision": {
+        "spawnInside": true,
+        "areaRoadAccess": true,
+        "spawnInitiallyDrivable": true,
+        "nearestRoad": {
+          "name": "Unnamed road",
+          "highway": "service",
+          "distanceMetres": 24.87
+        },
+        "exitStarted": true,
+        "exitCompleted": true,
+        "blockedMoves": 0,
+        "movementSteps": 66,
+        "outsideExpandedDrivingArea": true
+      },
+      "dispatchRouteCoverage": {
+        "calls": 6,
+        "reachable": 6,
+        "responseRouteFailures": 0,
+        "transportRouteFailures": 0
+      }
+    },
+    {
+      "baseId": "mississauga-ems-east-avenue",
+      "name": "East Avenue Satellite Station",
+      "address": "938 East Avenue, Mississauga, ON",
+      "sourcePoint": {
+        "lat": 43.57135715971339,
+        "lng": -79.562988167179
+      },
+      "drivingArea": {
+        "center": {
+          "lat": 43.57135715971339,
+          "lng": -79.562988167179
+        },
+        "widthMetres": 70,
+        "lengthMetres": 82,
+        "rotationDegrees": 45,
+        "spawn": {
+          "lat": 43.57135715971339,
+          "lng": -79.562988167179,
+          "headingDegrees": 0
+        },
+        "spawnOffsetFromCanonicalMetres": {
+          "east": 0,
+          "north": 0
+        }
+      },
+      "assessment": "estimated",
+      "observation": "Estimated from Esri imagery: the small building and adjoining paved apron/parking at the East Avenue address. The surrounding undeveloped/industrial land is excluded; EMS occupancy and exact entrance are unverified.",
+      "runtimeCollision": {
+        "spawnInside": true,
+        "areaRoadAccess": true,
+        "spawnInitiallyDrivable": true,
+        "nearestRoad": {
+          "name": "Unnamed road",
+          "highway": "service",
+          "distanceMetres": 35.48
+        },
+        "exitStarted": true,
+        "exitCompleted": true,
+        "blockedMoves": 0,
+        "movementSteps": 48,
+        "outsideExpandedDrivingArea": true
+      },
+      "dispatchRouteCoverage": {
+        "calls": 6,
+        "reachable": 6,
+        "responseRouteFailures": 0,
+        "transportRouteFailures": 0
+      }
+    },
+    {
+      "baseId": "mississauga-ems-falbourne",
+      "name": "Falbourne Satellite Station",
+      "address": "5841 Falbourne Street, Mississauga, ON",
+      "sourcePoint": {
+        "lat": 43.61611231020688,
+        "lng": -79.68043602246287
+      },
+      "drivingArea": {
+        "center": {
+          "lat": 43.61620277519693,
+          "lng": -79.68065936631197
+        },
+        "widthMetres": 65,
+        "lengthMetres": 90,
+        "rotationDegrees": 0,
+        "spawn": {
+          "lat": 43.616347519181005,
+          "lng": -79.680981974094,
+          "headingDegrees": 315
+        },
+        "spawnOffsetFromCanonicalMetres": {
+          "east": -44,
+          "north": 26
+        }
+      },
+      "assessment": "estimated",
+      "observation": "Estimated from Esri imagery and the 5841 Falbourne address: the canonical source point lies on open/pond-side ground; the nearby visible structure, paved aisle and connected Falbourne Street frontage are included conservatively. Exact EMS building identity and entrance remain unverified; canonical source coordinates are retained.",
+      "runtimeCollision": {
+        "spawnInside": true,
+        "areaRoadAccess": true,
+        "spawnInitiallyDrivable": true,
+        "nearestRoad": {
+          "name": "Falbourne Street",
+          "highway": "unclassified",
+          "distanceMetres": 0.26
+        },
+        "exitStarted": true,
+        "exitCompleted": true,
+        "blockedMoves": 0,
+        "movementSteps": 51,
+        "outsideExpandedDrivingArea": true
+      },
+      "dispatchRouteCoverage": {
+        "calls": 6,
+        "reachable": 6,
+        "responseRouteFailures": 0,
+        "transportRouteFailures": 0
+      }
+    },
+    {
+      "baseId": "mississauga-ems-goreway",
+      "name": "Goreway Satellite Station",
+      "address": "7101 Goreway Drive, Mississauga, ON",
+      "sourcePoint": {
+        "lat": 43.715918988072104,
+        "lng": -79.6337878548184
+      },
+      "drivingArea": {
+        "center": {
+          "lat": 43.715918988072104,
+          "lng": -79.6337878548184
+        },
+        "widthMetres": 80,
+        "lengthMetres": 90,
+        "rotationDegrees": 45,
+        "spawn": {
+          "lat": 43.715918988072104,
+          "lng": -79.6337878548184,
+          "headingDegrees": 0
+        },
+        "spawnOffsetFromCanonicalMetres": {
+          "east": 0,
+          "north": 0
+        }
+      },
+      "assessment": "estimated",
+      "observation": "Co-located at the Goreway Drive facility with Fire Station #105. Estimated from imagery: shared building, immediate parking/apron and access aisle; EMS-only entrance is unverified.",
+      "runtimeCollision": {
+        "spawnInside": true,
+        "areaRoadAccess": true,
+        "spawnInitiallyDrivable": true,
+        "nearestRoad": {
+          "name": "Unnamed road",
+          "highway": "service",
+          "distanceMetres": 9.93
+        },
+        "exitStarted": true,
+        "exitCompleted": true,
+        "blockedMoves": 0,
+        "movementSteps": 54,
+        "outsideExpandedDrivingArea": true
+      },
+      "dispatchRouteCoverage": {
+        "calls": 6,
+        "reachable": 6,
+        "responseRouteFailures": 0,
+        "transportRouteFailures": 0
+      }
+    },
+    {
+      "baseId": "mississauga-ems-kingsway",
+      "name": "Kingsway Satellite Station",
+      "address": "75 Kingsway Drive, Mississauga, ON",
+      "sourcePoint": {
+        "lat": 43.645785013756985,
+        "lng": -79.71014410083812
+      },
+      "drivingArea": {
+        "center": {
+          "lat": 43.645785013756985,
+          "lng": -79.71014410083812
+        },
+        "widthMetres": 80,
+        "lengthMetres": 90,
+        "rotationDegrees": 45,
+        "spawn": {
+          "lat": 43.645785013756985,
+          "lng": -79.71014410083812,
+          "headingDegrees": 0
+        },
+        "spawnOffsetFromCanonicalMetres": {
+          "east": 0,
+          "north": 0
+        }
+      },
+      "assessment": "estimated",
+      "observation": "Estimated from Esri imagery: the small Kingsway facility building, its immediate paved parking/apron and visible circulation to the adjoining road. The broader parking field is excluded where the site edge is visible; EMS entrance is unverified.",
+      "runtimeCollision": {
+        "spawnInside": true,
+        "areaRoadAccess": true,
+        "spawnInitiallyDrivable": true,
+        "nearestRoad": {
+          "name": "Unnamed road",
+          "highway": "service",
+          "distanceMetres": 2.38
+        },
+        "exitStarted": true,
+        "exitCompleted": true,
+        "blockedMoves": 0,
+        "movementSteps": 46,
+        "outsideExpandedDrivingArea": true
+      },
+      "dispatchRouteCoverage": {
+        "calls": 6,
+        "reachable": 6,
+        "responseRouteFailures": 0,
+        "transportRouteFailures": 0
+      }
+    },
+    {
+      "baseId": "mississauga-ems-kitimat",
+      "name": "Kitimat Satellite Station",
+      "address": "6810 Kitimat Road, Unit 13, Mississauga, ON",
+      "sourcePoint": {
+        "lat": 43.607413021505906,
+        "lng": -79.73576768009376
+      },
+      "drivingArea": {
+        "center": {
+          "lat": 43.607413021505906,
+          "lng": -79.73576768009376
+        },
+        "widthMetres": 80,
+        "lengthMetres": 95,
+        "rotationDegrees": 45,
+        "spawn": {
+          "lat": 43.607413021505906,
+          "lng": -79.73576768009376,
+          "headingDegrees": 0
+        },
+        "spawnOffsetFromCanonicalMetres": {
+          "east": 0,
+          "north": 0
+        }
+      },
+      "assessment": "estimated",
+      "observation": "Estimated from Esri imagery: the Kitimat paramedic unit/building frontage and immediate shared industrial parking/apron. Other warehouse footprints are excluded; unit entrance and access control are unverified.",
+      "runtimeCollision": {
+        "spawnInside": true,
+        "areaRoadAccess": true,
+        "spawnInitiallyDrivable": true,
+        "nearestRoad": {
+          "name": "Unnamed road",
+          "highway": "service",
+          "distanceMetres": 22.6
+        },
+        "exitStarted": true,
+        "exitCompleted": true,
+        "blockedMoves": 0,
+        "movementSteps": 67,
+        "outsideExpandedDrivingArea": true
+      },
+      "dispatchRouteCoverage": {
+        "calls": 6,
+        "reachable": 6,
+        "responseRouteFailures": 0,
+        "transportRouteFailures": 0
+      }
+    },
+    {
+      "baseId": "mississauga-ems-lorne-park",
+      "name": "Lorne Park Satellite Station",
+      "address": "1188 Lakeshore Road West, Mississauga, ON",
+      "sourcePoint": {
+        "lat": 43.528378168784336,
+        "lng": -79.60994853640328
+      },
+      "drivingArea": {
+        "center": {
+          "lat": 43.5286857497505,
+          "lng": -79.61002287597795
+        },
+        "widthMetres": 60,
+        "lengthMetres": 100,
+        "rotationDegrees": 0,
+        "spawn": {
+          "lat": 43.52902951671269,
+          "lng": -79.61028306448927,
+          "headingDegrees": 350
+        },
+        "spawnOffsetFromCanonicalMetres": {
+          "east": -27,
+          "north": 72
+        }
+      },
+      "assessment": "estimated",
+      "observation": "Estimated from Esri imagery at the 1188 Lakeshore Road West address: the visible small building/apron and curved access drive toward Lakeshore Road West. Canonical source coordinates are retained above; runtime spawn is placed on the mapped connected service-access edge. The exact EMS building use, parking assignment, and entrance are unverified.",
+      "runtimeCollision": {
+        "spawnInside": true,
+        "areaRoadAccess": true,
+        "spawnInitiallyDrivable": true,
+        "nearestRoad": {
+          "name": "Unnamed road",
+          "highway": "service",
+          "distanceMetres": 0.38
+        },
+        "exitStarted": true,
+        "exitCompleted": true,
+        "blockedMoves": 0,
+        "movementSteps": 23,
+        "outsideExpandedDrivingArea": true
+      },
+      "dispatchRouteCoverage": {
+        "calls": 6,
+        "reachable": 6,
+        "responseRouteFailures": 0,
+        "transportRouteFailures": 0
+      }
+    },
+    {
+      "baseId": "mississauga-ems-mavis",
+      "name": "Mavis Satellite Station",
+      "address": "3190 Mavis Road, Mississauga, ON",
+      "sourcePoint": {
+        "lat": 43.56894187282573,
+        "lng": -79.6391275780995
+      },
+      "drivingArea": {
+        "center": {
+          "lat": 43.56894187282573,
+          "lng": -79.6391275780995
+        },
+        "widthMetres": 85,
+        "lengthMetres": 100,
+        "rotationDegrees": 45,
+        "spawn": {
+          "lat": 43.56894187282573,
+          "lng": -79.6391275780995,
+          "headingDegrees": 0
+        },
+        "spawnOffsetFromCanonicalMetres": {
+          "east": 0,
+          "north": 0
+        }
+      },
+      "assessment": "estimated",
+      "observation": "Estimated from Esri imagery: Mavis paramedic facility building and its immediate parking/apron within the industrial campus. Shared circulation is included only around the visible unit frontage; EMS-only entrance is unverified.",
+      "runtimeCollision": {
+        "spawnInside": true,
+        "areaRoadAccess": true,
+        "spawnInitiallyDrivable": true,
+        "nearestRoad": {
+          "name": "Unnamed road",
+          "highway": "service",
+          "distanceMetres": 11.55
+        },
+        "exitStarted": true,
+        "exitCompleted": true,
+        "blockedMoves": 0,
+        "movementSteps": 69,
+        "outsideExpandedDrivingArea": true
+      },
+      "dispatchRouteCoverage": {
+        "calls": 6,
+        "reachable": 6,
+        "responseRouteFailures": 0,
+        "transportRouteFailures": 0
+      }
+    },
+    {
+      "baseId": "mississauga-ems-sheridan",
+      "name": "Sheridan Park Satellite Station",
+      "address": "2230 Sheridan Park Drive, Mississauga, ON",
+      "sourcePoint": {
+        "lat": 43.525937534605134,
+        "lng": -79.66062596857692
+      },
+      "drivingArea": {
+        "center": {
+          "lat": 43.525865162613094,
+          "lng": -79.66062596857692
+        },
+        "widthMetres": 78,
+        "lengthMetres": 90,
+        "rotationDegrees": 35,
+        "spawn": {
+          "lat": 43.525937534605134,
+          "lng": -79.66062596857692,
+          "headingDegrees": 0
+        },
+        "spawnOffsetFromCanonicalMetres": {
+          "east": 0,
+          "north": 0
+        }
+      },
+      "assessment": "estimated",
+      "observation": "Estimated from Esri imagery: Sheridan Park paramedic building, its immediate apron/parking and visible site aisle. Larger campus buildings and lawns are excluded; exact EMS entrance is unverified.",
+      "runtimeCollision": {
+        "spawnInside": true,
+        "areaRoadAccess": true,
+        "spawnInitiallyDrivable": true,
+        "nearestRoad": {
+          "name": "Unnamed road",
+          "highway": "service",
+          "distanceMetres": 4.65
+        },
+        "exitStarted": true,
+        "exitCompleted": true,
+        "blockedMoves": 0,
+        "movementSteps": 59,
+        "outsideExpandedDrivingArea": true
+      },
+      "dispatchRouteCoverage": {
+        "calls": 6,
+        "reachable": 6,
+        "responseRouteFailures": 0,
+        "transportRouteFailures": 0
+      }
+    },
+    {
+      "baseId": "mississauga-ems-tedlo",
+      "name": "Tedlo Satellite Station",
+      "address": "2355 Tedlo Street, Unit 4, Mississauga, ON",
+      "sourcePoint": {
+        "lat": 43.58750320514768,
+        "lng": -79.59578814025171
+      },
+      "drivingArea": {
+        "center": {
+          "lat": 43.58750320514768,
+          "lng": -79.59578814025171
+        },
+        "widthMetres": 78,
+        "lengthMetres": 90,
+        "rotationDegrees": 45,
+        "spawn": {
+          "lat": 43.58750320514768,
+          "lng": -79.59578814025171,
+          "headingDegrees": 0
+        },
+        "spawnOffsetFromCanonicalMetres": {
+          "east": 0,
+          "north": 0
+        }
+      },
+      "assessment": "estimated",
+      "observation": "Estimated from Esri imagery: Tedlo paramedic unit frontage, its immediate paved apron/parking and visible access aisle within the industrial block. Other warehouse units are excluded; EMS entrance is unverified.",
+      "runtimeCollision": {
+        "spawnInside": true,
+        "areaRoadAccess": true,
+        "spawnInitiallyDrivable": true,
+        "nearestRoad": {
+          "name": "Unnamed road",
+          "highway": "service",
+          "distanceMetres": 19.93
+        },
+        "exitStarted": true,
+        "exitCompleted": true,
+        "blockedMoves": 0,
+        "movementSteps": 48,
+        "outsideExpandedDrivingArea": true
+      },
+      "dispatchRouteCoverage": {
+        "calls": 6,
+        "reachable": 6,
+        "responseRouteFailures": 0,
+        "transportRouteFailures": 0
+      }
+    },
+    {
+      "baseId": "mississauga-ems-winding",
+      "name": "Winding Trail Satellite Station",
+      "address": "1355 Winding Trail, Mississauga, ON",
+      "sourcePoint": {
+        "lat": 43.61919726723139,
+        "lng": -79.59974187205779
+      },
+      "drivingArea": {
+        "center": {
+          "lat": 43.61919726723139,
+          "lng": -79.59974187205779
+        },
+        "widthMetres": 85,
+        "lengthMetres": 95,
+        "rotationDegrees": 45,
+        "spawn": {
+          "lat": 43.61919726723139,
+          "lng": -79.59974187205779,
+          "headingDegrees": 0
+        },
+        "spawnOffsetFromCanonicalMetres": {
+          "east": 0,
+          "north": 0
+        }
+      },
+      "assessment": "estimated",
+      "observation": "Co-located at the Winding Trail facility with Fire Station #106. Estimated from imagery: shared building and immediate parking/apron/site approach; no EMS-only entrance is claimed.",
+      "runtimeCollision": {
+        "spawnInside": true,
+        "areaRoadAccess": true,
+        "spawnInitiallyDrivable": true,
+        "nearestRoad": {
+          "name": "Unnamed road",
+          "highway": "service",
+          "distanceMetres": 19.97
+        },
+        "exitStarted": true,
+        "exitCompleted": true,
+        "blockedMoves": 0,
+        "movementSteps": 91,
+        "outsideExpandedDrivingArea": true
+      },
+      "dispatchRouteCoverage": {
+        "calls": 6,
+        "reachable": 6,
+        "responseRouteFailures": 0,
+        "transportRouteFailures": 0
+      }
+    }
+  ],
+  "runtimeCollisionChecks": {
+    "checkedLocalDate": "2026-11-02",
+    "runtimeVersion": "1.6.170",
+    "roadState": "ready",
+    "activeBaseCount": 36,
+    "method": "Browser QA started PTBO_ROAD_COLLISION.beginStationExit, selected a real route call from each base until the route left a 10 m expanded driving-area boundary, then moved along that route in 1.5 m steps with resolveMovement. Each path had to leave the expanded yard on a drivable point with no blocked moves.",
+    "results": [
+      {
+        "baseId": "mississauga-fire-101",
+        "spawnInside": true,
+        "areaRoadAccess": true,
+        "spawnInitiallyDrivable": true,
+        "nearestRoad": {
+          "name": "Unnamed road",
+          "highway": "service",
+          "distanceMetres": 17.63
+        },
+        "exitStarted": true,
+        "exitCompleted": true,
+        "blockedMoves": 0,
+        "movementSteps": 56,
+        "outsideExpandedDrivingArea": true
+      },
+      {
+        "baseId": "mississauga-fire-102",
+        "spawnInside": true,
+        "areaRoadAccess": true,
+        "spawnInitiallyDrivable": true,
+        "nearestRoad": {
+          "name": "Unnamed road",
+          "highway": "service",
+          "distanceMetres": 9.21
+        },
+        "exitStarted": true,
+        "exitCompleted": true,
+        "blockedMoves": 0,
+        "movementSteps": 60,
+        "outsideExpandedDrivingArea": true
+      },
+      {
+        "baseId": "mississauga-fire-103",
+        "spawnInside": true,
+        "areaRoadAccess": true,
+        "spawnInitiallyDrivable": true,
+        "nearestRoad": {
+          "name": "Unnamed road",
+          "highway": "service",
+          "distanceMetres": 12.32
+        },
+        "exitStarted": true,
+        "exitCompleted": true,
+        "blockedMoves": 0,
+        "movementSteps": 105,
+        "outsideExpandedDrivingArea": true
+      },
+      {
+        "baseId": "mississauga-fire-104",
+        "spawnInside": true,
+        "areaRoadAccess": true,
+        "spawnInitiallyDrivable": true,
+        "nearestRoad": {
+          "name": "Unnamed road",
+          "highway": "service",
+          "distanceMetres": 8.89
+        },
+        "exitStarted": true,
+        "exitCompleted": true,
+        "blockedMoves": 0,
+        "movementSteps": 109,
+        "outsideExpandedDrivingArea": true
+      },
+      {
+        "baseId": "mississauga-fire-105",
+        "spawnInside": true,
+        "areaRoadAccess": true,
+        "spawnInitiallyDrivable": true,
+        "nearestRoad": {
+          "name": "Unnamed road",
+          "highway": "service",
+          "distanceMetres": 14.97
+        },
+        "exitStarted": true,
+        "exitCompleted": true,
+        "blockedMoves": 0,
+        "movementSteps": 93,
+        "outsideExpandedDrivingArea": true
+      },
+      {
+        "baseId": "mississauga-fire-106",
+        "spawnInside": true,
+        "areaRoadAccess": true,
+        "spawnInitiallyDrivable": true,
+        "nearestRoad": {
+          "name": "Unnamed road",
+          "highway": "service",
+          "distanceMetres": 13.15
+        },
+        "exitStarted": true,
+        "exitCompleted": true,
+        "blockedMoves": 0,
+        "movementSteps": 139,
+        "outsideExpandedDrivingArea": true
+      },
+      {
+        "baseId": "mississauga-fire-107",
+        "spawnInside": true,
+        "areaRoadAccess": true,
+        "spawnInitiallyDrivable": true,
+        "nearestRoad": {
+          "name": "Unnamed road",
+          "highway": "service",
+          "distanceMetres": 10.43
+        },
+        "exitStarted": true,
+        "exitCompleted": true,
+        "blockedMoves": 0,
+        "movementSteps": 60,
+        "outsideExpandedDrivingArea": true
+      },
+      {
+        "baseId": "mississauga-fire-108",
+        "spawnInside": true,
+        "areaRoadAccess": true,
+        "spawnInitiallyDrivable": true,
+        "nearestRoad": {
+          "name": "Unnamed road",
+          "highway": "service",
+          "distanceMetres": 14.99
+        },
+        "exitStarted": true,
+        "exitCompleted": true,
+        "blockedMoves": 0,
+        "movementSteps": 78,
+        "outsideExpandedDrivingArea": true
+      },
+      {
+        "baseId": "mississauga-fire-109",
+        "spawnInside": true,
+        "areaRoadAccess": true,
+        "spawnInitiallyDrivable": true,
+        "nearestRoad": {
+          "name": "Unnamed road",
+          "highway": "service",
+          "distanceMetres": 17.94
+        },
+        "exitStarted": true,
+        "exitCompleted": true,
+        "blockedMoves": 0,
+        "movementSteps": 79,
+        "outsideExpandedDrivingArea": true
+      },
+      {
+        "baseId": "mississauga-fire-110",
+        "spawnInside": true,
+        "areaRoadAccess": true,
+        "spawnInitiallyDrivable": true,
+        "nearestRoad": {
+          "name": "Unnamed road",
+          "highway": "service",
+          "distanceMetres": 13.93
+        },
+        "exitStarted": true,
+        "exitCompleted": true,
+        "blockedMoves": 0,
+        "movementSteps": 85,
+        "outsideExpandedDrivingArea": true
+      },
+      {
+        "baseId": "mississauga-fire-111",
+        "spawnInside": true,
+        "areaRoadAccess": true,
+        "spawnInitiallyDrivable": true,
+        "nearestRoad": {
+          "name": "Unnamed road",
+          "highway": "service",
+          "distanceMetres": 10.2
+        },
+        "exitStarted": true,
+        "exitCompleted": true,
+        "blockedMoves": 0,
+        "movementSteps": 43,
+        "outsideExpandedDrivingArea": true
+      },
+      {
+        "baseId": "mississauga-fire-112",
+        "spawnInside": true,
+        "areaRoadAccess": true,
+        "spawnInitiallyDrivable": true,
+        "nearestRoad": {
+          "name": "Unnamed road",
+          "highway": "service",
+          "distanceMetres": 35.96
+        },
+        "exitStarted": true,
+        "exitCompleted": true,
+        "blockedMoves": 0,
+        "movementSteps": 50,
+        "outsideExpandedDrivingArea": true
+      },
+      {
+        "baseId": "mississauga-fire-114",
+        "spawnInside": true,
+        "areaRoadAccess": true,
+        "spawnInitiallyDrivable": true,
+        "nearestRoad": {
+          "name": "Unnamed road",
+          "highway": "service",
+          "distanceMetres": 13.22
+        },
+        "exitStarted": true,
+        "exitCompleted": true,
+        "blockedMoves": 0,
+        "movementSteps": 113,
+        "outsideExpandedDrivingArea": true
+      },
+      {
+        "baseId": "mississauga-fire-115",
+        "spawnInside": true,
+        "areaRoadAccess": true,
+        "spawnInitiallyDrivable": true,
+        "nearestRoad": {
+          "name": "Unnamed road",
+          "highway": "service",
+          "distanceMetres": 11.36
+        },
+        "exitStarted": true,
+        "exitCompleted": true,
+        "blockedMoves": 0,
+        "movementSteps": 54,
+        "outsideExpandedDrivingArea": true
+      },
+      {
+        "baseId": "mississauga-fire-116",
+        "spawnInside": true,
+        "areaRoadAccess": true,
+        "spawnInitiallyDrivable": true,
+        "nearestRoad": {
+          "name": "Unnamed road",
+          "highway": "service",
+          "distanceMetres": 11.47
+        },
+        "exitStarted": true,
+        "exitCompleted": true,
+        "blockedMoves": 0,
+        "movementSteps": 51,
+        "outsideExpandedDrivingArea": true
+      },
+      {
+        "baseId": "mississauga-fire-117",
+        "spawnInside": true,
+        "areaRoadAccess": true,
+        "spawnInitiallyDrivable": true,
+        "nearestRoad": {
+          "name": "Unnamed road",
+          "highway": "service",
+          "distanceMetres": 10.36
+        },
+        "exitStarted": true,
+        "exitCompleted": true,
+        "blockedMoves": 0,
+        "movementSteps": 43,
+        "outsideExpandedDrivingArea": true
+      },
+      {
+        "baseId": "mississauga-fire-118",
+        "spawnInside": true,
+        "areaRoadAccess": true,
+        "spawnInitiallyDrivable": true,
+        "nearestRoad": {
+          "name": "Unnamed road",
+          "highway": "service",
+          "distanceMetres": 15.11
+        },
+        "exitStarted": true,
+        "exitCompleted": true,
+        "blockedMoves": 0,
+        "movementSteps": 101,
+        "outsideExpandedDrivingArea": true
+      },
+      {
+        "baseId": "mississauga-fire-119",
+        "spawnInside": true,
+        "areaRoadAccess": true,
+        "spawnInitiallyDrivable": true,
+        "nearestRoad": {
+          "name": "Unnamed road",
+          "highway": "service",
+          "distanceMetres": 8.63
+        },
+        "exitStarted": true,
+        "exitCompleted": true,
+        "blockedMoves": 0,
+        "movementSteps": 63,
+        "outsideExpandedDrivingArea": true
+      },
+      {
+        "baseId": "mississauga-fire-120",
+        "spawnInside": true,
+        "areaRoadAccess": true,
+        "spawnInitiallyDrivable": true,
+        "nearestRoad": {
+          "name": "Unnamed road",
+          "highway": "service",
+          "distanceMetres": 4.43
+        },
+        "exitStarted": true,
+        "exitCompleted": true,
+        "blockedMoves": 0,
+        "movementSteps": 78,
+        "outsideExpandedDrivingArea": true
+      },
+      {
+        "baseId": "mississauga-fire-121",
+        "spawnInside": true,
+        "areaRoadAccess": true,
+        "spawnInitiallyDrivable": true,
+        "nearestRoad": {
+          "name": "Unnamed road",
+          "highway": "service",
+          "distanceMetres": 17.53
+        },
+        "exitStarted": true,
+        "exitCompleted": true,
+        "blockedMoves": 0,
+        "movementSteps": 60,
+        "outsideExpandedDrivingArea": true
+      },
+      {
+        "baseId": "mississauga-fire-122",
+        "spawnInside": true,
+        "areaRoadAccess": true,
+        "spawnInitiallyDrivable": true,
+        "nearestRoad": {
+          "name": "Unnamed road",
+          "highway": "service",
+          "distanceMetres": 39.32
+        },
+        "exitStarted": true,
+        "exitCompleted": true,
+        "blockedMoves": 0,
+        "movementSteps": 74,
+        "outsideExpandedDrivingArea": true
+      },
+      {
+        "baseId": "mississauga-fire-123",
+        "spawnInside": true,
+        "areaRoadAccess": true,
+        "spawnInitiallyDrivable": true,
+        "nearestRoad": {
+          "name": "Unnamed road",
+          "highway": "service",
+          "distanceMetres": 34.47
+        },
+        "exitStarted": true,
+        "exitCompleted": true,
+        "blockedMoves": 0,
+        "movementSteps": 37,
+        "outsideExpandedDrivingArea": true
+      },
+      {
+        "baseId": "mississauga-fire-125",
+        "spawnInside": true,
+        "areaRoadAccess": true,
+        "spawnInitiallyDrivable": true,
+        "nearestRoad": {
+          "name": "Unnamed road",
+          "highway": "service",
+          "distanceMetres": 32.4
+        },
+        "exitStarted": true,
+        "exitCompleted": true,
+        "blockedMoves": 0,
+        "movementSteps": 85,
+        "outsideExpandedDrivingArea": true
+      },
+      {
+        "baseId": "mississauga-ems-airport",
+        "spawnInside": true,
+        "areaRoadAccess": true,
+        "spawnInitiallyDrivable": true,
+        "nearestRoad": {
+          "name": "Unnamed road",
+          "highway": "service",
+          "distanceMetres": 24.87
+        },
+        "exitStarted": true,
+        "exitCompleted": true,
+        "blockedMoves": 0,
+        "movementSteps": 66,
+        "outsideExpandedDrivingArea": true
+      },
+      {
+        "baseId": "mississauga-ems-east-avenue",
+        "spawnInside": true,
+        "areaRoadAccess": true,
+        "spawnInitiallyDrivable": true,
+        "nearestRoad": {
+          "name": "Unnamed road",
+          "highway": "service",
+          "distanceMetres": 35.48
+        },
+        "exitStarted": true,
+        "exitCompleted": true,
+        "blockedMoves": 0,
+        "movementSteps": 48,
+        "outsideExpandedDrivingArea": true
+      },
+      {
+        "baseId": "mississauga-ems-falbourne",
+        "spawnInside": true,
+        "areaRoadAccess": true,
+        "spawnInitiallyDrivable": true,
+        "nearestRoad": {
+          "name": "Falbourne Street",
+          "highway": "unclassified",
+          "distanceMetres": 0.26
+        },
+        "exitStarted": true,
+        "exitCompleted": true,
+        "blockedMoves": 0,
+        "movementSteps": 51,
+        "outsideExpandedDrivingArea": true
+      },
+      {
+        "baseId": "mississauga-ems-goreway",
+        "spawnInside": true,
+        "areaRoadAccess": true,
+        "spawnInitiallyDrivable": true,
+        "nearestRoad": {
+          "name": "Unnamed road",
+          "highway": "service",
+          "distanceMetres": 9.93
+        },
+        "exitStarted": true,
+        "exitCompleted": true,
+        "blockedMoves": 0,
+        "movementSteps": 54,
+        "outsideExpandedDrivingArea": true
+      },
+      {
+        "baseId": "mississauga-ems-kingsway",
+        "spawnInside": true,
+        "areaRoadAccess": true,
+        "spawnInitiallyDrivable": true,
+        "nearestRoad": {
+          "name": "Unnamed road",
+          "highway": "service",
+          "distanceMetres": 2.38
+        },
+        "exitStarted": true,
+        "exitCompleted": true,
+        "blockedMoves": 0,
+        "movementSteps": 46,
+        "outsideExpandedDrivingArea": true
+      },
+      {
+        "baseId": "mississauga-ems-kitimat",
+        "spawnInside": true,
+        "areaRoadAccess": true,
+        "spawnInitiallyDrivable": true,
+        "nearestRoad": {
+          "name": "Unnamed road",
+          "highway": "service",
+          "distanceMetres": 22.6
+        },
+        "exitStarted": true,
+        "exitCompleted": true,
+        "blockedMoves": 0,
+        "movementSteps": 67,
+        "outsideExpandedDrivingArea": true
+      },
+      {
+        "baseId": "mississauga-ems-lorne-park",
+        "spawnInside": true,
+        "areaRoadAccess": true,
+        "spawnInitiallyDrivable": true,
+        "nearestRoad": {
+          "name": "Unnamed road",
+          "highway": "service",
+          "distanceMetres": 0.38
+        },
+        "exitStarted": true,
+        "exitCompleted": true,
+        "blockedMoves": 0,
+        "movementSteps": 23,
+        "outsideExpandedDrivingArea": true
+      },
+      {
+        "baseId": "mississauga-ems-mavis",
+        "spawnInside": true,
+        "areaRoadAccess": true,
+        "spawnInitiallyDrivable": true,
+        "nearestRoad": {
+          "name": "Unnamed road",
+          "highway": "service",
+          "distanceMetres": 11.55
+        },
+        "exitStarted": true,
+        "exitCompleted": true,
+        "blockedMoves": 0,
+        "movementSteps": 69,
+        "outsideExpandedDrivingArea": true
+      },
+      {
+        "baseId": "mississauga-ems-sheridan",
+        "spawnInside": true,
+        "areaRoadAccess": true,
+        "spawnInitiallyDrivable": true,
+        "nearestRoad": {
+          "name": "Unnamed road",
+          "highway": "service",
+          "distanceMetres": 4.65
+        },
+        "exitStarted": true,
+        "exitCompleted": true,
+        "blockedMoves": 0,
+        "movementSteps": 59,
+        "outsideExpandedDrivingArea": true
+      },
+      {
+        "baseId": "mississauga-ems-streetsville",
+        "spawnInside": true,
+        "areaRoadAccess": true,
+        "spawnInitiallyDrivable": true,
+        "nearestRoad": {
+          "name": "Thomas Street",
+          "highway": "tertiary",
+          "distanceMetres": 16.86
+        },
+        "exitStarted": true,
+        "exitCompleted": true,
+        "blockedMoves": 0,
+        "movementSteps": 56,
+        "outsideExpandedDrivingArea": true
+      },
+      {
+        "baseId": "mississauga-ems-tedlo",
+        "spawnInside": true,
+        "areaRoadAccess": true,
+        "spawnInitiallyDrivable": true,
+        "nearestRoad": {
+          "name": "Unnamed road",
+          "highway": "service",
+          "distanceMetres": 19.93
+        },
+        "exitStarted": true,
+        "exitCompleted": true,
+        "blockedMoves": 0,
+        "movementSteps": 48,
+        "outsideExpandedDrivingArea": true
+      },
+      {
+        "baseId": "mississauga-ems-tomken",
+        "spawnInside": true,
+        "areaRoadAccess": true,
+        "spawnInitiallyDrivable": true,
+        "nearestRoad": {
+          "name": "Unnamed road",
+          "highway": "service",
+          "distanceMetres": 11.07
+        },
+        "exitStarted": true,
+        "exitCompleted": true,
+        "blockedMoves": 0,
+        "movementSteps": 67,
+        "outsideExpandedDrivingArea": true
+      },
+      {
+        "baseId": "mississauga-ems-winding",
+        "spawnInside": true,
+        "areaRoadAccess": true,
+        "spawnInitiallyDrivable": true,
+        "nearestRoad": {
+          "name": "Unnamed road",
+          "highway": "service",
+          "distanceMetres": 19.97
+        },
+        "exitStarted": true,
+        "exitCompleted": true,
+        "blockedMoves": 0,
+        "movementSteps": 91,
+        "outsideExpandedDrivingArea": true
+      }
+    ],
+    "artifact": "artifacts/release-qa/base-fit/mississauga-driving-area-checks.json"
+  },
+  "dispatchRouteCoverage": {
+    "checkedLocalDate": "2026-11-02",
+    "device": "mobile browser route-only QA",
+    "fireTotals": {
+      "bases": 23,
+      "calls": 184,
+      "reachable": 184
+    },
+    "fireBases": [
+      {
+        "baseId": "mississauga-fire-119",
+        "calls": 8,
+        "reachable": 8,
+        "responseRouteFailures": 0,
+        "transportRouteFailures": 0
+      },
+      {
+        "baseId": "mississauga-fire-109",
+        "calls": 8,
+        "reachable": 8,
+        "responseRouteFailures": 0,
+        "transportRouteFailures": 0
+      },
+      {
+        "baseId": "mississauga-fire-122",
+        "calls": 8,
+        "reachable": 8,
+        "responseRouteFailures": 0,
+        "transportRouteFailures": 0
+      },
+      {
+        "baseId": "mississauga-fire-103",
+        "calls": 8,
+        "reachable": 8,
+        "responseRouteFailures": 0,
+        "transportRouteFailures": 0
+      },
+      {
+        "baseId": "mississauga-fire-101",
+        "calls": 8,
+        "reachable": 8,
+        "responseRouteFailures": 0,
+        "transportRouteFailures": 0
+      },
+      {
+        "baseId": "mississauga-fire-112",
+        "calls": 8,
+        "reachable": 8,
+        "responseRouteFailures": 0,
+        "transportRouteFailures": 0
+      },
+      {
+        "baseId": "mississauga-fire-106",
+        "calls": 8,
+        "reachable": 8,
+        "responseRouteFailures": 0,
+        "transportRouteFailures": 0
+      },
+      {
+        "baseId": "mississauga-fire-118",
+        "calls": 8,
+        "reachable": 8,
+        "responseRouteFailures": 0,
+        "transportRouteFailures": 0
+      },
+      {
+        "baseId": "mississauga-fire-120",
+        "calls": 8,
+        "reachable": 8,
+        "responseRouteFailures": 0,
+        "transportRouteFailures": 0
+      },
+      {
+        "baseId": "mississauga-fire-115",
+        "calls": 8,
+        "reachable": 8,
+        "responseRouteFailures": 0,
+        "transportRouteFailures": 0
+      },
+      {
+        "baseId": "mississauga-fire-107",
+        "calls": 8,
+        "reachable": 8,
+        "responseRouteFailures": 0,
+        "transportRouteFailures": 0
+      },
+      {
+        "baseId": "mississauga-fire-125",
+        "calls": 8,
+        "reachable": 8,
+        "responseRouteFailures": 0,
+        "transportRouteFailures": 0
+      },
+      {
+        "baseId": "mississauga-fire-114",
+        "calls": 8,
+        "reachable": 8,
+        "responseRouteFailures": 0,
+        "transportRouteFailures": 0
+      },
+      {
+        "baseId": "mississauga-fire-102",
+        "calls": 8,
+        "reachable": 8,
+        "responseRouteFailures": 0,
+        "transportRouteFailures": 0
+      },
+      {
+        "baseId": "mississauga-fire-105",
+        "calls": 8,
+        "reachable": 8,
+        "responseRouteFailures": 0,
+        "transportRouteFailures": 0
+      },
+      {
+        "baseId": "mississauga-fire-111",
+        "calls": 8,
+        "reachable": 8,
+        "responseRouteFailures": 0,
+        "transportRouteFailures": 0
+      },
+      {
+        "baseId": "mississauga-fire-121",
+        "calls": 8,
+        "reachable": 8,
+        "responseRouteFailures": 0,
+        "transportRouteFailures": 0
+      },
+      {
+        "baseId": "mississauga-fire-117",
+        "calls": 8,
+        "reachable": 8,
+        "responseRouteFailures": 0,
+        "transportRouteFailures": 0
+      },
+      {
+        "baseId": "mississauga-fire-104",
+        "calls": 8,
+        "reachable": 8,
+        "responseRouteFailures": 0,
+        "transportRouteFailures": 0
+      },
+      {
+        "baseId": "mississauga-fire-110",
+        "calls": 8,
+        "reachable": 8,
+        "responseRouteFailures": 0,
+        "transportRouteFailures": 0
+      },
+      {
+        "baseId": "mississauga-fire-108",
+        "calls": 8,
+        "reachable": 8,
+        "responseRouteFailures": 0,
+        "transportRouteFailures": 0
+      },
+      {
+        "baseId": "mississauga-fire-116",
+        "calls": 8,
+        "reachable": 8,
+        "responseRouteFailures": 0,
+        "transportRouteFailures": 0
+      },
+      {
+        "baseId": "mississauga-fire-123",
+        "calls": 8,
+        "reachable": 8,
+        "responseRouteFailures": 0,
+        "transportRouteFailures": 0
+      }
+    ],
+    "emsTotals": {
+      "bases": 13,
+      "calls": 78,
+      "reachable": 78
+    },
+    "emsBases": [
+      {
+        "baseId": "mississauga-ems-streetsville",
+        "calls": 6,
+        "reachable": 6,
+        "responseRouteFailures": 0,
+        "transportRouteFailures": 0
+      },
+      {
+        "baseId": "mississauga-ems-tomken",
+        "calls": 6,
+        "reachable": 6,
+        "responseRouteFailures": 0,
+        "transportRouteFailures": 0
+      },
+      {
+        "baseId": "mississauga-ems-airport",
+        "calls": 6,
+        "reachable": 6,
+        "responseRouteFailures": 0,
+        "transportRouteFailures": 0
+      },
+      {
+        "baseId": "mississauga-ems-east-avenue",
+        "calls": 6,
+        "reachable": 6,
+        "responseRouteFailures": 0,
+        "transportRouteFailures": 0
+      },
+      {
+        "baseId": "mississauga-ems-falbourne",
+        "calls": 6,
+        "reachable": 6,
+        "responseRouteFailures": 0,
+        "transportRouteFailures": 0
+      },
+      {
+        "baseId": "mississauga-ems-goreway",
+        "calls": 6,
+        "reachable": 6,
+        "responseRouteFailures": 0,
+        "transportRouteFailures": 0
+      },
+      {
+        "baseId": "mississauga-ems-kingsway",
+        "calls": 6,
+        "reachable": 6,
+        "responseRouteFailures": 0,
+        "transportRouteFailures": 0
+      },
+      {
+        "baseId": "mississauga-ems-kitimat",
+        "calls": 6,
+        "reachable": 6,
+        "responseRouteFailures": 0,
+        "transportRouteFailures": 0
+      },
+      {
+        "baseId": "mississauga-ems-lorne-park",
+        "calls": 6,
+        "reachable": 6,
+        "responseRouteFailures": 0,
+        "transportRouteFailures": 0
+      },
+      {
+        "baseId": "mississauga-ems-mavis",
+        "calls": 6,
+        "reachable": 6,
+        "responseRouteFailures": 0,
+        "transportRouteFailures": 0
+      },
+      {
+        "baseId": "mississauga-ems-sheridan",
+        "calls": 6,
+        "reachable": 6,
+        "responseRouteFailures": 0,
+        "transportRouteFailures": 0
+      },
+      {
+        "baseId": "mississauga-ems-tedlo",
+        "calls": 6,
+        "reachable": 6,
+        "responseRouteFailures": 0,
+        "transportRouteFailures": 0
+      },
+      {
+        "baseId": "mississauga-ems-winding",
+        "calls": 6,
+        "reachable": 6,
+        "responseRouteFailures": 0,
+        "transportRouteFailures": 0
+      }
+    ],
+    "lorneParkResponseFailures": 0,
+    "artifact": "artifacts/release-qa/base-fit-mississauga/dispatch-qa/route-coverage.json"
+  }
+}

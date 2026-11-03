@@ -1,0 +1,2251 @@
+{
+  "schemaVersion": 1,
+  "cityId": "ottawa",
+  "reviewedLocalDate": "2026-11-02",
+  "assessment": "estimated",
+  "imagery": {
+    "provider": "Esri World Imagery",
+    "tileUrl": "https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}",
+    "capturedLocalDate": "2026-11-02",
+    "vintage": "not independently provided by the tile response",
+    "method": "Independent Leaflet captures at zoom 19 for covered tiles. Six rural sites had no zoom-19 imagery tiles and were recaptured at zoom 18. Visible station building, on-site parking and circulation/apron were fitted to a rotated rectangle using the recorded map scale."
+  },
+  "roads": {
+    "file": "cities/ottawa/roads.geojson.gz",
+    "source": "OpenStreetMap via Geofabrik Ontario extract",
+    "sourceTimestamp": "2026-09-27T20:23:36Z",
+    "snapshotBuiltAt": "2026-10-29T04:21:08.675Z",
+    "packagedSha256": "b6a3bae1603fd73311f93fc42c84eb30ffbaaeffca5395537001799e54bf2361",
+    "sourceSha256": "ebb50b39682d2381ad3c1d21e005b48cec3397e15da0d72c5d76c7d20d8dd249",
+    "sourceUrl": "https://download.geofabrik.de/north-america/canada/ontario.html",
+    "attribution": "© OpenStreetMap contributors",
+    "assessment": "Packaged road/service-drive centerlines were inspected alongside imagery. Spawns are modeled points snapped to a selected mapped centerline, used to connect the fitted site apron to the local road network; they are not verified driveways, gates or apparatus entrances."
+  },
+  "limits": [
+    "Fit centers, rectangle dimensions, rotations and spawn coordinates are imagery- and road-map-based estimates, not surveyed measurements.",
+    "No official station parcel plans, building footprints or apparatus access routes were used.",
+    "Satellite imagery dates are not supplied by the tile response.",
+    "Canonical station IDs and source coordinates are preserved.",
+    "Six rural sites used Esri zoom-18 imagery because no zoom-19 tiles were available.",
+    "EMS 384 address is corroborated by the City of Ottawa facility energy-report listing; its modeled spawn was moved from an unrouteable mapped service loop to the Lord Byng Way centerline. This is a modeled network connection, not confirmed station access."
+  ],
+  "sources": [
+    {
+      "claim": "Ottawa EMS 384 facility address",
+      "url": "https://documents.ottawa.ca/sites/default/files/City_of_Ottawa_Broader_Public_Sector_Energy_Reporting_2023_AODA.pdf",
+      "limit": "Confirms the facility listing at 50 Lord Byng Way; does not verify coordinates, entrance or road connection."
+    }
+  ],
+  "bases": [
+    {
+      "baseId": "ottawa-fire-34",
+      "name": "Fire Station 34 - Hog's Back",
+      "address": "700 Brookfield Rd",
+      "sourcePoint": {
+        "lat": 45.37278981498543,
+        "lng": -75.68984164908812
+      },
+      "drivingArea": {
+        "center": {
+          "lat": 45.37278981,
+          "lng": -75.68984165
+        },
+        "widthMetres": 70,
+        "lengthMetres": 85,
+        "rotationDegrees": 0,
+        "spawn": {
+          "lat": 45.37281968,
+          "lng": -75.68962848,
+          "headingDegrees": 349
+        },
+        "roadSnap": {
+          "roadName": null,
+          "highway": "service",
+          "distanceFromSourceMetres": 17
+        }
+      },
+      "assessment": "estimated",
+      "imageryCapture": "artifacts/release-qa/base-fit-ottawa/ottawa-fire-34.png",
+      "imageryZoom": 19,
+      "metresPerPixel": 0.2095,
+      "imageryObservation": "Visible Fire Station 34 - Hog's Back station building and adjacent parking/circulation were used to estimate the fitted on-site footprint. The source coordinate above remains unchanged. The model spawn is on the mapped service centerline (service, 17.0 m from the preserved source point).",
+      "rotationBasis": "Axis-aligned estimate follows the visible local parcel/street grid; not survey-derived."
+    },
+    {
+      "baseId": "ottawa-fire-35",
+      "name": "Fire Station 35 - Alta Vista",
+      "address": "2355 Alta Vista Dr",
+      "sourcePoint": {
+        "lat": 45.38348171699613,
+        "lng": -75.66154953620153
+      },
+      "drivingArea": {
+        "center": {
+          "lat": 45.38351765,
+          "lng": -75.66154954
+        },
+        "widthMetres": 70,
+        "lengthMetres": 90,
+        "rotationDegrees": 0,
+        "spawn": {
+          "lat": 45.3835166,
+          "lng": -75.6613344,
+          "headingDegrees": 356
+        },
+        "roadSnap": {
+          "roadName": null,
+          "highway": "service",
+          "distanceFromSourceMetres": 17.3
+        }
+      },
+      "assessment": "estimated",
+      "imageryCapture": "artifacts/release-qa/base-fit-ottawa/ottawa-fire-35.png",
+      "imageryZoom": 19,
+      "metresPerPixel": 0.2095,
+      "imageryObservation": "Visible Fire Station 35 - Alta Vista station building and adjacent parking/circulation were used to estimate the fitted on-site footprint. The source coordinate above remains unchanged. The model spawn is on the mapped service centerline (service, 17.3 m from the preserved source point).",
+      "rotationBasis": "Axis-aligned estimate follows the visible local parcel/street grid; not survey-derived."
+    },
+    {
+      "baseId": "ottawa-ems-382",
+      "name": "Osgoode Paramedic Post",
+      "address": "3207 Vance St",
+      "sourcePoint": {
+        "lat": 45.148312212764594,
+        "lng": -75.60374000299095
+      },
+      "drivingArea": {
+        "center": {
+          "lat": 45.14831221,
+          "lng": -75.60374
+        },
+        "widthMetres": 70,
+        "lengthMetres": 80,
+        "rotationDegrees": 0,
+        "spawn": {
+          "lat": 45.14834957,
+          "lng": -75.60397071,
+          "headingDegrees": 193
+        },
+        "roadSnap": {
+          "roadName": null,
+          "highway": "service",
+          "distanceFromSourceMetres": 18.6
+        }
+      },
+      "assessment": "estimated",
+      "imageryCapture": "artifacts/release-qa/base-fit-ottawa/ottawa-ems-382.png",
+      "imageryZoom": 19,
+      "metresPerPixel": 0.2103,
+      "imageryObservation": "Visible Osgoode Paramedic Post station building and adjacent parking/circulation were used to estimate the fitted on-site footprint. The source coordinate above remains unchanged. The model spawn is on the mapped service centerline (service, 18.6 m from the preserved source point).",
+      "rotationBasis": "Axis-aligned estimate follows the visible local parcel/street grid; not survey-derived."
+    },
+    {
+      "baseId": "ottawa-ems-383",
+      "name": "St. Patrick Paramedic Post",
+      "address": "384 St. Patrick St",
+      "sourcePoint": {
+        "lat": 45.4327372165564,
+        "lng": -75.68791499726399
+      },
+      "drivingArea": {
+        "center": {
+          "lat": 45.43273722,
+          "lng": -75.687915
+        },
+        "widthMetres": 80,
+        "lengthMetres": 95,
+        "rotationDegrees": 0,
+        "spawn": {
+          "lat": 45.43247968,
+          "lng": -75.68793261,
+          "headingDegrees": 93
+        },
+        "roadSnap": {
+          "roadName": null,
+          "highway": "service",
+          "distanceFromSourceMetres": 28.7
+        }
+      },
+      "assessment": "estimated",
+      "imageryCapture": "artifacts/release-qa/base-fit-ottawa/ottawa-ems-383.png",
+      "imageryZoom": 19,
+      "metresPerPixel": 0.2093,
+      "imageryObservation": "Visible St. Patrick Paramedic Post station building and adjacent parking/circulation were used to estimate the fitted on-site footprint. The source coordinate above remains unchanged. The model spawn is on the mapped service centerline (service, 28.7 m from the preserved source point).",
+      "rotationBasis": "Axis-aligned estimate follows the visible local parcel/street grid; not survey-derived."
+    },
+    {
+      "baseId": "ottawa-ems-384",
+      "name": "Kanata Paramedic Post",
+      "address": "50 Lord Byng Way",
+      "sourcePoint": {
+        "lat": 45.31108052872959,
+        "lng": -75.90435319086606
+      },
+      "drivingArea": {
+        "center": {
+          "lat": 45.31130511,
+          "lng": -75.90448093
+        },
+        "widthMetres": 110,
+        "lengthMetres": 120,
+        "rotationDegrees": 45,
+        "spawn": {
+          "lat": 45.3109893,
+          "lng": -75.9049215,
+          "headingDegrees": 320
+        },
+        "roadSnap": {
+          "roadName": "Lord Byng Way",
+          "highway": "unclassified",
+          "distanceFromSourceMetres": 45.6
+        }
+      },
+      "assessment": "estimated",
+      "imageryCapture": "artifacts/release-qa/base-fit-ottawa/ottawa-ems-384.png",
+      "imageryZoom": 19,
+      "metresPerPixel": 0.2097,
+      "imageryObservation": "Visible Kanata Paramedic Post station building and adjacent parking/circulation were used to estimate the fitted on-site footprint. The source coordinate above remains unchanged. The nearby service spur did not provide response routes; the spawn is on Lord Byng Way, the adjacent named public centerline.",
+      "rotationBasis": "Approximate parcel/access alignment estimated from the visible site and nearby road axis (45°); not survey-derived."
+    },
+    {
+      "baseId": "ottawa-fire-45",
+      "name": "Fire Station 45 - March",
+      "address": "45 Buckbean Ave",
+      "sourcePoint": {
+        "lat": 45.36571754312128,
+        "lng": -75.94693567274969
+      },
+      "drivingArea": {
+        "center": {
+          "lat": 45.36571754,
+          "lng": -75.94693567
+        },
+        "widthMetres": 80,
+        "lengthMetres": 95,
+        "rotationDegrees": 0,
+        "spawn": {
+          "lat": 45.36542776,
+          "lng": -75.94655179,
+          "headingDegrees": 227
+        },
+        "roadSnap": {
+          "roadName": "Buckbean Avenue",
+          "highway": "residential",
+          "distanceFromSourceMetres": 44.1
+        }
+      },
+      "assessment": "estimated",
+      "imageryCapture": "artifacts/release-qa/base-fit-ottawa/ottawa-fire-45.png",
+      "imageryZoom": 19,
+      "metresPerPixel": 0.2095,
+      "imageryObservation": "Visible Fire Station 45 - March station building and adjacent parking/circulation were used to estimate the fitted on-site footprint. The source coordinate above remains unchanged. The model spawn is on the mapped Buckbean Avenue centerline (residential, 44.1 m from the preserved source point).",
+      "rotationBasis": "Axis-aligned estimate follows the visible local parcel/street grid; not survey-derived."
+    },
+    {
+      "baseId": "ottawa-fire-72",
+      "name": "Fire Station 72 - Cumberland",
+      "address": "2445 Old Montreal Rd",
+      "sourcePoint": {
+        "lat": 45.516010721880676,
+        "lng": -75.41373697432746
+      },
+      "drivingArea": {
+        "center": {
+          "lat": 45.51601072,
+          "lng": -75.41373697
+        },
+        "widthMetres": 80,
+        "lengthMetres": 100,
+        "rotationDegrees": 0,
+        "spawn": {
+          "lat": 45.5159183,
+          "lng": -75.41367764,
+          "headingDegrees": 246
+        },
+        "roadSnap": {
+          "roadName": null,
+          "highway": "service",
+          "distanceFromSourceMetres": 11.3
+        }
+      },
+      "assessment": "estimated",
+      "imageryCapture": "artifacts/release-qa/base-fit-ottawa/ottawa-fire-72.png",
+      "imageryZoom": 19,
+      "metresPerPixel": 0.209,
+      "imageryObservation": "Visible Fire Station 72 - Cumberland station building and adjacent parking/circulation were used to estimate the fitted on-site footprint. The source coordinate above remains unchanged. The model spawn is on the mapped service centerline (service, 11.3 m from the preserved source point).",
+      "rotationBasis": "Axis-aligned estimate follows the visible local parcel/street grid; not survey-derived."
+    },
+    {
+      "baseId": "ottawa-fire-41",
+      "name": "Fire Station 41 - Eagleson",
+      "address": "380 Eagleson Rd",
+      "sourcePoint": {
+        "lat": 45.29472340710306,
+        "lng": -75.87216092269755
+      },
+      "drivingArea": {
+        "center": {
+          "lat": 45.29468747,
+          "lng": -75.87216092
+        },
+        "widthMetres": 75,
+        "lengthMetres": 95,
+        "rotationDegrees": 0,
+        "spawn": {
+          "lat": 45.29485742,
+          "lng": -75.87223084,
+          "headingDegrees": 70
+        },
+        "roadSnap": {
+          "roadName": null,
+          "highway": "service",
+          "distanceFromSourceMetres": 15.9
+        }
+      },
+      "assessment": "estimated",
+      "imageryCapture": "artifacts/release-qa/base-fit-ottawa/ottawa-fire-41.png",
+      "imageryZoom": 19,
+      "metresPerPixel": 0.2098,
+      "imageryObservation": "Visible Fire Station 41 - Eagleson station building and adjacent parking/circulation were used to estimate the fitted on-site footprint. The source coordinate above remains unchanged. The model spawn is on the mapped service centerline (service, 15.9 m from the preserved source point).",
+      "rotationBasis": "Axis-aligned estimate follows the visible local parcel/street grid; not survey-derived."
+    },
+    {
+      "baseId": "ottawa-fire-43",
+      "name": "Fire Station 43 - Bell's Corners",
+      "address": "3845 Old Richmond Rd",
+      "sourcePoint": {
+        "lat": 45.323085156178706,
+        "lng": -75.82667442735054
+      },
+      "drivingArea": {
+        "center": {
+          "lat": 45.32308516,
+          "lng": -75.82667443
+        },
+        "widthMetres": 90,
+        "lengthMetres": 120,
+        "rotationDegrees": 0,
+        "spawn": {
+          "lat": 45.32298018,
+          "lng": -75.82665346,
+          "headingDegrees": 82
+        },
+        "roadSnap": {
+          "roadName": null,
+          "highway": "service",
+          "distanceFromSourceMetres": 11.8
+        }
+      },
+      "assessment": "estimated",
+      "imageryCapture": "artifacts/release-qa/base-fit-ottawa/ottawa-fire-43.png",
+      "imageryZoom": 19,
+      "metresPerPixel": 0.2097,
+      "imageryObservation": "Visible Fire Station 43 - Bell's Corners station building and adjacent parking/circulation were used to estimate the fitted on-site footprint. The source coordinate above remains unchanged. The model spawn is on the mapped service centerline (service, 11.8 m from the preserved source point).",
+      "rotationBasis": "Axis-aligned estimate follows the visible local parcel/street grid; not survey-derived."
+    },
+    {
+      "baseId": "ottawa-fire-44",
+      "name": "Fire Station 44 - Barrhaven",
+      "address": "1075 Greenbank Rd",
+      "sourcePoint": {
+        "lat": 45.275648837912875,
+        "lng": -75.74844122543827
+      },
+      "drivingArea": {
+        "center": {
+          "lat": 45.27564884,
+          "lng": -75.74844123
+        },
+        "widthMetres": 85,
+        "lengthMetres": 100,
+        "rotationDegrees": 0,
+        "spawn": {
+          "lat": 45.2754996,
+          "lng": -75.7483141,
+          "headingDegrees": 159
+        },
+        "roadSnap": {
+          "roadName": null,
+          "highway": "service",
+          "distanceFromSourceMetres": 19.4
+        }
+      },
+      "assessment": "estimated",
+      "imageryCapture": "artifacts/release-qa/base-fit-ottawa/ottawa-fire-44.png",
+      "imageryZoom": 19,
+      "metresPerPixel": 0.2099,
+      "imageryObservation": "Visible Fire Station 44 - Barrhaven station building and adjacent parking/circulation were used to estimate the fitted on-site footprint. The source coordinate above remains unchanged. The model spawn is on the mapped service centerline (service, 19.4 m from the preserved source point).",
+      "rotationBasis": "Axis-aligned estimate follows the visible local parcel/street grid; not survey-derived."
+    },
+    {
+      "baseId": "ottawa-ems-439",
+      "name": "Catherine Paramedic Post",
+      "address": "103 Catherine St",
+      "sourcePoint": {
+        "lat": 45.411221710250736,
+        "lng": -75.68848406292847
+      },
+      "drivingArea": {
+        "center": {
+          "lat": 45.41122171,
+          "lng": -75.68853525
+        },
+        "widthMetres": 90,
+        "lengthMetres": 100,
+        "rotationDegrees": 0,
+        "spawn": {
+          "lat": 45.41138682,
+          "lng": -75.68862595,
+          "headingDegrees": 59
+        },
+        "roadSnap": {
+          "roadName": null,
+          "highway": "service",
+          "distanceFromSourceMetres": 21.5
+        }
+      },
+      "assessment": "estimated",
+      "imageryCapture": "artifacts/release-qa/base-fit-ottawa/ottawa-ems-439.png",
+      "imageryZoom": 19,
+      "metresPerPixel": 0.2094,
+      "imageryObservation": "Visible Catherine Paramedic Post station building and adjacent parking/circulation were used to estimate the fitted on-site footprint. The source coordinate above remains unchanged. The model spawn is on the mapped service centerline (service, 21.5 m from the preserved source point).",
+      "rotationBasis": "Axis-aligned estimate follows the visible local parcel/street grid; not survey-derived."
+    },
+    {
+      "baseId": "ottawa-fire-46",
+      "name": "Fire Station 46 - Kanata West",
+      "address": "34 Iber Rd",
+      "sourcePoint": {
+        "lat": 45.28097497835496,
+        "lng": -75.91002006641052
+      },
+      "drivingArea": {
+        "center": {
+          "lat": 45.28097498,
+          "lng": -75.91002007
+        },
+        "widthMetres": 75,
+        "lengthMetres": 100,
+        "rotationDegrees": 0,
+        "spawn": {
+          "lat": 45.2811488,
+          "lng": -75.9099376,
+          "headingDegrees": 47
+        },
+        "roadSnap": {
+          "roadName": null,
+          "highway": "service",
+          "distanceFromSourceMetres": 20.4
+        }
+      },
+      "assessment": "estimated",
+      "imageryCapture": "artifacts/release-qa/base-fit-ottawa/ottawa-fire-46.png",
+      "imageryZoom": 19,
+      "metresPerPixel": 0.2099,
+      "imageryObservation": "Visible Fire Station 46 - Kanata West station building and adjacent parking/circulation were used to estimate the fitted on-site footprint. The source coordinate above remains unchanged. The model spawn is on the mapped service centerline (service, 20.4 m from the preserved source point).",
+      "rotationBasis": "Axis-aligned estimate follows the visible local parcel/street grid; not survey-derived."
+    },
+    {
+      "baseId": "ottawa-fire-51",
+      "name": "Fire Station 51 - Carson Grove",
+      "address": "900 Montreal Rd",
+      "sourcePoint": {
+        "lat": 45.44608460622407,
+        "lng": -75.62961482400814
+      },
+      "drivingArea": {
+        "center": {
+          "lat": 45.44608461,
+          "lng": -75.62961482
+        },
+        "widthMetres": 75,
+        "lengthMetres": 90,
+        "rotationDegrees": 0,
+        "spawn": {
+          "lat": 45.44603484,
+          "lng": -75.62986518,
+          "headingDegrees": 344
+        },
+        "roadSnap": {
+          "roadName": null,
+          "highway": "service",
+          "distanceFromSourceMetres": 20.3
+        }
+      },
+      "assessment": "estimated",
+      "imageryCapture": "artifacts/release-qa/base-fit-ottawa/ottawa-fire-51.png",
+      "imageryZoom": 19,
+      "metresPerPixel": 0.2092,
+      "imageryObservation": "Visible Fire Station 51 - Carson Grove station building and adjacent parking/circulation were used to estimate the fitted on-site footprint. The source coordinate above remains unchanged. The model spawn is on the mapped service centerline (service, 20.3 m from the preserved source point).",
+      "rotationBasis": "Axis-aligned estimate follows the visible local parcel/street grid; not survey-derived."
+    },
+    {
+      "baseId": "ottawa-fire-53",
+      "name": "Fire Station 53-Fallingbrook",
+      "address": "500 Charlemagne Blvd",
+      "sourcePoint": {
+        "lat": 45.46804947821658,
+        "lng": -75.48707655522045
+      },
+      "drivingArea": {
+        "center": {
+          "lat": 45.46804948,
+          "lng": -75.48707656
+        },
+        "widthMetres": 80,
+        "lengthMetres": 105,
+        "rotationDegrees": 0,
+        "spawn": {
+          "lat": 45.46831373,
+          "lng": -75.4871717,
+          "headingDegrees": 76
+        },
+        "roadSnap": {
+          "roadName": null,
+          "highway": "service",
+          "distanceFromSourceMetres": 30.3
+        }
+      },
+      "assessment": "estimated",
+      "imageryCapture": "artifacts/release-qa/base-fit-ottawa/ottawa-fire-53.png",
+      "imageryZoom": 19,
+      "metresPerPixel": 0.2092,
+      "imageryObservation": "Visible Fire Station 53-Fallingbrook station building and adjacent parking/circulation were used to estimate the fitted on-site footprint. The source coordinate above remains unchanged. The modeled spawn is on the mapped service-road centerline, 30.3 m from the source point; no gate or apparatus entrance was verified.",
+      "rotationBasis": "Axis-aligned estimate follows the visible local parcel/street grid; not survey-derived."
+    },
+    {
+      "baseId": "ottawa-fire-56",
+      "name": "Fire Station 56 - Overbrook",
+      "address": "275 Coventry Rd",
+      "sourcePoint": {
+        "lat": 45.42205472381515,
+        "lng": -75.65462282826833
+      },
+      "drivingArea": {
+        "center": {
+          "lat": 45.42205472,
+          "lng": -75.65462283
+        },
+        "widthMetres": 90,
+        "lengthMetres": 110,
+        "rotationDegrees": 0,
+        "spawn": {
+          "lat": 45.42220667,
+          "lng": -75.65464973,
+          "headingDegrees": 83
+        },
+        "roadSnap": {
+          "roadName": null,
+          "highway": "service",
+          "distanceFromSourceMetres": 17
+        }
+      },
+      "assessment": "estimated",
+      "imageryCapture": "artifacts/release-qa/base-fit-ottawa/ottawa-fire-56.png",
+      "imageryZoom": 19,
+      "metresPerPixel": 0.2093,
+      "imageryObservation": "Visible Fire Station 56 - Overbrook station building and adjacent parking/circulation were used to estimate the fitted on-site footprint. The source coordinate above remains unchanged. The model spawn is on the mapped service centerline (service, 17.0 m from the preserved source point).",
+      "rotationBasis": "Axis-aligned estimate follows the visible local parcel/street grid; not survey-derived."
+    },
+    {
+      "baseId": "ottawa-ems-450",
+      "name": "Gladstone Paramedic Post",
+      "address": "728 Gladstone Ave",
+      "sourcePoint": {
+        "lat": 45.407296129496736,
+        "lng": -75.70459402702569
+      },
+      "drivingArea": {
+        "center": {
+          "lat": 45.40729613,
+          "lng": -75.70459403
+        },
+        "widthMetres": 75,
+        "lengthMetres": 95,
+        "rotationDegrees": 0,
+        "spawn": {
+          "lat": 45.40711136,
+          "lng": -75.70448258,
+          "headingDegrees": 67
+        },
+        "roadSnap": {
+          "roadName": null,
+          "highway": "service",
+          "distanceFromSourceMetres": 22.3
+        }
+      },
+      "assessment": "estimated",
+      "imageryCapture": "artifacts/release-qa/base-fit-ottawa/ottawa-ems-450.png",
+      "imageryZoom": 19,
+      "metresPerPixel": 0.2094,
+      "imageryObservation": "Visible Gladstone Paramedic Post station building and adjacent parking/circulation were used to estimate the fitted on-site footprint. The source coordinate above remains unchanged. The model spawn is on the mapped service centerline (service, 22.3 m from the preserved source point).",
+      "rotationBasis": "Axis-aligned estimate follows the visible local parcel/street grid; not survey-derived."
+    },
+    {
+      "baseId": "ottawa-ems-451",
+      "name": "Ottawa Paramedic Service Headquarters - 2465 Don Reid",
+      "address": "2465 Don Reid Dr",
+      "sourcePoint": {
+        "lat": 45.377227257581744,
+        "lng": -75.63458827022187
+      },
+      "drivingArea": {
+        "center": {
+          "lat": 45.37722726,
+          "lng": -75.63458827
+        },
+        "widthMetres": 120,
+        "lengthMetres": 150,
+        "rotationDegrees": 0,
+        "spawn": {
+          "lat": 45.37760092,
+          "lng": -75.63477035,
+          "headingDegrees": 251
+        },
+        "roadSnap": {
+          "roadName": null,
+          "highway": "service",
+          "distanceFromSourceMetres": 44
+        }
+      },
+      "assessment": "estimated",
+      "imageryCapture": "artifacts/release-qa/base-fit-ottawa/ottawa-ems-451.png",
+      "imageryZoom": 19,
+      "metresPerPixel": 0.2095,
+      "imageryObservation": "Visible Ottawa Paramedic Service Headquarters - 2465 Don Reid station building and adjacent parking/circulation were used to estimate the fitted on-site footprint. The source coordinate above remains unchanged. The model spawn is on the mapped service centerline (service, 44.0 m from the preserved source point).",
+      "rotationBasis": "Axis-aligned estimate follows the visible local parcel/street grid; not survey-derived."
+    },
+    {
+      "baseId": "ottawa-fire-37",
+      "name": "Fire Station 37 - South Urban",
+      "address": "910 Earl Armstrong Rd",
+      "sourcePoint": {
+        "lat": 45.27298121380589,
+        "lng": -75.68621899597386
+      },
+      "drivingArea": {
+        "center": {
+          "lat": 45.27298121,
+          "lng": -75.686219
+        },
+        "widthMetres": 80,
+        "lengthMetres": 110,
+        "rotationDegrees": 0,
+        "spawn": {
+          "lat": 45.27284602,
+          "lng": -75.68656676,
+          "headingDegrees": 331
+        },
+        "roadSnap": {
+          "roadName": null,
+          "highway": "service",
+          "distanceFromSourceMetres": 31.1
+        }
+      },
+      "assessment": "estimated",
+      "imageryCapture": "artifacts/release-qa/base-fit-ottawa/ottawa-fire-37.png",
+      "imageryZoom": 19,
+      "metresPerPixel": 0.2099,
+      "imageryObservation": "Visible Fire Station 37 - South Urban station building and adjacent parking/circulation were used to estimate the fitted on-site footprint. The source coordinate above remains unchanged. The modeled spawn is on the mapped service-road centerline, 31.1 m from the source point; no gate or apparatus entrance was verified.",
+      "rotationBasis": "Axis-aligned estimate follows the visible local parcel/street grid; not survey-derived."
+    },
+    {
+      "baseId": "ottawa-fire-47",
+      "name": "Fire Station 47 - BARRHAVEN SOUTH",
+      "address": "3559 Greenbank Rd",
+      "sourcePoint": {
+        "lat": 45.252296383008485,
+        "lng": -75.73464288348528
+      },
+      "drivingArea": {
+        "center": {
+          "lat": 45.25229638,
+          "lng": -75.73464288
+        },
+        "widthMetres": 85,
+        "lengthMetres": 100,
+        "rotationDegrees": 0,
+        "spawn": {
+          "lat": 45.2523861,
+          "lng": -75.7344163,
+          "headingDegrees": 68
+        },
+        "roadSnap": {
+          "roadName": null,
+          "highway": "service",
+          "distanceFromSourceMetres": 20.4
+        }
+      },
+      "assessment": "estimated",
+      "imageryCapture": "artifacts/release-qa/base-fit-ottawa/ottawa-fire-47.png",
+      "imageryZoom": 19,
+      "metresPerPixel": 0.21,
+      "imageryObservation": "Visible Fire Station 47 - BARRHAVEN SOUTH station building and adjacent parking/circulation were used to estimate the fitted on-site footprint. The source coordinate above remains unchanged. The model spawn is on the mapped service centerline (service, 20.4 m from the preserved source point).",
+      "rotationBasis": "Axis-aligned estimate follows the visible local parcel/street grid; not survey-derived."
+    },
+    {
+      "baseId": "ottawa-fire-32",
+      "name": "Fire Station 32 - Leitrim",
+      "address": "3200 Leitrim Rd",
+      "sourcePoint": {
+        "lat": 45.3297179178298,
+        "lng": -75.60061655715481
+      },
+      "drivingArea": {
+        "center": {
+          "lat": 45.32971792,
+          "lng": -75.60061656
+        },
+        "widthMetres": 95,
+        "lengthMetres": 120,
+        "rotationDegrees": 0,
+        "spawn": {
+          "lat": 45.3295958,
+          "lng": -75.6006127,
+          "headingDegrees": 202
+        },
+        "roadSnap": {
+          "roadName": null,
+          "highway": "service",
+          "distanceFromSourceMetres": 13.6
+        }
+      },
+      "assessment": "estimated",
+      "imageryCapture": "artifacts/release-qa/base-fit-ottawa/ottawa-fire-32.png",
+      "imageryZoom": 19,
+      "metresPerPixel": 0.2097,
+      "imageryObservation": "Visible Fire Station 32 - Leitrim station building and adjacent parking/circulation were used to estimate the fitted on-site footprint. The source coordinate above remains unchanged. The model spawn is on the mapped service centerline (service, 13.6 m from the preserved source point).",
+      "rotationBasis": "Axis-aligned estimate follows the visible local parcel/street grid; not survey-derived."
+    },
+    {
+      "baseId": "ottawa-fire-42",
+      "name": "Fire Station 42- Beaverbrook",
+      "address": "1021 Teron Rd",
+      "sourcePoint": {
+        "lat": 45.32975083994525,
+        "lng": -75.89938558280338
+      },
+      "drivingArea": {
+        "center": {
+          "lat": 45.32975084,
+          "lng": -75.89938558
+        },
+        "widthMetres": 85,
+        "lengthMetres": 115,
+        "rotationDegrees": 0,
+        "spawn": {
+          "lat": 45.32986771,
+          "lng": -75.89954004,
+          "headingDegrees": 47
+        },
+        "roadSnap": {
+          "roadName": null,
+          "highway": "service",
+          "distanceFromSourceMetres": 17.8
+        }
+      },
+      "assessment": "estimated",
+      "imageryCapture": "artifacts/release-qa/base-fit-ottawa/ottawa-fire-42.png",
+      "imageryZoom": 19,
+      "metresPerPixel": 0.2097,
+      "imageryObservation": "Visible Fire Station 42- Beaverbrook station building and adjacent parking/circulation were used to estimate the fitted on-site footprint. The source coordinate above remains unchanged. The model spawn is on the mapped service centerline (service, 17.8 m from the preserved source point).",
+      "rotationBasis": "Axis-aligned estimate follows the visible local parcel/street grid; not survey-derived."
+    },
+    {
+      "baseId": "ottawa-ems-510",
+      "name": "Barrhaven Paramedic Post",
+      "address": "1075 Greenbank Rd",
+      "sourcePoint": {
+        "lat": 45.275686717717285,
+        "lng": -75.74844403896175
+      },
+      "drivingArea": {
+        "center": {
+          "lat": 45.25229638,
+          "lng": -75.73464288
+        },
+        "widthMetres": 85,
+        "lengthMetres": 100,
+        "rotationDegrees": 0,
+        "spawn": {
+          "lat": 45.2523861,
+          "lng": -75.7344163,
+          "headingDegrees": 68
+        },
+        "roadSnap": {
+          "roadName": null,
+          "highway": "service",
+          "distanceFromSourceMetres": 20.4
+        }
+      },
+      "assessment": "estimated",
+      "imageryCapture": "artifacts/release-qa/base-fit-ottawa/ottawa-ems-510.png",
+      "imageryZoom": 19,
+      "metresPerPixel": 0.2099,
+      "imageryObservation": "Visible Barrhaven Paramedic Post station building and adjacent parking/circulation were used to estimate the fitted on-site footprint. The source coordinate above remains unchanged. The model spawn is on the mapped service centerline (service, 20.4 m from the preserved source point). This station shares its site fit with the co-located Fire/EMS record.",
+      "rotationBasis": "Axis-aligned estimate follows the visible local parcel/street grid; not survey-derived."
+    },
+    {
+      "baseId": "ottawa-ems-511",
+      "name": "Navan Paramedic Post",
+      "address": "1246 Colonial Rd",
+      "sourcePoint": {
+        "lat": 45.42186786409646,
+        "lng": -75.42424012603674
+      },
+      "drivingArea": {
+        "center": {
+          "lat": 45.42186374,
+          "lng": -75.42428448
+        },
+        "widthMetres": 70,
+        "lengthMetres": 90,
+        "rotationDegrees": 0,
+        "spawn": {
+          "lat": 45.42182332,
+          "lng": -75.42446278,
+          "headingDegrees": 342
+        },
+        "roadSnap": {
+          "roadName": null,
+          "highway": "service",
+          "distanceFromSourceMetres": 14.6
+        }
+      },
+      "assessment": "estimated",
+      "imageryCapture": "artifacts/release-qa/base-fit-ottawa/ottawa-ems-511.png",
+      "imageryZoom": 19,
+      "metresPerPixel": 0.2093,
+      "imageryObservation": "Visible Navan Paramedic Post station building and adjacent parking/circulation were used to estimate the fitted on-site footprint. The source coordinate above remains unchanged. The model spawn is on the mapped service centerline (service, 14.6 m from the preserved source point). This station shares its site fit with the co-located Fire/EMS record.",
+      "rotationBasis": "Axis-aligned estimate follows the visible local parcel/street grid; not survey-derived."
+    },
+    {
+      "baseId": "ottawa-ems-512",
+      "name": "Cumberland Paramedic Post",
+      "address": "2445 Old Montreal Rd",
+      "sourcePoint": {
+        "lat": 45.51606367693511,
+        "lng": -75.41369367103918
+      },
+      "drivingArea": {
+        "center": {
+          "lat": 45.51601072,
+          "lng": -75.41373697
+        },
+        "widthMetres": 80,
+        "lengthMetres": 100,
+        "rotationDegrees": 0,
+        "spawn": {
+          "lat": 45.5159183,
+          "lng": -75.41367764,
+          "headingDegrees": 246
+        },
+        "roadSnap": {
+          "roadName": null,
+          "highway": "service",
+          "distanceFromSourceMetres": 11.3
+        }
+      },
+      "assessment": "estimated",
+      "imageryCapture": "artifacts/release-qa/base-fit-ottawa/ottawa-ems-512.png",
+      "imageryZoom": 19,
+      "metresPerPixel": 0.209,
+      "imageryObservation": "Visible Cumberland Paramedic Post station building and adjacent parking/circulation were used to estimate the fitted on-site footprint. The source coordinate above remains unchanged. The model spawn is on the mapped service centerline (service, 11.3 m from the preserved source point). This station shares its site fit with the co-located Fire/EMS record.",
+      "rotationBasis": "Axis-aligned estimate follows the visible local parcel/street grid; not survey-derived."
+    },
+    {
+      "baseId": "ottawa-fire-24",
+      "name": "Fire Station 24 - Viewmount",
+      "address": "230 Viewmont Dr",
+      "sourcePoint": {
+        "lat": 45.34468214028306,
+        "lng": -75.72136129919608
+      },
+      "drivingArea": {
+        "center": {
+          "lat": 45.34468214,
+          "lng": -75.7213613
+        },
+        "widthMetres": 75,
+        "lengthMetres": 95,
+        "rotationDegrees": 0,
+        "spawn": {
+          "lat": 45.3447872,
+          "lng": -75.7211124,
+          "headingDegrees": 337
+        },
+        "roadSnap": {
+          "roadName": null,
+          "highway": "service",
+          "distanceFromSourceMetres": 22.7
+        }
+      },
+      "assessment": "estimated",
+      "imageryCapture": "artifacts/release-qa/base-fit-ottawa/ottawa-fire-24.png",
+      "imageryZoom": 19,
+      "metresPerPixel": 0.2096,
+      "imageryObservation": "Visible Fire Station 24 - Viewmount station building and adjacent parking/circulation were used to estimate the fitted on-site footprint. The source coordinate above remains unchanged. The model spawn is on the mapped service centerline (service, 22.7 m from the preserved source point).",
+      "rotationBasis": "Axis-aligned estimate follows the visible local parcel/street grid; not survey-derived."
+    },
+    {
+      "baseId": "ottawa-ems-537",
+      "name": "Manotick Paramedic Post",
+      "address": "5669 Manotick Main St",
+      "sourcePoint": {
+        "lat": 45.2196367346394,
+        "lng": -75.67433182338108
+      },
+      "drivingArea": {
+        "center": {
+          "lat": 45.21969799,
+          "lng": -75.67435413
+        },
+        "widthMetres": 75,
+        "lengthMetres": 100,
+        "rotationDegrees": 0,
+        "spawn": {
+          "lat": 45.21943629,
+          "lng": -75.67401559,
+          "headingDegrees": 228
+        },
+        "roadSnap": {
+          "roadName": "Antochi Lane",
+          "highway": "residential",
+          "distanceFromSourceMetres": 39.4
+        }
+      },
+      "assessment": "estimated",
+      "imageryCapture": "artifacts/release-qa/base-fit-ottawa/ottawa-ems-537.png",
+      "imageryZoom": 19,
+      "metresPerPixel": 0.2101,
+      "imageryObservation": "Visible Manotick Paramedic Post station building and adjacent parking/circulation were used to estimate the fitted on-site footprint. The source coordinate above remains unchanged. The model spawn is on the mapped Antochi Lane centerline (residential, 39.4 m from the preserved source point). This station shares its site fit with the co-located Fire/EMS record.",
+      "rotationBasis": "Axis-aligned estimate follows the visible local parcel/street grid; not survey-derived."
+    },
+    {
+      "baseId": "ottawa-ems-538",
+      "name": "Kinburn Paramedic Post",
+      "address": "5670 Carp Rd",
+      "sourcePoint": {
+        "lat": 45.41610934240398,
+        "lng": -76.14740996023494
+      },
+      "drivingArea": {
+        "center": {
+          "lat": 45.41610934,
+          "lng": -76.14740996
+        },
+        "widthMetres": 100,
+        "lengthMetres": 120,
+        "rotationDegrees": 0,
+        "spawn": {
+          "lat": 45.41614218,
+          "lng": -76.14737911,
+          "headingDegrees": 123
+        },
+        "roadSnap": {
+          "roadName": null,
+          "highway": "service",
+          "distanceFromSourceMetres": 4.4
+        }
+      },
+      "assessment": "estimated",
+      "imageryCapture": "artifacts/release-qa/base-fit-ottawa/ottawa-ems-538-zoom18.png",
+      "imageryZoom": 18,
+      "metresPerPixel": 0.4192,
+      "imageryObservation": "Visible Kinburn Paramedic Post station building and adjacent parking/circulation were used to estimate the fitted on-site footprint. The source coordinate above remains unchanged. The model spawn is on the mapped service centerline (service, 4.4 m from the preserved source point).",
+      "rotationBasis": "Axis-aligned estimate follows the visible local parcel/street grid; not survey-derived."
+    },
+    {
+      "baseId": "ottawa-ems-561",
+      "name": "Metcalfe Paramedic Post",
+      "address": "8011 Victoria St",
+      "sourcePoint": {
+        "lat": 45.231213176316516,
+        "lng": -75.48523948878632
+      },
+      "drivingArea": {
+        "center": {
+          "lat": 45.23120388,
+          "lng": -75.48520972
+        },
+        "widthMetres": 85,
+        "lengthMetres": 110,
+        "rotationDegrees": 0,
+        "spawn": {
+          "lat": 45.2314557,
+          "lng": -75.4852527,
+          "headingDegrees": 69
+        },
+        "roadSnap": {
+          "roadName": null,
+          "highway": "service",
+          "distanceFromSourceMetres": 28.2
+        }
+      },
+      "assessment": "estimated",
+      "imageryCapture": "artifacts/release-qa/base-fit-ottawa/ottawa-ems-561.png",
+      "imageryZoom": 19,
+      "metresPerPixel": 0.21,
+      "imageryObservation": "Visible Metcalfe Paramedic Post station building and adjacent parking/circulation were used to estimate the fitted on-site footprint. The source coordinate above remains unchanged. The model spawn is on the mapped service centerline (service, 28.2 m from the preserved source point). This station shares its site fit with the co-located Fire/EMS record.",
+      "rotationBasis": "Axis-aligned estimate follows the visible local parcel/street grid; not survey-derived."
+    },
+    {
+      "baseId": "ottawa-ems-562",
+      "name": "Stittsville Paramedic Post",
+      "address": "1643 Stittsville Main St",
+      "sourcePoint": {
+        "lat": 45.25431420222616,
+        "lng": -75.91434483197108
+      },
+      "drivingArea": {
+        "center": {
+          "lat": 45.25417757,
+          "lng": -75.91424074
+        },
+        "widthMetres": 95,
+        "lengthMetres": 115,
+        "rotationDegrees": 0,
+        "spawn": {
+          "lat": 45.25417163,
+          "lng": -75.91409831,
+          "headingDegrees": 3
+        },
+        "roadSnap": {
+          "roadName": null,
+          "highway": "service",
+          "distanceFromSourceMetres": 11.2
+        }
+      },
+      "assessment": "estimated",
+      "imageryCapture": "artifacts/release-qa/base-fit-ottawa/ottawa-ems-562.png",
+      "imageryZoom": 19,
+      "metresPerPixel": 0.21,
+      "imageryObservation": "Visible Stittsville Paramedic Post station building and adjacent parking/circulation were used to estimate the fitted on-site footprint. The source coordinate above remains unchanged. The model spawn is on the mapped service centerline (service, 11.2 m from the preserved source point). This station shares its site fit with the co-located Fire/EMS record.",
+      "rotationBasis": "Axis-aligned estimate follows the visible local parcel/street grid; not survey-derived."
+    },
+    {
+      "baseId": "ottawa-fire-83",
+      "name": "Allen Sadler Fire Station 83",
+      "address": "2352 Roger Stevens Dr",
+      "sourcePoint": {
+        "lat": 45.13063983290271,
+        "lng": -75.7181418018965
+      },
+      "drivingArea": {
+        "center": {
+          "lat": 45.13063983,
+          "lng": -75.7181418
+        },
+        "widthMetres": 100,
+        "lengthMetres": 120,
+        "rotationDegrees": 45,
+        "spawn": {
+          "lat": 45.13086371,
+          "lng": -75.71831945,
+          "headingDegrees": 61
+        },
+        "roadSnap": {
+          "roadName": "Roger Stevens Drive",
+          "highway": "secondary",
+          "distanceFromSourceMetres": 28.6
+        }
+      },
+      "assessment": "estimated",
+      "imageryCapture": "artifacts/release-qa/base-fit-ottawa/ottawa-fire-83-zoom18.png",
+      "imageryZoom": 18,
+      "metresPerPixel": 0.4213,
+      "imageryObservation": "Visible Allen Sadler Fire Station 83 station building and adjacent parking/circulation were used to estimate the fitted on-site footprint. The source coordinate above remains unchanged. The model spawn is on the mapped Roger Stevens Drive centerline (secondary, 28.6 m from the preserved source point).",
+      "rotationBasis": "Approximate parcel/access alignment estimated from the visible site and nearby road axis (45°); not survey-derived."
+    },
+    {
+      "baseId": "ottawa-fire-57",
+      "name": "Fire Station 57 - Beechwood",
+      "address": "220 Beechwood Ave",
+      "sourcePoint": {
+        "lat": 45.44290910354488,
+        "lng": -75.67037348691315
+      },
+      "drivingArea": {
+        "center": {
+          "lat": 45.4429091,
+          "lng": -75.67037349
+        },
+        "widthMetres": 70,
+        "lengthMetres": 90,
+        "rotationDegrees": 0,
+        "spawn": {
+          "lat": 45.44280494,
+          "lng": -75.67006567,
+          "headingDegrees": 26
+        },
+        "roadSnap": {
+          "roadName": null,
+          "highway": "service",
+          "distanceFromSourceMetres": 26.7
+        }
+      },
+      "assessment": "estimated",
+      "imageryCapture": "artifacts/release-qa/base-fit-ottawa/ottawa-fire-57.png",
+      "imageryZoom": 19,
+      "metresPerPixel": 0.2093,
+      "imageryObservation": "Visible Fire Station 57 - Beechwood station building and adjacent parking/circulation were used to estimate the fitted on-site footprint. The source coordinate above remains unchanged. The model spawn is on the mapped service centerline (service, 26.7 m from the preserved source point).",
+      "rotationBasis": "Axis-aligned estimate follows the visible local parcel/street grid; not survey-derived."
+    },
+    {
+      "baseId": "ottawa-fire-61",
+      "name": "Fire Station 61 - Kinburn",
+      "address": "3150 Kinburn Side Rd",
+      "sourcePoint": {
+        "lat": 45.388812694249225,
+        "lng": -76.1925228776963
+      },
+      "drivingArea": {
+        "center": {
+          "lat": 45.38881269,
+          "lng": -76.19252288
+        },
+        "widthMetres": 140,
+        "lengthMetres": 160,
+        "rotationDegrees": 45,
+        "spawn": {
+          "lat": 45.38849592,
+          "lng": -76.19271688,
+          "headingDegrees": 293
+        },
+        "roadSnap": {
+          "roadName": "Donald B. Munro Drive",
+          "highway": "unclassified",
+          "distanceFromSourceMetres": 38.4
+        }
+      },
+      "assessment": "estimated",
+      "imageryCapture": "artifacts/release-qa/base-fit-ottawa/ottawa-fire-61-zoom18.png",
+      "imageryZoom": 18,
+      "metresPerPixel": 0.4194,
+      "imageryObservation": "Visible Fire Station 61 - Kinburn station building and adjacent parking/circulation were used to estimate the fitted on-site footprint. The source coordinate above remains unchanged. The model spawn is on the mapped Donald B. Munro Drive centerline (unclassified, 38.4 m from the preserved source point).",
+      "rotationBasis": "Approximate parcel/access alignment estimated from the visible site and nearby road axis (45°); not survey-derived."
+    },
+    {
+      "baseId": "ottawa-fire-62",
+      "name": "Fire Station 62 - Fitzroy Harbour",
+      "address": "6900 Harbour St",
+      "sourcePoint": {
+        "lat": 45.470768765219646,
+        "lng": -76.21527286587856
+      },
+      "drivingArea": {
+        "center": {
+          "lat": 45.47076877,
+          "lng": -76.21527287
+        },
+        "widthMetres": 80,
+        "lengthMetres": 100,
+        "rotationDegrees": 45,
+        "spawn": {
+          "lat": 45.47096054,
+          "lng": -76.21550735,
+          "headingDegrees": 229
+        },
+        "roadSnap": {
+          "roadName": "Fitzroy Street",
+          "highway": "tertiary",
+          "distanceFromSourceMetres": 28.1
+        }
+      },
+      "assessment": "estimated",
+      "imageryCapture": "artifacts/release-qa/base-fit-ottawa/ottawa-fire-62-zoom18.png",
+      "imageryZoom": 18,
+      "metresPerPixel": 0.4188,
+      "imageryObservation": "Visible Fire Station 62 - Fitzroy Harbour station building and adjacent parking/circulation were used to estimate the fitted on-site footprint. The source coordinate above remains unchanged. The model spawn is on the mapped Fitzroy Street centerline (tertiary, 28.1 m from the preserved source point).",
+      "rotationBasis": "Approximate parcel/access alignment estimated from the visible site and nearby road axis (45°); not survey-derived."
+    },
+    {
+      "baseId": "ottawa-fire-25",
+      "name": "Fire Station 25 - Manordale",
+      "address": "60 Knoxdale Rd",
+      "sourcePoint": {
+        "lat": 45.33052312551979,
+        "lng": -75.75994920657322
+      },
+      "drivingArea": {
+        "center": {
+          "lat": 45.33052313,
+          "lng": -75.75994921
+        },
+        "widthMetres": 75,
+        "lengthMetres": 90,
+        "rotationDegrees": 0,
+        "spawn": {
+          "lat": 45.3306277,
+          "lng": -75.7600585,
+          "headingDegrees": 25
+        },
+        "roadSnap": {
+          "roadName": null,
+          "highway": "service",
+          "distanceFromSourceMetres": 14.4
+        }
+      },
+      "assessment": "estimated",
+      "imageryCapture": "artifacts/release-qa/base-fit-ottawa/ottawa-fire-25.png",
+      "imageryZoom": 19,
+      "metresPerPixel": 0.2097,
+      "imageryObservation": "Visible Fire Station 25 - Manordale station building and adjacent parking/circulation were used to estimate the fitted on-site footprint. The source coordinate above remains unchanged. The model spawn is on the mapped service centerline (service, 14.4 m from the preserved source point).",
+      "rotationBasis": "Axis-aligned estimate follows the visible local parcel/street grid; not survey-derived."
+    },
+    {
+      "baseId": "ottawa-fire-52",
+      "name": "Fire Station 52- Convent Glen",
+      "address": "6213 Jeanne D'Arc Blvd",
+      "sourcePoint": {
+        "lat": 45.47362116197629,
+        "lng": -75.54910850264307
+      },
+      "drivingArea": {
+        "center": {
+          "lat": 45.47362116,
+          "lng": -75.5491085
+        },
+        "widthMetres": 95,
+        "lengthMetres": 125,
+        "rotationDegrees": 0,
+        "spawn": {
+          "lat": 45.4736446,
+          "lng": -75.5493735,
+          "headingDegrees": 255
+        },
+        "roadSnap": {
+          "roadName": null,
+          "highway": "service",
+          "distanceFromSourceMetres": 20.9
+        }
+      },
+      "assessment": "estimated",
+      "imageryCapture": "artifacts/release-qa/base-fit-ottawa/ottawa-fire-52.png",
+      "imageryZoom": 19,
+      "metresPerPixel": 0.2091,
+      "imageryObservation": "Visible Fire Station 52- Convent Glen station building and adjacent parking/circulation were used to estimate the fitted on-site footprint. The source coordinate above remains unchanged. The model spawn is on the mapped service centerline (service, 20.9 m from the preserved source point).",
+      "rotationBasis": "Axis-aligned estimate follows the visible local parcel/street grid; not survey-derived."
+    },
+    {
+      "baseId": "ottawa-fire-63",
+      "name": "Fire Station 63 - Constance Bay",
+      "address": "341 Bayview Dr",
+      "sourcePoint": {
+        "lat": 45.498612674864205,
+        "lng": -76.07767460621308
+      },
+      "drivingArea": {
+        "center": {
+          "lat": 45.49861267,
+          "lng": -76.07767461
+        },
+        "widthMetres": 70,
+        "lengthMetres": 85,
+        "rotationDegrees": 0,
+        "spawn": {
+          "lat": 45.49862984,
+          "lng": -76.07733911,
+          "headingDegrees": 356
+        },
+        "roadSnap": {
+          "roadName": "Bayview Drive",
+          "highway": "tertiary",
+          "distanceFromSourceMetres": 26.2
+        }
+      },
+      "assessment": "estimated",
+      "imageryCapture": "artifacts/release-qa/base-fit-ottawa/ottawa-fire-63.png",
+      "imageryZoom": 19,
+      "metresPerPixel": 0.209,
+      "imageryObservation": "Visible Fire Station 63 - Constance Bay station building and adjacent parking/circulation were used to estimate the fitted on-site footprint. The source coordinate above remains unchanged. The model spawn is on the mapped Bayview Drive centerline (tertiary, 26.2 m from the preserved source point).",
+      "rotationBasis": "Axis-aligned estimate follows the visible local parcel/street grid; not survey-derived."
+    },
+    {
+      "baseId": "ottawa-fire-64",
+      "name": "Fire Station 64 - Carp",
+      "address": "475 Donald B Munro Dr",
+      "sourcePoint": {
+        "lat": 45.34494887414969,
+        "lng": -76.03898434119922
+      },
+      "drivingArea": {
+        "center": {
+          "lat": 45.34494887,
+          "lng": -76.03898434
+        },
+        "widthMetres": 90,
+        "lengthMetres": 115,
+        "rotationDegrees": 0,
+        "spawn": {
+          "lat": 45.34482489,
+          "lng": -76.03902516,
+          "headingDegrees": 103
+        },
+        "roadSnap": {
+          "roadName": null,
+          "highway": "service",
+          "distanceFromSourceMetres": 14.2
+        }
+      },
+      "assessment": "estimated",
+      "imageryCapture": "artifacts/release-qa/base-fit-ottawa/ottawa-fire-64.png",
+      "imageryZoom": 19,
+      "metresPerPixel": 0.2096,
+      "imageryObservation": "Visible Fire Station 64 - Carp station building and adjacent parking/circulation were used to estimate the fitted on-site footprint. The source coordinate above remains unchanged. The model spawn is on the mapped service centerline (service, 14.2 m from the preserved source point).",
+      "rotationBasis": "Axis-aligned estimate follows the visible local parcel/street grid; not survey-derived."
+    },
+    {
+      "baseId": "ottawa-fire-66",
+      "name": "Fire Station 66 - Dunrobin",
+      "address": "3285 Dunrobin Rd",
+      "sourcePoint": {
+        "lat": 45.44156687781897,
+        "lng": -76.04793989420163
+      },
+      "drivingArea": {
+        "center": {
+          "lat": 45.44156688,
+          "lng": -76.04793989
+        },
+        "widthMetres": 75,
+        "lengthMetres": 90,
+        "rotationDegrees": 45,
+        "spawn": {
+          "lat": 45.4416151,
+          "lng": -76.0478592,
+          "headingDegrees": 44
+        },
+        "roadSnap": {
+          "roadName": null,
+          "highway": "service",
+          "distanceFromSourceMetres": 8.3
+        }
+      },
+      "assessment": "estimated",
+      "imageryCapture": "artifacts/release-qa/base-fit-ottawa/ottawa-fire-66-zoom18.png",
+      "imageryZoom": 18,
+      "metresPerPixel": 0.419,
+      "imageryObservation": "Visible Fire Station 66 - Dunrobin station building and adjacent parking/circulation were used to estimate the fitted on-site footprint. The source coordinate above remains unchanged. The model spawn is on the mapped service centerline (service, 8.3 m from the preserved source point).",
+      "rotationBasis": "Approximate parcel/access alignment estimated from the visible site and nearby road axis (45°); not survey-derived."
+    },
+    {
+      "baseId": "ottawa-fire-71",
+      "name": "Fire Station 71 - Navan",
+      "address": "1246 Colonial Rd",
+      "sourcePoint": {
+        "lat": 45.42186373614306,
+        "lng": -75.42428448035388
+      },
+      "drivingArea": {
+        "center": {
+          "lat": 45.42186374,
+          "lng": -75.42428448
+        },
+        "widthMetres": 70,
+        "lengthMetres": 90,
+        "rotationDegrees": 0,
+        "spawn": {
+          "lat": 45.42182332,
+          "lng": -75.42446278,
+          "headingDegrees": 342
+        },
+        "roadSnap": {
+          "roadName": null,
+          "highway": "service",
+          "distanceFromSourceMetres": 14.6
+        }
+      },
+      "assessment": "estimated",
+      "imageryCapture": "artifacts/release-qa/base-fit-ottawa/ottawa-fire-71.png",
+      "imageryZoom": 19,
+      "metresPerPixel": 0.2093,
+      "imageryObservation": "Visible Fire Station 71 - Navan station building and adjacent parking/circulation were used to estimate the fitted on-site footprint. The source coordinate above remains unchanged. The model spawn is on the mapped service centerline (service, 14.6 m from the preserved source point).",
+      "rotationBasis": "Axis-aligned estimate follows the visible local parcel/street grid; not survey-derived."
+    },
+    {
+      "baseId": "ottawa-fire-73",
+      "name": "Fire Station 73 - Vars",
+      "address": "6090 Rockdale Rd",
+      "sourcePoint": {
+        "lat": 45.344626872470684,
+        "lng": -75.3477126829152
+      },
+      "drivingArea": {
+        "center": {
+          "lat": 45.34462687,
+          "lng": -75.34758487
+        },
+        "widthMetres": 120,
+        "lengthMetres": 100,
+        "rotationDegrees": 0,
+        "spawn": {
+          "lat": 45.34483823,
+          "lng": -75.34691166,
+          "headingDegrees": 339
+        },
+        "roadSnap": {
+          "roadName": "Rockdale Road",
+          "highway": "secondary",
+          "distanceFromSourceMetres": 66.9
+        }
+      },
+      "assessment": "estimated",
+      "imageryCapture": "artifacts/release-qa/base-fit-ottawa/ottawa-fire-73-zoom18.png",
+      "imageryZoom": 18,
+      "metresPerPixel": 0.4197,
+      "imageryObservation": "Visible rural station building, on-site parking apron and approach to Rockdale Road were included in the fitted area. Source coordinate is preserved; the modeled spawn is snapped to Rockdale Road, not a verified station driveway.",
+      "rotationBasis": "Axis-aligned estimate follows the visible local parcel/street grid; not survey-derived."
+    },
+    {
+      "baseId": "ottawa-fire-81",
+      "name": "Fire Station 81 - Stittsville",
+      "address": "1643 Stittsville Main St",
+      "sourcePoint": {
+        "lat": 45.25417757148778,
+        "lng": -75.9142407378909
+      },
+      "drivingArea": {
+        "center": {
+          "lat": 45.25417757,
+          "lng": -75.91424074
+        },
+        "widthMetres": 95,
+        "lengthMetres": 115,
+        "rotationDegrees": 0,
+        "spawn": {
+          "lat": 45.25417163,
+          "lng": -75.91409831,
+          "headingDegrees": 3
+        },
+        "roadSnap": {
+          "roadName": null,
+          "highway": "service",
+          "distanceFromSourceMetres": 11.2
+        }
+      },
+      "assessment": "estimated",
+      "imageryCapture": "artifacts/release-qa/base-fit-ottawa/ottawa-fire-81.png",
+      "imageryZoom": 19,
+      "metresPerPixel": 0.21,
+      "imageryObservation": "Visible Fire Station 81 - Stittsville station building and adjacent parking/circulation were used to estimate the fitted on-site footprint. The source coordinate above remains unchanged. The model spawn is on the mapped service centerline (service, 11.2 m from the preserved source point).",
+      "rotationBasis": "Axis-aligned estimate follows the visible local parcel/street grid; not survey-derived."
+    },
+    {
+      "baseId": "ottawa-fire-82",
+      "name": "Fire Station 82 - Richmond",
+      "address": "6280 Perth St",
+      "sourcePoint": {
+        "lat": 45.1892671924771,
+        "lng": -75.84618543916456
+      },
+      "drivingArea": {
+        "center": {
+          "lat": 45.18926719,
+          "lng": -75.84618544
+        },
+        "widthMetres": 80,
+        "lengthMetres": 100,
+        "rotationDegrees": 0,
+        "spawn": {
+          "lat": 45.1892946,
+          "lng": -75.8463551,
+          "headingDegrees": 308
+        },
+        "roadSnap": {
+          "roadName": null,
+          "highway": "service",
+          "distanceFromSourceMetres": 13.7
+        }
+      },
+      "assessment": "estimated",
+      "imageryCapture": "artifacts/release-qa/base-fit-ottawa/ottawa-fire-82.png",
+      "imageryZoom": 19,
+      "metresPerPixel": 0.2102,
+      "imageryObservation": "Visible Fire Station 82 - Richmond station building and adjacent parking/circulation were used to estimate the fitted on-site footprint. The source coordinate above remains unchanged. The model spawn is on the mapped service centerline (service, 13.7 m from the preserved source point).",
+      "rotationBasis": "Axis-aligned estimate follows the visible local parcel/street grid; not survey-derived."
+    },
+    {
+      "baseId": "ottawa-ems-620",
+      "name": "Richmond Paramedic Post",
+      "address": "6280 Perth St",
+      "sourcePoint": {
+        "lat": 45.18926620736873,
+        "lng": -75.84605300233886
+      },
+      "drivingArea": {
+        "center": {
+          "lat": 45.18926719,
+          "lng": -75.84618544
+        },
+        "widthMetres": 80,
+        "lengthMetres": 100,
+        "rotationDegrees": 0,
+        "spawn": {
+          "lat": 45.1892946,
+          "lng": -75.8463551,
+          "headingDegrees": 308
+        },
+        "roadSnap": {
+          "roadName": null,
+          "highway": "service",
+          "distanceFromSourceMetres": 13.7
+        }
+      },
+      "assessment": "estimated",
+      "imageryCapture": "artifacts/release-qa/base-fit-ottawa/ottawa-ems-620.png",
+      "imageryZoom": 19,
+      "metresPerPixel": 0.2102,
+      "imageryObservation": "Visible Richmond Paramedic Post station building and adjacent parking/circulation were used to estimate the fitted on-site footprint. The source coordinate above remains unchanged. The model spawn is on the mapped service centerline (service, 13.7 m from the preserved source point). This station shares its site fit with the co-located Fire/EMS record.",
+      "rotationBasis": "Axis-aligned estimate follows the visible local parcel/street grid; not survey-derived."
+    },
+    {
+      "baseId": "ottawa-ems-630",
+      "name": "Dunrobin Paramedic Post",
+      "address": "640 Cameron Harvey Dr",
+      "sourcePoint": {
+        "lat": 45.3769578653183,
+        "lng": -75.95612531683368
+      },
+      "drivingArea": {
+        "center": {
+          "lat": 45.37695787,
+          "lng": -75.95612532
+        },
+        "widthMetres": 75,
+        "lengthMetres": 100,
+        "rotationDegrees": 45,
+        "spawn": {
+          "lat": 45.3768147,
+          "lng": -75.9558693,
+          "headingDegrees": 40
+        },
+        "roadSnap": {
+          "roadName": null,
+          "highway": "service",
+          "distanceFromSourceMetres": 25.6
+        }
+      },
+      "assessment": "estimated",
+      "imageryCapture": "artifacts/release-qa/base-fit-ottawa/ottawa-ems-630.png",
+      "imageryZoom": 19,
+      "metresPerPixel": 0.2095,
+      "imageryObservation": "Visible Dunrobin Paramedic Post station building and adjacent parking/circulation were used to estimate the fitted on-site footprint. The source coordinate above remains unchanged. The model spawn is on the mapped service centerline (service, 25.6 m from the preserved source point).",
+      "rotationBasis": "Approximate parcel/access alignment estimated from the visible site and nearby road axis (45°); not survey-derived."
+    },
+    {
+      "baseId": "ottawa-fire-91",
+      "name": "Fire Station 91 - Metcalfe",
+      "address": "8011 Victoria St",
+      "sourcePoint": {
+        "lat": 45.23120387845948,
+        "lng": -75.4852097240077
+      },
+      "drivingArea": {
+        "center": {
+          "lat": 45.23120388,
+          "lng": -75.48520972
+        },
+        "widthMetres": 85,
+        "lengthMetres": 110,
+        "rotationDegrees": 0,
+        "spawn": {
+          "lat": 45.2314557,
+          "lng": -75.4852527,
+          "headingDegrees": 69
+        },
+        "roadSnap": {
+          "roadName": null,
+          "highway": "service",
+          "distanceFromSourceMetres": 28.2
+        }
+      },
+      "assessment": "estimated",
+      "imageryCapture": "artifacts/release-qa/base-fit-ottawa/ottawa-fire-91.png",
+      "imageryZoom": 19,
+      "metresPerPixel": 0.21,
+      "imageryObservation": "Visible Fire Station 91 - Metcalfe station building and adjacent parking/circulation were used to estimate the fitted on-site footprint. The source coordinate above remains unchanged. The model spawn is on the mapped service centerline (service, 28.2 m from the preserved source point).",
+      "rotationBasis": "Axis-aligned estimate follows the visible local parcel/street grid; not survey-derived."
+    },
+    {
+      "baseId": "ottawa-fire-93",
+      "name": "Fire Station 93 - Greely",
+      "address": "6891 Parkway Rd",
+      "sourcePoint": {
+        "lat": 45.25760318618184,
+        "lng": -75.57357973836814
+      },
+      "drivingArea": {
+        "center": {
+          "lat": 45.25760319,
+          "lng": -75.57357974
+        },
+        "widthMetres": 110,
+        "lengthMetres": 140,
+        "rotationDegrees": 0,
+        "spawn": {
+          "lat": 45.2577832,
+          "lng": -75.5735788,
+          "headingDegrees": 294
+        },
+        "roadSnap": {
+          "roadName": null,
+          "highway": "service",
+          "distanceFromSourceMetres": 20
+        }
+      },
+      "assessment": "estimated",
+      "imageryCapture": "artifacts/release-qa/base-fit-ottawa/ottawa-fire-93.png",
+      "imageryZoom": 19,
+      "metresPerPixel": 0.2099,
+      "imageryObservation": "Visible Fire Station 93 - Greely station building and adjacent parking/circulation were used to estimate the fitted on-site footprint. The source coordinate above remains unchanged. The model spawn is on the mapped service centerline (service, 20.0 m from the preserved source point).",
+      "rotationBasis": "Axis-aligned estimate follows the visible local parcel/street grid; not survey-derived."
+    },
+    {
+      "baseId": "ottawa-fire-94",
+      "name": "Fire Station 94 - Manotick",
+      "address": "5669 Manotick Main St",
+      "sourcePoint": {
+        "lat": 45.219697991971074,
+        "lng": -75.67435413483778
+      },
+      "drivingArea": {
+        "center": {
+          "lat": 45.21969799,
+          "lng": -75.67435413
+        },
+        "widthMetres": 75,
+        "lengthMetres": 100,
+        "rotationDegrees": 0,
+        "spawn": {
+          "lat": 45.21943629,
+          "lng": -75.67401559,
+          "headingDegrees": 228
+        },
+        "roadSnap": {
+          "roadName": "Antochi Lane",
+          "highway": "residential",
+          "distanceFromSourceMetres": 39.4
+        }
+      },
+      "assessment": "estimated",
+      "imageryCapture": "artifacts/release-qa/base-fit-ottawa/ottawa-fire-94.png",
+      "imageryZoom": 19,
+      "metresPerPixel": 0.2101,
+      "imageryObservation": "Visible Fire Station 94 - Manotick station building and adjacent parking/circulation were used to estimate the fitted on-site footprint. The source coordinate above remains unchanged. The model spawn is on the mapped Antochi Lane centerline (residential, 39.4 m from the preserved source point).",
+      "rotationBasis": "Axis-aligned estimate follows the visible local parcel/street grid; not survey-derived."
+    },
+    {
+      "baseId": "ottawa-fire-92",
+      "name": "Fire Station 92 - Osgoode",
+      "address": "3110 Nixon Dr",
+      "sourcePoint": {
+        "lat": 45.14702021658345,
+        "lng": -75.61915499535007
+      },
+      "drivingArea": {
+        "center": {
+          "lat": 45.14702022,
+          "lng": -75.619155
+        },
+        "widthMetres": 70,
+        "lengthMetres": 90,
+        "rotationDegrees": 0,
+        "spawn": {
+          "lat": 45.14708789,
+          "lng": -75.61890584,
+          "headingDegrees": 339
+        },
+        "roadSnap": {
+          "roadName": null,
+          "highway": "service",
+          "distanceFromSourceMetres": 21
+        }
+      },
+      "assessment": "estimated",
+      "imageryCapture": "artifacts/release-qa/base-fit-ottawa/ottawa-fire-92.png",
+      "imageryZoom": 19,
+      "metresPerPixel": 0.2104,
+      "imageryObservation": "Visible Fire Station 92 - Osgoode station building and adjacent parking/circulation were used to estimate the fitted on-site footprint. The source coordinate above remains unchanged. The model spawn is on the mapped service centerline (service, 21.0 m from the preserved source point).",
+      "rotationBasis": "Axis-aligned estimate follows the visible local parcel/street grid; not survey-derived."
+    },
+    {
+      "baseId": "ottawa-fire-23",
+      "name": "Fire Station 23 - Carling",
+      "address": "1443 Carling Ave",
+      "sourcePoint": {
+        "lat": 45.384209907624246,
+        "lng": -75.74076213443715
+      },
+      "drivingArea": {
+        "center": {
+          "lat": 45.38420991,
+          "lng": -75.74076213
+        },
+        "widthMetres": 100,
+        "lengthMetres": 130,
+        "rotationDegrees": 0,
+        "spawn": {
+          "lat": 45.3843478,
+          "lng": -75.7409156,
+          "headingDegrees": 318
+        },
+        "roadSnap": {
+          "roadName": null,
+          "highway": "service",
+          "distanceFromSourceMetres": 19.5
+        }
+      },
+      "assessment": "estimated",
+      "imageryCapture": "artifacts/release-qa/base-fit-ottawa/ottawa-fire-23.png",
+      "imageryZoom": 19,
+      "metresPerPixel": 0.2095,
+      "imageryObservation": "Visible Fire Station 23 - Carling station building and adjacent parking/circulation were used to estimate the fitted on-site footprint. The source coordinate above remains unchanged. The model spawn is on the mapped service centerline (service, 19.5 m from the preserved source point).",
+      "rotationBasis": "Axis-aligned estimate follows the visible local parcel/street grid; not survey-derived."
+    },
+    {
+      "baseId": "ottawa-fire-54",
+      "name": "Fire Station 54 - Blackburn Hamlet",
+      "address": "3080 Innes Rd",
+      "sourcePoint": {
+        "lat": 45.43941735362116,
+        "lng": -75.54395217650547
+      },
+      "drivingArea": {
+        "center": {
+          "lat": 45.43941735,
+          "lng": -75.54395218
+        },
+        "widthMetres": 75,
+        "lengthMetres": 100,
+        "rotationDegrees": 0,
+        "spawn": {
+          "lat": 45.4394281,
+          "lng": -75.5436794,
+          "headingDegrees": 177
+        },
+        "roadSnap": {
+          "roadName": null,
+          "highway": "service",
+          "distanceFromSourceMetres": 21.3
+        }
+      },
+      "assessment": "estimated",
+      "imageryCapture": "artifacts/release-qa/base-fit-ottawa/ottawa-fire-54.png",
+      "imageryZoom": 19,
+      "metresPerPixel": 0.2093,
+      "imageryObservation": "Visible Fire Station 54 - Blackburn Hamlet station building and adjacent parking/circulation were used to estimate the fitted on-site footprint. The source coordinate above remains unchanged. The model spawn is on the mapped service centerline (service, 21.3 m from the preserved source point).",
+      "rotationBasis": "Axis-aligned estimate follows the visible local parcel/street grid; not survey-derived."
+    },
+    {
+      "baseId": "ottawa-fire-84",
+      "name": "Fire Station 84 - 3447 Old Almonte Rd",
+      "address": "3449 Old Almonte Rd",
+      "sourcePoint": {
+        "lat": 45.2589040901836,
+        "lng": -76.0623435165015
+      },
+      "drivingArea": {
+        "center": {
+          "lat": 45.25890409,
+          "lng": -76.06234352
+        },
+        "widthMetres": 85,
+        "lengthMetres": 105,
+        "rotationDegrees": 0,
+        "spawn": {
+          "lat": 45.2587745,
+          "lng": -76.0622477,
+          "headingDegrees": 137
+        },
+        "roadSnap": {
+          "roadName": null,
+          "highway": "service",
+          "distanceFromSourceMetres": 16.3
+        }
+      },
+      "assessment": "estimated",
+      "imageryCapture": "artifacts/release-qa/base-fit-ottawa/ottawa-fire-84.png",
+      "imageryZoom": 19,
+      "metresPerPixel": 0.2099,
+      "imageryObservation": "Visible Fire Station 84 - 3447 Old Almonte Rd station building and adjacent parking/circulation were used to estimate the fitted on-site footprint. The source coordinate above remains unchanged. The model spawn is on the mapped service centerline (service, 16.3 m from the preserved source point).",
+      "rotationBasis": "Axis-aligned estimate follows the visible local parcel/street grid; not survey-derived."
+    },
+    {
+      "baseId": "ottawa-ems-702",
+      "name": "Industrial Paramedic Post",
+      "address": "911 Industrial Ave",
+      "sourcePoint": {
+        "lat": 45.40733092562748,
+        "lng": -75.63032707484072
+      },
+      "drivingArea": {
+        "center": {
+          "lat": 45.40733093,
+          "lng": -75.63032707
+        },
+        "widthMetres": 100,
+        "lengthMetres": 130,
+        "rotationDegrees": 0,
+        "spawn": {
+          "lat": 45.40743803,
+          "lng": -75.62992492,
+          "headingDegrees": 339
+        },
+        "roadSnap": {
+          "roadName": null,
+          "highway": "service",
+          "distanceFromSourceMetres": 33.6
+        }
+      },
+      "assessment": "estimated",
+      "imageryCapture": "artifacts/release-qa/base-fit-ottawa/ottawa-ems-702.png",
+      "imageryZoom": 19,
+      "metresPerPixel": 0.2094,
+      "imageryObservation": "Visible Industrial Paramedic Post station building and adjacent parking/circulation were used to estimate the fitted on-site footprint. The source coordinate above remains unchanged. The modeled spawn is on the mapped service-road centerline, 33.6 m from the source point; no gate or apparatus entrance was verified.",
+      "rotationBasis": "Axis-aligned estimate follows the visible local parcel/street grid; not survey-derived."
+    },
+    {
+      "baseId": "ottawa-fire-36",
+      "name": "Fire Station 36 - Cyrville",
+      "address": "1935 Cyrville Rd",
+      "sourcePoint": {
+        "lat": 45.41407527841902,
+        "lng": -75.60048127177133
+      },
+      "drivingArea": {
+        "center": {
+          "lat": 45.41407528,
+          "lng": -75.60048127
+        },
+        "widthMetres": 85,
+        "lengthMetres": 105,
+        "rotationDegrees": 0,
+        "spawn": {
+          "lat": 45.41395995,
+          "lng": -75.60087689,
+          "headingDegrees": 157
+        },
+        "roadSnap": {
+          "roadName": "Cyrville Road",
+          "highway": "unclassified",
+          "distanceFromSourceMetres": 33.5
+        }
+      },
+      "assessment": "estimated",
+      "imageryCapture": "artifacts/release-qa/base-fit-ottawa/ottawa-fire-36.png",
+      "imageryZoom": 19,
+      "metresPerPixel": 0.2094,
+      "imageryObservation": "Visible Fire Station 36 - Cyrville station building and adjacent parking/circulation were used to estimate the fitted on-site footprint. The source coordinate above remains unchanged. The model spawn is on the mapped Cyrville Road centerline (unclassified, 33.5 m from the preserved source point).",
+      "rotationBasis": "Axis-aligned estimate follows the visible local parcel/street grid; not survey-derived."
+    },
+    {
+      "baseId": "ottawa-fire-55",
+      "name": "Fire Station 55 - Portobello",
+      "address": "2283 Portobello Blvd",
+      "sourcePoint": {
+        "lat": 45.4529820324503,
+        "lng": -75.46346364357966
+      },
+      "drivingArea": {
+        "center": {
+          "lat": 45.45298203,
+          "lng": -75.46346364
+        },
+        "widthMetres": 85,
+        "lengthMetres": 100,
+        "rotationDegrees": 0,
+        "spawn": {
+          "lat": 45.4531428,
+          "lng": -75.4633404,
+          "headingDegrees": 64
+        },
+        "roadSnap": {
+          "roadName": null,
+          "highway": "service",
+          "distanceFromSourceMetres": 20.3
+        }
+      },
+      "assessment": "estimated",
+      "imageryCapture": "artifacts/release-qa/base-fit-ottawa/ottawa-fire-55.png",
+      "imageryZoom": 19,
+      "metresPerPixel": 0.2092,
+      "imageryObservation": "Visible Fire Station 55 - Portobello station building and adjacent parking/circulation were used to estimate the fitted on-site footprint. The source coordinate above remains unchanged. The model spawn is on the mapped service centerline (service, 20.3 m from the preserved source point).",
+      "rotationBasis": "Axis-aligned estimate follows the visible local parcel/street grid; not survey-derived."
+    },
+    {
+      "baseId": "ottawa-fire-11",
+      "name": "Fire Station 11 - Preston",
+      "address": "135 Preston St",
+      "sourcePoint": {
+        "lat": 45.407893421945246,
+        "lng": -75.71321578852641
+      },
+      "drivingArea": {
+        "center": {
+          "lat": 45.40789342,
+          "lng": -75.71321579
+        },
+        "widthMetres": 80,
+        "lengthMetres": 100,
+        "rotationDegrees": 0,
+        "spawn": {
+          "lat": 45.40794911,
+          "lng": -75.71300879,
+          "headingDegrees": 339
+        },
+        "roadSnap": {
+          "roadName": null,
+          "highway": "service",
+          "distanceFromSourceMetres": 17.3
+        }
+      },
+      "assessment": "estimated",
+      "imageryCapture": "artifacts/release-qa/base-fit-ottawa/ottawa-fire-11.png",
+      "imageryZoom": 19,
+      "metresPerPixel": 0.2094,
+      "imageryObservation": "Visible Fire Station 11 - Preston station building and adjacent parking/circulation were used to estimate the fitted on-site footprint. The source coordinate above remains unchanged. The model spawn is on the mapped service centerline (service, 17.3 m from the preserved source point).",
+      "rotationBasis": "Axis-aligned estimate follows the visible local parcel/street grid; not survey-derived."
+    },
+    {
+      "baseId": "ottawa-fire-12",
+      "name": "Fire Station 12 - Glebe",
+      "address": "635 O'Connor St",
+      "sourcePoint": {
+        "lat": 45.40304313457268,
+        "lng": -75.68298972680063
+      },
+      "drivingArea": {
+        "center": {
+          "lat": 45.40304313,
+          "lng": -75.68298973
+        },
+        "widthMetres": 75,
+        "lengthMetres": 90,
+        "rotationDegrees": 0,
+        "spawn": {
+          "lat": 45.40289155,
+          "lng": -75.68286685,
+          "headingDegrees": 60
+        },
+        "roadSnap": {
+          "roadName": null,
+          "highway": "service",
+          "distanceFromSourceMetres": 19.4
+        }
+      },
+      "assessment": "estimated",
+      "imageryCapture": "artifacts/release-qa/base-fit-ottawa/ottawa-fire-12.png",
+      "imageryZoom": 19,
+      "metresPerPixel": 0.2094,
+      "imageryObservation": "Visible Fire Station 12 - Glebe station building and adjacent parking/circulation were used to estimate the fitted on-site footprint. The source coordinate above remains unchanged. The model spawn is on the mapped service centerline (service, 19.4 m from the preserved source point).",
+      "rotationBasis": "Axis-aligned estimate follows the visible local parcel/street grid; not survey-derived."
+    },
+    {
+      "baseId": "ottawa-fire-13",
+      "name": "Fire Station 13 - Sandy Hill",
+      "address": "530 King Edward Ave",
+      "sourcePoint": {
+        "lat": 45.42542482831782,
+        "lng": -75.6833729939149
+      },
+      "drivingArea": {
+        "center": {
+          "lat": 45.42542483,
+          "lng": -75.68337299
+        },
+        "widthMetres": 75,
+        "lengthMetres": 90,
+        "rotationDegrees": 0,
+        "spawn": {
+          "lat": 45.42532916,
+          "lng": -75.68360612,
+          "headingDegrees": 330
+        },
+        "roadSnap": {
+          "roadName": "Ring Lane",
+          "highway": "service",
+          "distanceFromSourceMetres": 21.1
+        }
+      },
+      "assessment": "estimated",
+      "imageryCapture": "artifacts/release-qa/base-fit-ottawa/ottawa-fire-13.png",
+      "imageryZoom": 19,
+      "metresPerPixel": 0.2093,
+      "imageryObservation": "Visible Fire Station 13 - Sandy Hill station building and adjacent parking/circulation were used to estimate the fitted on-site footprint. The source coordinate above remains unchanged. The model spawn is on the mapped Ring Lane centerline (service, 21.1 m from the preserved source point).",
+      "rotationBasis": "Axis-aligned estimate follows the visible local parcel/street grid; not survey-derived."
+    },
+    {
+      "baseId": "ottawa-fire-21",
+      "name": "Fire Station 21 - Centrepointe",
+      "address": "1300 Woodroffe Ave",
+      "sourcePoint": {
+        "lat": 45.35294565573702,
+        "lng": -75.76432823576681
+      },
+      "drivingArea": {
+        "center": {
+          "lat": 45.35294566,
+          "lng": -75.76432824
+        },
+        "widthMetres": 80,
+        "lengthMetres": 105,
+        "rotationDegrees": 0,
+        "spawn": {
+          "lat": 45.35304853,
+          "lng": -75.76391268,
+          "headingDegrees": 161
+        },
+        "roadSnap": {
+          "roadName": "Woodroffe Avenue",
+          "highway": "secondary",
+          "distanceFromSourceMetres": 34.5
+        }
+      },
+      "assessment": "estimated",
+      "imageryCapture": "artifacts/release-qa/base-fit-ottawa/ottawa-fire-21.png",
+      "imageryZoom": 19,
+      "metresPerPixel": 0.2096,
+      "imageryObservation": "Visible Fire Station 21 - Centrepointe station building and adjacent parking/circulation were used to estimate the fitted on-site footprint. The source coordinate above remains unchanged. The model spawn is on the mapped Woodroffe Avenue centerline (secondary, 34.5 m from the preserved source point).",
+      "rotationBasis": "Axis-aligned estimate follows the visible local parcel/street grid; not survey-derived."
+    },
+    {
+      "baseId": "ottawa-fire-22",
+      "name": "Fire Station 22 - Lincoln Heights",
+      "address": "1397 Richmond Rd",
+      "sourcePoint": {
+        "lat": 45.36509661283462,
+        "lng": -75.78901706860654
+      },
+      "drivingArea": {
+        "center": {
+          "lat": 45.36509661,
+          "lng": -75.78901707
+        },
+        "widthMetres": 90,
+        "lengthMetres": 110,
+        "rotationDegrees": 0,
+        "spawn": {
+          "lat": 45.3652137,
+          "lng": -75.7888815,
+          "headingDegrees": 55
+        },
+        "roadSnap": {
+          "roadName": null,
+          "highway": "service",
+          "distanceFromSourceMetres": 16.8
+        }
+      },
+      "assessment": "estimated",
+      "imageryCapture": "artifacts/release-qa/base-fit-ottawa/ottawa-fire-22.png",
+      "imageryZoom": 19,
+      "metresPerPixel": 0.2095,
+      "imageryObservation": "Visible Fire Station 22 - Lincoln Heights station building and adjacent parking/circulation were used to estimate the fitted on-site footprint. The source coordinate above remains unchanged. The model spawn is on the mapped service centerline (service, 16.8 m from the preserved source point).",
+      "rotationBasis": "Axis-aligned estimate follows the visible local parcel/street grid; not survey-derived."
+    },
+    {
+      "baseId": "ottawa-fire-31",
+      "name": "Fire Station 31 - Greenboro",
+      "address": "3255 Conroy Rd",
+      "sourcePoint": {
+        "lat": 45.37229038424042,
+        "lng": -75.62311742454246
+      },
+      "drivingArea": {
+        "center": {
+          "lat": 45.37229038,
+          "lng": -75.62311742
+        },
+        "widthMetres": 80,
+        "lengthMetres": 100,
+        "rotationDegrees": 0,
+        "spawn": {
+          "lat": 45.37240451,
+          "lng": -75.62318273,
+          "headingDegrees": 248
+        },
+        "roadSnap": {
+          "roadName": null,
+          "highway": "service",
+          "distanceFromSourceMetres": 13.7
+        }
+      },
+      "assessment": "estimated",
+      "imageryCapture": "artifacts/release-qa/base-fit-ottawa/ottawa-fire-31.png",
+      "imageryZoom": 19,
+      "metresPerPixel": 0.2095,
+      "imageryObservation": "Visible Fire Station 31 - Greenboro station building and adjacent parking/circulation were used to estimate the fitted on-site footprint. The source coordinate above remains unchanged. The model spawn is on the mapped service centerline (service, 13.7 m from the preserved source point).",
+      "rotationBasis": "Axis-aligned estimate follows the visible local parcel/street grid; not survey-derived."
+    },
+    {
+      "baseId": "ottawa-fire-33",
+      "name": "Fire Station 33 - Hunt Club",
+      "address": "3336 McCarthy Rd",
+      "sourcePoint": {
+        "lat": 45.35083897048121,
+        "lng": -75.66987265817595
+      },
+      "drivingArea": {
+        "center": {
+          "lat": 45.35083897,
+          "lng": -75.66987266
+        },
+        "widthMetres": 80,
+        "lengthMetres": 100,
+        "rotationDegrees": 0,
+        "spawn": {
+          "lat": 45.35086502,
+          "lng": -75.67001116,
+          "headingDegrees": 15
+        },
+        "roadSnap": {
+          "roadName": null,
+          "highway": "service",
+          "distanceFromSourceMetres": 11.2
+        }
+      },
+      "assessment": "estimated",
+      "imageryCapture": "artifacts/release-qa/base-fit-ottawa/ottawa-fire-33.png",
+      "imageryZoom": 19,
+      "metresPerPixel": 0.2096,
+      "imageryObservation": "Visible Fire Station 33 - Hunt Club station building and adjacent parking/circulation were used to estimate the fitted on-site footprint. The source coordinate above remains unchanged. The model spawn is on the mapped service centerline (service, 11.2 m from the preserved source point).",
+      "rotationBasis": "Axis-aligned estimate follows the visible local parcel/street grid; not survey-derived."
+    },
+    {
+      "baseId": "ottawa-ems-756",
+      "name": "Hunt Club Paramedic Post",
+      "address": "360 Hunt Club Rd",
+      "sourcePoint": {
+        "lat": 45.3377561806558,
+        "lng": -75.6841631807849
+      },
+      "drivingArea": {
+        "center": {
+          "lat": 45.33775618,
+          "lng": -75.68416318
+        },
+        "widthMetres": 85,
+        "lengthMetres": 105,
+        "rotationDegrees": 0,
+        "spawn": {
+          "lat": 45.33781767,
+          "lng": -75.68421173,
+          "headingDegrees": 61
+        },
+        "roadSnap": {
+          "roadName": null,
+          "highway": "service",
+          "distanceFromSourceMetres": 7.8
+        }
+      },
+      "assessment": "estimated",
+      "imageryCapture": "artifacts/release-qa/base-fit-ottawa/ottawa-ems-756.png",
+      "imageryZoom": 19,
+      "metresPerPixel": 0.2096,
+      "imageryObservation": "Visible Hunt Club Paramedic Post station building and adjacent parking/circulation were used to estimate the fitted on-site footprint. The source coordinate above remains unchanged. The model spawn is on the mapped service centerline (service, 7.8 m from the preserved source point).",
+      "rotationBasis": "Axis-aligned estimate follows the visible local parcel/street grid; not survey-derived."
+    },
+    {
+      "baseId": "ottawa-ems-764",
+      "name": "Bexley Paramedic Post",
+      "address": "20 Bexley Place",
+      "sourcePoint": {
+        "lat": 45.33022821415272,
+        "lng": -75.81880789657717
+      },
+      "drivingArea": {
+        "center": {
+          "lat": 45.33022821,
+          "lng": -75.8188079
+        },
+        "widthMetres": 95,
+        "lengthMetres": 120,
+        "rotationDegrees": 0,
+        "spawn": {
+          "lat": 45.3303791,
+          "lng": -75.81883818,
+          "headingDegrees": 82
+        },
+        "roadSnap": {
+          "roadName": null,
+          "highway": "service",
+          "distanceFromSourceMetres": 17
+        }
+      },
+      "assessment": "estimated",
+      "imageryCapture": "artifacts/release-qa/base-fit-ottawa/ottawa-ems-764.png",
+      "imageryZoom": 19,
+      "metresPerPixel": 0.2097,
+      "imageryObservation": "Visible Bexley Paramedic Post station building and adjacent parking/circulation were used to estimate the fitted on-site footprint. The source coordinate above remains unchanged. The model spawn is on the mapped service centerline (service, 17.0 m from the preserved source point).",
+      "rotationBasis": "Axis-aligned estimate follows the visible local parcel/street grid; not survey-derived."
+    },
+    {
+      "baseId": "ottawa-ems-765",
+      "name": "Vanier Paramedic Post",
+      "address": "200 Montreal Rd",
+      "sourcePoint": {
+        "lat": 45.43517196120502,
+        "lng": -75.66351970780795
+      },
+      "drivingArea": {
+        "center": {
+          "lat": 45.43517196,
+          "lng": -75.66351971
+        },
+        "widthMetres": 80,
+        "lengthMetres": 95,
+        "rotationDegrees": 0,
+        "spawn": {
+          "lat": 45.43506981,
+          "lng": -75.66344193,
+          "headingDegrees": 62
+        },
+        "roadSnap": {
+          "roadName": null,
+          "highway": "service",
+          "distanceFromSourceMetres": 12.9
+        }
+      },
+      "assessment": "estimated",
+      "imageryCapture": "artifacts/release-qa/base-fit-ottawa/ottawa-ems-765.png",
+      "imageryZoom": 19,
+      "metresPerPixel": 0.2093,
+      "imageryObservation": "Visible Vanier Paramedic Post station building and adjacent parking/circulation were used to estimate the fitted on-site footprint. The source coordinate above remains unchanged. The model spawn is on the mapped service centerline (service, 12.9 m from the preserved source point).",
+      "rotationBasis": "Axis-aligned estimate follows the visible local parcel/street grid; not survey-derived."
+    },
+    {
+      "baseId": "ottawa-ems-766",
+      "name": "Orleans Paramedic Post",
+      "address": "2851 St. Joseph Blvd",
+      "sourcePoint": {
+        "lat": 45.474202749756884,
+        "lng": -75.51943464789883
+      },
+      "drivingArea": {
+        "center": {
+          "lat": 45.47420275,
+          "lng": -75.51943465
+        },
+        "widthMetres": 85,
+        "lengthMetres": 100,
+        "rotationDegrees": 0,
+        "spawn": {
+          "lat": 45.4742813,
+          "lng": -75.5194652,
+          "headingDegrees": 322
+        },
+        "roadSnap": {
+          "roadName": null,
+          "highway": "service",
+          "distanceFromSourceMetres": 9.1
+        }
+      },
+      "assessment": "estimated",
+      "imageryCapture": "artifacts/release-qa/base-fit-ottawa/ottawa-ems-766.png",
+      "imageryZoom": 19,
+      "metresPerPixel": 0.2091,
+      "imageryObservation": "Visible Orleans Paramedic Post station building and adjacent parking/circulation were used to estimate the fitted on-site footprint. The source coordinate above remains unchanged. The model spawn is on the mapped service centerline (service, 9.1 m from the preserved source point).",
+      "rotationBasis": "Axis-aligned estimate follows the visible local parcel/street grid; not survey-derived."
+    }
+  ]
+}
