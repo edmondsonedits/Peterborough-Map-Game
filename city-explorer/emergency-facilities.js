@@ -10,6 +10,7 @@ const canonicalSource = value => String(value || '').replace(/^city-building\/(w
 export function createEmergencyFacilityLayer({ THREE, scene, loader, entries, project, baseSurface, records, hide }) {
   const states = new Map(entries.map(entry => [entry.id, { status: 'loading', error: null }]));
   const ready = new Map();
+  const runtimeOwners = new Set();
   let loading;
   const worldPoint = (x, z, anchor, yaw) => ({ x: anchor.x + x * Math.cos(yaw) + z * Math.sin(yaw), z: anchor.z - x * Math.sin(yaw) + z * Math.cos(yaw) });
 
@@ -118,6 +119,7 @@ export function createEmergencyFacilityLayer({ THREE, scene, loader, entries, pr
         if (child && Number.isFinite(height)) child.position.y += height-wrapper.position.y;
       }
       wrapper.traverse(node=>{if(node.isMesh){node.castShadow=true;node.receiveShadow=true;}});
+      wrapper.visible = !runtimeOwners.has(entry.id);
       scene.add(wrapper);ready.set(entry.id,{entry,wrapper});
       Object.assign(states.get(entry.id),{status:'ready',position:{x:wrapper.position.x,y:wrapper.position.y,z:wrapper.position.z}});
       suppress(entry);
@@ -128,7 +130,8 @@ export function createEmergencyFacilityLayer({ THREE, scene, loader, entries, pr
   }
   return {
     load() { return loading ||= Promise.all(entries.map(loadEntry)); },
+    setRuntimeOwner(id,owned=true) { if(owned)runtimeOwners.add(id);else runtimeOwners.delete(id);const value=ready.get(id);if(value)value.wrapper.visible=!owned; },
     reapplyReplacements() { for(const {entry} of ready.values()) suppress(entry); },
-    getStatus() { return Object.fromEntries([...states].map(([id,state])=>[id,{...state}])); },
+    getStatus() { return Object.fromEntries([...states].map(([id,state])=>[id,{...state,runtimeOwned:runtimeOwners.has(id),visible:ready.get(id)?.wrapper.visible??false}])); },
   };
 }

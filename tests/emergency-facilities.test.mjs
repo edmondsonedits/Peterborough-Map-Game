@@ -41,6 +41,20 @@ test('late loading cannot hide a source before its replacement is ready', async 
   resolve(model());await pending;assert.deepEqual(f.hidden,['station']);
 });
 
+test('runtime ownership claimed during loading hides the static wrapper and releasing it reveals the wrapper', async () => {
+  let resolve;const f=fixture(()=>new Promise(r=>{resolve=r;}));const pending=f.layer.load();
+  f.layer.setRuntimeOwner('test',true);
+  assert.equal(f.layer.getStatus().test.runtimeOwned,true);
+  resolve(model());await pending;
+  const wrapper=f.scene.children[0];
+  assert.equal(wrapper.visible,false);
+  assert.equal(f.layer.getStatus().test.visible,false);
+  f.layer.setRuntimeOwner('test',false);
+  assert.equal(wrapper.visible,true);
+  assert.equal(f.layer.getStatus().test.runtimeOwned,false);
+  assert.equal(f.layer.getStatus().test.visible,true);
+});
+
 test('ready facility takes precedence over authored replacement in either load order', async () => {
   for(const authoredFirst of [true,false]) {
     const f=fixture(async()=>model());

@@ -73,7 +73,10 @@ jobs:
       - name: Check authored actors and station architecture
         run: node --test tests/pumper-asset.test.mjs tests/firefighter-asset.test.mjs tests/station-architecture.test.mjs tests/station-one.test.mjs tests/station-one-editor-restore.test.mjs tests/station-two.test.mjs tests/station-two-user-spawn.test.mjs tests/station-three-bay-departure.test.mjs tests/station-three-runtime.test.mjs tests/emergency-facilities.test.mjs tests/researched-buildings.test.mjs
 
-      - name: Stress deterministic EMS transitions
+      - name: Check in-place station switching
+        run: node --test tests/station-transition.test.mjs tests/station-selector-transition.test.cjs tests/station-switch-integration.test.cjs tests/mobile-station-menu.test.cjs
+
+      - name: Stress deterministic EMS dispatch transitions
         run: |
           for pass in 1 2 3 4 5; do
             node --test tests/ems.test.cjs >/dev/null
