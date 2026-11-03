@@ -1,0 +1,594 @@
+{
+  "schemaVersion": 1,
+  "cityId": "barrie",
+  "reviewedLocalDate": "2026-11-02",
+  "assessment": "estimated",
+  "imagery": {
+    "provider": "Esri World Imagery",
+    "tileUrl": "https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}",
+    "capturedLocalDate": "2026-11-02",
+    "zoom": 19,
+    "vintage": "not supplied by tile response",
+    "method": "Independent Leaflet captures centered at each canonical base coordinate; screenshot scale was measured at approximately 0.213 m/pixel and building, apron, parking and access extents were estimated from imagery."
+  },
+  "roads": {
+    "file": "cities/barrie/roads.geojson.gz",
+    "source": "OpenStreetMap via Geofabrik Ontario extract",
+    "sourceUrl": "https://download.geofabrik.de/north-america/canada/ontario.html",
+    "sourceTimestamp": "2026-09-27T20:23:36Z",
+    "snapshotBuiltAt": "2026-10-29T04:10:06.429Z",
+    "attribution": "© OpenStreetMap contributors"
+  },
+  "limits": [
+    "No official parcel or building-footprint polygons were used.",
+    "Dimensions and spawn points are image/road-geometry estimates, not surveyed measurements.",
+    "Imagery does not independently verify apparatus bay doors, gates, access controls or current pavement.",
+    "Original station source coordinates are retained on every base record.",
+    "The collision QA exercises the runtime road-collision transition from each modeled spawn to the nearest drivable road point; it is not a sustained keyboard/vehicle-drive test."
+  ],
+  "bases": [
+    {
+      "baseId": "barrie-fire-1",
+      "name": "Station 1 — BFES Headquarters",
+      "address": "155 Dunlop Street West",
+      "sourcePoint": {
+        "lat": 44.38577426192153,
+        "lng": -79.6964919501417
+      },
+      "drivingArea": {
+        "center": {
+          "lat": 44.38590996,
+          "lng": -79.6965548
+        },
+        "widthMetres": 130,
+        "lengthMetres": 130,
+        "rotationDegrees": 31,
+        "spawn": {
+          "lat": 44.38629896,
+          "lng": -79.69691933,
+          "headingDegrees": 31
+        },
+        "spawnOffsetFromCanonicalMetres": {
+          "east": -34,
+          "north": 58
+        }
+      },
+      "assessment": "estimated",
+      "observation": "Estimated from Esri imagery: headquarters building, its visible parking/apron, and the northwest paved approach toward Dunlop Street West. Spawn is placed on the mapped Dunlop road edge at the apparent site driveway throat; entrance and apparatus bay are not independently verified."
+    },
+    {
+      "baseId": "barrie-fire-2",
+      "name": "Station 2",
+      "address": "15 Bellfarm Road",
+      "sourcePoint": {
+        "lat": 44.407482735116695,
+        "lng": -79.68387221131619
+      },
+      "drivingArea": {
+        "center": {
+          "lat": 44.40755511,
+          "lng": -79.68387221
+        },
+        "widthMetres": 70,
+        "lengthMetres": 75,
+        "rotationDegrees": 8,
+        "spawn": {
+          "lat": 44.40779032,
+          "lng": -79.68369623,
+          "headingDegrees": 86
+        },
+        "spawnOffsetFromCanonicalMetres": {
+          "east": 14,
+          "north": 34
+        }
+      },
+      "assessment": "estimated",
+      "observation": "Estimated from Esri imagery and the mapped Bell Farm access geometry. The visible station apron and mapped internal service ways end about 15 m short of the Bell Farm Road centerline; the modeled rectangle spans that apparent paved access throat and the spawn is on the connected Bell Farm Road edge so local dispatch routes begin on the road graph. Canonical source coordinates above are preserved; no gate or apparatus entrance is claimed verified."
+    },
+    {
+      "baseId": "barrie-fire-3",
+      "name": "Station 3",
+      "address": "340 Big Bay Point Road",
+      "sourcePoint": {
+        "lat": 44.35470707472111,
+        "lng": -79.66089086472746
+      },
+      "drivingArea": {
+        "center": {
+          "lat": 44.35452614,
+          "lng": -79.66070231
+        },
+        "widthMetres": 140,
+        "lengthMetres": 150,
+        "rotationDegrees": 20,
+        "spawn": {
+          "lat": 44.35478849,
+          "lng": -79.66012409,
+          "headingDegrees": 158
+        },
+        "spawnOffsetFromCanonicalMetres": {
+          "east": 61,
+          "north": 9
+        }
+      },
+      "assessment": "estimated",
+      "observation": "Estimated from Esri imagery: station building, nearby parking apron and the mapped east-side service aisle that connects to Big Bay Point Road. The broader lot is shared with nearby commercial parking; the fit covers the visible station-side circulation only as an estimate, not an official parcel."
+    },
+    {
+      "baseId": "barrie-fire-4",
+      "name": "Station 4",
+      "address": "250 Ardagh Road",
+      "sourcePoint": {
+        "lat": 44.35496513648066,
+        "lng": -79.7172486135394
+      },
+      "drivingArea": {
+        "center": {
+          "lat": 44.35482944,
+          "lng": -79.71724861
+        },
+        "widthMetres": 90,
+        "lengthMetres": 115,
+        "rotationDegrees": 17,
+        "spawn": {
+          "lat": 44.35447663,
+          "lng": -79.71693436,
+          "headingDegrees": 73
+        },
+        "spawnOffsetFromCanonicalMetres": {
+          "east": 25,
+          "north": -54
+        }
+      },
+      "assessment": "estimated",
+      "observation": "Estimated from Esri imagery: station building, front apron and the mapped Ardagh Road frontage approach. Spawn is placed on the mapped road segment at the apparent driveway throat; exact apparatus entrance is not independently verified."
+    },
+    {
+      "baseId": "barrie-fire-5",
+      "name": "Station 5",
+      "address": "361 King Street",
+      "sourcePoint": {
+        "lat": 44.3279290208334,
+        "lng": -79.69934298815615
+      },
+      "drivingArea": {
+        "center": {
+          "lat": 44.32792902,
+          "lng": -79.69934299
+        },
+        "widthMetres": 120,
+        "lengthMetres": 110,
+        "rotationDegrees": 12,
+        "spawn": {
+          "lat": 44.32765763,
+          "lng": -79.6990036,
+          "headingDegrees": 163
+        },
+        "spawnOffsetFromCanonicalMetres": {
+          "east": 27,
+          "north": -30
+        }
+      },
+      "assessment": "estimated",
+      "observation": "Estimated from Esri imagery: Station 5 building and the immediately adjacent plaza parking/aisle used for the apparent station-side approach. The surrounding lot is shared commercial parking; the rectangle is a modeled training area, not an official parcel boundary."
+    },
+    {
+      "baseId": "barrie-fire-6",
+      "name": "Station 6",
+      "address": "845 Mapleview Drive East",
+      "sourcePoint": {
+        "lat": 44.35164468788609,
+        "lng": -79.61114491942591
+      },
+      "drivingArea": {
+        "center": {
+          "lat": 44.35159946,
+          "lng": -79.61114492
+        },
+        "widthMetres": 120,
+        "lengthMetres": 110,
+        "rotationDegrees": 18,
+        "spawn": {
+          "lat": 44.35142757,
+          "lng": -79.61064212,
+          "headingDegrees": 72
+        },
+        "spawnOffsetFromCanonicalMetres": {
+          "east": 40,
+          "north": -24
+        }
+      },
+      "assessment": "estimated",
+      "observation": "Estimated from Esri imagery: Station 6 structure and the visible south-side access frontage near Tobias Lane. The imagery tile shows a blue-roof building and active-looking worksite, but its vintage is not supplied; current pavement, gates and operational apparatus access are not verified."
+    },
+    {
+      "baseId": "barrie-ems-fairview",
+      "name": "Barrie Simcoe Emergency Services Campus",
+      "address": "110 Fairview Drive",
+      "sourcePoint": {
+        "lat": 44.35549041721346,
+        "lng": -79.68760366837765
+      },
+      "drivingArea": {
+        "center": {
+          "lat": 44.35549042,
+          "lng": -79.68760367
+        },
+        "widthMetres": 150,
+        "lengthMetres": 180,
+        "rotationDegrees": 43,
+        "spawn": {
+          "lat": 44.35524616,
+          "lng": -79.6874654,
+          "headingDegrees": 308
+        },
+        "spawnOffsetFromCanonicalMetres": {
+          "east": 11,
+          "north": -27
+        }
+      },
+      "assessment": "estimated",
+      "observation": "Estimated from Esri imagery: Barrie Simcoe Emergency Services Campus building, the immediate access apron and nearby service aisle leading into the campus road network. The campus parking is shared; no EMS-only apron or entrance is claimed verified."
+    },
+    {
+      "baseId": "barrie-ems-ross",
+      "name": "Barrie Central East Post",
+      "address": "31 Ross Street",
+      "sourcePoint": {
+        "lat": 44.390617866705846,
+        "lng": -79.69402803739831
+      },
+      "drivingArea": {
+        "center": {
+          "lat": 44.39061787,
+          "lng": -79.69402804
+        },
+        "widthMetres": 40,
+        "lengthMetres": 55,
+        "rotationDegrees": 0,
+        "spawn": {
+          "lat": 44.39074452,
+          "lng": -79.69402804,
+          "headingDegrees": 90
+        },
+        "spawnOffsetFromCanonicalMetres": {
+          "east": 0,
+          "north": 14
+        }
+      },
+      "assessment": "estimated",
+      "observation": "Estimated from Esri imagery: the small Ross Street post building and its narrow street-front approach. The modeled spawn is on the mapped Ross Street frontage because no internal service way is present at the site; no vehicle bay or driveway is claimed verified."
+    }
+  ],
+  "fire2AccessCheck": {
+    "baseId": "barrie-fire-2",
+    "internalServiceWays": [
+      "way/1359518951",
+      "way/1359518950",
+      "way/693129283",
+      "way/693129285",
+      "way/693129286"
+    ],
+    "serviceEndLocalOffsetMetres": {
+      "east": 15,
+      "north": 19
+    },
+    "nearestBellFarmRoadLocalOffsetMetres": {
+      "east": 14,
+      "north": 34
+    },
+    "estimatedGapMetres": 15.03,
+    "visualMethod": "Zoom-19 Esri image shows a paved station-side throat between the internal service apron and Bell Farm Road; the access is measured from the supplied OSM service endpoint to the nearest named-road centerline. The rectangle spans that visible throat and the modeled spawn is placed on Bell Farm Road way/1359518949, the connected road graph.",
+    "assessment": "estimated; entrance/gate not independently verified"
+  },
+  "roadNetworkChecks": {
+    "method": "Nearest road centerline and connected feature path from each modeled spawn against the packaged Barrie OSM road graph (exact shared vertices).",
+    "results": [
+      {
+        "baseId": "barrie-fire-1",
+        "nearestRoad": {
+          "name": "Dunlop Street West",
+          "highway": "secondary",
+          "distanceMetres": 0.58
+        },
+        "connectedFeaturePath": [
+          "way/335841096",
+          "way/1415222474"
+        ]
+      },
+      {
+        "baseId": "barrie-fire-2",
+        "nearestRoad": {
+          "name": "Bell Farm Road",
+          "highway": "tertiary",
+          "distanceMetres": 0.29
+        },
+        "connectedFeaturePath": [
+          "way/1359518949"
+        ],
+        "note": "Spawn directly on named Bell Farm Road; internal service ways remain in the road pack."
+      },
+      {
+        "baseId": "barrie-fire-3",
+        "nearestRoad": {
+          "name": "Unnamed road",
+          "highway": "service",
+          "distanceMetres": 0.25
+        },
+        "connectedFeaturePath": [
+          "way/806238518",
+          "way/1432072018"
+        ],
+        "namedRoadReached": "Big Bay Point Road"
+      },
+      {
+        "baseId": "barrie-fire-4",
+        "nearestRoad": {
+          "name": "Ardagh Road",
+          "highway": "tertiary",
+          "distanceMetres": 0.47
+        },
+        "connectedFeaturePath": [
+          "way/33948462",
+          "way/1472788742"
+        ]
+      },
+      {
+        "baseId": "barrie-fire-5",
+        "nearestRoad": {
+          "name": "Unnamed road",
+          "highway": "service",
+          "distanceMetres": 0.09
+        },
+        "connectedFeaturePath": [
+          "way/802991525",
+          "way/27292506"
+        ],
+        "namedRoadReached": "King Street"
+      },
+      {
+        "baseId": "barrie-fire-6",
+        "nearestRoad": {
+          "name": "Tobias Lane",
+          "highway": "residential",
+          "distanceMetres": 0.27
+        },
+        "connectedFeaturePath": [
+          "way/1194083346",
+          "way/1194083343"
+        ],
+        "namedRoadReached": "Pumpkin Corner Cresent"
+      },
+      {
+        "baseId": "barrie-ems-fairview",
+        "nearestRoad": {
+          "name": "Unnamed road",
+          "highway": "service",
+          "distanceMetres": 0.53
+        },
+        "connectedFeaturePath": [
+          "way/957921137",
+          "way/957921127",
+          "way/826588996"
+        ],
+        "namedRoadReached": "Fairview Road"
+      },
+      {
+        "baseId": "barrie-ems-ross",
+        "nearestRoad": {
+          "name": "Ross Street",
+          "highway": "secondary",
+          "distanceMetres": 0.05
+        },
+        "connectedFeaturePath": [
+          "way/33965792",
+          "way/1412966778"
+        ]
+      }
+    ]
+  },
+  "runtimeCollisionChecks": {
+    "checkedLocalDate": "2026-11-02",
+    "runtimeVersion": "1.6.17",
+    "roadState": "ready",
+    "activeBaseCount": 8,
+    "method": "Called PTBO_ROAD_COLLISION.beginStationExit at each spawn, advanced toward the nearest road projection in 1.5 m steps with resolveMovement, and required an unblocked path ending on a drivable road point within 2.5 m.",
+    "results": [
+      {
+        "baseId": "barrie-fire-1",
+        "spawnInside": true,
+        "areaRoadAccess": true,
+        "spawnInitiallyDrivable": true,
+        "nearestRoad": {
+          "name": "Dunlop Street West",
+          "highway": "secondary",
+          "distanceMetres": 0.58
+        },
+        "exitStarted": true,
+        "exitCompleted": true,
+        "blockedMoves": 0,
+        "movementSteps": 1,
+        "endDistanceToRoadMetres": 0
+      },
+      {
+        "baseId": "barrie-fire-2",
+        "spawnInside": true,
+        "areaRoadAccess": true,
+        "spawnInitiallyDrivable": true,
+        "nearestRoad": {
+          "name": "Bell Farm Road",
+          "highway": "tertiary",
+          "distanceMetres": 0.29
+        },
+        "exitStarted": true,
+        "exitCompleted": true,
+        "blockedMoves": 0,
+        "movementSteps": 1,
+        "endDistanceToRoadMetres": 0
+      },
+      {
+        "baseId": "barrie-fire-3",
+        "spawnInside": true,
+        "areaRoadAccess": true,
+        "spawnInitiallyDrivable": true,
+        "nearestRoad": {
+          "name": "Unnamed road",
+          "highway": "service",
+          "distanceMetres": 0.25
+        },
+        "exitStarted": true,
+        "exitCompleted": true,
+        "blockedMoves": 0,
+        "movementSteps": 1,
+        "endDistanceToRoadMetres": 0
+      },
+      {
+        "baseId": "barrie-fire-4",
+        "spawnInside": true,
+        "areaRoadAccess": true,
+        "spawnInitiallyDrivable": true,
+        "nearestRoad": {
+          "name": "Ardagh Road",
+          "highway": "tertiary",
+          "distanceMetres": 0.47
+        },
+        "exitStarted": true,
+        "exitCompleted": true,
+        "blockedMoves": 0,
+        "movementSteps": 1,
+        "endDistanceToRoadMetres": 0
+      },
+      {
+        "baseId": "barrie-fire-5",
+        "spawnInside": true,
+        "areaRoadAccess": true,
+        "spawnInitiallyDrivable": true,
+        "nearestRoad": {
+          "name": "Unnamed road",
+          "highway": "service",
+          "distanceMetres": 0.09
+        },
+        "exitStarted": true,
+        "exitCompleted": true,
+        "blockedMoves": 0,
+        "movementSteps": 1,
+        "endDistanceToRoadMetres": 0
+      },
+      {
+        "baseId": "barrie-fire-6",
+        "spawnInside": true,
+        "areaRoadAccess": true,
+        "spawnInitiallyDrivable": true,
+        "nearestRoad": {
+          "name": "Tobias Lane",
+          "highway": "residential",
+          "distanceMetres": 0.27
+        },
+        "exitStarted": true,
+        "exitCompleted": true,
+        "blockedMoves": 0,
+        "movementSteps": 1,
+        "endDistanceToRoadMetres": 0
+      },
+      {
+        "baseId": "barrie-ems-fairview",
+        "spawnInside": true,
+        "areaRoadAccess": true,
+        "spawnInitiallyDrivable": true,
+        "nearestRoad": {
+          "name": "Unnamed road",
+          "highway": "service",
+          "distanceMetres": 0.53
+        },
+        "exitStarted": true,
+        "exitCompleted": true,
+        "blockedMoves": 0,
+        "movementSteps": 1,
+        "endDistanceToRoadMetres": 0
+      },
+      {
+        "baseId": "barrie-ems-ross",
+        "spawnInside": true,
+        "areaRoadAccess": true,
+        "spawnInitiallyDrivable": true,
+        "nearestRoad": {
+          "name": "Ross Street",
+          "highway": "secondary",
+          "distanceMetres": 0.05
+        },
+        "exitStarted": true,
+        "exitCompleted": true,
+        "blockedMoves": 0,
+        "movementSteps": 1,
+        "endDistanceToRoadMetres": 0
+      }
+    ],
+    "artifact": "artifacts/release-qa/base-fit/barrie-driving-area-checks.json"
+  },
+  "dispatchRouteCoverage": {
+    "checkedLocalDate": "2026-11-02",
+    "device": "mobile browser route-only QA",
+    "fireBases": [
+      {
+        "baseId": "barrie-fire-1",
+        "calls": 8,
+        "reachable": 8,
+        "responseRouteFailures": 0,
+        "transportRouteFailures": 0
+      },
+      {
+        "baseId": "barrie-fire-2",
+        "calls": 8,
+        "reachable": 8,
+        "responseRouteFailures": 0,
+        "transportRouteFailures": 0
+      },
+      {
+        "baseId": "barrie-fire-3",
+        "calls": 8,
+        "reachable": 8,
+        "responseRouteFailures": 0,
+        "transportRouteFailures": 0
+      },
+      {
+        "baseId": "barrie-fire-4",
+        "calls": 8,
+        "reachable": 8,
+        "responseRouteFailures": 0,
+        "transportRouteFailures": 0
+      },
+      {
+        "baseId": "barrie-fire-5",
+        "calls": 8,
+        "reachable": 8,
+        "responseRouteFailures": 0,
+        "transportRouteFailures": 0
+      },
+      {
+        "baseId": "barrie-fire-6",
+        "calls": 8,
+        "reachable": 8,
+        "responseRouteFailures": 0,
+        "transportRouteFailures": 0
+      }
+    ],
+    "emsBases": [
+      {
+        "baseId": "barrie-ems-fairview",
+        "calls": 6,
+        "reachable": 6,
+        "responseRouteFailures": 0,
+        "transportRouteFailures": 0
+      },
+      {
+        "baseId": "barrie-ems-ross",
+        "calls": 6,
+        "reachable": 6,
+        "responseRouteFailures": 0,
+        "transportRouteFailures": 0
+      }
+    ],
+    "fire2ResponseFailures": 0,
+    "artifact": "artifacts/release-qa/base-fit-barrie/dispatch-qa/route-coverage.json"
+  }
+}

@@ -7,16 +7,42 @@ const vm = require('node:vm');
 
 const root = path.resolve(__dirname, '..');
 const ids = ['ajax','barrie','brampton','brantford','burlington','cambridge','chatham-kent','clarington','greater-sudbury','guelph','hamilton','kingston','kitchener','london','markham','milton','mississauga','niagara-falls','oakville','oshawa','ottawa','pickering','richmond-hill','st-catharines','thunder-bay','toronto','vaughan','waterloo','whitby','windsor'];
-const previews = ['oshawa','belleville','scarborough','pickering','markham','toronto'];
 const read = file => fs.readFileSync(path.join(root,file),'utf8');
 const json = file => JSON.parse(read(file));
 const packs = () => ids.map(id => json(`cities/${id}/geo-data.json`));
+const releaseVersion = read('shared/build-version.js').match(/const VERSION = '([^']+)'/)?.[1] || '1';
 const coordinate = (value,minimum,maximum) => typeof value === 'number' && Number.isFinite(value) && value >= minimum && value <= maximum;
 
 function registry() {
   const context = {window:{}};
   vm.runInNewContext(read('cities/city-registry.js'),context);
   return context.window.PTBO_CITIES;
+}
+
+async function loadSharedPackageBases(cityId,pack) {
+  const requested=[];
+  const context=vm.createContext({
+    console,URL,AbortController,setTimeout,clearTimeout,
+    CustomEvent:class { constructor(type,options){this.type=type;this.detail=options?.detail;} },
+    location:{href:`https://example.invalid/?city=${cityId}`},
+    document:{currentScript:{src:`https://example.invalid/cities/${cityId}/package.js?v=${releaseVersion}`},readyState:'complete',
+      documentElement:{dataset:{}},createElement:()=>({dataset:{}}),head:{appendChild(){}}},
+    dispatchEvent(){},addEventListener(){},
+    fetch:async url=>{
+      const requestedUrl=new URL(url);
+      requested.push(requestedUrl.href);
+      assert.equal(requestedUrl.pathname,`/cities/${cityId}/geo-data.json`);
+      assert.equal(requestedUrl.searchParams.get('v'),releaseVersion);
+      return {ok:true,json:async()=>pack};
+    },
+  });
+  context.window=context;
+  vm.runInContext(read('cities/preview-package-factory.js'),context);
+  vm.runInContext(read(`cities/${cityId}/package.js`),context);
+  await context.PTBO_CITY_PACKAGE_READY;
+  const bases=['fire','ems'].flatMap(service=>Array.from(context.PTBO_SERVICE_CONFIG.profiles[service].bases,base=>({...base,service})));
+  assert.equal(requested.length,1,`${cityId}: canonical roster uses one local fetch`);
+  return bases;
 }
 
 test('registry declares each mode independently for Peterborough, researched demos and legacy previews', () => {
@@ -139,20 +165,27 @@ test('future base construction fields preserve reviewed stage, opening estimate 
   }
 });
 
-test('legacy aliases resolve only to real preview base IDs and remain unique within each city', async () => {
-  const {loadLegacyBases} = require(path.join(root,'scripts/build-ontario-geo-data.cjs'));
-  assert.equal(typeof loadLegacyBases,'function','builder can read original packaged preview IDs offline');
+test('legacy aliases retain canonical base identity and remain unique within each city', async () => {
   for (const [city,count] of [['oshawa',8],['pickering',6],['markham',15],['toronto',16]]) {
-    const originals = await loadLegacyBases(city);
     const pack = json(`cities/${city}/geo-data.json`);
+    const packageBases=await loadSharedPackageBases(city,pack);
+    const canonical=pack.bases.filter(base=>base.status==='active'&&base.selectionEligible===true);
+    const packageId=base=>base.id.startsWith(`${base.service}-`)?base.id:`${base.service}-${base.id}`;
+    assert.deepEqual(packageBases.map(base=>({id:base.id,service:base.service})).sort((a,b)=>a.id.localeCompare(b.id)),
+      canonical.map(base=>({id:packageId(base),service:base.service})).sort((a,b)=>a.id.localeCompare(b.id)),`${city}: package IDs are stable canonical service IDs`);
+    for(const base of canonical){
+      const packaged=packageBases.find(row=>row.id===packageId(base));
+      assert.deepEqual(packaged?.legacyIds,base.legacyIds,`${city}: ${base.id} retains historical IDs`);
+    }
     const aliases = pack.bases.flatMap(base => (base.legacyIds || []).map(id => ({id,base})));
     assert.equal(aliases.length,count,city);
     assert.equal(new Set(aliases.map(alias => alias.id)).size,count,`${city}: unambiguous aliases`);
     for (const {id,base} of aliases) {
-      const original = originals.find(row => row.id === id);
-      assert.ok(original,`${city}: ${id} is an actual preview ID`);
-      assert.equal(original.service,base.service,id);
-      assert.notEqual(id,base.id,id);
+      const canonicalBase=packageBases.find(row=>row.id===packageId(base));
+      assert.ok(canonicalBase,`${city}: ${base.id} maps to a canonical package base`);
+      assert.equal(canonicalBase.service,base.service,id);
+      assert.ok(canonicalBase.legacyIds.includes(id),`${city}: ${id} remains recorded as a historical ID`);
+      assert.notEqual(id,canonicalBase.id,id);
     }
   }
   const oshawa = json('cities/oshawa/geo-data.json');
@@ -175,42 +208,30 @@ test('legacy matching retains civic identity and service when nearby station lab
   }
 });
 
-test('manifests preserve researched capability flags and enable the Richmond Hill response demo', () => {
-  for (const id of ids) {
+test('all researched city manifests expose the shared dispatch demo capabilities', () => {
+  for (const id of [...ids,'belleville','scarborough']) {
     const manifest = json(`cities/${id}/city.json`);
     assert.equal(manifest.id,id);
     assert.equal(manifest.features.geoGuesser,true,id);
     assert.equal(manifest.data.geoGuesser,'geo-data.json',id);
-    assert.equal(manifest.features.dispatch,previews.includes(id) || id === 'richmond-hill',id);
-    assert.equal(manifest.features.routeGuidance,id === 'richmond-hill',id);
+    assert.equal(manifest.features.dispatch,true,id);
+    assert.equal(manifest.features.routeGuidance,true,id);
+    assert.equal(manifest.features.roadBoundaries,true,id);
+    assert.equal(manifest.features.sceneResponseDrills,true,id);
+    assert.equal(manifest.features.hospitalTransport,true,id);
     assert.equal(manifest.features.baseTraining,false,id);
-    assert.equal(manifest.data.roads,(previews.includes(id) || id === 'richmond-hill')?'roads.geojson.gz':null,id);
-    if (id === 'richmond-hill') {
-      assert.equal(manifest.features.hospitalTransport,true);
-      assert.equal(manifest.status,'dispatch-demo');
-      assert.equal(manifest.data.dispatchLocations,'dispatch-data.js');
-    } else if (previews.includes(id)) {
-      assert.equal(manifest.data.bases,'geo-data.json',id);
-      assert.equal(manifest.status,'scene-response',id);
-      assert.equal(manifest.map.minZoom,10,id);
-    } else {
-      assert.equal(manifest.runtime,undefined,id);
-      assert.equal(manifest.data.bases,'geo-data.json',id);
-      assert.equal(manifest.data.dispatchLocations,null,id);
-    }
+    assert.equal(manifest.status,'dispatch-demo',id);
+    assert.equal(manifest.runtime,'./package.js',id);
+    assert.equal(manifest.data.roads,'roads.geojson.gz',id);
+    assert.equal(manifest.data.dispatchLocations,'dispatch-data.js',id);
+    assert.equal(manifest.data.bases,'geo-data.json',id);
+    assert.equal(manifest.data.hospitals,'package.js',id);
+    assert.equal(manifest.data.services,'package.js',id);
   }
   const peterborough = json('cities/peterborough/city.json');
   assert.equal(peterborough.features.geoGuesser,true);
   assert.equal(peterborough.runtime,'./package.js');
   assert.equal(peterborough.data.roads,'../../city-explorer/data/osm-public-roads.geojson');
-  for (const id of ['belleville','scarborough']) {
-    const manifest = json(`cities/${id}/city.json`);
-    assert.equal(manifest.features.geoGuesser,true,id);
-    assert.equal(manifest.data.geoGuesser,'geo-data.json',id);
-    assert.equal(manifest.features.dispatch,previews.includes(id) || id === 'richmond-hill',id);
-    assert.equal(manifest.features.baseTraining,false,id);
-    assert.equal(manifest.data.bases,'geo-data.json',id);
-  }
 });
 
 test('builder rejects invalid selectable coordinates instead of silently coercing them', () => {

@@ -1,0 +1,274 @@
+{
+  "schemaVersion": 1,
+  "cityId": "ajax",
+  "reviewedLocalDate": "2026-11-02",
+  "assessment": "estimated",
+  "imagery": {
+    "provider": "Esri World Imagery",
+    "tileUrl": "https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}",
+    "capturedLocalDate": "2026-11-02",
+    "vintage": "not independently provided by the tile response",
+    "method": "Independent Leaflet captures centered at zoom 19; visible building, parking, driveway and apron extents estimated against the screenshot scale."
+  },
+  "roads": {
+    "file": "cities/ajax/roads.geojson.gz",
+    "source": "OpenStreetMap via Geofabrik Ontario extract",
+    "sourceTimestamp": "2026-09-27T20:23:36Z",
+    "snapshotBuiltAt": "2026-10-29T04:09:57.347Z",
+    "attribution": "© OpenStreetMap contributors",
+    "assessment": "Road/service-drive centerlines were inspected alongside imagery as plausibility evidence; they do not verify station gates or apparatus entrances."
+  },
+  "limits": [
+    "No official station parcel or building footprint was used.",
+    "Image-based fit dimensions and modeled spawn points are estimates, not surveyed measurements.",
+    "No apparatus door, gate, or emergency access route was independently verified.",
+    "Original source coordinates remain in each base record."
+  ],
+  "bases": [
+    {
+      "baseId": "ajax-ems-511",
+      "name": "Ajax Paramedic Station",
+      "address": "175 Hunt St, Ajax, ON",
+      "sourcePoint": {
+        "lat": 43.84540501890784,
+        "lng": -79.02694560796613
+      },
+      "drivingArea": {
+        "center": {
+          "lat": 43.84534214,
+          "lng": -79.02694561
+        },
+        "widthMetres": 92,
+        "lengthMetres": 112,
+        "rotationDegrees": 5,
+        "spawn": {
+          "lat": 43.84519841,
+          "lng": -79.02667159,
+          "headingDegrees": 72
+        }
+      },
+      "assessment": "estimated",
+      "imageryObservation": "Estimated from Esri World Imagery: paramedic station building, its immediately adjoining parking/apron and the visible internal service-drive approach. The source station coordinate above is preserved. Spawn is an estimated point on the mapped internal service driveway; no garage-door or dispatch entrance was independently verified.",
+      "rotationBasis": "Small image-estimated rotation follows the visible lot/driveway alignment; not survey-derived."
+    },
+    {
+      "baseId": "ajax-fire-1",
+      "name": "Fire Headquarters Station 1",
+      "address": "900 Salem Road North, Ajax, ON",
+      "sourcePoint": {
+        "lat": 43.88098109509981,
+        "lng": -79.01932954261235
+      },
+      "drivingArea": {
+        "center": {
+          "lat": 43.88078347,
+          "lng": -79.01932954
+        },
+        "widthMetres": 160,
+        "lengthMetres": 190,
+        "rotationDegrees": 0,
+        "spawn": {
+          "lat": 43.8809272,
+          "lng": -79.01883102,
+          "headingDegrees": 90
+        }
+      },
+      "assessment": "estimated",
+      "imageryObservation": "Estimated from Esri World Imagery: Fire Headquarters building and the surrounding on-site circulation/apron visible on the Salem Road parcel. The source station coordinate above is preserved. Spawn is estimated on the mapped internal service drive toward Salem Road; the specific apparatus entrance was not independently verified.",
+      "rotationBasis": "Site circulation is roughly cardinal/aligned with the Salem Road and Rossland Road grid in imagery."
+    },
+    {
+      "baseId": "ajax-fire-2",
+      "name": "Fire Station 2",
+      "address": "435 Monarch Avenue, Ajax, ON",
+      "sourcePoint": {
+        "lat": 43.83919297151598,
+        "lng": -79.02297469529482
+      },
+      "drivingArea": {
+        "center": {
+          "lat": 43.83914806,
+          "lng": -79.02291242
+        },
+        "widthMetres": 100,
+        "lengthMetres": 104,
+        "rotationDegrees": 5,
+        "spawn": {
+          "lat": 43.83899534,
+          "lng": -79.02250143,
+          "headingDegrees": 73
+        }
+      },
+      "assessment": "estimated",
+      "imageryObservation": "Estimated from Esri World Imagery: Fire Station 2 building, its immediate parking/apron and mapped internal service drive. The source station coordinate above is preserved. Spawn is estimated on the internal service drive toward Monarch Avenue; the specific apparatus entrance was not independently verified.",
+      "rotationBasis": "Small image-estimated rotation follows the visible lot/driveway alignment; not survey-derived."
+    },
+    {
+      "baseId": "ajax-fire-3",
+      "name": "Fire Station 3",
+      "address": "40 Westney Road North, Ajax, ON",
+      "sourcePoint": {
+        "lat": 43.85882201816389,
+        "lng": -79.04216324288274
+      },
+      "drivingArea": {
+        "center": {
+          "lat": 43.85876812,
+          "lng": -79.04228783
+        },
+        "widthMetres": 100,
+        "lengthMetres": 130,
+        "rotationDegrees": 354,
+        "spawn": {
+          "lat": 43.85870524,
+          "lng": -79.04193899,
+          "headingDegrees": 90
+        }
+      },
+      "assessment": "estimated",
+      "imageryObservation": "Estimated from Esri World Imagery: Fire Station 3 building, adjacent parking/apron and the visible driveway throat toward Westney Road North. The source station coordinate above is preserved. Spawn is an estimated point on the station-side driveway; the specific apparatus entrance was not independently verified.",
+      "rotationBasis": "354 degrees is equivalent to the image-estimated -6 degree alignment; normalized to the shared 0–359 rotation range."
+    }
+  ],
+  "roadConnectionChecks": {
+    "method": "Shared base-locations.js area/segment intersection semantics plus OSM segment distance and exact-coordinate node graph reachability from the nearest road geometry.",
+    "results": [
+      {
+        "baseId": "ajax-ems-511",
+        "drivingAreaIntersectsRoadSegments": 14,
+        "spawnNearestRoad": {
+          "featureId": "way/1547624805",
+          "highway": "service",
+          "name": null,
+          "distanceMetres": 0.96
+        },
+        "connectedFeaturePath": [
+          "way/1547624805",
+          "way/1547624803",
+          "way/35346176"
+        ],
+        "namedRoadReached": "Monarch Avenue"
+      },
+      {
+        "baseId": "ajax-fire-1",
+        "drivingAreaIntersectsRoadSegments": 56,
+        "spawnNearestRoad": {
+          "featureId": "way/462439847",
+          "highway": "service",
+          "name": null,
+          "distanceMetres": 0.21
+        },
+        "connectedFeaturePath": [
+          "way/462439847",
+          "way/426000066"
+        ],
+        "namedRoadReached": "Salem Road"
+      },
+      {
+        "baseId": "ajax-fire-2",
+        "drivingAreaIntersectsRoadSegments": 14,
+        "spawnNearestRoad": {
+          "featureId": "way/1073455244",
+          "highway": "service",
+          "name": null,
+          "distanceMetres": 0.11
+        },
+        "connectedFeaturePath": [
+          "way/1073455244",
+          "way/502500553"
+        ],
+        "namedRoadReached": "Monarch Avenue"
+      },
+      {
+        "baseId": "ajax-fire-3",
+        "drivingAreaIntersectsRoadSegments": 25,
+        "spawnNearestRoad": {
+          "featureId": "way/1014062631",
+          "highway": "secondary",
+          "name": "Westney Road North",
+          "distanceMetres": 11.29
+        },
+        "connectedFeaturePath": [
+          "estimated station-side driveway to mapped roadway",
+          "way/1014062631",
+          "way/300115449"
+        ],
+        "namedRoadReached": "Westney Road North",
+        "gapNote": "The OSM pack does not encode this station driveway; imagery shows the apparent throat. Spawn-to-road connection is therefore image-estimated, not network-verified."
+      }
+    ],
+    "caveat": "These checks establish modeled geometric/network plausibility only. They do not prove vehicle collision behavior, driveway/gate access, permitted turns, or operational station entrances. Ajax runtime dispatch is not fully enabled in this checkout, so an in-game drive-out could not be exercised."
+  },
+  "runtimeChecks": {
+    "checkedLocalDate": "2026-11-02",
+    "runtimeVersion": "1.6.17",
+    "browser": "Microsoft Edge headless",
+    "roadState": "ready",
+    "activeBaseCount": 4,
+    "method": "Called PTBO_ROAD_COLLISION.beginStationExit at each modeled spawn, advanced in 1.5 m steps with resolveMovement toward nearest road projection, and required an unblocked path ending on a drivable point within 2.5 m of that road point.",
+    "results": [
+      {
+        "baseId": "ajax-fire-1",
+        "spawnInitiallyDrivable": true,
+        "nearestRoad": {
+          "name": "Unnamed road",
+          "highway": "service",
+          "distanceMetres": 0.21
+        },
+        "areaRoadAccess": true,
+        "exitStarted": true,
+        "exitCompleted": true,
+        "blockedMoves": 0,
+        "movementSteps": 1,
+        "endDistanceToRoadMetres": 0
+      },
+      {
+        "baseId": "ajax-fire-2",
+        "spawnInitiallyDrivable": true,
+        "nearestRoad": {
+          "name": "Unnamed road",
+          "highway": "service",
+          "distanceMetres": 0.11
+        },
+        "areaRoadAccess": true,
+        "exitStarted": true,
+        "exitCompleted": true,
+        "blockedMoves": 0,
+        "movementSteps": 1,
+        "endDistanceToRoadMetres": 0
+      },
+      {
+        "baseId": "ajax-fire-3",
+        "spawnInitiallyDrivable": true,
+        "nearestRoad": {
+          "name": "Westney Road North",
+          "highway": "secondary",
+          "distanceMetres": 11.29
+        },
+        "areaRoadAccess": true,
+        "exitStarted": true,
+        "exitCompleted": true,
+        "blockedMoves": 0,
+        "movementSteps": 8,
+        "endDistanceToRoadMetres": 0
+      },
+      {
+        "baseId": "ajax-ems-511",
+        "spawnInitiallyDrivable": true,
+        "nearestRoad": {
+          "name": "Unnamed road",
+          "highway": "service",
+          "distanceMetres": 0.96
+        },
+        "areaRoadAccess": true,
+        "exitStarted": true,
+        "exitCompleted": true,
+        "blockedMoves": 0,
+        "movementSteps": 1,
+        "endDistanceToRoadMetres": 0
+      }
+    ],
+    "artifact": "artifacts/release-qa/base-fit/ajax-driving-area-checks.json",
+    "limits": "This directly exercised the runtime collision movement API from each configured spawn to its nearest mapped drivable road point. It did not simulate sustained vehicle acceleration or validate an actual station gate/garage door."
+  }
+}
