@@ -1,0 +1,439 @@
+{
+  "schemaVersion": 1,
+  "cityId": "guelph",
+  "reviewedLocalDate": "2026-11-02",
+  "assessment": "estimated",
+  "imagery": {
+    "provider": "Esri World Imagery",
+    "tileUrl": "https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}",
+    "capturedLocalDate": "2026-11-02",
+    "vintage": "not independently provided by the tile response",
+    "method": "Independent Leaflet captures of every active site at zoom 19; visible building, adjacent parking and apron/circulation estimated against map scale."
+  },
+  "roads": {
+    "file": "cities/guelph/roads.geojson.gz",
+    "source": "OpenStreetMap via Geofabrik Ontario extract",
+    "sourceTimestamp": "2026-09-27T20:23:36Z",
+    "packagedSha256": "1550ca7cee5f5fb189217f31f255b9f9663611fae5bb70fc9910c21045d7bd49",
+    "sourceSha256": "ebb50b39682d2381ad3c1d21e005b48cec3397e15da0d72c5d76c7d20d8dd249",
+    "sourceUrl": "https://download.geofabrik.de/north-america/canada/ontario.html",
+    "attribution": "© OpenStreetMap contributors",
+    "assessment": "Packaged local road and service centerlines were reviewed alongside imagery. Spawns are modeled projections to selected road centerlines and do not establish driveway ownership, gate access or apparatus entrances."
+  },
+  "limits": [
+    "Rectangle centers, dimensions, rotations and spawn coordinates are imagery- and road-map-based estimates, not surveyed measurements.",
+    "No official parcel plans, building footprints or apparatus entrance locations were used.",
+    "Satellite imagery dates are not supplied by the tile response.",
+    "Canonical source coordinates, base IDs and active statuses are preserved."
+  ],
+  "bases": [
+    {
+      "baseId": "guelph-fire-1",
+      "name": "Guelph Fire Station 1",
+      "address": "50 Wyndham Street South, Guelph, ON",
+      "sourcePoint": {
+        "lat": 43.5435157,
+        "lng": -80.243612
+      },
+      "drivingArea": {
+        "center": {
+          "lat": 43.5435157,
+          "lng": -80.243612
+        },
+        "widthMetres": 58,
+        "lengthMetres": 72,
+        "rotationDegrees": 0,
+        "spawn": {
+          "lat": 43.54366018,
+          "lng": -80.24387997,
+          "headingDegrees": 217
+        },
+        "roadSnap": {
+          "roadName": null,
+          "highway": "service",
+          "distanceFromSourceMetres": 26.9
+        }
+      },
+      "assessment": "estimated",
+      "imageryCapture": "artifacts/release-qa/base-fit-guelph/guelph-fire-1.png",
+      "imageryZoom": 19,
+      "metresPerPixel": 0.2162,
+      "imageryObservation": "Zoom-19 imagery reviewed for Guelph Fire Station 1; the fitted rectangle estimates the visible building, adjacent parking and on-site circulation.  Canonical source coordinates remain unchanged. Spawn is a modeled projection to the mapped service centerline, not a confirmed apparatus entrance.",
+      "rotationBasis": "Image-estimated alignment of the visible station, parking and circulation; not survey-derived.",
+      "identitySourceUrl": "https://guelph.ca/living/emergency-services/fire-service/station-locations/",
+      "runtimeCollision": {
+        "spawnInside": true,
+        "areaRoadAccess": true,
+        "spawnInitiallyDrivable": true,
+        "nearestRoad": {
+          "name": "Unnamed road",
+          "highway": "service",
+          "distanceMetres": 0
+        },
+        "exitStarted": true,
+        "exitCompleted": true,
+        "blockedMoves": 0,
+        "movementSteps": 15,
+        "outsideExpandedDrivingArea": true
+      }
+    },
+    {
+      "baseId": "guelph-fire-2",
+      "name": "Guelph Fire Station 2",
+      "address": "74 Speedvale Avenue East, Guelph, ON",
+      "sourcePoint": {
+        "lat": 43.5604422,
+        "lng": -80.2660534
+      },
+      "drivingArea": {
+        "center": {
+          "lat": 43.5604422,
+          "lng": -80.2660534
+        },
+        "widthMetres": 70,
+        "lengthMetres": 85,
+        "rotationDegrees": 0,
+        "spawn": {
+          "lat": 43.5604143,
+          "lng": -80.2658706,
+          "headingDegrees": 135
+        },
+        "roadSnap": {
+          "roadName": null,
+          "highway": "service",
+          "distanceFromSourceMetres": 15.1
+        }
+      },
+      "assessment": "estimated",
+      "imageryCapture": "artifacts/release-qa/base-fit-guelph/guelph-fire-2.png",
+      "imageryZoom": 19,
+      "metresPerPixel": 0.2161,
+      "imageryObservation": "Zoom-19 imagery reviewed for Guelph Fire Station 2; the fitted rectangle estimates the visible building, adjacent parking and on-site circulation.  Canonical source coordinates remain unchanged. Spawn is a modeled projection to the mapped service centerline, not a confirmed apparatus entrance.",
+      "rotationBasis": "Image-estimated alignment of the visible station, parking and circulation; not survey-derived.",
+      "identitySourceUrl": "https://guelph.ca/living/emergency-services/fire-service/station-locations/",
+      "runtimeCollision": {
+        "spawnInside": true,
+        "areaRoadAccess": true,
+        "spawnInitiallyDrivable": true,
+        "nearestRoad": {
+          "name": "Unnamed road",
+          "highway": "service",
+          "distanceMetres": 0
+        },
+        "exitStarted": true,
+        "exitCompleted": true,
+        "blockedMoves": 0,
+        "movementSteps": 50,
+        "outsideExpandedDrivingArea": true
+      }
+    },
+    {
+      "baseId": "guelph-fire-3",
+      "name": "Guelph Fire Station 3",
+      "address": "115 Stone Road West, Guelph, ON",
+      "sourcePoint": {
+        "lat": 43.5237436,
+        "lng": -80.2294306
+      },
+      "drivingArea": {
+        "center": {
+          "lat": 43.5237436,
+          "lng": -80.2294306
+        },
+        "widthMetres": 62,
+        "lengthMetres": 78,
+        "rotationDegrees": 0,
+        "spawn": {
+          "lat": 43.52353943,
+          "lng": -80.2296243,
+          "headingDegrees": 125
+        },
+        "roadSnap": {
+          "roadName": "Chancellors Way",
+          "highway": "unclassified",
+          "distanceFromSourceMetres": 27.6
+        }
+      },
+      "assessment": "estimated",
+      "imageryCapture": "artifacts/release-qa/base-fit-guelph/guelph-fire-3.png",
+      "imageryZoom": 19,
+      "metresPerPixel": 0.2163,
+      "imageryObservation": "Zoom-19 imagery reviewed for Guelph Fire Station 3; the fitted rectangle estimates the visible building, adjacent parking and on-site circulation.  Canonical source coordinates remain unchanged. Spawn is a modeled projection to the mapped Chancellors Way centerline, not a confirmed apparatus entrance.",
+      "rotationBasis": "Image-estimated alignment of the visible station, parking and circulation; not survey-derived.",
+      "identitySourceUrl": "https://guelph.ca/living/emergency-services/fire-service/station-locations/",
+      "runtimeCollision": {
+        "spawnInside": true,
+        "areaRoadAccess": true,
+        "spawnInitiallyDrivable": true,
+        "nearestRoad": {
+          "name": "Chancellors Way",
+          "highway": "unclassified",
+          "distanceMetres": 0
+        },
+        "exitStarted": true,
+        "exitCompleted": true,
+        "blockedMoves": 0,
+        "movementSteps": 38,
+        "outsideExpandedDrivingArea": true
+      }
+    },
+    {
+      "baseId": "guelph-fire-4",
+      "name": "Guelph Fire Station 4",
+      "address": "21 Imperial Road South, Guelph, ON",
+      "sourcePoint": {
+        "lat": 43.5247574,
+        "lng": -80.2916334
+      },
+      "drivingArea": {
+        "center": {
+          "lat": 43.5247574,
+          "lng": -80.2916334
+        },
+        "widthMetres": 65,
+        "lengthMetres": 82,
+        "rotationDegrees": 0,
+        "spawn": {
+          "lat": 43.52465088,
+          "lng": -80.29155677,
+          "headingDegrees": 62
+        },
+        "roadSnap": {
+          "roadName": null,
+          "highway": "service",
+          "distanceFromSourceMetres": 13.4
+        }
+      },
+      "assessment": "estimated",
+      "imageryCapture": "artifacts/release-qa/base-fit-guelph/guelph-fire-4.png",
+      "imageryZoom": 19,
+      "metresPerPixel": 0.2163,
+      "imageryObservation": "Zoom-19 imagery reviewed for Guelph Fire Station 4; the fitted rectangle estimates the visible building, adjacent parking and on-site circulation.  Canonical source coordinates remain unchanged. Spawn is a modeled projection to the mapped service centerline, not a confirmed apparatus entrance.",
+      "rotationBasis": "Image-estimated alignment of the visible station, parking and circulation; not survey-derived.",
+      "identitySourceUrl": "https://guelph.ca/living/emergency-services/fire-service/station-locations/",
+      "runtimeCollision": {
+        "spawnInside": true,
+        "areaRoadAccess": true,
+        "spawnInitiallyDrivable": true,
+        "nearestRoad": {
+          "name": "Unnamed road",
+          "highway": "service",
+          "distanceMetres": 0
+        },
+        "exitStarted": true,
+        "exitCompleted": true,
+        "blockedMoves": 0,
+        "movementSteps": 37,
+        "outsideExpandedDrivingArea": true
+      }
+    },
+    {
+      "baseId": "guelph-fire-5",
+      "name": "Guelph Fire Station 5",
+      "address": "380 Elizabeth Street, Guelph, ON",
+      "sourcePoint": {
+        "lat": 43.5558724,
+        "lng": -80.2284713
+      },
+      "drivingArea": {
+        "center": {
+          "lat": 43.5558724,
+          "lng": -80.2284713
+        },
+        "widthMetres": 60,
+        "lengthMetres": 75,
+        "rotationDegrees": 0,
+        "spawn": {
+          "lat": 43.5558296,
+          "lng": -80.22842326,
+          "headingDegrees": 51
+        },
+        "roadSnap": {
+          "roadName": null,
+          "highway": "service",
+          "distanceFromSourceMetres": 6.1
+        }
+      },
+      "assessment": "estimated",
+      "imageryCapture": "artifacts/release-qa/base-fit-guelph/guelph-fire-5.png",
+      "imageryZoom": 19,
+      "metresPerPixel": 0.2161,
+      "imageryObservation": "Zoom-19 imagery reviewed for Guelph Fire Station 5; the fitted rectangle estimates the visible building, adjacent parking and on-site circulation.  Canonical source coordinates remain unchanged. Spawn is a modeled projection to the mapped service centerline, not a confirmed apparatus entrance.",
+      "rotationBasis": "Image-estimated alignment of the visible station, parking and circulation; not survey-derived.",
+      "identitySourceUrl": "https://guelph.ca/living/emergency-services/fire-service/station-locations/",
+      "runtimeCollision": {
+        "spawnInside": true,
+        "areaRoadAccess": true,
+        "spawnInitiallyDrivable": true,
+        "nearestRoad": {
+          "name": "Unnamed road",
+          "highway": "service",
+          "distanceMetres": 0
+        },
+        "exitStarted": true,
+        "exitCompleted": true,
+        "blockedMoves": 0,
+        "movementSteps": 74,
+        "outsideExpandedDrivingArea": true
+      }
+    },
+    {
+      "baseId": "guelph-fire-6",
+      "name": "Guelph Fire Station 6",
+      "address": "160 Clair Road West, Guelph, ON",
+      "sourcePoint": {
+        "lat": 43.4961067,
+        "lng": -80.1933133
+      },
+      "drivingArea": {
+        "center": {
+          "lat": 43.4961067,
+          "lng": -80.1933133
+        },
+        "widthMetres": 125,
+        "lengthMetres": 145,
+        "rotationDegrees": 0,
+        "spawn": {
+          "lat": 43.49631414,
+          "lng": -80.1933945,
+          "headingDegrees": 74
+        },
+        "roadSnap": {
+          "roadName": null,
+          "highway": "service",
+          "distanceFromSourceMetres": 24
+        }
+      },
+      "assessment": "estimated",
+      "imageryCapture": "artifacts/release-qa/base-fit-guelph/guelph-fire-6.png",
+      "imageryZoom": 19,
+      "metresPerPixel": 0.2164,
+      "imageryObservation": "Zoom-19 imagery reviewed for Guelph Fire Station 6; the fitted rectangle estimates the visible building, adjacent parking and on-site circulation.  Canonical source coordinates remain unchanged. Spawn is a modeled projection to the mapped service centerline, not a confirmed apparatus entrance.",
+      "rotationBasis": "Image-estimated alignment of the visible station, parking and circulation; not survey-derived.",
+      "identitySourceUrl": "https://guelph.ca/living/emergency-services/fire-service/fire-department-history/",
+      "runtimeCollision": {
+        "spawnInside": true,
+        "areaRoadAccess": true,
+        "spawnInitiallyDrivable": true,
+        "nearestRoad": {
+          "name": "Unnamed road",
+          "highway": "service",
+          "distanceMetres": 0
+        },
+        "exitStarted": true,
+        "exitCompleted": true,
+        "blockedMoves": 0,
+        "movementSteps": 98,
+        "outsideExpandedDrivingArea": true
+      }
+    },
+    {
+      "baseId": "guelph-ems-0",
+      "name": "Guelph Paramedic Base 0",
+      "address": "355 Elmira Road North, Unit 134, Guelph, ON",
+      "sourcePoint": {
+        "lat": 43.5346402,
+        "lng": -80.3047251
+      },
+      "drivingArea": {
+        "center": {
+          "lat": 43.5346402,
+          "lng": -80.3047251
+        },
+        "widthMetres": 72,
+        "lengthMetres": 90,
+        "rotationDegrees": 0,
+        "spawn": {
+          "lat": 43.53448401,
+          "lng": -80.30479128,
+          "headingDegrees": 107
+        },
+        "roadSnap": {
+          "roadName": null,
+          "highway": "service",
+          "distanceFromSourceMetres": 18.2
+        }
+      },
+      "assessment": "estimated",
+      "imageryCapture": "artifacts/release-qa/base-fit-guelph/guelph-ems-0.png",
+      "imageryZoom": 19,
+      "metresPerPixel": 0.2162,
+      "imageryObservation": "Zoom-19 imagery reviewed for Guelph Paramedic Base 0; the fitted rectangle estimates the visible building, adjacent parking and on-site circulation.  Canonical source coordinates remain unchanged. Spawn is a modeled projection to the mapped service centerline, not a confirmed apparatus entrance.",
+      "rotationBasis": "Image-estimated alignment of the visible station, parking and circulation; not survey-derived.",
+      "identitySourceUrl": "https://guelph.ca/living/emergency-services/ambulance-service/stationsfleet/",
+      "runtimeCollision": {
+        "spawnInside": true,
+        "areaRoadAccess": true,
+        "spawnInitiallyDrivable": true,
+        "nearestRoad": {
+          "name": "Unnamed road",
+          "highway": "service",
+          "distanceMetres": 0
+        },
+        "exitStarted": true,
+        "exitCompleted": true,
+        "blockedMoves": 0,
+        "movementSteps": 38,
+        "outsideExpandedDrivingArea": true
+      }
+    },
+    {
+      "baseId": "guelph-ems-3",
+      "name": "Guelph Paramedic Base 3",
+      "address": "160 Clair Road West, Guelph, ON",
+      "sourcePoint": {
+        "lat": 43.4964424,
+        "lng": -80.1935736
+      },
+      "drivingArea": {
+        "center": {
+          "lat": 43.4961067,
+          "lng": -80.1933133
+        },
+        "widthMetres": 125,
+        "lengthMetres": 145,
+        "rotationDegrees": 0,
+        "spawn": {
+          "lat": 43.49631414,
+          "lng": -80.1933945,
+          "headingDegrees": 74
+        },
+        "roadSnap": {
+          "roadName": null,
+          "highway": "service",
+          "distanceFromSourceMetres": 24
+        }
+      },
+      "assessment": "estimated",
+      "imageryCapture": "artifacts/release-qa/base-fit-guelph/guelph-ems-3.png",
+      "imageryZoom": 19,
+      "metresPerPixel": 0.2164,
+      "imageryObservation": "Same site geometry as Guelph Fire Station 6: the zoom-19 capture shows the shared Clair Road emergency-services campus and its common building/parking/circulation parcel. The canonical EMS source coordinate remains unchanged. Spawn is modeled on the mapped access centerline, not a verified entrance.",
+      "rotationBasis": "Image-estimated alignment of the visible station, parking and circulation; not survey-derived.",
+      "identitySourceUrl": "https://guelph.ca/living/emergency-services/ambulance-service/stationsfleet/",
+      "sameSiteAs": "guelph-fire-6",
+      "runtimeCollision": {
+        "spawnInside": true,
+        "areaRoadAccess": true,
+        "spawnInitiallyDrivable": true,
+        "nearestRoad": {
+          "name": "Unnamed road",
+          "highway": "service",
+          "distanceMetres": 0
+        },
+        "exitStarted": true,
+        "exitCompleted": true,
+        "blockedMoves": 0,
+        "movementSteps": 98,
+        "outsideExpandedDrivingArea": true
+      }
+    }
+  ],
+  "runtimeCollisionChecks": {
+    "artifact": "artifacts/release-qa/base-fit/guelph-driving-area-checks.json",
+    "bases": 8,
+    "continuousExits": 8,
+    "blockedMoves": 0,
+    "note": "Continuous real-route collision-model samples through the yard boundary; not a physical full-route drive."
+  }
+}

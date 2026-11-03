@@ -1,0 +1,489 @@
+{
+  "schemaVersion": 1,
+  "cityId": "cambridge",
+  "reviewedLocalDate": "2026-11-02",
+  "assessment": "estimated",
+  "imagery": {
+    "provider": "Esri World Imagery",
+    "tileUrl": "https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}",
+    "capturedLocalDate": "2026-11-02",
+    "vintage": "not independently provided by the tile response",
+    "method": "Independent Leaflet captures of every active site at zoom 19; visible building, adjacent parking and apron/circulation estimated against map scale."
+  },
+  "roads": {
+    "file": "cities/cambridge/roads.geojson.gz",
+    "source": "OpenStreetMap via Geofabrik Ontario extract",
+    "sourceTimestamp": "2026-09-27T20:23:36Z",
+    "packagedSha256": "a842a94251cf4f147ee1c2bc7119e27267e1812d421af6789d9abd000376fe67",
+    "sourceSha256": "ebb50b39682d2381ad3c1d21e005b48cec3397e15da0d72c5d76c7d20d8dd249",
+    "sourceUrl": "https://download.geofabrik.de/north-america/canada/ontario.html",
+    "attribution": "© OpenStreetMap contributors",
+    "assessment": "Packaged local road and service centerlines were reviewed alongside imagery. Spawns are modeled projections to selected road centerlines and do not establish driveway ownership, gate access or apparatus entrances."
+  },
+  "limits": [
+    "Rectangle centers, dimensions, rotations and spawn coordinates are imagery- and road-map-based estimates, not surveyed measurements.",
+    "No official parcel plans, building footprints or apparatus entrance locations were used.",
+    "Satellite imagery dates are not supplied by the tile response.",
+    "Canonical source coordinates, base IDs and active statuses are preserved."
+  ],
+  "bases": [
+    {
+      "baseId": "cambridge-fire-1",
+      "name": "Cambridge Fire Station 1",
+      "address": "1625 Bishop Street North, Cambridge, ON",
+      "sourcePoint": {
+        "lat": 43.3986282,
+        "lng": -80.3057941
+      },
+      "drivingArea": {
+        "center": {
+          "lat": 43.3986282,
+          "lng": -80.3057941
+        },
+        "widthMetres": 60,
+        "lengthMetres": 75,
+        "rotationDegrees": 0,
+        "spawn": {
+          "lat": 43.39860589,
+          "lng": -80.30591537,
+          "headingDegrees": 346
+        },
+        "roadSnap": {
+          "roadName": null,
+          "highway": "service",
+          "distanceFromSourceMetres": 10.1
+        }
+      },
+      "assessment": "estimated",
+      "imageryCapture": "artifacts/release-qa/base-fit-cambridge/cambridge-fire-1.png",
+      "imageryZoom": 19,
+      "metresPerPixel": 0.2167,
+      "imageryObservation": "Zoom-19 imagery reviewed for Cambridge Fire Station 1; the fitted rectangle estimates the visible building, adjacent parking and on-site circulation.  Canonical source coordinates remain unchanged. Spawn is a modeled projection to the mapped service centerline, not a confirmed apparatus entrance.",
+      "rotationBasis": "Image-estimated alignment of the visible station, parking and circulation; not survey-derived.",
+      "identitySourceUrl": "https://www.cambridge.ca/resident-services/fire-department/about-cambridge-fire/",
+      "runtimeCollision": {
+        "spawnInside": true,
+        "areaRoadAccess": true,
+        "spawnInitiallyDrivable": true,
+        "nearestRoad": {
+          "name": "Unnamed road",
+          "highway": "service",
+          "distanceMetres": 0
+        },
+        "exitStarted": true,
+        "exitCompleted": true,
+        "blockedMoves": 0,
+        "movementSteps": 33,
+        "outsideExpandedDrivingArea": true
+      }
+    },
+    {
+      "baseId": "cambridge-fire-2",
+      "name": "Cambridge Fire Station 2",
+      "address": "11 Tannery Street East, Cambridge, ON",
+      "sourcePoint": {
+        "lat": 43.4312507,
+        "lng": -80.3094788
+      },
+      "drivingArea": {
+        "center": {
+          "lat": 43.4312507,
+          "lng": -80.3094788
+        },
+        "widthMetres": 65,
+        "lengthMetres": 80,
+        "rotationDegrees": 0,
+        "spawn": {
+          "lat": 43.4311462,
+          "lng": -80.3094717,
+          "headingDegrees": 329
+        },
+        "roadSnap": {
+          "roadName": null,
+          "highway": "service",
+          "distanceFromSourceMetres": 11.6
+        }
+      },
+      "assessment": "estimated",
+      "imageryCapture": "artifacts/release-qa/base-fit-cambridge/cambridge-fire-2.png",
+      "imageryZoom": 19,
+      "metresPerPixel": 0.2166,
+      "imageryObservation": "Zoom-19 imagery reviewed for Cambridge Fire Station 2; the fitted rectangle estimates the visible building, adjacent parking and on-site circulation.  Canonical source coordinates remain unchanged. Spawn is a modeled projection to the mapped service centerline, not a confirmed apparatus entrance.",
+      "rotationBasis": "Image-estimated alignment of the visible station, parking and circulation; not survey-derived.",
+      "identitySourceUrl": "https://www.cambridge.ca/resident-services/fire-department/about-cambridge-fire/",
+      "runtimeCollision": {
+        "spawnInside": true,
+        "areaRoadAccess": true,
+        "spawnInitiallyDrivable": true,
+        "nearestRoad": {
+          "name": "Unnamed road",
+          "highway": "service",
+          "distanceMetres": 0
+        },
+        "exitStarted": true,
+        "exitCompleted": true,
+        "blockedMoves": 0,
+        "movementSteps": 34,
+        "outsideExpandedDrivingArea": true
+      }
+    },
+    {
+      "baseId": "cambridge-fire-3",
+      "name": "Cambridge Fire Station 3",
+      "address": "525 King Street, Cambridge, ON",
+      "sourcePoint": {
+        "lat": 43.3971423,
+        "lng": -80.3602773
+      },
+      "drivingArea": {
+        "center": {
+          "lat": 43.3971423,
+          "lng": -80.3602773
+        },
+        "widthMetres": 60,
+        "lengthMetres": 75,
+        "rotationDegrees": 0,
+        "spawn": {
+          "lat": 43.39706737,
+          "lng": -80.36013174,
+          "headingDegrees": 215
+        },
+        "roadSnap": {
+          "roadName": null,
+          "highway": "service",
+          "distanceFromSourceMetres": 14.4
+        }
+      },
+      "assessment": "estimated",
+      "imageryCapture": "artifacts/release-qa/base-fit-cambridge/cambridge-fire-3.png",
+      "imageryZoom": 19,
+      "metresPerPixel": 0.2167,
+      "imageryObservation": "Zoom-19 imagery reviewed for Cambridge Fire Station 3; the fitted rectangle estimates the visible building, adjacent parking and on-site circulation.  Canonical source coordinates remain unchanged. Spawn is a modeled projection to the mapped service centerline, not a confirmed apparatus entrance.",
+      "rotationBasis": "Image-estimated alignment of the visible station, parking and circulation; not survey-derived.",
+      "identitySourceUrl": "https://www.cambridge.ca/resident-services/fire-department/about-cambridge-fire/",
+      "runtimeCollision": {
+        "spawnInside": true,
+        "areaRoadAccess": true,
+        "spawnInitiallyDrivable": true,
+        "nearestRoad": {
+          "name": "Unnamed road",
+          "highway": "service",
+          "distanceMetres": 0
+        },
+        "exitStarted": true,
+        "exitCompleted": true,
+        "blockedMoves": 0,
+        "movementSteps": 50,
+        "outsideExpandedDrivingArea": true
+      }
+    },
+    {
+      "baseId": "cambridge-fire-4",
+      "name": "Cambridge Fire Station 4",
+      "address": "91 Saint Andrews Street, Cambridge, ON",
+      "sourcePoint": {
+        "lat": 43.3542082,
+        "lng": -80.3213451
+      },
+      "drivingArea": {
+        "center": {
+          "lat": 43.3542082,
+          "lng": -80.3213451
+        },
+        "widthMetres": 75,
+        "lengthMetres": 95,
+        "rotationDegrees": 0,
+        "spawn": {
+          "lat": 43.3541594,
+          "lng": -80.3214825,
+          "headingDegrees": 124
+        },
+        "roadSnap": {
+          "roadName": null,
+          "highway": "service",
+          "distanceFromSourceMetres": 12.4
+        }
+      },
+      "assessment": "estimated",
+      "imageryCapture": "artifacts/release-qa/base-fit-cambridge/cambridge-fire-4.png",
+      "imageryZoom": 19,
+      "metresPerPixel": 0.2169,
+      "imageryObservation": "Zoom-19 imagery reviewed for Cambridge Fire Station 4; the fitted rectangle estimates the visible building, adjacent parking and on-site circulation.  Canonical source coordinates remain unchanged. Spawn is a modeled projection to the mapped service centerline, not a confirmed apparatus entrance.",
+      "rotationBasis": "Image-estimated alignment of the visible station, parking and circulation; not survey-derived.",
+      "identitySourceUrl": "https://www.cambridge.ca/resident-services/fire-department/about-cambridge-fire/",
+      "runtimeCollision": {
+        "spawnInside": true,
+        "areaRoadAccess": true,
+        "spawnInitiallyDrivable": true,
+        "nearestRoad": {
+          "name": "Unnamed road",
+          "highway": "service",
+          "distanceMetres": 0
+        },
+        "exitStarted": true,
+        "exitCompleted": true,
+        "blockedMoves": 0,
+        "movementSteps": 32,
+        "outsideExpandedDrivingArea": true
+      }
+    },
+    {
+      "baseId": "cambridge-fire-5",
+      "name": "Cambridge Fire Station 5",
+      "address": "490 Main Street East, Cambridge, ON",
+      "sourcePoint": {
+        "lat": 43.3583883,
+        "lng": -80.2883434
+      },
+      "drivingArea": {
+        "center": {
+          "lat": 43.3583883,
+          "lng": -80.2883434
+        },
+        "widthMetres": 60,
+        "lengthMetres": 75,
+        "rotationDegrees": 0,
+        "spawn": {
+          "lat": 43.35836898,
+          "lng": -80.28844448,
+          "headingDegrees": 345
+        },
+        "roadSnap": {
+          "roadName": null,
+          "highway": "service",
+          "distanceFromSourceMetres": 8.5
+        }
+      },
+      "assessment": "estimated",
+      "imageryCapture": "artifacts/release-qa/base-fit-cambridge/cambridge-fire-5.png",
+      "imageryZoom": 19,
+      "metresPerPixel": 0.2168,
+      "imageryObservation": "Zoom-19 imagery reviewed for Cambridge Fire Station 5; the fitted rectangle estimates the visible building, adjacent parking and on-site circulation.  Canonical source coordinates remain unchanged. Spawn is a modeled projection to the mapped service centerline, not a confirmed apparatus entrance.",
+      "rotationBasis": "Image-estimated alignment of the visible station, parking and circulation; not survey-derived.",
+      "identitySourceUrl": "https://www.cambridge.ca/resident-services/fire-department/about-cambridge-fire/",
+      "runtimeCollision": {
+        "spawnInside": true,
+        "areaRoadAccess": true,
+        "spawnInitiallyDrivable": true,
+        "nearestRoad": {
+          "name": "Unnamed road",
+          "highway": "service",
+          "distanceMetres": 0
+        },
+        "exitStarted": true,
+        "exitCompleted": true,
+        "blockedMoves": 0,
+        "movementSteps": 56,
+        "outsideExpandedDrivingArea": true
+      }
+    },
+    {
+      "baseId": "cambridge-fire-6",
+      "name": "Cambridge Fire Station 6",
+      "address": "485 Boxwood Drive, Cambridge, ON",
+      "sourcePoint": {
+        "lat": 43.4264252,
+        "lng": -80.3639325
+      },
+      "drivingArea": {
+        "center": {
+          "lat": 43.4264252,
+          "lng": -80.3639325
+        },
+        "widthMetres": 70,
+        "lengthMetres": 85,
+        "rotationDegrees": 0,
+        "spawn": {
+          "lat": 43.4264021,
+          "lng": -80.3639621,
+          "headingDegrees": 257
+        },
+        "roadSnap": {
+          "roadName": null,
+          "highway": "service",
+          "distanceFromSourceMetres": 3.5
+        }
+      },
+      "assessment": "estimated",
+      "imageryCapture": "artifacts/release-qa/base-fit-cambridge/cambridge-fire-6.png",
+      "imageryZoom": 19,
+      "metresPerPixel": 0.2166,
+      "imageryObservation": "Zoom-19 imagery reviewed for Cambridge Fire Station 6; the fitted rectangle estimates the visible building, adjacent parking and on-site circulation.  Canonical source coordinates remain unchanged. Spawn is a modeled projection to the mapped service centerline, not a confirmed apparatus entrance.",
+      "rotationBasis": "Image-estimated alignment of the visible station, parking and circulation; not survey-derived.",
+      "identitySourceUrl": "https://www.cambridge.ca/resident-services/fire-department/about-cambridge-fire/",
+      "runtimeCollision": {
+        "spawnInside": true,
+        "areaRoadAccess": true,
+        "spawnInitiallyDrivable": true,
+        "nearestRoad": {
+          "name": "Unnamed road",
+          "highway": "service",
+          "distanceMetres": 0
+        },
+        "exitStarted": true,
+        "exitCompleted": true,
+        "blockedMoves": 0,
+        "movementSteps": 58,
+        "outsideExpandedDrivingArea": true
+      }
+    },
+    {
+      "baseId": "cambridge-ems-maple-grove",
+      "name": "Cambridge Paramedic Base maple-grove",
+      "address": "120 Maple Grove Road, Cambridge, ON",
+      "sourcePoint": {
+        "lat": 43.4170227,
+        "lng": -80.3887545
+      },
+      "drivingArea": {
+        "center": {
+          "lat": 43.4170227,
+          "lng": -80.3887545
+        },
+        "widthMetres": 78,
+        "lengthMetres": 95,
+        "rotationDegrees": 0,
+        "spawn": {
+          "lat": 43.41726191,
+          "lng": -80.38883507,
+          "headingDegrees": 76
+        },
+        "roadSnap": {
+          "roadName": null,
+          "highway": "service",
+          "distanceFromSourceMetres": 27.4
+        }
+      },
+      "assessment": "estimated",
+      "imageryCapture": "artifacts/release-qa/base-fit-cambridge/cambridge-ems-maple-grove.png",
+      "imageryZoom": 19,
+      "metresPerPixel": 0.2166,
+      "imageryObservation": "Zoom-19 imagery reviewed for Cambridge Paramedic Base maple-grove; the fitted rectangle estimates the visible building, adjacent parking and on-site circulation.  Canonical source coordinates remain unchanged. Spawn is a modeled projection to the mapped service centerline, not a confirmed apparatus entrance.",
+      "rotationBasis": "Image-estimated alignment of the visible station, parking and circulation; not survey-derived.",
+      "identitySourceUrl": "https://www.regionofwaterloo.ca/programs-and-services/emergency-services-and-preparedness/ambulance-and-paramedic-services/about-us/",
+      "runtimeCollision": {
+        "spawnInside": true,
+        "areaRoadAccess": true,
+        "spawnInitiallyDrivable": true,
+        "nearestRoad": {
+          "name": "Unnamed road",
+          "highway": "service",
+          "distanceMetres": 0
+        },
+        "exitStarted": true,
+        "exitCompleted": true,
+        "blockedMoves": 0,
+        "movementSteps": 28,
+        "outsideExpandedDrivingArea": true
+      }
+    },
+    {
+      "baseId": "cambridge-ems-st-andrews",
+      "name": "Cambridge Paramedic Base st-andrews",
+      "address": "91 Saint Andrews Street, Cambridge, ON",
+      "sourcePoint": {
+        "lat": 43.3542082,
+        "lng": -80.3213451
+      },
+      "drivingArea": {
+        "center": {
+          "lat": 43.3542082,
+          "lng": -80.3213451
+        },
+        "widthMetres": 75,
+        "lengthMetres": 95,
+        "rotationDegrees": 0,
+        "spawn": {
+          "lat": 43.3541594,
+          "lng": -80.3214825,
+          "headingDegrees": 124
+        },
+        "roadSnap": {
+          "roadName": null,
+          "highway": "service",
+          "distanceFromSourceMetres": 12.4
+        }
+      },
+      "assessment": "estimated",
+      "imageryCapture": "artifacts/release-qa/base-fit-cambridge/cambridge-ems-st-andrews.png",
+      "imageryZoom": 19,
+      "metresPerPixel": 0.2169,
+      "imageryObservation": "Zoom-19 imagery reviewed for Cambridge Fire Station 4; the fitted rectangle estimates the visible building, adjacent parking and on-site circulation.  Canonical source coordinates remain unchanged. Spawn is a modeled projection to the mapped service centerline, not a confirmed apparatus entrance.",
+      "rotationBasis": "Image-estimated alignment of the visible station, parking and circulation; not survey-derived.",
+      "sameSiteAs": "cambridge-fire-4",
+      "identitySourceUrl": "https://www.regionofwaterloo.ca/programs-and-services/emergency-services-and-preparedness/ambulance-and-paramedic-services/about-us/",
+      "runtimeCollision": {
+        "spawnInside": true,
+        "areaRoadAccess": true,
+        "spawnInitiallyDrivable": true,
+        "nearestRoad": {
+          "name": "Unnamed road",
+          "highway": "service",
+          "distanceMetres": 0
+        },
+        "exitStarted": true,
+        "exitCompleted": true,
+        "blockedMoves": 0,
+        "movementSteps": 32,
+        "outsideExpandedDrivingArea": true
+      }
+    },
+    {
+      "baseId": "cambridge-ems-pinebush",
+      "name": "Cambridge Paramedic Base pinebush",
+      "address": "465 Pinebush Road, Cambridge, ON",
+      "sourcePoint": {
+        "lat": 43.4145467,
+        "lng": -80.2889791
+      },
+      "drivingArea": {
+        "center": {
+          "lat": 43.4145467,
+          "lng": -80.2889791
+        },
+        "widthMetres": 68,
+        "lengthMetres": 82,
+        "rotationDegrees": 0,
+        "spawn": {
+          "lat": 43.41461007,
+          "lng": -80.28900044,
+          "headingDegrees": 76
+        },
+        "roadSnap": {
+          "roadName": null,
+          "highway": "service",
+          "distanceFromSourceMetres": 7.3
+        }
+      },
+      "assessment": "estimated",
+      "imageryCapture": "artifacts/release-qa/base-fit-cambridge/cambridge-ems-pinebush.png",
+      "imageryZoom": 19,
+      "metresPerPixel": 0.2166,
+      "imageryObservation": "Zoom-19 imagery reviewed for Cambridge Paramedic Base pinebush; the fitted rectangle estimates the visible building, adjacent parking and on-site circulation.  Canonical source coordinates remain unchanged. Spawn is a modeled projection to the mapped service centerline, not a confirmed apparatus entrance.",
+      "rotationBasis": "Image-estimated alignment of the visible station, parking and circulation; not survey-derived.",
+      "identitySourceUrl": "https://www.regionofwaterloo.ca/programs-and-services/emergency-services-and-preparedness/ambulance-and-paramedic-services/about-us/",
+      "runtimeCollision": {
+        "spawnInside": true,
+        "areaRoadAccess": true,
+        "spawnInitiallyDrivable": true,
+        "nearestRoad": {
+          "name": "Unnamed road",
+          "highway": "service",
+          "distanceMetres": 0
+        },
+        "exitStarted": true,
+        "exitCompleted": true,
+        "blockedMoves": 0,
+        "movementSteps": 33,
+        "outsideExpandedDrivingArea": true
+      }
+    }
+  ],
+  "runtimeCollisionChecks": {
+    "artifact": "artifacts/release-qa/base-fit/cambridge-driving-area-checks.json",
+    "bases": 9,
+    "continuousExits": 9,
+    "blockedMoves": 0,
+    "note": "Continuous real-route collision-model samples through the yard boundary; not a physical full-route drive."
+  }
+}

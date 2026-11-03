@@ -1,0 +1,1999 @@
+{
+  "schemaVersion": 1,
+  "cityId": "scarborough",
+  "reviewedLocalDate": "2026-11-02",
+  "assessment": "estimated",
+  "imagery": {
+    "provider": "Esri World Imagery",
+    "tileUrl": "https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}",
+    "capturedLocalDate": "2026-11-02",
+    "captureTimestamp": "2026-11-03T03:09:57.959Z",
+    "zoom": 19,
+    "vintage": "not supplied by tile response",
+    "method": "Reviewed individual satellite captures for all 133 active Fire/EMS sites; average image scale 0.2155851582395278 m/pixel. Each area is estimated around visible building/frontage, immediate parking/apron and observable access; exact boundaries/entrances are not surveyed.",
+    "captureDirectory": "artifacts/release-qa/base-fit-toronto/"
+  },
+  "roads": {
+    "file": "cities/scarborough/roads.geojson.gz",
+    "note": "Scarborough road graph checked independently; imagery fits reused only for exact facility matches."
+  },
+  "limits": [
+    "No official parcel or building-footprint polygons were used.",
+    "Dimensions, centers, rotation and spawn coordinates are imagery/road-geometry estimates, not surveyed measurements.",
+    "Imagery does not verify apparatus doors, gates, access controls, current pavement, or building occupancy.",
+    "Canonical IDs and source coordinates remain unchanged.",
+    "Collision QA follows an actual city route from each spawn until at least 10 m beyond the fitted yard, then resolves movement in 1.5 m steps; this verifies the modeled collision transition, not sustained manual driving or real-world emergency-response suitability.",
+    "The 13 co-located Fire/EMS pairs reuse a shared imagery fit; this does not establish EMS-only bays or entrances."
+  ],
+  "bases": [
+    {
+      "baseId": "ems-ambulance-station-20-20",
+      "name": "Station 20, District 2 Office",
+      "address": "2430 Lawrence Ave E, Toronto, ON",
+      "sourcePoint": {
+        "lat": 43.75089720638386,
+        "lng": -79.27135957631407
+      },
+      "drivingArea": {
+        "center": {
+          "lat": 43.75089720638386,
+          "lng": -79.27135957631407
+        },
+        "widthMetres": 70,
+        "lengthMetres": 85,
+        "rotationDegrees": 45,
+        "spawn": {
+          "lat": 43.75089720638386,
+          "lng": -79.27135957631407,
+          "headingDegrees": 0
+        },
+        "spawnOffsetFromCanonicalMetres": {
+          "east": 0,
+          "north": 0
+        }
+      },
+      "assessment": "estimated",
+      "observation": "Estimated individually from the captured Esri image at 2430 Lawrence Ave E, Toronto, ON: visible paramedic post/building, immediate apron/marked parking and the on-site access aisle are included. Shared campus circulation is included only around the visible frontage; exact EMS door or entrance is unverified.",
+      "reusedFrom": {
+        "cityId": "toronto",
+        "baseId": "toronto-ems-3311695",
+        "validationFile": "docs/validation/base-areas/toronto.json",
+        "identityMatch": [
+          "service",
+          "exact address",
+          "exact canonical latitude",
+          "exact canonical longitude"
+        ],
+        "note": "Scarborough is a training view of these Toronto facilities; source IDs differ between packages."
+      },
+      "runtimeCollision": {
+        "spawnInside": true,
+        "areaRoadAccess": true,
+        "spawnInitiallyDrivable": true,
+        "nearestRoad": {
+          "name": "Unnamed road",
+          "highway": "service",
+          "distanceMetres": 18.91
+        },
+        "exitStarted": true,
+        "exitCompleted": true,
+        "blockedMoves": 0,
+        "movementSteps": 74,
+        "outsideExpandedDrivingArea": true
+      },
+      "dispatchRouteCoverage": {
+        "calls": 6,
+        "reachable": 6,
+        "responseRouteFailures": 0,
+        "transportRouteFailures": 0,
+        "maxRouteCalculationMs": 19.19999998807907,
+        "transportPolicy": {
+          "requiresHospital": true,
+          "note": null
+        }
+      }
+    },
+    {
+      "baseId": "ems-ambulance-station-21-21",
+      "name": "Station 21",
+      "address": "887 Pharmacy Ave, Toronto, ON",
+      "sourcePoint": {
+        "lat": 43.72955370341101,
+        "lng": -79.29852884106218
+      },
+      "drivingArea": {
+        "center": {
+          "lat": 43.72955370341101,
+          "lng": -79.29852884106218
+        },
+        "widthMetres": 65,
+        "lengthMetres": 80,
+        "rotationDegrees": 45,
+        "spawn": {
+          "lat": 43.72955370341101,
+          "lng": -79.29852884106218,
+          "headingDegrees": 0
+        },
+        "spawnOffsetFromCanonicalMetres": {
+          "east": 0,
+          "north": 0
+        }
+      },
+      "assessment": "estimated",
+      "observation": "Estimated individually from the captured Esri image at 887 Pharmacy Ave, Toronto, ON: visible paramedic post/building, immediate apron/marked parking and the on-site access aisle are included. Shared campus circulation is included only around the visible frontage; exact EMS door or entrance is unverified.",
+      "reusedFrom": {
+        "cityId": "toronto",
+        "baseId": "toronto-ems-3311716",
+        "validationFile": "docs/validation/base-areas/toronto.json",
+        "identityMatch": [
+          "service",
+          "exact address",
+          "exact canonical latitude",
+          "exact canonical longitude"
+        ],
+        "note": "Scarborough is a training view of these Toronto facilities; source IDs differ between packages."
+      },
+      "runtimeCollision": {
+        "spawnInside": true,
+        "areaRoadAccess": true,
+        "spawnInitiallyDrivable": true,
+        "nearestRoad": {
+          "name": "Pharmacy Avenue",
+          "highway": "tertiary",
+          "distanceMetres": 39.44
+        },
+        "exitStarted": true,
+        "exitCompleted": true,
+        "blockedMoves": 0,
+        "movementSteps": 39,
+        "outsideExpandedDrivingArea": true
+      },
+      "dispatchRouteCoverage": {
+        "calls": 6,
+        "reachable": 6,
+        "responseRouteFailures": 0,
+        "transportRouteFailures": 0,
+        "maxRouteCalculationMs": 42.099999994039536,
+        "transportPolicy": {
+          "requiresHospital": true,
+          "note": null
+        }
+      }
+    },
+    {
+      "baseId": "ems-ambulance-station-22-22",
+      "name": "Station 22",
+      "address": "3100 Eglinton Ave E, Toronto, ON",
+      "sourcePoint": {
+        "lat": 43.74200035565319,
+        "lng": -79.22625845845992
+      },
+      "drivingArea": {
+        "center": {
+          "lat": 43.74200035565319,
+          "lng": -79.22625845845992
+        },
+        "widthMetres": 75,
+        "lengthMetres": 90,
+        "rotationDegrees": 0,
+        "spawn": {
+          "lat": 43.74200035565319,
+          "lng": -79.22625845845992,
+          "headingDegrees": 0
+        },
+        "spawnOffsetFromCanonicalMetres": {
+          "east": 0,
+          "north": 0
+        }
+      },
+      "assessment": "estimated",
+      "observation": "Estimated individually from the captured Esri image at 3100 Eglinton Ave E, Toronto, ON: visible paramedic post/building, immediate apron/marked parking and the on-site access aisle are included. Shared campus circulation is included only around the visible frontage; exact EMS door or entrance is unverified.",
+      "reusedFrom": {
+        "cityId": "toronto",
+        "baseId": "toronto-ems-3311701",
+        "validationFile": "docs/validation/base-areas/toronto.json",
+        "identityMatch": [
+          "service",
+          "exact address",
+          "exact canonical latitude",
+          "exact canonical longitude"
+        ],
+        "note": "Scarborough is a training view of these Toronto facilities; source IDs differ between packages."
+      },
+      "runtimeCollision": {
+        "spawnInside": true,
+        "areaRoadAccess": true,
+        "spawnInitiallyDrivable": true,
+        "nearestRoad": {
+          "name": "Unnamed road",
+          "highway": "service",
+          "distanceMetres": 29.48
+        },
+        "exitStarted": true,
+        "exitCompleted": true,
+        "blockedMoves": 0,
+        "movementSteps": 55,
+        "outsideExpandedDrivingArea": true
+      },
+      "dispatchRouteCoverage": {
+        "calls": 6,
+        "reachable": 6,
+        "responseRouteFailures": 0,
+        "transportRouteFailures": 0,
+        "maxRouteCalculationMs": 41.099999994039536,
+        "transportPolicy": {
+          "requiresHospital": true,
+          "note": null
+        }
+      }
+    },
+    {
+      "baseId": "ems-ambulance-station-24-24",
+      "name": "Station 24",
+      "address": "3061 Birchmount Rd, Toronto, ON",
+      "sourcePoint": {
+        "lat": 43.80279737480081,
+        "lng": -79.30815774616198
+      },
+      "drivingArea": {
+        "center": {
+          "lat": 43.80279737480081,
+          "lng": -79.30815774616198
+        },
+        "widthMetres": 75,
+        "lengthMetres": 90,
+        "rotationDegrees": 0,
+        "spawn": {
+          "lat": 43.80279737480081,
+          "lng": -79.30815774616198,
+          "headingDegrees": 0
+        },
+        "spawnOffsetFromCanonicalMetres": {
+          "east": 0,
+          "north": 0
+        }
+      },
+      "assessment": "estimated",
+      "observation": "Estimated individually from the captured Esri image at 3061 Birchmount Rd, Toronto, ON: visible paramedic post/building, immediate apron/marked parking and the on-site access aisle are included. Shared campus circulation is included only around the visible frontage; exact EMS door or entrance is unverified.",
+      "reusedFrom": {
+        "cityId": "toronto",
+        "baseId": "toronto-ems-3331452",
+        "validationFile": "docs/validation/base-areas/toronto.json",
+        "identityMatch": [
+          "service",
+          "exact address",
+          "exact canonical latitude",
+          "exact canonical longitude"
+        ],
+        "note": "Scarborough is a training view of these Toronto facilities; source IDs differ between packages."
+      },
+      "runtimeCollision": {
+        "spawnInside": true,
+        "areaRoadAccess": true,
+        "spawnInitiallyDrivable": true,
+        "nearestRoad": {
+          "name": "Unnamed road",
+          "highway": "service",
+          "distanceMetres": 4.62
+        },
+        "exitStarted": true,
+        "exitCompleted": true,
+        "blockedMoves": 0,
+        "movementSteps": 59,
+        "outsideExpandedDrivingArea": true
+      },
+      "dispatchRouteCoverage": {
+        "calls": 6,
+        "reachable": 6,
+        "responseRouteFailures": 0,
+        "transportRouteFailures": 0,
+        "maxRouteCalculationMs": 3.9000000059604645,
+        "transportPolicy": {
+          "requiresHospital": true,
+          "note": null
+        }
+      }
+    },
+    {
+      "baseId": "ems-toronto-ems-2303629",
+      "name": "Station 25",
+      "address": "8500 Sheppard Ave E, Toronto, ON",
+      "sourcePoint": {
+        "lat": 43.80493224157932,
+        "lng": -79.18862000612295
+      },
+      "drivingArea": {
+        "center": {
+          "lat": 43.80490579237686,
+          "lng": -79.18874082377098
+        },
+        "widthMetres": 90,
+        "lengthMetres": 105,
+        "rotationDegrees": 0,
+        "spawn": {
+          "lat": 43.80493224157932,
+          "lng": -79.18862000612295,
+          "headingDegrees": 0
+        },
+        "spawnOffsetFromCanonicalMetres": {
+          "east": 0,
+          "north": 0
+        }
+      },
+      "assessment": "estimated",
+      "observation": "Co-located at 8500 Sheppard Ave E, Toronto, ON with Fire Station 212. Reuses the imagery-fitted shared building/apron/parking area; no EMS-only bay, door or access control is verified.",
+      "sharedFitWith": "toronto-fire-212",
+      "reusedFrom": {
+        "cityId": "toronto",
+        "baseId": "toronto-ems-2303629",
+        "validationFile": "docs/validation/base-areas/toronto.json",
+        "identityMatch": [
+          "service",
+          "exact address",
+          "exact canonical latitude",
+          "exact canonical longitude"
+        ],
+        "note": "Scarborough is a training view of these Toronto facilities; source IDs differ between packages."
+      },
+      "runtimeCollision": {
+        "spawnInside": true,
+        "areaRoadAccess": true,
+        "spawnInitiallyDrivable": true,
+        "nearestRoad": {
+          "name": "Unnamed road",
+          "highway": "service",
+          "distanceMetres": 5.82
+        },
+        "exitStarted": true,
+        "exitCompleted": true,
+        "blockedMoves": 0,
+        "movementSteps": 54,
+        "outsideExpandedDrivingArea": true
+      },
+      "dispatchRouteCoverage": {
+        "calls": 6,
+        "reachable": 6,
+        "responseRouteFailures": 0,
+        "transportRouteFailures": 0,
+        "maxRouteCalculationMs": 36.70000001788139,
+        "transportPolicy": {
+          "requiresHospital": true,
+          "note": null
+        }
+      }
+    },
+    {
+      "baseId": "ems-ambulance-station-26-26",
+      "name": "Station 26",
+      "address": "4331 Lawrence Ave E, Toronto, ON",
+      "sourcePoint": {
+        "lat": 43.77082674064299,
+        "lng": -79.17405340914407
+      },
+      "drivingArea": {
+        "center": {
+          "lat": 43.77082674064299,
+          "lng": -79.17405340914407
+        },
+        "widthMetres": 70,
+        "lengthMetres": 85,
+        "rotationDegrees": 45,
+        "spawn": {
+          "lat": 43.77082674064299,
+          "lng": -79.17405340914407,
+          "headingDegrees": 0
+        },
+        "spawnOffsetFromCanonicalMetres": {
+          "east": 0,
+          "north": 0
+        }
+      },
+      "assessment": "estimated",
+      "observation": "Estimated individually from the captured Esri image at 4331 Lawrence Ave E, Toronto, ON: visible paramedic post/building, immediate apron/marked parking and the on-site access aisle are included. Shared campus circulation is included only around the visible frontage; exact EMS door or entrance is unverified.",
+      "reusedFrom": {
+        "cityId": "toronto",
+        "baseId": "toronto-ems-3824182",
+        "validationFile": "docs/validation/base-areas/toronto.json",
+        "identityMatch": [
+          "service",
+          "exact address",
+          "exact canonical latitude",
+          "exact canonical longitude"
+        ],
+        "note": "Scarborough is a training view of these Toronto facilities; source IDs differ between packages."
+      },
+      "runtimeCollision": {
+        "spawnInside": true,
+        "areaRoadAccess": true,
+        "spawnInitiallyDrivable": true,
+        "nearestRoad": {
+          "name": "Lawrence Avenue East",
+          "highway": "secondary",
+          "distanceMetres": 32.74
+        },
+        "exitStarted": true,
+        "exitCompleted": true,
+        "blockedMoves": 0,
+        "movementSteps": 58,
+        "outsideExpandedDrivingArea": true
+      },
+      "dispatchRouteCoverage": {
+        "calls": 6,
+        "reachable": 6,
+        "responseRouteFailures": 0,
+        "transportRouteFailures": 0,
+        "maxRouteCalculationMs": 51.30000001192093,
+        "transportPolicy": {
+          "requiresHospital": true,
+          "note": null
+        }
+      }
+    },
+    {
+      "baseId": "ems-ambulance-station-27-27",
+      "name": "Station 27",
+      "address": "900 Tapscott Rd, Toronto, ON",
+      "sourcePoint": {
+        "lat": 43.82399272520154,
+        "lng": -79.24287003538682
+      },
+      "drivingArea": {
+        "center": {
+          "lat": 43.82399272520154,
+          "lng": -79.24287003538682
+        },
+        "widthMetres": 90,
+        "lengthMetres": 105,
+        "rotationDegrees": 0,
+        "spawn": {
+          "lat": 43.82399272520154,
+          "lng": -79.24287003538682,
+          "headingDegrees": 0
+        },
+        "spawnOffsetFromCanonicalMetres": {
+          "east": 0,
+          "north": 0
+        }
+      },
+      "assessment": "estimated",
+      "observation": "Co-located at 900 Tapscott Rd, Toronto, ON with Fire Station 211. Reuses the imagery-fitted shared building/apron/parking area; no EMS-only bay, door or access control is verified.",
+      "sharedFitWith": "toronto-fire-211",
+      "reusedFrom": {
+        "cityId": "toronto",
+        "baseId": "toronto-ems-1520443",
+        "validationFile": "docs/validation/base-areas/toronto.json",
+        "identityMatch": [
+          "service",
+          "exact address",
+          "exact canonical latitude",
+          "exact canonical longitude"
+        ],
+        "note": "Scarborough is a training view of these Toronto facilities; source IDs differ between packages."
+      },
+      "runtimeCollision": {
+        "spawnInside": true,
+        "areaRoadAccess": true,
+        "spawnInitiallyDrivable": true,
+        "nearestRoad": {
+          "name": "Unnamed road",
+          "highway": "service",
+          "distanceMetres": 14.74
+        },
+        "exitStarted": true,
+        "exitCompleted": true,
+        "blockedMoves": 0,
+        "movementSteps": 58,
+        "outsideExpandedDrivingArea": true
+      },
+      "dispatchRouteCoverage": {
+        "calls": 6,
+        "reachable": 6,
+        "responseRouteFailures": 0,
+        "transportRouteFailures": 0,
+        "maxRouteCalculationMs": 14.599999994039536,
+        "transportPolicy": {
+          "requiresHospital": true,
+          "note": null
+        }
+      }
+    },
+    {
+      "baseId": "ems-toronto-ems-2807376",
+      "name": "Station 28",
+      "address": "2900 Lawrence Ave E, Toronto, ON",
+      "sourcePoint": {
+        "lat": 43.75417044660114,
+        "lng": -79.25338351971146
+      },
+      "drivingArea": {
+        "center": {
+          "lat": 43.75417044660114,
+          "lng": -79.25338351971146
+        },
+        "widthMetres": 75,
+        "lengthMetres": 90,
+        "rotationDegrees": 45,
+        "spawn": {
+          "lat": 43.75417044660114,
+          "lng": -79.25338351971146,
+          "headingDegrees": 0
+        },
+        "spawnOffsetFromCanonicalMetres": {
+          "east": 0,
+          "north": 0
+        }
+      },
+      "assessment": "estimated",
+      "observation": "Estimated individually from the captured Esri image at 2900 Lawrence Ave E, Toronto, ON: visible paramedic post/building, immediate apron/marked parking and the on-site access aisle are included. Shared campus circulation is included only around the visible frontage; exact EMS door or entrance is unverified.",
+      "reusedFrom": {
+        "cityId": "toronto",
+        "baseId": "toronto-ems-2807376",
+        "validationFile": "docs/validation/base-areas/toronto.json",
+        "identityMatch": [
+          "service",
+          "exact address",
+          "exact canonical latitude",
+          "exact canonical longitude"
+        ],
+        "note": "Scarborough is a training view of these Toronto facilities; source IDs differ between packages."
+      },
+      "runtimeCollision": {
+        "spawnInside": true,
+        "areaRoadAccess": true,
+        "spawnInitiallyDrivable": true,
+        "nearestRoad": {
+          "name": "Unnamed road",
+          "highway": "service",
+          "distanceMetres": 5.46
+        },
+        "exitStarted": true,
+        "exitCompleted": true,
+        "blockedMoves": 0,
+        "movementSteps": 55,
+        "outsideExpandedDrivingArea": true
+      },
+      "dispatchRouteCoverage": {
+        "calls": 6,
+        "reachable": 6,
+        "responseRouteFailures": 0,
+        "transportRouteFailures": 0,
+        "maxRouteCalculationMs": 29.799999982118607,
+        "transportPolicy": {
+          "requiresHospital": true,
+          "note": null
+        }
+      }
+    },
+    {
+      "baseId": "ems-toronto-ems-2236216",
+      "name": "Station 29",
+      "address": "4560 Sheppard Ave E, Toronto, ON",
+      "sourcePoint": {
+        "lat": 43.78913691711762,
+        "lng": -79.2629602053098
+      },
+      "drivingArea": {
+        "center": {
+          "lat": 43.78913691711762,
+          "lng": -79.2629602053098
+        },
+        "widthMetres": 75,
+        "lengthMetres": 90,
+        "rotationDegrees": 0,
+        "spawn": {
+          "lat": 43.78913691711762,
+          "lng": -79.2629602053098,
+          "headingDegrees": 0
+        },
+        "spawnOffsetFromCanonicalMetres": {
+          "east": 0,
+          "north": 0
+        }
+      },
+      "assessment": "estimated",
+      "observation": "Co-located at 4560 Sheppard Ave E, Toronto, ON with Fire Station 243. Reuses the imagery-fitted shared building/apron/parking area; no EMS-only bay, door or access control is verified.",
+      "sharedFitWith": "toronto-fire-243",
+      "reusedFrom": {
+        "cityId": "toronto",
+        "baseId": "toronto-ems-2236216",
+        "validationFile": "docs/validation/base-areas/toronto.json",
+        "identityMatch": [
+          "service",
+          "exact address",
+          "exact canonical latitude",
+          "exact canonical longitude"
+        ],
+        "note": "Scarborough is a training view of these Toronto facilities; source IDs differ between packages."
+      },
+      "runtimeCollision": {
+        "spawnInside": true,
+        "areaRoadAccess": true,
+        "spawnInitiallyDrivable": true,
+        "nearestRoad": {
+          "name": "Unnamed road",
+          "highway": "service",
+          "distanceMetres": 8.23
+        },
+        "exitStarted": true,
+        "exitCompleted": true,
+        "blockedMoves": 0,
+        "movementSteps": 85,
+        "outsideExpandedDrivingArea": true
+      },
+      "dispatchRouteCoverage": {
+        "calls": 6,
+        "reachable": 6,
+        "responseRouteFailures": 0,
+        "transportRouteFailures": 0,
+        "maxRouteCalculationMs": 18.599999994039536,
+        "transportPolicy": {
+          "requiresHospital": true,
+          "note": null
+        }
+      }
+    },
+    {
+      "baseId": "ems-toronto-ems-3311686",
+      "name": "Station 42, District 4 Office",
+      "address": "1535 Kingston Rd, Toronto, ON",
+      "sourcePoint": {
+        "lat": 43.688967036148306,
+        "lng": -79.26855090900895
+      },
+      "drivingArea": {
+        "center": {
+          "lat": 43.688967036148306,
+          "lng": -79.26855090900895
+        },
+        "widthMetres": 70,
+        "lengthMetres": 85,
+        "rotationDegrees": 0,
+        "spawn": {
+          "lat": 43.688967036148306,
+          "lng": -79.26855090900895,
+          "headingDegrees": 0
+        },
+        "spawnOffsetFromCanonicalMetres": {
+          "east": 0,
+          "north": 0
+        }
+      },
+      "assessment": "estimated",
+      "observation": "Estimated individually from the captured Esri image at 1535 Kingston Rd, Toronto, ON: visible paramedic post/building, immediate apron/marked parking and the on-site access aisle are included. Shared campus circulation is included only around the visible frontage; exact EMS door or entrance is unverified.",
+      "reusedFrom": {
+        "cityId": "toronto",
+        "baseId": "toronto-ems-3311686",
+        "validationFile": "docs/validation/base-areas/toronto.json",
+        "identityMatch": [
+          "service",
+          "exact address",
+          "exact canonical latitude",
+          "exact canonical longitude"
+        ],
+        "note": "Scarborough is a training view of these Toronto facilities; source IDs differ between packages."
+      },
+      "runtimeCollision": {
+        "spawnInside": true,
+        "areaRoadAccess": true,
+        "spawnInitiallyDrivable": true,
+        "nearestRoad": {
+          "name": "Unnamed road",
+          "highway": "service",
+          "distanceMetres": 14.7
+        },
+        "exitStarted": true,
+        "exitCompleted": true,
+        "blockedMoves": 0,
+        "movementSteps": 66,
+        "outsideExpandedDrivingArea": true
+      },
+      "dispatchRouteCoverage": {
+        "calls": 6,
+        "reachable": 6,
+        "responseRouteFailures": 0,
+        "transportRouteFailures": 0,
+        "maxRouteCalculationMs": 40.400000005960464,
+        "transportPolicy": {
+          "requiresHospital": true,
+          "note": null
+        }
+      }
+    },
+    {
+      "baseId": "ems-toronto-ems-3175714",
+      "name": "Station 47",
+      "address": "3600 St Clair Ave E, Toronto, ON",
+      "sourcePoint": {
+        "lat": 43.718005193356724,
+        "lng": -79.25623717137962
+      },
+      "drivingArea": {
+        "center": {
+          "lat": 43.718005193356724,
+          "lng": -79.25623717137962
+        },
+        "widthMetres": 80,
+        "lengthMetres": 90,
+        "rotationDegrees": 45,
+        "spawn": {
+          "lat": 43.718005193356724,
+          "lng": -79.25623717137962,
+          "headingDegrees": 0
+        },
+        "spawnOffsetFromCanonicalMetres": {
+          "east": 0,
+          "north": 0
+        }
+      },
+      "assessment": "estimated",
+      "observation": "Estimated individually from the captured Esri image at 3600 St Clair Ave E, Toronto, ON: visible paramedic post/building, immediate apron/marked parking and the on-site access aisle are included. Shared campus circulation is included only around the visible frontage; exact EMS door or entrance is unverified.",
+      "reusedFrom": {
+        "cityId": "toronto",
+        "baseId": "toronto-ems-3175714",
+        "validationFile": "docs/validation/base-areas/toronto.json",
+        "identityMatch": [
+          "service",
+          "exact address",
+          "exact canonical latitude",
+          "exact canonical longitude"
+        ],
+        "note": "Scarborough is a training view of these Toronto facilities; source IDs differ between packages."
+      },
+      "runtimeCollision": {
+        "spawnInside": true,
+        "areaRoadAccess": true,
+        "spawnInitiallyDrivable": true,
+        "nearestRoad": {
+          "name": "Linden Avenue",
+          "highway": "residential",
+          "distanceMetres": 27.72
+        },
+        "exitStarted": true,
+        "exitCompleted": true,
+        "blockedMoves": 0,
+        "movementSteps": 82,
+        "outsideExpandedDrivingArea": true
+      },
+      "dispatchRouteCoverage": {
+        "calls": 6,
+        "reachable": 6,
+        "responseRouteFailures": 0,
+        "transportRouteFailures": 0,
+        "maxRouteCalculationMs": 38.29999998211861,
+        "transportPolicy": {
+          "requiresHospital": true,
+          "note": null
+        }
+      }
+    },
+    {
+      "baseId": "ems-toronto-ems-2489114",
+      "name": "26 Post",
+      "address": "5316 Lawrence Ave E, Toronto, ON",
+      "sourcePoint": {
+        "lat": 43.777357054492995,
+        "lng": -79.14821464794156
+      },
+      "drivingArea": {
+        "center": {
+          "lat": 43.77739193506365,
+          "lng": -79.14806589221874
+        },
+        "widthMetres": 80,
+        "lengthMetres": 90,
+        "rotationDegrees": 45,
+        "spawn": {
+          "lat": 43.777357054492995,
+          "lng": -79.14821464794156,
+          "headingDegrees": 0
+        },
+        "spawnOffsetFromCanonicalMetres": {
+          "east": 0,
+          "north": 0
+        }
+      },
+      "assessment": "estimated",
+      "observation": "Co-located at 5316 Lawrence Ave E, Toronto, ON with Fire Station 215. Reuses the imagery-fitted shared building/apron/parking area; no EMS-only bay, door or access control is verified.",
+      "sharedFitWith": "toronto-fire-215",
+      "reusedFrom": {
+        "cityId": "toronto",
+        "baseId": "toronto-ems-2489114",
+        "validationFile": "docs/validation/base-areas/toronto.json",
+        "identityMatch": [
+          "service",
+          "exact address",
+          "exact canonical latitude",
+          "exact canonical longitude"
+        ],
+        "note": "Scarborough is a training view of these Toronto facilities; source IDs differ between packages."
+      },
+      "runtimeCollision": {
+        "spawnInside": true,
+        "areaRoadAccess": true,
+        "spawnInitiallyDrivable": true,
+        "nearestRoad": {
+          "name": "Unnamed road",
+          "highway": "service",
+          "distanceMetres": 8.83
+        },
+        "exitStarted": true,
+        "exitCompleted": true,
+        "blockedMoves": 0,
+        "movementSteps": 66,
+        "outsideExpandedDrivingArea": true
+      },
+      "dispatchRouteCoverage": {
+        "calls": 6,
+        "reachable": 6,
+        "responseRouteFailures": 0,
+        "transportRouteFailures": 0,
+        "maxRouteCalculationMs": 39.5,
+        "transportPolicy": {
+          "requiresHospital": true,
+          "note": null
+        }
+      }
+    },
+    {
+      "baseId": "fire-toronto-fire-211",
+      "name": "Fire Station 211",
+      "address": "900 Tapscott Rd, Toronto, ON",
+      "sourcePoint": {
+        "lat": 43.82399272520154,
+        "lng": -79.24287003538682
+      },
+      "drivingArea": {
+        "center": {
+          "lat": 43.82399272520154,
+          "lng": -79.24287003538682
+        },
+        "widthMetres": 90,
+        "lengthMetres": 105,
+        "rotationDegrees": 0,
+        "spawn": {
+          "lat": 43.82399272520154,
+          "lng": -79.24287003538682,
+          "headingDegrees": 0
+        },
+        "spawnOffsetFromCanonicalMetres": {
+          "east": 0,
+          "north": 0
+        }
+      },
+      "assessment": "estimated",
+      "observation": "Estimated individually from the captured Esri image at 900 Tapscott Rd, Toronto, ON: visible station building, immediate apron/marked parking and the on-site access aisle toward the adjacent street are included; neighboring parcel is excluded where visible. Dimensions and rotation are image estimates; no apparatus bay or entrance is verified.",
+      "reusedFrom": {
+        "cityId": "toronto",
+        "baseId": "toronto-fire-211",
+        "validationFile": "docs/validation/base-areas/toronto.json",
+        "identityMatch": [
+          "service",
+          "exact address",
+          "exact canonical latitude",
+          "exact canonical longitude"
+        ],
+        "note": "Scarborough is a training view of these Toronto facilities; source IDs differ between packages."
+      },
+      "runtimeCollision": {
+        "spawnInside": true,
+        "areaRoadAccess": true,
+        "spawnInitiallyDrivable": true,
+        "nearestRoad": {
+          "name": "Unnamed road",
+          "highway": "service",
+          "distanceMetres": 14.74
+        },
+        "exitStarted": true,
+        "exitCompleted": true,
+        "blockedMoves": 0,
+        "movementSteps": 58,
+        "outsideExpandedDrivingArea": true
+      },
+      "dispatchRouteCoverage": {
+        "calls": 8,
+        "reachable": 8,
+        "responseRouteFailures": 0,
+        "transportRouteFailures": 0,
+        "maxRouteCalculationMs": 3,
+        "transportPolicy": {
+          "requiresHospital": false,
+          "note": null
+        }
+      }
+    },
+    {
+      "baseId": "fire-station-212-212",
+      "name": "Fire Station 212",
+      "address": "8500 Sheppard Ave E, Toronto, ON",
+      "sourcePoint": {
+        "lat": 43.80490579237686,
+        "lng": -79.18874082377098
+      },
+      "drivingArea": {
+        "center": {
+          "lat": 43.80490579237686,
+          "lng": -79.18874082377098
+        },
+        "widthMetres": 90,
+        "lengthMetres": 105,
+        "rotationDegrees": 0,
+        "spawn": {
+          "lat": 43.80490579237686,
+          "lng": -79.18874082377098,
+          "headingDegrees": 0
+        },
+        "spawnOffsetFromCanonicalMetres": {
+          "east": 0,
+          "north": 0
+        }
+      },
+      "assessment": "estimated",
+      "observation": "Estimated individually from the captured Esri image at 8500 Sheppard Ave E, Toronto, ON: visible station building, immediate apron/marked parking and the on-site access aisle toward the adjacent street are included; neighboring parcel is excluded where visible. Dimensions and rotation are image estimates; no apparatus bay or entrance is verified.",
+      "reusedFrom": {
+        "cityId": "toronto",
+        "baseId": "toronto-fire-212",
+        "validationFile": "docs/validation/base-areas/toronto.json",
+        "identityMatch": [
+          "service",
+          "exact address",
+          "exact canonical latitude",
+          "exact canonical longitude"
+        ],
+        "note": "Scarborough is a training view of these Toronto facilities; source IDs differ between packages."
+      },
+      "runtimeCollision": {
+        "spawnInside": true,
+        "areaRoadAccess": true,
+        "spawnInitiallyDrivable": true,
+        "nearestRoad": {
+          "name": "Unnamed road",
+          "highway": "service",
+          "distanceMetres": 9.47
+        },
+        "exitStarted": true,
+        "exitCompleted": true,
+        "blockedMoves": 0,
+        "movementSteps": 60,
+        "outsideExpandedDrivingArea": true
+      },
+      "dispatchRouteCoverage": {
+        "calls": 8,
+        "reachable": 8,
+        "responseRouteFailures": 0,
+        "transportRouteFailures": 0,
+        "maxRouteCalculationMs": 4.5,
+        "transportPolicy": {
+          "requiresHospital": false,
+          "note": null
+        }
+      }
+    },
+    {
+      "baseId": "fire-toronto-fire-213",
+      "name": "Fire Station 213",
+      "address": "7 Lapsley Rd, Toronto, ON",
+      "sourcePoint": {
+        "lat": 43.795406608873364,
+        "lng": -79.22596190861587
+      },
+      "drivingArea": {
+        "center": {
+          "lat": 43.795406608873364,
+          "lng": -79.22596190861587
+        },
+        "widthMetres": 65,
+        "lengthMetres": 80,
+        "rotationDegrees": 45,
+        "spawn": {
+          "lat": 43.795406608873364,
+          "lng": -79.22596190861587,
+          "headingDegrees": 0
+        },
+        "spawnOffsetFromCanonicalMetres": {
+          "east": 0,
+          "north": 0
+        }
+      },
+      "assessment": "estimated",
+      "observation": "Estimated individually from the captured Esri image at 7 Lapsley Rd, Toronto, ON: visible station building, immediate apron/marked parking and the on-site access aisle toward the adjacent street are included; neighboring parcel is excluded where visible. Dimensions and rotation are image estimates; no apparatus bay or entrance is verified.",
+      "reusedFrom": {
+        "cityId": "toronto",
+        "baseId": "toronto-fire-213",
+        "validationFile": "docs/validation/base-areas/toronto.json",
+        "identityMatch": [
+          "service",
+          "exact address",
+          "exact canonical latitude",
+          "exact canonical longitude"
+        ],
+        "note": "Scarborough is a training view of these Toronto facilities; source IDs differ between packages."
+      },
+      "runtimeCollision": {
+        "spawnInside": true,
+        "areaRoadAccess": true,
+        "spawnInitiallyDrivable": true,
+        "nearestRoad": {
+          "name": "Unnamed road",
+          "highway": "service",
+          "distanceMetres": 15.74
+        },
+        "exitStarted": true,
+        "exitCompleted": true,
+        "blockedMoves": 0,
+        "movementSteps": 34,
+        "outsideExpandedDrivingArea": true
+      },
+      "dispatchRouteCoverage": {
+        "calls": 8,
+        "reachable": 8,
+        "responseRouteFailures": 0,
+        "transportRouteFailures": 0,
+        "maxRouteCalculationMs": 3.0999999940395355,
+        "transportPolicy": {
+          "requiresHospital": false,
+          "note": null
+        }
+      }
+    },
+    {
+      "baseId": "fire-toronto-fire-214",
+      "name": "Fire Station 214",
+      "address": "745 Meadowvale Rd, Toronto, ON",
+      "sourcePoint": {
+        "lat": 43.794210766943564,
+        "lng": -79.16360160417264
+      },
+      "drivingArea": {
+        "center": {
+          "lat": 43.794210766943564,
+          "lng": -79.16360160417264
+        },
+        "widthMetres": 85,
+        "lengthMetres": 100,
+        "rotationDegrees": 0,
+        "spawn": {
+          "lat": 43.794210766943564,
+          "lng": -79.16360160417264,
+          "headingDegrees": 0
+        },
+        "spawnOffsetFromCanonicalMetres": {
+          "east": 0,
+          "north": 0
+        }
+      },
+      "assessment": "estimated",
+      "observation": "Estimated individually from the captured Esri image at 745 Meadowvale Rd, Toronto, ON: visible station building, immediate apron/marked parking and the on-site access aisle toward the adjacent street are included; neighboring parcel is excluded where visible. Dimensions and rotation are image estimates; no apparatus bay or entrance is verified.",
+      "reusedFrom": {
+        "cityId": "toronto",
+        "baseId": "toronto-fire-214",
+        "validationFile": "docs/validation/base-areas/toronto.json",
+        "identityMatch": [
+          "service",
+          "exact address",
+          "exact canonical latitude",
+          "exact canonical longitude"
+        ],
+        "note": "Scarborough is a training view of these Toronto facilities; source IDs differ between packages."
+      },
+      "runtimeCollision": {
+        "spawnInside": true,
+        "areaRoadAccess": true,
+        "spawnInitiallyDrivable": true,
+        "nearestRoad": {
+          "name": "Unnamed road",
+          "highway": "service",
+          "distanceMetres": 13.26
+        },
+        "exitStarted": true,
+        "exitCompleted": true,
+        "blockedMoves": 0,
+        "movementSteps": 66,
+        "outsideExpandedDrivingArea": true
+      },
+      "dispatchRouteCoverage": {
+        "calls": 8,
+        "reachable": 8,
+        "responseRouteFailures": 0,
+        "transportRouteFailures": 0,
+        "maxRouteCalculationMs": 4.199999988079071,
+        "transportPolicy": {
+          "requiresHospital": false,
+          "note": null
+        }
+      }
+    },
+    {
+      "baseId": "fire-station-215-215",
+      "name": "Fire Station 215",
+      "address": "5318 Lawrence Ave E, Toronto, ON",
+      "sourcePoint": {
+        "lat": 43.77739193506365,
+        "lng": -79.14806589221874
+      },
+      "drivingArea": {
+        "center": {
+          "lat": 43.77739193506365,
+          "lng": -79.14806589221874
+        },
+        "widthMetres": 80,
+        "lengthMetres": 90,
+        "rotationDegrees": 45,
+        "spawn": {
+          "lat": 43.77739193506365,
+          "lng": -79.14806589221874,
+          "headingDegrees": 0
+        },
+        "spawnOffsetFromCanonicalMetres": {
+          "east": 0,
+          "north": 0
+        }
+      },
+      "assessment": "estimated",
+      "observation": "Estimated individually from the captured Esri image at 5318 Lawrence Ave E, Toronto, ON: visible station building, immediate apron/marked parking and the on-site access aisle toward the adjacent street are included; neighboring parcel is excluded where visible. Dimensions and rotation are image estimates; no apparatus bay or entrance is verified.",
+      "reusedFrom": {
+        "cityId": "toronto",
+        "baseId": "toronto-fire-215",
+        "validationFile": "docs/validation/base-areas/toronto.json",
+        "identityMatch": [
+          "service",
+          "exact address",
+          "exact canonical latitude",
+          "exact canonical longitude"
+        ],
+        "note": "Scarborough is a training view of these Toronto facilities; source IDs differ between packages."
+      },
+      "runtimeCollision": {
+        "spawnInside": true,
+        "areaRoadAccess": true,
+        "spawnInitiallyDrivable": true,
+        "nearestRoad": {
+          "name": "Unnamed road",
+          "highway": "service",
+          "distanceMetres": 5.85
+        },
+        "exitStarted": true,
+        "exitCompleted": true,
+        "blockedMoves": 0,
+        "movementSteps": 64,
+        "outsideExpandedDrivingArea": true
+      },
+      "dispatchRouteCoverage": {
+        "calls": 8,
+        "reachable": 8,
+        "responseRouteFailures": 0,
+        "transportRouteFailures": 0,
+        "maxRouteCalculationMs": 3.699999988079071,
+        "transportPolicy": {
+          "requiresHospital": false,
+          "note": null
+        }
+      }
+    },
+    {
+      "baseId": "fire-station-221-221",
+      "name": "Fire Station 221",
+      "address": "2575 Eglinton Ave E, Toronto, ON",
+      "sourcePoint": {
+        "lat": 43.73479014329829,
+        "lng": -79.25506270350353
+      },
+      "drivingArea": {
+        "center": {
+          "lat": 43.73479014329829,
+          "lng": -79.25506270350353
+        },
+        "widthMetres": 75,
+        "lengthMetres": 90,
+        "rotationDegrees": 45,
+        "spawn": {
+          "lat": 43.73479014329829,
+          "lng": -79.25506270350353,
+          "headingDegrees": 0
+        },
+        "spawnOffsetFromCanonicalMetres": {
+          "east": 0,
+          "north": 0
+        }
+      },
+      "assessment": "estimated",
+      "observation": "Estimated individually from the captured Esri image at 2575 Eglinton Ave E, Toronto, ON: visible station building, immediate apron/marked parking and the on-site access aisle toward the adjacent street are included; neighboring parcel is excluded where visible. Dimensions and rotation are image estimates; no apparatus bay or entrance is verified.",
+      "reusedFrom": {
+        "cityId": "toronto",
+        "baseId": "toronto-fire-221",
+        "validationFile": "docs/validation/base-areas/toronto.json",
+        "identityMatch": [
+          "service",
+          "exact address",
+          "exact canonical latitude",
+          "exact canonical longitude"
+        ],
+        "note": "Scarborough is a training view of these Toronto facilities; source IDs differ between packages."
+      },
+      "runtimeCollision": {
+        "spawnInside": true,
+        "areaRoadAccess": true,
+        "spawnInitiallyDrivable": true,
+        "nearestRoad": {
+          "name": "Unnamed road",
+          "highway": "service",
+          "distanceMetres": 14.62
+        },
+        "exitStarted": true,
+        "exitCompleted": true,
+        "blockedMoves": 0,
+        "movementSteps": 63,
+        "outsideExpandedDrivingArea": true
+      },
+      "dispatchRouteCoverage": {
+        "calls": 8,
+        "reachable": 8,
+        "responseRouteFailures": 0,
+        "transportRouteFailures": 0,
+        "maxRouteCalculationMs": 2,
+        "transportPolicy": {
+          "requiresHospital": false,
+          "note": null
+        }
+      }
+    },
+    {
+      "baseId": "fire-toronto-fire-222",
+      "name": "Fire Station 222",
+      "address": "755 Warden Ave, Toronto, ON",
+      "sourcePoint": {
+        "lat": 43.72039942742826,
+        "lng": -79.2840906320077
+      },
+      "drivingArea": {
+        "center": {
+          "lat": 43.72039942742826,
+          "lng": -79.2840906320077
+        },
+        "widthMetres": 70,
+        "lengthMetres": 90,
+        "rotationDegrees": 0,
+        "spawn": {
+          "lat": 43.72039942742826,
+          "lng": -79.2840906320077,
+          "headingDegrees": 0
+        },
+        "spawnOffsetFromCanonicalMetres": {
+          "east": 0,
+          "north": 0
+        }
+      },
+      "assessment": "estimated",
+      "observation": "Estimated individually from the captured Esri image at 755 Warden Ave, Toronto, ON: visible station building, immediate apron/marked parking and the on-site access aisle toward the adjacent street are included; neighboring parcel is excluded where visible. Dimensions and rotation are image estimates; no apparatus bay or entrance is verified.",
+      "reusedFrom": {
+        "cityId": "toronto",
+        "baseId": "toronto-fire-222",
+        "validationFile": "docs/validation/base-areas/toronto.json",
+        "identityMatch": [
+          "service",
+          "exact address",
+          "exact canonical latitude",
+          "exact canonical longitude"
+        ],
+        "note": "Scarborough is a training view of these Toronto facilities; source IDs differ between packages."
+      },
+      "runtimeCollision": {
+        "spawnInside": true,
+        "areaRoadAccess": true,
+        "spawnInitiallyDrivable": true,
+        "nearestRoad": {
+          "name": "Unnamed road",
+          "highway": "service",
+          "distanceMetres": 7.38
+        },
+        "exitStarted": true,
+        "exitCompleted": true,
+        "blockedMoves": 0,
+        "movementSteps": 57,
+        "outsideExpandedDrivingArea": true
+      },
+      "dispatchRouteCoverage": {
+        "calls": 8,
+        "reachable": 8,
+        "responseRouteFailures": 0,
+        "transportRouteFailures": 0,
+        "maxRouteCalculationMs": 4.5,
+        "transportPolicy": {
+          "requiresHospital": false,
+          "note": null
+        }
+      }
+    },
+    {
+      "baseId": "fire-toronto-fire-223",
+      "name": "Fire Station 223",
+      "address": "116 Dorset Rd, Toronto, ON",
+      "sourcePoint": {
+        "lat": 43.723956761795435,
+        "lng": -79.23326107765529
+      },
+      "drivingArea": {
+        "center": {
+          "lat": 43.723956761795435,
+          "lng": -79.23326107765529
+        },
+        "widthMetres": 70,
+        "lengthMetres": 80,
+        "rotationDegrees": 0,
+        "spawn": {
+          "lat": 43.723956761795435,
+          "lng": -79.23326107765529,
+          "headingDegrees": 0
+        },
+        "spawnOffsetFromCanonicalMetres": {
+          "east": 0,
+          "north": 0
+        }
+      },
+      "assessment": "estimated",
+      "observation": "Estimated individually from the captured Esri image at 116 Dorset Rd, Toronto, ON: visible station building, immediate apron/marked parking and the on-site access aisle toward the adjacent street are included; neighboring parcel is excluded where visible. Dimensions and rotation are image estimates; no apparatus bay or entrance is verified.",
+      "reusedFrom": {
+        "cityId": "toronto",
+        "baseId": "toronto-fire-223",
+        "validationFile": "docs/validation/base-areas/toronto.json",
+        "identityMatch": [
+          "service",
+          "exact address",
+          "exact canonical latitude",
+          "exact canonical longitude"
+        ],
+        "note": "Scarborough is a training view of these Toronto facilities; source IDs differ between packages."
+      },
+      "runtimeCollision": {
+        "spawnInside": true,
+        "areaRoadAccess": true,
+        "spawnInitiallyDrivable": true,
+        "nearestRoad": {
+          "name": "Unnamed road",
+          "highway": "service",
+          "distanceMetres": 16.64
+        },
+        "exitStarted": true,
+        "exitCompleted": true,
+        "blockedMoves": 0,
+        "movementSteps": 58,
+        "outsideExpandedDrivingArea": true
+      },
+      "dispatchRouteCoverage": {
+        "calls": 8,
+        "reachable": 8,
+        "responseRouteFailures": 0,
+        "transportRouteFailures": 0,
+        "maxRouteCalculationMs": 2.4000000059604645,
+        "transportPolicy": {
+          "requiresHospital": false,
+          "note": null
+        }
+      }
+    },
+    {
+      "baseId": "fire-toronto-fire-225",
+      "name": "Fire Station 225",
+      "address": "3600 Danforth Ave, Toronto, ON",
+      "sourcePoint": {
+        "lat": 43.69591687317466,
+        "lng": -79.26849460456525
+      },
+      "drivingArea": {
+        "center": {
+          "lat": 43.69591687317466,
+          "lng": -79.26849460456525
+        },
+        "widthMetres": 70,
+        "lengthMetres": 80,
+        "rotationDegrees": 45,
+        "spawn": {
+          "lat": 43.69591687317466,
+          "lng": -79.26849460456525,
+          "headingDegrees": 0
+        },
+        "spawnOffsetFromCanonicalMetres": {
+          "east": 0,
+          "north": 0
+        }
+      },
+      "assessment": "estimated",
+      "observation": "Estimated individually from the captured Esri image at 3600 Danforth Ave, Toronto, ON: visible station building, immediate apron/marked parking and the on-site access aisle toward the adjacent street are included; neighboring parcel is excluded where visible. Dimensions and rotation are image estimates; no apparatus bay or entrance is verified.",
+      "reusedFrom": {
+        "cityId": "toronto",
+        "baseId": "toronto-fire-225",
+        "validationFile": "docs/validation/base-areas/toronto.json",
+        "identityMatch": [
+          "service",
+          "exact address",
+          "exact canonical latitude",
+          "exact canonical longitude"
+        ],
+        "note": "Scarborough is a training view of these Toronto facilities; source IDs differ between packages."
+      },
+      "runtimeCollision": {
+        "spawnInside": true,
+        "areaRoadAccess": true,
+        "spawnInitiallyDrivable": true,
+        "nearestRoad": {
+          "name": "Unnamed road",
+          "highway": "service",
+          "distanceMetres": 18.2
+        },
+        "exitStarted": true,
+        "exitCompleted": true,
+        "blockedMoves": 0,
+        "movementSteps": 51,
+        "outsideExpandedDrivingArea": true
+      },
+      "dispatchRouteCoverage": {
+        "calls": 8,
+        "reachable": 8,
+        "responseRouteFailures": 0,
+        "transportRouteFailures": 0,
+        "maxRouteCalculationMs": 2.2999999821186066,
+        "transportPolicy": {
+          "requiresHospital": false,
+          "note": null
+        }
+      }
+    },
+    {
+      "baseId": "fire-station-231-231",
+      "name": "Fire Station 231",
+      "address": "740 Markham Rd, Toronto, ON",
+      "sourcePoint": {
+        "lat": 43.7646440088669,
+        "lng": -79.22778766284232
+      },
+      "drivingArea": {
+        "center": {
+          "lat": 43.7646440088669,
+          "lng": -79.22778766284232
+        },
+        "widthMetres": 75,
+        "lengthMetres": 85,
+        "rotationDegrees": 45,
+        "spawn": {
+          "lat": 43.7646440088669,
+          "lng": -79.22778766284232,
+          "headingDegrees": 0
+        },
+        "spawnOffsetFromCanonicalMetres": {
+          "east": 0,
+          "north": 0
+        }
+      },
+      "assessment": "estimated",
+      "observation": "Estimated individually from the captured Esri image at 740 Markham Rd, Toronto, ON: visible station building, immediate apron/marked parking and the on-site access aisle toward the adjacent street are included; neighboring parcel is excluded where visible. Dimensions and rotation are image estimates; no apparatus bay or entrance is verified.",
+      "reusedFrom": {
+        "cityId": "toronto",
+        "baseId": "toronto-fire-231",
+        "validationFile": "docs/validation/base-areas/toronto.json",
+        "identityMatch": [
+          "service",
+          "exact address",
+          "exact canonical latitude",
+          "exact canonical longitude"
+        ],
+        "note": "Scarborough is a training view of these Toronto facilities; source IDs differ between packages."
+      },
+      "runtimeCollision": {
+        "spawnInside": true,
+        "areaRoadAccess": true,
+        "spawnInitiallyDrivable": true,
+        "nearestRoad": {
+          "name": "Unnamed road",
+          "highway": "service",
+          "distanceMetres": 12.85
+        },
+        "exitStarted": true,
+        "exitCompleted": true,
+        "blockedMoves": 0,
+        "movementSteps": 45,
+        "outsideExpandedDrivingArea": true
+      },
+      "dispatchRouteCoverage": {
+        "calls": 8,
+        "reachable": 8,
+        "responseRouteFailures": 0,
+        "transportRouteFailures": 0,
+        "maxRouteCalculationMs": 4.299999982118607,
+        "transportPolicy": {
+          "requiresHospital": false,
+          "note": null
+        }
+      }
+    },
+    {
+      "baseId": "fire-toronto-fire-232",
+      "name": "Fire Station 232",
+      "address": "1550 Midland Ave, Toronto, ON",
+      "sourcePoint": {
+        "lat": 43.75496694557759,
+        "lng": -79.26685107132796
+      },
+      "drivingArea": {
+        "center": {
+          "lat": 43.75496694557759,
+          "lng": -79.26685107132796
+        },
+        "widthMetres": 70,
+        "lengthMetres": 85,
+        "rotationDegrees": 45,
+        "spawn": {
+          "lat": 43.75496694557759,
+          "lng": -79.26685107132796,
+          "headingDegrees": 0
+        },
+        "spawnOffsetFromCanonicalMetres": {
+          "east": 0,
+          "north": 0
+        }
+      },
+      "assessment": "estimated",
+      "observation": "Estimated individually from the captured Esri image at 1550 Midland Ave, Toronto, ON: visible station building, immediate apron/marked parking and the on-site access aisle toward the adjacent street are included; neighboring parcel is excluded where visible. Dimensions and rotation are image estimates; no apparatus bay or entrance is verified.",
+      "reusedFrom": {
+        "cityId": "toronto",
+        "baseId": "toronto-fire-232",
+        "validationFile": "docs/validation/base-areas/toronto.json",
+        "identityMatch": [
+          "service",
+          "exact address",
+          "exact canonical latitude",
+          "exact canonical longitude"
+        ],
+        "note": "Scarborough is a training view of these Toronto facilities; source IDs differ between packages."
+      },
+      "runtimeCollision": {
+        "spawnInside": true,
+        "areaRoadAccess": true,
+        "spawnInitiallyDrivable": true,
+        "nearestRoad": {
+          "name": "Unnamed road",
+          "highway": "service",
+          "distanceMetres": 12.89
+        },
+        "exitStarted": true,
+        "exitCompleted": true,
+        "blockedMoves": 0,
+        "movementSteps": 41,
+        "outsideExpandedDrivingArea": true
+      },
+      "dispatchRouteCoverage": {
+        "calls": 8,
+        "reachable": 8,
+        "responseRouteFailures": 0,
+        "transportRouteFailures": 0,
+        "maxRouteCalculationMs": 2.5999999940395355,
+        "transportPolicy": {
+          "requiresHospital": false,
+          "note": null
+        }
+      }
+    },
+    {
+      "baseId": "fire-toronto-fire-234",
+      "name": "Fire Station 234",
+      "address": "40 Coronation Dr, Toronto, ON",
+      "sourcePoint": {
+        "lat": 43.761068166342255,
+        "lng": -79.19152202912737
+      },
+      "drivingArea": {
+        "center": {
+          "lat": 43.761068166342255,
+          "lng": -79.19152202912737
+        },
+        "widthMetres": 75,
+        "lengthMetres": 90,
+        "rotationDegrees": 0,
+        "spawn": {
+          "lat": 43.761068166342255,
+          "lng": -79.19152202912737,
+          "headingDegrees": 0
+        },
+        "spawnOffsetFromCanonicalMetres": {
+          "east": 0,
+          "north": 0
+        }
+      },
+      "assessment": "estimated",
+      "observation": "Estimated individually from the captured Esri image at 40 Coronation Dr, Toronto, ON: visible station building, immediate apron/marked parking and the on-site access aisle toward the adjacent street are included; neighboring parcel is excluded where visible. Dimensions and rotation are image estimates; no apparatus bay or entrance is verified.",
+      "reusedFrom": {
+        "cityId": "toronto",
+        "baseId": "toronto-fire-234",
+        "validationFile": "docs/validation/base-areas/toronto.json",
+        "identityMatch": [
+          "service",
+          "exact address",
+          "exact canonical latitude",
+          "exact canonical longitude"
+        ],
+        "note": "Scarborough is a training view of these Toronto facilities; source IDs differ between packages."
+      },
+      "runtimeCollision": {
+        "spawnInside": true,
+        "areaRoadAccess": true,
+        "spawnInitiallyDrivable": true,
+        "nearestRoad": {
+          "name": "Unnamed road",
+          "highway": "service",
+          "distanceMetres": 11.67
+        },
+        "exitStarted": true,
+        "exitCompleted": true,
+        "blockedMoves": 0,
+        "movementSteps": 55,
+        "outsideExpandedDrivingArea": true
+      },
+      "dispatchRouteCoverage": {
+        "calls": 8,
+        "reachable": 8,
+        "responseRouteFailures": 0,
+        "transportRouteFailures": 0,
+        "maxRouteCalculationMs": 3.300000011920929,
+        "transportPolicy": {
+          "requiresHospital": false,
+          "note": null
+        }
+      }
+    },
+    {
+      "baseId": "fire-toronto-fire-241",
+      "name": "Fire Station 241",
+      "address": "3325 Warden Ave, Toronto, ON",
+      "sourcePoint": {
+        "lat": 43.81404197971089,
+        "lng": -79.3238025417745
+      },
+      "drivingArea": {
+        "center": {
+          "lat": 43.81404197971089,
+          "lng": -79.3238025417745
+        },
+        "widthMetres": 65,
+        "lengthMetres": 80,
+        "rotationDegrees": 45,
+        "spawn": {
+          "lat": 43.81404197971089,
+          "lng": -79.3238025417745,
+          "headingDegrees": 0
+        },
+        "spawnOffsetFromCanonicalMetres": {
+          "east": 0,
+          "north": 0
+        }
+      },
+      "assessment": "estimated",
+      "observation": "Estimated individually from the captured Esri image at 3325 Warden Ave, Toronto, ON: visible station building, immediate apron/marked parking and the on-site access aisle toward the adjacent street are included; neighboring parcel is excluded where visible. Dimensions and rotation are image estimates; no apparatus bay or entrance is verified.",
+      "reusedFrom": {
+        "cityId": "toronto",
+        "baseId": "toronto-fire-241",
+        "validationFile": "docs/validation/base-areas/toronto.json",
+        "identityMatch": [
+          "service",
+          "exact address",
+          "exact canonical latitude",
+          "exact canonical longitude"
+        ],
+        "note": "Scarborough is a training view of these Toronto facilities; source IDs differ between packages."
+      },
+      "runtimeCollision": {
+        "spawnInside": true,
+        "areaRoadAccess": true,
+        "spawnInitiallyDrivable": true,
+        "nearestRoad": {
+          "name": "Unnamed road",
+          "highway": "service",
+          "distanceMetres": 12.94
+        },
+        "exitStarted": true,
+        "exitCompleted": true,
+        "blockedMoves": 0,
+        "movementSteps": 56,
+        "outsideExpandedDrivingArea": true
+      },
+      "dispatchRouteCoverage": {
+        "calls": 8,
+        "reachable": 8,
+        "responseRouteFailures": 0,
+        "transportRouteFailures": 0,
+        "maxRouteCalculationMs": 3.199999988079071,
+        "transportPolicy": {
+          "requiresHospital": false,
+          "note": null
+        }
+      }
+    },
+    {
+      "baseId": "fire-toronto-fire-242",
+      "name": "Fire Station 242",
+      "address": "2733 Brimley Rd, Toronto, ON",
+      "sourcePoint": {
+        "lat": 43.80691964458345,
+        "lng": -79.27725628028892
+      },
+      "drivingArea": {
+        "center": {
+          "lat": 43.80691964458345,
+          "lng": -79.27725628028892
+        },
+        "widthMetres": 75,
+        "lengthMetres": 90,
+        "rotationDegrees": 0,
+        "spawn": {
+          "lat": 43.80691964458345,
+          "lng": -79.27725628028892,
+          "headingDegrees": 0
+        },
+        "spawnOffsetFromCanonicalMetres": {
+          "east": 0,
+          "north": 0
+        }
+      },
+      "assessment": "estimated",
+      "observation": "Estimated individually from the captured Esri image at 2733 Brimley Rd, Toronto, ON: visible station building, immediate apron/marked parking and the on-site access aisle toward the adjacent street are included; neighboring parcel is excluded where visible. Dimensions and rotation are image estimates; no apparatus bay or entrance is verified.",
+      "reusedFrom": {
+        "cityId": "toronto",
+        "baseId": "toronto-fire-242",
+        "validationFile": "docs/validation/base-areas/toronto.json",
+        "identityMatch": [
+          "service",
+          "exact address",
+          "exact canonical latitude",
+          "exact canonical longitude"
+        ],
+        "note": "Scarborough is a training view of these Toronto facilities; source IDs differ between packages."
+      },
+      "runtimeCollision": {
+        "spawnInside": true,
+        "areaRoadAccess": true,
+        "spawnInitiallyDrivable": true,
+        "nearestRoad": {
+          "name": "Unnamed road",
+          "highway": "service",
+          "distanceMetres": 14.65
+        },
+        "exitStarted": true,
+        "exitCompleted": true,
+        "blockedMoves": 0,
+        "movementSteps": 38,
+        "outsideExpandedDrivingArea": true
+      },
+      "dispatchRouteCoverage": {
+        "calls": 8,
+        "reachable": 8,
+        "responseRouteFailures": 0,
+        "transportRouteFailures": 0,
+        "maxRouteCalculationMs": 3.0999999940395355,
+        "transportPolicy": {
+          "requiresHospital": false,
+          "note": null
+        }
+      }
+    },
+    {
+      "baseId": "fire-station-243-243",
+      "name": "Fire Station 243",
+      "address": "4560 Sheppard Ave E, Toronto, ON",
+      "sourcePoint": {
+        "lat": 43.78913691711762,
+        "lng": -79.2629602053098
+      },
+      "drivingArea": {
+        "center": {
+          "lat": 43.78913691711762,
+          "lng": -79.2629602053098
+        },
+        "widthMetres": 75,
+        "lengthMetres": 90,
+        "rotationDegrees": 0,
+        "spawn": {
+          "lat": 43.78913691711762,
+          "lng": -79.2629602053098,
+          "headingDegrees": 0
+        },
+        "spawnOffsetFromCanonicalMetres": {
+          "east": 0,
+          "north": 0
+        }
+      },
+      "assessment": "estimated",
+      "observation": "Estimated individually from the captured Esri image at 4560 Sheppard Ave E, Toronto, ON: visible station building, immediate apron/marked parking and the on-site access aisle toward the adjacent street are included; neighboring parcel is excluded where visible. Dimensions and rotation are image estimates; no apparatus bay or entrance is verified.",
+      "reusedFrom": {
+        "cityId": "toronto",
+        "baseId": "toronto-fire-243",
+        "validationFile": "docs/validation/base-areas/toronto.json",
+        "identityMatch": [
+          "service",
+          "exact address",
+          "exact canonical latitude",
+          "exact canonical longitude"
+        ],
+        "note": "Scarborough is a training view of these Toronto facilities; source IDs differ between packages."
+      },
+      "runtimeCollision": {
+        "spawnInside": true,
+        "areaRoadAccess": true,
+        "spawnInitiallyDrivable": true,
+        "nearestRoad": {
+          "name": "Unnamed road",
+          "highway": "service",
+          "distanceMetres": 8.23
+        },
+        "exitStarted": true,
+        "exitCompleted": true,
+        "blockedMoves": 0,
+        "movementSteps": 85,
+        "outsideExpandedDrivingArea": true
+      },
+      "dispatchRouteCoverage": {
+        "calls": 8,
+        "reachable": 8,
+        "responseRouteFailures": 0,
+        "transportRouteFailures": 0,
+        "maxRouteCalculationMs": 3.7000000178813934,
+        "transportPolicy": {
+          "requiresHospital": false,
+          "note": null
+        }
+      }
+    },
+    {
+      "baseId": "fire-toronto-fire-244",
+      "name": "Fire Station 244",
+      "address": "2340 Birchmount Rd, Toronto, ON",
+      "sourcePoint": {
+        "lat": 43.781682495272456,
+        "lng": -79.2991153286616
+      },
+      "drivingArea": {
+        "center": {
+          "lat": 43.781682495272456,
+          "lng": -79.2991153286616
+        },
+        "widthMetres": 70,
+        "lengthMetres": 85,
+        "rotationDegrees": 0,
+        "spawn": {
+          "lat": 43.781682495272456,
+          "lng": -79.2991153286616,
+          "headingDegrees": 0
+        },
+        "spawnOffsetFromCanonicalMetres": {
+          "east": 0,
+          "north": 0
+        }
+      },
+      "assessment": "estimated",
+      "observation": "Estimated individually from the captured Esri image at 2340 Birchmount Rd, Toronto, ON: visible station building, immediate apron/marked parking and the on-site access aisle toward the adjacent street are included; neighboring parcel is excluded where visible. Dimensions and rotation are image estimates; no apparatus bay or entrance is verified.",
+      "reusedFrom": {
+        "cityId": "toronto",
+        "baseId": "toronto-fire-244",
+        "validationFile": "docs/validation/base-areas/toronto.json",
+        "identityMatch": [
+          "service",
+          "exact address",
+          "exact canonical latitude",
+          "exact canonical longitude"
+        ],
+        "note": "Scarborough is a training view of these Toronto facilities; source IDs differ between packages."
+      },
+      "runtimeCollision": {
+        "spawnInside": true,
+        "areaRoadAccess": true,
+        "spawnInitiallyDrivable": true,
+        "nearestRoad": {
+          "name": "Unnamed road",
+          "highway": "service",
+          "distanceMetres": 13.39
+        },
+        "exitStarted": true,
+        "exitCompleted": true,
+        "blockedMoves": 0,
+        "movementSteps": 35,
+        "outsideExpandedDrivingArea": true
+      },
+      "dispatchRouteCoverage": {
+        "calls": 8,
+        "reachable": 8,
+        "responseRouteFailures": 0,
+        "transportRouteFailures": 0,
+        "maxRouteCalculationMs": 2.699999988079071,
+        "transportPolicy": {
+          "requiresHospital": false,
+          "note": null
+        }
+      }
+    },
+    {
+      "baseId": "fire-station-245-245",
+      "name": "Fire Station 245",
+      "address": "1600 Birchmount Rd, Toronto, ON",
+      "sourcePoint": {
+        "lat": 43.76269182180581,
+        "lng": -79.29151840526467
+      },
+      "drivingArea": {
+        "center": {
+          "lat": 43.76269182180581,
+          "lng": -79.29151840526467
+        },
+        "widthMetres": 75,
+        "lengthMetres": 90,
+        "rotationDegrees": 0,
+        "spawn": {
+          "lat": 43.76269182180581,
+          "lng": -79.29151840526467,
+          "headingDegrees": 0
+        },
+        "spawnOffsetFromCanonicalMetres": {
+          "east": 0,
+          "north": 0
+        }
+      },
+      "assessment": "estimated",
+      "observation": "Estimated individually from the captured Esri image at 1600 Birchmount Rd, Toronto, ON: visible station building, immediate apron/marked parking and the on-site access aisle toward the adjacent street are included; neighboring parcel is excluded where visible. Dimensions and rotation are image estimates; no apparatus bay or entrance is verified.",
+      "reusedFrom": {
+        "cityId": "toronto",
+        "baseId": "toronto-fire-245",
+        "validationFile": "docs/validation/base-areas/toronto.json",
+        "identityMatch": [
+          "service",
+          "exact address",
+          "exact canonical latitude",
+          "exact canonical longitude"
+        ],
+        "note": "Scarborough is a training view of these Toronto facilities; source IDs differ between packages."
+      },
+      "runtimeCollision": {
+        "spawnInside": true,
+        "areaRoadAccess": true,
+        "spawnInitiallyDrivable": true,
+        "nearestRoad": {
+          "name": "Unnamed road",
+          "highway": "service",
+          "distanceMetres": 11.14
+        },
+        "exitStarted": true,
+        "exitCompleted": true,
+        "blockedMoves": 0,
+        "movementSteps": 60,
+        "outsideExpandedDrivingArea": true
+      },
+      "dispatchRouteCoverage": {
+        "calls": 8,
+        "reachable": 8,
+        "responseRouteFailures": 0,
+        "transportRouteFailures": 0,
+        "maxRouteCalculationMs": 2.4000000059604645,
+        "transportPolicy": {
+          "requiresHospital": false,
+          "note": null
+        }
+      }
+    }
+  ],
+  "runtimeCollisionChecks": {
+    "artifact": "artifacts/release-qa/base-fit/scarborough-driving-area-checks.json",
+    "bases": 29,
+    "continuousExits": 29,
+    "blockedMoves": 0,
+    "note": "Continuous real-route collision-model samples through the yard boundary; not a physical full-route drive."
+  },
+  "dispatchRouteCoverage": {
+    "artifact": "artifacts/release-qa/all-city-dispatch/scarborough/dispatch-browser.json",
+    "scenarios": 4,
+    "services": [
+      "fire",
+      "ems"
+    ],
+    "viewports": [
+      "desktop",
+      "mobile"
+    ],
+    "errors": 0,
+    "alerts": 0,
+    "note": "Short real-control driving; controlled arrival coordinates for long response/transport legs. Route coverage checks every local assignment."
+  }
+}

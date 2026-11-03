@@ -1,0 +1,2254 @@
+{
+  "schemaVersion": 1,
+  "cityId": "hamilton",
+  "reviewedLocalDate": "2026-11-02",
+  "assessment": "estimated",
+  "imagery": {
+    "provider": "Esri World Imagery",
+    "tileUrl": "https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}",
+    "capturedLocalDate": "2026-11-02",
+    "vintage": "not independently provided by the tile response",
+    "method": "Independent Leaflet captures of every active site at zoom 19; visible building, adjacent parking and apron/circulation estimated against map scale."
+  },
+  "roads": {
+    "file": "cities/hamilton/roads.geojson.gz",
+    "source": "OpenStreetMap via Geofabrik Ontario extract",
+    "sourceTimestamp": "2026-09-27T20:23:36Z",
+    "packagedSha256": "ec5cf0915f84517062df5c551ec7a4d8a3780c2c5bb6125b8c530b5e744b0e52",
+    "sourceSha256": "ebb50b39682d2381ad3c1d21e005b48cec3397e15da0d72c5d76c7d20d8dd249",
+    "sourceUrl": "https://download.geofabrik.de/north-america/canada/ontario.html",
+    "attribution": "© OpenStreetMap contributors",
+    "assessment": "Packaged local road and service centerlines were reviewed alongside imagery. Spawns are modeled projections to selected road centerlines and do not establish driveway ownership, gate access or apparatus entrances."
+  },
+  "limits": [
+    "Rectangle centers, dimensions, rotations and spawn coordinates are imagery- and road-map-based estimates, not surveyed measurements.",
+    "No official parcel plans, building footprints or apparatus entrance locations were used.",
+    "Satellite imagery dates are not supplied by the tile response.",
+    "Canonical source coordinates, base IDs and active statuses are preserved."
+  ],
+  "bases": [
+    {
+      "baseId": "hamilton-fire-1",
+      "name": "Fire Station 1",
+      "address": "35-43 John Street North, Hamilton, ON",
+      "sourcePoint": {
+        "lat": 43.25708912544889,
+        "lng": -79.86618024180544
+      },
+      "drivingArea": {
+        "center": {
+          "lat": 43.25708913,
+          "lng": -79.86618024
+        },
+        "widthMetres": 60,
+        "lengthMetres": 75,
+        "rotationDegrees": 0,
+        "spawn": {
+          "lat": 43.256962,
+          "lng": -79.8660433,
+          "headingDegrees": 293
+        },
+        "roadSnap": {
+          "roadName": null,
+          "highway": "service",
+          "distanceFromSourceMetres": 18
+        }
+      },
+      "assessment": "estimated",
+      "imageryCapture": "artifacts/release-qa/base-fit-hamilton/hamilton-fire-1.png",
+      "imageryZoom": 19,
+      "metresPerPixel": 0.2172,
+      "imageryObservation": "Zoom-19 imagery reviewed for Fire Station 1; the fitted rectangle estimates the visible building, adjacent parking and on-site circulation.  Canonical source coordinates remain unchanged. Spawn is a modeled projection to the mapped service centerline, not a confirmed apparatus entrance.",
+      "rotationBasis": "Image-estimated alignment of the visible station, parking and circulation; not survey-derived.",
+      "identitySourceUrl": "https://www.hamilton.ca/home-neighbourhood/emergency-services/fire-department/fire-stations",
+      "runtimeCollision": {
+        "spawnInside": true,
+        "areaRoadAccess": true,
+        "spawnInitiallyDrivable": true,
+        "nearestRoad": {
+          "name": "John Street North",
+          "highway": "secondary",
+          "distanceMetres": 0
+        },
+        "exitStarted": true,
+        "exitCompleted": true,
+        "blockedMoves": 0,
+        "movementSteps": 26,
+        "outsideExpandedDrivingArea": true
+      }
+    },
+    {
+      "baseId": "hamilton-fire-2",
+      "name": "Fire Station 2",
+      "address": "1400 Upper Wellington Street, Hamilton, ON",
+      "sourcePoint": {
+        "lat": 43.21044949116063,
+        "lng": -79.87969383289347
+      },
+      "drivingArea": {
+        "center": {
+          "lat": 43.21044949,
+          "lng": -79.87969383
+        },
+        "widthMetres": 75,
+        "lengthMetres": 92,
+        "rotationDegrees": 0,
+        "spawn": {
+          "lat": 43.21042746,
+          "lng": -79.87960968,
+          "headingDegrees": 20
+        },
+        "roadSnap": {
+          "roadName": null,
+          "highway": "service",
+          "distanceFromSourceMetres": 7.3
+        }
+      },
+      "assessment": "estimated",
+      "imageryCapture": "artifacts/release-qa/base-fit-hamilton/hamilton-fire-2.png",
+      "imageryZoom": 19,
+      "metresPerPixel": 0.2174,
+      "imageryObservation": "Zoom-19 imagery reviewed for Fire Station 2; the fitted rectangle estimates the visible building, adjacent parking and on-site circulation.  Canonical source coordinates remain unchanged. Spawn is a modeled projection to the mapped service centerline, not a confirmed apparatus entrance.",
+      "rotationBasis": "Image-estimated alignment of the visible station, parking and circulation; not survey-derived.",
+      "identitySourceUrl": "https://www.hamilton.ca/home-neighbourhood/emergency-services/fire-department/fire-stations",
+      "runtimeCollision": {
+        "spawnInside": true,
+        "areaRoadAccess": true,
+        "spawnInitiallyDrivable": true,
+        "nearestRoad": {
+          "name": "Unnamed road",
+          "highway": "service",
+          "distanceMetres": 0
+        },
+        "exitStarted": true,
+        "exitCompleted": true,
+        "blockedMoves": 0,
+        "movementSteps": 36,
+        "outsideExpandedDrivingArea": true
+      }
+    },
+    {
+      "baseId": "hamilton-fire-3",
+      "name": "Fire Station 3",
+      "address": "965 Garth Street, Hamilton, ON",
+      "sourcePoint": {
+        "lat": 43.230767153748815,
+        "lng": -79.9015890250203
+      },
+      "drivingArea": {
+        "center": {
+          "lat": 43.23076715,
+          "lng": -79.90158903
+        },
+        "widthMetres": 60,
+        "lengthMetres": 78,
+        "rotationDegrees": 0,
+        "spawn": {
+          "lat": 43.2308983,
+          "lng": -79.9013557,
+          "headingDegrees": 11
+        },
+        "roadSnap": {
+          "roadName": null,
+          "highway": "service",
+          "distanceFromSourceMetres": 23.9
+        }
+      },
+      "assessment": "estimated",
+      "imageryCapture": "artifacts/release-qa/base-fit-hamilton/hamilton-fire-3.png",
+      "imageryZoom": 19,
+      "metresPerPixel": 0.2173,
+      "imageryObservation": "Zoom-19 imagery reviewed for Fire Station 3; the fitted rectangle estimates the visible building, adjacent parking and on-site circulation.  Canonical source coordinates remain unchanged. Spawn is a modeled projection to the mapped service centerline, not a confirmed apparatus entrance.",
+      "rotationBasis": "Image-estimated alignment of the visible station, parking and circulation; not survey-derived.",
+      "identitySourceUrl": "https://www.hamilton.ca/home-neighbourhood/emergency-services/fire-department/fire-stations",
+      "runtimeCollision": {
+        "spawnInside": true,
+        "areaRoadAccess": true,
+        "spawnInitiallyDrivable": true,
+        "nearestRoad": {
+          "name": "Unnamed road",
+          "highway": "service",
+          "distanceMetres": 0
+        },
+        "exitStarted": true,
+        "exitCompleted": true,
+        "blockedMoves": 0,
+        "movementSteps": 34,
+        "outsideExpandedDrivingArea": true
+      }
+    },
+    {
+      "baseId": "hamilton-fire-4",
+      "name": "Fire Station 4",
+      "address": "729 Upper Sherman Avenue, Hamilton, ON",
+      "sourcePoint": {
+        "lat": 43.224529364199654,
+        "lng": -79.85001423246095
+      },
+      "drivingArea": {
+        "center": {
+          "lat": 43.22452936,
+          "lng": -79.85001423
+        },
+        "widthMetres": 70,
+        "lengthMetres": 88,
+        "rotationDegrees": 0,
+        "spawn": {
+          "lat": 43.2247061,
+          "lng": -79.850125,
+          "headingDegrees": 289
+        },
+        "roadSnap": {
+          "roadName": null,
+          "highway": "service",
+          "distanceFromSourceMetres": 21.6
+        }
+      },
+      "assessment": "estimated",
+      "imageryCapture": "artifacts/release-qa/base-fit-hamilton/hamilton-fire-4.png",
+      "imageryZoom": 19,
+      "metresPerPixel": 0.2173,
+      "imageryObservation": "Zoom-19 imagery reviewed for Fire Station 4; the fitted rectangle estimates the visible building, adjacent parking and on-site circulation.  Canonical source coordinates remain unchanged. Spawn is a modeled projection to the mapped service centerline, not a confirmed apparatus entrance.",
+      "rotationBasis": "Image-estimated alignment of the visible station, parking and circulation; not survey-derived.",
+      "identitySourceUrl": "https://www.hamilton.ca/home-neighbourhood/emergency-services/fire-department/fire-stations",
+      "runtimeCollision": {
+        "spawnInside": true,
+        "areaRoadAccess": true,
+        "spawnInitiallyDrivable": true,
+        "nearestRoad": {
+          "name": "Unnamed road",
+          "highway": "service",
+          "distanceMetres": 0
+        },
+        "exitStarted": true,
+        "exitCompleted": true,
+        "blockedMoves": 0,
+        "movementSteps": 42,
+        "outsideExpandedDrivingArea": true
+      }
+    },
+    {
+      "baseId": "hamilton-fire-5",
+      "name": "Fire Station 5",
+      "address": "1227 Stone Church Road East, Hamilton, ON",
+      "sourcePoint": {
+        "lat": 43.19832952242623,
+        "lng": -79.83496580107368
+      },
+      "drivingArea": {
+        "center": {
+          "lat": 43.19832952,
+          "lng": -79.8349658
+        },
+        "widthMetres": 65,
+        "lengthMetres": 82,
+        "rotationDegrees": 0,
+        "spawn": {
+          "lat": 43.1983866,
+          "lng": -79.83523515,
+          "headingDegrees": 196
+        },
+        "roadSnap": {
+          "roadName": "Ricottone Road",
+          "highway": "service",
+          "distanceFromSourceMetres": 22.8
+        }
+      },
+      "assessment": "estimated",
+      "imageryCapture": "artifacts/release-qa/base-fit-hamilton/hamilton-fire-5.png",
+      "imageryZoom": 19,
+      "metresPerPixel": 0.2174,
+      "imageryObservation": "Zoom-19 imagery reviewed for Fire Station 5; the fitted rectangle estimates the visible building, adjacent parking and on-site circulation.  Canonical source coordinates remain unchanged. Spawn is a modeled projection to the mapped Ricottone Road centerline, not a confirmed apparatus entrance.",
+      "rotationBasis": "Image-estimated alignment of the visible station, parking and circulation; not survey-derived.",
+      "identitySourceUrl": "https://www.hamilton.ca/home-neighbourhood/emergency-services/fire-department/fire-stations",
+      "runtimeCollision": {
+        "spawnInside": true,
+        "areaRoadAccess": true,
+        "spawnInitiallyDrivable": true,
+        "nearestRoad": {
+          "name": "Ricottone Road",
+          "highway": "service",
+          "distanceMetres": 0
+        },
+        "exitStarted": true,
+        "exitCompleted": true,
+        "blockedMoves": 0,
+        "movementSteps": 38,
+        "outsideExpandedDrivingArea": true
+      }
+    },
+    {
+      "baseId": "hamilton-fire-6",
+      "name": "Fire Station 6",
+      "address": "246 Wentworth Street North, Hamilton, ON",
+      "sourcePoint": {
+        "lat": 43.25927048988558,
+        "lng": -79.84533578915921
+      },
+      "drivingArea": {
+        "center": {
+          "lat": 43.25927049,
+          "lng": -79.84533579
+        },
+        "widthMetres": 70,
+        "lengthMetres": 90,
+        "rotationDegrees": 0,
+        "spawn": {
+          "lat": 43.2595346,
+          "lng": -79.845487,
+          "headingDegrees": 284
+        },
+        "roadSnap": {
+          "roadName": null,
+          "highway": "service",
+          "distanceFromSourceMetres": 31.9
+        }
+      },
+      "assessment": "estimated",
+      "imageryCapture": "artifacts/release-qa/base-fit-hamilton/hamilton-fire-6.png",
+      "imageryZoom": 19,
+      "metresPerPixel": 0.2172,
+      "imageryObservation": "Zoom-19 imagery reviewed for Fire Station 6; the fitted rectangle estimates the visible building, adjacent parking and on-site circulation.  Canonical source coordinates remain unchanged. Spawn is a modeled projection to the mapped service centerline, not a confirmed apparatus entrance.",
+      "rotationBasis": "Image-estimated alignment of the visible station, parking and circulation; not survey-derived.",
+      "identitySourceUrl": "https://www.hamilton.ca/home-neighbourhood/emergency-services/fire-department/fire-stations",
+      "runtimeCollision": {
+        "spawnInside": true,
+        "areaRoadAccess": true,
+        "spawnInitiallyDrivable": true,
+        "nearestRoad": {
+          "name": "Unnamed road",
+          "highway": "service",
+          "distanceMetres": 0
+        },
+        "exitStarted": true,
+        "exitCompleted": true,
+        "blockedMoves": 0,
+        "movementSteps": 49,
+        "outsideExpandedDrivingArea": true
+      }
+    },
+    {
+      "baseId": "hamilton-fire-7",
+      "name": "Fire Station 7",
+      "address": "225 Quigley Road, Hamilton, ON",
+      "sourcePoint": {
+        "lat": 43.21576608479038,
+        "lng": -79.7841725004528
+      },
+      "drivingArea": {
+        "center": {
+          "lat": 43.21576608,
+          "lng": -79.7841725
+        },
+        "widthMetres": 65,
+        "lengthMetres": 82,
+        "rotationDegrees": 0,
+        "spawn": {
+          "lat": 43.21592256,
+          "lng": -79.78411154,
+          "headingDegrees": 286
+        },
+        "roadSnap": {
+          "roadName": null,
+          "highway": "service",
+          "distanceFromSourceMetres": 18.1
+        }
+      },
+      "assessment": "estimated",
+      "imageryCapture": "artifacts/release-qa/base-fit-hamilton/hamilton-fire-7.png",
+      "imageryZoom": 19,
+      "metresPerPixel": 0.2174,
+      "imageryObservation": "Zoom-19 imagery reviewed for Fire Station 7; the fitted rectangle estimates the visible building, adjacent parking and on-site circulation.  Canonical source coordinates remain unchanged. Spawn is a modeled projection to the mapped service centerline, not a confirmed apparatus entrance.",
+      "rotationBasis": "Image-estimated alignment of the visible station, parking and circulation; not survey-derived.",
+      "identitySourceUrl": "https://www.hamilton.ca/home-neighbourhood/emergency-services/fire-department/fire-stations",
+      "runtimeCollision": {
+        "spawnInside": true,
+        "areaRoadAccess": true,
+        "spawnInitiallyDrivable": true,
+        "nearestRoad": {
+          "name": "Unnamed road",
+          "highway": "service",
+          "distanceMetres": 0
+        },
+        "exitStarted": true,
+        "exitCompleted": true,
+        "blockedMoves": 0,
+        "movementSteps": 47,
+        "outsideExpandedDrivingArea": true
+      }
+    },
+    {
+      "baseId": "hamilton-fire-8",
+      "name": "Fire Station 8",
+      "address": "400 Melvin Avenue, Hamilton, ON",
+      "sourcePoint": {
+        "lat": 43.24084501221451,
+        "lng": -79.77928295006683
+      },
+      "drivingArea": {
+        "center": {
+          "lat": 43.24084501,
+          "lng": -79.77928295
+        },
+        "widthMetres": 55,
+        "lengthMetres": 72,
+        "rotationDegrees": 0,
+        "spawn": {
+          "lat": 43.2411066,
+          "lng": -79.7790782,
+          "headingDegrees": 17
+        },
+        "roadSnap": {
+          "roadName": null,
+          "highway": "service",
+          "distanceFromSourceMetres": 33.5
+        }
+      },
+      "assessment": "estimated",
+      "imageryCapture": "artifacts/release-qa/base-fit-hamilton/hamilton-fire-8.png",
+      "imageryZoom": 19,
+      "metresPerPixel": 0.2173,
+      "imageryObservation": "Zoom-19 imagery reviewed for Fire Station 8; the fitted rectangle estimates the visible building, adjacent parking and on-site circulation.  Canonical source coordinates remain unchanged. Spawn is a modeled projection to the mapped service centerline, not a confirmed apparatus entrance.",
+      "rotationBasis": "Image-estimated alignment of the visible station, parking and circulation; not survey-derived.",
+      "identitySourceUrl": "https://www.hamilton.ca/home-neighbourhood/emergency-services/fire-department/fire-stations",
+      "runtimeCollision": {
+        "spawnInside": true,
+        "areaRoadAccess": true,
+        "spawnInitiallyDrivable": true,
+        "nearestRoad": {
+          "name": "Melvin Avenue",
+          "highway": "tertiary",
+          "distanceMetres": 0
+        },
+        "exitStarted": true,
+        "exitCompleted": true,
+        "blockedMoves": 0,
+        "movementSteps": 42,
+        "outsideExpandedDrivingArea": true
+      }
+    },
+    {
+      "baseId": "hamilton-fire-9",
+      "name": "Fire Station 9",
+      "address": "125 Kenilworth Avenue North, Hamilton, ON",
+      "sourcePoint": {
+        "lat": 43.24416472613135,
+        "lng": -79.80873698683915
+      },
+      "drivingArea": {
+        "center": {
+          "lat": 43.24416473,
+          "lng": -79.80873699
+        },
+        "widthMetres": 60,
+        "lengthMetres": 76,
+        "rotationDegrees": 0,
+        "spawn": {
+          "lat": 43.2441058,
+          "lng": -79.8088128,
+          "headingDegrees": 1
+        },
+        "roadSnap": {
+          "roadName": null,
+          "highway": "service",
+          "distanceFromSourceMetres": 9
+        }
+      },
+      "assessment": "estimated",
+      "imageryCapture": "artifacts/release-qa/base-fit-hamilton/hamilton-fire-9.png",
+      "imageryZoom": 19,
+      "metresPerPixel": 0.2173,
+      "imageryObservation": "Zoom-19 imagery reviewed for Fire Station 9; the fitted rectangle estimates the visible building, adjacent parking and on-site circulation.  Canonical source coordinates remain unchanged. Spawn is a modeled projection to the mapped service centerline, not a confirmed apparatus entrance.",
+      "rotationBasis": "Image-estimated alignment of the visible station, parking and circulation; not survey-derived.",
+      "identitySourceUrl": "https://www.hamilton.ca/home-neighbourhood/emergency-services/fire-department/fire-stations",
+      "runtimeCollision": {
+        "spawnInside": true,
+        "areaRoadAccess": true,
+        "spawnInitiallyDrivable": true,
+        "nearestRoad": {
+          "name": "Unnamed road",
+          "highway": "service",
+          "distanceMetres": 0
+        },
+        "exitStarted": true,
+        "exitCompleted": true,
+        "blockedMoves": 0,
+        "movementSteps": 74,
+        "outsideExpandedDrivingArea": true
+      }
+    },
+    {
+      "baseId": "hamilton-fire-10",
+      "name": "Fire Station 10",
+      "address": "1455 Main Street West, Hamilton, ON",
+      "sourcePoint": {
+        "lat": 43.25729973251378,
+        "lng": -79.92342327063947
+      },
+      "drivingArea": {
+        "center": {
+          "lat": 43.25729973,
+          "lng": -79.92342327
+        },
+        "widthMetres": 65,
+        "lengthMetres": 78,
+        "rotationDegrees": 0,
+        "spawn": {
+          "lat": 43.2574353,
+          "lng": -79.9234213,
+          "headingDegrees": 176
+        },
+        "roadSnap": {
+          "roadName": null,
+          "highway": "service",
+          "distanceFromSourceMetres": 15.1
+        }
+      },
+      "assessment": "estimated",
+      "imageryCapture": "artifacts/release-qa/base-fit-hamilton/hamilton-fire-10.png",
+      "imageryZoom": 19,
+      "metresPerPixel": 0.2172,
+      "imageryObservation": "Zoom-19 imagery reviewed for Fire Station 10; the fitted rectangle estimates the visible building, adjacent parking and on-site circulation.  Canonical source coordinates remain unchanged. Spawn is a modeled projection to the mapped service centerline, not a confirmed apparatus entrance.",
+      "rotationBasis": "Image-estimated alignment of the visible station, parking and circulation; not survey-derived.",
+      "identitySourceUrl": "https://www.hamilton.ca/home-neighbourhood/emergency-services/fire-department/fire-stations",
+      "runtimeCollision": {
+        "spawnInside": true,
+        "areaRoadAccess": true,
+        "spawnInitiallyDrivable": true,
+        "nearestRoad": {
+          "name": "Unnamed road",
+          "highway": "service",
+          "distanceMetres": 0
+        },
+        "exitStarted": true,
+        "exitCompleted": true,
+        "blockedMoves": 0,
+        "movementSteps": 46,
+        "outsideExpandedDrivingArea": true
+      }
+    },
+    {
+      "baseId": "hamilton-fire-11",
+      "name": "Fire Station 11",
+      "address": "24 Ray Street South, Hamilton, ON",
+      "sourcePoint": {
+        "lat": 43.25928834302491,
+        "lng": -79.88090517607934
+      },
+      "drivingArea": {
+        "center": {
+          "lat": 43.25928834,
+          "lng": -79.88090518
+        },
+        "widthMetres": 55,
+        "lengthMetres": 70,
+        "rotationDegrees": 0,
+        "spawn": {
+          "lat": 43.2593558,
+          "lng": -79.8808136,
+          "headingDegrees": 288
+        },
+        "roadSnap": {
+          "roadName": null,
+          "highway": "service",
+          "distanceFromSourceMetres": 10.6
+        }
+      },
+      "assessment": "estimated",
+      "imageryCapture": "artifacts/release-qa/base-fit-hamilton/hamilton-fire-11.png",
+      "imageryZoom": 19,
+      "metresPerPixel": 0.2172,
+      "imageryObservation": "Zoom-19 imagery reviewed for Fire Station 11; the fitted rectangle estimates the visible building, adjacent parking and on-site circulation.  Canonical source coordinates remain unchanged. Spawn is a modeled projection to the mapped service centerline, not a confirmed apparatus entrance.",
+      "rotationBasis": "Image-estimated alignment of the visible station, parking and circulation; not survey-derived.",
+      "identitySourceUrl": "https://www.hamilton.ca/home-neighbourhood/emergency-services/fire-department/fire-stations",
+      "runtimeCollision": {
+        "spawnInside": true,
+        "areaRoadAccess": true,
+        "spawnInitiallyDrivable": true,
+        "nearestRoad": {
+          "name": "Unnamed road",
+          "highway": "service",
+          "distanceMetres": 0
+        },
+        "exitStarted": true,
+        "exitCompleted": true,
+        "blockedMoves": 0,
+        "movementSteps": 40,
+        "outsideExpandedDrivingArea": true
+      }
+    },
+    {
+      "baseId": "hamilton-fire-12",
+      "name": "Fire Station 12",
+      "address": "199 Highway No. 8, Stoney Creek, ON",
+      "sourcePoint": {
+        "lat": 43.223129155592005,
+        "lng": -79.7400922339779
+      },
+      "drivingArea": {
+        "center": {
+          "lat": 43.22312916,
+          "lng": -79.74009223
+        },
+        "widthMetres": 68,
+        "lengthMetres": 85,
+        "rotationDegrees": 0,
+        "spawn": {
+          "lat": 43.2232251,
+          "lng": -79.7402768,
+          "headingDegrees": 290
+        },
+        "roadSnap": {
+          "roadName": null,
+          "highway": "service",
+          "distanceFromSourceMetres": 18.4
+        }
+      },
+      "assessment": "estimated",
+      "imageryCapture": "artifacts/release-qa/base-fit-hamilton/hamilton-fire-12.png",
+      "imageryZoom": 19,
+      "metresPerPixel": 0.2173,
+      "imageryObservation": "Zoom-19 imagery reviewed for Fire Station 12; the fitted rectangle estimates the visible building, adjacent parking and on-site circulation.  Canonical source coordinates remain unchanged. Spawn is a modeled projection to the mapped service centerline, not a confirmed apparatus entrance.",
+      "rotationBasis": "Image-estimated alignment of the visible station, parking and circulation; not survey-derived.",
+      "identitySourceUrl": "https://www.hamilton.ca/home-neighbourhood/emergency-services/fire-department/fire-stations",
+      "runtimeCollision": {
+        "spawnInside": true,
+        "areaRoadAccess": true,
+        "spawnInitiallyDrivable": true,
+        "nearestRoad": {
+          "name": "Unnamed road",
+          "highway": "service",
+          "distanceMetres": 0
+        },
+        "exitStarted": true,
+        "exitCompleted": true,
+        "blockedMoves": 0,
+        "movementSteps": 44,
+        "outsideExpandedDrivingArea": true
+      }
+    },
+    {
+      "baseId": "hamilton-fire-14",
+      "name": "Fire Station 14",
+      "address": "595 Chapel Hill Road, Hamilton, ON",
+      "sourcePoint": {
+        "lat": 43.15857604566561,
+        "lng": -79.71820761507493
+      },
+      "drivingArea": {
+        "center": {
+          "lat": 43.15814486,
+          "lng": -79.71863863
+        },
+        "widthMetres": 115,
+        "lengthMetres": 130,
+        "rotationDegrees": 0,
+        "spawn": {
+          "lat": 43.15784979,
+          "lng": -79.71849165,
+          "headingDegrees": 286
+        },
+        "roadSnap": {
+          "roadName": null,
+          "highway": "service",
+          "distanceFromSourceMetres": 84.1
+        }
+      },
+      "assessment": "estimated",
+      "imageryCapture": "artifacts/release-qa/base-fit-hamilton/hamilton-fire-14.png",
+      "imageryZoom": 19,
+      "metresPerPixel": 0.2176,
+      "imageryObservation": "The canonical source point falls on undeveloped ground within the Fire Station 14 parcel. The official City of Hamilton Fire Stations roster identifies Station 14 at 595 Chapel Hill Road; imagery shows the developed station building and paved apron about 50–60 m southwest of the point. The fitted area is recentered over that visible developed facility while preserving the canonical source coordinate. Spawn is modeled on a mapped road centerline and is not a confirmed apparatus entrance.",
+      "rotationBasis": "Image-estimated facility alignment; not survey-derived.",
+      "identitySourceUrl": "https://www.hamilton.ca/home-neighbourhood/emergency-services/fire-department/fire-stations",
+      "runtimeCollision": {
+        "spawnInside": true,
+        "areaRoadAccess": true,
+        "spawnInitiallyDrivable": true,
+        "nearestRoad": {
+          "name": "Unnamed road",
+          "highway": "service",
+          "distanceMetres": 0
+        },
+        "exitStarted": true,
+        "exitCompleted": true,
+        "blockedMoves": 0,
+        "movementSteps": 48,
+        "outsideExpandedDrivingArea": true
+      }
+    },
+    {
+      "baseId": "hamilton-fire-15",
+      "name": "Fire Station 15",
+      "address": "415 Arvin Avenue, Stoney Creek, ON",
+      "sourcePoint": {
+        "lat": 43.229933234892556,
+        "lng": -79.7165233639151
+      },
+      "drivingArea": {
+        "center": {
+          "lat": 43.22993323,
+          "lng": -79.71652336
+        },
+        "widthMetres": 65,
+        "lengthMetres": 84,
+        "rotationDegrees": 0,
+        "spawn": {
+          "lat": 43.229773,
+          "lng": -79.716597,
+          "headingDegrees": 196
+        },
+        "roadSnap": {
+          "roadName": null,
+          "highway": "service",
+          "distanceFromSourceMetres": 18.8
+        }
+      },
+      "assessment": "estimated",
+      "imageryCapture": "artifacts/release-qa/base-fit-hamilton/hamilton-fire-15.png",
+      "imageryZoom": 19,
+      "metresPerPixel": 0.2173,
+      "imageryObservation": "Zoom-19 imagery reviewed for Fire Station 15; the fitted rectangle estimates the visible building, adjacent parking and on-site circulation.  Canonical source coordinates remain unchanged. Spawn is a modeled projection to the mapped service centerline, not a confirmed apparatus entrance.",
+      "rotationBasis": "Image-estimated alignment of the visible station, parking and circulation; not survey-derived.",
+      "identitySourceUrl": "https://www.hamilton.ca/home-neighbourhood/emergency-services/fire-department/fire-stations",
+      "runtimeCollision": {
+        "spawnInside": true,
+        "areaRoadAccess": true,
+        "spawnInitiallyDrivable": true,
+        "nearestRoad": {
+          "name": "Unnamed road",
+          "highway": "service",
+          "distanceMetres": 0
+        },
+        "exitStarted": true,
+        "exitCompleted": true,
+        "blockedMoves": 0,
+        "movementSteps": 35,
+        "outsideExpandedDrivingArea": true
+      }
+    },
+    {
+      "baseId": "hamilton-fire-16",
+      "name": "Fire Station 16",
+      "address": "939 Barton Street, Stoney Creek, ON",
+      "sourcePoint": {
+        "lat": 43.21714032462177,
+        "lng": -79.67551240187956
+      },
+      "drivingArea": {
+        "center": {
+          "lat": 43.21699659,
+          "lng": -79.6755124
+        },
+        "widthMetres": 75,
+        "lengthMetres": 100,
+        "rotationDegrees": 0,
+        "spawn": {
+          "lat": 43.21663439,
+          "lng": -79.6757288,
+          "headingDegrees": 107
+        },
+        "roadSnap": {
+          "roadName": "Barton Street",
+          "highway": "secondary",
+          "distanceFromSourceMetres": 59
+        }
+      },
+      "assessment": "estimated",
+      "imageryCapture": "artifacts/release-qa/base-fit-hamilton/hamilton-fire-16.png",
+      "imageryZoom": 19,
+      "metresPerPixel": 0.2174,
+      "imageryObservation": "The imagery fit covers the visible small station structure and its access apron. The modeled spawn is on the mapped local road to the south; the yard center is offset slightly south to include the connected approach while keeping the station structure inside. The canonical source point remains unchanged; no entrance is verified.",
+      "rotationBasis": "Image-estimated alignment of the visible station, parking and circulation; not survey-derived.",
+      "identitySourceUrl": "https://www.hamilton.ca/home-neighbourhood/emergency-services/fire-department/fire-stations",
+      "runtimeCollision": {
+        "spawnInside": true,
+        "areaRoadAccess": true,
+        "spawnInitiallyDrivable": true,
+        "nearestRoad": {
+          "name": "Barton Street",
+          "highway": "secondary",
+          "distanceMetres": 0
+        },
+        "exitStarted": true,
+        "exitCompleted": true,
+        "blockedMoves": 0,
+        "movementSteps": 47,
+        "outsideExpandedDrivingArea": true
+      }
+    },
+    {
+      "baseId": "hamilton-fire-17",
+      "name": "Fire Station 17",
+      "address": "363 Isaac Brock Drive, Stoney Creek, ON",
+      "sourcePoint": {
+        "lat": 43.19424358732057,
+        "lng": -79.78936757060087
+      },
+      "drivingArea": {
+        "center": {
+          "lat": 43.19424359,
+          "lng": -79.78936757
+        },
+        "widthMetres": 70,
+        "lengthMetres": 85,
+        "rotationDegrees": 0,
+        "spawn": {
+          "lat": 43.1942318,
+          "lng": -79.7891524,
+          "headingDegrees": 286
+        },
+        "roadSnap": {
+          "roadName": null,
+          "highway": "service",
+          "distanceFromSourceMetres": 17.5
+        }
+      },
+      "assessment": "estimated",
+      "imageryCapture": "artifacts/release-qa/base-fit-hamilton/hamilton-fire-17.png",
+      "imageryZoom": 19,
+      "metresPerPixel": 0.2174,
+      "imageryObservation": "Zoom-19 imagery reviewed for Fire Station 17; the fitted rectangle estimates the visible building, adjacent parking and on-site circulation.  Canonical source coordinates remain unchanged. Spawn is a modeled projection to the mapped service centerline, not a confirmed apparatus entrance.",
+      "rotationBasis": "Image-estimated alignment of the visible station, parking and circulation; not survey-derived.",
+      "identitySourceUrl": "https://www.hamilton.ca/home-neighbourhood/emergency-services/fire-department/fire-stations",
+      "runtimeCollision": {
+        "spawnInside": true,
+        "areaRoadAccess": true,
+        "spawnInitiallyDrivable": true,
+        "nearestRoad": {
+          "name": "Unnamed road",
+          "highway": "service",
+          "distanceMetres": 0
+        },
+        "exitStarted": true,
+        "exitCompleted": true,
+        "blockedMoves": 0,
+        "movementSteps": 21,
+        "outsideExpandedDrivingArea": true
+      }
+    },
+    {
+      "baseId": "hamilton-fire-18",
+      "name": "Fire Station 18",
+      "address": "2636 Highway 56, Hamilton, ON",
+      "sourcePoint": {
+        "lat": 43.12170676091661,
+        "lng": -79.80501144996799
+      },
+      "drivingArea": {
+        "center": {
+          "lat": 43.12170676,
+          "lng": -79.80501145
+        },
+        "widthMetres": 85,
+        "lengthMetres": 100,
+        "rotationDegrees": 0,
+        "spawn": {
+          "lat": 43.1216017,
+          "lng": -79.8048321,
+          "headingDegrees": 286
+        },
+        "roadSnap": {
+          "roadName": null,
+          "highway": "service",
+          "distanceFromSourceMetres": 18.7
+        }
+      },
+      "assessment": "estimated",
+      "imageryCapture": "artifacts/release-qa/base-fit-hamilton/hamilton-fire-18.png",
+      "imageryZoom": 19,
+      "metresPerPixel": 0.2177,
+      "imageryObservation": "Zoom-19 imagery reviewed for Fire Station 18; the fitted rectangle estimates the visible building, adjacent parking and on-site circulation.  Canonical source coordinates remain unchanged. Spawn is a modeled projection to the mapped service centerline, not a confirmed apparatus entrance.",
+      "rotationBasis": "Image-estimated alignment of the visible station, parking and circulation; not survey-derived.",
+      "identitySourceUrl": "https://www.hamilton.ca/home-neighbourhood/emergency-services/fire-department/fire-stations",
+      "runtimeCollision": {
+        "spawnInside": true,
+        "areaRoadAccess": true,
+        "spawnInitiallyDrivable": true,
+        "nearestRoad": {
+          "name": "Unnamed road",
+          "highway": "service",
+          "distanceMetres": 0
+        },
+        "exitStarted": true,
+        "exitCompleted": true,
+        "blockedMoves": 0,
+        "movementSteps": 29,
+        "outsideExpandedDrivingArea": true
+      }
+    },
+    {
+      "baseId": "hamilton-fire-19",
+      "name": "Fire Station 19",
+      "address": "3303 Homestead Drive, Hamilton, ON",
+      "sourcePoint": {
+        "lat": 43.153355469627954,
+        "lng": -79.91648420123792
+      },
+      "drivingArea": {
+        "center": {
+          "lat": 43.15335547,
+          "lng": -79.9164842
+        },
+        "widthMetres": 75,
+        "lengthMetres": 88,
+        "rotationDegrees": 0,
+        "spawn": {
+          "lat": 43.153277,
+          "lng": -79.91631,
+          "headingDegrees": 291
+        },
+        "roadSnap": {
+          "roadName": null,
+          "highway": "service",
+          "distanceFromSourceMetres": 16.6
+        }
+      },
+      "assessment": "estimated",
+      "imageryCapture": "artifacts/release-qa/base-fit-hamilton/hamilton-fire-19.png",
+      "imageryZoom": 19,
+      "metresPerPixel": 0.2176,
+      "imageryObservation": "Zoom-19 imagery reviewed for Fire Station 19; the fitted rectangle estimates the visible building, adjacent parking and on-site circulation.  Canonical source coordinates remain unchanged. Spawn is a modeled projection to the mapped service centerline, not a confirmed apparatus entrance.",
+      "rotationBasis": "Image-estimated alignment of the visible station, parking and circulation; not survey-derived.",
+      "identitySourceUrl": "https://www.hamilton.ca/home-neighbourhood/emergency-services/fire-department/fire-stations",
+      "runtimeCollision": {
+        "spawnInside": true,
+        "areaRoadAccess": true,
+        "spawnInitiallyDrivable": true,
+        "nearestRoad": {
+          "name": "Unnamed road",
+          "highway": "service",
+          "distanceMetres": 0
+        },
+        "exitStarted": true,
+        "exitCompleted": true,
+        "blockedMoves": 0,
+        "movementSteps": 44,
+        "outsideExpandedDrivingArea": true
+      }
+    },
+    {
+      "baseId": "hamilton-fire-20",
+      "name": "Fire Station 20",
+      "address": "661 Garner Road East, Ancaster, ON",
+      "sourcePoint": {
+        "lat": 43.206946950622395,
+        "lng": -79.95362034459178
+      },
+      "drivingArea": {
+        "center": {
+          "lat": 43.20694695,
+          "lng": -79.95362034
+        },
+        "widthMetres": 70,
+        "lengthMetres": 86,
+        "rotationDegrees": 0,
+        "spawn": {
+          "lat": 43.20682,
+          "lng": -79.9537446,
+          "headingDegrees": 348
+        },
+        "roadSnap": {
+          "roadName": null,
+          "highway": "service",
+          "distanceFromSourceMetres": 17.4
+        }
+      },
+      "assessment": "estimated",
+      "imageryCapture": "artifacts/release-qa/base-fit-hamilton/hamilton-fire-20.png",
+      "imageryZoom": 19,
+      "metresPerPixel": 0.2174,
+      "imageryObservation": "Zoom-19 imagery reviewed for Fire Station 20; the fitted rectangle estimates the visible building, adjacent parking and on-site circulation.  Canonical source coordinates remain unchanged. Spawn is a modeled projection to the mapped service centerline, not a confirmed apparatus entrance.",
+      "rotationBasis": "Image-estimated alignment of the visible station, parking and circulation; not survey-derived.",
+      "identitySourceUrl": "https://www.hamilton.ca/home-neighbourhood/emergency-services/fire-department/fire-stations",
+      "runtimeCollision": {
+        "spawnInside": true,
+        "areaRoadAccess": true,
+        "spawnInitiallyDrivable": true,
+        "nearestRoad": {
+          "name": "Unnamed road",
+          "highway": "service",
+          "distanceMetres": 0
+        },
+        "exitStarted": true,
+        "exitCompleted": true,
+        "blockedMoves": 0,
+        "movementSteps": 28,
+        "outsideExpandedDrivingArea": true
+      }
+    },
+    {
+      "baseId": "hamilton-fire-21",
+      "name": "Fire Station 21",
+      "address": "365 Wilson Street West, Ancaster, ON",
+      "sourcePoint": {
+        "lat": 43.208552709112006,
+        "lng": -80.00216593150137
+      },
+      "drivingArea": {
+        "center": {
+          "lat": 43.20855271,
+          "lng": -80.00216593
+        },
+        "widthMetres": 65,
+        "lengthMetres": 82,
+        "rotationDegrees": 0,
+        "spawn": {
+          "lat": 43.2085474,
+          "lng": -80.0019894,
+          "headingDegrees": 319
+        },
+        "roadSnap": {
+          "roadName": null,
+          "highway": "service",
+          "distanceFromSourceMetres": 14.3
+        }
+      },
+      "assessment": "estimated",
+      "imageryCapture": "artifacts/release-qa/base-fit-hamilton/hamilton-fire-21.png",
+      "imageryZoom": 19,
+      "metresPerPixel": 0.2174,
+      "imageryObservation": "Zoom-19 imagery reviewed for Fire Station 21; the fitted rectangle estimates the visible building, adjacent parking and on-site circulation.  Canonical source coordinates remain unchanged. Spawn is a modeled projection to the mapped service centerline, not a confirmed apparatus entrance.",
+      "rotationBasis": "Image-estimated alignment of the visible station, parking and circulation; not survey-derived.",
+      "identitySourceUrl": "https://www.hamilton.ca/home-neighbourhood/emergency-services/fire-department/fire-stations",
+      "runtimeCollision": {
+        "spawnInside": true,
+        "areaRoadAccess": true,
+        "spawnInitiallyDrivable": true,
+        "nearestRoad": {
+          "name": "Unnamed road",
+          "highway": "service",
+          "distanceMetres": 0
+        },
+        "exitStarted": true,
+        "exitCompleted": true,
+        "blockedMoves": 0,
+        "movementSteps": 57,
+        "outsideExpandedDrivingArea": true
+      }
+    },
+    {
+      "baseId": "hamilton-fire-23",
+      "name": "Fire Station 23",
+      "address": "19 Sydenham Street, Memorial Square, Dundas, ON",
+      "sourcePoint": {
+        "lat": 43.265742313570584,
+        "lng": -79.95697156263195
+      },
+      "drivingArea": {
+        "center": {
+          "lat": 43.26574231,
+          "lng": -79.95697156
+        },
+        "widthMetres": 65,
+        "lengthMetres": 78,
+        "rotationDegrees": 0,
+        "spawn": {
+          "lat": 43.2658973,
+          "lng": -79.9569802,
+          "headingDegrees": 279
+        },
+        "roadSnap": {
+          "roadName": null,
+          "highway": "service",
+          "distanceFromSourceMetres": 17.3
+        }
+      },
+      "assessment": "estimated",
+      "imageryCapture": "artifacts/release-qa/base-fit-hamilton/hamilton-fire-23.png",
+      "imageryZoom": 19,
+      "metresPerPixel": 0.2172,
+      "imageryObservation": "Zoom-19 imagery reviewed for Fire Station 23; the fitted rectangle estimates the visible building, adjacent parking and on-site circulation.  Canonical source coordinates remain unchanged. Spawn is a modeled projection to the mapped service centerline, not a confirmed apparatus entrance.",
+      "rotationBasis": "Image-estimated alignment of the visible station, parking and circulation; not survey-derived.",
+      "identitySourceUrl": "https://www.hamilton.ca/home-neighbourhood/emergency-services/fire-department/fire-stations",
+      "runtimeCollision": {
+        "spawnInside": true,
+        "areaRoadAccess": true,
+        "spawnInitiallyDrivable": true,
+        "nearestRoad": {
+          "name": "Unnamed road",
+          "highway": "service",
+          "distanceMetres": 0
+        },
+        "exitStarted": true,
+        "exitCompleted": true,
+        "blockedMoves": 0,
+        "movementSteps": 37,
+        "outsideExpandedDrivingArea": true
+      }
+    },
+    {
+      "baseId": "hamilton-fire-24",
+      "name": "Fire Station 24",
+      "address": "256 Parkside Drive, Hamilton, ON",
+      "sourcePoint": {
+        "lat": 43.33578984103745,
+        "lng": -79.90526597223598
+      },
+      "drivingArea": {
+        "center": {
+          "lat": 43.33578984,
+          "lng": -79.90526597
+        },
+        "widthMetres": 70,
+        "lengthMetres": 86,
+        "rotationDegrees": 0,
+        "spawn": {
+          "lat": 43.335935,
+          "lng": -79.9053435,
+          "headingDegrees": 314
+        },
+        "roadSnap": {
+          "roadName": null,
+          "highway": "service",
+          "distanceFromSourceMetres": 17.3
+        }
+      },
+      "assessment": "estimated",
+      "imageryCapture": "artifacts/release-qa/base-fit-hamilton/hamilton-fire-24.png",
+      "imageryZoom": 19,
+      "metresPerPixel": 0.2169,
+      "imageryObservation": "Zoom-19 imagery reviewed for Fire Station 24; the fitted rectangle estimates the visible building, adjacent parking and on-site circulation.  Canonical source coordinates remain unchanged. Spawn is a modeled projection to the mapped service centerline, not a confirmed apparatus entrance.",
+      "rotationBasis": "Image-estimated alignment of the visible station, parking and circulation; not survey-derived.",
+      "identitySourceUrl": "https://www.hamilton.ca/home-neighbourhood/emergency-services/fire-department/fire-stations",
+      "runtimeCollision": {
+        "spawnInside": true,
+        "areaRoadAccess": true,
+        "spawnInitiallyDrivable": true,
+        "nearestRoad": {
+          "name": "Unnamed road",
+          "highway": "service",
+          "distanceMetres": 0
+        },
+        "exitStarted": true,
+        "exitCompleted": true,
+        "blockedMoves": 0,
+        "movementSteps": 38,
+        "outsideExpandedDrivingArea": true
+      }
+    },
+    {
+      "baseId": "hamilton-fire-25",
+      "name": "Fire Station 25",
+      "address": "361 Old Brock Road, Hamilton, ON",
+      "sourcePoint": {
+        "lat": 43.28188318305357,
+        "lng": -79.99422717608844
+      },
+      "drivingArea": {
+        "center": {
+          "lat": 43.28188318,
+          "lng": -79.99422718
+        },
+        "widthMetres": 70,
+        "lengthMetres": 86,
+        "rotationDegrees": 0,
+        "spawn": {
+          "lat": 43.2820045,
+          "lng": -79.9941024,
+          "headingDegrees": 248
+        },
+        "roadSnap": {
+          "roadName": null,
+          "highway": "service",
+          "distanceFromSourceMetres": 16.9
+        }
+      },
+      "assessment": "estimated",
+      "imageryCapture": "artifacts/release-qa/base-fit-hamilton/hamilton-fire-25.png",
+      "imageryZoom": 19,
+      "metresPerPixel": 0.2171,
+      "imageryObservation": "Zoom-19 imagery reviewed for Fire Station 25; the fitted rectangle estimates the visible building, adjacent parking and on-site circulation.  Canonical source coordinates remain unchanged. Spawn is a modeled projection to the mapped service centerline, not a confirmed apparatus entrance.",
+      "rotationBasis": "Image-estimated alignment of the visible station, parking and circulation; not survey-derived.",
+      "identitySourceUrl": "https://www.hamilton.ca/home-neighbourhood/emergency-services/fire-department/fire-stations",
+      "runtimeCollision": {
+        "spawnInside": true,
+        "areaRoadAccess": true,
+        "spawnInitiallyDrivable": true,
+        "nearestRoad": {
+          "name": "Unnamed road",
+          "highway": "service",
+          "distanceMetres": 0
+        },
+        "exitStarted": true,
+        "exitCompleted": true,
+        "blockedMoves": 0,
+        "movementSteps": 33,
+        "outsideExpandedDrivingArea": true
+      }
+    },
+    {
+      "baseId": "hamilton-fire-26",
+      "name": "Fire Station 26",
+      "address": "119 Lynden Road, Hamilton, ON",
+      "sourcePoint": {
+        "lat": 43.236998830447945,
+        "lng": -80.14803960727258
+      },
+      "drivingArea": {
+        "center": {
+          "lat": 43.23699883,
+          "lng": -80.14803961
+        },
+        "widthMetres": 65,
+        "lengthMetres": 80,
+        "rotationDegrees": 0,
+        "spawn": {
+          "lat": 43.2369873,
+          "lng": -80.1478557,
+          "headingDegrees": 258
+        },
+        "roadSnap": {
+          "roadName": null,
+          "highway": "service",
+          "distanceFromSourceMetres": 15
+        }
+      },
+      "assessment": "estimated",
+      "imageryCapture": "artifacts/release-qa/base-fit-hamilton/hamilton-fire-26.png",
+      "imageryZoom": 19,
+      "metresPerPixel": 0.2173,
+      "imageryObservation": "Zoom-19 imagery reviewed for Fire Station 26; the fitted rectangle estimates the visible building, adjacent parking and on-site circulation.  Canonical source coordinates remain unchanged. Spawn is a modeled projection to the mapped service centerline, not a confirmed apparatus entrance.",
+      "rotationBasis": "Image-estimated alignment of the visible station, parking and circulation; not survey-derived.",
+      "identitySourceUrl": "https://www.hamilton.ca/home-neighbourhood/emergency-services/fire-department/fire-stations",
+      "runtimeCollision": {
+        "spawnInside": true,
+        "areaRoadAccess": true,
+        "spawnInitiallyDrivable": true,
+        "nearestRoad": {
+          "name": "Unnamed road",
+          "highway": "service",
+          "distanceMetres": 0
+        },
+        "exitStarted": true,
+        "exitCompleted": true,
+        "blockedMoves": 0,
+        "movementSteps": 21,
+        "outsideExpandedDrivingArea": true
+      }
+    },
+    {
+      "baseId": "hamilton-fire-27",
+      "name": "Fire Station 27",
+      "address": "795 Old Highway No. 8, Hamilton, ON",
+      "sourcePoint": {
+        "lat": 43.29973383349787,
+        "lng": -80.12685026411285
+      },
+      "drivingArea": {
+        "center": {
+          "lat": 43.29973383,
+          "lng": -80.12685026
+        },
+        "widthMetres": 100,
+        "lengthMetres": 120,
+        "rotationDegrees": 0,
+        "spawn": {
+          "lat": 43.29979289,
+          "lng": -80.12713963,
+          "headingDegrees": 196
+        },
+        "roadSnap": {
+          "roadName": "Carruthers Lane",
+          "highway": "residential",
+          "distanceFromSourceMetres": 24.3
+        }
+      },
+      "assessment": "estimated",
+      "imageryCapture": "artifacts/release-qa/base-fit-hamilton/hamilton-fire-27.png",
+      "imageryZoom": 19,
+      "metresPerPixel": 0.2171,
+      "imageryObservation": "Zoom-19 imagery reviewed for Fire Station 27; the fitted rectangle estimates the visible building, adjacent parking and on-site circulation.  Canonical source coordinates remain unchanged. Spawn is a modeled projection to the mapped Carruthers Lane centerline, not a confirmed apparatus entrance.",
+      "rotationBasis": "Image-estimated alignment of the visible station, parking and circulation; not survey-derived.",
+      "identitySourceUrl": "https://www.hamilton.ca/home-neighbourhood/emergency-services/fire-department/fire-stations",
+      "runtimeCollision": {
+        "spawnInside": true,
+        "areaRoadAccess": true,
+        "spawnInitiallyDrivable": true,
+        "nearestRoad": {
+          "name": "Carruthers Lane",
+          "highway": "residential",
+          "distanceMetres": 0
+        },
+        "exitStarted": true,
+        "exitCompleted": true,
+        "blockedMoves": 0,
+        "movementSteps": 47,
+        "outsideExpandedDrivingArea": true
+      }
+    },
+    {
+      "baseId": "hamilton-fire-28",
+      "name": "Fire Station 28",
+      "address": "1801 Brock Road, Hamilton, ON",
+      "sourcePoint": {
+        "lat": 43.397803797467574,
+        "lng": -80.03879396510992
+      },
+      "drivingArea": {
+        "center": {
+          "lat": 43.3978038,
+          "lng": -80.03879397
+        },
+        "widthMetres": 75,
+        "lengthMetres": 95,
+        "rotationDegrees": 0,
+        "spawn": {
+          "lat": 43.39786804,
+          "lng": -80.0383964,
+          "headingDegrees": 167
+        },
+        "roadSnap": {
+          "roadName": "Brock Road",
+          "highway": "secondary",
+          "distanceFromSourceMetres": 32.9
+        }
+      },
+      "assessment": "estimated",
+      "imageryCapture": "artifacts/release-qa/base-fit-hamilton/hamilton-fire-28.png",
+      "imageryZoom": 19,
+      "metresPerPixel": 0.2167,
+      "imageryObservation": "Zoom-19 imagery reviewed for Fire Station 28; the fitted rectangle estimates the visible building, adjacent parking and on-site circulation.  Canonical source coordinates remain unchanged. Spawn is a modeled projection to the mapped Brock Road centerline, not a confirmed apparatus entrance.",
+      "rotationBasis": "Image-estimated alignment of the visible station, parking and circulation; not survey-derived.",
+      "identitySourceUrl": "https://www.hamilton.ca/home-neighbourhood/emergency-services/fire-department/fire-stations",
+      "runtimeCollision": {
+        "spawnInside": true,
+        "areaRoadAccess": true,
+        "spawnInitiallyDrivable": true,
+        "nearestRoad": {
+          "name": "Brock Road",
+          "highway": "secondary",
+          "distanceMetres": 0
+        },
+        "exitStarted": true,
+        "exitCompleted": true,
+        "blockedMoves": 0,
+        "movementSteps": 94,
+        "outsideExpandedDrivingArea": true
+      }
+    },
+    {
+      "baseId": "hamilton-ems-1",
+      "name": "Paramedic Station 1",
+      "address": "35 - 43 John Street North, Hamilton, ON",
+      "sourcePoint": {
+        "lat": 43.25708912544417,
+        "lng": -79.86618024180528
+      },
+      "drivingArea": {
+        "center": {
+          "lat": 43.25708913,
+          "lng": -79.86618024
+        },
+        "widthMetres": 60,
+        "lengthMetres": 75,
+        "rotationDegrees": 0,
+        "spawn": {
+          "lat": 43.256962,
+          "lng": -79.8660433,
+          "headingDegrees": 293
+        },
+        "roadSnap": {
+          "roadName": null,
+          "highway": "service",
+          "distanceFromSourceMetres": 18
+        }
+      },
+      "assessment": "estimated",
+      "imageryCapture": "artifacts/release-qa/base-fit-hamilton/hamilton-ems-1.png",
+      "imageryZoom": 19,
+      "metresPerPixel": 0.2172,
+      "imageryObservation": "Zoom-19 imagery reviewed for Fire Station 1; the fitted rectangle estimates the visible building, adjacent parking and on-site circulation.  Canonical source coordinates remain unchanged. Spawn is a modeled projection to the mapped service centerline, not a confirmed apparatus entrance.",
+      "rotationBasis": "Image-estimated alignment of the visible station, parking and circulation; not survey-derived.",
+      "sameSiteAs": "hamilton-fire-1",
+      "identitySourceUrl": "https://www.hamilton.ca/home-neighbourhood/emergency-services/paramedics/about-hamilton-paramedic-service",
+      "runtimeCollision": {
+        "spawnInside": true,
+        "areaRoadAccess": true,
+        "spawnInitiallyDrivable": true,
+        "nearestRoad": {
+          "name": "John Street North",
+          "highway": "secondary",
+          "distanceMetres": 0
+        },
+        "exitStarted": true,
+        "exitCompleted": true,
+        "blockedMoves": 0,
+        "movementSteps": 26,
+        "outsideExpandedDrivingArea": true
+      }
+    },
+    {
+      "baseId": "hamilton-ems-3",
+      "name": "Paramedic Station 3",
+      "address": "965 Garth Street, Hamilton, ON",
+      "sourcePoint": {
+        "lat": 43.2307671537441,
+        "lng": -79.90158902502017
+      },
+      "drivingArea": {
+        "center": {
+          "lat": 43.23076715,
+          "lng": -79.90158903
+        },
+        "widthMetres": 60,
+        "lengthMetres": 78,
+        "rotationDegrees": 0,
+        "spawn": {
+          "lat": 43.2308983,
+          "lng": -79.9013557,
+          "headingDegrees": 11
+        },
+        "roadSnap": {
+          "roadName": null,
+          "highway": "service",
+          "distanceFromSourceMetres": 23.9
+        }
+      },
+      "assessment": "estimated",
+      "imageryCapture": "artifacts/release-qa/base-fit-hamilton/hamilton-ems-3.png",
+      "imageryZoom": 19,
+      "metresPerPixel": 0.2173,
+      "imageryObservation": "Zoom-19 imagery reviewed for Fire Station 3; the fitted rectangle estimates the visible building, adjacent parking and on-site circulation.  Canonical source coordinates remain unchanged. Spawn is a modeled projection to the mapped service centerline, not a confirmed apparatus entrance.",
+      "rotationBasis": "Image-estimated alignment of the visible station, parking and circulation; not survey-derived.",
+      "sameSiteAs": "hamilton-fire-3",
+      "identitySourceUrl": "https://www.hamilton.ca/home-neighbourhood/emergency-services/paramedics/about-hamilton-paramedic-service",
+      "runtimeCollision": {
+        "spawnInside": true,
+        "areaRoadAccess": true,
+        "spawnInitiallyDrivable": true,
+        "nearestRoad": {
+          "name": "Unnamed road",
+          "highway": "service",
+          "distanceMetres": 0
+        },
+        "exitStarted": true,
+        "exitCompleted": true,
+        "blockedMoves": 0,
+        "movementSteps": 33,
+        "outsideExpandedDrivingArea": true
+      }
+    },
+    {
+      "baseId": "hamilton-ems-4",
+      "name": "Paramedic Station 4",
+      "address": "729 Upper Sherman Avenue, Hamilton, ON",
+      "sourcePoint": {
+        "lat": 43.22452936419492,
+        "lng": -79.85001423246078
+      },
+      "drivingArea": {
+        "center": {
+          "lat": 43.22452936,
+          "lng": -79.85001423
+        },
+        "widthMetres": 70,
+        "lengthMetres": 88,
+        "rotationDegrees": 0,
+        "spawn": {
+          "lat": 43.2247061,
+          "lng": -79.850125,
+          "headingDegrees": 289
+        },
+        "roadSnap": {
+          "roadName": null,
+          "highway": "service",
+          "distanceFromSourceMetres": 21.6
+        }
+      },
+      "assessment": "estimated",
+      "imageryCapture": "artifacts/release-qa/base-fit-hamilton/hamilton-ems-4.png",
+      "imageryZoom": 19,
+      "metresPerPixel": 0.2173,
+      "imageryObservation": "Zoom-19 imagery reviewed for Fire Station 4; the fitted rectangle estimates the visible building, adjacent parking and on-site circulation.  Canonical source coordinates remain unchanged. Spawn is a modeled projection to the mapped service centerline, not a confirmed apparatus entrance.",
+      "rotationBasis": "Image-estimated alignment of the visible station, parking and circulation; not survey-derived.",
+      "sameSiteAs": "hamilton-fire-4",
+      "identitySourceUrl": "https://www.hamilton.ca/home-neighbourhood/emergency-services/paramedics/about-hamilton-paramedic-service",
+      "runtimeCollision": {
+        "spawnInside": true,
+        "areaRoadAccess": true,
+        "spawnInitiallyDrivable": true,
+        "nearestRoad": {
+          "name": "Unnamed road",
+          "highway": "service",
+          "distanceMetres": 0
+        },
+        "exitStarted": true,
+        "exitCompleted": true,
+        "blockedMoves": 0,
+        "movementSteps": 42,
+        "outsideExpandedDrivingArea": true
+      }
+    },
+    {
+      "baseId": "hamilton-ems-7",
+      "name": "Paramedic Station 7",
+      "address": "225 Quigley Road, Hamilton, ON",
+      "sourcePoint": {
+        "lat": 43.21576608478566,
+        "lng": -79.78417250045254
+      },
+      "drivingArea": {
+        "center": {
+          "lat": 43.21576608,
+          "lng": -79.7841725
+        },
+        "widthMetres": 65,
+        "lengthMetres": 82,
+        "rotationDegrees": 0,
+        "spawn": {
+          "lat": 43.21592256,
+          "lng": -79.78411154,
+          "headingDegrees": 286
+        },
+        "roadSnap": {
+          "roadName": null,
+          "highway": "service",
+          "distanceFromSourceMetres": 18.1
+        }
+      },
+      "assessment": "estimated",
+      "imageryCapture": "artifacts/release-qa/base-fit-hamilton/hamilton-ems-7.png",
+      "imageryZoom": 19,
+      "metresPerPixel": 0.2174,
+      "imageryObservation": "Zoom-19 imagery reviewed for Fire Station 7; the fitted rectangle estimates the visible building, adjacent parking and on-site circulation.  Canonical source coordinates remain unchanged. Spawn is a modeled projection to the mapped service centerline, not a confirmed apparatus entrance.",
+      "rotationBasis": "Image-estimated alignment of the visible station, parking and circulation; not survey-derived.",
+      "sameSiteAs": "hamilton-fire-7",
+      "identitySourceUrl": "https://www.hamilton.ca/home-neighbourhood/emergency-services/paramedics/about-hamilton-paramedic-service",
+      "runtimeCollision": {
+        "spawnInside": true,
+        "areaRoadAccess": true,
+        "spawnInitiallyDrivable": true,
+        "nearestRoad": {
+          "name": "Unnamed road",
+          "highway": "service",
+          "distanceMetres": 0
+        },
+        "exitStarted": true,
+        "exitCompleted": true,
+        "blockedMoves": 0,
+        "movementSteps": 47,
+        "outsideExpandedDrivingArea": true
+      }
+    },
+    {
+      "baseId": "hamilton-ems-9",
+      "name": "Paramedic Station 9",
+      "address": "125 Kenilworth Avenue North, Hamilton, ON",
+      "sourcePoint": {
+        "lat": 43.24416472612663,
+        "lng": -79.80873698683892
+      },
+      "drivingArea": {
+        "center": {
+          "lat": 43.24416473,
+          "lng": -79.80873699
+        },
+        "widthMetres": 60,
+        "lengthMetres": 76,
+        "rotationDegrees": 0,
+        "spawn": {
+          "lat": 43.2441058,
+          "lng": -79.8088128,
+          "headingDegrees": 1
+        },
+        "roadSnap": {
+          "roadName": null,
+          "highway": "service",
+          "distanceFromSourceMetres": 9
+        }
+      },
+      "assessment": "estimated",
+      "imageryCapture": "artifacts/release-qa/base-fit-hamilton/hamilton-ems-9.png",
+      "imageryZoom": 19,
+      "metresPerPixel": 0.2173,
+      "imageryObservation": "Zoom-19 imagery reviewed for Fire Station 9; the fitted rectangle estimates the visible building, adjacent parking and on-site circulation.  Canonical source coordinates remain unchanged. Spawn is a modeled projection to the mapped service centerline, not a confirmed apparatus entrance.",
+      "rotationBasis": "Image-estimated alignment of the visible station, parking and circulation; not survey-derived.",
+      "sameSiteAs": "hamilton-fire-9",
+      "identitySourceUrl": "https://www.hamilton.ca/home-neighbourhood/emergency-services/paramedics/about-hamilton-paramedic-service",
+      "runtimeCollision": {
+        "spawnInside": true,
+        "areaRoadAccess": true,
+        "spawnInitiallyDrivable": true,
+        "nearestRoad": {
+          "name": "Unnamed road",
+          "highway": "service",
+          "distanceMetres": 0
+        },
+        "exitStarted": true,
+        "exitCompleted": true,
+        "blockedMoves": 0,
+        "movementSteps": 74,
+        "outsideExpandedDrivingArea": true
+      }
+    },
+    {
+      "baseId": "hamilton-ems-10",
+      "name": "Paramedic Station 10",
+      "address": "1455 Main Street West, Hamilton, ON",
+      "sourcePoint": {
+        "lat": 43.257299732509054,
+        "lng": -79.92342327063938
+      },
+      "drivingArea": {
+        "center": {
+          "lat": 43.25729973,
+          "lng": -79.92342327
+        },
+        "widthMetres": 65,
+        "lengthMetres": 78,
+        "rotationDegrees": 0,
+        "spawn": {
+          "lat": 43.2574353,
+          "lng": -79.9234213,
+          "headingDegrees": 176
+        },
+        "roadSnap": {
+          "roadName": null,
+          "highway": "service",
+          "distanceFromSourceMetres": 15.1
+        }
+      },
+      "assessment": "estimated",
+      "imageryCapture": "artifacts/release-qa/base-fit-hamilton/hamilton-ems-10.png",
+      "imageryZoom": 19,
+      "metresPerPixel": 0.2172,
+      "imageryObservation": "Zoom-19 imagery reviewed for Fire Station 10; the fitted rectangle estimates the visible building, adjacent parking and on-site circulation.  Canonical source coordinates remain unchanged. Spawn is a modeled projection to the mapped service centerline, not a confirmed apparatus entrance.",
+      "rotationBasis": "Image-estimated alignment of the visible station, parking and circulation; not survey-derived.",
+      "sameSiteAs": "hamilton-fire-10",
+      "identitySourceUrl": "https://www.hamilton.ca/home-neighbourhood/emergency-services/paramedics/about-hamilton-paramedic-service",
+      "runtimeCollision": {
+        "spawnInside": true,
+        "areaRoadAccess": true,
+        "spawnInitiallyDrivable": true,
+        "nearestRoad": {
+          "name": "Unnamed road",
+          "highway": "service",
+          "distanceMetres": 0
+        },
+        "exitStarted": true,
+        "exitCompleted": true,
+        "blockedMoves": 0,
+        "movementSteps": 46,
+        "outsideExpandedDrivingArea": true
+      }
+    },
+    {
+      "baseId": "hamilton-ems-12",
+      "name": "Paramedic Station 12",
+      "address": "199 Highway No. 8, Stoney Creek, ON",
+      "sourcePoint": {
+        "lat": 43.223129155587245,
+        "lng": -79.74009223397759
+      },
+      "drivingArea": {
+        "center": {
+          "lat": 43.22312916,
+          "lng": -79.74009223
+        },
+        "widthMetres": 68,
+        "lengthMetres": 85,
+        "rotationDegrees": 0,
+        "spawn": {
+          "lat": 43.2232251,
+          "lng": -79.7402768,
+          "headingDegrees": 290
+        },
+        "roadSnap": {
+          "roadName": null,
+          "highway": "service",
+          "distanceFromSourceMetres": 18.4
+        }
+      },
+      "assessment": "estimated",
+      "imageryCapture": "artifacts/release-qa/base-fit-hamilton/hamilton-ems-12.png",
+      "imageryZoom": 19,
+      "metresPerPixel": 0.2173,
+      "imageryObservation": "Zoom-19 imagery reviewed for Fire Station 12; the fitted rectangle estimates the visible building, adjacent parking and on-site circulation.  Canonical source coordinates remain unchanged. Spawn is a modeled projection to the mapped service centerline, not a confirmed apparatus entrance.",
+      "rotationBasis": "Image-estimated alignment of the visible station, parking and circulation; not survey-derived.",
+      "sameSiteAs": "hamilton-fire-12",
+      "identitySourceUrl": "https://www.hamilton.ca/home-neighbourhood/emergency-services/paramedics/about-hamilton-paramedic-service",
+      "runtimeCollision": {
+        "spawnInside": true,
+        "areaRoadAccess": true,
+        "spawnInitiallyDrivable": true,
+        "nearestRoad": {
+          "name": "Unnamed road",
+          "highway": "service",
+          "distanceMetres": 0
+        },
+        "exitStarted": true,
+        "exitCompleted": true,
+        "blockedMoves": 0,
+        "movementSteps": 44,
+        "outsideExpandedDrivingArea": true
+      }
+    },
+    {
+      "baseId": "hamilton-ems-15",
+      "name": "Paramedic Station 15",
+      "address": "415 Arvin Avenue, Stoney Creek, ON",
+      "sourcePoint": {
+        "lat": 43.22993323488779,
+        "lng": -79.71652336391476
+      },
+      "drivingArea": {
+        "center": {
+          "lat": 43.22993323,
+          "lng": -79.71652336
+        },
+        "widthMetres": 65,
+        "lengthMetres": 84,
+        "rotationDegrees": 0,
+        "spawn": {
+          "lat": 43.229773,
+          "lng": -79.716597,
+          "headingDegrees": 196
+        },
+        "roadSnap": {
+          "roadName": null,
+          "highway": "service",
+          "distanceFromSourceMetres": 18.8
+        }
+      },
+      "assessment": "estimated",
+      "imageryCapture": "artifacts/release-qa/base-fit-hamilton/hamilton-ems-15.png",
+      "imageryZoom": 19,
+      "metresPerPixel": 0.2173,
+      "imageryObservation": "Zoom-19 imagery reviewed for Fire Station 15; the fitted rectangle estimates the visible building, adjacent parking and on-site circulation.  Canonical source coordinates remain unchanged. Spawn is a modeled projection to the mapped service centerline, not a confirmed apparatus entrance.",
+      "rotationBasis": "Image-estimated alignment of the visible station, parking and circulation; not survey-derived.",
+      "sameSiteAs": "hamilton-fire-15",
+      "identitySourceUrl": "https://www.hamilton.ca/home-neighbourhood/emergency-services/paramedics/about-hamilton-paramedic-service",
+      "runtimeCollision": {
+        "spawnInside": true,
+        "areaRoadAccess": true,
+        "spawnInitiallyDrivable": true,
+        "nearestRoad": {
+          "name": "Unnamed road",
+          "highway": "service",
+          "distanceMetres": 0
+        },
+        "exitStarted": true,
+        "exitCompleted": true,
+        "blockedMoves": 0,
+        "movementSteps": 35,
+        "outsideExpandedDrivingArea": true
+      }
+    },
+    {
+      "baseId": "hamilton-ems-17",
+      "name": "Paramedic Station 17",
+      "address": "363 Isaac Brock Drive, Stoney Creek, ON",
+      "sourcePoint": {
+        "lat": 43.19424358731585,
+        "lng": -79.78936757060065
+      },
+      "drivingArea": {
+        "center": {
+          "lat": 43.19424359,
+          "lng": -79.78936757
+        },
+        "widthMetres": 70,
+        "lengthMetres": 85,
+        "rotationDegrees": 0,
+        "spawn": {
+          "lat": 43.1942318,
+          "lng": -79.7891524,
+          "headingDegrees": 286
+        },
+        "roadSnap": {
+          "roadName": null,
+          "highway": "service",
+          "distanceFromSourceMetres": 17.5
+        }
+      },
+      "assessment": "estimated",
+      "imageryCapture": "artifacts/release-qa/base-fit-hamilton/hamilton-ems-17.png",
+      "imageryZoom": 19,
+      "metresPerPixel": 0.2174,
+      "imageryObservation": "Zoom-19 imagery reviewed for Fire Station 17; the fitted rectangle estimates the visible building, adjacent parking and on-site circulation.  Canonical source coordinates remain unchanged. Spawn is a modeled projection to the mapped service centerline, not a confirmed apparatus entrance.",
+      "rotationBasis": "Image-estimated alignment of the visible station, parking and circulation; not survey-derived.",
+      "sameSiteAs": "hamilton-fire-17",
+      "identitySourceUrl": "https://www.hamilton.ca/home-neighbourhood/emergency-services/paramedics/about-hamilton-paramedic-service",
+      "runtimeCollision": {
+        "spawnInside": true,
+        "areaRoadAccess": true,
+        "spawnInitiallyDrivable": true,
+        "nearestRoad": {
+          "name": "Unnamed road",
+          "highway": "service",
+          "distanceMetres": 0
+        },
+        "exitStarted": true,
+        "exitCompleted": true,
+        "blockedMoves": 0,
+        "movementSteps": 21,
+        "outsideExpandedDrivingArea": true
+      }
+    },
+    {
+      "baseId": "hamilton-ems-18",
+      "name": "Paramedic Station 18",
+      "address": "2636 Regional Road 56, Hamilton, ON",
+      "sourcePoint": {
+        "lat": 43.12170676091187,
+        "lng": -79.80501144996776
+      },
+      "drivingArea": {
+        "center": {
+          "lat": 43.12170676,
+          "lng": -79.80501145
+        },
+        "widthMetres": 85,
+        "lengthMetres": 100,
+        "rotationDegrees": 0,
+        "spawn": {
+          "lat": 43.1216017,
+          "lng": -79.8048321,
+          "headingDegrees": 286
+        },
+        "roadSnap": {
+          "roadName": null,
+          "highway": "service",
+          "distanceFromSourceMetres": 18.7
+        }
+      },
+      "assessment": "estimated",
+      "imageryCapture": "artifacts/release-qa/base-fit-hamilton/hamilton-ems-18.png",
+      "imageryZoom": 19,
+      "metresPerPixel": 0.2177,
+      "imageryObservation": "Zoom-19 imagery reviewed for Fire Station 18; the fitted rectangle estimates the visible building, adjacent parking and on-site circulation.  Canonical source coordinates remain unchanged. Spawn is a modeled projection to the mapped service centerline, not a confirmed apparatus entrance.",
+      "rotationBasis": "Image-estimated alignment of the visible station, parking and circulation; not survey-derived.",
+      "sameSiteAs": "hamilton-fire-18",
+      "identitySourceUrl": "https://www.hamilton.ca/home-neighbourhood/emergency-services/paramedics/about-hamilton-paramedic-service",
+      "runtimeCollision": {
+        "spawnInside": true,
+        "areaRoadAccess": true,
+        "spawnInitiallyDrivable": true,
+        "nearestRoad": {
+          "name": "Unnamed road",
+          "highway": "service",
+          "distanceMetres": 0
+        },
+        "exitStarted": true,
+        "exitCompleted": true,
+        "blockedMoves": 0,
+        "movementSteps": 29,
+        "outsideExpandedDrivingArea": true
+      }
+    },
+    {
+      "baseId": "hamilton-ems-19",
+      "name": "Paramedic Station 19",
+      "address": "3303 Homestead Drive, Hamilton, ON",
+      "sourcePoint": {
+        "lat": 43.15335546962322,
+        "lng": -79.91648420123782
+      },
+      "drivingArea": {
+        "center": {
+          "lat": 43.15335547,
+          "lng": -79.9164842
+        },
+        "widthMetres": 75,
+        "lengthMetres": 88,
+        "rotationDegrees": 0,
+        "spawn": {
+          "lat": 43.153277,
+          "lng": -79.91631,
+          "headingDegrees": 291
+        },
+        "roadSnap": {
+          "roadName": null,
+          "highway": "service",
+          "distanceFromSourceMetres": 16.6
+        }
+      },
+      "assessment": "estimated",
+      "imageryCapture": "artifacts/release-qa/base-fit-hamilton/hamilton-ems-19.png",
+      "imageryZoom": 19,
+      "metresPerPixel": 0.2176,
+      "imageryObservation": "Zoom-19 imagery reviewed for Fire Station 19; the fitted rectangle estimates the visible building, adjacent parking and on-site circulation.  Canonical source coordinates remain unchanged. Spawn is a modeled projection to the mapped service centerline, not a confirmed apparatus entrance.",
+      "rotationBasis": "Image-estimated alignment of the visible station, parking and circulation; not survey-derived.",
+      "sameSiteAs": "hamilton-fire-19",
+      "identitySourceUrl": "https://www.hamilton.ca/home-neighbourhood/emergency-services/paramedics/about-hamilton-paramedic-service",
+      "runtimeCollision": {
+        "spawnInside": true,
+        "areaRoadAccess": true,
+        "spawnInitiallyDrivable": true,
+        "nearestRoad": {
+          "name": "Unnamed road",
+          "highway": "service",
+          "distanceMetres": 0
+        },
+        "exitStarted": true,
+        "exitCompleted": true,
+        "blockedMoves": 0,
+        "movementSteps": 44,
+        "outsideExpandedDrivingArea": true
+      }
+    },
+    {
+      "baseId": "hamilton-ems-20",
+      "name": "Paramedic Station 20",
+      "address": "661 Garner Road East, Ancaster, ON",
+      "sourcePoint": {
+        "lat": 43.206946950617684,
+        "lng": -79.9536203445917
+      },
+      "drivingArea": {
+        "center": {
+          "lat": 43.20694695,
+          "lng": -79.95362034
+        },
+        "widthMetres": 70,
+        "lengthMetres": 86,
+        "rotationDegrees": 0,
+        "spawn": {
+          "lat": 43.20682,
+          "lng": -79.9537446,
+          "headingDegrees": 348
+        },
+        "roadSnap": {
+          "roadName": null,
+          "highway": "service",
+          "distanceFromSourceMetres": 17.4
+        }
+      },
+      "assessment": "estimated",
+      "imageryCapture": "artifacts/release-qa/base-fit-hamilton/hamilton-ems-20.png",
+      "imageryZoom": 19,
+      "metresPerPixel": 0.2174,
+      "imageryObservation": "Zoom-19 imagery reviewed for Fire Station 20; the fitted rectangle estimates the visible building, adjacent parking and on-site circulation.  Canonical source coordinates remain unchanged. Spawn is a modeled projection to the mapped service centerline, not a confirmed apparatus entrance.",
+      "rotationBasis": "Image-estimated alignment of the visible station, parking and circulation; not survey-derived.",
+      "sameSiteAs": "hamilton-fire-20",
+      "identitySourceUrl": "https://www.hamilton.ca/home-neighbourhood/emergency-services/paramedics/about-hamilton-paramedic-service",
+      "runtimeCollision": {
+        "spawnInside": true,
+        "areaRoadAccess": true,
+        "spawnInitiallyDrivable": true,
+        "nearestRoad": {
+          "name": "Unnamed road",
+          "highway": "service",
+          "distanceMetres": 0
+        },
+        "exitStarted": true,
+        "exitCompleted": true,
+        "blockedMoves": 0,
+        "movementSteps": 28,
+        "outsideExpandedDrivingArea": true
+      }
+    },
+    {
+      "baseId": "hamilton-ems-21",
+      "name": "Paramedic Station 21",
+      "address": "365 Wilson Street West, Ancaster, ON",
+      "sourcePoint": {
+        "lat": 43.20855270910729,
+        "lng": -80.00216593150132
+      },
+      "drivingArea": {
+        "center": {
+          "lat": 43.20855271,
+          "lng": -80.00216593
+        },
+        "widthMetres": 65,
+        "lengthMetres": 82,
+        "rotationDegrees": 0,
+        "spawn": {
+          "lat": 43.2085474,
+          "lng": -80.0019894,
+          "headingDegrees": 319
+        },
+        "roadSnap": {
+          "roadName": null,
+          "highway": "service",
+          "distanceFromSourceMetres": 14.3
+        }
+      },
+      "assessment": "estimated",
+      "imageryCapture": "artifacts/release-qa/base-fit-hamilton/hamilton-ems-21.png",
+      "imageryZoom": 19,
+      "metresPerPixel": 0.2174,
+      "imageryObservation": "Zoom-19 imagery reviewed for Fire Station 21; the fitted rectangle estimates the visible building, adjacent parking and on-site circulation.  Canonical source coordinates remain unchanged. Spawn is a modeled projection to the mapped service centerline, not a confirmed apparatus entrance.",
+      "rotationBasis": "Image-estimated alignment of the visible station, parking and circulation; not survey-derived.",
+      "sameSiteAs": "hamilton-fire-21",
+      "identitySourceUrl": "https://www.hamilton.ca/home-neighbourhood/emergency-services/paramedics/about-hamilton-paramedic-service",
+      "runtimeCollision": {
+        "spawnInside": true,
+        "areaRoadAccess": true,
+        "spawnInitiallyDrivable": true,
+        "nearestRoad": {
+          "name": "Unnamed road",
+          "highway": "service",
+          "distanceMetres": 0
+        },
+        "exitStarted": true,
+        "exitCompleted": true,
+        "blockedMoves": 0,
+        "movementSteps": 30,
+        "outsideExpandedDrivingArea": true
+      }
+    },
+    {
+      "baseId": "hamilton-ems-23",
+      "name": "Paramedic Station 23",
+      "address": "19 Sydenham Street, Memorial Square, Dundas, ON",
+      "sourcePoint": {
+        "lat": 43.26574231356586,
+        "lng": -79.95697156263189
+      },
+      "drivingArea": {
+        "center": {
+          "lat": 43.26574231,
+          "lng": -79.95697156
+        },
+        "widthMetres": 65,
+        "lengthMetres": 78,
+        "rotationDegrees": 0,
+        "spawn": {
+          "lat": 43.2658973,
+          "lng": -79.9569802,
+          "headingDegrees": 279
+        },
+        "roadSnap": {
+          "roadName": null,
+          "highway": "service",
+          "distanceFromSourceMetres": 17.3
+        }
+      },
+      "assessment": "estimated",
+      "imageryCapture": "artifacts/release-qa/base-fit-hamilton/hamilton-ems-23.png",
+      "imageryZoom": 19,
+      "metresPerPixel": 0.2172,
+      "imageryObservation": "Zoom-19 imagery reviewed for Fire Station 23; the fitted rectangle estimates the visible building, adjacent parking and on-site circulation.  Canonical source coordinates remain unchanged. Spawn is a modeled projection to the mapped service centerline, not a confirmed apparatus entrance.",
+      "rotationBasis": "Image-estimated alignment of the visible station, parking and circulation; not survey-derived.",
+      "sameSiteAs": "hamilton-fire-23",
+      "identitySourceUrl": "https://www.hamilton.ca/home-neighbourhood/emergency-services/paramedics/about-hamilton-paramedic-service",
+      "runtimeCollision": {
+        "spawnInside": true,
+        "areaRoadAccess": true,
+        "spawnInitiallyDrivable": true,
+        "nearestRoad": {
+          "name": "Unnamed road",
+          "highway": "service",
+          "distanceMetres": 0
+        },
+        "exitStarted": true,
+        "exitCompleted": true,
+        "blockedMoves": 0,
+        "movementSteps": 37,
+        "outsideExpandedDrivingArea": true
+      }
+    },
+    {
+      "baseId": "hamilton-ems-24",
+      "name": "Paramedic Station 24",
+      "address": "256 Parkside Drive, Hamilton, ON",
+      "sourcePoint": {
+        "lat": 43.335789841032714,
+        "lng": -79.90526597223588
+      },
+      "drivingArea": {
+        "center": {
+          "lat": 43.33578984,
+          "lng": -79.90526597
+        },
+        "widthMetres": 70,
+        "lengthMetres": 86,
+        "rotationDegrees": 0,
+        "spawn": {
+          "lat": 43.335935,
+          "lng": -79.9053435,
+          "headingDegrees": 314
+        },
+        "roadSnap": {
+          "roadName": null,
+          "highway": "service",
+          "distanceFromSourceMetres": 17.3
+        }
+      },
+      "assessment": "estimated",
+      "imageryCapture": "artifacts/release-qa/base-fit-hamilton/hamilton-ems-24.png",
+      "imageryZoom": 19,
+      "metresPerPixel": 0.2169,
+      "imageryObservation": "Zoom-19 imagery reviewed for Fire Station 24; the fitted rectangle estimates the visible building, adjacent parking and on-site circulation.  Canonical source coordinates remain unchanged. Spawn is a modeled projection to the mapped service centerline, not a confirmed apparatus entrance.",
+      "rotationBasis": "Image-estimated alignment of the visible station, parking and circulation; not survey-derived.",
+      "sameSiteAs": "hamilton-fire-24",
+      "identitySourceUrl": "https://www.hamilton.ca/home-neighbourhood/emergency-services/paramedics/about-hamilton-paramedic-service",
+      "runtimeCollision": {
+        "spawnInside": true,
+        "areaRoadAccess": true,
+        "spawnInitiallyDrivable": true,
+        "nearestRoad": {
+          "name": "Unnamed road",
+          "highway": "service",
+          "distanceMetres": 0
+        },
+        "exitStarted": true,
+        "exitCompleted": true,
+        "blockedMoves": 0,
+        "movementSteps": 38,
+        "outsideExpandedDrivingArea": true
+      }
+    },
+    {
+      "baseId": "hamilton-ems-25",
+      "name": "Paramedic Station 25",
+      "address": "361 Old Brock Road, Hamilton, ON",
+      "sourcePoint": {
+        "lat": 43.28188318304887,
+        "lng": -79.99422717608839
+      },
+      "drivingArea": {
+        "center": {
+          "lat": 43.28188318,
+          "lng": -79.99422718
+        },
+        "widthMetres": 70,
+        "lengthMetres": 86,
+        "rotationDegrees": 0,
+        "spawn": {
+          "lat": 43.2820045,
+          "lng": -79.9941024,
+          "headingDegrees": 248
+        },
+        "roadSnap": {
+          "roadName": null,
+          "highway": "service",
+          "distanceFromSourceMetres": 16.9
+        }
+      },
+      "assessment": "estimated",
+      "imageryCapture": "artifacts/release-qa/base-fit-hamilton/hamilton-ems-25.png",
+      "imageryZoom": 19,
+      "metresPerPixel": 0.2171,
+      "imageryObservation": "Zoom-19 imagery reviewed for Fire Station 25; the fitted rectangle estimates the visible building, adjacent parking and on-site circulation.  Canonical source coordinates remain unchanged. Spawn is a modeled projection to the mapped service centerline, not a confirmed apparatus entrance.",
+      "rotationBasis": "Image-estimated alignment of the visible station, parking and circulation; not survey-derived.",
+      "sameSiteAs": "hamilton-fire-25",
+      "identitySourceUrl": "https://www.hamilton.ca/home-neighbourhood/emergency-services/paramedics/about-hamilton-paramedic-service",
+      "runtimeCollision": {
+        "spawnInside": true,
+        "areaRoadAccess": true,
+        "spawnInitiallyDrivable": true,
+        "nearestRoad": {
+          "name": "Unnamed road",
+          "highway": "service",
+          "distanceMetres": 0
+        },
+        "exitStarted": true,
+        "exitCompleted": true,
+        "blockedMoves": 0,
+        "movementSteps": 33,
+        "outsideExpandedDrivingArea": true
+      }
+    },
+    {
+      "baseId": "hamilton-ems-32",
+      "name": "Paramedic Station 32",
+      "address": "1000 Limeridge Road East, Hamilton, ON",
+      "sourcePoint": {
+        "lat": 43.20743287193501,
+        "lng": -79.83645221827959
+      },
+      "drivingArea": {
+        "center": {
+          "lat": 43.20743287,
+          "lng": -79.83645222
+        },
+        "widthMetres": 70,
+        "lengthMetres": 88,
+        "rotationDegrees": 0,
+        "spawn": {
+          "lat": 43.20746422,
+          "lng": -79.83660219,
+          "headingDegrees": 16
+        },
+        "roadSnap": {
+          "roadName": null,
+          "highway": "service",
+          "distanceFromSourceMetres": 12.7
+        }
+      },
+      "assessment": "estimated",
+      "imageryCapture": "artifacts/release-qa/base-fit-hamilton/hamilton-ems-32.png",
+      "imageryZoom": 19,
+      "metresPerPixel": 0.2174,
+      "imageryObservation": "Zoom-19 imagery reviewed for Paramedic Station 32; the fitted rectangle estimates the visible building, adjacent parking and on-site circulation.  Canonical source coordinates remain unchanged. Spawn is a modeled projection to the mapped service centerline, not a confirmed apparatus entrance.",
+      "rotationBasis": "Image-estimated alignment of the visible station, parking and circulation; not survey-derived.",
+      "identitySourceUrl": "https://www.hamilton.ca/home-neighbourhood/emergency-services/paramedics/about-hamilton-paramedic-service",
+      "runtimeCollision": {
+        "spawnInside": true,
+        "areaRoadAccess": true,
+        "spawnInitiallyDrivable": true,
+        "nearestRoad": {
+          "name": "Unnamed road",
+          "highway": "service",
+          "distanceMetres": 0
+        },
+        "exitStarted": true,
+        "exitCompleted": true,
+        "blockedMoves": 0,
+        "movementSteps": 66,
+        "outsideExpandedDrivingArea": true
+      }
+    },
+    {
+      "baseId": "hamilton-ems-30",
+      "name": "Paramedic Station 30 — Victoria / Fleet Centre",
+      "address": "489 Victoria Avenue North, Hamilton, ON",
+      "sourcePoint": {
+        "lat": 43.26865303155598,
+        "lng": -79.8504849869453
+      },
+      "drivingArea": {
+        "center": {
+          "lat": 43.26865303,
+          "lng": -79.85048499
+        },
+        "widthMetres": 60,
+        "lengthMetres": 75,
+        "rotationDegrees": 0,
+        "spawn": {
+          "lat": 43.2687165,
+          "lng": -79.8501499,
+          "headingDegrees": 16
+        },
+        "roadSnap": {
+          "roadName": null,
+          "highway": "service",
+          "distanceFromSourceMetres": 28.1
+        }
+      },
+      "assessment": "estimated",
+      "imageryCapture": "artifacts/release-qa/base-fit-hamilton/hamilton-ems-30.png",
+      "imageryZoom": 19,
+      "metresPerPixel": 0.2172,
+      "imageryObservation": "Zoom-19 imagery reviewed for Paramedic Station 30 — Victoria / Fleet Centre; the fitted rectangle estimates the visible building, adjacent parking and on-site circulation.  Canonical source coordinates remain unchanged. Spawn is a modeled projection to the mapped service centerline, not a confirmed apparatus entrance.",
+      "rotationBasis": "Image-estimated alignment of the visible station, parking and circulation; not survey-derived.",
+      "identitySourceUrl": "https://www.hamilton.ca/home-neighbourhood/emergency-services/paramedics/about-hamilton-paramedic-service",
+      "runtimeCollision": {
+        "spawnInside": true,
+        "areaRoadAccess": true,
+        "spawnInitiallyDrivable": true,
+        "nearestRoad": {
+          "name": "Unnamed road",
+          "highway": "service",
+          "distanceMetres": 0
+        },
+        "exitStarted": true,
+        "exitCompleted": true,
+        "blockedMoves": 0,
+        "movementSteps": 11,
+        "outsideExpandedDrivingArea": true
+      }
+    }
+  ],
+  "runtimeCollisionChecks": {
+    "artifact": "artifacts/release-qa/base-fit/hamilton-driving-area-checks.json",
+    "bases": 44,
+    "continuousExits": 44,
+    "blockedMoves": 0,
+    "note": "Continuous real-route collision-model samples through the yard boundary; not a physical full-route drive."
+  }
+}

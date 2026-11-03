@@ -78,7 +78,12 @@
         "calls": 8,
         "reachable": 8,
         "responseRouteFailures": 0,
-        "transportRouteFailures": 0
+        "transportRouteFailures": 0,
+        "maxRouteCalculationMs": 4.399999976158142,
+        "transportPolicy": {
+          "requiresHospital": false,
+          "note": null
+        }
       }
     },
     {
@@ -128,7 +133,12 @@
         "calls": 8,
         "reachable": 8,
         "responseRouteFailures": 0,
-        "transportRouteFailures": 0
+        "transportRouteFailures": 0,
+        "maxRouteCalculationMs": 5.200000017881393,
+        "transportPolicy": {
+          "requiresHospital": false,
+          "note": null
+        }
       }
     },
     {
@@ -178,7 +188,12 @@
         "calls": 8,
         "reachable": 8,
         "responseRouteFailures": 0,
-        "transportRouteFailures": 0
+        "transportRouteFailures": 0,
+        "maxRouteCalculationMs": 4.699999988079071,
+        "transportPolicy": {
+          "requiresHospital": false,
+          "note": null
+        }
       }
     },
     {
@@ -228,7 +243,12 @@
         "calls": 8,
         "reachable": 8,
         "responseRouteFailures": 0,
-        "transportRouteFailures": 0
+        "transportRouteFailures": 0,
+        "maxRouteCalculationMs": 4.5,
+        "transportPolicy": {
+          "requiresHospital": false,
+          "note": null
+        }
       }
     },
     {
@@ -278,7 +298,12 @@
         "calls": 8,
         "reachable": 8,
         "responseRouteFailures": 0,
-        "transportRouteFailures": 0
+        "transportRouteFailures": 0,
+        "maxRouteCalculationMs": 8,
+        "transportPolicy": {
+          "requiresHospital": false,
+          "note": null
+        }
       }
     },
     {
@@ -328,7 +353,12 @@
         "calls": 8,
         "reachable": 8,
         "responseRouteFailures": 0,
-        "transportRouteFailures": 0
+        "transportRouteFailures": 0,
+        "maxRouteCalculationMs": 4,
+        "transportPolicy": {
+          "requiresHospital": false,
+          "note": null
+        }
       }
     },
     {
@@ -378,7 +408,12 @@
         "calls": 8,
         "reachable": 8,
         "responseRouteFailures": 0,
-        "transportRouteFailures": 0
+        "transportRouteFailures": 0,
+        "maxRouteCalculationMs": 4.9000000059604645,
+        "transportPolicy": {
+          "requiresHospital": false,
+          "note": null
+        }
       }
     },
     {
@@ -428,7 +463,12 @@
         "calls": 8,
         "reachable": 8,
         "responseRouteFailures": 0,
-        "transportRouteFailures": 0
+        "transportRouteFailures": 0,
+        "maxRouteCalculationMs": 6.800000011920929,
+        "transportPolicy": {
+          "requiresHospital": false,
+          "note": null
+        }
       }
     },
     {
@@ -478,7 +518,12 @@
         "calls": 8,
         "reachable": 8,
         "responseRouteFailures": 0,
-        "transportRouteFailures": 0
+        "transportRouteFailures": 0,
+        "maxRouteCalculationMs": 6,
+        "transportPolicy": {
+          "requiresHospital": false,
+          "note": null
+        }
       }
     },
     {
@@ -528,7 +573,12 @@
         "calls": 8,
         "reachable": 8,
         "responseRouteFailures": 0,
-        "transportRouteFailures": 0
+        "transportRouteFailures": 0,
+        "maxRouteCalculationMs": 5.799999982118607,
+        "transportPolicy": {
+          "requiresHospital": false,
+          "note": null
+        }
       }
     },
     {
@@ -578,7 +628,12 @@
         "calls": 8,
         "reachable": 8,
         "responseRouteFailures": 0,
-        "transportRouteFailures": 0
+        "transportRouteFailures": 0,
+        "maxRouteCalculationMs": 4.399999976158142,
+        "transportPolicy": {
+          "requiresHospital": false,
+          "note": null
+        }
       }
     },
     {
@@ -628,7 +683,12 @@
         "calls": 8,
         "reachable": 8,
         "responseRouteFailures": 0,
-        "transportRouteFailures": 0
+        "transportRouteFailures": 0,
+        "maxRouteCalculationMs": 5,
+        "transportPolicy": {
+          "requiresHospital": false,
+          "note": null
+        }
       }
     },
     {
@@ -678,7 +738,12 @@
         "calls": 8,
         "reachable": 8,
         "responseRouteFailures": 0,
-        "transportRouteFailures": 0
+        "transportRouteFailures": 0,
+        "maxRouteCalculationMs": 5.299999982118607,
+        "transportPolicy": {
+          "requiresHospital": false,
+          "note": null
+        }
       }
     },
     {
@@ -728,7 +793,12 @@
         "calls": 8,
         "reachable": 8,
         "responseRouteFailures": 0,
-        "transportRouteFailures": 0
+        "transportRouteFailures": 0,
+        "maxRouteCalculationMs": 4.5,
+        "transportPolicy": {
+          "requiresHospital": false,
+          "note": null
+        }
       }
     },
     {
@@ -778,7 +848,12 @@
         "calls": 8,
         "reachable": 8,
         "responseRouteFailures": 0,
-        "transportRouteFailures": 0
+        "transportRouteFailures": 0,
+        "maxRouteCalculationMs": 4.4000000059604645,
+        "transportPolicy": {
+          "requiresHospital": false,
+          "note": null
+        }
       }
     },
     {
@@ -828,7 +903,12 @@
         "calls": 8,
         "reachable": 8,
         "responseRouteFailures": 0,
-        "transportRouteFailures": 0
+        "transportRouteFailures": 0,
+        "maxRouteCalculationMs": 4.399999976158142,
+        "transportPolicy": {
+          "requiresHospital": false,
+          "note": null
+        }
       }
     },
     {
@@ -878,7 +958,12 @@
         "calls": 8,
         "reachable": 8,
         "responseRouteFailures": 0,
-        "transportRouteFailures": 0
+        "transportRouteFailures": 0,
+        "maxRouteCalculationMs": 7.5999999940395355,
+        "transportPolicy": {
+          "requiresHospital": false,
+          "note": null
+        }
       }
     },
     {
@@ -928,7 +1013,12 @@
         "calls": 8,
         "reachable": 8,
         "responseRouteFailures": 0,
-        "transportRouteFailures": 0
+        "transportRouteFailures": 0,
+        "maxRouteCalculationMs": 5.5,
+        "transportPolicy": {
+          "requiresHospital": false,
+          "note": null
+        }
       }
     },
     {
@@ -978,7 +1068,12 @@
         "calls": 8,
         "reachable": 8,
         "responseRouteFailures": 0,
-        "transportRouteFailures": 0
+        "transportRouteFailures": 0,
+        "maxRouteCalculationMs": 5.299999982118607,
+        "transportPolicy": {
+          "requiresHospital": false,
+          "note": null
+        }
       }
     },
     {
@@ -1028,7 +1123,12 @@
         "calls": 8,
         "reachable": 8,
         "responseRouteFailures": 0,
-        "transportRouteFailures": 0
+        "transportRouteFailures": 0,
+        "maxRouteCalculationMs": 4.600000023841858,
+        "transportPolicy": {
+          "requiresHospital": false,
+          "note": null
+        }
       }
     },
     {
@@ -1078,7 +1178,12 @@
         "calls": 8,
         "reachable": 8,
         "responseRouteFailures": 0,
-        "transportRouteFailures": 0
+        "transportRouteFailures": 0,
+        "maxRouteCalculationMs": 6.4000000059604645,
+        "transportPolicy": {
+          "requiresHospital": false,
+          "note": null
+        }
       }
     },
     {
@@ -1128,7 +1233,12 @@
         "calls": 8,
         "reachable": 8,
         "responseRouteFailures": 0,
-        "transportRouteFailures": 0
+        "transportRouteFailures": 0,
+        "maxRouteCalculationMs": 6,
+        "transportPolicy": {
+          "requiresHospital": false,
+          "note": null
+        }
       }
     },
     {
@@ -1178,7 +1288,12 @@
         "calls": 8,
         "reachable": 8,
         "responseRouteFailures": 0,
-        "transportRouteFailures": 0
+        "transportRouteFailures": 0,
+        "maxRouteCalculationMs": 3.5,
+        "transportPolicy": {
+          "requiresHospital": false,
+          "note": null
+        }
       }
     },
     {
@@ -1228,7 +1343,12 @@
         "calls": 6,
         "reachable": 6,
         "responseRouteFailures": 0,
-        "transportRouteFailures": 0
+        "transportRouteFailures": 0,
+        "maxRouteCalculationMs": 41.5,
+        "transportPolicy": {
+          "requiresHospital": true,
+          "note": null
+        }
       }
     },
     {
@@ -1278,7 +1398,12 @@
         "calls": 6,
         "reachable": 6,
         "responseRouteFailures": 0,
-        "transportRouteFailures": 0
+        "transportRouteFailures": 0,
+        "maxRouteCalculationMs": 53.599999994039536,
+        "transportPolicy": {
+          "requiresHospital": true,
+          "note": null
+        }
       }
     },
     {
@@ -1328,7 +1453,12 @@
         "calls": 6,
         "reachable": 6,
         "responseRouteFailures": 0,
-        "transportRouteFailures": 0
+        "transportRouteFailures": 0,
+        "maxRouteCalculationMs": 48.099999994039536,
+        "transportPolicy": {
+          "requiresHospital": true,
+          "note": null
+        }
       }
     },
     {
@@ -1378,7 +1508,12 @@
         "calls": 6,
         "reachable": 6,
         "responseRouteFailures": 0,
-        "transportRouteFailures": 0
+        "transportRouteFailures": 0,
+        "maxRouteCalculationMs": 10.400000005960464,
+        "transportPolicy": {
+          "requiresHospital": true,
+          "note": null
+        }
       }
     },
     {
@@ -1391,24 +1526,68 @@
       },
       "drivingArea": {
         "center": {
-          "lat": 43.61620277519693,
-          "lng": -79.68065936631197
+          "lat": 43.61701121971051,
+          "lng": -79.68084726727413
         },
-        "widthMetres": 65,
-        "lengthMetres": 90,
-        "rotationDegrees": 0,
+        "widthMetres": 57,
+        "lengthMetres": 45,
+        "rotationDegrees": 11,
         "spawn": {
-          "lat": 43.616347519181005,
-          "lng": -79.680981974094,
-          "headingDegrees": 315
-        },
-        "spawnOffsetFromCanonicalMetres": {
-          "east": -44,
-          "north": 26
+          "lat": 43.61697029083904,
+          "lng": -79.6810411656761,
+          "headingDegrees": 259
         }
       },
       "assessment": "estimated",
-      "observation": "Estimated from Esri imagery and the 5841 Falbourne address: the canonical source point lies on open/pond-side ground; the nearby visible structure, paved aisle and connected Falbourne Street frontage are included conservatively. Exact EMS building identity and entrance remain unverified; canonical source coordinates are retained.",
+      "observation": "Source point lies beside Saigon Park pond. Driving area is recentered on the 5841 Falbourne station building identified by the official Peel address and named OSM facility, with its immediate parking/apron. Imagery-estimated, no verified apparatus entrance; canonical source point preserved.",
+      "identityEvidence": {
+        "officialAddressUrl": "https://peelregion.ca/paramedics/paramedic-stations",
+        "officialBuildingPermitUrl": "https://www.mississauga.ca/wp-content/uploads/2021/06/18163024/2016-Building-Permit-Activity-Listing-Report.pdf",
+        "mappedFacilityUrl": "https://mapcarta.com/W733908213",
+        "osmFeatureUrl": "https://www.openstreetmap.org/way/733908213",
+        "mappedPoint": {
+          "lat": 43.61698,
+          "lng": -79.68084
+        },
+        "coordinateMethod": "OSM-derived mapped facility point as reported by Mapcarta, checked against visible building; direct OSM API returned HTTP 429 and was not retried.",
+        "recheckDate": "2026-11-02"
+      },
+      "imageReview": {
+        "screenshot": "artifacts/release-qa/base-fit-falbourne-review/mississauga-ems-falbourne.png",
+        "center": {
+          "lat": 43.61698,
+          "lng": -79.68084
+        },
+        "viewport": [
+          1120,
+          860
+        ],
+        "zoom": 19,
+        "metresPerPixel": 0.2159218699603009,
+        "polygonPixels": [
+          [
+            425,
+            350
+          ],
+          [
+            645,
+            305
+          ],
+          [
+            690,
+            480
+          ],
+          [
+            500,
+            515
+          ]
+        ],
+        "spawnPixel": [
+          485,
+          435
+        ],
+        "marginMetres": 3
+      },
       "runtimeCollision": {
         "spawnInside": true,
         "areaRoadAccess": true,
@@ -1416,19 +1595,24 @@
         "nearestRoad": {
           "name": "Falbourne Street",
           "highway": "unclassified",
-          "distanceMetres": 0.26
+          "distanceMetres": 9.07
         },
         "exitStarted": true,
         "exitCompleted": true,
         "blockedMoves": 0,
-        "movementSteps": 51,
+        "movementSteps": 29,
         "outsideExpandedDrivingArea": true
       },
       "dispatchRouteCoverage": {
         "calls": 6,
         "reachable": 6,
         "responseRouteFailures": 0,
-        "transportRouteFailures": 0
+        "transportRouteFailures": 0,
+        "maxRouteCalculationMs": 19.400000005960464,
+        "transportPolicy": {
+          "requiresHospital": true,
+          "note": null
+        }
       }
     },
     {
@@ -1478,7 +1662,12 @@
         "calls": 6,
         "reachable": 6,
         "responseRouteFailures": 0,
-        "transportRouteFailures": 0
+        "transportRouteFailures": 0,
+        "maxRouteCalculationMs": 56.20000001788139,
+        "transportPolicy": {
+          "requiresHospital": true,
+          "note": null
+        }
       }
     },
     {
@@ -1528,7 +1717,12 @@
         "calls": 6,
         "reachable": 6,
         "responseRouteFailures": 0,
-        "transportRouteFailures": 0
+        "transportRouteFailures": 0,
+        "maxRouteCalculationMs": 26.599999994039536,
+        "transportPolicy": {
+          "requiresHospital": true,
+          "note": null
+        }
       }
     },
     {
@@ -1578,7 +1772,12 @@
         "calls": 6,
         "reachable": 6,
         "responseRouteFailures": 0,
-        "transportRouteFailures": 0
+        "transportRouteFailures": 0,
+        "maxRouteCalculationMs": 51.70000001788139,
+        "transportPolicy": {
+          "requiresHospital": true,
+          "note": null
+        }
       }
     },
     {
@@ -1628,7 +1827,12 @@
         "calls": 6,
         "reachable": 6,
         "responseRouteFailures": 0,
-        "transportRouteFailures": 0
+        "transportRouteFailures": 0,
+        "maxRouteCalculationMs": 9.899999976158142,
+        "transportPolicy": {
+          "requiresHospital": true,
+          "note": null
+        }
       }
     },
     {
@@ -1678,7 +1882,12 @@
         "calls": 6,
         "reachable": 6,
         "responseRouteFailures": 0,
-        "transportRouteFailures": 0
+        "transportRouteFailures": 0,
+        "maxRouteCalculationMs": 11.099999994039536,
+        "transportPolicy": {
+          "requiresHospital": true,
+          "note": null
+        }
       }
     },
     {
@@ -1728,7 +1937,12 @@
         "calls": 6,
         "reachable": 6,
         "responseRouteFailures": 0,
-        "transportRouteFailures": 0
+        "transportRouteFailures": 0,
+        "maxRouteCalculationMs": 14.800000011920929,
+        "transportPolicy": {
+          "requiresHospital": true,
+          "note": null
+        }
       }
     },
     {
@@ -1778,7 +1992,12 @@
         "calls": 6,
         "reachable": 6,
         "responseRouteFailures": 0,
-        "transportRouteFailures": 0
+        "transportRouteFailures": 0,
+        "maxRouteCalculationMs": 8.599999994039536,
+        "transportPolicy": {
+          "requiresHospital": true,
+          "note": null
+        }
       }
     },
     {
@@ -1828,866 +2047,35 @@
         "calls": 6,
         "reachable": 6,
         "responseRouteFailures": 0,
-        "transportRouteFailures": 0
+        "transportRouteFailures": 0,
+        "maxRouteCalculationMs": 37.89999997615814,
+        "transportPolicy": {
+          "requiresHospital": true,
+          "note": null
+        }
       }
     }
   ],
   "runtimeCollisionChecks": {
-    "checkedLocalDate": "2026-11-02",
-    "runtimeVersion": "1.6.170",
-    "roadState": "ready",
-    "activeBaseCount": 36,
-    "method": "Browser QA started PTBO_ROAD_COLLISION.beginStationExit, selected a real route call from each base until the route left a 10 m expanded driving-area boundary, then moved along that route in 1.5 m steps with resolveMovement. Each path had to leave the expanded yard on a drivable point with no blocked moves.",
-    "results": [
-      {
-        "baseId": "mississauga-fire-101",
-        "spawnInside": true,
-        "areaRoadAccess": true,
-        "spawnInitiallyDrivable": true,
-        "nearestRoad": {
-          "name": "Unnamed road",
-          "highway": "service",
-          "distanceMetres": 17.63
-        },
-        "exitStarted": true,
-        "exitCompleted": true,
-        "blockedMoves": 0,
-        "movementSteps": 56,
-        "outsideExpandedDrivingArea": true
-      },
-      {
-        "baseId": "mississauga-fire-102",
-        "spawnInside": true,
-        "areaRoadAccess": true,
-        "spawnInitiallyDrivable": true,
-        "nearestRoad": {
-          "name": "Unnamed road",
-          "highway": "service",
-          "distanceMetres": 9.21
-        },
-        "exitStarted": true,
-        "exitCompleted": true,
-        "blockedMoves": 0,
-        "movementSteps": 60,
-        "outsideExpandedDrivingArea": true
-      },
-      {
-        "baseId": "mississauga-fire-103",
-        "spawnInside": true,
-        "areaRoadAccess": true,
-        "spawnInitiallyDrivable": true,
-        "nearestRoad": {
-          "name": "Unnamed road",
-          "highway": "service",
-          "distanceMetres": 12.32
-        },
-        "exitStarted": true,
-        "exitCompleted": true,
-        "blockedMoves": 0,
-        "movementSteps": 105,
-        "outsideExpandedDrivingArea": true
-      },
-      {
-        "baseId": "mississauga-fire-104",
-        "spawnInside": true,
-        "areaRoadAccess": true,
-        "spawnInitiallyDrivable": true,
-        "nearestRoad": {
-          "name": "Unnamed road",
-          "highway": "service",
-          "distanceMetres": 8.89
-        },
-        "exitStarted": true,
-        "exitCompleted": true,
-        "blockedMoves": 0,
-        "movementSteps": 109,
-        "outsideExpandedDrivingArea": true
-      },
-      {
-        "baseId": "mississauga-fire-105",
-        "spawnInside": true,
-        "areaRoadAccess": true,
-        "spawnInitiallyDrivable": true,
-        "nearestRoad": {
-          "name": "Unnamed road",
-          "highway": "service",
-          "distanceMetres": 14.97
-        },
-        "exitStarted": true,
-        "exitCompleted": true,
-        "blockedMoves": 0,
-        "movementSteps": 93,
-        "outsideExpandedDrivingArea": true
-      },
-      {
-        "baseId": "mississauga-fire-106",
-        "spawnInside": true,
-        "areaRoadAccess": true,
-        "spawnInitiallyDrivable": true,
-        "nearestRoad": {
-          "name": "Unnamed road",
-          "highway": "service",
-          "distanceMetres": 13.15
-        },
-        "exitStarted": true,
-        "exitCompleted": true,
-        "blockedMoves": 0,
-        "movementSteps": 139,
-        "outsideExpandedDrivingArea": true
-      },
-      {
-        "baseId": "mississauga-fire-107",
-        "spawnInside": true,
-        "areaRoadAccess": true,
-        "spawnInitiallyDrivable": true,
-        "nearestRoad": {
-          "name": "Unnamed road",
-          "highway": "service",
-          "distanceMetres": 10.43
-        },
-        "exitStarted": true,
-        "exitCompleted": true,
-        "blockedMoves": 0,
-        "movementSteps": 60,
-        "outsideExpandedDrivingArea": true
-      },
-      {
-        "baseId": "mississauga-fire-108",
-        "spawnInside": true,
-        "areaRoadAccess": true,
-        "spawnInitiallyDrivable": true,
-        "nearestRoad": {
-          "name": "Unnamed road",
-          "highway": "service",
-          "distanceMetres": 14.99
-        },
-        "exitStarted": true,
-        "exitCompleted": true,
-        "blockedMoves": 0,
-        "movementSteps": 78,
-        "outsideExpandedDrivingArea": true
-      },
-      {
-        "baseId": "mississauga-fire-109",
-        "spawnInside": true,
-        "areaRoadAccess": true,
-        "spawnInitiallyDrivable": true,
-        "nearestRoad": {
-          "name": "Unnamed road",
-          "highway": "service",
-          "distanceMetres": 17.94
-        },
-        "exitStarted": true,
-        "exitCompleted": true,
-        "blockedMoves": 0,
-        "movementSteps": 79,
-        "outsideExpandedDrivingArea": true
-      },
-      {
-        "baseId": "mississauga-fire-110",
-        "spawnInside": true,
-        "areaRoadAccess": true,
-        "spawnInitiallyDrivable": true,
-        "nearestRoad": {
-          "name": "Unnamed road",
-          "highway": "service",
-          "distanceMetres": 13.93
-        },
-        "exitStarted": true,
-        "exitCompleted": true,
-        "blockedMoves": 0,
-        "movementSteps": 85,
-        "outsideExpandedDrivingArea": true
-      },
-      {
-        "baseId": "mississauga-fire-111",
-        "spawnInside": true,
-        "areaRoadAccess": true,
-        "spawnInitiallyDrivable": true,
-        "nearestRoad": {
-          "name": "Unnamed road",
-          "highway": "service",
-          "distanceMetres": 10.2
-        },
-        "exitStarted": true,
-        "exitCompleted": true,
-        "blockedMoves": 0,
-        "movementSteps": 43,
-        "outsideExpandedDrivingArea": true
-      },
-      {
-        "baseId": "mississauga-fire-112",
-        "spawnInside": true,
-        "areaRoadAccess": true,
-        "spawnInitiallyDrivable": true,
-        "nearestRoad": {
-          "name": "Unnamed road",
-          "highway": "service",
-          "distanceMetres": 35.96
-        },
-        "exitStarted": true,
-        "exitCompleted": true,
-        "blockedMoves": 0,
-        "movementSteps": 50,
-        "outsideExpandedDrivingArea": true
-      },
-      {
-        "baseId": "mississauga-fire-114",
-        "spawnInside": true,
-        "areaRoadAccess": true,
-        "spawnInitiallyDrivable": true,
-        "nearestRoad": {
-          "name": "Unnamed road",
-          "highway": "service",
-          "distanceMetres": 13.22
-        },
-        "exitStarted": true,
-        "exitCompleted": true,
-        "blockedMoves": 0,
-        "movementSteps": 113,
-        "outsideExpandedDrivingArea": true
-      },
-      {
-        "baseId": "mississauga-fire-115",
-        "spawnInside": true,
-        "areaRoadAccess": true,
-        "spawnInitiallyDrivable": true,
-        "nearestRoad": {
-          "name": "Unnamed road",
-          "highway": "service",
-          "distanceMetres": 11.36
-        },
-        "exitStarted": true,
-        "exitCompleted": true,
-        "blockedMoves": 0,
-        "movementSteps": 54,
-        "outsideExpandedDrivingArea": true
-      },
-      {
-        "baseId": "mississauga-fire-116",
-        "spawnInside": true,
-        "areaRoadAccess": true,
-        "spawnInitiallyDrivable": true,
-        "nearestRoad": {
-          "name": "Unnamed road",
-          "highway": "service",
-          "distanceMetres": 11.47
-        },
-        "exitStarted": true,
-        "exitCompleted": true,
-        "blockedMoves": 0,
-        "movementSteps": 51,
-        "outsideExpandedDrivingArea": true
-      },
-      {
-        "baseId": "mississauga-fire-117",
-        "spawnInside": true,
-        "areaRoadAccess": true,
-        "spawnInitiallyDrivable": true,
-        "nearestRoad": {
-          "name": "Unnamed road",
-          "highway": "service",
-          "distanceMetres": 10.36
-        },
-        "exitStarted": true,
-        "exitCompleted": true,
-        "blockedMoves": 0,
-        "movementSteps": 43,
-        "outsideExpandedDrivingArea": true
-      },
-      {
-        "baseId": "mississauga-fire-118",
-        "spawnInside": true,
-        "areaRoadAccess": true,
-        "spawnInitiallyDrivable": true,
-        "nearestRoad": {
-          "name": "Unnamed road",
-          "highway": "service",
-          "distanceMetres": 15.11
-        },
-        "exitStarted": true,
-        "exitCompleted": true,
-        "blockedMoves": 0,
-        "movementSteps": 101,
-        "outsideExpandedDrivingArea": true
-      },
-      {
-        "baseId": "mississauga-fire-119",
-        "spawnInside": true,
-        "areaRoadAccess": true,
-        "spawnInitiallyDrivable": true,
-        "nearestRoad": {
-          "name": "Unnamed road",
-          "highway": "service",
-          "distanceMetres": 8.63
-        },
-        "exitStarted": true,
-        "exitCompleted": true,
-        "blockedMoves": 0,
-        "movementSteps": 63,
-        "outsideExpandedDrivingArea": true
-      },
-      {
-        "baseId": "mississauga-fire-120",
-        "spawnInside": true,
-        "areaRoadAccess": true,
-        "spawnInitiallyDrivable": true,
-        "nearestRoad": {
-          "name": "Unnamed road",
-          "highway": "service",
-          "distanceMetres": 4.43
-        },
-        "exitStarted": true,
-        "exitCompleted": true,
-        "blockedMoves": 0,
-        "movementSteps": 78,
-        "outsideExpandedDrivingArea": true
-      },
-      {
-        "baseId": "mississauga-fire-121",
-        "spawnInside": true,
-        "areaRoadAccess": true,
-        "spawnInitiallyDrivable": true,
-        "nearestRoad": {
-          "name": "Unnamed road",
-          "highway": "service",
-          "distanceMetres": 17.53
-        },
-        "exitStarted": true,
-        "exitCompleted": true,
-        "blockedMoves": 0,
-        "movementSteps": 60,
-        "outsideExpandedDrivingArea": true
-      },
-      {
-        "baseId": "mississauga-fire-122",
-        "spawnInside": true,
-        "areaRoadAccess": true,
-        "spawnInitiallyDrivable": true,
-        "nearestRoad": {
-          "name": "Unnamed road",
-          "highway": "service",
-          "distanceMetres": 39.32
-        },
-        "exitStarted": true,
-        "exitCompleted": true,
-        "blockedMoves": 0,
-        "movementSteps": 74,
-        "outsideExpandedDrivingArea": true
-      },
-      {
-        "baseId": "mississauga-fire-123",
-        "spawnInside": true,
-        "areaRoadAccess": true,
-        "spawnInitiallyDrivable": true,
-        "nearestRoad": {
-          "name": "Unnamed road",
-          "highway": "service",
-          "distanceMetres": 34.47
-        },
-        "exitStarted": true,
-        "exitCompleted": true,
-        "blockedMoves": 0,
-        "movementSteps": 37,
-        "outsideExpandedDrivingArea": true
-      },
-      {
-        "baseId": "mississauga-fire-125",
-        "spawnInside": true,
-        "areaRoadAccess": true,
-        "spawnInitiallyDrivable": true,
-        "nearestRoad": {
-          "name": "Unnamed road",
-          "highway": "service",
-          "distanceMetres": 32.4
-        },
-        "exitStarted": true,
-        "exitCompleted": true,
-        "blockedMoves": 0,
-        "movementSteps": 85,
-        "outsideExpandedDrivingArea": true
-      },
-      {
-        "baseId": "mississauga-ems-airport",
-        "spawnInside": true,
-        "areaRoadAccess": true,
-        "spawnInitiallyDrivable": true,
-        "nearestRoad": {
-          "name": "Unnamed road",
-          "highway": "service",
-          "distanceMetres": 24.87
-        },
-        "exitStarted": true,
-        "exitCompleted": true,
-        "blockedMoves": 0,
-        "movementSteps": 66,
-        "outsideExpandedDrivingArea": true
-      },
-      {
-        "baseId": "mississauga-ems-east-avenue",
-        "spawnInside": true,
-        "areaRoadAccess": true,
-        "spawnInitiallyDrivable": true,
-        "nearestRoad": {
-          "name": "Unnamed road",
-          "highway": "service",
-          "distanceMetres": 35.48
-        },
-        "exitStarted": true,
-        "exitCompleted": true,
-        "blockedMoves": 0,
-        "movementSteps": 48,
-        "outsideExpandedDrivingArea": true
-      },
-      {
-        "baseId": "mississauga-ems-falbourne",
-        "spawnInside": true,
-        "areaRoadAccess": true,
-        "spawnInitiallyDrivable": true,
-        "nearestRoad": {
-          "name": "Falbourne Street",
-          "highway": "unclassified",
-          "distanceMetres": 0.26
-        },
-        "exitStarted": true,
-        "exitCompleted": true,
-        "blockedMoves": 0,
-        "movementSteps": 51,
-        "outsideExpandedDrivingArea": true
-      },
-      {
-        "baseId": "mississauga-ems-goreway",
-        "spawnInside": true,
-        "areaRoadAccess": true,
-        "spawnInitiallyDrivable": true,
-        "nearestRoad": {
-          "name": "Unnamed road",
-          "highway": "service",
-          "distanceMetres": 9.93
-        },
-        "exitStarted": true,
-        "exitCompleted": true,
-        "blockedMoves": 0,
-        "movementSteps": 54,
-        "outsideExpandedDrivingArea": true
-      },
-      {
-        "baseId": "mississauga-ems-kingsway",
-        "spawnInside": true,
-        "areaRoadAccess": true,
-        "spawnInitiallyDrivable": true,
-        "nearestRoad": {
-          "name": "Unnamed road",
-          "highway": "service",
-          "distanceMetres": 2.38
-        },
-        "exitStarted": true,
-        "exitCompleted": true,
-        "blockedMoves": 0,
-        "movementSteps": 46,
-        "outsideExpandedDrivingArea": true
-      },
-      {
-        "baseId": "mississauga-ems-kitimat",
-        "spawnInside": true,
-        "areaRoadAccess": true,
-        "spawnInitiallyDrivable": true,
-        "nearestRoad": {
-          "name": "Unnamed road",
-          "highway": "service",
-          "distanceMetres": 22.6
-        },
-        "exitStarted": true,
-        "exitCompleted": true,
-        "blockedMoves": 0,
-        "movementSteps": 67,
-        "outsideExpandedDrivingArea": true
-      },
-      {
-        "baseId": "mississauga-ems-lorne-park",
-        "spawnInside": true,
-        "areaRoadAccess": true,
-        "spawnInitiallyDrivable": true,
-        "nearestRoad": {
-          "name": "Unnamed road",
-          "highway": "service",
-          "distanceMetres": 0.38
-        },
-        "exitStarted": true,
-        "exitCompleted": true,
-        "blockedMoves": 0,
-        "movementSteps": 23,
-        "outsideExpandedDrivingArea": true
-      },
-      {
-        "baseId": "mississauga-ems-mavis",
-        "spawnInside": true,
-        "areaRoadAccess": true,
-        "spawnInitiallyDrivable": true,
-        "nearestRoad": {
-          "name": "Unnamed road",
-          "highway": "service",
-          "distanceMetres": 11.55
-        },
-        "exitStarted": true,
-        "exitCompleted": true,
-        "blockedMoves": 0,
-        "movementSteps": 69,
-        "outsideExpandedDrivingArea": true
-      },
-      {
-        "baseId": "mississauga-ems-sheridan",
-        "spawnInside": true,
-        "areaRoadAccess": true,
-        "spawnInitiallyDrivable": true,
-        "nearestRoad": {
-          "name": "Unnamed road",
-          "highway": "service",
-          "distanceMetres": 4.65
-        },
-        "exitStarted": true,
-        "exitCompleted": true,
-        "blockedMoves": 0,
-        "movementSteps": 59,
-        "outsideExpandedDrivingArea": true
-      },
-      {
-        "baseId": "mississauga-ems-streetsville",
-        "spawnInside": true,
-        "areaRoadAccess": true,
-        "spawnInitiallyDrivable": true,
-        "nearestRoad": {
-          "name": "Thomas Street",
-          "highway": "tertiary",
-          "distanceMetres": 16.86
-        },
-        "exitStarted": true,
-        "exitCompleted": true,
-        "blockedMoves": 0,
-        "movementSteps": 56,
-        "outsideExpandedDrivingArea": true
-      },
-      {
-        "baseId": "mississauga-ems-tedlo",
-        "spawnInside": true,
-        "areaRoadAccess": true,
-        "spawnInitiallyDrivable": true,
-        "nearestRoad": {
-          "name": "Unnamed road",
-          "highway": "service",
-          "distanceMetres": 19.93
-        },
-        "exitStarted": true,
-        "exitCompleted": true,
-        "blockedMoves": 0,
-        "movementSteps": 48,
-        "outsideExpandedDrivingArea": true
-      },
-      {
-        "baseId": "mississauga-ems-tomken",
-        "spawnInside": true,
-        "areaRoadAccess": true,
-        "spawnInitiallyDrivable": true,
-        "nearestRoad": {
-          "name": "Unnamed road",
-          "highway": "service",
-          "distanceMetres": 11.07
-        },
-        "exitStarted": true,
-        "exitCompleted": true,
-        "blockedMoves": 0,
-        "movementSteps": 67,
-        "outsideExpandedDrivingArea": true
-      },
-      {
-        "baseId": "mississauga-ems-winding",
-        "spawnInside": true,
-        "areaRoadAccess": true,
-        "spawnInitiallyDrivable": true,
-        "nearestRoad": {
-          "name": "Unnamed road",
-          "highway": "service",
-          "distanceMetres": 19.97
-        },
-        "exitStarted": true,
-        "exitCompleted": true,
-        "blockedMoves": 0,
-        "movementSteps": 91,
-        "outsideExpandedDrivingArea": true
-      }
-    ],
-    "artifact": "artifacts/release-qa/base-fit/mississauga-driving-area-checks.json"
+    "artifact": "artifacts/release-qa/base-fit/mississauga-driving-area-checks.json",
+    "bases": 36,
+    "continuousExits": 36,
+    "blockedMoves": 0,
+    "note": "Continuous real-route collision-model samples through the yard boundary; not a physical full-route drive."
   },
   "dispatchRouteCoverage": {
-    "checkedLocalDate": "2026-11-02",
-    "device": "mobile browser route-only QA",
-    "fireTotals": {
-      "bases": 23,
-      "calls": 184,
-      "reachable": 184
-    },
-    "fireBases": [
-      {
-        "baseId": "mississauga-fire-119",
-        "calls": 8,
-        "reachable": 8,
-        "responseRouteFailures": 0,
-        "transportRouteFailures": 0
-      },
-      {
-        "baseId": "mississauga-fire-109",
-        "calls": 8,
-        "reachable": 8,
-        "responseRouteFailures": 0,
-        "transportRouteFailures": 0
-      },
-      {
-        "baseId": "mississauga-fire-122",
-        "calls": 8,
-        "reachable": 8,
-        "responseRouteFailures": 0,
-        "transportRouteFailures": 0
-      },
-      {
-        "baseId": "mississauga-fire-103",
-        "calls": 8,
-        "reachable": 8,
-        "responseRouteFailures": 0,
-        "transportRouteFailures": 0
-      },
-      {
-        "baseId": "mississauga-fire-101",
-        "calls": 8,
-        "reachable": 8,
-        "responseRouteFailures": 0,
-        "transportRouteFailures": 0
-      },
-      {
-        "baseId": "mississauga-fire-112",
-        "calls": 8,
-        "reachable": 8,
-        "responseRouteFailures": 0,
-        "transportRouteFailures": 0
-      },
-      {
-        "baseId": "mississauga-fire-106",
-        "calls": 8,
-        "reachable": 8,
-        "responseRouteFailures": 0,
-        "transportRouteFailures": 0
-      },
-      {
-        "baseId": "mississauga-fire-118",
-        "calls": 8,
-        "reachable": 8,
-        "responseRouteFailures": 0,
-        "transportRouteFailures": 0
-      },
-      {
-        "baseId": "mississauga-fire-120",
-        "calls": 8,
-        "reachable": 8,
-        "responseRouteFailures": 0,
-        "transportRouteFailures": 0
-      },
-      {
-        "baseId": "mississauga-fire-115",
-        "calls": 8,
-        "reachable": 8,
-        "responseRouteFailures": 0,
-        "transportRouteFailures": 0
-      },
-      {
-        "baseId": "mississauga-fire-107",
-        "calls": 8,
-        "reachable": 8,
-        "responseRouteFailures": 0,
-        "transportRouteFailures": 0
-      },
-      {
-        "baseId": "mississauga-fire-125",
-        "calls": 8,
-        "reachable": 8,
-        "responseRouteFailures": 0,
-        "transportRouteFailures": 0
-      },
-      {
-        "baseId": "mississauga-fire-114",
-        "calls": 8,
-        "reachable": 8,
-        "responseRouteFailures": 0,
-        "transportRouteFailures": 0
-      },
-      {
-        "baseId": "mississauga-fire-102",
-        "calls": 8,
-        "reachable": 8,
-        "responseRouteFailures": 0,
-        "transportRouteFailures": 0
-      },
-      {
-        "baseId": "mississauga-fire-105",
-        "calls": 8,
-        "reachable": 8,
-        "responseRouteFailures": 0,
-        "transportRouteFailures": 0
-      },
-      {
-        "baseId": "mississauga-fire-111",
-        "calls": 8,
-        "reachable": 8,
-        "responseRouteFailures": 0,
-        "transportRouteFailures": 0
-      },
-      {
-        "baseId": "mississauga-fire-121",
-        "calls": 8,
-        "reachable": 8,
-        "responseRouteFailures": 0,
-        "transportRouteFailures": 0
-      },
-      {
-        "baseId": "mississauga-fire-117",
-        "calls": 8,
-        "reachable": 8,
-        "responseRouteFailures": 0,
-        "transportRouteFailures": 0
-      },
-      {
-        "baseId": "mississauga-fire-104",
-        "calls": 8,
-        "reachable": 8,
-        "responseRouteFailures": 0,
-        "transportRouteFailures": 0
-      },
-      {
-        "baseId": "mississauga-fire-110",
-        "calls": 8,
-        "reachable": 8,
-        "responseRouteFailures": 0,
-        "transportRouteFailures": 0
-      },
-      {
-        "baseId": "mississauga-fire-108",
-        "calls": 8,
-        "reachable": 8,
-        "responseRouteFailures": 0,
-        "transportRouteFailures": 0
-      },
-      {
-        "baseId": "mississauga-fire-116",
-        "calls": 8,
-        "reachable": 8,
-        "responseRouteFailures": 0,
-        "transportRouteFailures": 0
-      },
-      {
-        "baseId": "mississauga-fire-123",
-        "calls": 8,
-        "reachable": 8,
-        "responseRouteFailures": 0,
-        "transportRouteFailures": 0
-      }
+    "artifact": "artifacts/release-qa/all-city-dispatch/mississauga/dispatch-browser.json",
+    "scenarios": 4,
+    "services": [
+      "fire",
+      "ems"
     ],
-    "emsTotals": {
-      "bases": 13,
-      "calls": 78,
-      "reachable": 78
-    },
-    "emsBases": [
-      {
-        "baseId": "mississauga-ems-streetsville",
-        "calls": 6,
-        "reachable": 6,
-        "responseRouteFailures": 0,
-        "transportRouteFailures": 0
-      },
-      {
-        "baseId": "mississauga-ems-tomken",
-        "calls": 6,
-        "reachable": 6,
-        "responseRouteFailures": 0,
-        "transportRouteFailures": 0
-      },
-      {
-        "baseId": "mississauga-ems-airport",
-        "calls": 6,
-        "reachable": 6,
-        "responseRouteFailures": 0,
-        "transportRouteFailures": 0
-      },
-      {
-        "baseId": "mississauga-ems-east-avenue",
-        "calls": 6,
-        "reachable": 6,
-        "responseRouteFailures": 0,
-        "transportRouteFailures": 0
-      },
-      {
-        "baseId": "mississauga-ems-falbourne",
-        "calls": 6,
-        "reachable": 6,
-        "responseRouteFailures": 0,
-        "transportRouteFailures": 0
-      },
-      {
-        "baseId": "mississauga-ems-goreway",
-        "calls": 6,
-        "reachable": 6,
-        "responseRouteFailures": 0,
-        "transportRouteFailures": 0
-      },
-      {
-        "baseId": "mississauga-ems-kingsway",
-        "calls": 6,
-        "reachable": 6,
-        "responseRouteFailures": 0,
-        "transportRouteFailures": 0
-      },
-      {
-        "baseId": "mississauga-ems-kitimat",
-        "calls": 6,
-        "reachable": 6,
-        "responseRouteFailures": 0,
-        "transportRouteFailures": 0
-      },
-      {
-        "baseId": "mississauga-ems-lorne-park",
-        "calls": 6,
-        "reachable": 6,
-        "responseRouteFailures": 0,
-        "transportRouteFailures": 0
-      },
-      {
-        "baseId": "mississauga-ems-mavis",
-        "calls": 6,
-        "reachable": 6,
-        "responseRouteFailures": 0,
-        "transportRouteFailures": 0
-      },
-      {
-        "baseId": "mississauga-ems-sheridan",
-        "calls": 6,
-        "reachable": 6,
-        "responseRouteFailures": 0,
-        "transportRouteFailures": 0
-      },
-      {
-        "baseId": "mississauga-ems-tedlo",
-        "calls": 6,
-        "reachable": 6,
-        "responseRouteFailures": 0,
-        "transportRouteFailures": 0
-      },
-      {
-        "baseId": "mississauga-ems-winding",
-        "calls": 6,
-        "reachable": 6,
-        "responseRouteFailures": 0,
-        "transportRouteFailures": 0
-      }
+    "viewports": [
+      "desktop",
+      "mobile"
     ],
-    "lorneParkResponseFailures": 0,
-    "artifact": "artifacts/release-qa/base-fit-mississauga/dispatch-qa/route-coverage.json"
+    "errors": 0,
+    "alerts": 0,
+    "note": "Short real-control driving; controlled arrival coordinates for long response/transport legs. Route coverage checks every local assignment."
   }
 }
