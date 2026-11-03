@@ -1,0 +1,1315 @@
+{
+  "schemaVersion": 1,
+  "cityId": "thunder-bay",
+  "reviewedLocalDate": "2026-11-02",
+  "assessment": "estimated",
+  "imagery": {
+    "provider": "Esri World Imagery",
+    "tileUrl": "https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}",
+    "capturedLocalDate": "2026-11-02",
+    "captureTimestamp": "2026-11-03T03:39:41.686Z",
+    "vintage": "not supplied by tile response",
+    "zoom": 19,
+    "method": "Reviewed independent zoom-19 Esri World Imagery captures for 12 eligible Fire/EMS records at average scale 0.198 m/pixel. For fitted sites, the individually sized rectangle follows the visible building, immediate parking/apron and observable access aisle; dimensions and rotation remain estimates. Sites with a conflicting/stale capture are left without a fit.",
+    "captureDirectory": "artifacts/release-qa/base-fit-thunder-bay/"
+  },
+  "roads": {
+    "file": "cities/thunder-bay/roads.geojson.gz",
+    "source": "OpenStreetMap via Geofabrik Ontario extract",
+    "sourceTimestamp": "2026-09-27T20:23:36Z",
+    "snapshotBuiltAt": "2026-10-29T04:13:43.928Z",
+    "sourceSha256": "ebb50b39682d2381ad3c1d21e005b48cec3397e15da0d72c5d76c7d20d8dd249",
+    "packagedSha256": "4665821cbd392a25f12c48d3bab14fb899d5967c0fdc8a6d618e5fefcdc6b9cb",
+    "sourceUrl": "https://download.geofabrik.de/north-america/canada/ontario.html",
+    "attribution": "© OpenStreetMap contributors",
+    "assessment": "Packaged road/service geometry was reviewed with imagery. Runtime QA follows an actual response route through fitted-yard boundaries; mapped graph segments do not verify driveway rights or apparatus doors."
+  },
+  "limits": [
+    "No official parcel or building-footprint polygons were used for the fitted sites.",
+    "Dimensions, centers, rotations and modeled spawn coordinates are imagery/road-geometry estimates, not surveyed measurements.",
+    "Imagery does not verify apparatus bays, gates, access controls, current pavement, occupancy or driveway rights.",
+    "Canonical IDs and source coordinates remain unchanged.",
+    "Collision QA follows a real route from modeled spawn until at least 10 m outside the expanded fitted yard and checks movement in 1.5 m increments; this verifies the modeled collision transition, not sustained manual driving or real-world response suitability.",
+    "Shared Fire/EMS fits represent exact co-located site records and do not establish EMS-only bays or entrances."
+  ],
+  "bases": [
+    {
+      "baseId": "thunder-bay-fire-1",
+      "name": "Fire Station 1",
+      "address": "330 Vickers Street North",
+      "sourcePoint": {
+        "lat": 48.38867738806357,
+        "lng": -89.25080703242487
+      },
+      "assessment": "estimated",
+      "imageEvidence": {
+        "screenshot": "artifacts/release-qa/base-fit-thunder-bay/thunder-bay-fire-1.png",
+        "scaleMetresPerPixel": 0.19805876036225478,
+        "nearbyRoadFeatures": [
+          {
+            "name": "Bethune Street",
+            "highway": "residential"
+          },
+          {
+            "name": "McKellar Street North",
+            "highway": "residential"
+          },
+          {
+            "name": "Archibald Street North",
+            "highway": "residential"
+          },
+          {
+            "name": "Cameron Street",
+            "highway": "tertiary"
+          },
+          {
+            "name": "Archibald Street North",
+            "highway": "residential"
+          },
+          {
+            "name": "Bethune Street",
+            "highway": "residential"
+          },
+          {
+            "name": "Syndicate Avenue North",
+            "highway": "residential"
+          },
+          {
+            "name": "Cumming Street",
+            "highway": "residential"
+          },
+          {
+            "name": "Syndicate Avenue North",
+            "highway": "residential"
+          },
+          {
+            "name": "Bethune Street",
+            "highway": "residential"
+          },
+          {
+            "name": "Syndicate Avenue North",
+            "highway": "residential"
+          },
+          {
+            "name": "Cameron Street",
+            "highway": "tertiary"
+          }
+        ]
+      },
+      "dispatchRouteCoverage": {
+        "calls": 8,
+        "reachable": 8,
+        "missing": []
+      },
+      "drivingArea": {
+        "center": {
+          "lat": 48.38867738806357,
+          "lng": -89.25080703242487
+        },
+        "widthMetres": 90,
+        "lengthMetres": 110,
+        "rotationDegrees": 0,
+        "spawn": {
+          "lat": 48.38867738806357,
+          "lng": -89.25080703242487,
+          "headingDegrees": 0
+        },
+        "spawnOffsetFromCanonicalMetres": {
+          "east": 0,
+          "north": 0
+        }
+      },
+      "observation": "Estimated individually from the captured Esri zoom-19 image at 330 Vickers Street North: the visible fire station footprint and its own immediate apron/parking/access aisle guide this 90 by 110 m rotated area. The fit excludes adjacent unrelated buildings where visible. No apparatus bay, gate, or access right is verified.",
+      "runtimeCollision": {
+        "spawnInside": true,
+        "areaRoadAccess": true,
+        "spawnInitiallyDrivable": true,
+        "nearestRoad": {
+          "name": "Vickers Street North",
+          "highway": "tertiary",
+          "distanceMetres": 19.89
+        },
+        "exitStarted": true,
+        "exitCompleted": true,
+        "blockedMoves": 0,
+        "movementSteps": 107,
+        "outsideExpandedDrivingArea": true,
+        "exitPoint": {
+          "lat": 48.38921267358491,
+          "lng": -89.25006191320755
+        }
+      }
+    },
+    {
+      "baseId": "thunder-bay-fire-2",
+      "name": "Fire Station 2",
+      "address": "20 Junot Avenue North",
+      "sourcePoint": {
+        "lat": 48.4483842694894,
+        "lng": -89.2487066718839
+      },
+      "assessment": "estimated",
+      "imageEvidence": {
+        "screenshot": "artifacts/release-qa/base-fit-thunder-bay/thunder-bay-fire-2.png",
+        "scaleMetresPerPixel": 0.19782627582618734,
+        "nearbyRoadFeatures": [
+          {
+            "name": "Melon Street",
+            "highway": "residential"
+          },
+          {
+            "name": "Junot Avenue North",
+            "highway": "secondary"
+          },
+          {
+            "name": "McComber Crescent",
+            "highway": "residential"
+          },
+          {
+            "name": "Melon Street",
+            "highway": "residential"
+          },
+          {
+            "name": "Robinson Drive",
+            "highway": "residential"
+          },
+          {
+            "name": "Stardust Crescent",
+            "highway": "residential"
+          },
+          {
+            "name": "Jewell Street",
+            "highway": "residential"
+          },
+          {
+            "name": "Robinson Drive",
+            "highway": "residential"
+          },
+          {
+            "name": "Melon Street",
+            "highway": "residential"
+          },
+          {
+            "name": "Junot Avenue North",
+            "highway": "secondary"
+          },
+          {
+            "name": "Red River Road",
+            "highway": "secondary"
+          },
+          {
+            "name": "Junot Avenue North",
+            "highway": "secondary"
+          }
+        ]
+      },
+      "dispatchRouteCoverage": {
+        "calls": 8,
+        "reachable": 8,
+        "missing": []
+      },
+      "drivingArea": {
+        "center": {
+          "lat": 48.4483842694894,
+          "lng": -89.2487066718839
+        },
+        "widthMetres": 65,
+        "lengthMetres": 75,
+        "rotationDegrees": 45,
+        "spawn": {
+          "lat": 48.4483842694894,
+          "lng": -89.2487066718839,
+          "headingDegrees": 0
+        },
+        "spawnOffsetFromCanonicalMetres": {
+          "east": 0,
+          "north": 0
+        }
+      },
+      "observation": "Estimated individually from the captured Esri zoom-19 image at 20 Junot Avenue North: the visible fire station footprint and its own immediate apron/parking/access aisle guide this 65 by 75 m rotated area. The fit excludes adjacent unrelated buildings where visible. No apparatus bay, gate, or access right is verified.",
+      "runtimeCollision": {
+        "spawnInside": true,
+        "areaRoadAccess": true,
+        "spawnInitiallyDrivable": true,
+        "nearestRoad": {
+          "name": "Unnamed road",
+          "highway": "service",
+          "distanceMetres": 15.25
+        },
+        "exitStarted": true,
+        "exitCompleted": true,
+        "blockedMoves": 0,
+        "movementSteps": 84,
+        "outsideExpandedDrivingArea": true,
+        "exitPoint": {
+          "lat": 48.44836592666667,
+          "lng": -89.24784008
+        }
+      }
+    },
+    {
+      "baseId": "thunder-bay-fire-3",
+      "name": "Fire Station 3",
+      "address": "60 South Water Street",
+      "sourcePoint": {
+        "lat": 48.43233669701474,
+        "lng": -89.22121470705632
+      },
+      "assessment": "estimated",
+      "imageEvidence": {
+        "screenshot": "artifacts/release-qa/base-fit-thunder-bay/thunder-bay-fire-3.png",
+        "scaleMetresPerPixel": 0.19788878398794268,
+        "nearbyRoadFeatures": [
+          {
+            "name": "Pearl Street",
+            "highway": "unclassified"
+          },
+          {
+            "name": "Sleeping Giant Parkway",
+            "highway": "residential"
+          },
+          {
+            "name": "South Water Street",
+            "highway": "secondary"
+          },
+          {
+            "name": "South Water Street",
+            "highway": "secondary"
+          },
+          {
+            "name": "Court Street South",
+            "highway": "tertiary"
+          },
+          {
+            "name": "Lake Street",
+            "highway": "residential"
+          },
+          {
+            "name": "South Water Street",
+            "highway": "secondary"
+          },
+          {
+            "name": "Cumberland Street South",
+            "highway": "tertiary"
+          },
+          {
+            "name": "South Water Street",
+            "highway": "secondary"
+          },
+          {
+            "name": "Sleeping Giant Parkway",
+            "highway": "residential"
+          },
+          {
+            "name": null,
+            "highway": "service"
+          },
+          {
+            "name": "Lincoln Street",
+            "highway": "residential"
+          }
+        ]
+      },
+      "dispatchRouteCoverage": {
+        "calls": 8,
+        "reachable": 8,
+        "missing": []
+      },
+      "drivingArea": {
+        "center": {
+          "lat": 48.43233669701474,
+          "lng": -89.22121470705632
+        },
+        "widthMetres": 70,
+        "lengthMetres": 85,
+        "rotationDegrees": 0,
+        "spawn": {
+          "lat": 48.43233669701474,
+          "lng": -89.22121470705632,
+          "headingDegrees": 0
+        },
+        "spawnOffsetFromCanonicalMetres": {
+          "east": 0,
+          "north": 0
+        }
+      },
+      "observation": "Estimated individually from the captured Esri zoom-19 image at 60 South Water Street: the visible fire station footprint and its own immediate apron/parking/access aisle guide this 70 by 85 m rotated area. The fit excludes adjacent unrelated buildings where visible. No apparatus bay, gate, or access right is verified.",
+      "runtimeCollision": {
+        "spawnInside": true,
+        "areaRoadAccess": true,
+        "spawnInitiallyDrivable": true,
+        "nearestRoad": {
+          "name": "Pearl Street",
+          "highway": "tertiary",
+          "distanceMetres": 31.66
+        },
+        "exitStarted": true,
+        "exitCompleted": true,
+        "blockedMoves": 0,
+        "movementSteps": 47,
+        "outsideExpandedDrivingArea": true,
+        "exitPoint": {
+          "lat": 48.432404149999996,
+          "lng": -89.22058981
+        }
+      }
+    },
+    {
+      "baseId": "thunder-bay-fire-4",
+      "name": "Fire Station 4",
+      "address": "501 Churchill Drive West",
+      "sourcePoint": {
+        "lat": 48.39036337276641,
+        "lng": -89.29004160610206
+      },
+      "assessment": "estimated",
+      "imageEvidence": {
+        "screenshot": "artifacts/release-qa/base-fit-thunder-bay/thunder-bay-fire-4.png",
+        "scaleMetresPerPixel": 0.19805219556480438,
+        "nearbyRoadFeatures": [
+          {
+            "name": "Agate Bay",
+            "highway": "residential"
+          },
+          {
+            "name": "Lansing Street",
+            "highway": "residential"
+          },
+          {
+            "name": "James Street North",
+            "highway": "tertiary"
+          },
+          {
+            "name": "Parkway Drive",
+            "highway": "residential"
+          },
+          {
+            "name": "Sycamore Avenue",
+            "highway": "residential"
+          },
+          {
+            "name": "Parkway Drive",
+            "highway": "residential"
+          },
+          {
+            "name": "Lansdowne Court",
+            "highway": "residential"
+          },
+          {
+            "name": "Churchill Drive West",
+            "highway": "residential"
+          },
+          {
+            "name": "Lansing Street",
+            "highway": "residential"
+          },
+          {
+            "name": "Sycamore Place",
+            "highway": "residential"
+          },
+          {
+            "name": "Amethyst Crescent",
+            "highway": "residential"
+          },
+          {
+            "name": "Erindale Street",
+            "highway": "residential"
+          }
+        ]
+      },
+      "dispatchRouteCoverage": {
+        "calls": 8,
+        "reachable": 8,
+        "missing": []
+      },
+      "drivingArea": {
+        "center": {
+          "lat": 48.39036337276641,
+          "lng": -89.29004160610206
+        },
+        "widthMetres": 70,
+        "lengthMetres": 85,
+        "rotationDegrees": 0,
+        "spawn": {
+          "lat": 48.39036337276641,
+          "lng": -89.29004160610206,
+          "headingDegrees": 0
+        },
+        "spawnOffsetFromCanonicalMetres": {
+          "east": 0,
+          "north": 0
+        }
+      },
+      "observation": "Estimated individually from the captured Esri zoom-19 image at 501 Churchill Drive West: the visible fire station footprint and its own immediate apron/parking/access aisle guide this 70 by 85 m rotated area. The fit excludes adjacent unrelated buildings where visible. No apparatus bay, gate, or access right is verified.",
+      "runtimeCollision": {
+        "spawnInside": true,
+        "areaRoadAccess": true,
+        "spawnInitiallyDrivable": true,
+        "nearestRoad": {
+          "name": "Unnamed road",
+          "highway": "service",
+          "distanceMetres": 15.49
+        },
+        "exitStarted": true,
+        "exitCompleted": true,
+        "blockedMoves": 0,
+        "movementSteps": 59,
+        "outsideExpandedDrivingArea": true,
+        "exitPoint": {
+          "lat": 48.39084059032258,
+          "lng": -89.28953372903226
+        }
+      }
+    },
+    {
+      "baseId": "thunder-bay-fire-5",
+      "name": "Fire Station 5",
+      "address": "300 Hodder Avenue",
+      "sourcePoint": {
+        "lat": 48.461009032960675,
+        "lng": -89.1818247075838
+      },
+      "assessment": "estimated",
+      "imageEvidence": {
+        "screenshot": "artifacts/release-qa/base-fit-thunder-bay/thunder-bay-fire-5.png",
+        "scaleMetresPerPixel": 0.1977770914840921,
+        "nearbyRoadFeatures": [
+          {
+            "name": "Cuyler Street",
+            "highway": "residential"
+          },
+          {
+            "name": "Merrill Street",
+            "highway": "residential"
+          },
+          {
+            "name": "Adams Street",
+            "highway": "residential"
+          },
+          {
+            "name": "Marion Street",
+            "highway": "residential"
+          },
+          {
+            "name": "Leslie Avenue",
+            "highway": "residential"
+          },
+          {
+            "name": "Merrill Street",
+            "highway": "residential"
+          },
+          {
+            "name": "Terrace Crescent",
+            "highway": "residential"
+          },
+          {
+            "name": "Marion Street",
+            "highway": "residential"
+          },
+          {
+            "name": "Hodder Avenue",
+            "highway": "secondary"
+          },
+          {
+            "name": "Morse Street",
+            "highway": "residential"
+          },
+          {
+            "name": "Marion Street",
+            "highway": "residential"
+          },
+          {
+            "name": "Morse Street",
+            "highway": "residential"
+          }
+        ]
+      },
+      "dispatchRouteCoverage": {
+        "calls": 8,
+        "reachable": 8,
+        "missing": []
+      },
+      "drivingArea": {
+        "center": {
+          "lat": 48.461009032960675,
+          "lng": -89.1818247075838
+        },
+        "widthMetres": 60,
+        "lengthMetres": 75,
+        "rotationDegrees": 0,
+        "spawn": {
+          "lat": 48.461009032960675,
+          "lng": -89.1818247075838,
+          "headingDegrees": 0
+        },
+        "spawnOffsetFromCanonicalMetres": {
+          "east": 0,
+          "north": 0
+        }
+      },
+      "observation": "Estimated individually from the captured Esri zoom-19 image at 300 Hodder Avenue: the visible fire station footprint and its own immediate apron/parking/access aisle guide this 60 by 75 m rotated area. The fit excludes adjacent unrelated buildings where visible. No apparatus bay, gate, or access right is verified.",
+      "runtimeCollision": {
+        "spawnInside": true,
+        "areaRoadAccess": true,
+        "spawnInitiallyDrivable": true,
+        "nearestRoad": {
+          "name": "Marion Street",
+          "highway": "residential",
+          "distanceMetres": 24.38
+        },
+        "exitStarted": true,
+        "exitCompleted": true,
+        "blockedMoves": 0,
+        "movementSteps": 55,
+        "outsideExpandedDrivingArea": true,
+        "exitPoint": {
+          "lat": 48.46057059775281,
+          "lng": -89.18224449325842
+        }
+      }
+    },
+    {
+      "baseId": "thunder-bay-fire-6",
+      "name": "Fire Station 6",
+      "address": "1710 Frederica Street West",
+      "sourcePoint": {
+        "lat": 48.36478516799224,
+        "lng": -89.30645945467703
+      },
+      "assessment": "estimated",
+      "imageEvidence": {
+        "screenshot": "artifacts/release-qa/base-fit-thunder-bay/thunder-bay-fire-6.png",
+        "scaleMetresPerPixel": 0.19815172599385583,
+        "nearbyRoadFeatures": [
+          {
+            "name": "Rosslyn Road",
+            "highway": "secondary"
+          },
+          {
+            "name": "Alpine Avenue",
+            "highway": "residential"
+          },
+          {
+            "name": "Frederica Street West",
+            "highway": "residential"
+          },
+          {
+            "name": "Frederica Street West",
+            "highway": "secondary"
+          },
+          {
+            "name": "Rosslyn Road",
+            "highway": "secondary"
+          },
+          {
+            "name": "Metcalfe Avenue",
+            "highway": "residential"
+          },
+          {
+            "name": "Gore Street West",
+            "highway": "residential"
+          },
+          {
+            "name": "Rosslyn Road",
+            "highway": "secondary"
+          },
+          {
+            "name": "Neebing Avenue",
+            "highway": "secondary"
+          },
+          {
+            "name": "Neebing Avenue",
+            "highway": "secondary"
+          },
+          {
+            "name": "Wallbridge Avenue",
+            "highway": "residential"
+          },
+          {
+            "name": null,
+            "highway": "secondary_link"
+          }
+        ]
+      },
+      "dispatchRouteCoverage": {
+        "calls": 8,
+        "reachable": 8,
+        "missing": []
+      },
+      "drivingArea": {
+        "center": {
+          "lat": 48.36478516799224,
+          "lng": -89.30645945467703
+        },
+        "widthMetres": 65,
+        "lengthMetres": 75,
+        "rotationDegrees": 0,
+        "spawn": {
+          "lat": 48.36478516799224,
+          "lng": -89.30645945467703,
+          "headingDegrees": 0
+        },
+        "spawnOffsetFromCanonicalMetres": {
+          "east": 0,
+          "north": 0
+        }
+      },
+      "observation": "Estimated individually from the captured Esri zoom-19 image at 1710 Frederica Street West: the visible fire station footprint and its own immediate apron/parking/access aisle guide this 65 by 75 m rotated area. The fit excludes adjacent unrelated buildings where visible. No apparatus bay, gate, or access right is verified.",
+      "runtimeCollision": {
+        "spawnInside": true,
+        "areaRoadAccess": true,
+        "spawnInitiallyDrivable": true,
+        "nearestRoad": {
+          "name": "Unnamed road",
+          "highway": "service",
+          "distanceMetres": 8.75
+        },
+        "exitStarted": true,
+        "exitCompleted": true,
+        "blockedMoves": 0,
+        "movementSteps": 68,
+        "outsideExpandedDrivingArea": true,
+        "exitPoint": {
+          "lat": 48.3652217,
+          "lng": -89.30603930000001
+        }
+      }
+    },
+    {
+      "baseId": "thunder-bay-fire-7",
+      "name": "Fire Station 7",
+      "address": "2065 20th Side Road",
+      "sourcePoint": {
+        "lat": 48.36408807838533,
+        "lng": -89.36152243992956
+      },
+      "assessment": "estimated",
+      "imageEvidence": {
+        "screenshot": "artifacts/release-qa/base-fit-thunder-bay/thunder-bay-fire-7.png",
+        "scaleMetresPerPixel": 0.1981544367624643,
+        "nearbyRoadFeatures": [
+          {
+            "name": "Empson Avenue",
+            "highway": "residential"
+          },
+          {
+            "name": "Rosslyn Road",
+            "highway": "secondary"
+          },
+          {
+            "name": "20th Sideroad",
+            "highway": "tertiary"
+          },
+          {
+            "name": "Freeman Street",
+            "highway": "residential"
+          },
+          {
+            "name": "Freeman Drive",
+            "highway": "residential"
+          },
+          {
+            "name": "20th Sideroad",
+            "highway": "residential"
+          },
+          {
+            "name": "Otway Street",
+            "highway": "residential"
+          },
+          {
+            "name": "Rosslyn Road",
+            "highway": "secondary"
+          },
+          {
+            "name": "Rosslyn Road",
+            "highway": "secondary"
+          },
+          {
+            "name": "20th Sideroad",
+            "highway": "tertiary"
+          },
+          {
+            "name": "20th Sideroad",
+            "highway": "tertiary"
+          }
+        ]
+      },
+      "dispatchRouteCoverage": {
+        "calls": 8,
+        "reachable": 8,
+        "missing": []
+      },
+      "drivingArea": {
+        "center": {
+          "lat": 48.36408807838533,
+          "lng": -89.36152243992956
+        },
+        "widthMetres": 55,
+        "lengthMetres": 70,
+        "rotationDegrees": 0,
+        "spawn": {
+          "lat": 48.36408807838533,
+          "lng": -89.36152243992956,
+          "headingDegrees": 0
+        },
+        "spawnOffsetFromCanonicalMetres": {
+          "east": 0,
+          "north": 0
+        }
+      },
+      "observation": "Estimated individually from the captured Esri zoom-19 image at 2065 20th Side Road: the visible fire station footprint and its own immediate apron/parking/access aisle guide this 55 by 70 m rotated area. The fit excludes adjacent unrelated buildings where visible. No apparatus bay, gate, or access right is verified.",
+      "runtimeCollision": {
+        "spawnInside": true,
+        "areaRoadAccess": false,
+        "spawnInitiallyDrivable": true,
+        "nearestRoad": {
+          "name": "20th Sideroad",
+          "highway": "tertiary",
+          "distanceMetres": 38.61
+        },
+        "exitStarted": true,
+        "exitCompleted": true,
+        "blockedMoves": 0,
+        "movementSteps": 27,
+        "outsideExpandedDrivingArea": true,
+        "exitPoint": {
+          "lat": 48.364087379210794,
+          "lng": -89.36100012677521
+        }
+      }
+    },
+    {
+      "baseId": "thunder-bay-fire-8",
+      "name": "Fire Station 8",
+      "address": "3000 Government Road",
+      "sourcePoint": {
+        "lat": 48.4706337054753,
+        "lng": -89.37347250345582
+      },
+      "assessment": "estimated",
+      "imageEvidence": {
+        "screenshot": "artifacts/release-qa/base-fit-thunder-bay/thunder-bay-fire-8.png",
+        "scaleMetresPerPixel": 0.19773958647636278,
+        "nearbyRoadFeatures": [
+          {
+            "name": "Mapleward Road",
+            "highway": "tertiary"
+          },
+          {
+            "name": "Mapleward Road",
+            "highway": "tertiary"
+          },
+          {
+            "name": "Government Road",
+            "highway": "tertiary"
+          },
+          {
+            "name": "Government Road",
+            "highway": "tertiary"
+          },
+          {
+            "name": "Government Road",
+            "highway": "tertiary"
+          }
+        ]
+      },
+      "dispatchRouteCoverage": {
+        "calls": 6,
+        "reachable": 6,
+        "missing": []
+      },
+      "drivingArea": {
+        "center": {
+          "lat": 48.4706337054753,
+          "lng": -89.37347250345582
+        },
+        "widthMetres": 55,
+        "lengthMetres": 70,
+        "rotationDegrees": 45,
+        "spawn": {
+          "lat": 48.4706337054753,
+          "lng": -89.37347250345582,
+          "headingDegrees": 0
+        },
+        "spawnOffsetFromCanonicalMetres": {
+          "east": 0,
+          "north": 0
+        }
+      },
+      "observation": "Estimated individually from the captured Esri zoom-19 image at 3000 Government Road: the visible fire station footprint and its own immediate apron/parking/access aisle guide this 55 by 70 m rotated area. The fit excludes adjacent unrelated buildings where visible. No apparatus bay, gate, or access right is verified.",
+      "runtimeCollision": {
+        "spawnInside": true,
+        "areaRoadAccess": true,
+        "spawnInitiallyDrivable": true,
+        "nearestRoad": {
+          "name": "Mapleward Road",
+          "highway": "tertiary",
+          "distanceMetres": 38.38
+        },
+        "exitStarted": true,
+        "exitCompleted": true,
+        "blockedMoves": 0,
+        "movementSteps": 37,
+        "outsideExpandedDrivingArea": true,
+        "exitPoint": {
+          "lat": 48.47049391396849,
+          "lng": -89.37398833017292
+        }
+      }
+    },
+    {
+      "baseId": "thunder-bay-ems-1",
+      "name": "North Station / Junot Headquarters",
+      "address": "105 Junot Avenue South",
+      "sourcePoint": {
+        "lat": 48.44459182132058,
+        "lng": -89.2543037266947
+      },
+      "assessment": "estimated",
+      "imageEvidence": {
+        "screenshot": "artifacts/release-qa/base-fit-thunder-bay/thunder-bay-ems-1.png",
+        "scaleMetresPerPixel": 0.19784105174973918,
+        "nearbyRoadFeatures": [
+          {
+            "name": "Walkover Street",
+            "highway": "residential"
+          },
+          {
+            "name": "Junot Avenue South",
+            "highway": "secondary"
+          },
+          {
+            "name": "Windsor Street",
+            "highway": "residential"
+          },
+          {
+            "name": "Walkover Street",
+            "highway": "residential"
+          },
+          {
+            "name": "Blucher Crescent",
+            "highway": "residential"
+          },
+          {
+            "name": "Blucher Avenue",
+            "highway": "residential"
+          },
+          {
+            "name": "Junot Avenue South",
+            "highway": "secondary"
+          },
+          {
+            "name": "Junot Avenue South",
+            "highway": "secondary"
+          },
+          {
+            "name": "Picton Avenue",
+            "highway": "residential"
+          },
+          {
+            "name": "Junot Avenue South",
+            "highway": "secondary"
+          },
+          {
+            "name": "Thunder Bay Expressway",
+            "highway": "trunk"
+          },
+          {
+            "name": "Thunder Bay Expressway",
+            "highway": "trunk"
+          }
+        ]
+      },
+      "dispatchRouteCoverage": {
+        "calls": 6,
+        "reachable": 6,
+        "missing": []
+      },
+      "drivingArea": {
+        "center": {
+          "lat": 48.44459182132058,
+          "lng": -89.2543037266947
+        },
+        "widthMetres": 70,
+        "lengthMetres": 85,
+        "rotationDegrees": 0,
+        "spawn": {
+          "lat": 48.44459182132058,
+          "lng": -89.2543037266947,
+          "headingDegrees": 0
+        },
+        "spawnOffsetFromCanonicalMetres": {
+          "east": 0,
+          "north": 0
+        }
+      },
+      "observation": "Estimated individually from the captured Esri zoom-19 image at 105 Junot Avenue South: the visible paramedic facility footprint and its own immediate apron/parking/access aisle guide this 70 by 85 m rotated area. The fit excludes adjacent unrelated buildings where visible. No apparatus bay, gate, or access right is verified.",
+      "runtimeCollision": {
+        "spawnInside": true,
+        "areaRoadAccess": false,
+        "spawnInitiallyDrivable": true,
+        "nearestRoad": {
+          "name": "Junot Avenue South",
+          "highway": "secondary",
+          "distanceMetres": 59.67
+        },
+        "exitStarted": true,
+        "exitCompleted": true,
+        "blockedMoves": 0,
+        "movementSteps": 49,
+        "outsideExpandedDrivingArea": true,
+        "exitPoint": {
+          "lat": 48.4449542152775,
+          "lng": -89.25492295732077
+        }
+      }
+    },
+    {
+      "baseId": "thunder-bay-ems-2",
+      "name": "Downtown South Station",
+      "address": "330 Vickers Street North",
+      "sourcePoint": {
+        "lat": 48.38867738806357,
+        "lng": -89.25080703242487
+      },
+      "assessment": "estimated",
+      "imageEvidence": {
+        "screenshot": "artifacts/release-qa/base-fit-thunder-bay/thunder-bay-ems-2.png",
+        "scaleMetresPerPixel": 0.19805876036225478,
+        "nearbyRoadFeatures": [
+          {
+            "name": "Bethune Street",
+            "highway": "residential"
+          },
+          {
+            "name": "McKellar Street North",
+            "highway": "residential"
+          },
+          {
+            "name": "Archibald Street North",
+            "highway": "residential"
+          },
+          {
+            "name": "Cameron Street",
+            "highway": "tertiary"
+          },
+          {
+            "name": "Archibald Street North",
+            "highway": "residential"
+          },
+          {
+            "name": "Bethune Street",
+            "highway": "residential"
+          },
+          {
+            "name": "Syndicate Avenue North",
+            "highway": "residential"
+          },
+          {
+            "name": "Cumming Street",
+            "highway": "residential"
+          },
+          {
+            "name": "Syndicate Avenue North",
+            "highway": "residential"
+          },
+          {
+            "name": "Bethune Street",
+            "highway": "residential"
+          },
+          {
+            "name": "Syndicate Avenue North",
+            "highway": "residential"
+          },
+          {
+            "name": "Cameron Street",
+            "highway": "tertiary"
+          }
+        ]
+      },
+      "dispatchRouteCoverage": {
+        "calls": 6,
+        "reachable": 6,
+        "missing": []
+      },
+      "drivingArea": {
+        "center": {
+          "lat": 48.38867738806357,
+          "lng": -89.25080703242487
+        },
+        "widthMetres": 90,
+        "lengthMetres": 110,
+        "rotationDegrees": 0,
+        "spawn": {
+          "lat": 48.38867738806357,
+          "lng": -89.25080703242487,
+          "headingDegrees": 0
+        },
+        "spawnOffsetFromCanonicalMetres": {
+          "east": 0,
+          "north": 0
+        }
+      },
+      "observation": "Shared imagery fit with thunder-bay-fire-1 at the same official site and matching address (330 Vickers Street North); the capture shows one facility parcel with the building, immediate apron/parking and access aisle. This does not identify an EMS-only bay or entrance.",
+      "sharedFitWith": "thunder-bay-fire-1 at the same official site and matching address (330 Vickers Street North)",
+      "runtimeCollision": {
+        "spawnInside": true,
+        "areaRoadAccess": true,
+        "spawnInitiallyDrivable": true,
+        "nearestRoad": {
+          "name": "Vickers Street North",
+          "highway": "tertiary",
+          "distanceMetres": 19.89
+        },
+        "exitStarted": true,
+        "exitCompleted": true,
+        "blockedMoves": 0,
+        "movementSteps": 107,
+        "outsideExpandedDrivingArea": true,
+        "exitPoint": {
+          "lat": 48.38921267358491,
+          "lng": -89.25006191320755
+        }
+      }
+    },
+    {
+      "baseId": "thunder-bay-ems-3",
+      "name": "Northwood Station",
+      "address": "501 Churchill Drive West",
+      "sourcePoint": {
+        "lat": 48.39036337276641,
+        "lng": -89.29004160610206
+      },
+      "assessment": "estimated",
+      "imageEvidence": {
+        "screenshot": "artifacts/release-qa/base-fit-thunder-bay/thunder-bay-ems-3.png",
+        "scaleMetresPerPixel": 0.19805219556480438,
+        "nearbyRoadFeatures": [
+          {
+            "name": "Agate Bay",
+            "highway": "residential"
+          },
+          {
+            "name": "Lansing Street",
+            "highway": "residential"
+          },
+          {
+            "name": "James Street North",
+            "highway": "tertiary"
+          },
+          {
+            "name": "Parkway Drive",
+            "highway": "residential"
+          },
+          {
+            "name": "Sycamore Avenue",
+            "highway": "residential"
+          },
+          {
+            "name": "Parkway Drive",
+            "highway": "residential"
+          },
+          {
+            "name": "Lansdowne Court",
+            "highway": "residential"
+          },
+          {
+            "name": "Churchill Drive West",
+            "highway": "residential"
+          },
+          {
+            "name": "Lansing Street",
+            "highway": "residential"
+          },
+          {
+            "name": "Sycamore Place",
+            "highway": "residential"
+          },
+          {
+            "name": "Amethyst Crescent",
+            "highway": "residential"
+          },
+          {
+            "name": "Erindale Street",
+            "highway": "residential"
+          }
+        ]
+      },
+      "dispatchRouteCoverage": {
+        "calls": 6,
+        "reachable": 6,
+        "missing": []
+      },
+      "drivingArea": {
+        "center": {
+          "lat": 48.39036337276641,
+          "lng": -89.29004160610206
+        },
+        "widthMetres": 70,
+        "lengthMetres": 85,
+        "rotationDegrees": 0,
+        "spawn": {
+          "lat": 48.39036337276641,
+          "lng": -89.29004160610206,
+          "headingDegrees": 0
+        },
+        "spawnOffsetFromCanonicalMetres": {
+          "east": 0,
+          "north": 0
+        }
+      },
+      "observation": "Shared imagery fit with thunder-bay-fire-4 at the same official site and matching address (501 Churchill Drive West); the capture shows one facility parcel with the building, immediate apron/parking and access aisle. This does not identify an EMS-only bay or entrance.",
+      "sharedFitWith": "thunder-bay-fire-4 at the same official site and matching address (501 Churchill Drive West)",
+      "runtimeCollision": {
+        "spawnInside": true,
+        "areaRoadAccess": true,
+        "spawnInitiallyDrivable": true,
+        "nearestRoad": {
+          "name": "Unnamed road",
+          "highway": "service",
+          "distanceMetres": 15.49
+        },
+        "exitStarted": true,
+        "exitCompleted": true,
+        "blockedMoves": 0,
+        "movementSteps": 59,
+        "outsideExpandedDrivingArea": true,
+        "exitPoint": {
+          "lat": 48.39084059032258,
+          "lng": -89.28953372903226
+        }
+      }
+    },
+    {
+      "baseId": "thunder-bay-ems-4",
+      "name": "Westfort Station",
+      "address": "1321 Brown Street",
+      "sourcePoint": {
+        "lat": 48.36633770634117,
+        "lng": -89.28180087294466
+      },
+      "assessment": "estimated",
+      "imageEvidence": {
+        "screenshot": "artifacts/release-qa/base-fit-thunder-bay/thunder-bay-ems-4.png",
+        "scaleMetresPerPixel": 0.1981456874554367,
+        "nearbyRoadFeatures": [
+          {
+            "name": "Edward Street South",
+            "highway": "residential"
+          },
+          {
+            "name": "Gore Street East",
+            "highway": "residential"
+          },
+          {
+            "name": "Brock Street East",
+            "highway": "tertiary"
+          },
+          {
+            "name": "Edward Street South",
+            "highway": "secondary"
+          },
+          {
+            "name": "Frederica Street East",
+            "highway": "secondary"
+          },
+          {
+            "name": "Brock Street West",
+            "highway": "residential"
+          },
+          {
+            "name": "Frederica Street West",
+            "highway": "secondary"
+          },
+          {
+            "name": "Francis Street East",
+            "highway": "residential"
+          },
+          {
+            "name": "Amelia Street West",
+            "highway": "residential"
+          },
+          {
+            "name": "Gore Street West",
+            "highway": "residential"
+          },
+          {
+            "name": "Brown Street",
+            "highway": "residential"
+          },
+          {
+            "name": "Amelia Street East",
+            "highway": "residential"
+          }
+        ]
+      },
+      "dispatchRouteCoverage": {
+        "calls": 6,
+        "reachable": 6,
+        "missing": []
+      },
+      "drivingArea": {
+        "center": {
+          "lat": 48.36633770634117,
+          "lng": -89.28180087294466
+        },
+        "widthMetres": 65,
+        "lengthMetres": 75,
+        "rotationDegrees": 0,
+        "spawn": {
+          "lat": 48.36633770634117,
+          "lng": -89.28180087294466,
+          "headingDegrees": 0
+        },
+        "spawnOffsetFromCanonicalMetres": {
+          "east": 0,
+          "north": 0
+        }
+      },
+      "observation": "Estimated individually from the captured Esri zoom-19 image at 1321 Brown Street: the visible paramedic facility footprint and its own immediate apron/parking/access aisle guide this 65 by 75 m rotated area. The fit excludes adjacent unrelated buildings where visible. No apparatus bay, gate, or access right is verified.",
+      "runtimeCollision": {
+        "spawnInside": true,
+        "areaRoadAccess": true,
+        "spawnInitiallyDrivable": true,
+        "nearestRoad": {
+          "name": "Amelia Street West",
+          "highway": "residential",
+          "distanceMetres": 16.15
+        },
+        "exitStarted": true,
+        "exitCompleted": true,
+        "blockedMoves": 0,
+        "movementSteps": 47,
+        "outsideExpandedDrivingArea": true,
+        "exitPoint": {
+          "lat": 48.365894565,
+          "lng": -89.281540565
+        }
+      }
+    }
+  ],
+  "runtimeCollisionChecks": {
+    "artifact": "artifacts/release-qa/base-fit/thunder-bay-driving-area-checks.json",
+    "bases": 12,
+    "continuousExits": 12,
+    "blockedMoves": 0,
+    "note": "Continuous real-route collision-model samples through the yard boundary; not a physical full-route drive."
+  },
+  "dispatchRouteCoverage": {
+    "checkedLocalDate": "2026-11-02",
+    "device": "mobile browser route-only QA",
+    "fireTotals": {
+      "bases": 8,
+      "calls": 62,
+      "reachable": 62,
+      "failures": 0
+    },
+    "emsTotals": {
+      "bases": 4,
+      "calls": 24,
+      "reachable": 24,
+      "failures": 0
+    },
+    "artifact": "artifacts/release-qa/base-fit-thunder-bay/dispatch-qa/route-coverage.json"
+  }
+}

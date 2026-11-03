@@ -1,0 +1,1452 @@
+{
+  "schemaVersion": 1,
+  "cityId": "kingston",
+  "reviewedLocalDate": "2026-11-02",
+  "assessment": "estimated",
+  "imagery": {
+    "provider": "Esri World Imagery",
+    "tileUrl": "https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}",
+    "capturedLocalDate": "2026-11-02",
+    "captureTimestamp": "2026-11-03T03:38:54.867Z",
+    "vintage": "not supplied by tile response",
+    "zoom": 19,
+    "method": "Reviewed independent zoom-19 Esri World Imagery captures for 14 eligible Fire/EMS records at average scale 0.214 m/pixel. For fitted sites, the individually sized rectangle follows the visible building, immediate parking/apron and observable access aisle; dimensions and rotation remain estimates. Sites with a conflicting/stale capture are left without a fit.",
+    "captureDirectory": "artifacts/release-qa/base-fit-kingston/"
+  },
+  "roads": {
+    "file": "cities/kingston/roads.geojson.gz",
+    "source": "OpenStreetMap via Geofabrik Ontario extract",
+    "sourceTimestamp": "2026-09-27T20:23:36Z",
+    "snapshotBuiltAt": "2026-10-29T04:12:48.921Z",
+    "sourceSha256": "ebb50b39682d2381ad3c1d21e005b48cec3397e15da0d72c5d76c7d20d8dd249",
+    "packagedSha256": "48c60e6227ca5bb568b5704a4266bdc48cd19cfe9063786dd8afedc5b0188ec4",
+    "sourceUrl": "https://download.geofabrik.de/north-america/canada/ontario.html",
+    "attribution": "© OpenStreetMap contributors",
+    "assessment": "Packaged road/service geometry was reviewed with imagery. Runtime QA follows an actual response route through fitted-yard boundaries; mapped graph segments do not verify driveway rights or apparatus doors."
+  },
+  "limits": [
+    "No official parcel or building-footprint polygons were used for the fitted sites.",
+    "Dimensions, centers, rotations and modeled spawn coordinates are imagery/road-geometry estimates, not surveyed measurements.",
+    "Imagery does not verify apparatus bays, gates, access controls, current pavement, occupancy or driveway rights.",
+    "Canonical IDs and source coordinates remain unchanged.",
+    "Collision QA follows a real route from modeled spawn until at least 10 m outside the expanded fitted yard and checks movement in 1.5 m increments; this verifies the modeled collision transition, not sustained manual driving or real-world response suitability.",
+    "Shared Fire/EMS fits represent exact co-located site records and do not establish EMS-only bays or entrances."
+  ],
+  "bases": [
+    {
+      "baseId": "kingston-fire-8",
+      "name": "KFR Fire Station 8",
+      "address": "1485 UNITY RD",
+      "sourcePoint": {
+        "lat": 44.3197869168625,
+        "lng": -76.50204335478855
+      },
+      "assessment": "estimated",
+      "imageEvidence": {
+        "screenshot": "artifacts/release-qa/base-fit-kingston/kingston-fire-8.png",
+        "scaleMetresPerPixel": 0.21338199983760814,
+        "nearbyRoadFeatures": [
+          {
+            "name": "Unity Road",
+            "highway": "tertiary"
+          },
+          {
+            "name": "Wagner Street",
+            "highway": "residential"
+          },
+          {
+            "name": "Cashman Place",
+            "highway": "residential"
+          },
+          {
+            "name": "Unity Road",
+            "highway": "tertiary"
+          },
+          {
+            "name": "Perth Road",
+            "highway": "secondary"
+          },
+          {
+            "name": null,
+            "highway": "service"
+          },
+          {
+            "name": null,
+            "highway": "service"
+          },
+          {
+            "name": null,
+            "highway": "service"
+          },
+          {
+            "name": null,
+            "highway": "service"
+          },
+          {
+            "name": null,
+            "highway": "service"
+          },
+          {
+            "name": null,
+            "highway": "service"
+          },
+          {
+            "name": null,
+            "highway": "service"
+          }
+        ]
+      },
+      "dispatchRouteCoverage": {
+        "calls": 8,
+        "reachable": 8,
+        "missing": []
+      },
+      "drivingArea": {
+        "center": {
+          "lat": 44.3197869168625,
+          "lng": -76.50204335478855
+        },
+        "widthMetres": 65,
+        "lengthMetres": 80,
+        "rotationDegrees": 0,
+        "spawn": {
+          "lat": 44.3197869168625,
+          "lng": -76.50204335478855,
+          "headingDegrees": 0
+        },
+        "spawnOffsetFromCanonicalMetres": {
+          "east": 0,
+          "north": 0
+        }
+      },
+      "observation": "Estimated individually from the captured Esri zoom-19 image at 1485 UNITY RD: the visible fire station footprint and its own immediate apron/parking/access aisle guide this 65 by 80 m rotated area. The fit excludes adjacent unrelated buildings where visible. No apparatus bay, gate, or access right is verified.",
+      "runtimeCollision": {
+        "spawnInside": true,
+        "areaRoadAccess": false,
+        "spawnInitiallyDrivable": true,
+        "nearestRoad": {
+          "name": "Unity Road",
+          "highway": "tertiary",
+          "distanceMetres": 46.85
+        },
+        "exitStarted": true,
+        "exitCompleted": true,
+        "blockedMoves": 0,
+        "movementSteps": 63,
+        "outsideExpandedDrivingArea": true,
+        "exitPoint": {
+          "lat": 44.32022714025267,
+          "lng": -76.50150891530329
+        }
+      }
+    },
+    {
+      "baseId": "kingston-fire-4",
+      "name": "KFR Fire Station 4",
+      "address": "271 BROCK ST",
+      "sourcePoint": {
+        "lat": 44.23207590592248,
+        "lng": -76.48982444693776
+      },
+      "assessment": "estimated",
+      "imageEvidence": {
+        "screenshot": "artifacts/release-qa/base-fit-kingston/kingston-fire-4.png",
+        "scaleMetresPerPixel": 0.21370074105167736,
+        "nearbyRoadFeatures": [
+          {
+            "name": "Princess Street",
+            "highway": "primary"
+          },
+          {
+            "name": "William Street",
+            "highway": "residential"
+          },
+          {
+            "name": "Garrett Street",
+            "highway": "residential"
+          },
+          {
+            "name": "Division Street",
+            "highway": "tertiary"
+          },
+          {
+            "name": "Sydenham Street",
+            "highway": "residential"
+          },
+          {
+            "name": "Barrie Street",
+            "highway": "residential"
+          },
+          {
+            "name": "William Street",
+            "highway": "residential"
+          },
+          {
+            "name": "Johnson Street",
+            "highway": "secondary"
+          },
+          {
+            "name": "Sydenham Street",
+            "highway": "residential"
+          },
+          {
+            "name": "Barrie Street",
+            "highway": "secondary"
+          },
+          {
+            "name": "Chapman Street",
+            "highway": "residential"
+          },
+          {
+            "name": "Division Street",
+            "highway": "tertiary"
+          }
+        ]
+      },
+      "dispatchRouteCoverage": {
+        "calls": 8,
+        "reachable": 8,
+        "missing": []
+      },
+      "drivingArea": {
+        "center": {
+          "lat": 44.23207590592248,
+          "lng": -76.48982444693776
+        },
+        "widthMetres": 60,
+        "lengthMetres": 75,
+        "rotationDegrees": 0,
+        "spawn": {
+          "lat": 44.23207590592248,
+          "lng": -76.48982444693776,
+          "headingDegrees": 0
+        },
+        "spawnOffsetFromCanonicalMetres": {
+          "east": 0,
+          "north": 0
+        }
+      },
+      "observation": "Estimated individually from the captured Esri zoom-19 image at 271 BROCK ST: the visible fire station footprint and its own immediate apron/parking/access aisle guide this 60 by 75 m rotated area. The fit excludes adjacent unrelated buildings where visible. No apparatus bay, gate, or access right is verified.",
+      "runtimeCollision": {
+        "spawnInside": true,
+        "areaRoadAccess": true,
+        "spawnInitiallyDrivable": true,
+        "nearestRoad": {
+          "name": "Unnamed road",
+          "highway": "service",
+          "distanceMetres": 16.15
+        },
+        "exitStarted": true,
+        "exitCompleted": true,
+        "blockedMoves": 0,
+        "movementSteps": 63,
+        "outsideExpandedDrivingArea": true,
+        "exitPoint": {
+          "lat": 44.231830478571425,
+          "lng": -76.49033952142858
+        }
+      }
+    },
+    {
+      "baseId": "kingston-fire-9",
+      "name": "KFR Fire Station 9",
+      "address": "2835 38 HWY",
+      "sourcePoint": {
+        "lat": 44.32104653948433,
+        "lng": -76.62120522038346
+      },
+      "assessment": "estimated",
+      "imageEvidence": {
+        "screenshot": "artifacts/release-qa/base-fit-kingston/kingston-fire-9.png",
+        "scaleMetresPerPixel": 0.21337742159067666,
+        "nearbyRoadFeatures": [
+          {
+            "name": "Highway 38",
+            "highway": "primary"
+          },
+          {
+            "name": "Rock Road",
+            "highway": "residential"
+          },
+          {
+            "name": null,
+            "highway": "service"
+          },
+          {
+            "name": "Highway 38",
+            "highway": "primary"
+          },
+          {
+            "name": null,
+            "highway": "service"
+          }
+        ]
+      },
+      "dispatchRouteCoverage": {
+        "calls": 6,
+        "reachable": 6,
+        "missing": []
+      },
+      "drivingArea": {
+        "center": {
+          "lat": 44.32104653948433,
+          "lng": -76.62120522038346
+        },
+        "widthMetres": 60,
+        "lengthMetres": 75,
+        "rotationDegrees": 45,
+        "spawn": {
+          "lat": 44.32104653948433,
+          "lng": -76.62120522038346,
+          "headingDegrees": 0
+        },
+        "spawnOffsetFromCanonicalMetres": {
+          "east": 0,
+          "north": 0
+        }
+      },
+      "observation": "Estimated individually from the captured Esri zoom-19 image at 2835 38 HWY: the visible fire station footprint and its own immediate apron/parking/access aisle guide this 60 by 75 m rotated area. The fit excludes adjacent unrelated buildings where visible. No apparatus bay, gate, or access right is verified.",
+      "runtimeCollision": {
+        "spawnInside": true,
+        "areaRoadAccess": true,
+        "spawnInitiallyDrivable": true,
+        "nearestRoad": {
+          "name": "Unnamed road",
+          "highway": "service",
+          "distanceMetres": 24.29
+        },
+        "exitStarted": true,
+        "exitCompleted": true,
+        "blockedMoves": 0,
+        "movementSteps": 56,
+        "outsideExpandedDrivingArea": true,
+        "exitPoint": {
+          "lat": 44.32110065,
+          "lng": -76.6205680090909
+        }
+      }
+    },
+    {
+      "baseId": "kingston-fire-5",
+      "name": "KFR Fire Station 5",
+      "address": "171 RAILWAY ST",
+      "sourcePoint": {
+        "lat": 44.24837036011454,
+        "lng": -76.49430217492993
+      },
+      "assessment": "estimated",
+      "imageEvidence": {
+        "screenshot": "artifacts/release-qa/base-fit-kingston/kingston-fire-5.png",
+        "scaleMetresPerPixel": 0.21364156298725484,
+        "nearbyRoadFeatures": [
+          {
+            "name": "Railway Street",
+            "highway": "tertiary"
+          },
+          {
+            "name": "Division Street",
+            "highway": "secondary"
+          },
+          {
+            "name": "Barbara Avenue",
+            "highway": "residential"
+          },
+          {
+            "name": "Duff Street",
+            "highway": "unclassified"
+          },
+          {
+            "name": "St. Dismas Street",
+            "highway": "service"
+          },
+          {
+            "name": null,
+            "highway": "service"
+          },
+          {
+            "name": null,
+            "highway": "secondary_link"
+          },
+          {
+            "name": "Patrick Street",
+            "highway": "unclassified"
+          },
+          {
+            "name": "Division Street",
+            "highway": "secondary"
+          },
+          {
+            "name": "Division Street",
+            "highway": "secondary"
+          },
+          {
+            "name": "Railway Street",
+            "highway": "tertiary"
+          },
+          {
+            "name": null,
+            "highway": "service"
+          }
+        ]
+      },
+      "dispatchRouteCoverage": {
+        "calls": 8,
+        "reachable": 8,
+        "missing": []
+      },
+      "drivingArea": {
+        "center": {
+          "lat": 44.24837036011454,
+          "lng": -76.49430217492993
+        },
+        "widthMetres": 55,
+        "lengthMetres": 70,
+        "rotationDegrees": 0,
+        "spawn": {
+          "lat": 44.24837036011454,
+          "lng": -76.49430217492993,
+          "headingDegrees": 0
+        },
+        "spawnOffsetFromCanonicalMetres": {
+          "east": 0,
+          "north": 0
+        }
+      },
+      "observation": "Estimated individually from the captured Esri zoom-19 image at 171 RAILWAY ST: the visible fire station footprint and its own immediate apron/parking/access aisle guide this 55 by 70 m rotated area. The fit excludes adjacent unrelated buildings where visible. No apparatus bay, gate, or access right is verified.",
+      "runtimeCollision": {
+        "spawnInside": true,
+        "areaRoadAccess": true,
+        "spawnInitiallyDrivable": true,
+        "nearestRoad": {
+          "name": "Railway Street",
+          "highway": "tertiary",
+          "distanceMetres": 29.38
+        },
+        "exitStarted": true,
+        "exitCompleted": true,
+        "blockedMoves": 0,
+        "movementSteps": 44,
+        "outsideExpandedDrivingArea": true,
+        "exitPoint": {
+          "lat": 44.248152110214654,
+          "lng": -76.49382549339947
+        }
+      }
+    },
+    {
+      "baseId": "kingston-fire-2",
+      "name": "KFR Fire Station 2",
+      "address": "3505 BREWER'S MILLS RD",
+      "sourcePoint": {
+        "lat": 44.41103589721976,
+        "lng": -76.28162681923713
+      },
+      "assessment": "estimated",
+      "imageEvidence": {
+        "screenshot": "artifacts/release-qa/base-fit-kingston/kingston-fire-2.png",
+        "scaleMetresPerPixel": 0.21304987668331785,
+        "nearbyRoadFeatures": [
+          {
+            "name": "Brewer's Mills Road",
+            "highway": "residential"
+          },
+          {
+            "name": "Haggerty's Sideroad",
+            "highway": "residential"
+          },
+          {
+            "name": "Brewer's Mills Road",
+            "highway": "residential"
+          }
+        ]
+      },
+      "dispatchRouteCoverage": {
+        "calls": 6,
+        "reachable": 6,
+        "missing": []
+      },
+      "drivingArea": {
+        "center": {
+          "lat": 44.41103589721976,
+          "lng": -76.28162681923713
+        },
+        "widthMetres": 55,
+        "lengthMetres": 65,
+        "rotationDegrees": 0,
+        "spawn": {
+          "lat": 44.41103589721976,
+          "lng": -76.28162681923713,
+          "headingDegrees": 0
+        },
+        "spawnOffsetFromCanonicalMetres": {
+          "east": 0,
+          "north": 0
+        }
+      },
+      "observation": "Estimated individually from the captured Esri zoom-19 image at 3505 BREWER'S MILLS RD: the visible fire station footprint and its own immediate apron/parking/access aisle guide this 55 by 65 m rotated area. The fit excludes adjacent unrelated buildings where visible. No apparatus bay, gate, or access right is verified.",
+      "runtimeCollision": {
+        "spawnInside": true,
+        "areaRoadAccess": false,
+        "spawnInitiallyDrivable": true,
+        "nearestRoad": {
+          "name": "Brewer's Mills Road",
+          "highway": "residential",
+          "distanceMetres": 45.58
+        },
+        "exitStarted": true,
+        "exitCompleted": true,
+        "blockedMoves": 0,
+        "movementSteps": 31,
+        "outsideExpandedDrivingArea": true,
+        "exitPoint": {
+          "lat": 44.41142708255958,
+          "lng": -76.28151769062289
+        }
+      }
+    },
+    {
+      "baseId": "kingston-fire-1",
+      "name": "KFR Fire Station 1",
+      "address": "1648 JOYCEVILLE RD",
+      "sourcePoint": {
+        "lat": 44.302701971895566,
+        "lng": -76.33015614021681
+      },
+      "assessment": "estimated",
+      "imageEvidence": {
+        "screenshot": "artifacts/release-qa/base-fit-kingston/kingston-fire-1.png",
+        "scaleMetresPerPixel": 0.2134441267307701,
+        "nearbyRoadFeatures": [
+          {
+            "name": "Joyceville Road",
+            "highway": "secondary"
+          },
+          {
+            "name": "Joyceville Road",
+            "highway": "secondary"
+          },
+          {
+            "name": "Middle Road",
+            "highway": "secondary"
+          },
+          {
+            "name": "Middle Road",
+            "highway": "secondary"
+          }
+        ]
+      },
+      "dispatchRouteCoverage": {
+        "calls": 6,
+        "reachable": 6,
+        "missing": []
+      },
+      "drivingArea": {
+        "center": {
+          "lat": 44.302701971895566,
+          "lng": -76.33015614021681
+        },
+        "widthMetres": 55,
+        "lengthMetres": 70,
+        "rotationDegrees": 0,
+        "spawn": {
+          "lat": 44.302701971895566,
+          "lng": -76.33015614021681,
+          "headingDegrees": 0
+        },
+        "spawnOffsetFromCanonicalMetres": {
+          "east": 0,
+          "north": 0
+        }
+      },
+      "observation": "Estimated individually from the captured Esri zoom-19 image at 1648 JOYCEVILLE RD: the visible fire station footprint and its own immediate apron/parking/access aisle guide this 55 by 70 m rotated area. The fit excludes adjacent unrelated buildings where visible. No apparatus bay, gate, or access right is verified.",
+      "runtimeCollision": {
+        "spawnInside": true,
+        "areaRoadAccess": false,
+        "spawnInitiallyDrivable": true,
+        "nearestRoad": {
+          "name": "Joyceville Road",
+          "highway": "secondary",
+          "distanceMetres": 36.85
+        },
+        "exitStarted": true,
+        "exitCompleted": true,
+        "blockedMoves": 0,
+        "movementSteps": 55,
+        "outsideExpandedDrivingArea": true,
+        "exitPoint": {
+          "lat": 44.30311984145026,
+          "lng": -76.32974361736142
+        }
+      }
+    },
+    {
+      "baseId": "kingston-fire-6",
+      "name": "KFR Fire Station 6",
+      "address": "260 PALACE RD",
+      "sourcePoint": {
+        "lat": 44.23191906675686,
+        "lng": -76.51396905253061
+      },
+      "assessment": "estimated",
+      "imageEvidence": {
+        "screenshot": "artifacts/release-qa/base-fit-kingston/kingston-fire-6.png",
+        "scaleMetresPerPixel": 0.21370131328791003,
+        "nearbyRoadFeatures": [
+          {
+            "name": null,
+            "highway": "secondary"
+          },
+          {
+            "name": null,
+            "highway": "secondary_link"
+          },
+          {
+            "name": "Johnson Street",
+            "highway": "secondary"
+          },
+          {
+            "name": "Gibson Avenue",
+            "highway": "residential"
+          },
+          {
+            "name": "Oakridge Avenue",
+            "highway": "residential"
+          },
+          {
+            "name": "Johnson Street",
+            "highway": "secondary"
+          },
+          {
+            "name": "Johnson Street",
+            "highway": "secondary"
+          },
+          {
+            "name": null,
+            "highway": "secondary_link"
+          },
+          {
+            "name": "Palace Road",
+            "highway": "tertiary"
+          },
+          {
+            "name": "Sir John A. Macdonald Boulevard",
+            "highway": "secondary"
+          },
+          {
+            "name": "Johnson Street",
+            "highway": "secondary"
+          },
+          {
+            "name": null,
+            "highway": "secondary"
+          }
+        ]
+      },
+      "dispatchRouteCoverage": {
+        "calls": 8,
+        "reachable": 8,
+        "missing": []
+      },
+      "drivingArea": {
+        "center": {
+          "lat": 44.23191906675686,
+          "lng": -76.51396905253061
+        },
+        "widthMetres": 75,
+        "lengthMetres": 90,
+        "rotationDegrees": 0,
+        "spawn": {
+          "lat": 44.23191906675686,
+          "lng": -76.51396905253061,
+          "headingDegrees": 0
+        },
+        "spawnOffsetFromCanonicalMetres": {
+          "east": 0,
+          "north": 0
+        }
+      },
+      "observation": "Estimated individually from the captured Esri zoom-19 image at 260 PALACE RD: the visible fire station footprint and its own immediate apron/parking/access aisle guide this 75 by 90 m rotated area. The fit excludes adjacent unrelated buildings where visible. No apparatus bay, gate, or access right is verified.",
+      "runtimeCollision": {
+        "spawnInside": true,
+        "areaRoadAccess": true,
+        "spawnInitiallyDrivable": true,
+        "nearestRoad": {
+          "name": "Unnamed road",
+          "highway": "service",
+          "distanceMetres": 11.73
+        },
+        "exitStarted": true,
+        "exitCompleted": true,
+        "blockedMoves": 0,
+        "movementSteps": 65,
+        "outsideExpandedDrivingArea": true,
+        "exitPoint": {
+          "lat": 44.23141337692308,
+          "lng": -76.51358904615385
+        }
+      }
+    },
+    {
+      "baseId": "kingston-fire-10",
+      "name": "KFR Fire Station 10",
+      "address": "127 DAYS RD",
+      "sourcePoint": {
+        "lat": 44.21920071629015,
+        "lng": -76.56980558264502
+      },
+      "assessment": "estimated",
+      "imageEvidence": {
+        "screenshot": "artifacts/release-qa/base-fit-kingston/kingston-fire-10.png",
+        "scaleMetresPerPixel": 0.21374748969202528,
+        "nearbyRoadFeatures": [
+          {
+            "name": "Crerar Boulevard",
+            "highway": "residential"
+          },
+          {
+            "name": "Days Road",
+            "highway": "secondary"
+          },
+          {
+            "name": "Crerar Boulevard",
+            "highway": "residential"
+          },
+          {
+            "name": "Front Road",
+            "highway": "secondary"
+          },
+          {
+            "name": null,
+            "highway": "service"
+          },
+          {
+            "name": null,
+            "highway": "service"
+          },
+          {
+            "name": null,
+            "highway": "service"
+          },
+          {
+            "name": null,
+            "highway": "service"
+          },
+          {
+            "name": null,
+            "highway": "service"
+          },
+          {
+            "name": null,
+            "highway": "service"
+          },
+          {
+            "name": "Front Road",
+            "highway": "secondary"
+          },
+          {
+            "name": null,
+            "highway": "service"
+          }
+        ]
+      },
+      "dispatchRouteCoverage": {
+        "calls": 8,
+        "reachable": 8,
+        "missing": []
+      },
+      "drivingArea": {
+        "center": {
+          "lat": 44.21920071629015,
+          "lng": -76.56980558264502
+        },
+        "widthMetres": 85,
+        "lengthMetres": 95,
+        "rotationDegrees": 45,
+        "spawn": {
+          "lat": 44.21920071629015,
+          "lng": -76.56980558264502,
+          "headingDegrees": 0
+        },
+        "spawnOffsetFromCanonicalMetres": {
+          "east": 0,
+          "north": 0
+        }
+      },
+      "observation": "Estimated individually from the captured Esri zoom-19 image at 127 DAYS RD: the visible fire station footprint and its own immediate apron/parking/access aisle guide this 85 by 95 m rotated area. The fit excludes adjacent unrelated buildings where visible. No apparatus bay, gate, or access right is verified.",
+      "runtimeCollision": {
+        "spawnInside": true,
+        "areaRoadAccess": true,
+        "spawnInitiallyDrivable": true,
+        "nearestRoad": {
+          "name": "Unnamed road",
+          "highway": "service",
+          "distanceMetres": 6.39
+        },
+        "exitStarted": true,
+        "exitCompleted": true,
+        "blockedMoves": 0,
+        "movementSteps": 59,
+        "outsideExpandedDrivingArea": true,
+        "exitPoint": {
+          "lat": 44.21883900625,
+          "lng": -76.56928049375
+        }
+      }
+    },
+    {
+      "baseId": "kingston-fire-7",
+      "name": "KFR Fire Station 7",
+      "address": "905 WOODBINE RD",
+      "sourcePoint": {
+        "lat": 44.258457882712406,
+        "lng": -76.58529396915948
+      },
+      "assessment": "estimated",
+      "imageEvidence": {
+        "screenshot": "artifacts/release-qa/base-fit-kingston/kingston-fire-7.png",
+        "scaleMetresPerPixel": 0.2136049252099909,
+        "nearbyRoadFeatures": [
+          {
+            "name": "Bauder Crescent",
+            "highway": "residential"
+          },
+          {
+            "name": "Kenshaw Street",
+            "highway": "residential"
+          },
+          {
+            "name": "Lawton Place",
+            "highway": "residential"
+          },
+          {
+            "name": "Woodbine Road",
+            "highway": "tertiary"
+          },
+          {
+            "name": "Bayridge Drive",
+            "highway": "secondary"
+          },
+          {
+            "name": "Princess Street",
+            "highway": "primary"
+          },
+          {
+            "name": "Princess Street",
+            "highway": "primary"
+          },
+          {
+            "name": "Princess Street",
+            "highway": "primary"
+          },
+          {
+            "name": "Princess Street",
+            "highway": "primary"
+          },
+          {
+            "name": "Bayridge Drive",
+            "highway": "secondary"
+          },
+          {
+            "name": "Old Colony Road",
+            "highway": "residential"
+          },
+          {
+            "name": "Bayridge Drive",
+            "highway": "secondary"
+          }
+        ]
+      },
+      "dispatchRouteCoverage": {
+        "calls": 8,
+        "reachable": 8,
+        "missing": []
+      },
+      "drivingArea": {
+        "center": {
+          "lat": 44.258457882712406,
+          "lng": -76.58529396915948
+        },
+        "widthMetres": 75,
+        "lengthMetres": 90,
+        "rotationDegrees": 0,
+        "spawn": {
+          "lat": 44.258457882712406,
+          "lng": -76.58529396915948,
+          "headingDegrees": 0
+        },
+        "spawnOffsetFromCanonicalMetres": {
+          "east": 0,
+          "north": 0
+        }
+      },
+      "observation": "Estimated individually from the captured Esri zoom-19 image at 905 WOODBINE RD: the visible fire station footprint and its own immediate apron/parking/access aisle guide this 75 by 90 m rotated area. The fit excludes adjacent unrelated buildings where visible. No apparatus bay, gate, or access right is verified.",
+      "runtimeCollision": {
+        "spawnInside": true,
+        "areaRoadAccess": true,
+        "spawnInitiallyDrivable": true,
+        "nearestRoad": {
+          "name": "Unnamed road",
+          "highway": "service",
+          "distanceMetres": 30.83
+        },
+        "exitStarted": true,
+        "exitCompleted": true,
+        "blockedMoves": 0,
+        "movementSteps": 65,
+        "outsideExpandedDrivingArea": true,
+        "exitPoint": {
+          "lat": 44.258874606666666,
+          "lng": -76.58469640666667
+        }
+      }
+    },
+    {
+      "baseId": "kingston-fire-3",
+      "name": "KFR Fire Station 3",
+      "address": "211 GORE RD",
+      "sourcePoint": {
+        "lat": 44.25882907076905,
+        "lng": -76.45823357120756
+      },
+      "assessment": "estimated",
+      "imageEvidence": {
+        "screenshot": "artifacts/release-qa/base-fit-kingston/kingston-fire-3.png",
+        "scaleMetresPerPixel": 0.2136035713383083,
+        "nearbyRoadFeatures": [
+          {
+            "name": "Windfield Crescent",
+            "highway": "residential"
+          },
+          {
+            "name": "Bonny Lane",
+            "highway": "residential"
+          },
+          {
+            "name": "Deering Place",
+            "highway": "residential"
+          },
+          {
+            "name": "Fireside Court",
+            "highway": "residential"
+          },
+          {
+            "name": "Gore Road",
+            "highway": "tertiary"
+          },
+          {
+            "name": "Highway 15",
+            "highway": "secondary"
+          },
+          {
+            "name": "Barker Drive",
+            "highway": "residential"
+          },
+          {
+            "name": null,
+            "highway": "service"
+          },
+          {
+            "name": null,
+            "highway": "service"
+          },
+          {
+            "name": null,
+            "highway": "service"
+          },
+          {
+            "name": null,
+            "highway": "service"
+          },
+          {
+            "name": null,
+            "highway": "service"
+          }
+        ]
+      },
+      "dispatchRouteCoverage": {
+        "calls": 8,
+        "reachable": 8,
+        "missing": []
+      },
+      "drivingArea": {
+        "center": {
+          "lat": 44.25882907076905,
+          "lng": -76.45823357120756
+        },
+        "widthMetres": 65,
+        "lengthMetres": 80,
+        "rotationDegrees": 45,
+        "spawn": {
+          "lat": 44.25882907076905,
+          "lng": -76.45823357120756,
+          "headingDegrees": 0
+        },
+        "spawnOffsetFromCanonicalMetres": {
+          "east": 0,
+          "north": 0
+        }
+      },
+      "observation": "Estimated individually from the captured Esri zoom-19 image at 211 GORE RD: the visible fire station footprint and its own immediate apron/parking/access aisle guide this 65 by 80 m rotated area. The fit excludes adjacent unrelated buildings where visible. No apparatus bay, gate, or access right is verified.",
+      "runtimeCollision": {
+        "spawnInside": true,
+        "areaRoadAccess": true,
+        "spawnInitiallyDrivable": true,
+        "nearestRoad": {
+          "name": "Unnamed road",
+          "highway": "service",
+          "distanceMetres": 9.83
+        },
+        "exitStarted": true,
+        "exitCompleted": true,
+        "blockedMoves": 0,
+        "movementSteps": 45,
+        "outsideExpandedDrivingArea": true,
+        "exitPoint": {
+          "lat": 44.25936082352941,
+          "lng": -76.45821611176471
+        }
+      }
+    },
+    {
+      "baseId": "kingston-ems-1",
+      "name": "Station #01 — Palace Road",
+      "address": "250 Palace Rd",
+      "sourcePoint": {
+        "lat": 44.23138336610468,
+        "lng": -76.51393473830873
+      },
+      "assessment": "estimated",
+      "imageEvidence": {
+        "screenshot": "artifacts/release-qa/base-fit-kingston/kingston-ems-1.png",
+        "scaleMetresPerPixel": 0.21370325329635814,
+        "nearbyRoadFeatures": [
+          {
+            "name": null,
+            "highway": "secondary"
+          },
+          {
+            "name": null,
+            "highway": "secondary_link"
+          },
+          {
+            "name": "Johnson Street",
+            "highway": "secondary"
+          },
+          {
+            "name": "Gibson Avenue",
+            "highway": "residential"
+          },
+          {
+            "name": "Oakridge Avenue",
+            "highway": "residential"
+          },
+          {
+            "name": "Johnson Street",
+            "highway": "secondary"
+          },
+          {
+            "name": "Johnson Street",
+            "highway": "secondary"
+          },
+          {
+            "name": null,
+            "highway": "secondary_link"
+          },
+          {
+            "name": "Palace Road",
+            "highway": "tertiary"
+          },
+          {
+            "name": "Sir John A. Macdonald Boulevard",
+            "highway": "secondary"
+          },
+          {
+            "name": "Johnson Street",
+            "highway": "secondary"
+          },
+          {
+            "name": null,
+            "highway": "secondary"
+          }
+        ]
+      },
+      "dispatchRouteCoverage": {
+        "calls": 6,
+        "reachable": 6,
+        "missing": []
+      },
+      "drivingArea": {
+        "center": {
+          "lat": 44.23138336610468,
+          "lng": -76.51393473830873
+        },
+        "widthMetres": 65,
+        "lengthMetres": 75,
+        "rotationDegrees": 0,
+        "spawn": {
+          "lat": 44.23138336610468,
+          "lng": -76.51393473830873,
+          "headingDegrees": 0
+        },
+        "spawnOffsetFromCanonicalMetres": {
+          "east": 0,
+          "north": 0
+        }
+      },
+      "observation": "Estimated individually from the captured Esri zoom-19 image at 250 Palace Rd: the visible paramedic facility footprint and its own immediate apron/parking/access aisle guide this 65 by 75 m rotated area. The fit excludes adjacent unrelated buildings where visible. No apparatus bay, gate, or access right is verified.",
+      "runtimeCollision": {
+        "spawnInside": true,
+        "areaRoadAccess": true,
+        "spawnInitiallyDrivable": true,
+        "nearestRoad": {
+          "name": "Unnamed road",
+          "highway": "service",
+          "distanceMetres": 15.75
+        },
+        "exitStarted": true,
+        "exitCompleted": true,
+        "blockedMoves": 0,
+        "movementSteps": 114,
+        "outsideExpandedDrivingArea": true,
+        "exitPoint": {
+          "lat": 44.23102775555556,
+          "lng": -76.51448158888888
+        }
+      }
+    },
+    {
+      "baseId": "kingston-ems-3",
+      "name": "Station #03 — Highway 15",
+      "address": "1665 Hwy 15",
+      "sourcePoint": {
+        "lat": 44.285722963671525,
+        "lng": -76.43150837146734
+      },
+      "assessment": "estimated",
+      "imageEvidence": {
+        "screenshot": "artifacts/release-qa/base-fit-kingston/kingston-ems-3.png",
+        "scaleMetresPerPixel": 0.2135058479496932,
+        "nearbyRoadFeatures": [
+          {
+            "name": null,
+            "highway": "motorway_link"
+          },
+          {
+            "name": "Middle Road",
+            "highway": "secondary"
+          },
+          {
+            "name": "Highway 401",
+            "highway": "motorway"
+          },
+          {
+            "name": null,
+            "highway": "motorway_link"
+          },
+          {
+            "name": "Highway 15",
+            "highway": "primary"
+          },
+          {
+            "name": "Highway 401",
+            "highway": "motorway"
+          },
+          {
+            "name": null,
+            "highway": "service"
+          },
+          {
+            "name": null,
+            "highway": "motorway_link"
+          },
+          {
+            "name": "Highway 15",
+            "highway": "secondary"
+          },
+          {
+            "name": "Highway 15",
+            "highway": "secondary"
+          },
+          {
+            "name": null,
+            "highway": "service"
+          },
+          {
+            "name": null,
+            "highway": "service"
+          }
+        ]
+      },
+      "dispatchRouteCoverage": {
+        "calls": 6,
+        "reachable": 6,
+        "missing": []
+      },
+      "drivingArea": {
+        "center": {
+          "lat": 44.285722963671525,
+          "lng": -76.43150837146734
+        },
+        "widthMetres": 60,
+        "lengthMetres": 75,
+        "rotationDegrees": 45,
+        "spawn": {
+          "lat": 44.285722963671525,
+          "lng": -76.43150837146734,
+          "headingDegrees": 0
+        },
+        "spawnOffsetFromCanonicalMetres": {
+          "east": 0,
+          "north": 0
+        }
+      },
+      "observation": "Estimated individually from the captured Esri zoom-19 image at 1665 Hwy 15: the visible paramedic facility footprint and its own immediate apron/parking/access aisle guide this 60 by 75 m rotated area. The fit excludes adjacent unrelated buildings where visible. No apparatus bay, gate, or access right is verified.",
+      "runtimeCollision": {
+        "spawnInside": true,
+        "areaRoadAccess": true,
+        "spawnInitiallyDrivable": true,
+        "nearestRoad": {
+          "name": "Unnamed road",
+          "highway": "service",
+          "distanceMetres": 24.25
+        },
+        "exitStarted": true,
+        "exitCompleted": true,
+        "blockedMoves": 0,
+        "movementSteps": 45,
+        "outsideExpandedDrivingArea": true,
+        "exitPoint": {
+          "lat": 44.285964681818186,
+          "lng": -76.43202067272728
+        }
+      }
+    },
+    {
+      "baseId": "kingston-ems-2",
+      "name": "Station #02 — Woodbine Road",
+      "address": "905 Woodbine Rd",
+      "sourcePoint": {
+        "lat": 44.25847024538176,
+        "lng": -76.58554944803886
+      },
+      "assessment": "estimated",
+      "imageEvidence": {
+        "screenshot": "artifacts/release-qa/base-fit-kingston/kingston-ems-2.png",
+        "scaleMetresPerPixel": 0.21360487634804987,
+        "nearbyRoadFeatures": [
+          {
+            "name": "Bauder Crescent",
+            "highway": "residential"
+          },
+          {
+            "name": "Kenshaw Street",
+            "highway": "residential"
+          },
+          {
+            "name": "Lawton Place",
+            "highway": "residential"
+          },
+          {
+            "name": "Woodbine Road",
+            "highway": "tertiary"
+          },
+          {
+            "name": "Bayridge Drive",
+            "highway": "secondary"
+          },
+          {
+            "name": "Princess Street",
+            "highway": "primary"
+          },
+          {
+            "name": "Princess Street",
+            "highway": "primary"
+          },
+          {
+            "name": "Princess Street",
+            "highway": "primary"
+          },
+          {
+            "name": "Princess Street",
+            "highway": "primary"
+          },
+          {
+            "name": "Bayridge Drive",
+            "highway": "secondary"
+          },
+          {
+            "name": "Old Colony Road",
+            "highway": "residential"
+          },
+          {
+            "name": "Bayridge Drive",
+            "highway": "secondary"
+          }
+        ]
+      },
+      "dispatchRouteCoverage": {
+        "calls": 6,
+        "reachable": 6,
+        "missing": []
+      },
+      "drivingArea": {
+        "center": {
+          "lat": 44.25847024538176,
+          "lng": -76.58554944803886
+        },
+        "widthMetres": 75,
+        "lengthMetres": 90,
+        "rotationDegrees": 0,
+        "spawn": {
+          "lat": 44.25847024538176,
+          "lng": -76.58554944803886,
+          "headingDegrees": 0
+        },
+        "spawnOffsetFromCanonicalMetres": {
+          "east": 0,
+          "north": 0
+        }
+      },
+      "observation": "Shared imagery fit with kingston-fire-7 at the same official site and matching address (905 Woodbine Rd); the capture shows one facility parcel with the building, immediate apron/parking and access aisle. This does not identify an EMS-only bay or entrance.",
+      "sharedFitWith": "kingston-fire-7 at the same official site and matching address (905 Woodbine Rd)",
+      "runtimeCollision": {
+        "spawnInside": true,
+        "areaRoadAccess": true,
+        "spawnInitiallyDrivable": true,
+        "nearestRoad": {
+          "name": "Unnamed road",
+          "highway": "service",
+          "distanceMetres": 23.87
+        },
+        "exitStarted": true,
+        "exitCompleted": true,
+        "blockedMoves": 0,
+        "movementSteps": 99,
+        "outsideExpandedDrivingArea": true,
+        "exitPoint": {
+          "lat": 44.258869745000005,
+          "lng": -76.5849496025
+        }
+      }
+    },
+    {
+      "baseId": "kingston-ems-9",
+      "name": "Station #09 — Glenburnie",
+      "address": "2129 Battersea Rd",
+      "sourcePoint": {
+        "lat": 44.31542451005081,
+        "lng": -76.46461109218805
+      },
+      "assessment": "estimated",
+      "imageEvidence": {
+        "screenshot": "artifacts/release-qa/base-fit-kingston/kingston-ems-9.png",
+        "scaleMetresPerPixel": 0.21339787012605668,
+        "nearbyRoadFeatures": [
+          {
+            "name": null,
+            "highway": "service"
+          },
+          {
+            "name": null,
+            "highway": "service"
+          },
+          {
+            "name": null,
+            "highway": "service"
+          },
+          {
+            "name": null,
+            "highway": "service"
+          },
+          {
+            "name": null,
+            "highway": "service"
+          },
+          {
+            "name": null,
+            "highway": "service"
+          },
+          {
+            "name": null,
+            "highway": "service"
+          },
+          {
+            "name": null,
+            "highway": "service"
+          },
+          {
+            "name": "Battersea Road",
+            "highway": "secondary"
+          }
+        ]
+      },
+      "dispatchRouteCoverage": {
+        "calls": 6,
+        "reachable": 6,
+        "missing": []
+      },
+      "drivingArea": {
+        "center": {
+          "lat": 44.31542451005081,
+          "lng": -76.46461109218805
+        },
+        "widthMetres": 60,
+        "lengthMetres": 75,
+        "rotationDegrees": 0,
+        "spawn": {
+          "lat": 44.31542451005081,
+          "lng": -76.46461109218805,
+          "headingDegrees": 0
+        },
+        "spawnOffsetFromCanonicalMetres": {
+          "east": 0,
+          "north": 0
+        }
+      },
+      "observation": "Estimated individually from the captured Esri zoom-19 image at 2129 Battersea Rd: the visible paramedic facility footprint and its own immediate apron/parking/access aisle guide this 60 by 75 m rotated area. The fit excludes adjacent unrelated buildings where visible. No apparatus bay, gate, or access right is verified.",
+      "runtimeCollision": {
+        "spawnInside": true,
+        "areaRoadAccess": true,
+        "spawnInitiallyDrivable": true,
+        "nearestRoad": {
+          "name": "Unnamed road",
+          "highway": "service",
+          "distanceMetres": 32.13
+        },
+        "exitStarted": true,
+        "exitCompleted": true,
+        "blockedMoves": 0,
+        "movementSteps": 63,
+        "outsideExpandedDrivingArea": true,
+        "exitPoint": {
+          "lat": 44.315232763750004,
+          "lng": -76.46410529125
+        }
+      }
+    }
+  ],
+  "runtimeCollisionChecks": {
+    "artifact": "artifacts/release-qa/base-fit/kingston-driving-area-checks.json",
+    "bases": 14,
+    "continuousExits": 14,
+    "blockedMoves": 0,
+    "note": "Continuous real-route collision-model samples through the yard boundary; not a physical full-route drive."
+  },
+  "dispatchRouteCoverage": {
+    "checkedLocalDate": "2026-11-02",
+    "device": "mobile browser route-only QA",
+    "fireTotals": {
+      "bases": 10,
+      "calls": 74,
+      "reachable": 74,
+      "failures": 0
+    },
+    "emsTotals": {
+      "bases": 4,
+      "calls": 24,
+      "reachable": 24,
+      "failures": 0
+    },
+    "artifact": "artifacts/release-qa/base-fit-kingston/dispatch-qa/route-coverage.json"
+  }
+}

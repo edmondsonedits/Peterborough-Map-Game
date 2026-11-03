@@ -1,0 +1,1562 @@
+{
+  "schemaVersion": 1,
+  "cityId": "vaughan",
+  "reviewedLocalDate": "2026-11-02",
+  "assessment": "estimated",
+  "imagery": {
+    "provider": "Esri World Imagery",
+    "tileUrl": "https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}",
+    "capturedLocalDate": "2026-11-02",
+    "captureTimestamp": "2026-11-03T03:41:21.426Z",
+    "vintage": "not supplied by tile response",
+    "zoom": 19,
+    "method": "Reviewed independent zoom-19 Esri World Imagery captures for 14 eligible Fire/EMS records at average scale 0.215 m/pixel. For fitted sites, the individually sized rectangle follows the visible building, immediate parking/apron and observable access aisle; dimensions and rotation remain estimates. Sites with a conflicting/stale capture are left without a fit.",
+    "captureDirectory": "artifacts/release-qa/base-fit-vaughan/"
+  },
+  "roads": {
+    "file": "cities/vaughan/roads.geojson.gz",
+    "source": "OpenStreetMap via Geofabrik Ontario extract",
+    "sourceTimestamp": "2026-09-27T20:23:36Z",
+    "snapshotBuiltAt": "2026-10-29T04:13:50.934Z",
+    "sourceSha256": "ebb50b39682d2381ad3c1d21e005b48cec3397e15da0d72c5d76c7d20d8dd249",
+    "packagedSha256": "bd92d3c0933efe379a4ed7afc3905096a7512e33784c73f4877b07ba13e4818d",
+    "sourceUrl": "https://download.geofabrik.de/north-america/canada/ontario.html",
+    "attribution": "© OpenStreetMap contributors",
+    "assessment": "Packaged road/service geometry was reviewed with imagery. Runtime QA follows an actual response route through fitted-yard boundaries; mapped graph segments do not verify driveway rights or apparatus doors."
+  },
+  "limits": [
+    "No official parcel or building-footprint polygons were used for the fitted sites.",
+    "Dimensions, centers, rotations and modeled spawn coordinates are imagery/road-geometry estimates, not surveyed measurements.",
+    "Imagery does not verify apparatus bays, gates, access controls, current pavement, occupancy or driveway rights.",
+    "Canonical IDs and source coordinates remain unchanged.",
+    "Collision QA follows a real route from modeled spawn until at least 10 m outside the expanded fitted yard and checks movement in 1.5 m increments; this verifies the modeled collision transition, not sustained manual driving or real-world response suitability.",
+    "Shared Fire/EMS fits represent exact co-located site records and do not establish EMS-only bays or entrances."
+  ],
+  "bases": [
+    {
+      "baseId": "vaughan-ems-30",
+      "name": "Paramedic Station #30 (Woodbridge)",
+      "address": "9601 Islington Avenue, Vaughan, ON",
+      "sourcePoint": {
+        "lat": 43.82434676861765,
+        "lng": -79.60771870225449
+      },
+      "assessment": "estimated",
+      "imageEvidence": {
+        "screenshot": "artifacts/release-qa/base-fit-vaughan/vaughan-ems-30.png",
+        "scaleMetresPerPixel": 0.21517583065868787,
+        "nearbyRoadFeatures": [
+          {
+            "name": "Castle Park Boulevard",
+            "highway": "residential"
+          },
+          {
+            "name": "Castle Park Boulevard",
+            "highway": "residential"
+          },
+          {
+            "name": "Laura Sabrina Drive",
+            "highway": "residential"
+          },
+          {
+            "name": null,
+            "highway": "service"
+          },
+          {
+            "name": "Canada Company Avenue",
+            "highway": "residential"
+          },
+          {
+            "name": "Laneway V37",
+            "highway": "service"
+          },
+          {
+            "name": "Domenica Way",
+            "highway": "service"
+          },
+          {
+            "name": "Chalone Crescent",
+            "highway": "residential"
+          },
+          {
+            "name": "Via Canala Way",
+            "highway": "service"
+          },
+          {
+            "name": "Islington Avenue",
+            "highway": "secondary"
+          },
+          {
+            "name": "Islington Avenue",
+            "highway": "secondary"
+          },
+          {
+            "name": "Islington Avenue",
+            "highway": "secondary"
+          }
+        ]
+      },
+      "dispatchRouteCoverage": {
+        "calls": 6,
+        "reachable": 6,
+        "missing": []
+      },
+      "drivingArea": {
+        "center": {
+          "lat": 43.82434676861765,
+          "lng": -79.60771870225449
+        },
+        "widthMetres": 65,
+        "lengthMetres": 80,
+        "rotationDegrees": 0,
+        "spawn": {
+          "lat": 43.82434676861765,
+          "lng": -79.60771870225449,
+          "headingDegrees": 0
+        },
+        "spawnOffsetFromCanonicalMetres": {
+          "east": 0,
+          "north": 0
+        }
+      },
+      "observation": "Shared imagery fit with vaughan-fire-7-9 at the same official site and matching address (9601 Islington Avenue, Vaughan, ON); the capture shows one facility parcel with the building, immediate apron/parking and access aisle. This does not identify an EMS-only bay or entrance.",
+      "sharedFitWith": "vaughan-fire-7-9 at the same official site and matching address (9601 Islington Avenue, Vaughan, ON)",
+      "runtimeCollision": {
+        "spawnInside": true,
+        "areaRoadAccess": true,
+        "spawnInitiallyDrivable": true,
+        "nearestRoad": {
+          "name": "Unnamed road",
+          "highway": "service",
+          "distanceMetres": 2.11
+        },
+        "exitStarted": true,
+        "exitCompleted": true,
+        "blockedMoves": 0,
+        "movementSteps": 36,
+        "outsideExpandedDrivingArea": true,
+        "exitPoint": {
+          "lat": 43.82418640196078,
+          "lng": -79.6082518745098
+        }
+      }
+    },
+    {
+      "baseId": "vaughan-ems-31",
+      "name": "Paramedic Station #31 (Vaughan West)",
+      "address": "7690 Martin Grove Road, Vaughan, ON",
+      "sourcePoint": {
+        "lat": 43.77406814540807,
+        "lng": -79.6099779212045
+      },
+      "assessment": "estimated",
+      "imageEvidence": {
+        "screenshot": "artifacts/release-qa/base-fit-vaughan/vaughan-ems-31.png",
+        "scaleMetresPerPixel": 0.21535697491927736,
+        "nearbyRoadFeatures": [
+          {
+            "name": "Regina Road",
+            "highway": "unclassified"
+          },
+          {
+            "name": "Martin Grove Road",
+            "highway": "secondary"
+          },
+          {
+            "name": "Highway 7",
+            "highway": "primary"
+          },
+          {
+            "name": "Martin Grove Road",
+            "highway": "tertiary"
+          },
+          {
+            "name": "Highway 7",
+            "highway": "primary"
+          },
+          {
+            "name": "Highway 7",
+            "highway": "primary"
+          },
+          {
+            "name": "Martin Grove Road",
+            "highway": "secondary"
+          },
+          {
+            "name": "Martin Grove Road",
+            "highway": "secondary"
+          },
+          {
+            "name": "Woodstream Boulevard",
+            "highway": "unclassified"
+          },
+          {
+            "name": "Martin Grove Road",
+            "highway": "secondary"
+          },
+          {
+            "name": "Martin Grove Road",
+            "highway": "tertiary"
+          },
+          {
+            "name": "Highway 7",
+            "highway": "primary"
+          }
+        ]
+      },
+      "dispatchRouteCoverage": {
+        "calls": 6,
+        "reachable": 6,
+        "missing": []
+      },
+      "drivingArea": {
+        "center": {
+          "lat": 43.77406814540807,
+          "lng": -79.6099779212045
+        },
+        "widthMetres": 70,
+        "lengthMetres": 80,
+        "rotationDegrees": 0,
+        "spawn": {
+          "lat": 43.77406814540807,
+          "lng": -79.6099779212045,
+          "headingDegrees": 0
+        },
+        "spawnOffsetFromCanonicalMetres": {
+          "east": 0,
+          "north": 0
+        }
+      },
+      "observation": "Shared imagery fit with vaughan-fire-7-3 at the same official site and matching address (7690 Martin Grove Road, Vaughan, ON); the capture shows one facility parcel with the building, immediate apron/parking and access aisle. This does not identify an EMS-only bay or entrance.",
+      "sharedFitWith": "vaughan-fire-7-3 at the same official site and matching address (7690 Martin Grove Road, Vaughan, ON)",
+      "runtimeCollision": {
+        "spawnInside": true,
+        "areaRoadAccess": true,
+        "spawnInitiallyDrivable": true,
+        "nearestRoad": {
+          "name": "Unnamed road",
+          "highway": "service",
+          "distanceMetres": 0.49
+        },
+        "exitStarted": true,
+        "exitCompleted": true,
+        "blockedMoves": 0,
+        "movementSteps": 38,
+        "outsideExpandedDrivingArea": true,
+        "exitPoint": {
+          "lat": 43.774118933333334,
+          "lng": -79.6094018
+        }
+      }
+    },
+    {
+      "baseId": "vaughan-ems-32",
+      "name": "Paramedic Station #32 (Maple)",
+      "address": "53 Jacob Keffer Parkway, Vaughan, ON",
+      "sourcePoint": {
+        "lat": 43.83550461615788,
+        "lng": -79.50476769737406
+      },
+      "assessment": "estimated",
+      "imageEvidence": {
+        "screenshot": "artifacts/release-qa/base-fit-vaughan/vaughan-ems-32.png",
+        "scaleMetresPerPixel": 0.2151356117876898,
+        "nearbyRoadFeatures": [
+          {
+            "name": "Zantella Court",
+            "highway": "residential"
+          },
+          {
+            "name": "Gantner Gate",
+            "highway": "unclassified"
+          },
+          {
+            "name": "Jacob Keffer Parkway",
+            "highway": "unclassified"
+          },
+          {
+            "name": "Westburne Drive",
+            "highway": "unclassified"
+          },
+          {
+            "name": "Alberta Drive",
+            "highway": "residential"
+          },
+          {
+            "name": "Jacob Keffer Parkway",
+            "highway": "unclassified"
+          },
+          {
+            "name": "Moyal Court",
+            "highway": "unclassified"
+          },
+          {
+            "name": "Old Rutherford Road",
+            "highway": "residential"
+          },
+          {
+            "name": "Keele Street",
+            "highway": "secondary"
+          },
+          {
+            "name": "Keele Street",
+            "highway": "secondary"
+          },
+          {
+            "name": "Keele Street",
+            "highway": "secondary"
+          },
+          {
+            "name": null,
+            "highway": "residential"
+          }
+        ]
+      },
+      "dispatchRouteCoverage": {
+        "calls": 6,
+        "reachable": 6,
+        "missing": []
+      },
+      "drivingArea": {
+        "center": {
+          "lat": 43.83550461615788,
+          "lng": -79.50476769737406
+        },
+        "widthMetres": 80,
+        "lengthMetres": 95,
+        "rotationDegrees": 0,
+        "spawn": {
+          "lat": 43.83550461615788,
+          "lng": -79.50476769737406,
+          "headingDegrees": 0
+        },
+        "spawnOffsetFromCanonicalMetres": {
+          "east": 0,
+          "north": 0
+        }
+      },
+      "observation": "Estimated individually from the captured Esri zoom-19 image at 53 Jacob Keffer Parkway, Vaughan, ON: the visible paramedic facility footprint and its own immediate apron/parking/access aisle guide this 80 by 95 m rotated area. The fit excludes adjacent unrelated buildings where visible. No apparatus bay, gate, or access right is verified.",
+      "runtimeCollision": {
+        "spawnInside": true,
+        "areaRoadAccess": true,
+        "spawnInitiallyDrivable": true,
+        "nearestRoad": {
+          "name": "Unnamed road",
+          "highway": "service",
+          "distanceMetres": 40.07
+        },
+        "exitStarted": true,
+        "exitCompleted": true,
+        "blockedMoves": 0,
+        "movementSteps": 56,
+        "outsideExpandedDrivingArea": true,
+        "exitPoint": {
+          "lat": 43.835263678709154,
+          "lng": -79.50413151281728
+        }
+      }
+    },
+    {
+      "baseId": "vaughan-ems-34",
+      "name": "Paramedic Station #34 (Vaughan-Racco)",
+      "address": "111 Racco Parkway, Vaughan, ON",
+      "sourcePoint": {
+        "lat": 43.815673750756346,
+        "lng": -79.47390456103007
+      },
+      "assessment": "estimated",
+      "imageEvidence": {
+        "screenshot": "artifacts/release-qa/base-fit-vaughan/vaughan-ems-34.png",
+        "scaleMetresPerPixel": 0.21520709295834142,
+        "nearbyRoadFeatures": [
+          {
+            "name": "Caraway Drive",
+            "highway": "unclassified"
+          },
+          {
+            "name": "Dufferin Street",
+            "highway": "secondary"
+          },
+          {
+            "name": "Dufferin Street",
+            "highway": "secondary"
+          },
+          {
+            "name": null,
+            "highway": "motorway_link"
+          },
+          {
+            "name": "Caraway Drive",
+            "highway": "unclassified"
+          },
+          {
+            "name": null,
+            "highway": "motorway_link"
+          },
+          {
+            "name": "Dufferin Street",
+            "highway": "secondary"
+          },
+          {
+            "name": "Dufferin Street",
+            "highway": "secondary"
+          },
+          {
+            "name": "Racco Parkway",
+            "highway": "unclassified"
+          },
+          {
+            "name": "Racco Parkway",
+            "highway": "unclassified"
+          },
+          {
+            "name": "Caraway Drive",
+            "highway": "unclassified"
+          },
+          {
+            "name": null,
+            "highway": "motorway_link"
+          }
+        ]
+      },
+      "dispatchRouteCoverage": {
+        "calls": 6,
+        "reachable": 6,
+        "missing": []
+      },
+      "drivingArea": {
+        "center": {
+          "lat": 43.815673750756346,
+          "lng": -79.47390456103007
+        },
+        "widthMetres": 70,
+        "lengthMetres": 85,
+        "rotationDegrees": 0,
+        "spawn": {
+          "lat": 43.815673750756346,
+          "lng": -79.47390456103007,
+          "headingDegrees": 0
+        },
+        "spawnOffsetFromCanonicalMetres": {
+          "east": 0,
+          "north": 0
+        }
+      },
+      "observation": "Shared imagery fit with vaughan-fire-7-8 at the same official site and matching address (111 Racco Parkway, Vaughan, ON); the capture shows one facility parcel with the building, immediate apron/parking and access aisle. This does not identify an EMS-only bay or entrance.",
+      "sharedFitWith": "vaughan-fire-7-8 at the same official site and matching address (111 Racco Parkway, Vaughan, ON)",
+      "runtimeCollision": {
+        "spawnInside": true,
+        "areaRoadAccess": true,
+        "spawnInitiallyDrivable": true,
+        "nearestRoad": {
+          "name": "Unnamed road",
+          "highway": "service",
+          "distanceMetres": 2.22
+        },
+        "exitStarted": true,
+        "exitCompleted": true,
+        "blockedMoves": 0,
+        "movementSteps": 67,
+        "outsideExpandedDrivingArea": true,
+        "exitPoint": {
+          "lat": 43.8151969,
+          "lng": -79.4743018
+        }
+      }
+    },
+    {
+      "baseId": "vaughan-fire-7-1",
+      "name": "Fire Station 7-1",
+      "address": "835 Clark Avenue West, Vaughan, ON",
+      "sourcePoint": {
+        "lat": 43.802916,
+        "lng": -79.449364
+      },
+      "assessment": "estimated",
+      "imageEvidence": {
+        "screenshot": "artifacts/release-qa/base-fit-vaughan/vaughan-fire-7-1.png",
+        "scaleMetresPerPixel": 0.21525306498541433,
+        "nearbyRoadFeatures": [
+          {
+            "name": "Promenade Circle",
+            "highway": "unclassified"
+          },
+          {
+            "name": "South Promenade",
+            "highway": "unclassified"
+          },
+          {
+            "name": null,
+            "highway": "service"
+          },
+          {
+            "name": "Tansley Road",
+            "highway": "tertiary"
+          },
+          {
+            "name": "McMorran Crescent",
+            "highway": "residential"
+          },
+          {
+            "name": "Peter Andrew Crescent",
+            "highway": "residential"
+          },
+          {
+            "name": "Finlayson Court",
+            "highway": "residential"
+          },
+          {
+            "name": "Eddy Green Court",
+            "highway": "residential"
+          },
+          {
+            "name": "Thornbury Circle",
+            "highway": "residential"
+          },
+          {
+            "name": "Bathurst Street",
+            "highway": "secondary"
+          },
+          {
+            "name": "Bathurst Street",
+            "highway": "secondary"
+          },
+          {
+            "name": "Clark Avenue West",
+            "highway": "tertiary"
+          }
+        ]
+      },
+      "dispatchRouteCoverage": {
+        "calls": 8,
+        "reachable": 8,
+        "missing": []
+      },
+      "drivingArea": {
+        "center": {
+          "lat": 43.802916,
+          "lng": -79.449364
+        },
+        "widthMetres": 65,
+        "lengthMetres": 80,
+        "rotationDegrees": 0,
+        "spawn": {
+          "lat": 43.802916,
+          "lng": -79.449364,
+          "headingDegrees": 0
+        },
+        "spawnOffsetFromCanonicalMetres": {
+          "east": 0,
+          "north": 0
+        }
+      },
+      "observation": "Estimated individually from the captured Esri zoom-19 image at 835 Clark Avenue West, Vaughan, ON: the visible fire station footprint and its own immediate apron/parking/access aisle guide this 65 by 80 m rotated area. The fit excludes adjacent unrelated buildings where visible. No apparatus bay, gate, or access right is verified.",
+      "runtimeCollision": {
+        "spawnInside": true,
+        "areaRoadAccess": true,
+        "spawnInitiallyDrivable": true,
+        "nearestRoad": {
+          "name": "Smallwood Circle",
+          "highway": "residential",
+          "distanceMetres": 35.66
+        },
+        "exitStarted": true,
+        "exitCompleted": true,
+        "blockedMoves": 0,
+        "movementSteps": 39,
+        "outsideExpandedDrivingArea": true,
+        "exitPoint": {
+          "lat": 43.802846849999995,
+          "lng": -79.449906
+        }
+      }
+    },
+    {
+      "baseId": "vaughan-fire-7-10",
+      "name": "Fire Station 7-10",
+      "address": "10800 Dufferin Street, Vaughan, ON",
+      "sourcePoint": {
+        "lat": 43.880172,
+        "lng": -79.493017
+      },
+      "assessment": "estimated",
+      "imageEvidence": {
+        "screenshot": "artifacts/release-qa/base-fit-vaughan/vaughan-fire-7-10.png",
+        "scaleMetresPerPixel": 0.21497450677470453,
+        "nearbyRoadFeatures": [
+          {
+            "name": "Germana Place",
+            "highway": "residential"
+          },
+          {
+            "name": "Teston Road",
+            "highway": "secondary"
+          },
+          {
+            "name": null,
+            "highway": "service"
+          },
+          {
+            "name": null,
+            "highway": "service"
+          },
+          {
+            "name": null,
+            "highway": "service"
+          },
+          {
+            "name": "Teston Road",
+            "highway": "residential"
+          },
+          {
+            "name": null,
+            "highway": "service"
+          },
+          {
+            "name": null,
+            "highway": "service"
+          },
+          {
+            "name": null,
+            "highway": "service"
+          },
+          {
+            "name": null,
+            "highway": "service"
+          },
+          {
+            "name": "Dufferin Street",
+            "highway": "secondary"
+          },
+          {
+            "name": "Dufferin Street",
+            "highway": "secondary"
+          }
+        ]
+      },
+      "dispatchRouteCoverage": {
+        "calls": 8,
+        "reachable": 8,
+        "missing": []
+      },
+      "drivingArea": {
+        "center": {
+          "lat": 43.880172,
+          "lng": -79.493017
+        },
+        "widthMetres": 75,
+        "lengthMetres": 85,
+        "rotationDegrees": 0,
+        "spawn": {
+          "lat": 43.880172,
+          "lng": -79.493017,
+          "headingDegrees": 0
+        },
+        "spawnOffsetFromCanonicalMetres": {
+          "east": 0,
+          "north": 0
+        }
+      },
+      "observation": "Estimated individually from the captured Esri zoom-19 image at 10800 Dufferin Street, Vaughan, ON: the visible fire station footprint and its own immediate apron/parking/access aisle guide this 75 by 85 m rotated area. The fit excludes adjacent unrelated buildings where visible. No apparatus bay, gate, or access right is verified.",
+      "runtimeCollision": {
+        "spawnInside": true,
+        "areaRoadAccess": true,
+        "spawnInitiallyDrivable": true,
+        "nearestRoad": {
+          "name": "Unnamed road",
+          "highway": "service",
+          "distanceMetres": 7.66
+        },
+        "exitStarted": true,
+        "exitCompleted": true,
+        "blockedMoves": 0,
+        "movementSteps": 41,
+        "outsideExpandedDrivingArea": true,
+        "exitPoint": {
+          "lat": 43.88031541632653,
+          "lng": -79.49241231428572
+        }
+      }
+    },
+    {
+      "baseId": "vaughan-fire-7-2",
+      "name": "Fire Station 7-2",
+      "address": "9290 Keele Street, Vaughan, ON",
+      "sourcePoint": {
+        "lat": 43.837383,
+        "lng": -79.508923
+      },
+      "assessment": "estimated",
+      "imageEvidence": {
+        "screenshot": "artifacts/release-qa/base-fit-vaughan/vaughan-fire-7-2.png",
+        "scaleMetresPerPixel": 0.21512883882791686,
+        "nearbyRoadFeatures": [
+          {
+            "name": "Sherwood Park Drive",
+            "highway": "residential"
+          },
+          {
+            "name": "Belmont Crescent",
+            "highway": "residential"
+          },
+          {
+            "name": "Zantella Court",
+            "highway": "residential"
+          },
+          {
+            "name": "Enola Place",
+            "highway": "residential"
+          },
+          {
+            "name": "Wedgewood Place",
+            "highway": "residential"
+          },
+          {
+            "name": "Jacob Keffer Parkway",
+            "highway": "unclassified"
+          },
+          {
+            "name": "Links Road",
+            "highway": "residential"
+          },
+          {
+            "name": "Dina Road",
+            "highway": "residential"
+          },
+          {
+            "name": "Old Rutherford Road",
+            "highway": "residential"
+          },
+          {
+            "name": "Links Road",
+            "highway": "residential"
+          },
+          {
+            "name": "Castlehill Road",
+            "highway": "residential"
+          },
+          {
+            "name": "Castlehill Road",
+            "highway": "residential"
+          }
+        ]
+      },
+      "dispatchRouteCoverage": {
+        "calls": 8,
+        "reachable": 8,
+        "missing": []
+      },
+      "drivingArea": {
+        "center": {
+          "lat": 43.837383,
+          "lng": -79.508923
+        },
+        "widthMetres": 70,
+        "lengthMetres": 85,
+        "rotationDegrees": 0,
+        "spawn": {
+          "lat": 43.837383,
+          "lng": -79.508923,
+          "headingDegrees": 0
+        },
+        "spawnOffsetFromCanonicalMetres": {
+          "east": 0,
+          "north": 0
+        }
+      },
+      "observation": "Estimated individually from the captured Esri zoom-19 image at 9290 Keele Street, Vaughan, ON: the visible fire station footprint and its own immediate apron/parking/access aisle guide this 70 by 85 m rotated area. The fit excludes adjacent unrelated buildings where visible. No apparatus bay, gate, or access right is verified.",
+      "runtimeCollision": {
+        "spawnInside": true,
+        "areaRoadAccess": true,
+        "spawnInitiallyDrivable": true,
+        "nearestRoad": {
+          "name": "Unnamed road",
+          "highway": "service",
+          "distanceMetres": 11.95
+        },
+        "exitStarted": true,
+        "exitCompleted": true,
+        "blockedMoves": 0,
+        "movementSteps": 39,
+        "outsideExpandedDrivingArea": true,
+        "exitPoint": {
+          "lat": 43.837374363636364,
+          "lng": -79.50836208181818
+        }
+      }
+    },
+    {
+      "baseId": "vaughan-fire-7-3",
+      "name": "Fire Station 7-3",
+      "address": "7690 Martin Grove Road, Vaughan, ON",
+      "sourcePoint": {
+        "lat": 43.77406,
+        "lng": -79.609974
+      },
+      "assessment": "estimated",
+      "imageEvidence": {
+        "screenshot": "artifacts/release-qa/base-fit-vaughan/vaughan-fire-7-3.png",
+        "scaleMetresPerPixel": 0.21535700979231745,
+        "nearbyRoadFeatures": [
+          {
+            "name": "Regina Road",
+            "highway": "unclassified"
+          },
+          {
+            "name": "Martin Grove Road",
+            "highway": "secondary"
+          },
+          {
+            "name": "Highway 7",
+            "highway": "primary"
+          },
+          {
+            "name": "Martin Grove Road",
+            "highway": "tertiary"
+          },
+          {
+            "name": "Highway 7",
+            "highway": "primary"
+          },
+          {
+            "name": "Highway 7",
+            "highway": "primary"
+          },
+          {
+            "name": "Martin Grove Road",
+            "highway": "secondary"
+          },
+          {
+            "name": "Martin Grove Road",
+            "highway": "secondary"
+          },
+          {
+            "name": "Woodstream Boulevard",
+            "highway": "unclassified"
+          },
+          {
+            "name": "Martin Grove Road",
+            "highway": "secondary"
+          },
+          {
+            "name": "Martin Grove Road",
+            "highway": "tertiary"
+          },
+          {
+            "name": "Highway 7",
+            "highway": "primary"
+          }
+        ]
+      },
+      "dispatchRouteCoverage": {
+        "calls": 8,
+        "reachable": 8,
+        "missing": []
+      },
+      "drivingArea": {
+        "center": {
+          "lat": 43.77406,
+          "lng": -79.609974
+        },
+        "widthMetres": 70,
+        "lengthMetres": 80,
+        "rotationDegrees": 0,
+        "spawn": {
+          "lat": 43.77406,
+          "lng": -79.609974,
+          "headingDegrees": 0
+        },
+        "spawnOffsetFromCanonicalMetres": {
+          "east": 0,
+          "north": 0
+        }
+      },
+      "observation": "Estimated individually from the captured Esri zoom-19 image at 7690 Martin Grove Road, Vaughan, ON: the visible fire station footprint and its own immediate apron/parking/access aisle guide this 70 by 80 m rotated area. The fit excludes adjacent unrelated buildings where visible. No apparatus bay, gate, or access right is verified.",
+      "runtimeCollision": {
+        "spawnInside": true,
+        "areaRoadAccess": true,
+        "spawnInitiallyDrivable": true,
+        "nearestRoad": {
+          "name": "Unnamed road",
+          "highway": "service",
+          "distanceMetres": 0.49
+        },
+        "exitStarted": true,
+        "exitCompleted": true,
+        "blockedMoves": 0,
+        "movementSteps": 37,
+        "outsideExpandedDrivingArea": true,
+        "exitPoint": {
+          "lat": 43.774118933333334,
+          "lng": -79.6094018
+        }
+      }
+    },
+    {
+      "baseId": "vaughan-fire-7-4",
+      "name": "Fire Station 7-4",
+      "address": "835 Nashville Road, Vaughan, ON",
+      "sourcePoint": {
+        "lat": 43.84196,
+        "lng": -79.658463
+      },
+      "assessment": "estimated",
+      "imageEvidence": {
+        "screenshot": "artifacts/release-qa/base-fit-vaughan/vaughan-fire-7-4.png",
+        "scaleMetresPerPixel": 0.2151123353304037,
+        "nearbyRoadFeatures": [
+          {
+            "name": "Nashville Road",
+            "highway": "tertiary"
+          },
+          {
+            "name": "Richard Lovat Court",
+            "highway": "residential"
+          },
+          {
+            "name": "Charles Cooper Court",
+            "highway": "residential"
+          },
+          {
+            "name": "Charles Cooper Court",
+            "highway": "residential"
+          },
+          {
+            "name": "Factor Street",
+            "highway": "residential"
+          },
+          {
+            "name": "Ghent Drive",
+            "highway": "residential"
+          },
+          {
+            "name": "Stilton Avenue",
+            "highway": "residential"
+          },
+          {
+            "name": "Bellefond Street",
+            "highway": "residential"
+          },
+          {
+            "name": "Barons Street",
+            "highway": "tertiary"
+          },
+          {
+            "name": "Stilton Avenue",
+            "highway": "residential"
+          },
+          {
+            "name": "Barons Street",
+            "highway": "tertiary"
+          },
+          {
+            "name": "Port Renfrew Avenue",
+            "highway": "residential"
+          }
+        ]
+      },
+      "dispatchRouteCoverage": {
+        "calls": 8,
+        "reachable": 8,
+        "missing": []
+      },
+      "drivingArea": {
+        "center": {
+          "lat": 43.84196,
+          "lng": -79.658463
+        },
+        "widthMetres": 65,
+        "lengthMetres": 75,
+        "rotationDegrees": 45,
+        "spawn": {
+          "lat": 43.84196,
+          "lng": -79.658463,
+          "headingDegrees": 0
+        },
+        "spawnOffsetFromCanonicalMetres": {
+          "east": 0,
+          "north": 0
+        }
+      },
+      "observation": "Estimated individually from the captured Esri zoom-19 image at 835 Nashville Road, Vaughan, ON: the visible fire station footprint and its own immediate apron/parking/access aisle guide this 65 by 75 m rotated area. The fit excludes adjacent unrelated buildings where visible. No apparatus bay, gate, or access right is verified.",
+      "runtimeCollision": {
+        "spawnInside": true,
+        "areaRoadAccess": true,
+        "spawnInitiallyDrivable": true,
+        "nearestRoad": {
+          "name": "Nashville Road",
+          "highway": "tertiary",
+          "distanceMetres": 11.38
+        },
+        "exitStarted": true,
+        "exitCompleted": true,
+        "blockedMoves": 0,
+        "movementSteps": 46,
+        "outsideExpandedDrivingArea": true,
+        "exitPoint": {
+          "lat": 43.841908575203604,
+          "lng": -79.65916119713664
+        }
+      }
+    },
+    {
+      "baseId": "vaughan-fire-7-5",
+      "name": "Fire Station 7-5",
+      "address": "2 Fieldstone Drive, Vaughan, ON",
+      "sourcePoint": {
+        "lat": 43.793334,
+        "lng": -79.54908
+      },
+      "assessment": "estimated",
+      "imageEvidence": {
+        "screenshot": "artifacts/release-qa/base-fit-vaughan/vaughan-fire-7-5.png",
+        "scaleMetresPerPixel": 0.21528758354958902,
+        "nearbyRoadFeatures": [
+          {
+            "name": "Fieldstone Drive",
+            "highway": "residential"
+          },
+          {
+            "name": "Pottery Place",
+            "highway": "residential"
+          },
+          {
+            "name": null,
+            "highway": "service"
+          },
+          {
+            "name": "Blue Willow Drive",
+            "highway": "tertiary"
+          },
+          {
+            "name": null,
+            "highway": "service"
+          },
+          {
+            "name": "Blue Willow Drive",
+            "highway": "tertiary"
+          },
+          {
+            "name": "Fieldstone Drive",
+            "highway": "residential"
+          },
+          {
+            "name": "Windflower Gate",
+            "highway": "unclassified"
+          },
+          {
+            "name": "Foxchase Avenue",
+            "highway": "residential"
+          },
+          {
+            "name": "Grantcrest Gate",
+            "highway": "residential"
+          },
+          {
+            "name": null,
+            "highway": "service"
+          },
+          {
+            "name": "Blue Willow Drive",
+            "highway": "tertiary"
+          }
+        ]
+      },
+      "dispatchRouteCoverage": {
+        "calls": 8,
+        "reachable": 8,
+        "missing": []
+      },
+      "drivingArea": {
+        "center": {
+          "lat": 43.793334,
+          "lng": -79.54908
+        },
+        "widthMetres": 60,
+        "lengthMetres": 75,
+        "rotationDegrees": 0,
+        "spawn": {
+          "lat": 43.793334,
+          "lng": -79.54908,
+          "headingDegrees": 0
+        },
+        "spawnOffsetFromCanonicalMetres": {
+          "east": 0,
+          "north": 0
+        }
+      },
+      "observation": "Estimated individually from the captured Esri zoom-19 image at 2 Fieldstone Drive, Vaughan, ON: the visible fire station footprint and its own immediate apron/parking/access aisle guide this 60 by 75 m rotated area. The fit excludes adjacent unrelated buildings where visible. No apparatus bay, gate, or access right is verified.",
+      "runtimeCollision": {
+        "spawnInside": true,
+        "areaRoadAccess": false,
+        "spawnInitiallyDrivable": true,
+        "nearestRoad": {
+          "name": "Weston Road",
+          "highway": "secondary",
+          "distanceMetres": 43.98
+        },
+        "exitStarted": true,
+        "exitCompleted": true,
+        "blockedMoves": 0,
+        "movementSteps": 29,
+        "outsideExpandedDrivingArea": true,
+        "exitPoint": {
+          "lat": 43.793390229054744,
+          "lng": -79.54857481186622
+        }
+      }
+    },
+    {
+      "baseId": "vaughan-fire-7-6",
+      "name": "Fire Station 7-6",
+      "address": "120 McCleary Court, Vaughan, ON",
+      "sourcePoint": {
+        "lat": 43.798334,
+        "lng": -79.513883
+      },
+      "assessment": "estimated",
+      "imageEvidence": {
+        "screenshot": "artifacts/release-qa/base-fit-vaughan/vaughan-fire-7-6.png",
+        "scaleMetresPerPixel": 0.2152695745194956,
+        "nearbyRoadFeatures": [
+          {
+            "name": "Costa Road",
+            "highway": "unclassified"
+          },
+          {
+            "name": "McCleary Court",
+            "highway": "unclassified"
+          },
+          {
+            "name": "Highway 7",
+            "highway": "primary"
+          },
+          {
+            "name": "Highway 7",
+            "highway": "primary"
+          },
+          {
+            "name": "Highway 7",
+            "highway": "primary"
+          },
+          {
+            "name": null,
+            "highway": "service"
+          },
+          {
+            "name": null,
+            "highway": "service"
+          },
+          {
+            "name": null,
+            "highway": "service"
+          },
+          {
+            "name": null,
+            "highway": "service"
+          },
+          {
+            "name": null,
+            "highway": "service"
+          },
+          {
+            "name": null,
+            "highway": "service"
+          },
+          {
+            "name": null,
+            "highway": "service"
+          }
+        ]
+      },
+      "dispatchRouteCoverage": {
+        "calls": 8,
+        "reachable": 8,
+        "missing": []
+      },
+      "drivingArea": {
+        "center": {
+          "lat": 43.798334,
+          "lng": -79.513883
+        },
+        "widthMetres": 70,
+        "lengthMetres": 80,
+        "rotationDegrees": 0,
+        "spawn": {
+          "lat": 43.798334,
+          "lng": -79.513883,
+          "headingDegrees": 0
+        },
+        "spawnOffsetFromCanonicalMetres": {
+          "east": 0,
+          "north": 0
+        }
+      },
+      "observation": "Estimated individually from the captured Esri zoom-19 image at 120 McCleary Court, Vaughan, ON: the visible fire station footprint and its own immediate apron/parking/access aisle guide this 70 by 80 m rotated area. The fit excludes adjacent unrelated buildings where visible. No apparatus bay, gate, or access right is verified.",
+      "runtimeCollision": {
+        "spawnInside": true,
+        "areaRoadAccess": true,
+        "spawnInitiallyDrivable": true,
+        "nearestRoad": {
+          "name": "Unnamed road",
+          "highway": "service",
+          "distanceMetres": 34.95
+        },
+        "exitStarted": true,
+        "exitCompleted": true,
+        "blockedMoves": 0,
+        "movementSteps": 56,
+        "outsideExpandedDrivingArea": true,
+        "exitPoint": {
+          "lat": 43.79787066666667,
+          "lng": -79.51423373333333
+        }
+      }
+    },
+    {
+      "baseId": "vaughan-fire-7-7",
+      "name": "Fire Station 7-7",
+      "address": "40 Eagleview Heights, Vaughan, ON",
+      "sourcePoint": {
+        "lat": 43.845363,
+        "lng": -79.552256
+      },
+      "assessment": "estimated",
+      "imageEvidence": {
+        "screenshot": "artifacts/release-qa/base-fit-vaughan/vaughan-fire-7-7.png",
+        "scaleMetresPerPixel": 0.21510006576626764,
+        "nearbyRoadFeatures": [
+          {
+            "name": "Major MacKenzie Drive West",
+            "highway": "primary"
+          },
+          {
+            "name": null,
+            "highway": "motorway_link"
+          },
+          {
+            "name": "Cityview Boulevard",
+            "highway": "tertiary"
+          },
+          {
+            "name": "Major MacKenzie Drive West",
+            "highway": "primary"
+          },
+          {
+            "name": null,
+            "highway": "motorway_link"
+          },
+          {
+            "name": "Robins Nest Drive",
+            "highway": "residential"
+          },
+          {
+            "name": "Eagleview Heights",
+            "highway": "residential"
+          },
+          {
+            "name": "Bullrush Drive",
+            "highway": "residential"
+          },
+          {
+            "name": "Grapevine Drive",
+            "highway": "residential"
+          },
+          {
+            "name": "Canvasback Drive",
+            "highway": "residential"
+          },
+          {
+            "name": "Sedgeway Heights",
+            "highway": "residential"
+          },
+          {
+            "name": "Bullrush Drive",
+            "highway": "residential"
+          }
+        ]
+      },
+      "dispatchRouteCoverage": {
+        "calls": 8,
+        "reachable": 8,
+        "missing": []
+      },
+      "drivingArea": {
+        "center": {
+          "lat": 43.845363,
+          "lng": -79.552256
+        },
+        "widthMetres": 65,
+        "lengthMetres": 75,
+        "rotationDegrees": 45,
+        "spawn": {
+          "lat": 43.845363,
+          "lng": -79.552256,
+          "headingDegrees": 0
+        },
+        "spawnOffsetFromCanonicalMetres": {
+          "east": 0,
+          "north": 0
+        }
+      },
+      "observation": "Estimated individually from the captured Esri zoom-19 image at 40 Eagleview Heights, Vaughan, ON: the visible fire station footprint and its own immediate apron/parking/access aisle guide this 65 by 75 m rotated area. The fit excludes adjacent unrelated buildings where visible. No apparatus bay, gate, or access right is verified.",
+      "runtimeCollision": {
+        "spawnInside": true,
+        "areaRoadAccess": true,
+        "spawnInitiallyDrivable": true,
+        "nearestRoad": {
+          "name": "Unnamed road",
+          "highway": "service",
+          "distanceMetres": 0.48
+        },
+        "exitStarted": true,
+        "exitCompleted": true,
+        "blockedMoves": 0,
+        "movementSteps": 42,
+        "outsideExpandedDrivingArea": true,
+        "exitPoint": {
+          "lat": 43.8458597,
+          "lng": -79.55242341666667
+        }
+      }
+    },
+    {
+      "baseId": "vaughan-fire-7-8",
+      "name": "Fire Station 7-8",
+      "address": "111 Racco Parkway, Vaughan, ON",
+      "sourcePoint": {
+        "lat": 43.815543,
+        "lng": -79.473858
+      },
+      "assessment": "estimated",
+      "imageEvidence": {
+        "screenshot": "artifacts/release-qa/base-fit-vaughan/vaughan-fire-7-8.png",
+        "scaleMetresPerPixel": 0.21520756029700724,
+        "nearbyRoadFeatures": [
+          {
+            "name": "Racco Parkway",
+            "highway": "unclassified"
+          },
+          {
+            "name": "Caraway Drive",
+            "highway": "unclassified"
+          },
+          {
+            "name": "Dufferin Street",
+            "highway": "secondary"
+          },
+          {
+            "name": "Dufferin Street",
+            "highway": "secondary"
+          },
+          {
+            "name": null,
+            "highway": "motorway_link"
+          },
+          {
+            "name": "Caraway Drive",
+            "highway": "unclassified"
+          },
+          {
+            "name": null,
+            "highway": "motorway_link"
+          },
+          {
+            "name": "Dufferin Street",
+            "highway": "secondary"
+          },
+          {
+            "name": "Dufferin Street",
+            "highway": "secondary"
+          },
+          {
+            "name": "Racco Parkway",
+            "highway": "unclassified"
+          },
+          {
+            "name": "Racco Parkway",
+            "highway": "unclassified"
+          },
+          {
+            "name": "Caraway Drive",
+            "highway": "unclassified"
+          }
+        ]
+      },
+      "dispatchRouteCoverage": {
+        "calls": 8,
+        "reachable": 8,
+        "missing": []
+      },
+      "drivingArea": {
+        "center": {
+          "lat": 43.815543,
+          "lng": -79.473858
+        },
+        "widthMetres": 70,
+        "lengthMetres": 85,
+        "rotationDegrees": 0,
+        "spawn": {
+          "lat": 43.815543,
+          "lng": -79.473858,
+          "headingDegrees": 0
+        },
+        "spawnOffsetFromCanonicalMetres": {
+          "east": 0,
+          "north": 0
+        }
+      },
+      "observation": "Estimated individually from the captured Esri zoom-19 image at 111 Racco Parkway, Vaughan, ON: the visible fire station footprint and its own immediate apron/parking/access aisle guide this 70 by 85 m rotated area. The fit excludes adjacent unrelated buildings where visible. No apparatus bay, gate, or access right is verified.",
+      "runtimeCollision": {
+        "spawnInside": true,
+        "areaRoadAccess": true,
+        "spawnInitiallyDrivable": true,
+        "nearestRoad": {
+          "name": "Unnamed road",
+          "highway": "service",
+          "distanceMetres": 12.66
+        },
+        "exitStarted": true,
+        "exitCompleted": true,
+        "blockedMoves": 0,
+        "movementSteps": 41,
+        "outsideExpandedDrivingArea": true,
+        "exitPoint": {
+          "lat": 43.8155857,
+          "lng": -79.4744321
+        }
+      }
+    },
+    {
+      "baseId": "vaughan-fire-7-9",
+      "name": "Fire Station 7-9",
+      "address": "9601 Islington Avenue, Vaughan, ON",
+      "sourcePoint": {
+        "lat": 43.824211,
+        "lng": -79.607631
+      },
+      "assessment": "estimated",
+      "imageEvidence": {
+        "screenshot": "artifacts/release-qa/base-fit-vaughan/vaughan-fire-7-9.png",
+        "scaleMetresPerPixel": 0.21517631891714384,
+        "nearbyRoadFeatures": [
+          {
+            "name": "Castle Park Boulevard",
+            "highway": "residential"
+          },
+          {
+            "name": "Castle Park Boulevard",
+            "highway": "residential"
+          },
+          {
+            "name": "Laura Sabrina Drive",
+            "highway": "residential"
+          },
+          {
+            "name": null,
+            "highway": "service"
+          },
+          {
+            "name": "Canada Company Avenue",
+            "highway": "residential"
+          },
+          {
+            "name": "Laneway V37",
+            "highway": "service"
+          },
+          {
+            "name": "Laneway V34",
+            "highway": "service"
+          },
+          {
+            "name": "Domenica Way",
+            "highway": "service"
+          },
+          {
+            "name": "Laneway V35",
+            "highway": "service"
+          },
+          {
+            "name": "Via Canala Way",
+            "highway": "service"
+          },
+          {
+            "name": "Islington Avenue",
+            "highway": "secondary"
+          },
+          {
+            "name": "Islington Avenue",
+            "highway": "secondary"
+          }
+        ]
+      },
+      "dispatchRouteCoverage": {
+        "calls": 8,
+        "reachable": 8,
+        "missing": []
+      },
+      "drivingArea": {
+        "center": {
+          "lat": 43.824211,
+          "lng": -79.607631
+        },
+        "widthMetres": 65,
+        "lengthMetres": 80,
+        "rotationDegrees": 0,
+        "spawn": {
+          "lat": 43.824211,
+          "lng": -79.607631,
+          "headingDegrees": 0
+        },
+        "spawnOffsetFromCanonicalMetres": {
+          "east": 0,
+          "north": 0
+        }
+      },
+      "observation": "Estimated individually from the captured Esri zoom-19 image at 9601 Islington Avenue, Vaughan, ON: the visible fire station footprint and its own immediate apron/parking/access aisle guide this 65 by 80 m rotated area. The fit excludes adjacent unrelated buildings where visible. No apparatus bay, gate, or access right is verified.",
+      "runtimeCollision": {
+        "spawnInside": true,
+        "areaRoadAccess": true,
+        "spawnInitiallyDrivable": true,
+        "nearestRoad": {
+          "name": "Unnamed road",
+          "highway": "service",
+          "distanceMetres": 14.44
+        },
+        "exitStarted": true,
+        "exitCompleted": true,
+        "blockedMoves": 0,
+        "movementSteps": 39,
+        "outsideExpandedDrivingArea": true,
+        "exitPoint": {
+          "lat": 43.8241966,
+          "lng": -79.60816679999999
+        }
+      }
+    }
+  ],
+  "runtimeCollisionChecks": {
+    "artifact": "artifacts/release-qa/base-fit/vaughan-driving-area-checks.json",
+    "bases": 14,
+    "continuousExits": 14,
+    "blockedMoves": 0,
+    "note": "Continuous real-route collision-model samples through the yard boundary; not a physical full-route drive."
+  },
+  "dispatchRouteCoverage": {
+    "checkedLocalDate": "2026-11-02",
+    "device": "mobile browser route-only QA",
+    "fireTotals": {
+      "bases": 10,
+      "calls": 80,
+      "reachable": 80,
+      "failures": 0
+    },
+    "emsTotals": {
+      "bases": 4,
+      "calls": 24,
+      "reachable": 24,
+      "failures": 0
+    },
+    "artifact": "artifacts/release-qa/base-fit-vaughan/dispatch-qa/route-coverage.json"
+  }
+}

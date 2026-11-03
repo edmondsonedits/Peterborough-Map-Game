@@ -1,0 +1,1753 @@
+{
+  "schemaVersion": 1,
+  "cityId": "markham",
+  "reviewedLocalDate": "2026-11-02",
+  "assessment": "partial",
+  "imagery": {
+    "provider": "Esri World Imagery",
+    "tileUrl": "https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}",
+    "capturedLocalDate": "2026-11-02",
+    "captureTimestamp": "2026-11-03T03:40:35.809Z",
+    "vintage": "not supplied by tile response",
+    "zoom": 19,
+    "method": "Reviewed independent zoom-19 Esri World Imagery captures for 15 eligible Fire/EMS records at average scale 0.215 m/pixel. For fitted sites, the individually sized rectangle follows the visible building, immediate parking/apron and observable access aisle; dimensions and rotation remain estimates. Sites with a conflicting/stale capture are left without a fit.",
+    "captureDirectory": "artifacts/release-qa/base-fit-markham/"
+  },
+  "roads": {
+    "file": "cities/markham/roads.geojson.gz",
+    "source": "OpenStreetMap via Geofabrik Ontario extract",
+    "sourceTimestamp": "2026-09-27T20:23:36Z",
+    "snapshotBuiltAt": "2026-10-29T04:15:39.715Z",
+    "sourceSha256": "ebb50b39682d2381ad3c1d21e005b48cec3397e15da0d72c5d76c7d20d8dd249",
+    "packagedSha256": "a665abc6475479b64ac28ce0fea0fce1b37c44a793d0f60fa8b916feffcff45c",
+    "sourceUrl": "https://download.geofabrik.de/north-america/canada/ontario.html",
+    "attribution": "© OpenStreetMap contributors",
+    "assessment": "Packaged road/service geometry was reviewed with imagery. Runtime QA follows an actual response route through fitted-yard boundaries; mapped graph segments do not verify driveway rights or apparatus doors."
+  },
+  "limits": [
+    "Most fits use imagery estimates; EMS27 additionally uses the official York building footprint and official YorkMaps address point for facility identity.",
+    "Dimensions, centers, rotations and modeled spawn coordinates are imagery/road-geometry estimates, not surveyed measurements.",
+    "Imagery does not verify apparatus bays, gates, access controls, current pavement, occupancy or driveway rights.",
+    "Canonical IDs and source coordinates remain unchanged.",
+    "Collision QA follows a real route from modeled spawn until at least 10 m outside the expanded fitted yard and checks movement in 1.5 m increments; this verifies the modeled collision transition, not sustained manual driving or real-world response suitability.",
+    "Shared Fire/EMS fits represent exact co-located site records and do not establish EMS-only bays or entrances."
+  ],
+  "bases": [
+    {
+      "baseId": "markham-ems-23",
+      "name": "Paramedic Station #23 (Markham-Church)",
+      "address": "280 Church Street, Markham, ON",
+      "sourcePoint": {
+        "lat": 43.88468485724745,
+        "lng": -79.23575514385108
+      },
+      "assessment": "estimated",
+      "imageEvidence": {
+        "screenshot": "artifacts/release-qa/base-fit-markham/markham-ems-23.png",
+        "scaleMetresPerPixel": 0.21495822553076624,
+        "nearbyRoadFeatures": [
+          {
+            "name": "Butternut Lane",
+            "highway": "residential"
+          },
+          {
+            "name": "Settlement Park Avenue",
+            "highway": "residential"
+          },
+          {
+            "name": "Country Glen Road",
+            "highway": "residential"
+          },
+          {
+            "name": "Milroy Lane",
+            "highway": "residential"
+          },
+          {
+            "name": "Settlement Park Avenue",
+            "highway": "residential"
+          },
+          {
+            "name": "Riverlands Avenue",
+            "highway": "residential"
+          },
+          {
+            "name": "Settlement Park Avenue",
+            "highway": "residential"
+          },
+          {
+            "name": "Country Glen Road",
+            "highway": "residential"
+          },
+          {
+            "name": "Riverlands Avenue",
+            "highway": "residential"
+          },
+          {
+            "name": "Country Glen Road",
+            "highway": "residential"
+          },
+          {
+            "name": "Country Glen Road",
+            "highway": "residential"
+          },
+          {
+            "name": "Country Glen Road",
+            "highway": "residential"
+          }
+        ]
+      },
+      "dispatchRouteCoverage": {
+        "calls": 6,
+        "reachable": 6,
+        "responseRouteFailures": 0,
+        "transportRouteFailures": 0,
+        "maxRouteCalculationMs": 12.800000011920929,
+        "transportPolicy": {
+          "requiresHospital": true,
+          "note": null
+        }
+      },
+      "drivingArea": {
+        "center": {
+          "lat": 43.88468485724745,
+          "lng": -79.23575514385108
+        },
+        "widthMetres": 70,
+        "lengthMetres": 85,
+        "rotationDegrees": 0,
+        "spawn": {
+          "lat": 43.88468485724745,
+          "lng": -79.23575514385108,
+          "headingDegrees": 0
+        },
+        "spawnOffsetFromCanonicalMetres": {
+          "east": 0,
+          "north": 0
+        }
+      },
+      "observation": "Estimated individually from the captured Esri zoom-19 image at 280 Church Street, Markham, ON: the visible paramedic facility footprint and its own immediate apron/parking/access aisle guide this 70 by 85 m rotated area. The fit excludes adjacent unrelated buildings where visible. No apparatus bay, gate, or access right is verified.",
+      "runtimeCollision": {
+        "spawnInside": true,
+        "areaRoadAccess": true,
+        "spawnInitiallyDrivable": true,
+        "nearestRoad": {
+          "name": "Ninth Line",
+          "highway": "secondary",
+          "distanceMetres": 34.8
+        },
+        "exitStarted": true,
+        "exitCompleted": true,
+        "blockedMoves": 0,
+        "movementSteps": 54,
+        "outsideExpandedDrivingArea": true
+      }
+    },
+    {
+      "baseId": "markham-ems-24",
+      "name": "Paramedic Station #24 (Markham-Unionville)",
+      "address": "316 Main Unionville Street North, Markham, ON",
+      "sourcePoint": {
+        "lat": 43.87597862588655,
+        "lng": -79.31403749334882
+      },
+      "assessment": "estimated",
+      "imageEvidence": {
+        "screenshot": "artifacts/release-qa/base-fit-markham/markham-ems-24.png",
+        "scaleMetresPerPixel": 0.2149896369516435,
+        "nearbyRoadFeatures": [
+          {
+            "name": "Aitken Circle",
+            "highway": "residential"
+          },
+          {
+            "name": "Aitken Circle",
+            "highway": "residential"
+          },
+          {
+            "name": "Redwood Lane",
+            "highway": "residential"
+          },
+          {
+            "name": "Longwater Chase",
+            "highway": "residential"
+          },
+          {
+            "name": "Redwood Lane",
+            "highway": "residential"
+          },
+          {
+            "name": "Greencroft Crescent",
+            "highway": "residential"
+          },
+          {
+            "name": "Longwater Chase",
+            "highway": "residential"
+          },
+          {
+            "name": "Redwood Lane",
+            "highway": "residential"
+          },
+          {
+            "name": "Hedgewood Drive",
+            "highway": "residential"
+          },
+          {
+            "name": "The Bridle Trail",
+            "highway": "residential"
+          },
+          {
+            "name": "Marshfield Hollow",
+            "highway": "residential"
+          },
+          {
+            "name": "The Bridle Trail",
+            "highway": "residential"
+          }
+        ]
+      },
+      "dispatchRouteCoverage": {
+        "calls": 6,
+        "reachable": 6,
+        "responseRouteFailures": 0,
+        "transportRouteFailures": 0,
+        "maxRouteCalculationMs": 22.30000001192093,
+        "transportPolicy": {
+          "requiresHospital": true,
+          "note": null
+        }
+      },
+      "drivingArea": {
+        "center": {
+          "lat": 43.87597862588655,
+          "lng": -79.31403749334882
+        },
+        "widthMetres": 65,
+        "lengthMetres": 80,
+        "rotationDegrees": 0,
+        "spawn": {
+          "lat": 43.87597862588655,
+          "lng": -79.31403749334882,
+          "headingDegrees": 0
+        },
+        "spawnOffsetFromCanonicalMetres": {
+          "east": 0,
+          "north": 0
+        }
+      },
+      "observation": "Estimated individually from the captured Esri zoom-19 image at 316 Main Unionville Street North, Markham, ON: the visible paramedic facility footprint and its own immediate apron/parking/access aisle guide this 65 by 80 m rotated area. The fit excludes adjacent unrelated buildings where visible. No apparatus bay, gate, or access right is verified.",
+      "runtimeCollision": {
+        "spawnInside": true,
+        "areaRoadAccess": true,
+        "spawnInitiallyDrivable": true,
+        "nearestRoad": {
+          "name": "Aitken Circle",
+          "highway": "residential",
+          "distanceMetres": 36.45
+        },
+        "exitStarted": true,
+        "exitCompleted": true,
+        "blockedMoves": 0,
+        "movementSteps": 52,
+        "outsideExpandedDrivingArea": true
+      }
+    },
+    {
+      "baseId": "markham-ems-25",
+      "name": "Paramedic Station #25 (Markham SE)",
+      "address": "5600 14th Avenue, Markham, ON",
+      "sourcePoint": {
+        "lat": 43.8522433295467,
+        "lng": -79.26852976848058
+      },
+      "assessment": "estimated",
+      "imageEvidence": {
+        "screenshot": "artifacts/release-qa/base-fit-markham/markham-ems-25.png",
+        "scaleMetresPerPixel": 0.21507525438720487,
+        "nearbyRoadFeatures": [
+          {
+            "name": "Clifton Court",
+            "highway": "residential"
+          },
+          {
+            "name": "Nessie Street",
+            "highway": "residential"
+          },
+          {
+            "name": "Featherstone Avenue",
+            "highway": "residential"
+          },
+          {
+            "name": "Featherstone Avenue",
+            "highway": "residential"
+          },
+          {
+            "name": "14th Avenue",
+            "highway": "secondary"
+          },
+          {
+            "name": "14th Avenue",
+            "highway": "secondary"
+          },
+          {
+            "name": "Middlefield Road",
+            "highway": "secondary"
+          },
+          {
+            "name": "Clifton Court",
+            "highway": "residential"
+          },
+          {
+            "name": "Travail Road",
+            "highway": "unclassified"
+          },
+          {
+            "name": null,
+            "highway": "residential"
+          },
+          {
+            "name": "Killbear Drive",
+            "highway": "residential"
+          },
+          {
+            "name": "Mullai Drive",
+            "highway": "residential"
+          }
+        ]
+      },
+      "dispatchRouteCoverage": {
+        "calls": 6,
+        "reachable": 6,
+        "responseRouteFailures": 0,
+        "transportRouteFailures": 0,
+        "maxRouteCalculationMs": 27.700000017881393,
+        "transportPolicy": {
+          "requiresHospital": true,
+          "note": null
+        }
+      },
+      "drivingArea": {
+        "center": {
+          "lat": 43.8522433295467,
+          "lng": -79.26852976848058
+        },
+        "widthMetres": 60,
+        "lengthMetres": 75,
+        "rotationDegrees": 0,
+        "spawn": {
+          "lat": 43.8522433295467,
+          "lng": -79.26852976848058,
+          "headingDegrees": 0
+        },
+        "spawnOffsetFromCanonicalMetres": {
+          "east": 0,
+          "north": 0
+        }
+      },
+      "observation": "Estimated individually from the captured Esri zoom-19 image at 5600 14th Avenue, Markham, ON: the visible paramedic facility footprint and its own immediate apron/parking/access aisle guide this 60 by 75 m rotated area. The fit excludes adjacent unrelated buildings where visible. No apparatus bay, gate, or access right is verified.",
+      "runtimeCollision": {
+        "spawnInside": true,
+        "areaRoadAccess": true,
+        "spawnInitiallyDrivable": true,
+        "nearestRoad": {
+          "name": "Unnamed road",
+          "highway": "service",
+          "distanceMetres": 13.22
+        },
+        "exitStarted": true,
+        "exitCompleted": true,
+        "blockedMoves": 0,
+        "movementSteps": 78,
+        "outsideExpandedDrivingArea": true
+      }
+    },
+    {
+      "baseId": "markham-ems-26",
+      "name": "Paramedic Station #26 (Markham - Riviera)",
+      "address": "10 Riviera Drive, Markham, ON",
+      "sourcePoint": {
+        "lat": 43.83097993692777,
+        "lng": -79.35118734858287
+      },
+      "assessment": "estimated",
+      "imageEvidence": {
+        "screenshot": "artifacts/release-qa/base-fit-markham/markham-ems-26.png",
+        "scaleMetresPerPixel": 0.2151519198288131,
+        "nearbyRoadFeatures": [
+          {
+            "name": "14th Avenue",
+            "highway": "tertiary"
+          },
+          {
+            "name": "Riviera Drive",
+            "highway": "unclassified"
+          },
+          {
+            "name": "14th Avenue",
+            "highway": "tertiary"
+          },
+          {
+            "name": "14th Avenue",
+            "highway": "unclassified"
+          },
+          {
+            "name": "14th Avenue",
+            "highway": "tertiary"
+          },
+          {
+            "name": "14th Avenue",
+            "highway": "tertiary"
+          },
+          {
+            "name": "14th Avenue",
+            "highway": "unclassified"
+          },
+          {
+            "name": "Woodbine Avenue",
+            "highway": "secondary"
+          },
+          {
+            "name": "Woodbine Avenue",
+            "highway": "secondary"
+          },
+          {
+            "name": null,
+            "highway": "service"
+          },
+          {
+            "name": "14th Avenue",
+            "highway": "unclassified"
+          },
+          {
+            "name": "Woodbine Avenue",
+            "highway": "secondary"
+          }
+        ]
+      },
+      "dispatchRouteCoverage": {
+        "calls": 6,
+        "reachable": 6,
+        "responseRouteFailures": 0,
+        "transportRouteFailures": 0,
+        "maxRouteCalculationMs": 48.60000002384186,
+        "transportPolicy": {
+          "requiresHospital": true,
+          "note": null
+        }
+      },
+      "drivingArea": {
+        "center": {
+          "lat": 43.83097993692777,
+          "lng": -79.35118734858287
+        },
+        "widthMetres": 65,
+        "lengthMetres": 80,
+        "rotationDegrees": 0,
+        "spawn": {
+          "lat": 43.83097993692777,
+          "lng": -79.35118734858287,
+          "headingDegrees": 0
+        },
+        "spawnOffsetFromCanonicalMetres": {
+          "east": 0,
+          "north": 0
+        }
+      },
+      "observation": "Estimated individually from the captured Esri zoom-19 image at 10 Riviera Drive, Markham, ON: the visible paramedic facility footprint and its own immediate apron/parking/access aisle guide this 65 by 80 m rotated area. The fit excludes adjacent unrelated buildings where visible. No apparatus bay, gate, or access right is verified.",
+      "runtimeCollision": {
+        "spawnInside": true,
+        "areaRoadAccess": true,
+        "spawnInitiallyDrivable": true,
+        "nearestRoad": {
+          "name": "Unnamed road",
+          "highway": "service",
+          "distanceMetres": 30.13
+        },
+        "exitStarted": true,
+        "exitCompleted": true,
+        "blockedMoves": 0,
+        "movementSteps": 101,
+        "outsideExpandedDrivingArea": true
+      }
+    },
+    {
+      "baseId": "markham-ems-27",
+      "name": "Paramedic Station #27 (Cachet Woods)",
+      "address": "180 Cachet Woods Court, Markham, ON",
+      "sourcePoint": {
+        "lat": 43.86837673840266,
+        "lng": -79.37371583942056
+      },
+      "assessment": "estimated",
+      "identityEvidence": {
+        "officialAddressUrl": "https://ww4.yorkmaps.ca/locateit/AddressDirectory/Markham/Cachet-Woods-/180.html",
+        "officialAddressPoint": {
+          "lat": 43.869535,
+          "lng": -79.374102
+        },
+        "officialAddressId": 401947,
+        "officialCompletionReport": "https://www.york.ca/media/124566/download",
+        "footprintLayer": "https://ww8.yorkmaps.ca/arcgis/rest/services/OpenData/Structures/FeatureServer/0",
+        "footprintQuery": "https://ww8.yorkmaps.ca/arcgis/rest/services/OpenData/Structures/FeatureServer/0/query?outFields=%2A&outSR=4326&where=1%3D1&f=geojson&geometry=-79.376%2C43.866%2C-79.371%2C43.871&inSR=4326&returnGeometry=true&spatialRel=esriSpatialRelIntersects&geometryType=esriGeometryEnvelope",
+        "footprintFeature": {
+          "type": "Feature",
+          "id": 178841,
+          "geometry": {
+            "type": "Polygon",
+            "coordinates": [
+              [
+                [
+                  -79.37381137432375,
+                  43.86946901397039
+                ],
+                [
+                  -79.37385461058007,
+                  43.86956837691216
+                ],
+                [
+                  -79.37383729004557,
+                  43.86957232154479
+                ],
+                [
+                  -79.3739238203338,
+                  43.86977117876195
+                ],
+                [
+                  -79.37421058961768,
+                  43.869705870282424
+                ],
+                [
+                  -79.37411745786906,
+                  43.86949184645992
+                ],
+                [
+                  -79.3740864773401,
+                  43.86949890194525
+                ],
+                [
+                  -79.37404984005842,
+                  43.86941470587836
+                ],
+                [
+                  -79.37381137432375,
+                  43.86946901397039
+                ]
+              ]
+            ]
+          },
+          "properties": {
+            "OBJECTID": 178841,
+            "BUILDINGID": 0,
+            "YEAR_COLLECTED": 2023,
+            "YEAR_MODIFIED": 0,
+            "YEAR_DELETED": 0,
+            "STATUS": "Unchanged",
+            "MUNICIPALITY": "Markham",
+            "CREDATE": 1702944000000,
+            "GEOMODDT": 1702944000000,
+            "ATTMODDT": 1734652800000,
+            "Shape__Area": 796.68326505,
+            "Shape__Length": 117.78610357650165
+          }
+        },
+        "method": "Official address point lies within the official 2023 building footprint. Recentered satellite capture shows the matching completed building and parking/apron. Original station GIS point is south in field; source point remains unchanged.",
+        "checkedDate": "2026-11-02",
+        "officialAddressInsideFootprint": true
+      },
+      "drivingArea": {
+        "center": {
+          "lat": 43.86957280844892,
+          "lng": -79.37410670094323
+        },
+        "widthMetres": 94,
+        "lengthMetres": 58,
+        "rotationDegrees": 18,
+        "spawn": {
+          "lat": 43.86974469224231,
+          "lng": -79.37368813491821,
+          "headingDegrees": 72
+        }
+      },
+      "observation": "Modeled area recentered on YorkMaps official 180 Cachet Woods Court address and York 2023 building footprint, approximately 135 m north of canonical station point. Includes visible station, parking/apron and paved access. Imagery estimate, not surveyed access; canonical point preserved.",
+      "imageReview": {
+        "screenshot": "artifacts/release-qa/base-fit-markham-27-review/markham-ems-27.png",
+        "center": {
+          "lat": 43.86959,
+          "lng": -79.37401
+        },
+        "viewport": [
+          1120,
+          860
+        ],
+        "zoom": 19,
+        "metresPerPixel": 0.21501268431998727,
+        "polygonPixels": [
+          [
+            306,
+            398
+          ],
+          [
+            640,
+            275
+          ],
+          [
+            755,
+            490
+          ],
+          [
+            356,
+            582
+          ]
+        ],
+        "spawnPixel": [
+          680,
+          350
+        ],
+        "marginMetres": 3
+      },
+      "previousSourcePointReview": {
+        "screenshot": "artifacts/release-qa/base-fit-markham/markham-ems-27.png",
+        "note": "Original canonical station point is in field south of the address-confirmed building; this image was not used to size the final fit."
+      },
+      "runtimeCollision": {
+        "spawnInside": true,
+        "areaRoadAccess": true,
+        "spawnInitiallyDrivable": true,
+        "nearestRoad": {
+          "name": "Cachet Woods Court",
+          "highway": "unclassified",
+          "distanceMetres": 10.79
+        },
+        "exitStarted": true,
+        "exitCompleted": true,
+        "blockedMoves": 0,
+        "movementSteps": 29,
+        "outsideExpandedDrivingArea": true
+      },
+      "dispatchRouteCoverage": {
+        "calls": 6,
+        "reachable": 6,
+        "responseRouteFailures": 0,
+        "transportRouteFailures": 0,
+        "maxRouteCalculationMs": 44,
+        "transportPolicy": {
+          "requiresHospital": true,
+          "note": null
+        }
+      }
+    },
+    {
+      "baseId": "markham-ems-29",
+      "name": "Paramedic Station #29 (Thornhill-Markham)",
+      "address": "107 Glen Cameron Road, Markham, ON",
+      "sourcePoint": {
+        "lat": 43.80740254352569,
+        "lng": -79.41156548353628
+      },
+      "assessment": "estimated",
+      "imageEvidence": {
+        "screenshot": "artifacts/release-qa/base-fit-markham/markham-ems-29.png",
+        "scaleMetresPerPixel": 0.2152368970907336,
+        "nearbyRoadFeatures": [
+          {
+            "name": "Henderson Avenue",
+            "highway": "tertiary"
+          },
+          {
+            "name": "Doncaster Avenue",
+            "highway": "tertiary"
+          },
+          {
+            "name": "Dalmeny Road",
+            "highway": "residential"
+          },
+          {
+            "name": "New Haven's Way",
+            "highway": "residential"
+          },
+          {
+            "name": "Glen Cameron Road",
+            "highway": "residential"
+          },
+          {
+            "name": "Henderson Avenue",
+            "highway": "tertiary"
+          },
+          {
+            "name": "Henderson Avenue",
+            "highway": "tertiary"
+          },
+          {
+            "name": "Proctor Avenue",
+            "highway": "unclassified"
+          },
+          {
+            "name": "Clark Avenue",
+            "highway": "residential"
+          },
+          {
+            "name": "Glen Cameron Road",
+            "highway": "unclassified"
+          },
+          {
+            "name": "Glen Cameron Road",
+            "highway": "residential"
+          },
+          {
+            "name": "Henderson Avenue",
+            "highway": "tertiary"
+          }
+        ]
+      },
+      "dispatchRouteCoverage": {
+        "calls": 6,
+        "reachable": 6,
+        "responseRouteFailures": 0,
+        "transportRouteFailures": 0,
+        "maxRouteCalculationMs": 44.19999998807907,
+        "transportPolicy": {
+          "requiresHospital": true,
+          "note": null
+        }
+      },
+      "drivingArea": {
+        "center": {
+          "lat": 43.80740254352569,
+          "lng": -79.41156548353628
+        },
+        "widthMetres": 65,
+        "lengthMetres": 80,
+        "rotationDegrees": 45,
+        "spawn": {
+          "lat": 43.80740254352569,
+          "lng": -79.41156548353628,
+          "headingDegrees": 0
+        },
+        "spawnOffsetFromCanonicalMetres": {
+          "east": 0,
+          "north": 0
+        }
+      },
+      "observation": "Estimated individually from the captured Esri zoom-19 image at 107 Glen Cameron Road, Markham, ON: the visible paramedic facility footprint and its own immediate apron/parking/access aisle guide this 65 by 80 m rotated area. The fit excludes adjacent unrelated buildings where visible. No apparatus bay, gate, or access right is verified.",
+      "runtimeCollision": {
+        "spawnInside": true,
+        "areaRoadAccess": true,
+        "spawnInitiallyDrivable": true,
+        "nearestRoad": {
+          "name": "Unnamed road",
+          "highway": "service",
+          "distanceMetres": 6.58
+        },
+        "exitStarted": true,
+        "exitCompleted": true,
+        "blockedMoves": 0,
+        "movementSteps": 43,
+        "outsideExpandedDrivingArea": true
+      }
+    },
+    {
+      "baseId": "markham-fire-9-1",
+      "name": "Fire Station 9-1",
+      "address": "7801 Bayview Avenue, Markham, ON",
+      "sourcePoint": {
+        "lat": 43.821718,
+        "lng": -79.401171
+      },
+      "assessment": "estimated",
+      "imageEvidence": {
+        "screenshot": "artifacts/release-qa/base-fit-markham/markham-fire-9-1.png",
+        "scaleMetresPerPixel": 0.21518530983089584,
+        "nearbyRoadFeatures": [
+          {
+            "name": "Green Lane",
+            "highway": "tertiary"
+          },
+          {
+            "name": "Baywood Court",
+            "highway": "residential"
+          },
+          {
+            "name": "Bayview Avenue",
+            "highway": "secondary"
+          },
+          {
+            "name": "Bayview Avenue",
+            "highway": "secondary"
+          },
+          {
+            "name": "Bayview Avenue",
+            "highway": "secondary"
+          },
+          {
+            "name": "Bayview Avenue",
+            "highway": "secondary"
+          },
+          {
+            "name": "Bayview Avenue",
+            "highway": "secondary"
+          },
+          {
+            "name": "Bayview Avenue",
+            "highway": "secondary"
+          },
+          {
+            "name": "Bayview Avenue",
+            "highway": "secondary"
+          },
+          {
+            "name": null,
+            "highway": "secondary_link"
+          },
+          {
+            "name": null,
+            "highway": "secondary_link"
+          },
+          {
+            "name": "Royal Orchard Boulevard",
+            "highway": "tertiary"
+          }
+        ]
+      },
+      "dispatchRouteCoverage": {
+        "calls": 8,
+        "reachable": 8,
+        "responseRouteFailures": 0,
+        "transportRouteFailures": 0,
+        "maxRouteCalculationMs": 7.300000011920929,
+        "transportPolicy": {
+          "requiresHospital": false,
+          "note": null
+        }
+      },
+      "drivingArea": {
+        "center": {
+          "lat": 43.821718,
+          "lng": -79.401171
+        },
+        "widthMetres": 70,
+        "lengthMetres": 85,
+        "rotationDegrees": 0,
+        "spawn": {
+          "lat": 43.821718,
+          "lng": -79.401171,
+          "headingDegrees": 0
+        },
+        "spawnOffsetFromCanonicalMetres": {
+          "east": 0,
+          "north": 0
+        }
+      },
+      "observation": "Estimated individually from the captured Esri zoom-19 image at 7801 Bayview Avenue, Markham, ON: the visible fire station footprint and its own immediate apron/parking/access aisle guide this 70 by 85 m rotated area. The fit excludes adjacent unrelated buildings where visible. No apparatus bay, gate, or access right is verified.",
+      "runtimeCollision": {
+        "spawnInside": true,
+        "areaRoadAccess": true,
+        "spawnInitiallyDrivable": true,
+        "nearestRoad": {
+          "name": "Green Lane",
+          "highway": "tertiary",
+          "distanceMetres": 37.87
+        },
+        "exitStarted": true,
+        "exitCompleted": true,
+        "blockedMoves": 0,
+        "movementSteps": 55,
+        "outsideExpandedDrivingArea": true
+      }
+    },
+    {
+      "baseId": "markham-fire-9-2",
+      "name": "Fire Station 9-2",
+      "address": "10 Riviera Drive, Markham, ON",
+      "sourcePoint": {
+        "lat": 43.831083,
+        "lng": -79.351242
+      },
+      "assessment": "estimated",
+      "imageEvidence": {
+        "screenshot": "artifacts/release-qa/base-fit-markham/markham-fire-9-2.png",
+        "scaleMetresPerPixel": 0.21515155015524212,
+        "nearbyRoadFeatures": [
+          {
+            "name": "14th Avenue",
+            "highway": "tertiary"
+          },
+          {
+            "name": "Riviera Drive",
+            "highway": "unclassified"
+          },
+          {
+            "name": "14th Avenue",
+            "highway": "tertiary"
+          },
+          {
+            "name": "14th Avenue",
+            "highway": "unclassified"
+          },
+          {
+            "name": "14th Avenue",
+            "highway": "tertiary"
+          },
+          {
+            "name": "14th Avenue",
+            "highway": "tertiary"
+          },
+          {
+            "name": "14th Avenue",
+            "highway": "unclassified"
+          },
+          {
+            "name": "Woodbine Avenue",
+            "highway": "secondary"
+          },
+          {
+            "name": "Woodbine Avenue",
+            "highway": "secondary"
+          },
+          {
+            "name": null,
+            "highway": "service"
+          },
+          {
+            "name": "14th Avenue",
+            "highway": "unclassified"
+          },
+          {
+            "name": "Woodbine Avenue",
+            "highway": "secondary"
+          }
+        ]
+      },
+      "dispatchRouteCoverage": {
+        "calls": 8,
+        "reachable": 8,
+        "responseRouteFailures": 0,
+        "transportRouteFailures": 0,
+        "maxRouteCalculationMs": 7.0999999940395355,
+        "transportPolicy": {
+          "requiresHospital": false,
+          "note": null
+        }
+      },
+      "drivingArea": {
+        "center": {
+          "lat": 43.831083,
+          "lng": -79.351242
+        },
+        "widthMetres": 65,
+        "lengthMetres": 80,
+        "rotationDegrees": 0,
+        "spawn": {
+          "lat": 43.831083,
+          "lng": -79.351242,
+          "headingDegrees": 0
+        },
+        "spawnOffsetFromCanonicalMetres": {
+          "east": 0,
+          "north": 0
+        }
+      },
+      "observation": "Shared imagery fit with markham-ems-26 at the same official site and matching address (10 Riviera Drive, Markham, ON); the capture shows one facility parcel with the building, immediate apron/parking and access aisle. This does not identify an EMS-only bay or entrance.",
+      "sharedFitWith": "markham-ems-26 at the same official site and matching address (10 Riviera Drive, Markham, ON)",
+      "runtimeCollision": {
+        "spawnInside": true,
+        "areaRoadAccess": true,
+        "spawnInitiallyDrivable": true,
+        "nearestRoad": {
+          "name": "Unnamed road",
+          "highway": "service",
+          "distanceMetres": 30.86
+        },
+        "exitStarted": true,
+        "exitCompleted": true,
+        "blockedMoves": 0,
+        "movementSteps": 52,
+        "outsideExpandedDrivingArea": true
+      }
+    },
+    {
+      "baseId": "markham-fire-9-3",
+      "name": "Fire Station 9-3",
+      "address": "2930 Major Mackenzie Drive East, Markham, ON",
+      "sourcePoint": {
+        "lat": 43.885917,
+        "lng": -79.369368
+      },
+      "assessment": "estimated",
+      "imageEvidence": {
+        "screenshot": "artifacts/release-qa/base-fit-markham/markham-fire-9-3.png",
+        "scaleMetresPerPixel": 0.2149537750131599,
+        "nearbyRoadFeatures": [
+          {
+            "name": "Nichols Boulevard",
+            "highway": "residential"
+          },
+          {
+            "name": "Calico Crescent",
+            "highway": "residential"
+          },
+          {
+            "name": "Starhill Crescent",
+            "highway": "residential"
+          },
+          {
+            "name": "Quintessa Court",
+            "highway": "residential"
+          },
+          {
+            "name": "Robert Grundy Road",
+            "highway": "residential"
+          },
+          {
+            "name": "Willow Heights Boulevard",
+            "highway": "residential"
+          },
+          {
+            "name": "Willow Heights Boulevard",
+            "highway": "residential"
+          },
+          {
+            "name": "Princess Diana Drive",
+            "highway": "residential"
+          },
+          {
+            "name": "Princess Diana Drive",
+            "highway": "residential"
+          },
+          {
+            "name": "Silverado Hills Drive",
+            "highway": "residential"
+          },
+          {
+            "name": "Major MacKenzie Drive East",
+            "highway": "primary"
+          },
+          {
+            "name": "Major MacKenzie Drive East",
+            "highway": "primary"
+          }
+        ]
+      },
+      "dispatchRouteCoverage": {
+        "calls": 8,
+        "reachable": 8,
+        "responseRouteFailures": 0,
+        "transportRouteFailures": 0,
+        "maxRouteCalculationMs": 6.5,
+        "transportPolicy": {
+          "requiresHospital": false,
+          "note": null
+        }
+      },
+      "drivingArea": {
+        "center": {
+          "lat": 43.885917,
+          "lng": -79.369368
+        },
+        "widthMetres": 65,
+        "lengthMetres": 80,
+        "rotationDegrees": 0,
+        "spawn": {
+          "lat": 43.885917,
+          "lng": -79.369368,
+          "headingDegrees": 0
+        },
+        "spawnOffsetFromCanonicalMetres": {
+          "east": 0,
+          "north": 0
+        }
+      },
+      "observation": "Estimated individually from the captured Esri zoom-19 image at 2930 Major Mackenzie Drive East, Markham, ON: the visible fire station footprint and its own immediate apron/parking/access aisle guide this 65 by 80 m rotated area. The fit excludes adjacent unrelated buildings where visible. No apparatus bay, gate, or access right is verified.",
+      "runtimeCollision": {
+        "spawnInside": true,
+        "areaRoadAccess": true,
+        "spawnInitiallyDrivable": true,
+        "nearestRoad": {
+          "name": "Unnamed road",
+          "highway": "service",
+          "distanceMetres": 8.88
+        },
+        "exitStarted": true,
+        "exitCompleted": true,
+        "blockedMoves": 0,
+        "movementSteps": 70,
+        "outsideExpandedDrivingArea": true
+      }
+    },
+    {
+      "baseId": "markham-fire-9-4",
+      "name": "Fire Station 9-4",
+      "address": "7300 Birchmount Road, Markham, ON",
+      "sourcePoint": {
+        "lat": 43.831576,
+        "lng": -79.318904
+      },
+      "assessment": "estimated",
+      "imageEvidence": {
+        "screenshot": "artifacts/release-qa/base-fit-markham/markham-fire-9-4.png",
+        "scaleMetresPerPixel": 0.2151497714587194,
+        "nearbyRoadFeatures": [
+          {
+            "name": "Fieldview Crescent",
+            "highway": "residential"
+          },
+          {
+            "name": "Upton Crescent",
+            "highway": "residential"
+          },
+          {
+            "name": "Longmeadow Crescent",
+            "highway": "residential"
+          },
+          {
+            "name": "Bibury Gate",
+            "highway": "residential"
+          },
+          {
+            "name": "Highgate Drive",
+            "highway": "tertiary"
+          },
+          {
+            "name": "Ferguson Gate",
+            "highway": "residential"
+          },
+          {
+            "name": "Birchmount Road",
+            "highway": "secondary"
+          },
+          {
+            "name": "Birchmount Road",
+            "highway": "secondary"
+          },
+          {
+            "name": "Denison Street",
+            "highway": "tertiary"
+          },
+          {
+            "name": "Denison Street",
+            "highway": "tertiary"
+          },
+          {
+            "name": "Birchmount Road",
+            "highway": "secondary"
+          },
+          {
+            "name": "Birchmount Road",
+            "highway": "secondary"
+          }
+        ]
+      },
+      "dispatchRouteCoverage": {
+        "calls": 8,
+        "reachable": 8,
+        "responseRouteFailures": 0,
+        "transportRouteFailures": 0,
+        "maxRouteCalculationMs": 5,
+        "transportPolicy": {
+          "requiresHospital": false,
+          "note": null
+        }
+      },
+      "drivingArea": {
+        "center": {
+          "lat": 43.831576,
+          "lng": -79.318904
+        },
+        "widthMetres": 70,
+        "lengthMetres": 85,
+        "rotationDegrees": 0,
+        "spawn": {
+          "lat": 43.831576,
+          "lng": -79.318904,
+          "headingDegrees": 0
+        },
+        "spawnOffsetFromCanonicalMetres": {
+          "east": 0,
+          "north": 0
+        }
+      },
+      "observation": "Estimated individually from the captured Esri zoom-19 image at 7300 Birchmount Road, Markham, ON: the visible fire station footprint and its own immediate apron/parking/access aisle guide this 70 by 85 m rotated area. The fit excludes adjacent unrelated buildings where visible. No apparatus bay, gate, or access right is verified.",
+      "runtimeCollision": {
+        "spawnInside": true,
+        "areaRoadAccess": true,
+        "spawnInitiallyDrivable": true,
+        "nearestRoad": {
+          "name": "Unnamed road",
+          "highway": "service",
+          "distanceMetres": 6.91
+        },
+        "exitStarted": true,
+        "exitCompleted": true,
+        "blockedMoves": 0,
+        "movementSteps": 45,
+        "outsideExpandedDrivingArea": true
+      }
+    },
+    {
+      "baseId": "markham-fire-9-5",
+      "name": "Fire Station 9-5",
+      "address": "316 Main Unionville Street, Markham, ON",
+      "sourcePoint": {
+        "lat": 43.876096,
+        "lng": -79.313842
+      },
+      "assessment": "estimated",
+      "imageEvidence": {
+        "screenshot": "artifacts/release-qa/base-fit-markham/markham-fire-9-5.png",
+        "scaleMetresPerPixel": 0.21498921144979324,
+        "nearbyRoadFeatures": [
+          {
+            "name": "Aitken Circle",
+            "highway": "residential"
+          },
+          {
+            "name": "Aitken Circle",
+            "highway": "residential"
+          },
+          {
+            "name": "Redwood Lane",
+            "highway": "residential"
+          },
+          {
+            "name": "Longwater Chase",
+            "highway": "residential"
+          },
+          {
+            "name": "Redwood Lane",
+            "highway": "residential"
+          },
+          {
+            "name": "Greencroft Crescent",
+            "highway": "residential"
+          },
+          {
+            "name": "Longwater Chase",
+            "highway": "residential"
+          },
+          {
+            "name": "Redwood Lane",
+            "highway": "residential"
+          },
+          {
+            "name": "Longwater Chase",
+            "highway": "residential"
+          },
+          {
+            "name": "Hedgewood Drive",
+            "highway": "residential"
+          },
+          {
+            "name": "The Bridle Trail",
+            "highway": "residential"
+          },
+          {
+            "name": "Marshfield Hollow",
+            "highway": "residential"
+          }
+        ]
+      },
+      "dispatchRouteCoverage": {
+        "calls": 8,
+        "reachable": 8,
+        "responseRouteFailures": 0,
+        "transportRouteFailures": 0,
+        "maxRouteCalculationMs": 2.5,
+        "transportPolicy": {
+          "requiresHospital": false,
+          "note": null
+        }
+      },
+      "drivingArea": {
+        "center": {
+          "lat": 43.876096,
+          "lng": -79.313842
+        },
+        "widthMetres": 65,
+        "lengthMetres": 80,
+        "rotationDegrees": 0,
+        "spawn": {
+          "lat": 43.876096,
+          "lng": -79.313842,
+          "headingDegrees": 0
+        },
+        "spawnOffsetFromCanonicalMetres": {
+          "east": 0,
+          "north": 0
+        }
+      },
+      "observation": "Shared imagery fit with markham-ems-24 at the same official site and matching address (316 Main Unionville Street, Markham, ON); the capture shows one facility parcel with the building, immediate apron/parking and access aisle. This does not identify an EMS-only bay or entrance.",
+      "sharedFitWith": "markham-ems-24 at the same official site and matching address (316 Main Unionville Street, Markham, ON)",
+      "runtimeCollision": {
+        "spawnInside": true,
+        "areaRoadAccess": true,
+        "spawnInitiallyDrivable": true,
+        "nearestRoad": {
+          "name": "Birchview Lane",
+          "highway": "residential",
+          "distanceMetres": 40.27
+        },
+        "exitStarted": true,
+        "exitCompleted": true,
+        "blockedMoves": 0,
+        "movementSteps": 54,
+        "outsideExpandedDrivingArea": true
+      }
+    },
+    {
+      "baseId": "markham-fire-9-6",
+      "name": "Fire Station 9-6",
+      "address": "5567 14th Avenue, Markham, ON",
+      "sourcePoint": {
+        "lat": 43.851351,
+        "lng": -79.269364
+      },
+      "assessment": "estimated",
+      "imageEvidence": {
+        "screenshot": "artifacts/release-qa/base-fit-markham/markham-fire-9-6.png",
+        "scaleMetresPerPixel": 0.21507847004324243,
+        "nearbyRoadFeatures": [
+          {
+            "name": "Summerlea Street",
+            "highway": "residential"
+          },
+          {
+            "name": "Quantum Street",
+            "highway": "residential"
+          },
+          {
+            "name": "Avenida Street",
+            "highway": "residential"
+          },
+          {
+            "name": "Clifton Court",
+            "highway": "residential"
+          },
+          {
+            "name": "Nessie Street",
+            "highway": "residential"
+          },
+          {
+            "name": "Featherstone Avenue",
+            "highway": "residential"
+          },
+          {
+            "name": "Featherstone Avenue",
+            "highway": "residential"
+          },
+          {
+            "name": "Avenida Street",
+            "highway": "residential"
+          },
+          {
+            "name": "Featherstone Avenue",
+            "highway": "residential"
+          },
+          {
+            "name": "Featherstone Avenue",
+            "highway": "residential"
+          },
+          {
+            "name": "14th Avenue",
+            "highway": "secondary"
+          },
+          {
+            "name": "14th Avenue",
+            "highway": "secondary"
+          }
+        ]
+      },
+      "dispatchRouteCoverage": {
+        "calls": 8,
+        "reachable": 8,
+        "responseRouteFailures": 0,
+        "transportRouteFailures": 0,
+        "maxRouteCalculationMs": 2.800000011920929,
+        "transportPolicy": {
+          "requiresHospital": false,
+          "note": null
+        }
+      },
+      "drivingArea": {
+        "center": {
+          "lat": 43.851351,
+          "lng": -79.269364
+        },
+        "widthMetres": 65,
+        "lengthMetres": 75,
+        "rotationDegrees": 0,
+        "spawn": {
+          "lat": 43.851351,
+          "lng": -79.269364,
+          "headingDegrees": 0
+        },
+        "spawnOffsetFromCanonicalMetres": {
+          "east": 0,
+          "north": 0
+        }
+      },
+      "observation": "Estimated individually from the captured Esri zoom-19 image at 5567 14th Avenue, Markham, ON: the visible fire station footprint and its own immediate apron/parking/access aisle guide this 65 by 75 m rotated area. The fit excludes adjacent unrelated buildings where visible. No apparatus bay, gate, or access right is verified.",
+      "runtimeCollision": {
+        "spawnInside": true,
+        "areaRoadAccess": true,
+        "spawnInitiallyDrivable": true,
+        "nearestRoad": {
+          "name": "Nessie Street",
+          "highway": "residential",
+          "distanceMetres": 37.7
+        },
+        "exitStarted": true,
+        "exitCompleted": true,
+        "blockedMoves": 0,
+        "movementSteps": 54,
+        "outsideExpandedDrivingArea": true
+      }
+    },
+    {
+      "baseId": "markham-fire-9-7",
+      "name": "Fire Station 9-7",
+      "address": "209 Main Markham Street North, Markham, ON",
+      "sourcePoint": {
+        "lat": 43.882734,
+        "lng": -79.261468
+      },
+      "assessment": "estimated",
+      "imageEvidence": {
+        "screenshot": "artifacts/release-qa/base-fit-markham/markham-fire-9-7.png",
+        "scaleMetresPerPixel": 0.2149652639892597,
+        "nearbyRoadFeatures": [
+          {
+            "name": "George Street",
+            "highway": "residential"
+          },
+          {
+            "name": "Saint Goran Crescent",
+            "highway": "residential"
+          },
+          {
+            "name": "Byer Drive",
+            "highway": "residential"
+          },
+          {
+            "name": "Peter Street",
+            "highway": "residential"
+          },
+          {
+            "name": "Backus Court",
+            "highway": "residential"
+          },
+          {
+            "name": "Snider Drive",
+            "highway": "tertiary"
+          },
+          {
+            "name": "Beech Street",
+            "highway": "residential"
+          },
+          {
+            "name": "Station Street",
+            "highway": "residential"
+          },
+          {
+            "name": "Station Street",
+            "highway": "residential"
+          },
+          {
+            "name": "Bullock Drive",
+            "highway": "tertiary"
+          },
+          {
+            "name": "Station Street",
+            "highway": "residential"
+          },
+          {
+            "name": "Orchard Street",
+            "highway": "residential"
+          }
+        ]
+      },
+      "dispatchRouteCoverage": {
+        "calls": 8,
+        "reachable": 8,
+        "responseRouteFailures": 0,
+        "transportRouteFailures": 0,
+        "maxRouteCalculationMs": 6.699999988079071,
+        "transportPolicy": {
+          "requiresHospital": false,
+          "note": null
+        }
+      },
+      "drivingArea": {
+        "center": {
+          "lat": 43.882734,
+          "lng": -79.261468
+        },
+        "widthMetres": 70,
+        "lengthMetres": 80,
+        "rotationDegrees": 0,
+        "spawn": {
+          "lat": 43.882734,
+          "lng": -79.261468,
+          "headingDegrees": 0
+        },
+        "spawnOffsetFromCanonicalMetres": {
+          "east": 0,
+          "north": 0
+        }
+      },
+      "observation": "Estimated individually from the captured Esri zoom-19 image at 209 Main Markham Street North, Markham, ON: the visible fire station footprint and its own immediate apron/parking/access aisle guide this 70 by 80 m rotated area. The fit excludes adjacent unrelated buildings where visible. No apparatus bay, gate, or access right is verified.",
+      "runtimeCollision": {
+        "spawnInside": true,
+        "areaRoadAccess": true,
+        "spawnInitiallyDrivable": true,
+        "nearestRoad": {
+          "name": "Ramona Boulevard",
+          "highway": "residential",
+          "distanceMetres": 35.01
+        },
+        "exitStarted": true,
+        "exitCompleted": true,
+        "blockedMoves": 0,
+        "movementSteps": 65,
+        "outsideExpandedDrivingArea": true
+      }
+    },
+    {
+      "baseId": "markham-fire-9-8",
+      "name": "Fire Station 9-8",
+      "address": "650 Bur Oak Avenue, Markham, ON",
+      "sourcePoint": {
+        "lat": 43.895474,
+        "lng": -79.289771
+      },
+      "assessment": "estimated",
+      "imageEvidence": {
+        "screenshot": "artifacts/release-qa/base-fit-markham/markham-fire-9-8.png",
+        "scaleMetresPerPixel": 0.21491928681436678,
+        "nearbyRoadFeatures": [
+          {
+            "name": "Lambton Crescent",
+            "highway": "residential"
+          },
+          {
+            "name": "Oscar Drive",
+            "highway": "residential"
+          },
+          {
+            "name": "Lambton Crescent",
+            "highway": "residential"
+          },
+          {
+            "name": "Timberlea Street",
+            "highway": "residential"
+          },
+          {
+            "name": "Oscar Drive",
+            "highway": "residential"
+          },
+          {
+            "name": "Fred McLaren Boulevard",
+            "highway": "residential"
+          },
+          {
+            "name": "Fred McLaren Boulevard",
+            "highway": "residential"
+          },
+          {
+            "name": "Lambton Crescent",
+            "highway": "residential"
+          },
+          {
+            "name": "Laconda Street",
+            "highway": "residential"
+          },
+          {
+            "name": "Country Ridge Drive",
+            "highway": "residential"
+          },
+          {
+            "name": "Davidoff Street",
+            "highway": "residential"
+          },
+          {
+            "name": "Country Ridge Drive",
+            "highway": "residential"
+          }
+        ]
+      },
+      "dispatchRouteCoverage": {
+        "calls": 8,
+        "reachable": 8,
+        "responseRouteFailures": 0,
+        "transportRouteFailures": 0,
+        "maxRouteCalculationMs": 3.2999999821186066,
+        "transportPolicy": {
+          "requiresHospital": false,
+          "note": null
+        }
+      },
+      "drivingArea": {
+        "center": {
+          "lat": 43.895474,
+          "lng": -79.289771
+        },
+        "widthMetres": 70,
+        "lengthMetres": 85,
+        "rotationDegrees": 45,
+        "spawn": {
+          "lat": 43.895474,
+          "lng": -79.289771,
+          "headingDegrees": 0
+        },
+        "spawnOffsetFromCanonicalMetres": {
+          "east": 0,
+          "north": 0
+        }
+      },
+      "observation": "Estimated individually from the captured Esri zoom-19 image at 650 Bur Oak Avenue, Markham, ON: the visible fire station footprint and its own immediate apron/parking/access aisle guide this 70 by 85 m rotated area. The fit excludes adjacent unrelated buildings where visible. No apparatus bay, gate, or access right is verified.",
+      "runtimeCollision": {
+        "spawnInside": true,
+        "areaRoadAccess": true,
+        "spawnInitiallyDrivable": true,
+        "nearestRoad": {
+          "name": "Unnamed road",
+          "highway": "service",
+          "distanceMetres": 31.84
+        },
+        "exitStarted": true,
+        "exitCompleted": true,
+        "blockedMoves": 0,
+        "movementSteps": 46,
+        "outsideExpandedDrivingArea": true
+      }
+    },
+    {
+      "baseId": "markham-fire-9-9",
+      "name": "Fire Station 9-9",
+      "address": "3255 Bur Oak Avenue, Markham, ON",
+      "sourcePoint": {
+        "lat": 43.883761,
+        "lng": -79.227663
+      },
+      "assessment": "estimated",
+      "imageEvidence": {
+        "screenshot": "artifacts/release-qa/base-fit-markham/markham-fire-9-9.png",
+        "scaleMetresPerPixel": 0.21496155990629284,
+        "nearbyRoadFeatures": [
+          {
+            "name": "Bur Oak Avenue",
+            "highway": "tertiary"
+          },
+          {
+            "name": "Bur Oak Avenue",
+            "highway": "tertiary"
+          },
+          {
+            "name": "Bur Oak Avenue",
+            "highway": "tertiary"
+          },
+          {
+            "name": "Bur Oak Avenue",
+            "highway": "tertiary"
+          },
+          {
+            "name": "Bur Oak Avenue",
+            "highway": "tertiary"
+          },
+          {
+            "name": "Bur Oak Avenue",
+            "highway": "tertiary"
+          },
+          {
+            "name": "Church Street",
+            "highway": "tertiary"
+          },
+          {
+            "name": "Church Street",
+            "highway": "tertiary"
+          },
+          {
+            "name": "Bur Oak Avenue",
+            "highway": "tertiary"
+          },
+          {
+            "name": null,
+            "highway": "service"
+          },
+          {
+            "name": null,
+            "highway": "service"
+          },
+          {
+            "name": null,
+            "highway": "service"
+          }
+        ]
+      },
+      "dispatchRouteCoverage": {
+        "calls": 8,
+        "reachable": 8,
+        "responseRouteFailures": 0,
+        "transportRouteFailures": 0,
+        "maxRouteCalculationMs": 3.300000011920929,
+        "transportPolicy": {
+          "requiresHospital": false,
+          "note": null
+        }
+      },
+      "drivingArea": {
+        "center": {
+          "lat": 43.883761,
+          "lng": -79.227663
+        },
+        "widthMetres": 75,
+        "lengthMetres": 85,
+        "rotationDegrees": 45,
+        "spawn": {
+          "lat": 43.883761,
+          "lng": -79.227663,
+          "headingDegrees": 0
+        },
+        "spawnOffsetFromCanonicalMetres": {
+          "east": 0,
+          "north": 0
+        }
+      },
+      "observation": "Estimated individually from the captured Esri zoom-19 image at 3255 Bur Oak Avenue, Markham, ON: the visible fire station footprint and its own immediate apron/parking/access aisle guide this 75 by 85 m rotated area. The fit excludes adjacent unrelated buildings where visible. No apparatus bay, gate, or access right is verified.",
+      "runtimeCollision": {
+        "spawnInside": true,
+        "areaRoadAccess": true,
+        "spawnInitiallyDrivable": true,
+        "nearestRoad": {
+          "name": "Unnamed road",
+          "highway": "service",
+          "distanceMetres": 20.53
+        },
+        "exitStarted": true,
+        "exitCompleted": true,
+        "blockedMoves": 0,
+        "movementSteps": 127,
+        "outsideExpandedDrivingArea": true
+      }
+    }
+  ],
+  "runtimeCollisionChecks": {
+    "artifact": "artifacts/release-qa/base-fit/markham-driving-area-checks.json",
+    "bases": 15,
+    "continuousExits": 15,
+    "blockedMoves": 0,
+    "note": "All15 explicit fitted areas checked; no fallback squares accepted."
+  },
+  "dispatchRouteCoverage": {
+    "artifact": "artifacts/release-qa/all-city-dispatch/markham/dispatch-browser.json",
+    "scenarios": 4,
+    "services": [
+      "fire",
+      "ems"
+    ],
+    "viewports": [
+      "desktop",
+      "mobile"
+    ],
+    "errors": 0,
+    "alerts": 0,
+    "note": "Short real-control driving; controlled arrival coordinates for long response/transport legs. Route coverage checks every local assignment."
+  }
+}

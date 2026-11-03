@@ -166,6 +166,7 @@ test('future base construction fields preserve reviewed stage, opening estimate 
 });
 
 test('legacy aliases retain canonical base identity and remain unique within each city', async () => {
+  const historical = json('tests/fixtures/historical-preview-ids.json').cities;
   for (const [city,count] of [['oshawa',8],['pickering',6],['markham',15],['toronto',16]]) {
     const pack = json(`cities/${city}/geo-data.json`);
     const packageBases=await loadSharedPackageBases(city,pack);
@@ -173,9 +174,15 @@ test('legacy aliases retain canonical base identity and remain unique within eac
     const packageId=base=>base.id.startsWith(`${base.service}-`)?base.id:`${base.service}-${base.id}`;
     assert.deepEqual(packageBases.map(base=>({id:base.id,service:base.service})).sort((a,b)=>a.id.localeCompare(b.id)),
       canonical.map(base=>({id:packageId(base),service:base.service})).sort((a,b)=>a.id.localeCompare(b.id)),`${city}: package IDs are stable canonical service IDs`);
+    const expectedByBase = historical[city];
+    assert.ok(expectedByBase,`${city}: persisted preview ID fixture`);
+    const actualByBase = Object.fromEntries(canonical.filter(base=>base.legacyIds?.length).map(base=>[base.id,base.legacyIds]));
+    assert.deepEqual(actualByBase,expectedByBase,`${city}: canonical bases retain the historical preview ID mapping`);
     for(const base of canonical){
       const packaged=packageBases.find(row=>row.id===packageId(base));
-      assert.deepEqual(packaged?.legacyIds,base.legacyIds,`${city}: ${base.id} retains historical IDs`);
+      const expectedIds=expectedByBase[base.id]||[];
+      assert.deepEqual(base.legacyIds||[],expectedIds,`${city}: ${base.id} retains IDs from the historical preview package`);
+      assert.deepEqual(packaged?.legacyIds||[],expectedIds,`${city}: runtime canonical roster exposes historical IDs for ${base.id}`);
     }
     const aliases = pack.bases.flatMap(base => (base.legacyIds || []).map(id => ({id,base})));
     assert.equal(aliases.length,count,city);

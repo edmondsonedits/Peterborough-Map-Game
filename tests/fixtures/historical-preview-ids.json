@@ -1,0 +1,58 @@
+{
+  "source": "origin/main@b2a95316164c3327fef8d8b73bd777a1916e2091 package.js configs and preview-package-factory.js",
+  "cities": {
+    "oshawa": {
+      "oshawa-ems-514": ["ems-oshawa-rdps-1"],
+      "oshawa-ems-537": ["ems-oshawa-rdps-2"],
+      "oshawa-fire-1": ["fire-fire-station-1-1"],
+      "oshawa-fire-2": ["fire-fire-station-2-2"],
+      "oshawa-fire-3": ["fire-fire-station-3-3"],
+      "oshawa-fire-4": ["fire-fire-station-4-4"],
+      "oshawa-fire-5": ["fire-fire-station-5-5"],
+      "oshawa-fire-6": ["fire-fire-station-6-6"]
+    },
+    "pickering": {
+      "pickering-ems-506": ["ems-pickering-rdps-1"],
+      "pickering-fire-1": ["fire-headquarters-fire-station-1-1"],
+      "pickering-fire-2": ["fire-fire-station-2-2"],
+      "pickering-fire-4": ["fire-fire-station-4-4"],
+      "pickering-fire-5": ["fire-fire-station-5-5"],
+      "pickering-fire-6": ["fire-fire-station-6-6"]
+    },
+    "markham": {
+      "markham-ems-23": ["ems-paramedic-station-23-23"],
+      "markham-ems-24": ["ems-paramedic-station-24-24"],
+      "markham-ems-25": ["ems-paramedic-station-25-25"],
+      "markham-ems-26": ["ems-paramedic-station-26-26"],
+      "markham-ems-27": ["ems-paramedic-station-27-27"],
+      "markham-ems-29": ["ems-paramedic-station-29-29"],
+      "markham-fire-9-1": ["fire-fire-station-91-91"],
+      "markham-fire-9-2": ["fire-fire-station-92-92"],
+      "markham-fire-9-3": ["fire-fire-station-93-93"],
+      "markham-fire-9-4": ["fire-fire-station-94-94"],
+      "markham-fire-9-5": ["fire-fire-station-95-95"],
+      "markham-fire-9-6": ["fire-fire-station-96-96"],
+      "markham-fire-9-7": ["fire-fire-station-97-97"],
+      "markham-fire-9-8": ["fire-fire-station-98-98"],
+      "markham-fire-9-9": ["fire-fire-station-99-99"]
+    },
+    "toronto": {
+      "toronto-ems-3331452": ["ems-ambulance-station-24-24"],
+      "toronto-ems-3311695": ["ems-ambulance-station-20-20"],
+      "toronto-ems-3311704": ["ems-ambulance-station-54-54"],
+      "toronto-ems-3234576": ["ems-ambulance-station-10-10"],
+      "toronto-ems-3151930": ["ems-ambulance-station-46-46"],
+      "toronto-ems-4326823": ["ems-ambulance-station-31-31"],
+      "toronto-ems-4271262": ["ems-ambulance-station-18-18"],
+      "toronto-ems-3006960": ["ems-ambulance-station-40-40"],
+      "toronto-fire-111": ["fire-station-111-111"],
+      "toronto-fire-221": ["fire-station-221-221"],
+      "toronto-fire-245": ["fire-station-245-245"],
+      "toronto-fire-314": ["fire-station-314-314"],
+      "toronto-fire-333": ["fire-station-333-333"],
+      "toronto-fire-411": ["fire-station-411-411"],
+      "toronto-fire-435": ["fire-station-435-435"],
+      "toronto-fire-443": ["fire-station-443-443"]
+    }
+  }
+}
