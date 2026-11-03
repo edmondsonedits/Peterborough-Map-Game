@@ -111,7 +111,8 @@ test('parser station loader inserts the alternate-city factory before its packag
  assert.equal((html.match(/v=1\.6\.99/g)||[]).length,2);
 });
 test('direct alternate-city packages defer creation until their parser-inserted factory runs',()=>{
- for(const city of ['oshawa','belleville','scarborough','pickering','markham','toronto']){
+ const registry={window:{}};vm.runInNewContext(read('cities/city-registry.js').toString(),registry);
+ for(const city of registry.window.PTBO_CITIES.map(c=>c.id).filter(id=>id!=='peterborough')){
   const writes=[],created=[],c=vm.createContext({URL,location:{href:'https://example.com/?city='+city},console,document:{currentScript:{src:'https://example.com/cities/'+city+'/package.js?v=1.6.99'},readyState:'loading',write:s=>writes.push(s)}});c.window=c;
   assert.doesNotThrow(()=>vm.runInContext(read('cities/'+city+'/package.js').toString(),c));assert.equal(created.length,0);
   const scripts=[...writes.join('').matchAll(/<script([^>]*)>([\s\S]*?)<\/script>/g)];assert.equal(scripts.length,2);
