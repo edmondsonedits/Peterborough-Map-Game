@@ -1,0 +1,2677 @@
+{
+  "schemaVersion": 1,
+  "cityId": "chatham-kent",
+  "reviewedLocalDate": "2026-11-02",
+  "assessment": "estimated",
+  "imagery": {
+    "provider": "Esri World Imagery",
+    "tileUrl": "https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}",
+    "capturedLocalDate": "2026-11-02",
+    "captureTimestamp": "2026-11-03T03:28:40.020Z",
+    "vintage": "not supplied by tile response",
+    "zoom": 19,
+    "method": "Reviewed independent zoom-19 imagery captures for all 25 eligible Fire/EMS sites at average scale 0.220 m/pixel. Each rectangle follows the visible building, immediate paved apron/parking and site access aisle; fit dimensions and rotation are estimates, not surveyed boundaries.",
+    "captureDirectory": "artifacts/release-qa/base-fit-chatham-kent/"
+  },
+  "roads": {
+    "file": "cities/chatham-kent/roads.geojson.gz",
+    "source": "OpenStreetMap via Geofabrik Ontario extract",
+    "sourceTimestamp": "2026-09-27T20:23:36Z",
+    "snapshotBuiltAt": "2026-10-29T04:20:35.794Z",
+    "sourceSha256": "ebb50b39682d2381ad3c1d21e005b48cec3397e15da0d72c5d76c7d20d8dd249",
+    "packagedSha256": "06e0801c895ab05a4802bbc9f67efc94244f3f5bcde7cdf26d1c244cc6772e31",
+    "sourceUrl": "https://download.geofabrik.de/north-america/canada/ontario.html",
+    "attribution": "© OpenStreetMap contributors",
+    "assessment": "Packaged road/service geometry was reviewed with imagery. Runtime QA follows an actual response route through the fitted-yard boundary; mapped graph segments do not verify private driveway rights or apparatus doors."
+  },
+  "limits": [
+    "No official station parcel or building-footprint polygons were used.",
+    "Dimensions, centers, rotations and modeled spawn coordinates are imagery/road-geometry estimates, not surveyed measurements.",
+    "Imagery does not verify apparatus bays, access controls, current pavement, occupancy or driveway rights.",
+    "Canonical IDs and source coordinates remain unchanged.",
+    "Collision QA follows a real route from the modeled spawn until at least 10 m outside the expanded fitted yard and checks movement in 1.5 m increments; it verifies the modeled collision transition, not sustained manual driving or real-world emergency-response suitability.",
+    "A shared Fire/EMS fit denotes an identical official address and source coordinate; it does not identify an EMS-only bay or entrance."
+  ],
+  "bases": [
+    {
+      "baseId": "chatham-kent-fire-1",
+      "name": "Station 1 — Chatham",
+      "address": "5 Second St, Chatham, Chatham-Kent, Ontario",
+      "sourcePoint": {
+        "lat": 42.40458100516701,
+        "lng": -82.19165049253854
+      },
+      "drivingArea": {
+        "center": {
+          "lat": 42.40458100516701,
+          "lng": -82.19165049253854
+        },
+        "widthMetres": 85,
+        "lengthMetres": 95,
+        "rotationDegrees": 0,
+        "spawn": {
+          "lat": 42.40458100516701,
+          "lng": -82.19165049253854,
+          "headingDegrees": 0
+        },
+        "spawnOffsetFromCanonicalMetres": {
+          "east": 0,
+          "north": 0
+        }
+      },
+      "assessment": "estimated",
+      "observation": "Estimated individually from the captured Esri World Imagery zoom-19 view at 5 Second St, Chatham, Chatham-Kent, Ontario: the visible fire station, immediate paved apron/parking and the site access aisle are fitted within this rectangle. Dimensions and orientation are image estimates; no apparatus door, gate or access right is verified.",
+      "imageEvidence": {
+        "screenshot": "artifacts/release-qa/base-fit-chatham-kent/chatham-kent-fire-1.png",
+        "scaleMetresPerPixel": 0.22022677467071344,
+        "nearbyRoadFeatures": [
+          {
+            "name": "Second Street",
+            "highway": "tertiary"
+          },
+          {
+            "name": "First Street",
+            "highway": "residential"
+          },
+          {
+            "name": "King Street West",
+            "highway": "tertiary"
+          },
+          {
+            "name": "Third Street",
+            "highway": "tertiary"
+          },
+          {
+            "name": "Wellington Street West",
+            "highway": "tertiary"
+          },
+          {
+            "name": "Forsyth Street",
+            "highway": "unclassified"
+          },
+          {
+            "name": "Wellington Street West",
+            "highway": "tertiary"
+          },
+          {
+            "name": "Louise Street",
+            "highway": "residential"
+          },
+          {
+            "name": "Raleigh Street",
+            "highway": "residential"
+          },
+          {
+            "name": "Third Street",
+            "highway": "tertiary"
+          },
+          {
+            "name": "Mary Street",
+            "highway": "residential"
+          },
+          {
+            "name": "Thames Street",
+            "highway": "unclassified"
+          }
+        ]
+      },
+      "runtimeCollision": {
+        "spawnInside": true,
+        "areaRoadAccess": true,
+        "spawnInitiallyDrivable": true,
+        "nearestRoad": {
+          "name": "Unnamed road",
+          "highway": "service",
+          "distanceMetres": 22.65
+        },
+        "exitStarted": true,
+        "exitCompleted": true,
+        "blockedMoves": 0,
+        "movementSteps": 89,
+        "outsideExpandedDrivingArea": true,
+        "exitPoint": {
+          "lat": 42.404221166666666,
+          "lng": -82.19101
+        }
+      },
+      "dispatchRouteCoverage": {
+        "calls": 8,
+        "reachable": 8,
+        "missing": []
+      }
+    },
+    {
+      "baseId": "chatham-kent-fire-2",
+      "name": "Station 2 — Chatham",
+      "address": "270 Sandys St, Chatham, Chatham-Kent, Ontario",
+      "sourcePoint": {
+        "lat": 42.41063645922057,
+        "lng": -82.20414404666609
+      },
+      "drivingArea": {
+        "center": {
+          "lat": 42.41063645922057,
+          "lng": -82.20414404666609
+        },
+        "widthMetres": 75,
+        "lengthMetres": 85,
+        "rotationDegrees": 45,
+        "spawn": {
+          "lat": 42.41063645922057,
+          "lng": -82.20414404666609,
+          "headingDegrees": 0
+        },
+        "spawnOffsetFromCanonicalMetres": {
+          "east": 0,
+          "north": 0
+        }
+      },
+      "assessment": "estimated",
+      "observation": "Estimated individually from the captured Esri World Imagery zoom-19 view at 270 Sandys St, Chatham, Chatham-Kent, Ontario: the visible fire station, immediate paved apron/parking and the site access aisle are fitted within this rectangle. Dimensions and orientation are image estimates; no apparatus door, gate or access right is verified.",
+      "imageEvidence": {
+        "screenshot": "artifacts/release-qa/base-fit-chatham-kent/chatham-kent-fire-2.png",
+        "scaleMetresPerPixel": 0.22020551412187628,
+        "nearbyRoadFeatures": [
+          {
+            "name": "Sudbury Drive",
+            "highway": "residential"
+          },
+          {
+            "name": "Cornhill Street",
+            "highway": "residential"
+          },
+          {
+            "name": "Stewart Street",
+            "highway": "residential"
+          },
+          {
+            "name": "Romney Road",
+            "highway": "residential"
+          },
+          {
+            "name": "Sandys Street",
+            "highway": "tertiary"
+          },
+          {
+            "name": "McNaughton Avenue West",
+            "highway": "secondary"
+          },
+          {
+            "name": "Canterbury Street",
+            "highway": "residential"
+          },
+          {
+            "name": "Diane Road",
+            "highway": "residential"
+          },
+          {
+            "name": "Truro Road",
+            "highway": "residential"
+          },
+          {
+            "name": "Coatsworth Avenue",
+            "highway": "residential"
+          },
+          {
+            "name": "McNaughton Avenue West",
+            "highway": "secondary"
+          },
+          {
+            "name": "Coatsworth Avenue",
+            "highway": "residential"
+          }
+        ]
+      },
+      "runtimeCollision": {
+        "spawnInside": true,
+        "areaRoadAccess": true,
+        "spawnInitiallyDrivable": true,
+        "nearestRoad": {
+          "name": "Unnamed road",
+          "highway": "service",
+          "distanceMetres": 16.68
+        },
+        "exitStarted": true,
+        "exitCompleted": true,
+        "blockedMoves": 0,
+        "movementSteps": 58,
+        "outsideExpandedDrivingArea": true,
+        "exitPoint": {
+          "lat": 42.41078645625,
+          "lng": -82.20484589062501
+        }
+      },
+      "dispatchRouteCoverage": {
+        "calls": 8,
+        "reachable": 8,
+        "missing": []
+      }
+    },
+    {
+      "baseId": "chatham-kent-fire-3",
+      "name": "Station 3 — Wallaceburg",
+      "address": "786 Dufferin Ave, Wallaceburg, Chatham-Kent, Ontario",
+      "sourcePoint": {
+        "lat": 42.59301279712185,
+        "lng": -82.38770547652773
+      },
+      "drivingArea": {
+        "center": {
+          "lat": 42.59301279712185,
+          "lng": -82.38770547652773
+        },
+        "widthMetres": 65,
+        "lengthMetres": 75,
+        "rotationDegrees": 0,
+        "spawn": {
+          "lat": 42.59301279712185,
+          "lng": -82.38770547652773,
+          "headingDegrees": 0
+        },
+        "spawnOffsetFromCanonicalMetres": {
+          "east": 0,
+          "north": 0
+        }
+      },
+      "assessment": "estimated",
+      "observation": "Estimated individually from the captured Esri World Imagery zoom-19 view at 786 Dufferin Ave, Wallaceburg, Chatham-Kent, Ontario: the visible fire station, immediate paved apron/parking and the site access aisle are fitted within this rectangle. Dimensions and orientation are image estimates; no apparatus door, gate or access right is verified.",
+      "imageEvidence": {
+        "screenshot": "artifacts/release-qa/base-fit-chatham-kent/chatham-kent-fire-3.png",
+        "scaleMetresPerPixel": 0.21956412493569094,
+        "nearbyRoadFeatures": [
+          {
+            "name": "James Street",
+            "highway": "secondary"
+          },
+          {
+            "name": "Gillard Street",
+            "highway": "residential"
+          },
+          {
+            "name": "Wellington Street",
+            "highway": "secondary"
+          },
+          {
+            "name": "McNaughton Avenue",
+            "highway": "primary"
+          },
+          {
+            "name": "Wellington Street",
+            "highway": "secondary"
+          },
+          {
+            "name": "Cameron Street",
+            "highway": "residential"
+          },
+          {
+            "name": "McNaughton Avenue",
+            "highway": "primary"
+          },
+          {
+            "name": "Cameron Street",
+            "highway": "residential"
+          },
+          {
+            "name": "Gillard Street",
+            "highway": "residential"
+          },
+          {
+            "name": "Elgin Street",
+            "highway": "residential"
+          },
+          {
+            "name": "Hiram Street",
+            "highway": "residential"
+          },
+          {
+            "name": "Minnie Street",
+            "highway": "residential"
+          }
+        ]
+      },
+      "runtimeCollision": {
+        "spawnInside": true,
+        "areaRoadAccess": true,
+        "spawnInitiallyDrivable": true,
+        "nearestRoad": {
+          "name": "Dufferin Avenue",
+          "highway": "secondary",
+          "distanceMetres": 24.52
+        },
+        "exitStarted": true,
+        "exitCompleted": true,
+        "blockedMoves": 0,
+        "movementSteps": 50,
+        "outsideExpandedDrivingArea": true,
+        "exitPoint": {
+          "lat": 42.5928525,
+          "lng": -82.3871838
+        }
+      },
+      "dispatchRouteCoverage": {
+        "calls": 8,
+        "reachable": 8,
+        "missing": []
+      }
+    },
+    {
+      "baseId": "chatham-kent-fire-4",
+      "name": "Station 4 — Dover Twsp",
+      "address": "7112 St Phillipe Line, Dover Twsp, Chatham-Kent, Ontario",
+      "sourcePoint": {
+        "lat": 42.43970241724522,
+        "lng": -82.3553020108232
+      },
+      "drivingArea": {
+        "center": {
+          "lat": 42.43970241724522,
+          "lng": -82.3553020108232
+        },
+        "widthMetres": 50,
+        "lengthMetres": 60,
+        "rotationDegrees": 45,
+        "spawn": {
+          "lat": 42.43970241724522,
+          "lng": -82.3553020108232,
+          "headingDegrees": 0
+        },
+        "spawnOffsetFromCanonicalMetres": {
+          "east": 0,
+          "north": 0
+        }
+      },
+      "assessment": "estimated",
+      "observation": "Estimated individually from the captured Esri World Imagery zoom-19 view at 7112 St Phillipe Line, Dover Twsp, Chatham-Kent, Ontario: the visible fire station, immediate paved apron/parking and the site access aisle are fitted within this rectangle. Dimensions and orientation are image estimates; no apparatus door, gate or access right is verified.",
+      "imageEvidence": {
+        "screenshot": "artifacts/release-qa/base-fit-chatham-kent/chatham-kent-fire-4.png",
+        "scaleMetresPerPixel": 0.2201034467214316,
+        "nearbyRoadFeatures": [
+          {
+            "name": "Meadowbrook Lane",
+            "highway": "residential"
+          },
+          {
+            "name": "St. Philippes Line",
+            "highway": "unclassified"
+          },
+          {
+            "name": "Benoit Drive",
+            "highway": "residential"
+          },
+          {
+            "name": "St. Philippes Line",
+            "highway": "unclassified"
+          },
+          {
+            "name": "Winter Line Road",
+            "highway": "secondary"
+          },
+          {
+            "name": "Winter Line Road",
+            "highway": "secondary"
+          },
+          {
+            "name": null,
+            "highway": "service"
+          },
+          {
+            "name": null,
+            "highway": "service"
+          },
+          {
+            "name": null,
+            "highway": "service"
+          },
+          {
+            "name": null,
+            "highway": "service"
+          }
+        ]
+      },
+      "runtimeCollision": {
+        "spawnInside": true,
+        "areaRoadAccess": true,
+        "spawnInitiallyDrivable": true,
+        "nearestRoad": {
+          "name": "Unnamed road",
+          "highway": "service",
+          "distanceMetres": 13.02
+        },
+        "exitStarted": true,
+        "exitCompleted": true,
+        "blockedMoves": 0,
+        "movementSteps": 36,
+        "outsideExpandedDrivingArea": true,
+        "exitPoint": {
+          "lat": 42.43946202,
+          "lng": -82.35559026
+        }
+      },
+      "dispatchRouteCoverage": {
+        "calls": 6,
+        "reachable": 6,
+        "missing": []
+      }
+    },
+    {
+      "baseId": "chatham-kent-fire-5",
+      "name": "Station 5 — Chatham Twsp",
+      "address": "3 John Park Line, Chatham Twsp, Chatham-Kent, Ontario",
+      "sourcePoint": {
+        "lat": 42.589750519252206,
+        "lng": -82.26705943058019
+      },
+      "drivingArea": {
+        "center": {
+          "lat": 42.589750519252206,
+          "lng": -82.26705943058019
+        },
+        "widthMetres": 50,
+        "lengthMetres": 60,
+        "rotationDegrees": 0,
+        "spawn": {
+          "lat": 42.589750519252206,
+          "lng": -82.26705943058019,
+          "headingDegrees": 0
+        },
+        "spawnOffsetFromCanonicalMetres": {
+          "east": 0,
+          "north": 0
+        }
+      },
+      "assessment": "estimated",
+      "observation": "Estimated individually from the captured Esri World Imagery zoom-19 view at 3 John Park Line, Chatham Twsp, Chatham-Kent, Ontario: the visible fire station, immediate paved apron/parking and the site access aisle are fitted within this rectangle. Dimensions and orientation are image estimates; no apparatus door, gate or access right is verified.",
+      "imageEvidence": {
+        "screenshot": "artifacts/release-qa/base-fit-chatham-kent/chatham-kent-fire-5.png",
+        "scaleMetresPerPixel": 0.2195756168088496,
+        "nearbyRoadFeatures": [
+          {
+            "name": "Tupperville Road",
+            "highway": "secondary"
+          },
+          {
+            "name": "Centre Side Road",
+            "highway": "secondary"
+          },
+          {
+            "name": "Chesney Line",
+            "highway": "unclassified"
+          },
+          {
+            "name": "Glasgow Line",
+            "highway": "tertiary"
+          },
+          {
+            "name": "Glasgow Line",
+            "highway": "tertiary"
+          },
+          {
+            "name": "John Park Line",
+            "highway": "tertiary"
+          },
+          {
+            "name": "Burns Street",
+            "highway": "residential"
+          },
+          {
+            "name": "Tupperville Road",
+            "highway": "secondary"
+          },
+          {
+            "name": "Bank Street",
+            "highway": "unclassified"
+          },
+          {
+            "name": "Broad Road",
+            "highway": "unclassified"
+          },
+          {
+            "name": "John Park Line",
+            "highway": "tertiary"
+          }
+        ]
+      },
+      "runtimeCollision": {
+        "spawnInside": true,
+        "areaRoadAccess": true,
+        "spawnInitiallyDrivable": true,
+        "nearestRoad": {
+          "name": "Glasgow Line",
+          "highway": "tertiary",
+          "distanceMetres": 22.73
+        },
+        "exitStarted": true,
+        "exitCompleted": true,
+        "blockedMoves": 0,
+        "movementSteps": 41,
+        "outsideExpandedDrivingArea": true,
+        "exitPoint": {
+          "lat": 42.590113599999995,
+          "lng": -82.26715375
+        }
+      },
+      "dispatchRouteCoverage": {
+        "calls": 7,
+        "reachable": 7,
+        "missing": []
+      }
+    },
+    {
+      "baseId": "chatham-kent-fire-6",
+      "name": "Station 6 — Dresden",
+      "address": "185 Lindsley St E, Dresden, Chatham-Kent, Ontario",
+      "sourcePoint": {
+        "lat": 42.591557111335035,
+        "lng": -82.17835629501394
+      },
+      "drivingArea": {
+        "center": {
+          "lat": 42.591557111335035,
+          "lng": -82.17835629501394
+        },
+        "widthMetres": 65,
+        "lengthMetres": 75,
+        "rotationDegrees": 0,
+        "spawn": {
+          "lat": 42.591557111335035,
+          "lng": -82.17835629501394,
+          "headingDegrees": 0
+        },
+        "spawnOffsetFromCanonicalMetres": {
+          "east": 0,
+          "north": 0
+        }
+      },
+      "assessment": "estimated",
+      "observation": "Estimated individually from the captured Esri World Imagery zoom-19 view at 185 Lindsley St E, Dresden, Chatham-Kent, Ontario: the visible fire station, immediate paved apron/parking and the site access aisle are fitted within this rectangle. Dimensions and orientation are image estimates; no apparatus door, gate or access right is verified.",
+      "imageEvidence": {
+        "screenshot": "artifacts/release-qa/base-fit-chatham-kent/chatham-kent-fire-6.png",
+        "scaleMetresPerPixel": 0.21956925177166295,
+        "nearbyRoadFeatures": [
+          {
+            "name": "St. George Street South",
+            "highway": "secondary"
+          },
+          {
+            "name": "North Street",
+            "highway": "secondary"
+          },
+          {
+            "name": "Metcalfe Avenue East",
+            "highway": "residential"
+          },
+          {
+            "name": "St. George Street South",
+            "highway": "secondary"
+          },
+          {
+            "name": "Water Street",
+            "highway": "residential"
+          },
+          {
+            "name": "Centre Street",
+            "highway": "residential"
+          },
+          {
+            "name": "Centre Street",
+            "highway": "residential"
+          },
+          {
+            "name": "Brown Street",
+            "highway": "residential"
+          },
+          {
+            "name": "Brown Street",
+            "highway": "residential"
+          },
+          {
+            "name": "St John Street West",
+            "highway": "residential"
+          },
+          {
+            "name": "Centre Street",
+            "highway": "residential"
+          },
+          {
+            "name": "Tecumseh Street",
+            "highway": "residential"
+          }
+        ]
+      },
+      "runtimeCollision": {
+        "spawnInside": true,
+        "areaRoadAccess": true,
+        "spawnInitiallyDrivable": true,
+        "nearestRoad": {
+          "name": "Lindsley Street East",
+          "highway": "residential",
+          "distanceMetres": 31.19
+        },
+        "exitStarted": true,
+        "exitCompleted": true,
+        "blockedMoves": 0,
+        "movementSteps": 52,
+        "outsideExpandedDrivingArea": true,
+        "exitPoint": {
+          "lat": 42.591847103644184,
+          "lng": -82.17888880433564
+        }
+      },
+      "dispatchRouteCoverage": {
+        "calls": 6,
+        "reachable": 6,
+        "missing": []
+      }
+    },
+    {
+      "baseId": "chatham-kent-fire-7",
+      "name": "Station 7 — Chatham Twsp",
+      "address": "10133 Longwoods Rd, Chatham Twsp, Chatham-Kent, Ontario",
+      "sourcePoint": {
+        "lat": 42.46285142285254,
+        "lng": -82.13147660262288
+      },
+      "drivingArea": {
+        "center": {
+          "lat": 42.46285142285254,
+          "lng": -82.13147660262288
+        },
+        "widthMetres": 50,
+        "lengthMetres": 60,
+        "rotationDegrees": 0,
+        "spawn": {
+          "lat": 42.46285142285254,
+          "lng": -82.13147660262288,
+          "headingDegrees": 0
+        },
+        "spawnOffsetFromCanonicalMetres": {
+          "east": 0,
+          "north": 0
+        }
+      },
+      "assessment": "estimated",
+      "observation": "Estimated individually from the captured Esri World Imagery zoom-19 view at 10133 Longwoods Rd, Chatham Twsp, Chatham-Kent, Ontario: the visible fire station, immediate paved apron/parking and the site access aisle are fitted within this rectangle. Dimensions and orientation are image estimates; no apparatus door, gate or access right is verified.",
+      "imageEvidence": {
+        "screenshot": "artifacts/release-qa/base-fit-chatham-kent/chatham-kent-fire-7.png",
+        "scaleMetresPerPixel": 0.220022112916015,
+        "nearbyRoadFeatures": [
+          {
+            "name": "Longwoods Road",
+            "highway": "secondary"
+          },
+          {
+            "name": "Center Side Road",
+            "highway": "secondary"
+          }
+        ]
+      },
+      "runtimeCollision": {
+        "spawnInside": true,
+        "areaRoadAccess": true,
+        "spawnInitiallyDrivable": true,
+        "nearestRoad": {
+          "name": "Longwoods Road",
+          "highway": "secondary",
+          "distanceMetres": 29.09
+        },
+        "exitStarted": true,
+        "exitCompleted": true,
+        "blockedMoves": 0,
+        "movementSteps": 36,
+        "outsideExpandedDrivingArea": true,
+        "exitPoint": {
+          "lat": 42.46293905292307,
+          "lng": -82.13105069031465
+        }
+      },
+      "dispatchRouteCoverage": {
+        "calls": 8,
+        "reachable": 8,
+        "missing": []
+      }
+    },
+    {
+      "baseId": "chatham-kent-fire-8",
+      "name": "Station 8 — Thamesville",
+      "address": "48 Jane Rd, Thamesville, Chatham-Kent, Ontario",
+      "sourcePoint": {
+        "lat": 42.554842525488084,
+        "lng": -81.98280503462955
+      },
+      "drivingArea": {
+        "center": {
+          "lat": 42.554842525488084,
+          "lng": -81.98280503462955
+        },
+        "widthMetres": 60,
+        "lengthMetres": 70,
+        "rotationDegrees": 45,
+        "spawn": {
+          "lat": 42.554842525488084,
+          "lng": -81.98280503462955,
+          "headingDegrees": 0
+        },
+        "spawnOffsetFromCanonicalMetres": {
+          "east": 0,
+          "north": 0
+        }
+      },
+      "assessment": "estimated",
+      "observation": "Estimated individually from the captured Esri World Imagery zoom-19 view at 48 Jane Rd, Thamesville, Chatham-Kent, Ontario: the visible fire station, immediate paved apron/parking and the site access aisle are fitted within this rectangle. Dimensions and orientation are image estimates; no apparatus door, gate or access right is verified.",
+      "imageEvidence": {
+        "screenshot": "artifacts/release-qa/base-fit-chatham-kent/chatham-kent-fire-8.png",
+        "scaleMetresPerPixel": 0.21969854926350202,
+        "nearbyRoadFeatures": [
+          {
+            "name": "Victoria Road",
+            "highway": "secondary"
+          },
+          {
+            "name": "Industrial Road",
+            "highway": "secondary"
+          },
+          {
+            "name": "Jane Street",
+            "highway": "secondary"
+          },
+          {
+            "name": "Ann Street",
+            "highway": "residential"
+          },
+          {
+            "name": "Lemuel Street",
+            "highway": "residential"
+          },
+          {
+            "name": "William Street",
+            "highway": "residential"
+          },
+          {
+            "name": "Victoria Street",
+            "highway": "residential"
+          }
+        ]
+      },
+      "runtimeCollision": {
+        "spawnInside": true,
+        "areaRoadAccess": true,
+        "spawnInitiallyDrivable": true,
+        "nearestRoad": {
+          "name": "Victoria Road",
+          "highway": "secondary",
+          "distanceMetres": 37.33
+        },
+        "exitStarted": true,
+        "exitCompleted": true,
+        "blockedMoves": 0,
+        "movementSteps": 45,
+        "outsideExpandedDrivingArea": true,
+        "exitPoint": {
+          "lat": 42.55521504604591,
+          "lng": -81.98307846966273
+        }
+      },
+      "dispatchRouteCoverage": {
+        "calls": 6,
+        "reachable": 6,
+        "missing": []
+      }
+    },
+    {
+      "baseId": "chatham-kent-fire-9",
+      "name": "Station 9 — Bothwell",
+      "address": "122 Elm St, Bothwell, Chatham-Kent, Ontario",
+      "sourcePoint": {
+        "lat": 42.63109291501017,
+        "lng": -81.86985965391058
+      },
+      "drivingArea": {
+        "center": {
+          "lat": 42.63109291501017,
+          "lng": -81.86985965391058
+        },
+        "widthMetres": 55,
+        "lengthMetres": 65,
+        "rotationDegrees": 0,
+        "spawn": {
+          "lat": 42.63109291501017,
+          "lng": -81.86985965391058,
+          "headingDegrees": 0
+        },
+        "spawnOffsetFromCanonicalMetres": {
+          "east": 0,
+          "north": 0
+        }
+      },
+      "assessment": "estimated",
+      "observation": "Estimated individually from the captured Esri World Imagery zoom-19 view at 122 Elm St, Bothwell, Chatham-Kent, Ontario: the visible fire station, immediate paved apron/parking and the site access aisle are fitted within this rectangle. Dimensions and orientation are image estimates; no apparatus door, gate or access right is verified.",
+      "imageEvidence": {
+        "screenshot": "artifacts/release-qa/base-fit-chatham-kent/chatham-kent-fire-9.png",
+        "scaleMetresPerPixel": 0.21942992207050888,
+        "nearbyRoadFeatures": [
+          {
+            "name": "Peter Street South",
+            "highway": "secondary"
+          },
+          {
+            "name": "George Street",
+            "highway": "residential"
+          },
+          {
+            "name": "Main Street North",
+            "highway": "unclassified"
+          },
+          {
+            "name": "Chestnut Street West",
+            "highway": "residential"
+          },
+          {
+            "name": "Elm Street West",
+            "highway": "tertiary"
+          },
+          {
+            "name": "Oak Street East",
+            "highway": "residential"
+          },
+          {
+            "name": "Peter Street North",
+            "highway": "secondary"
+          },
+          {
+            "name": "Chestnut Street East",
+            "highway": "residential"
+          },
+          {
+            "name": "Peter Street North",
+            "highway": "secondary"
+          },
+          {
+            "name": "Elm Street East",
+            "highway": "residential"
+          },
+          {
+            "name": "Walnut Street East",
+            "highway": "residential"
+          },
+          {
+            "name": "Peter Street North",
+            "highway": "residential"
+          }
+        ]
+      },
+      "runtimeCollision": {
+        "spawnInside": true,
+        "areaRoadAccess": true,
+        "spawnInitiallyDrivable": true,
+        "nearestRoad": {
+          "name": "Unnamed road",
+          "highway": "service",
+          "distanceMetres": 14.61
+        },
+        "exitStarted": true,
+        "exitCompleted": true,
+        "blockedMoves": 0,
+        "movementSteps": 36,
+        "outsideExpandedDrivingArea": true,
+        "exitPoint": {
+          "lat": 42.631175475862065,
+          "lng": -81.87031991034483
+        }
+      },
+      "dispatchRouteCoverage": {
+        "calls": 6,
+        "reachable": 6,
+        "missing": []
+      }
+    },
+    {
+      "baseId": "chatham-kent-fire-10",
+      "name": "Station 10 — Highgate",
+      "address": "257 King St, Highgate, Chatham-Kent, Ontario",
+      "sourcePoint": {
+        "lat": 42.50151900630494,
+        "lng": -81.81654410023424
+      },
+      "drivingArea": {
+        "center": {
+          "lat": 42.50151900630494,
+          "lng": -81.81654410023424
+        },
+        "widthMetres": 55,
+        "lengthMetres": 65,
+        "rotationDegrees": 0,
+        "spawn": {
+          "lat": 42.50151900630494,
+          "lng": -81.81654410023424,
+          "headingDegrees": 0
+        },
+        "spawnOffsetFromCanonicalMetres": {
+          "east": 0,
+          "north": 0
+        }
+      },
+      "assessment": "estimated",
+      "observation": "Estimated individually from the captured Esri World Imagery zoom-19 view at 257 King St, Highgate, Chatham-Kent, Ontario: the visible fire station, immediate paved apron/parking and the site access aisle are fitted within this rectangle. Dimensions and orientation are image estimates; no apparatus door, gate or access right is verified.",
+      "imageEvidence": {
+        "screenshot": "artifacts/release-qa/base-fit-chatham-kent/chatham-kent-fire-10.png",
+        "scaleMetresPerPixel": 0.21988617506702213,
+        "nearbyRoadFeatures": [
+          {
+            "name": "Main Street",
+            "highway": "secondary"
+          },
+          {
+            "name": "King Street North",
+            "highway": "secondary"
+          },
+          {
+            "name": "Prince Street",
+            "highway": "residential"
+          },
+          {
+            "name": "Victoria Street",
+            "highway": "residential"
+          },
+          {
+            "name": "Queen Street",
+            "highway": "residential"
+          },
+          {
+            "name": "Victoria Street",
+            "highway": "residential"
+          },
+          {
+            "name": "Queen Street",
+            "highway": "residential"
+          },
+          {
+            "name": "Victoria Street",
+            "highway": "residential"
+          },
+          {
+            "name": "Albert Street",
+            "highway": "residential"
+          },
+          {
+            "name": "Queen Street",
+            "highway": "residential"
+          },
+          {
+            "name": "Albert Street",
+            "highway": "residential"
+          },
+          {
+            "name": "Prince Street",
+            "highway": "residential"
+          }
+        ]
+      },
+      "runtimeCollision": {
+        "spawnInside": true,
+        "areaRoadAccess": true,
+        "spawnInitiallyDrivable": true,
+        "nearestRoad": {
+          "name": "King Street South",
+          "highway": "secondary",
+          "distanceMetres": 32.26
+        },
+        "exitStarted": true,
+        "exitCompleted": true,
+        "blockedMoves": 0,
+        "movementSteps": 42,
+        "outsideExpandedDrivingArea": true,
+        "exitPoint": {
+          "lat": 42.501131632537756,
+          "lng": -81.81658236034704
+        }
+      },
+      "dispatchRouteCoverage": {
+        "calls": 6,
+        "reachable": 6,
+        "missing": []
+      }
+    },
+    {
+      "baseId": "chatham-kent-fire-11",
+      "name": "Station 11 — Ridgetown",
+      "address": "19 Ebenezer St W, Ridgetown, Chatham-Kent, Ontario",
+      "sourcePoint": {
+        "lat": 42.437776081592716,
+        "lng": -81.88776711915806
+      },
+      "drivingArea": {
+        "center": {
+          "lat": 42.437776081592716,
+          "lng": -81.88776711915806
+        },
+        "widthMetres": 60,
+        "lengthMetres": 70,
+        "rotationDegrees": 0,
+        "spawn": {
+          "lat": 42.437776081592716,
+          "lng": -81.88776711915806,
+          "headingDegrees": 0
+        },
+        "spawnOffsetFromCanonicalMetres": {
+          "east": 0,
+          "north": 0
+        }
+      },
+      "assessment": "estimated",
+      "observation": "Estimated individually from the captured Esri World Imagery zoom-19 view at 19 Ebenezer St W, Ridgetown, Chatham-Kent, Ontario: the visible fire station, immediate paved apron/parking and the site access aisle are fitted within this rectangle. Dimensions and orientation are image estimates; no apparatus door, gate or access right is verified.",
+      "imageEvidence": {
+        "screenshot": "artifacts/release-qa/base-fit-chatham-kent/chatham-kent-fire-11.png",
+        "scaleMetresPerPixel": 0.22011021209288,
+        "nearbyRoadFeatures": [
+          {
+            "name": "Main Street",
+            "highway": "secondary"
+          },
+          {
+            "name": "York Street",
+            "highway": "residential"
+          },
+          {
+            "name": "Marsh Street",
+            "highway": "residential"
+          },
+          {
+            "name": "West Street",
+            "highway": "residential"
+          },
+          {
+            "name": "Walnut Street",
+            "highway": "residential"
+          },
+          {
+            "name": "George Street",
+            "highway": "residential"
+          },
+          {
+            "name": "York Street",
+            "highway": "residential"
+          },
+          {
+            "name": "Ebenezer Street",
+            "highway": "residential"
+          },
+          {
+            "name": "James Street",
+            "highway": "residential"
+          },
+          {
+            "name": "Marsh Street",
+            "highway": "residential"
+          },
+          {
+            "name": "York Street",
+            "highway": "residential"
+          },
+          {
+            "name": "Market Lane",
+            "highway": "residential"
+          }
+        ]
+      },
+      "runtimeCollision": {
+        "spawnInside": true,
+        "areaRoadAccess": true,
+        "spawnInitiallyDrivable": true,
+        "nearestRoad": {
+          "name": "Ebenezer Street",
+          "highway": "residential",
+          "distanceMetres": 36.49
+        },
+        "exitStarted": true,
+        "exitCompleted": true,
+        "blockedMoves": 0,
+        "movementSteps": 39,
+        "outsideExpandedDrivingArea": true,
+        "exitPoint": {
+          "lat": 42.43768820488815,
+          "lng": -81.88727917125574
+        }
+      },
+      "dispatchRouteCoverage": {
+        "calls": 6,
+        "reachable": 6,
+        "missing": []
+      }
+    },
+    {
+      "baseId": "chatham-kent-fire-12",
+      "name": "Station 12 — Harwich",
+      "address": "9906 Maynard Ln, Harwich, Chatham-Kent, Ontario",
+      "sourcePoint": {
+        "lat": 42.4139592075448,
+        "lng": -82.09124408716127
+      },
+      "drivingArea": {
+        "center": {
+          "lat": 42.4139592075448,
+          "lng": -82.09124408716127
+        },
+        "widthMetres": 50,
+        "lengthMetres": 60,
+        "rotationDegrees": 45,
+        "spawn": {
+          "lat": 42.4139592075448,
+          "lng": -82.09124408716127,
+          "headingDegrees": 0
+        },
+        "spawnOffsetFromCanonicalMetres": {
+          "east": 0,
+          "north": 0
+        }
+      },
+      "assessment": "estimated",
+      "observation": "Estimated individually from the captured Esri World Imagery zoom-19 view at 9906 Maynard Ln, Harwich, Chatham-Kent, Ontario: the visible fire station, immediate paved apron/parking and the site access aisle are fitted within this rectangle. Dimensions and orientation are image estimates; no apparatus door, gate or access right is verified.",
+      "imageEvidence": {
+        "screenshot": "artifacts/release-qa/base-fit-chatham-kent/chatham-kent-fire-12.png",
+        "scaleMetresPerPixel": 0.2201938477613708,
+        "nearbyRoadFeatures": [
+          {
+            "name": "Maynard Line",
+            "highway": "residential"
+          }
+        ]
+      },
+      "runtimeCollision": {
+        "spawnInside": true,
+        "areaRoadAccess": false,
+        "spawnInitiallyDrivable": true,
+        "nearestRoad": {
+          "name": "Maynard Line",
+          "highway": "residential",
+          "distanceMetres": 39.19
+        },
+        "exitStarted": true,
+        "exitCompleted": true,
+        "blockedMoves": 0,
+        "movementSteps": 51,
+        "outsideExpandedDrivingArea": true,
+        "exitPoint": {
+          "lat": 42.414428889495696,
+          "lng": -82.09126372754636
+        }
+      },
+      "dispatchRouteCoverage": {
+        "calls": 6,
+        "reachable": 6,
+        "missing": []
+      }
+    },
+    {
+      "baseId": "chatham-kent-fire-14",
+      "name": "Station 14 — Erieau",
+      "address": "780 Ross Ln, Erieau, Chatham-Kent, Ontario",
+      "sourcePoint": {
+        "lat": 42.261216475248084,
+        "lng": -81.91991729422647
+      },
+      "drivingArea": {
+        "center": {
+          "lat": 42.261216475248084,
+          "lng": -81.91991729422647
+        },
+        "widthMetres": 60,
+        "lengthMetres": 70,
+        "rotationDegrees": 0,
+        "spawn": {
+          "lat": 42.261216475248084,
+          "lng": -81.91991729422647,
+          "headingDegrees": 0
+        },
+        "spawnOffsetFromCanonicalMetres": {
+          "east": 0,
+          "north": 0
+        }
+      },
+      "assessment": "estimated",
+      "observation": "Estimated individually from the captured Esri World Imagery zoom-19 view at 780 Ross Ln, Erieau, Chatham-Kent, Ontario: the visible fire station, immediate paved apron/parking and the site access aisle are fitted within this rectangle. Dimensions and orientation are image estimates; no apparatus door, gate or access right is verified.",
+      "imageEvidence": {
+        "screenshot": "artifacts/release-qa/base-fit-chatham-kent/chatham-kent-fire-14.png",
+        "scaleMetresPerPixel": 0.22072934244894704,
+        "nearbyRoadFeatures": [
+          {
+            "name": "Nichols Avenue",
+            "highway": "residential"
+          },
+          {
+            "name": "Mariners Road",
+            "highway": "secondary"
+          },
+          {
+            "name": "Samson Street",
+            "highway": "residential"
+          },
+          {
+            "name": "Kerr Avenue",
+            "highway": "residential"
+          },
+          {
+            "name": "Mariners Road",
+            "highway": "secondary"
+          },
+          {
+            "name": "Mariners Road",
+            "highway": "secondary"
+          },
+          {
+            "name": "Ross Lane",
+            "highway": "secondary"
+          },
+          {
+            "name": "Ross Lane",
+            "highway": "secondary"
+          },
+          {
+            "name": null,
+            "highway": "secondary"
+          },
+          {
+            "name": "Mariners Road",
+            "highway": "residential"
+          },
+          {
+            "name": "Mariners Road",
+            "highway": "residential"
+          },
+          {
+            "name": "Ross Lane",
+            "highway": "secondary"
+          }
+        ]
+      },
+      "runtimeCollision": {
+        "spawnInside": true,
+        "areaRoadAccess": true,
+        "spawnInitiallyDrivable": true,
+        "nearestRoad": {
+          "name": "Unnamed road",
+          "highway": "unclassified",
+          "distanceMetres": 27.78
+        },
+        "exitStarted": true,
+        "exitCompleted": true,
+        "blockedMoves": 0,
+        "movementSteps": 64,
+        "outsideExpandedDrivingArea": true,
+        "exitPoint": {
+          "lat": 42.26079662,
+          "lng": -81.9198004
+        }
+      },
+      "dispatchRouteCoverage": {
+        "calls": 6,
+        "reachable": 6,
+        "missing": []
+      }
+    },
+    {
+      "baseId": "chatham-kent-fire-15",
+      "name": "Station 15 — Raleigh",
+      "address": "7584 Sixth Line, Raleigh, Chatham-Kent, Ontario",
+      "sourcePoint": {
+        "lat": 42.35386844776246,
+        "lng": -82.20339786270345
+      },
+      "drivingArea": {
+        "center": {
+          "lat": 42.35386844776246,
+          "lng": -82.20339786270345
+        },
+        "widthMetres": 45,
+        "lengthMetres": 55,
+        "rotationDegrees": 45,
+        "spawn": {
+          "lat": 42.35386844776246,
+          "lng": -82.20339786270345,
+          "headingDegrees": 0
+        },
+        "spawnOffsetFromCanonicalMetres": {
+          "east": 0,
+          "north": 0
+        }
+      },
+      "assessment": "estimated",
+      "observation": "Estimated individually from the captured Esri World Imagery zoom-19 view at 7584 Sixth Line, Raleigh, Chatham-Kent, Ontario: the visible fire station, immediate paved apron/parking and the site access aisle are fitted within this rectangle. Dimensions and orientation are image estimates; no apparatus door, gate or access right is verified.",
+      "imageEvidence": {
+        "screenshot": "artifacts/release-qa/base-fit-chatham-kent/chatham-kent-fire-15.png",
+        "scaleMetresPerPixel": 0.22040470614802213,
+        "nearbyRoadFeatures": [
+          {
+            "name": "6th Line East",
+            "highway": "unclassified"
+          },
+          {
+            "name": null,
+            "highway": "service"
+          }
+        ]
+      },
+      "runtimeCollision": {
+        "spawnInside": true,
+        "areaRoadAccess": false,
+        "spawnInitiallyDrivable": true,
+        "nearestRoad": {
+          "name": "6th Line East",
+          "highway": "unclassified",
+          "distanceMetres": 41.86
+        },
+        "exitStarted": true,
+        "exitCompleted": true,
+        "blockedMoves": 0,
+        "movementSteps": 27,
+        "outsideExpandedDrivingArea": true,
+        "exitPoint": {
+          "lat": 42.35412743963984,
+          "lng": -82.20371766255501
+        }
+      },
+      "dispatchRouteCoverage": {
+        "calls": 8,
+        "reachable": 8,
+        "missing": []
+      }
+    },
+    {
+      "baseId": "chatham-kent-fire-16",
+      "name": "Station 16 — Raleigh",
+      "address": "20218 Dillon Rd, Raleigh, Chatham-Kent, Ontario",
+      "sourcePoint": {
+        "lat": 42.25874602103693,
+        "lng": -82.13247562092623
+      },
+      "drivingArea": {
+        "center": {
+          "lat": 42.25874602103693,
+          "lng": -82.13247562092623
+        },
+        "widthMetres": 50,
+        "lengthMetres": 60,
+        "rotationDegrees": 45,
+        "spawn": {
+          "lat": 42.25874602103693,
+          "lng": -82.13247562092623,
+          "headingDegrees": 0
+        },
+        "spawnOffsetFromCanonicalMetres": {
+          "east": 0,
+          "north": 0
+        }
+      },
+      "assessment": "estimated",
+      "observation": "Estimated individually from the captured Esri World Imagery zoom-19 view at 20218 Dillon Rd, Raleigh, Chatham-Kent, Ontario: the visible fire station, immediate paved apron/parking and the site access aisle are fitted within this rectangle. Dimensions and orientation are image estimates; no apparatus door, gate or access right is verified.",
+      "imageEvidence": {
+        "screenshot": "artifacts/release-qa/base-fit-chatham-kent/chatham-kent-fire-16.png",
+        "scaleMetresPerPixel": 0.2207379871201829,
+        "nearbyRoadFeatures": [
+          {
+            "name": "15th Line",
+            "highway": "unclassified"
+          },
+          {
+            "name": "Dillon Road",
+            "highway": "unclassified"
+          },
+          {
+            "name": "Fifteenth Line",
+            "highway": "unclassified"
+          },
+          {
+            "name": "Dillon Road",
+            "highway": "unclassified"
+          }
+        ]
+      },
+      "runtimeCollision": {
+        "spawnInside": true,
+        "areaRoadAccess": false,
+        "spawnInitiallyDrivable": true,
+        "nearestRoad": {
+          "name": "Fifteenth Line",
+          "highway": "unclassified",
+          "distanceMetres": 38.84
+        },
+        "exitStarted": true,
+        "exitCompleted": true,
+        "blockedMoves": 0,
+        "movementSteps": 50,
+        "outsideExpandedDrivingArea": true,
+        "exitPoint": {
+          "lat": 42.258698548903254,
+          "lng": -82.13185042492728
+        }
+      },
+      "dispatchRouteCoverage": {
+        "calls": 7,
+        "reachable": 7,
+        "missing": []
+      }
+    },
+    {
+      "baseId": "chatham-kent-fire-17",
+      "name": "Station 17 — Merlin",
+      "address": "108 Blake St, Merlin, Chatham-Kent, Ontario",
+      "sourcePoint": {
+        "lat": 42.24034499788345,
+        "lng": -82.23009515351507
+      },
+      "drivingArea": {
+        "center": {
+          "lat": 42.24034499788345,
+          "lng": -82.23009515351507
+        },
+        "widthMetres": 55,
+        "lengthMetres": 65,
+        "rotationDegrees": 0,
+        "spawn": {
+          "lat": 42.24034499788345,
+          "lng": -82.23009515351507,
+          "headingDegrees": 0
+        },
+        "spawnOffsetFromCanonicalMetres": {
+          "east": 0,
+          "north": 0
+        }
+      },
+      "assessment": "estimated",
+      "observation": "Estimated individually from the captured Esri World Imagery zoom-19 view at 108 Blake St, Merlin, Chatham-Kent, Ontario: the visible fire station, immediate paved apron/parking and the site access aisle are fitted within this rectangle. Dimensions and orientation are image estimates; no apparatus door, gate or access right is verified.",
+      "imageEvidence": {
+        "screenshot": "artifacts/release-qa/base-fit-chatham-kent/chatham-kent-fire-17.png",
+        "scaleMetresPerPixel": 0.22080238904307528,
+        "nearbyRoadFeatures": [
+          {
+            "name": "Blake Street",
+            "highway": "residential"
+          },
+          {
+            "name": "Hattie Street",
+            "highway": "residential"
+          },
+          {
+            "name": "Stanley Street",
+            "highway": "residential"
+          },
+          {
+            "name": "Sullivan Street",
+            "highway": "residential"
+          },
+          {
+            "name": "Sullivan Street",
+            "highway": "residential"
+          },
+          {
+            "name": "Blake Street",
+            "highway": "residential"
+          },
+          {
+            "name": "Crescent Lane",
+            "highway": "residential"
+          },
+          {
+            "name": "George Street",
+            "highway": "residential"
+          },
+          {
+            "name": "Sullivan Street",
+            "highway": "residential"
+          },
+          {
+            "name": "Blake Street",
+            "highway": "residential"
+          },
+          {
+            "name": "Hattie Street",
+            "highway": "residential"
+          },
+          {
+            "name": null,
+            "highway": "residential"
+          }
+        ]
+      },
+      "runtimeCollision": {
+        "spawnInside": true,
+        "areaRoadAccess": true,
+        "spawnInitiallyDrivable": true,
+        "nearestRoad": {
+          "name": "Blake Street",
+          "highway": "residential",
+          "distanceMetres": 18.58
+        },
+        "exitStarted": true,
+        "exitCompleted": true,
+        "blockedMoves": 0,
+        "movementSteps": 43,
+        "outsideExpandedDrivingArea": true,
+        "exitPoint": {
+          "lat": 42.23995723076923,
+          "lng": -82.23000271538461
+        }
+      },
+      "dispatchRouteCoverage": {
+        "calls": 6,
+        "reachable": 6,
+        "missing": []
+      }
+    },
+    {
+      "baseId": "chatham-kent-fire-18",
+      "name": "Station 18 — Blenheim",
+      "address": "2 Charles St, Blenheim, Chatham-Kent, Ontario",
+      "sourcePoint": {
+        "lat": 42.33402589130718,
+        "lng": -81.99346737806187
+      },
+      "drivingArea": {
+        "center": {
+          "lat": 42.33402589130718,
+          "lng": -81.99346737806187
+        },
+        "widthMetres": 70,
+        "lengthMetres": 80,
+        "rotationDegrees": 0,
+        "spawn": {
+          "lat": 42.33402589130718,
+          "lng": -81.99346737806187,
+          "headingDegrees": 0
+        },
+        "spawnOffsetFromCanonicalMetres": {
+          "east": 0,
+          "north": 0
+        }
+      },
+      "assessment": "estimated",
+      "observation": "Estimated individually from the captured Esri World Imagery zoom-19 view at 2 Charles St, Blenheim, Chatham-Kent, Ontario: the visible fire station, immediate paved apron/parking and the site access aisle are fitted within this rectangle. Dimensions and orientation are image estimates; no apparatus door, gate or access right is verified.",
+      "imageEvidence": {
+        "screenshot": "artifacts/release-qa/base-fit-chatham-kent/chatham-kent-fire-18.png",
+        "scaleMetresPerPixel": 0.2204742788854863,
+        "nearbyRoadFeatures": [
+          {
+            "name": "Marlborough Street South",
+            "highway": "secondary"
+          },
+          {
+            "name": "Sandys Street",
+            "highway": "residential"
+          },
+          {
+            "name": "Elizabeth Street",
+            "highway": "residential"
+          },
+          {
+            "name": "John Street",
+            "highway": "residential"
+          },
+          {
+            "name": "Joseph Street",
+            "highway": "residential"
+          },
+          {
+            "name": "Charles Street",
+            "highway": "residential"
+          },
+          {
+            "name": "King Street",
+            "highway": "residential"
+          },
+          {
+            "name": "Hall Street",
+            "highway": "residential"
+          },
+          {
+            "name": "Sandys Street",
+            "highway": "residential"
+          },
+          {
+            "name": "Regent Street",
+            "highway": "residential"
+          },
+          {
+            "name": "John Street",
+            "highway": "residential"
+          },
+          {
+            "name": "Wellington Street",
+            "highway": "residential"
+          }
+        ]
+      },
+      "runtimeCollision": {
+        "spawnInside": true,
+        "areaRoadAccess": true,
+        "spawnInitiallyDrivable": true,
+        "nearestRoad": {
+          "name": "Charles Street",
+          "highway": "residential",
+          "distanceMetres": 26.61
+        },
+        "exitStarted": true,
+        "exitCompleted": true,
+        "blockedMoves": 0,
+        "movementSteps": 47,
+        "outsideExpandedDrivingArea": true,
+        "exitPoint": {
+          "lat": 42.33394492222222,
+          "lng": -81.99401496666667
+        }
+      },
+      "dispatchRouteCoverage": {
+        "calls": 6,
+        "reachable": 6,
+        "missing": []
+      }
+    },
+    {
+      "baseId": "chatham-kent-fire-19",
+      "name": "Station 19 — Tilbury",
+      "address": "9 Superior St, Tilbury, Chatham-Kent, Ontario",
+      "sourcePoint": {
+        "lat": 42.26109194984508,
+        "lng": -82.43314718061532
+      },
+      "drivingArea": {
+        "center": {
+          "lat": 42.26109194984508,
+          "lng": -82.43314718061532
+        },
+        "widthMetres": 65,
+        "lengthMetres": 75,
+        "rotationDegrees": 0,
+        "spawn": {
+          "lat": 42.26109194984508,
+          "lng": -82.43314718061532,
+          "headingDegrees": 0
+        },
+        "spawnOffsetFromCanonicalMetres": {
+          "east": 0,
+          "north": 0
+        }
+      },
+      "assessment": "estimated",
+      "observation": "Estimated individually from the captured Esri World Imagery zoom-19 view at 9 Superior St, Tilbury, Chatham-Kent, Ontario: the visible fire station, immediate paved apron/parking and the site access aisle are fitted within this rectangle. Dimensions and orientation are image estimates; no apparatus door, gate or access right is verified.",
+      "imageEvidence": {
+        "screenshot": "artifacts/release-qa/base-fit-chatham-kent/chatham-kent-fire-19.png",
+        "scaleMetresPerPixel": 0.22072977329438273,
+        "nearbyRoadFeatures": [
+          {
+            "name": "Queen Street South",
+            "highway": "secondary"
+          },
+          {
+            "name": "Mill Street West",
+            "highway": "secondary"
+          },
+          {
+            "name": "Canal Street East",
+            "highway": "tertiary"
+          },
+          {
+            "name": "Fort Street",
+            "highway": "residential"
+          },
+          {
+            "name": "Young Street",
+            "highway": "residential"
+          },
+          {
+            "name": "Canal Street West",
+            "highway": "tertiary"
+          },
+          {
+            "name": "St. Clair Street",
+            "highway": "residential"
+          },
+          {
+            "name": "Canal Street East",
+            "highway": "tertiary"
+          },
+          {
+            "name": null,
+            "highway": "residential"
+          },
+          {
+            "name": "Lyon Street North",
+            "highway": "residential"
+          },
+          {
+            "name": "Elm Street North",
+            "highway": "residential"
+          },
+          {
+            "name": "Prospect Street",
+            "highway": "residential"
+          }
+        ]
+      },
+      "runtimeCollision": {
+        "spawnInside": true,
+        "areaRoadAccess": true,
+        "spawnInitiallyDrivable": true,
+        "nearestRoad": {
+          "name": "Unnamed road",
+          "highway": "service",
+          "distanceMetres": 20.63
+        },
+        "exitStarted": true,
+        "exitCompleted": true,
+        "blockedMoves": 0,
+        "movementSteps": 48,
+        "outsideExpandedDrivingArea": true,
+        "exitPoint": {
+          "lat": 42.260949008695654,
+          "lng": -82.43262994782609
+        }
+      },
+      "dispatchRouteCoverage": {
+        "calls": 6,
+        "reachable": 6,
+        "missing": []
+      }
+    },
+    {
+      "baseId": "chatham-kent-fire-20",
+      "name": "Station 20 — Wheatley",
+      "address": "130 Talbot Trail, Wheatley, Chatham-Kent, Ontario",
+      "sourcePoint": {
+        "lat": 42.093495892813394,
+        "lng": -82.4675344777922
+      },
+      "drivingArea": {
+        "center": {
+          "lat": 42.093495892813394,
+          "lng": -82.4675344777922
+        },
+        "widthMetres": 60,
+        "lengthMetres": 70,
+        "rotationDegrees": 0,
+        "spawn": {
+          "lat": 42.093495892813394,
+          "lng": -82.4675344777922,
+          "headingDegrees": 0
+        },
+        "spawnOffsetFromCanonicalMetres": {
+          "east": 0,
+          "north": 0
+        }
+      },
+      "assessment": "estimated",
+      "observation": "Estimated individually from the captured Esri World Imagery zoom-19 view at 130 Talbot Trail, Wheatley, Chatham-Kent, Ontario: the visible fire station, immediate paved apron/parking and the site access aisle are fitted within this rectangle. Dimensions and orientation are image estimates; no apparatus door, gate or access right is verified.",
+      "imageEvidence": {
+        "screenshot": "artifacts/release-qa/base-fit-chatham-kent/chatham-kent-fire-20.png",
+        "scaleMetresPerPixel": 0.22131553449050764,
+        "nearbyRoadFeatures": [
+          {
+            "name": "Julian Street",
+            "highway": "residential"
+          },
+          {
+            "name": "Victoria Street",
+            "highway": "residential"
+          },
+          {
+            "name": "Foster Street",
+            "highway": "residential"
+          },
+          {
+            "name": "Buchanan Street",
+            "highway": "residential"
+          },
+          {
+            "name": "Robinson Street",
+            "highway": "residential"
+          },
+          {
+            "name": "Foster Street",
+            "highway": "residential"
+          },
+          {
+            "name": "Foster Street",
+            "highway": "residential"
+          },
+          {
+            "name": "Buchanan Street",
+            "highway": "residential"
+          },
+          {
+            "name": "Talbot Trail",
+            "highway": "secondary"
+          },
+          {
+            "name": "Talbot Trail",
+            "highway": "secondary"
+          },
+          {
+            "name": null,
+            "highway": "service"
+          }
+        ]
+      },
+      "runtimeCollision": {
+        "spawnInside": true,
+        "areaRoadAccess": false,
+        "spawnInitiallyDrivable": true,
+        "nearestRoad": {
+          "name": "Talbot Trail",
+          "highway": "secondary",
+          "distanceMetres": 48.75
+        },
+        "exitStarted": true,
+        "exitCompleted": true,
+        "blockedMoves": 0,
+        "movementSteps": 34,
+        "outsideExpandedDrivingArea": true,
+        "exitPoint": {
+          "lat": 42.09391529750375,
+          "lng": -82.4677178580026
+        }
+      },
+      "dispatchRouteCoverage": {
+        "calls": 6,
+        "reachable": 6,
+        "missing": []
+      }
+    },
+    {
+      "baseId": "chatham-kent-ems-chatham",
+      "name": "Chatham response station and headquarters",
+      "address": "337 Richmond Street, Chatham, Chatham-Kent, Ontario",
+      "sourcePoint": {
+        "lat": 42.394684612016526,
+        "lng": -82.19438607895832
+      },
+      "drivingArea": {
+        "center": {
+          "lat": 42.394684612016526,
+          "lng": -82.19438607895832
+        },
+        "widthMetres": 75,
+        "lengthMetres": 85,
+        "rotationDegrees": 0,
+        "spawn": {
+          "lat": 42.394684612016526,
+          "lng": -82.19438607895832,
+          "headingDegrees": 0
+        },
+        "spawnOffsetFromCanonicalMetres": {
+          "east": 0,
+          "north": 0
+        }
+      },
+      "assessment": "estimated",
+      "observation": "Estimated individually from the captured Esri World Imagery zoom-19 view at 337 Richmond Street, Chatham, Chatham-Kent, Ontario: the visible paramedic facility, immediate paved apron/parking and the site access aisle are fitted within this rectangle. Dimensions and orientation are image estimates; no apparatus door, gate or access right is verified.",
+      "imageEvidence": {
+        "screenshot": "artifacts/release-qa/base-fit-chatham-kent/chatham-kent-ems-chatham.png",
+        "scaleMetresPerPixel": 0.2202615081612972,
+        "nearbyRoadFeatures": [
+          {
+            "name": "Crystal Drive",
+            "highway": "residential"
+          },
+          {
+            "name": "Phyllis Avenue",
+            "highway": "residential"
+          },
+          {
+            "name": "Buckingham Avenue",
+            "highway": "residential"
+          },
+          {
+            "name": "Robertson Avenue",
+            "highway": "residential"
+          },
+          {
+            "name": "Phillip Street",
+            "highway": "residential"
+          },
+          {
+            "name": "Harvey Street",
+            "highway": "residential"
+          },
+          {
+            "name": "Currie Street",
+            "highway": "unclassified"
+          },
+          {
+            "name": "Leeson Drive",
+            "highway": "unclassified"
+          },
+          {
+            "name": "Merritt Avenue",
+            "highway": "tertiary"
+          },
+          {
+            "name": "Byng Avenue",
+            "highway": "unclassified"
+          },
+          {
+            "name": "Richmond Court",
+            "highway": "unclassified"
+          },
+          {
+            "name": "Patteson Avenue",
+            "highway": "unclassified"
+          }
+        ]
+      },
+      "runtimeCollision": {
+        "spawnInside": true,
+        "areaRoadAccess": true,
+        "spawnInitiallyDrivable": true,
+        "nearestRoad": {
+          "name": "Unnamed road",
+          "highway": "service",
+          "distanceMetres": 19
+        },
+        "exitStarted": true,
+        "exitCompleted": true,
+        "blockedMoves": 0,
+        "movementSteps": 80,
+        "outsideExpandedDrivingArea": true,
+        "exitPoint": {
+          "lat": 42.3942048,
+          "lng": -82.19414712105264
+        }
+      },
+      "dispatchRouteCoverage": {
+        "calls": 6,
+        "reachable": 6,
+        "missing": []
+      }
+    },
+    {
+      "baseId": "chatham-kent-ems-ridgetown",
+      "name": "Ridgetown response station",
+      "address": "116 Main Street West, Ridgetown, Chatham-Kent, Ontario",
+      "sourcePoint": {
+        "lat": 42.433720842037786,
+        "lng": -81.89433276166861
+      },
+      "drivingArea": {
+        "center": {
+          "lat": 42.433720842037786,
+          "lng": -81.89433276166861
+        },
+        "widthMetres": 40,
+        "lengthMetres": 45,
+        "rotationDegrees": 0,
+        "spawn": {
+          "lat": 42.433720842037786,
+          "lng": -81.89433276166861,
+          "headingDegrees": 0
+        },
+        "spawnOffsetFromCanonicalMetres": {
+          "east": 0,
+          "north": 0
+        }
+      },
+      "assessment": "estimated",
+      "observation": "Estimated individually from the captured Esri World Imagery zoom-19 view at 116 Main Street West, Ridgetown, Chatham-Kent, Ontario: the visible paramedic facility, immediate paved apron/parking and the site access aisle are fitted within this rectangle. Dimensions and orientation are image estimates; no apparatus door, gate or access right is verified.",
+      "imageEvidence": {
+        "screenshot": "artifacts/release-qa/base-fit-chatham-kent/chatham-kent-ems-ridgetown.png",
+        "scaleMetresPerPixel": 0.22012445194374033,
+        "nearbyRoadFeatures": [
+          {
+            "name": "York Street",
+            "highway": "residential"
+          },
+          {
+            "name": "George Street",
+            "highway": "residential"
+          },
+          {
+            "name": "Henry Street",
+            "highway": "unclassified"
+          },
+          {
+            "name": "Henry Street",
+            "highway": "residential"
+          },
+          {
+            "name": "Ebenezer Street",
+            "highway": "residential"
+          },
+          {
+            "name": "Maple Street",
+            "highway": "residential"
+          },
+          {
+            "name": "Maple Street",
+            "highway": "residential"
+          },
+          {
+            "name": "Henry Street",
+            "highway": "unclassified"
+          },
+          {
+            "name": "Maple Street",
+            "highway": "residential"
+          },
+          {
+            "name": "Ridge Line",
+            "highway": "secondary"
+          },
+          {
+            "name": "Ridge Line",
+            "highway": "secondary"
+          }
+        ]
+      },
+      "runtimeCollision": {
+        "spawnInside": true,
+        "areaRoadAccess": false,
+        "spawnInitiallyDrivable": true,
+        "nearestRoad": {
+          "name": "Ridge Line",
+          "highway": "secondary",
+          "distanceMetres": 34.86
+        },
+        "exitStarted": true,
+        "exitCompleted": true,
+        "blockedMoves": 0,
+        "movementSteps": 31,
+        "outsideExpandedDrivingArea": true,
+        "exitPoint": {
+          "lat": 42.43389529114256,
+          "lng": -81.89470248749912
+        }
+      },
+      "dispatchRouteCoverage": {
+        "calls": 6,
+        "reachable": 6,
+        "missing": []
+      }
+    },
+    {
+      "baseId": "chatham-kent-ems-wallaceburg",
+      "name": "Wallaceburg response station",
+      "address": "7075 Base Line, Wallaceburg, Chatham-Kent, Ontario",
+      "sourcePoint": {
+        "lat": 42.58008068409403,
+        "lng": -82.37683006444743
+      },
+      "drivingArea": {
+        "center": {
+          "lat": 42.58008068409403,
+          "lng": -82.37683006444743
+        },
+        "widthMetres": 60,
+        "lengthMetres": 70,
+        "rotationDegrees": 45,
+        "spawn": {
+          "lat": 42.58008068409403,
+          "lng": -82.37683006444743,
+          "headingDegrees": 0
+        },
+        "spawnOffsetFromCanonicalMetres": {
+          "east": 0,
+          "north": 0
+        }
+      },
+      "assessment": "estimated",
+      "observation": "Estimated individually from the captured Esri World Imagery zoom-19 view at 7075 Base Line, Wallaceburg, Chatham-Kent, Ontario: the visible paramedic facility, immediate paved apron/parking and the site access aisle are fitted within this rectangle. Dimensions and orientation are image estimates; no apparatus door, gate or access right is verified.",
+      "imageEvidence": {
+        "screenshot": "artifacts/release-qa/base-fit-chatham-kent/chatham-kent-ems-wallaceburg.png",
+        "scaleMetresPerPixel": 0.21960968134363415,
+        "nearbyRoadFeatures": [
+          {
+            "name": "Albert Street",
+            "highway": "residential"
+          },
+          {
+            "name": "Baseline",
+            "highway": "secondary"
+          },
+          {
+            "name": "Brownlee Street",
+            "highway": "residential"
+          },
+          {
+            "name": "Baseline",
+            "highway": "secondary"
+          },
+          {
+            "name": "Albert Street",
+            "highway": "residential"
+          },
+          {
+            "name": "Canary Crescent",
+            "highway": "residential"
+          },
+          {
+            "name": "Franklin Avenue",
+            "highway": "residential"
+          },
+          {
+            "name": "Albert Street",
+            "highway": "residential"
+          },
+          {
+            "name": "Brownlee Crescent",
+            "highway": "residential"
+          },
+          {
+            "name": "Brownlee Crescent",
+            "highway": "residential"
+          },
+          {
+            "name": "Cedar Crescent",
+            "highway": "residential"
+          },
+          {
+            "name": "Albert Street",
+            "highway": "residential"
+          }
+        ]
+      },
+      "runtimeCollision": {
+        "spawnInside": true,
+        "areaRoadAccess": true,
+        "spawnInitiallyDrivable": true,
+        "nearestRoad": {
+          "name": "Albert Street",
+          "highway": "residential",
+          "distanceMetres": 25.4
+        },
+        "exitStarted": true,
+        "exitCompleted": true,
+        "blockedMoves": 0,
+        "movementSteps": 40,
+        "outsideExpandedDrivingArea": true,
+        "exitPoint": {
+          "lat": 42.5798248054945,
+          "lng": -82.37718090219781
+        }
+      },
+      "dispatchRouteCoverage": {
+        "calls": 6,
+        "reachable": 6,
+        "missing": []
+      }
+    },
+    {
+      "baseId": "chatham-kent-ems-blenheim",
+      "name": "Blenheim response station (shared Fire Station18)",
+      "address": "2 Charles Street, Blenheim, Chatham-Kent, Ontario",
+      "sourcePoint": {
+        "lat": 42.33402589130718,
+        "lng": -81.99346737806187
+      },
+      "drivingArea": {
+        "center": {
+          "lat": 42.33402589130718,
+          "lng": -81.99346737806187
+        },
+        "widthMetres": 70,
+        "lengthMetres": 80,
+        "rotationDegrees": 0,
+        "spawn": {
+          "lat": 42.33402589130718,
+          "lng": -81.99346737806187,
+          "headingDegrees": 0
+        },
+        "spawnOffsetFromCanonicalMetres": {
+          "east": 0,
+          "north": 0
+        }
+      },
+      "assessment": "estimated",
+      "observation": "Shared imagery fit with chatham-kent-fire-18 at the same official address and source coordinates (2 Charles Street, Blenheim, Chatham-Kent, Ontario); the capture shows the co-located facility parcel, visible apron/parking and access aisle. This does not identify an EMS-only bay or entrance.",
+      "imageEvidence": {
+        "screenshot": "artifacts/release-qa/base-fit-chatham-kent/chatham-kent-ems-blenheim.png",
+        "scaleMetresPerPixel": 0.2204742788854863,
+        "nearbyRoadFeatures": [
+          {
+            "name": "Marlborough Street South",
+            "highway": "secondary"
+          },
+          {
+            "name": "Sandys Street",
+            "highway": "residential"
+          },
+          {
+            "name": "Elizabeth Street",
+            "highway": "residential"
+          },
+          {
+            "name": "John Street",
+            "highway": "residential"
+          },
+          {
+            "name": "Joseph Street",
+            "highway": "residential"
+          },
+          {
+            "name": "Charles Street",
+            "highway": "residential"
+          },
+          {
+            "name": "King Street",
+            "highway": "residential"
+          },
+          {
+            "name": "Hall Street",
+            "highway": "residential"
+          },
+          {
+            "name": "Sandys Street",
+            "highway": "residential"
+          },
+          {
+            "name": "Regent Street",
+            "highway": "residential"
+          },
+          {
+            "name": "John Street",
+            "highway": "residential"
+          },
+          {
+            "name": "Wellington Street",
+            "highway": "residential"
+          }
+        ]
+      },
+      "runtimeCollision": {
+        "spawnInside": true,
+        "areaRoadAccess": true,
+        "spawnInitiallyDrivable": true,
+        "nearestRoad": {
+          "name": "Charles Street",
+          "highway": "residential",
+          "distanceMetres": 26.61
+        },
+        "exitStarted": true,
+        "exitCompleted": true,
+        "blockedMoves": 0,
+        "movementSteps": 47,
+        "outsideExpandedDrivingArea": true,
+        "exitPoint": {
+          "lat": 42.33394492222222,
+          "lng": -81.99401496666667
+        }
+      },
+      "dispatchRouteCoverage": {
+        "calls": 6,
+        "reachable": 6,
+        "missing": []
+      },
+      "sharedFitWith": "chatham-kent-fire-18 at the same official address and source coordinates (2 Charles Street, Blenheim, Chatham-Kent, Ontario)"
+    },
+    {
+      "baseId": "chatham-kent-ems-thamesville",
+      "name": "Thamesville response station (shared Fire Station8)",
+      "address": "48 Jane Road, Thamesville, Chatham-Kent, Ontario",
+      "sourcePoint": {
+        "lat": 42.554842525488084,
+        "lng": -81.98280503462955
+      },
+      "drivingArea": {
+        "center": {
+          "lat": 42.554842525488084,
+          "lng": -81.98280503462955
+        },
+        "widthMetres": 60,
+        "lengthMetres": 70,
+        "rotationDegrees": 45,
+        "spawn": {
+          "lat": 42.554842525488084,
+          "lng": -81.98280503462955,
+          "headingDegrees": 0
+        },
+        "spawnOffsetFromCanonicalMetres": {
+          "east": 0,
+          "north": 0
+        }
+      },
+      "assessment": "estimated",
+      "observation": "Shared imagery fit with chatham-kent-fire-8 at the same official address and source coordinates (48 Jane Road, Thamesville, Chatham-Kent, Ontario); the capture shows the co-located facility parcel, visible apron/parking and access aisle. This does not identify an EMS-only bay or entrance.",
+      "imageEvidence": {
+        "screenshot": "artifacts/release-qa/base-fit-chatham-kent/chatham-kent-ems-thamesville.png",
+        "scaleMetresPerPixel": 0.21969854926350202,
+        "nearbyRoadFeatures": [
+          {
+            "name": "Victoria Road",
+            "highway": "secondary"
+          },
+          {
+            "name": "Industrial Road",
+            "highway": "secondary"
+          },
+          {
+            "name": "Jane Street",
+            "highway": "secondary"
+          },
+          {
+            "name": "Ann Street",
+            "highway": "residential"
+          },
+          {
+            "name": "Lemuel Street",
+            "highway": "residential"
+          },
+          {
+            "name": "William Street",
+            "highway": "residential"
+          },
+          {
+            "name": "Victoria Street",
+            "highway": "residential"
+          }
+        ]
+      },
+      "runtimeCollision": {
+        "spawnInside": true,
+        "areaRoadAccess": true,
+        "spawnInitiallyDrivable": true,
+        "nearestRoad": {
+          "name": "Victoria Road",
+          "highway": "secondary",
+          "distanceMetres": 37.33
+        },
+        "exitStarted": true,
+        "exitCompleted": true,
+        "blockedMoves": 0,
+        "movementSteps": 45,
+        "outsideExpandedDrivingArea": true,
+        "exitPoint": {
+          "lat": 42.55521504604591,
+          "lng": -81.98307846966273
+        }
+      },
+      "dispatchRouteCoverage": {
+        "calls": 6,
+        "reachable": 6,
+        "missing": []
+      },
+      "sharedFitWith": "chatham-kent-fire-8 at the same official address and source coordinates (48 Jane Road, Thamesville, Chatham-Kent, Ontario)"
+    },
+    {
+      "baseId": "chatham-kent-ems-tilbury",
+      "name": "Tilbury response station (shared Fire Station19)",
+      "address": "9 Superior Street, Tilbury, Chatham-Kent, Ontario",
+      "sourcePoint": {
+        "lat": 42.26109194984508,
+        "lng": -82.43314718061532
+      },
+      "drivingArea": {
+        "center": {
+          "lat": 42.26109194984508,
+          "lng": -82.43314718061532
+        },
+        "widthMetres": 65,
+        "lengthMetres": 75,
+        "rotationDegrees": 0,
+        "spawn": {
+          "lat": 42.26109194984508,
+          "lng": -82.43314718061532,
+          "headingDegrees": 0
+        },
+        "spawnOffsetFromCanonicalMetres": {
+          "east": 0,
+          "north": 0
+        }
+      },
+      "assessment": "estimated",
+      "observation": "Shared imagery fit with chatham-kent-fire-19 at the same official address and source coordinates (9 Superior Street, Tilbury, Chatham-Kent, Ontario); the capture shows the co-located facility parcel, visible apron/parking and access aisle. This does not identify an EMS-only bay or entrance.",
+      "imageEvidence": {
+        "screenshot": "artifacts/release-qa/base-fit-chatham-kent/chatham-kent-ems-tilbury.png",
+        "scaleMetresPerPixel": 0.22072977329438273,
+        "nearbyRoadFeatures": [
+          {
+            "name": "Queen Street South",
+            "highway": "secondary"
+          },
+          {
+            "name": "Mill Street West",
+            "highway": "secondary"
+          },
+          {
+            "name": "Canal Street East",
+            "highway": "tertiary"
+          },
+          {
+            "name": "Fort Street",
+            "highway": "residential"
+          },
+          {
+            "name": "Young Street",
+            "highway": "residential"
+          },
+          {
+            "name": "Canal Street West",
+            "highway": "tertiary"
+          },
+          {
+            "name": "St. Clair Street",
+            "highway": "residential"
+          },
+          {
+            "name": "Canal Street East",
+            "highway": "tertiary"
+          },
+          {
+            "name": null,
+            "highway": "residential"
+          },
+          {
+            "name": "Lyon Street North",
+            "highway": "residential"
+          },
+          {
+            "name": "Elm Street North",
+            "highway": "residential"
+          },
+          {
+            "name": "Prospect Street",
+            "highway": "residential"
+          }
+        ]
+      },
+      "runtimeCollision": {
+        "spawnInside": true,
+        "areaRoadAccess": true,
+        "spawnInitiallyDrivable": true,
+        "nearestRoad": {
+          "name": "Unnamed road",
+          "highway": "service",
+          "distanceMetres": 20.63
+        },
+        "exitStarted": true,
+        "exitCompleted": true,
+        "blockedMoves": 0,
+        "movementSteps": 48,
+        "outsideExpandedDrivingArea": true,
+        "exitPoint": {
+          "lat": 42.260949008695654,
+          "lng": -82.43262994782609
+        }
+      },
+      "dispatchRouteCoverage": {
+        "calls": 6,
+        "reachable": 6,
+        "missing": []
+      },
+      "sharedFitWith": "chatham-kent-fire-19 at the same official address and source coordinates (9 Superior Street, Tilbury, Chatham-Kent, Ontario)"
+    }
+  ],
+  "runtimeCollisionChecks": {
+    "artifact": "artifacts/release-qa/base-fit/chatham-kent-driving-area-checks.json",
+    "bases": 25,
+    "continuousExits": 25,
+    "blockedMoves": 0,
+    "note": "Continuous real-route collision-model samples through the yard boundary; not a physical full-route drive."
+  },
+  "dispatchRouteCoverage": {
+    "checkedLocalDate": "2026-11-02",
+    "device": "mobile browser route-only QA",
+    "fireTotals": {
+      "bases": 19,
+      "calls": 126,
+      "reachable": 126,
+      "failures": 0
+    },
+    "fireBases": [
+      {
+        "baseId": "fire-chatham-kent-fire-1",
+        "calls": 8,
+        "reachable": 8,
+        "missing": []
+      },
+      {
+        "baseId": "fire-chatham-kent-fire-2",
+        "calls": 8,
+        "reachable": 8,
+        "missing": []
+      },
+      {
+        "baseId": "fire-chatham-kent-fire-3",
+        "calls": 8,
+        "reachable": 8,
+        "missing": []
+      },
+      {
+        "baseId": "fire-chatham-kent-fire-4",
+        "calls": 6,
+        "reachable": 6,
+        "missing": []
+      },
+      {
+        "baseId": "fire-chatham-kent-fire-5",
+        "calls": 7,
+        "reachable": 7,
+        "missing": []
+      },
+      {
+        "baseId": "fire-chatham-kent-fire-6",
+        "calls": 6,
+        "reachable": 6,
+        "missing": []
+      },
+      {
+        "baseId": "fire-chatham-kent-fire-7",
+        "calls": 8,
+        "reachable": 8,
+        "missing": []
+      },
+      {
+        "baseId": "fire-chatham-kent-fire-8",
+        "calls": 6,
+        "reachable": 6,
+        "missing": []
+      },
+      {
+        "baseId": "fire-chatham-kent-fire-9",
+        "calls": 6,
+        "reachable": 6,
+        "missing": []
+      },
+      {
+        "baseId": "fire-chatham-kent-fire-10",
+        "calls": 6,
+        "reachable": 6,
+        "missing": []
+      },
+      {
+        "baseId": "fire-chatham-kent-fire-11",
+        "calls": 6,
+        "reachable": 6,
+        "missing": []
+      },
+      {
+        "baseId": "fire-chatham-kent-fire-12",
+        "calls": 6,
+        "reachable": 6,
+        "missing": []
+      },
+      {
+        "baseId": "fire-chatham-kent-fire-14",
+        "calls": 6,
+        "reachable": 6,
+        "missing": []
+      },
+      {
+        "baseId": "fire-chatham-kent-fire-15",
+        "calls": 8,
+        "reachable": 8,
+        "missing": []
+      },
+      {
+        "baseId": "fire-chatham-kent-fire-16",
+        "calls": 7,
+        "reachable": 7,
+        "missing": []
+      },
+      {
+        "baseId": "fire-chatham-kent-fire-17",
+        "calls": 6,
+        "reachable": 6,
+        "missing": []
+      },
+      {
+        "baseId": "fire-chatham-kent-fire-18",
+        "calls": 6,
+        "reachable": 6,
+        "missing": []
+      },
+      {
+        "baseId": "fire-chatham-kent-fire-19",
+        "calls": 6,
+        "reachable": 6,
+        "missing": []
+      },
+      {
+        "baseId": "fire-chatham-kent-fire-20",
+        "calls": 6,
+        "reachable": 6,
+        "missing": []
+      }
+    ],
+    "emsTotals": {
+      "bases": 6,
+      "calls": 36,
+      "reachable": 36,
+      "failures": 0
+    },
+    "emsBases": [
+      {
+        "baseId": "ems-chatham-kent-ems-thamesville",
+        "calls": 6,
+        "reachable": 6,
+        "missing": []
+      },
+      {
+        "baseId": "ems-chatham-kent-ems-blenheim",
+        "calls": 6,
+        "reachable": 6,
+        "missing": []
+      },
+      {
+        "baseId": "ems-chatham-kent-ems-tilbury",
+        "calls": 6,
+        "reachable": 6,
+        "missing": []
+      },
+      {
+        "baseId": "ems-chatham-kent-ems-chatham",
+        "calls": 6,
+        "reachable": 6,
+        "missing": []
+      },
+      {
+        "baseId": "ems-chatham-kent-ems-ridgetown",
+        "calls": 6,
+        "reachable": 6,
+        "missing": []
+      },
+      {
+        "baseId": "ems-chatham-kent-ems-wallaceburg",
+        "calls": 6,
+        "reachable": 6,
+        "missing": []
+      }
+    ],
+    "artifact": "artifacts/release-qa/base-fit-chatham-kent/dispatch-qa/route-coverage.json"
+  }
+}

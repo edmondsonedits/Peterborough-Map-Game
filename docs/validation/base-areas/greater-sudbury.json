@@ -1,0 +1,3353 @@
+{
+  "schemaVersion": 1,
+  "cityId": "greater-sudbury",
+  "reviewedLocalDate": "2026-11-02",
+  "assessment": "estimated",
+  "imagery": {
+    "provider": "Esri World Imagery",
+    "tileUrl": "https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}",
+    "capturedLocalDate": "2026-11-02",
+    "captureTimestamp": "2026-11-03T03:30:10.795Z",
+    "vintage": "not supplied by tile response",
+    "zoom": 19,
+    "method": "Reviewed independent zoom-19 imagery captures for all 30 eligible Fire/EMS sites at average scale 0.205 m/pixel. Each rectangle follows the visible building, immediate paved apron/parking and site access aisle; fit dimensions and rotation are estimates, not surveyed boundaries.",
+    "captureDirectory": "artifacts/release-qa/base-fit-greater-sudbury/"
+  },
+  "roads": {
+    "file": "cities/greater-sudbury/roads.geojson.gz",
+    "source": "OpenStreetMap via Geofabrik Ontario extract",
+    "sourceTimestamp": "2026-09-27T20:23:36Z",
+    "snapshotBuiltAt": "2026-10-29T04:11:40.785Z",
+    "sourceSha256": "ebb50b39682d2381ad3c1d21e005b48cec3397e15da0d72c5d76c7d20d8dd249",
+    "packagedSha256": "66cd652ddc38ef25c8bcb6557687c01d61e05bcec8b606a5d983c20c27332c26",
+    "sourceUrl": "https://download.geofabrik.de/north-america/canada/ontario.html",
+    "attribution": "© OpenStreetMap contributors",
+    "assessment": "Packaged road/service geometry was reviewed with imagery. Runtime QA follows an actual response route through the fitted-yard boundary; mapped graph segments do not verify private driveway rights or apparatus doors."
+  },
+  "limits": [
+    "No official station parcel or building-footprint polygons were used.",
+    "Dimensions, centers, rotations and modeled spawn coordinates are imagery/road-geometry estimates, not surveyed measurements.",
+    "Imagery does not verify apparatus bays, access controls, current pavement, occupancy or driveway rights.",
+    "Canonical IDs and source coordinates remain unchanged.",
+    "Collision QA follows a real route from the modeled spawn until at least 10 m outside the expanded fitted yard and checks movement in 1.5 m increments; it verifies the modeled collision transition, not sustained manual driving or real-world emergency-response suitability.",
+    "A shared Fire/EMS fit denotes an identical official address and source coordinate; it does not identify an EMS-only bay or entrance."
+  ],
+  "bases": [
+    {
+      "baseId": "greater-sudbury-fire-1",
+      "name": "Station 1 — Van Horne (Main Station)",
+      "address": "193 Van Horne Street",
+      "sourcePoint": {
+        "lat": 46.48744001132133,
+        "lng": -80.99004528426735
+      },
+      "drivingArea": {
+        "center": {
+          "lat": 46.48744001132133,
+          "lng": -80.99004528426735
+        },
+        "widthMetres": 95,
+        "lengthMetres": 105,
+        "rotationDegrees": 0,
+        "spawn": {
+          "lat": 46.48744001132133,
+          "lng": -80.99004528426735,
+          "headingDegrees": 0
+        },
+        "spawnOffsetFromCanonicalMetres": {
+          "east": 0,
+          "north": 0
+        }
+      },
+      "assessment": "estimated",
+      "observation": "Estimated individually from the captured Esri World Imagery zoom-19 view at 193 Van Horne Street: the visible fire station, immediate paved apron/parking and the site access aisle are fitted within this rectangle. Dimensions and orientation are image estimates; no apparatus door, gate or access right is verified.",
+      "imageEvidence": {
+        "screenshot": "artifacts/release-qa/base-fit-greater-sudbury/greater-sudbury-fire-1.png",
+        "scaleMetresPerPixel": 0.205347817987432,
+        "nearbyRoadFeatures": [
+          {
+            "name": "St. Brendan Street",
+            "highway": "residential"
+          },
+          {
+            "name": "Edinburgh Street",
+            "highway": "residential"
+          },
+          {
+            "name": "Morris Street",
+            "highway": "tertiary"
+          },
+          {
+            "name": "Worthington Crescent",
+            "highway": "tertiary"
+          },
+          {
+            "name": "Druides Street",
+            "highway": "unclassified"
+          },
+          {
+            "name": "Marion Street",
+            "highway": "tertiary"
+          },
+          {
+            "name": "Grey Street",
+            "highway": "tertiary"
+          },
+          {
+            "name": "Lourdes Street",
+            "highway": "residential"
+          },
+          {
+            "name": "Medora Street",
+            "highway": "residential"
+          },
+          {
+            "name": "Frederic Street",
+            "highway": "service"
+          },
+          {
+            "name": "Elgin Street",
+            "highway": "tertiary"
+          },
+          {
+            "name": "Paris Street",
+            "highway": "secondary"
+          }
+        ]
+      },
+      "runtimeCollision": {
+        "spawnInside": true,
+        "areaRoadAccess": true,
+        "spawnInitiallyDrivable": true,
+        "nearestRoad": {
+          "name": "Unnamed road",
+          "highway": "service",
+          "distanceMetres": 26.35
+        },
+        "exitStarted": true,
+        "exitCompleted": true,
+        "blockedMoves": 0,
+        "movementSteps": 73,
+        "outsideExpandedDrivingArea": true,
+        "exitPoint": {
+          "lat": 46.4878454,
+          "lng": -80.98929100000001
+        }
+      },
+      "dispatchRouteCoverage": {
+        "calls": 8,
+        "reachable": 8,
+        "missing": []
+      }
+    },
+    {
+      "baseId": "greater-sudbury-fire-3",
+      "name": "Station 3 — New Sudbury Station",
+      "address": "1190 Leon Avenue",
+      "sourcePoint": {
+        "lat": 46.52304245043858,
+        "lng": -80.95036209008248
+      },
+      "drivingArea": {
+        "center": {
+          "lat": 46.52304245043858,
+          "lng": -80.95036209008248
+        },
+        "widthMetres": 70,
+        "lengthMetres": 80,
+        "rotationDegrees": 0,
+        "spawn": {
+          "lat": 46.52304245043858,
+          "lng": -80.95036209008248,
+          "headingDegrees": 0
+        },
+        "spawnOffsetFromCanonicalMetres": {
+          "east": 0,
+          "north": 0
+        }
+      },
+      "assessment": "estimated",
+      "observation": "Estimated individually from the captured Esri World Imagery zoom-19 view at 1190 Leon Avenue: the visible fire station, immediate paved apron/parking and the site access aisle are fitted within this rectangle. Dimensions and orientation are image estimates; no apparatus door, gate or access right is verified.",
+      "imageEvidence": {
+        "screenshot": "artifacts/release-qa/base-fit-greater-sudbury/greater-sudbury-fire-3.png",
+        "scaleMetresPerPixel": 0.20521337522467037,
+        "nearbyRoadFeatures": [
+          {
+            "name": "Arvo Avenue",
+            "highway": "residential"
+          },
+          {
+            "name": "McCormack Court",
+            "highway": "service"
+          },
+          {
+            "name": "Roy Avenue",
+            "highway": "residential"
+          },
+          {
+            "name": "Roland Street",
+            "highway": "residential"
+          },
+          {
+            "name": "Holland Road",
+            "highway": "residential"
+          },
+          {
+            "name": "McCormack Court",
+            "highway": "service"
+          },
+          {
+            "name": "Leon Avenue",
+            "highway": "residential"
+          },
+          {
+            "name": "Sparks Street",
+            "highway": "residential"
+          },
+          {
+            "name": "Sparks Street",
+            "highway": "residential"
+          },
+          {
+            "name": "Lamothe Street",
+            "highway": "residential"
+          },
+          {
+            "name": "Attlee Avenue",
+            "highway": "residential"
+          },
+          {
+            "name": "Lamothe Street",
+            "highway": "residential"
+          }
+        ]
+      },
+      "runtimeCollision": {
+        "spawnInside": true,
+        "areaRoadAccess": true,
+        "spawnInitiallyDrivable": true,
+        "nearestRoad": {
+          "name": "Sparks Street",
+          "highway": "service",
+          "distanceMetres": 14.86
+        },
+        "exitStarted": true,
+        "exitCompleted": true,
+        "blockedMoves": 0,
+        "movementSteps": 34,
+        "outsideExpandedDrivingArea": true,
+        "exitPoint": {
+          "lat": 46.52294653333333,
+          "lng": -80.9497607
+        }
+      },
+      "dispatchRouteCoverage": {
+        "calls": 8,
+        "reachable": 8,
+        "missing": []
+      }
+    },
+    {
+      "baseId": "greater-sudbury-fire-4",
+      "name": "Station 4 — Long Lake Road Station",
+      "address": "2069 Long Lake Road",
+      "sourcePoint": {
+        "lat": 46.449897865508376,
+        "lng": -81.00444676134677
+      },
+      "drivingArea": {
+        "center": {
+          "lat": 46.449897865508376,
+          "lng": -81.00444676134677
+        },
+        "widthMetres": 75,
+        "lengthMetres": 90,
+        "rotationDegrees": 45,
+        "spawn": {
+          "lat": 46.449897865508376,
+          "lng": -81.00444676134677,
+          "headingDegrees": 0
+        },
+        "spawnOffsetFromCanonicalMetres": {
+          "east": 0,
+          "north": 0
+        }
+      },
+      "assessment": "estimated",
+      "observation": "Estimated individually from the captured Esri World Imagery zoom-19 view at 2069 Long Lake Road: the visible fire station, immediate paved apron/parking and the site access aisle are fitted within this rectangle. Dimensions and orientation are image estimates; no apparatus door, gate or access right is verified.",
+      "imageEvidence": {
+        "screenshot": "artifacts/release-qa/base-fit-greater-sudbury/greater-sudbury-fire-4.png",
+        "scaleMetresPerPixel": 0.2054894994503188,
+        "nearbyRoadFeatures": [
+          {
+            "name": "Este Drive",
+            "highway": "residential"
+          },
+          {
+            "name": "Brenda Drive",
+            "highway": "residential"
+          },
+          {
+            "name": "Este Drive",
+            "highway": "residential"
+          },
+          {
+            "name": "Paris Street",
+            "highway": "secondary"
+          },
+          {
+            "name": "Long Lake Road",
+            "highway": "secondary"
+          },
+          {
+            "name": "Regent Street",
+            "highway": "primary"
+          },
+          {
+            "name": null,
+            "highway": "service"
+          },
+          {
+            "name": null,
+            "highway": "service"
+          },
+          {
+            "name": null,
+            "highway": "service"
+          },
+          {
+            "name": null,
+            "highway": "service"
+          },
+          {
+            "name": null,
+            "highway": "service"
+          },
+          {
+            "name": null,
+            "highway": "service"
+          }
+        ]
+      },
+      "runtimeCollision": {
+        "spawnInside": true,
+        "areaRoadAccess": true,
+        "spawnInitiallyDrivable": true,
+        "nearestRoad": {
+          "name": "Long Lake Road",
+          "highway": "secondary",
+          "distanceMetres": 38.95
+        },
+        "exitStarted": true,
+        "exitCompleted": true,
+        "blockedMoves": 0,
+        "movementSteps": 52,
+        "outsideExpandedDrivingArea": true,
+        "exitPoint": {
+          "lat": 46.45008621111111,
+          "lng": -81.00381805555556
+        }
+      },
+      "dispatchRouteCoverage": {
+        "calls": 8,
+        "reachable": 8,
+        "missing": []
+      }
+    },
+    {
+      "baseId": "greater-sudbury-fire-23",
+      "name": "Station 23 — Coniston Station",
+      "address": "7 Second Avenue",
+      "sourcePoint": {
+        "lat": 46.48695828702971,
+        "lng": -80.84680863927042
+      },
+      "drivingArea": {
+        "center": {
+          "lat": 46.48695828702971,
+          "lng": -80.84680863927042
+        },
+        "widthMetres": 55,
+        "lengthMetres": 65,
+        "rotationDegrees": 0,
+        "spawn": {
+          "lat": 46.48695828702971,
+          "lng": -80.84680863927042,
+          "headingDegrees": 0
+        },
+        "spawnOffsetFromCanonicalMetres": {
+          "east": 0,
+          "north": 0
+        }
+      },
+      "assessment": "estimated",
+      "observation": "Estimated individually from the captured Esri World Imagery zoom-19 view at 7 Second Avenue: the visible fire station, immediate paved apron/parking and the site access aisle are fitted within this rectangle. Dimensions and orientation are image estimates; no apparatus door, gate or access right is verified.",
+      "imageEvidence": {
+        "screenshot": "artifacts/release-qa/base-fit-greater-sudbury/greater-sudbury-fire-23.png",
+        "scaleMetresPerPixel": 0.20534963757357313,
+        "nearbyRoadFeatures": [
+          {
+            "name": "Edward Avenue",
+            "highway": "residential"
+          },
+          {
+            "name": "Caruso Street",
+            "highway": "residential"
+          },
+          {
+            "name": "Edward Avenue",
+            "highway": "residential"
+          },
+          {
+            "name": "Edward Avenue",
+            "highway": "residential"
+          },
+          {
+            "name": "Thomas Street",
+            "highway": "residential"
+          },
+          {
+            "name": "Government Road",
+            "highway": "tertiary"
+          },
+          {
+            "name": "First Avenue",
+            "highway": "residential"
+          },
+          {
+            "name": "Edward Avenue",
+            "highway": "residential"
+          },
+          {
+            "name": "Second Avenue",
+            "highway": "secondary"
+          },
+          {
+            "name": "Cedar Street",
+            "highway": "residential"
+          },
+          {
+            "name": "First Avenue",
+            "highway": "residential"
+          },
+          {
+            "name": "Walter Street",
+            "highway": "residential"
+          }
+        ]
+      },
+      "runtimeCollision": {
+        "spawnInside": true,
+        "areaRoadAccess": true,
+        "spawnInitiallyDrivable": true,
+        "nearestRoad": {
+          "name": "Unnamed road",
+          "highway": "service",
+          "distanceMetres": 15.17
+        },
+        "exitStarted": true,
+        "exitCompleted": true,
+        "blockedMoves": 0,
+        "movementSteps": 100,
+        "outsideExpandedDrivingArea": true,
+        "exitPoint": {
+          "lat": 46.48672862222222,
+          "lng": -80.84630372592592
+        }
+      },
+      "dispatchRouteCoverage": {
+        "calls": 8,
+        "reachable": 8,
+        "missing": []
+      }
+    },
+    {
+      "baseId": "greater-sudbury-fire-20",
+      "name": "Station 20 — Garson Station",
+      "address": "206 Church Street",
+      "sourcePoint": {
+        "lat": 46.55947628650494,
+        "lng": -80.86118064985578
+      },
+      "drivingArea": {
+        "center": {
+          "lat": 46.55947628650494,
+          "lng": -80.86118064985578
+        },
+        "widthMetres": 65,
+        "lengthMetres": 75,
+        "rotationDegrees": 0,
+        "spawn": {
+          "lat": 46.55947628650494,
+          "lng": -80.86118064985578,
+          "headingDegrees": 0
+        },
+        "spawnOffsetFromCanonicalMetres": {
+          "east": 0,
+          "north": 0
+        }
+      },
+      "assessment": "estimated",
+      "observation": "Estimated individually from the captured Esri World Imagery zoom-19 view at 206 Church Street: the visible fire station, immediate paved apron/parking and the site access aisle are fitted within this rectangle. Dimensions and orientation are image estimates; no apparatus door, gate or access right is verified.",
+      "imageEvidence": {
+        "screenshot": "artifacts/release-qa/base-fit-greater-sudbury/greater-sudbury-fire-20.png",
+        "scaleMetresPerPixel": 0.2050757139215053,
+        "nearbyRoadFeatures": [
+          {
+            "name": "Spruce Street",
+            "highway": "residential"
+          },
+          {
+            "name": "Spruce Street",
+            "highway": "residential"
+          },
+          {
+            "name": "Church Street",
+            "highway": "tertiary"
+          },
+          {
+            "name": "Victoria Street",
+            "highway": "residential"
+          },
+          {
+            "name": "Birch Lane",
+            "highway": "residential"
+          },
+          {
+            "name": "Birch Street",
+            "highway": "residential"
+          },
+          {
+            "name": "Devuono Street",
+            "highway": "residential"
+          },
+          {
+            "name": "Spruce Street",
+            "highway": "residential"
+          },
+          {
+            "name": "Beech Street",
+            "highway": "residential"
+          },
+          {
+            "name": "Spruce Street",
+            "highway": "tertiary"
+          },
+          {
+            "name": "Church Street",
+            "highway": "tertiary"
+          },
+          {
+            "name": "Central Lane",
+            "highway": "residential"
+          }
+        ]
+      },
+      "runtimeCollision": {
+        "spawnInside": true,
+        "areaRoadAccess": true,
+        "spawnInitiallyDrivable": true,
+        "nearestRoad": {
+          "name": "Unnamed road",
+          "highway": "service",
+          "distanceMetres": 13.88
+        },
+        "exitStarted": true,
+        "exitCompleted": true,
+        "blockedMoves": 0,
+        "movementSteps": 55,
+        "outsideExpandedDrivingArea": true,
+        "exitPoint": {
+          "lat": 46.55991805,
+          "lng": -80.8615699
+        }
+      },
+      "dispatchRouteCoverage": {
+        "calls": 6,
+        "reachable": 6,
+        "missing": []
+      }
+    },
+    {
+      "baseId": "greater-sudbury-fire-17",
+      "name": "Station 17 — Hanmer Station",
+      "address": "4680 Lafontaine Street",
+      "sourcePoint": {
+        "lat": 46.65610916494837,
+        "lng": -80.94623132903726
+      },
+      "drivingArea": {
+        "center": {
+          "lat": 46.65610916494837,
+          "lng": -80.94623132903726
+        },
+        "widthMetres": 60,
+        "lengthMetres": 75,
+        "rotationDegrees": 45,
+        "spawn": {
+          "lat": 46.65610916494837,
+          "lng": -80.94623132903726,
+          "headingDegrees": 0
+        },
+        "spawnOffsetFromCanonicalMetres": {
+          "east": 0,
+          "north": 0
+        }
+      },
+      "assessment": "estimated",
+      "observation": "Estimated individually from the captured Esri World Imagery zoom-19 view at 4680 Lafontaine Street: the visible fire station, immediate paved apron/parking and the site access aisle are fitted within this rectangle. Dimensions and orientation are image estimates; no apparatus door, gate or access right is verified.",
+      "imageEvidence": {
+        "screenshot": "artifacts/release-qa/base-fit-greater-sudbury/greater-sudbury-fire-17.png",
+        "scaleMetresPerPixel": 0.2047101929564096,
+        "nearbyRoadFeatures": [
+          {
+            "name": "Rita Street",
+            "highway": "residential"
+          },
+          {
+            "name": "Notre Dame Avenue",
+            "highway": "tertiary"
+          },
+          {
+            "name": "Lafontaine Street",
+            "highway": "residential"
+          },
+          {
+            "name": "Saint Joseph Street",
+            "highway": "residential"
+          },
+          {
+            "name": "Marguerite Street",
+            "highway": "residential"
+          },
+          {
+            "name": "Gabrielle Street",
+            "highway": "residential"
+          },
+          {
+            "name": "Notre Dame Avenue",
+            "highway": "tertiary"
+          },
+          {
+            "name": "Saint Isidore Street",
+            "highway": "residential"
+          },
+          {
+            "name": "Gabrielle Street",
+            "highway": "residential"
+          },
+          {
+            "name": null,
+            "highway": "service"
+          },
+          {
+            "name": null,
+            "highway": "service"
+          }
+        ]
+      },
+      "runtimeCollision": {
+        "spawnInside": true,
+        "areaRoadAccess": true,
+        "spawnInitiallyDrivable": true,
+        "nearestRoad": {
+          "name": "Lafontaine Street",
+          "highway": "residential",
+          "distanceMetres": 23.97
+        },
+        "exitStarted": true,
+        "exitCompleted": true,
+        "blockedMoves": 0,
+        "movementSteps": 39,
+        "outsideExpandedDrivingArea": true,
+        "exitPoint": {
+          "lat": 46.65580936632393,
+          "lng": -80.94653849894898
+        }
+      },
+      "dispatchRouteCoverage": {
+        "calls": 7,
+        "reachable": 7,
+        "missing": []
+      }
+    },
+    {
+      "baseId": "greater-sudbury-fire-16",
+      "name": "Station 16 — Val Therese Station",
+      "address": "4200 Municipal Road 80",
+      "sourcePoint": {
+        "lat": 46.64364379604278,
+        "lng": -81.00773006812001
+      },
+      "drivingArea": {
+        "center": {
+          "lat": 46.64364379604278,
+          "lng": -81.00773006812001
+        },
+        "widthMetres": 75,
+        "lengthMetres": 90,
+        "rotationDegrees": 0,
+        "spawn": {
+          "lat": 46.64364379604278,
+          "lng": -81.00773006812001,
+          "headingDegrees": 0
+        },
+        "spawnOffsetFromCanonicalMetres": {
+          "east": 0,
+          "north": 0
+        }
+      },
+      "assessment": "estimated",
+      "observation": "Estimated individually from the captured Esri World Imagery zoom-19 view at 4200 Municipal Road 80: the visible fire station, immediate paved apron/parking and the site access aisle are fitted within this rectangle. Dimensions and orientation are image estimates; no apparatus door, gate or access right is verified.",
+      "imageEvidence": {
+        "screenshot": "artifacts/release-qa/base-fit-greater-sudbury/greater-sudbury-fire-16.png",
+        "scaleMetresPerPixel": 0.2047573759743594,
+        "nearbyRoadFeatures": [
+          {
+            "name": "Gaston Avenue",
+            "highway": "residential"
+          },
+          {
+            "name": "Lillian Street",
+            "highway": "residential"
+          },
+          {
+            "name": "Guimond Avenue",
+            "highway": "residential"
+          },
+          {
+            "name": "Gauthier Street",
+            "highway": "residential"
+          },
+          {
+            "name": "Dutrisac Boulevard",
+            "highway": "residential"
+          },
+          {
+            "name": "Larocque Avenue",
+            "highway": "residential"
+          },
+          {
+            "name": "Alexandre Street",
+            "highway": "residential"
+          },
+          {
+            "name": "La Habre Avenue",
+            "highway": "residential"
+          },
+          {
+            "name": "Jeanne D'arc Street",
+            "highway": "residential"
+          },
+          {
+            "name": "Grandale Street",
+            "highway": "residential"
+          },
+          {
+            "name": "Old Highway 69 North",
+            "highway": "secondary"
+          },
+          {
+            "name": null,
+            "highway": "service"
+          }
+        ]
+      },
+      "runtimeCollision": {
+        "spawnInside": true,
+        "areaRoadAccess": true,
+        "spawnInitiallyDrivable": true,
+        "nearestRoad": {
+          "name": "Jeanne D'arc Street",
+          "highway": "residential",
+          "distanceMetres": 31.3
+        },
+        "exitStarted": true,
+        "exitCompleted": true,
+        "blockedMoves": 0,
+        "movementSteps": 70,
+        "outsideExpandedDrivingArea": true,
+        "exitPoint": {
+          "lat": 46.64313299041096,
+          "lng": -81.00830742054795
+        }
+      },
+      "dispatchRouteCoverage": {
+        "calls": 8,
+        "reachable": 8,
+        "missing": []
+      }
+    },
+    {
+      "baseId": "greater-sudbury-fire-2",
+      "name": "Station 2 — Minnow Lake Station",
+      "address": "144 Second Avenue South",
+      "sourcePoint": {
+        "lat": 46.48801647090031,
+        "lng": -80.93400460435173
+      },
+      "drivingArea": {
+        "center": {
+          "lat": 46.48801647090031,
+          "lng": -80.93400460435173
+        },
+        "widthMetres": 65,
+        "lengthMetres": 75,
+        "rotationDegrees": 0,
+        "spawn": {
+          "lat": 46.48801647090031,
+          "lng": -80.93400460435173,
+          "headingDegrees": 0
+        },
+        "spawnOffsetFromCanonicalMetres": {
+          "east": 0,
+          "north": 0
+        }
+      },
+      "assessment": "estimated",
+      "observation": "Estimated individually from the captured Esri World Imagery zoom-19 view at 144 Second Avenue South: the visible fire station, immediate paved apron/parking and the site access aisle are fitted within this rectangle. Dimensions and orientation are image estimates; no apparatus door, gate or access right is verified.",
+      "imageEvidence": {
+        "screenshot": "artifacts/release-qa/base-fit-greater-sudbury/greater-sudbury-fire-2.png",
+        "scaleMetresPerPixel": 0.20534564285206355,
+        "nearbyRoadFeatures": [
+          {
+            "name": "Second Avenue South",
+            "highway": "tertiary"
+          },
+          {
+            "name": "Torbay Road",
+            "highway": "residential"
+          },
+          {
+            "name": "Wilfred Street",
+            "highway": "residential"
+          },
+          {
+            "name": "Wilfred Street",
+            "highway": "residential"
+          },
+          {
+            "name": "Rita Street",
+            "highway": "residential"
+          },
+          {
+            "name": null,
+            "highway": "service"
+          },
+          {
+            "name": null,
+            "highway": "service"
+          },
+          {
+            "name": null,
+            "highway": "service"
+          },
+          {
+            "name": null,
+            "highway": "service"
+          },
+          {
+            "name": null,
+            "highway": "service"
+          },
+          {
+            "name": null,
+            "highway": "service"
+          },
+          {
+            "name": "Bayside Crescent",
+            "highway": "residential"
+          }
+        ]
+      },
+      "runtimeCollision": {
+        "spawnInside": true,
+        "areaRoadAccess": true,
+        "spawnInitiallyDrivable": true,
+        "nearestRoad": {
+          "name": "Second Avenue South",
+          "highway": "tertiary",
+          "distanceMetres": 34.4
+        },
+        "exitStarted": true,
+        "exitCompleted": true,
+        "blockedMoves": 0,
+        "movementSteps": 53,
+        "outsideExpandedDrivingArea": true,
+        "exitPoint": {
+          "lat": 46.48798813333333,
+          "lng": -80.9345643
+        }
+      },
+      "dispatchRouteCoverage": {
+        "calls": 8,
+        "reachable": 8,
+        "missing": []
+      }
+    },
+    {
+      "baseId": "greater-sudbury-fire-7",
+      "name": "Station 7 — Lively Station",
+      "address": "229 Ninth Avenue",
+      "sourcePoint": {
+        "lat": 46.438527943260034,
+        "lng": -81.1460788522652
+      },
+      "drivingArea": {
+        "center": {
+          "lat": 46.438527943260034,
+          "lng": -81.1460788522652
+        },
+        "widthMetres": 60,
+        "lengthMetres": 75,
+        "rotationDegrees": 0,
+        "spawn": {
+          "lat": 46.438527943260034,
+          "lng": -81.1460788522652,
+          "headingDegrees": 0
+        },
+        "spawnOffsetFromCanonicalMetres": {
+          "east": 0,
+          "north": 0
+        }
+      },
+      "assessment": "estimated",
+      "observation": "Estimated individually from the captured Esri World Imagery zoom-19 view at 229 Ninth Avenue: the visible fire station, immediate paved apron/parking and the site access aisle are fitted within this rectangle. Dimensions and orientation are image estimates; no apparatus door, gate or access right is verified.",
+      "imageEvidence": {
+        "screenshot": "artifacts/release-qa/base-fit-greater-sudbury/greater-sudbury-fire-7.png",
+        "scaleMetresPerPixel": 0.20553239199445902,
+        "nearbyRoadFeatures": [
+          {
+            "name": "A Street",
+            "highway": "residential"
+          },
+          {
+            "name": "Main Street",
+            "highway": "unclassified"
+          },
+          {
+            "name": "Ninth Avenue",
+            "highway": "residential"
+          },
+          {
+            "name": "Coronation Boulevard",
+            "highway": "residential"
+          },
+          {
+            "name": "Main Street",
+            "highway": "secondary"
+          },
+          {
+            "name": "Len Turner Drive",
+            "highway": "residential"
+          },
+          {
+            "name": "Main Street",
+            "highway": "secondary"
+          },
+          {
+            "name": "Sixth Avenue",
+            "highway": "residential"
+          },
+          {
+            "name": "Coronation Boulevard",
+            "highway": "residential"
+          },
+          {
+            "name": "Sixth Avenue",
+            "highway": "residential"
+          },
+          {
+            "name": "Queen Elizabeth Street",
+            "highway": "residential"
+          },
+          {
+            "name": "Twelveth Avenue",
+            "highway": "residential"
+          }
+        ]
+      },
+      "runtimeCollision": {
+        "spawnInside": true,
+        "areaRoadAccess": true,
+        "spawnInitiallyDrivable": true,
+        "nearestRoad": {
+          "name": "Kin Drive",
+          "highway": "residential",
+          "distanceMetres": 11.72
+        },
+        "exitStarted": true,
+        "exitCompleted": true,
+        "blockedMoves": 0,
+        "movementSteps": 58,
+        "outsideExpandedDrivingArea": true,
+        "exitPoint": {
+          "lat": 46.43870148888889,
+          "lng": -81.14660244444444
+        }
+      },
+      "dispatchRouteCoverage": {
+        "calls": 8,
+        "reachable": 8,
+        "missing": []
+      }
+    },
+    {
+      "baseId": "greater-sudbury-fire-24",
+      "name": "Station 24 — Wahnapitae Station",
+      "address": "162 Hill Street",
+      "sourcePoint": {
+        "lat": 46.48374642817837,
+        "lng": -80.7864994744655
+      },
+      "drivingArea": {
+        "center": {
+          "lat": 46.48374642817837,
+          "lng": -80.7864994744655
+        },
+        "widthMetres": 55,
+        "lengthMetres": 65,
+        "rotationDegrees": 45,
+        "spawn": {
+          "lat": 46.48374642817837,
+          "lng": -80.7864994744655,
+          "headingDegrees": 0
+        },
+        "spawnOffsetFromCanonicalMetres": {
+          "east": 0,
+          "north": 0
+        }
+      },
+      "assessment": "estimated",
+      "observation": "Estimated individually from the captured Esri World Imagery zoom-19 view at 162 Hill Street: the visible fire station, immediate paved apron/parking and the site access aisle are fitted within this rectangle. Dimensions and orientation are image estimates; no apparatus door, gate or access right is verified.",
+      "imageEvidence": {
+        "screenshot": "artifacts/release-qa/base-fit-greater-sudbury/greater-sudbury-fire-24.png",
+        "scaleMetresPerPixel": 0.20536176121683108,
+        "nearbyRoadFeatures": [
+          {
+            "name": "Lamothe Street",
+            "highway": "residential"
+          },
+          {
+            "name": "Glenbower Crescent",
+            "highway": "residential"
+          },
+          {
+            "name": "Lamothe Street",
+            "highway": "residential"
+          },
+          {
+            "name": "Shaw Street",
+            "highway": "residential"
+          },
+          {
+            "name": "Glenbower Crescent",
+            "highway": "residential"
+          },
+          {
+            "name": "Jessica Street",
+            "highway": "residential"
+          },
+          {
+            "name": "Riverside Drive",
+            "highway": "residential"
+          },
+          {
+            "name": "Shaw Street",
+            "highway": "residential"
+          },
+          {
+            "name": "Lamothe Street",
+            "highway": "residential"
+          },
+          {
+            "name": "Beverley Street",
+            "highway": "residential"
+          },
+          {
+            "name": "Hill Street",
+            "highway": "secondary"
+          },
+          {
+            "name": null,
+            "highway": "service"
+          }
+        ]
+      },
+      "runtimeCollision": {
+        "spawnInside": true,
+        "areaRoadAccess": true,
+        "spawnInitiallyDrivable": true,
+        "nearestRoad": {
+          "name": "Lamothe Street",
+          "highway": "residential",
+          "distanceMetres": 34.78
+        },
+        "exitStarted": true,
+        "exitCompleted": true,
+        "blockedMoves": 0,
+        "movementSteps": 36,
+        "outsideExpandedDrivingArea": true,
+        "exitPoint": {
+          "lat": 46.4835712,
+          "lng": -80.7859643
+        }
+      },
+      "dispatchRouteCoverage": {
+        "calls": 8,
+        "reachable": 8,
+        "missing": []
+      }
+    },
+    {
+      "baseId": "greater-sudbury-fire-11",
+      "name": "Station 11 — Chelmsford Station",
+      "address": "3400 Highway 144",
+      "sourcePoint": {
+        "lat": 46.56939070025234,
+        "lng": -81.202950008714
+      },
+      "drivingArea": {
+        "center": {
+          "lat": 46.56939070025234,
+          "lng": -81.202950008714
+        },
+        "widthMetres": 70,
+        "lengthMetres": 85,
+        "rotationDegrees": 0,
+        "spawn": {
+          "lat": 46.56939070025234,
+          "lng": -81.202950008714,
+          "headingDegrees": 0
+        },
+        "spawnOffsetFromCanonicalMetres": {
+          "east": 0,
+          "north": 0
+        }
+      },
+      "assessment": "estimated",
+      "observation": "Estimated individually from the captured Esri World Imagery zoom-19 view at 3400 Highway 144: the visible fire station, immediate paved apron/parking and the site access aisle are fitted within this rectangle. Dimensions and orientation are image estimates; no apparatus door, gate or access right is verified.",
+      "imageEvidence": {
+        "screenshot": "artifacts/release-qa/base-fit-greater-sudbury/greater-sudbury-fire-11.png",
+        "scaleMetresPerPixel": 0.2050382400273898,
+        "nearbyRoadFeatures": [
+          {
+            "name": "Rita Street",
+            "highway": "residential"
+          },
+          {
+            "name": "Balfour Street",
+            "highway": "residential"
+          },
+          {
+            "name": "Rita Street",
+            "highway": "residential"
+          },
+          {
+            "name": "Laurette Street",
+            "highway": "residential"
+          },
+          {
+            "name": "Balfour Street",
+            "highway": "residential"
+          },
+          {
+            "name": "Irene Crescent",
+            "highway": "residential"
+          },
+          {
+            "name": "Saint Onge Street",
+            "highway": "residential"
+          },
+          {
+            "name": "Laurette Street",
+            "highway": "residential"
+          },
+          {
+            "name": "Isidore Street",
+            "highway": "residential"
+          },
+          {
+            "name": "Saint Onge Street",
+            "highway": "residential"
+          },
+          {
+            "name": "Saint Onge Street",
+            "highway": "residential"
+          },
+          {
+            "name": "Highway 144",
+            "highway": "primary"
+          }
+        ]
+      },
+      "runtimeCollision": {
+        "spawnInside": true,
+        "areaRoadAccess": true,
+        "spawnInitiallyDrivable": true,
+        "nearestRoad": {
+          "name": "Unnamed road",
+          "highway": "service",
+          "distanceMetres": 28.9
+        },
+        "exitStarted": true,
+        "exitCompleted": true,
+        "blockedMoves": 0,
+        "movementSteps": 50,
+        "outsideExpandedDrivingArea": true,
+        "exitPoint": {
+          "lat": 46.568905586363634,
+          "lng": -81.2031839909091
+        }
+      },
+      "dispatchRouteCoverage": {
+        "calls": 6,
+        "reachable": 6,
+        "missing": []
+      }
+    },
+    {
+      "baseId": "greater-sudbury-fire-14",
+      "name": "Station 14 — Levack Station",
+      "address": "50 Nickel Street",
+      "sourcePoint": {
+        "lat": 46.64140344244166,
+        "lng": -81.38797218386797
+      },
+      "drivingArea": {
+        "center": {
+          "lat": 46.64140344244166,
+          "lng": -81.38797218386797
+        },
+        "widthMetres": 60,
+        "lengthMetres": 70,
+        "rotationDegrees": 0,
+        "spawn": {
+          "lat": 46.64140344244166,
+          "lng": -81.38797218386797,
+          "headingDegrees": 0
+        },
+        "spawnOffsetFromCanonicalMetres": {
+          "east": 0,
+          "north": 0
+        }
+      },
+      "assessment": "estimated",
+      "observation": "Estimated individually from the captured Esri World Imagery zoom-19 view at 50 Nickel Street: the visible fire station, immediate paved apron/parking and the site access aisle are fitted within this rectangle. Dimensions and orientation are image estimates; no apparatus door, gate or access right is verified.",
+      "imageEvidence": {
+        "screenshot": "artifacts/release-qa/base-fit-greater-sudbury/greater-sudbury-fire-14.png",
+        "scaleMetresPerPixel": 0.20476585092032054,
+        "nearbyRoadFeatures": [
+          {
+            "name": "Fourth Avenue",
+            "highway": "residential"
+          },
+          {
+            "name": "Third Avenue S",
+            "highway": "residential"
+          },
+          {
+            "name": "Fourth Avenue",
+            "highway": "residential"
+          },
+          {
+            "name": "Evergreen Street",
+            "highway": "residential"
+          },
+          {
+            "name": "Balsam Street",
+            "highway": "residential"
+          },
+          {
+            "name": "Fourth Avenue",
+            "highway": "residential"
+          },
+          {
+            "name": "Nickel Street",
+            "highway": "residential"
+          },
+          {
+            "name": "School Street",
+            "highway": "residential"
+          },
+          {
+            "name": "Copper Street",
+            "highway": "residential"
+          },
+          {
+            "name": "Cedar Street",
+            "highway": "residential"
+          },
+          {
+            "name": "Second Avenue",
+            "highway": "residential"
+          },
+          {
+            "name": "First Avenue",
+            "highway": "residential"
+          }
+        ]
+      },
+      "runtimeCollision": {
+        "spawnInside": true,
+        "areaRoadAccess": true,
+        "spawnInitiallyDrivable": true,
+        "nearestRoad": {
+          "name": "Nickel Street",
+          "highway": "residential",
+          "distanceMetres": 23.7
+        },
+        "exitStarted": true,
+        "exitCompleted": true,
+        "blockedMoves": 0,
+        "movementSteps": 43,
+        "outsideExpandedDrivingArea": true,
+        "exitPoint": {
+          "lat": 46.640994344518695,
+          "lng": -81.38799270245072
+        }
+      },
+      "dispatchRouteCoverage": {
+        "calls": 6,
+        "reachable": 6,
+        "missing": []
+      }
+    },
+    {
+      "baseId": "greater-sudbury-fire-22",
+      "name": "Station 22 — Skead Station",
+      "address": "20 Maclennan Drive",
+      "sourcePoint": {
+        "lat": 46.66773358075291,
+        "lng": -80.75033393283168
+      },
+      "drivingArea": {
+        "center": {
+          "lat": 46.66773358075291,
+          "lng": -80.75033393283168
+        },
+        "widthMetres": 45,
+        "lengthMetres": 60,
+        "rotationDegrees": 0,
+        "spawn": {
+          "lat": 46.66773358075291,
+          "lng": -80.75033393283168,
+          "headingDegrees": 0
+        },
+        "spawnOffsetFromCanonicalMetres": {
+          "east": 0,
+          "north": 0
+        }
+      },
+      "assessment": "estimated",
+      "observation": "Estimated individually from the captured Esri World Imagery zoom-19 view at 20 Maclennan Drive: the visible fire station, immediate paved apron/parking and the site access aisle are fitted within this rectangle. Dimensions and orientation are image estimates; no apparatus door, gate or access right is verified.",
+      "imageEvidence": {
+        "screenshot": "artifacts/release-qa/base-fit-greater-sudbury/greater-sudbury-fire-22.png",
+        "scaleMetresPerPixel": 0.20466618211924614,
+        "nearbyRoadFeatures": [
+          {
+            "name": "MacLennan Drive",
+            "highway": "residential"
+          },
+          {
+            "name": "MacLennan Drive",
+            "highway": "residential"
+          },
+          {
+            "name": "Skead Road",
+            "highway": "secondary"
+          },
+          {
+            "name": "Poupore Road East",
+            "highway": "residential"
+          },
+          {
+            "name": "Bell Street",
+            "highway": "residential"
+          },
+          {
+            "name": "Poupore Road W",
+            "highway": "residential"
+          },
+          {
+            "name": "Bonhomme Road",
+            "highway": "residential"
+          },
+          {
+            "name": "East Bay Road",
+            "highway": "residential"
+          },
+          {
+            "name": "MacLennan Drive",
+            "highway": "residential"
+          },
+          {
+            "name": "Skead Road",
+            "highway": "secondary"
+          },
+          {
+            "name": null,
+            "highway": "service"
+          }
+        ]
+      },
+      "runtimeCollision": {
+        "spawnInside": true,
+        "areaRoadAccess": false,
+        "spawnInitiallyDrivable": true,
+        "nearestRoad": {
+          "name": "MacLennan Drive",
+          "highway": "residential",
+          "distanceMetres": 22.79
+        },
+        "exitStarted": true,
+        "exitCompleted": true,
+        "blockedMoves": 0,
+        "movementSteps": 43,
+        "outsideExpandedDrivingArea": true,
+        "exitPoint": {
+          "lat": 46.6680955875,
+          "lng": -80.750036175
+        }
+      },
+      "dispatchRouteCoverage": {
+        "calls": 6,
+        "reachable": 6,
+        "missing": []
+      }
+    },
+    {
+      "baseId": "greater-sudbury-fire-18",
+      "name": "Station 18 — Capreol Station (Railway Avenue)",
+      "address": "65 Railway Avenue",
+      "sourcePoint": {
+        "lat": 46.70947514004447,
+        "lng": -80.91488222318719
+      },
+      "drivingArea": {
+        "center": {
+          "lat": 46.70947514004447,
+          "lng": -80.91488222318719
+        },
+        "widthMetres": 85,
+        "lengthMetres": 100,
+        "rotationDegrees": 0,
+        "spawn": {
+          "lat": 46.70947514004447,
+          "lng": -80.91488222318719,
+          "headingDegrees": 0
+        },
+        "spawnOffsetFromCanonicalMetres": {
+          "east": 0,
+          "north": 0
+        }
+      },
+      "assessment": "estimated",
+      "observation": "Estimated individually from the captured Esri World Imagery zoom-19 view at 65 Railway Avenue: the visible fire station, immediate paved apron/parking and the site access aisle are fitted within this rectangle. Dimensions and orientation are image estimates; no apparatus door, gate or access right is verified.",
+      "imageEvidence": {
+        "screenshot": "artifacts/release-qa/base-fit-greater-sudbury/greater-sudbury-fire-18.png",
+        "scaleMetresPerPixel": 0.20450807925662268,
+        "nearbyRoadFeatures": [
+          {
+            "name": "Dennie Street",
+            "highway": "residential"
+          },
+          {
+            "name": "Railway Avenue",
+            "highway": "residential"
+          },
+          {
+            "name": "Dennie Street",
+            "highway": "residential"
+          },
+          {
+            "name": "Highland Crescent",
+            "highway": "residential"
+          },
+          {
+            "name": "Pine Street",
+            "highway": "residential"
+          },
+          {
+            "name": null,
+            "highway": "service"
+          },
+          {
+            "name": "Belmont Court",
+            "highway": "residential"
+          },
+          {
+            "name": "Dennie Street",
+            "highway": "residential"
+          },
+          {
+            "name": "Oakwood Avenue",
+            "highway": "residential"
+          }
+        ]
+      },
+      "runtimeCollision": {
+        "spawnInside": true,
+        "areaRoadAccess": true,
+        "spawnInitiallyDrivable": true,
+        "nearestRoad": {
+          "name": "Railway Avenue",
+          "highway": "residential",
+          "distanceMetres": 27.03
+        },
+        "exitStarted": true,
+        "exitCompleted": true,
+        "blockedMoves": 0,
+        "movementSteps": 58,
+        "outsideExpandedDrivingArea": true,
+        "exitPoint": {
+          "lat": 46.709695076923076,
+          "lng": -80.91557343692308
+        }
+      },
+      "dispatchRouteCoverage": {
+        "calls": 6,
+        "reachable": 6,
+        "missing": []
+      }
+    },
+    {
+      "baseId": "greater-sudbury-fire-8",
+      "name": "Station 8 — Whitefish Station",
+      "address": "4895 Regional Road 55",
+      "sourcePoint": {
+        "lat": 46.38059171913426,
+        "lng": -81.30259668136665
+      },
+      "drivingArea": {
+        "center": {
+          "lat": 46.38059171913426,
+          "lng": -81.30259668136665
+        },
+        "widthMetres": 55,
+        "lengthMetres": 65,
+        "rotationDegrees": 0,
+        "spawn": {
+          "lat": 46.38059171913426,
+          "lng": -81.30259668136665,
+          "headingDegrees": 0
+        },
+        "spawnOffsetFromCanonicalMetres": {
+          "east": 0,
+          "north": 0
+        }
+      },
+      "assessment": "estimated",
+      "observation": "Estimated individually from the captured Esri World Imagery zoom-19 view at 4895 Regional Road 55: the visible fire station, immediate paved apron/parking and the site access aisle are fitted within this rectangle. Dimensions and orientation are image estimates; no apparatus door, gate or access right is verified.",
+      "imageEvidence": {
+        "screenshot": "artifacts/release-qa/base-fit-greater-sudbury/greater-sudbury-fire-8.png",
+        "scaleMetresPerPixel": 0.205750821034787,
+        "nearbyRoadFeatures": [
+          {
+            "name": "Old Highway 17",
+            "highway": "primary"
+          },
+          {
+            "name": "Graham Road",
+            "highway": "residential"
+          },
+          {
+            "name": "Paul Street",
+            "highway": "residential"
+          },
+          {
+            "name": "Anthony Street",
+            "highway": "residential"
+          },
+          {
+            "name": "Anthony Street",
+            "highway": "residential"
+          },
+          {
+            "name": "Graham Road",
+            "highway": "residential"
+          },
+          {
+            "name": "Paul Street",
+            "highway": "residential"
+          }
+        ]
+      },
+      "runtimeCollision": {
+        "spawnInside": true,
+        "areaRoadAccess": false,
+        "spawnInitiallyDrivable": true,
+        "nearestRoad": {
+          "name": "Old Highway 17",
+          "highway": "primary",
+          "distanceMetres": 48.85
+        },
+        "exitStarted": true,
+        "exitCompleted": true,
+        "blockedMoves": 0,
+        "movementSteps": 34,
+        "outsideExpandedDrivingArea": true,
+        "exitPoint": {
+          "lat": 46.380988029598406,
+          "lng": -81.30287871463848
+        }
+      },
+      "dispatchRouteCoverage": {
+        "calls": 6,
+        "reachable": 6,
+        "missing": []
+      }
+    },
+    {
+      "baseId": "greater-sudbury-fire-12",
+      "name": "Station 12 — Dowling Station",
+      "address": "65 Main Street",
+      "sourcePoint": {
+        "lat": 46.58568376980513,
+        "lng": -81.33829417911029
+      },
+      "drivingArea": {
+        "center": {
+          "lat": 46.58568376980513,
+          "lng": -81.33829417911029
+        },
+        "widthMetres": 60,
+        "lengthMetres": 75,
+        "rotationDegrees": 0,
+        "spawn": {
+          "lat": 46.58568376980513,
+          "lng": -81.33829417911029,
+          "headingDegrees": 0
+        },
+        "spawnOffsetFromCanonicalMetres": {
+          "east": 0,
+          "north": 0
+        }
+      },
+      "assessment": "estimated",
+      "observation": "Estimated individually from the captured Esri World Imagery zoom-19 view at 65 Main Street: the visible fire station, immediate paved apron/parking and the site access aisle are fitted within this rectangle. Dimensions and orientation are image estimates; no apparatus door, gate or access right is verified.",
+      "imageEvidence": {
+        "screenshot": "artifacts/release-qa/base-fit-greater-sudbury/greater-sudbury-fire-12.png",
+        "scaleMetresPerPixel": 0.20497664244908959,
+        "nearbyRoadFeatures": [
+          {
+            "name": "Sturgeon Street",
+            "highway": "residential"
+          },
+          {
+            "name": "Pine Court",
+            "highway": "residential"
+          },
+          {
+            "name": null,
+            "highway": "service"
+          },
+          {
+            "name": "Main Street West",
+            "highway": "primary"
+          },
+          {
+            "name": null,
+            "highway": "service"
+          },
+          {
+            "name": null,
+            "highway": "service"
+          }
+        ]
+      },
+      "runtimeCollision": {
+        "spawnInside": true,
+        "areaRoadAccess": false,
+        "spawnInitiallyDrivable": true,
+        "nearestRoad": {
+          "name": "Main Street West",
+          "highway": "primary",
+          "distanceMetres": 53.27
+        },
+        "exitStarted": true,
+        "exitCompleted": true,
+        "blockedMoves": 0,
+        "movementSteps": 34,
+        "outsideExpandedDrivingArea": true,
+        "exitPoint": {
+          "lat": 46.5861255088793,
+          "lng": -81.33829625817911
+        }
+      },
+      "dispatchRouteCoverage": {
+        "calls": 6,
+        "reachable": 6,
+        "missing": []
+      }
+    },
+    {
+      "baseId": "greater-sudbury-fire-6",
+      "name": "Station 6 — Waters (Black Lake Road) Station",
+      "address": "25 Black Lake Road",
+      "sourcePoint": {
+        "lat": 46.41815363366876,
+        "lng": -81.14023725472087
+      },
+      "drivingArea": {
+        "center": {
+          "lat": 46.4180179,
+          "lng": -81.139848
+        },
+        "widthMetres": 125,
+        "lengthMetres": 95,
+        "rotationDegrees": 0,
+        "spawn": {
+          "lat": 46.41783949619683,
+          "lng": -81.13928493441935,
+          "headingDegrees": 120
+        },
+        "spawnOffsetFromCanonicalMetres": {
+          "east": 73.1,
+          "north": -34.7
+        }
+      },
+      "assessment": "estimated",
+      "observation": "The Esri zoom-19 capture shows the station building and broad paved apron continuing east-southeast to Black Lake Road. The canonical source point remains at the facility; modeled spawn is placed at the visible road edge about 81 m away because the packaged OSM graph has no internal driveway segment. Fit is site-specific and estimated; actual driveway rights and apparatus entrance are unverified.",
+      "imageEvidence": {
+        "screenshot": "artifacts/release-qa/base-fit-greater-sudbury/greater-sudbury-fire-6.png",
+        "scaleMetresPerPixel": 0.20560923397496997,
+        "nearbyRoadFeatures": [
+          {
+            "name": "Old Highway 17",
+            "highway": "primary"
+          },
+          {
+            "name": "Main Street",
+            "highway": "secondary"
+          },
+          {
+            "name": "Black Lake Road",
+            "highway": "tertiary"
+          },
+          {
+            "name": null,
+            "highway": "primary_link"
+          },
+          {
+            "name": "Main Street",
+            "highway": "secondary"
+          },
+          {
+            "name": "Main Street",
+            "highway": "secondary"
+          },
+          {
+            "name": "Old Soo Road",
+            "highway": "residential"
+          },
+          {
+            "name": "Old Soo Road",
+            "highway": "residential"
+          },
+          {
+            "name": "Old Highway 17",
+            "highway": "primary"
+          },
+          {
+            "name": "Old Highway 17",
+            "highway": "primary"
+          },
+          {
+            "name": "Black Lake Road",
+            "highway": "tertiary"
+          },
+          {
+            "name": "Old Highway 17",
+            "highway": "primary"
+          }
+        ]
+      },
+      "runtimeCollision": {
+        "spawnInside": true,
+        "areaRoadAccess": true,
+        "spawnInitiallyDrivable": true,
+        "nearestRoad": {
+          "name": "Black Lake Road",
+          "highway": "tertiary",
+          "distanceMetres": 0
+        },
+        "exitStarted": true,
+        "exitCompleted": true,
+        "blockedMoves": 0,
+        "movementSteps": 30,
+        "outsideExpandedDrivingArea": true,
+        "exitPoint": {
+          "lat": 46.41749048713385,
+          "lng": -81.13952379027606
+        }
+      },
+      "dispatchRouteCoverage": {
+        "calls": 8,
+        "reachable": 8,
+        "missing": []
+      }
+    },
+    {
+      "baseId": "greater-sudbury-fire-10",
+      "name": "Station 10 — Azilda Station",
+      "address": "239 Montee Principale",
+      "sourcePoint": {
+        "lat": 46.55528526983091,
+        "lng": -81.13104513358918
+      },
+      "drivingArea": {
+        "center": {
+          "lat": 46.55528526983091,
+          "lng": -81.13104513358918
+        },
+        "widthMetres": 65,
+        "lengthMetres": 75,
+        "rotationDegrees": 0,
+        "spawn": {
+          "lat": 46.55528526983091,
+          "lng": -81.13104513358918,
+          "headingDegrees": 0
+        },
+        "spawnOffsetFromCanonicalMetres": {
+          "east": 0,
+          "north": 0
+        }
+      },
+      "assessment": "estimated",
+      "observation": "Estimated individually from the captured Esri World Imagery zoom-19 view at 239 Montee Principale: the visible fire station, immediate paved apron/parking and the site access aisle are fitted within this rectangle. Dimensions and orientation are image estimates; no apparatus door, gate or access right is verified.",
+      "imageEvidence": {
+        "screenshot": "artifacts/release-qa/base-fit-greater-sudbury/greater-sudbury-fire-10.png",
+        "scaleMetresPerPixel": 0.20509155133110407,
+        "nearbyRoadFeatures": [
+          {
+            "name": "Montée Principale",
+            "highway": "tertiary"
+          },
+          {
+            "name": "Fleetwood Drive",
+            "highway": "residential"
+          },
+          {
+            "name": "Zina Street",
+            "highway": "residential"
+          },
+          {
+            "name": "Country Club Drive",
+            "highway": "residential"
+          },
+          {
+            "name": null,
+            "highway": "service"
+          },
+          {
+            "name": null,
+            "highway": "service"
+          }
+        ]
+      },
+      "runtimeCollision": {
+        "spawnInside": true,
+        "areaRoadAccess": false,
+        "spawnInitiallyDrivable": true,
+        "nearestRoad": {
+          "name": "Unnamed road",
+          "highway": "service",
+          "distanceMetres": 37.17
+        },
+        "exitStarted": true,
+        "exitCompleted": true,
+        "blockedMoves": 0,
+        "movementSteps": 32,
+        "outsideExpandedDrivingArea": true,
+        "exitPoint": {
+          "lat": 46.55525972727273,
+          "lng": -81.13160361818181
+        }
+      },
+      "dispatchRouteCoverage": {
+        "calls": 7,
+        "reachable": 7,
+        "missing": []
+      }
+    },
+    {
+      "baseId": "greater-sudbury-ems-post-1",
+      "name": "Van Horne (Main Station) Paramedic Post",
+      "address": "193 Van Horne Street",
+      "sourcePoint": {
+        "lat": 46.48744001132133,
+        "lng": -80.99004528426735
+      },
+      "drivingArea": {
+        "center": {
+          "lat": 46.48744001132133,
+          "lng": -80.99004528426735
+        },
+        "widthMetres": 95,
+        "lengthMetres": 105,
+        "rotationDegrees": 0,
+        "spawn": {
+          "lat": 46.48744001132133,
+          "lng": -80.99004528426735,
+          "headingDegrees": 0
+        },
+        "spawnOffsetFromCanonicalMetres": {
+          "east": 0,
+          "north": 0
+        }
+      },
+      "assessment": "estimated",
+      "observation": "Shared imagery fit with greater-sudbury-fire-1 at the same official address and source coordinates (193 Van Horne Street); the capture shows the co-located facility parcel, visible apron/parking and access aisle. This does not identify an EMS-only bay or entrance.",
+      "imageEvidence": {
+        "screenshot": "artifacts/release-qa/base-fit-greater-sudbury/greater-sudbury-ems-post-1.png",
+        "scaleMetresPerPixel": 0.205347817987432,
+        "nearbyRoadFeatures": [
+          {
+            "name": "St. Brendan Street",
+            "highway": "residential"
+          },
+          {
+            "name": "Edinburgh Street",
+            "highway": "residential"
+          },
+          {
+            "name": "Morris Street",
+            "highway": "tertiary"
+          },
+          {
+            "name": "Worthington Crescent",
+            "highway": "tertiary"
+          },
+          {
+            "name": "Druides Street",
+            "highway": "unclassified"
+          },
+          {
+            "name": "Marion Street",
+            "highway": "tertiary"
+          },
+          {
+            "name": "Grey Street",
+            "highway": "tertiary"
+          },
+          {
+            "name": "Lourdes Street",
+            "highway": "residential"
+          },
+          {
+            "name": "Medora Street",
+            "highway": "residential"
+          },
+          {
+            "name": "Frederic Street",
+            "highway": "service"
+          },
+          {
+            "name": "Elgin Street",
+            "highway": "tertiary"
+          },
+          {
+            "name": "Paris Street",
+            "highway": "secondary"
+          }
+        ]
+      },
+      "runtimeCollision": {
+        "spawnInside": true,
+        "areaRoadAccess": true,
+        "spawnInitiallyDrivable": true,
+        "nearestRoad": {
+          "name": "Unnamed road",
+          "highway": "service",
+          "distanceMetres": 26.35
+        },
+        "exitStarted": true,
+        "exitCompleted": true,
+        "blockedMoves": 0,
+        "movementSteps": 73,
+        "outsideExpandedDrivingArea": true,
+        "exitPoint": {
+          "lat": 46.4878454,
+          "lng": -80.98929100000001
+        }
+      },
+      "dispatchRouteCoverage": {
+        "calls": 6,
+        "reachable": 6,
+        "missing": []
+      },
+      "sharedFitWith": "greater-sudbury-fire-1 at the same official address and source coordinates (193 Van Horne Street)"
+    },
+    {
+      "baseId": "greater-sudbury-ems-post-3",
+      "name": "New Sudbury Station Paramedic Post",
+      "address": "1190 Leon Avenue",
+      "sourcePoint": {
+        "lat": 46.52304245043858,
+        "lng": -80.95036209008248
+      },
+      "drivingArea": {
+        "center": {
+          "lat": 46.52304245043858,
+          "lng": -80.95036209008248
+        },
+        "widthMetres": 70,
+        "lengthMetres": 80,
+        "rotationDegrees": 0,
+        "spawn": {
+          "lat": 46.52304245043858,
+          "lng": -80.95036209008248,
+          "headingDegrees": 0
+        },
+        "spawnOffsetFromCanonicalMetres": {
+          "east": 0,
+          "north": 0
+        }
+      },
+      "assessment": "estimated",
+      "observation": "Shared imagery fit with greater-sudbury-fire-3 at the same official address and source coordinates (1190 Leon Avenue); the capture shows the co-located facility parcel, visible apron/parking and access aisle. This does not identify an EMS-only bay or entrance.",
+      "imageEvidence": {
+        "screenshot": "artifacts/release-qa/base-fit-greater-sudbury/greater-sudbury-ems-post-3.png",
+        "scaleMetresPerPixel": 0.20521337522467037,
+        "nearbyRoadFeatures": [
+          {
+            "name": "Arvo Avenue",
+            "highway": "residential"
+          },
+          {
+            "name": "McCormack Court",
+            "highway": "service"
+          },
+          {
+            "name": "Roy Avenue",
+            "highway": "residential"
+          },
+          {
+            "name": "Roland Street",
+            "highway": "residential"
+          },
+          {
+            "name": "Holland Road",
+            "highway": "residential"
+          },
+          {
+            "name": "McCormack Court",
+            "highway": "service"
+          },
+          {
+            "name": "Leon Avenue",
+            "highway": "residential"
+          },
+          {
+            "name": "Sparks Street",
+            "highway": "residential"
+          },
+          {
+            "name": "Sparks Street",
+            "highway": "residential"
+          },
+          {
+            "name": "Lamothe Street",
+            "highway": "residential"
+          },
+          {
+            "name": "Attlee Avenue",
+            "highway": "residential"
+          },
+          {
+            "name": "Lamothe Street",
+            "highway": "residential"
+          }
+        ]
+      },
+      "runtimeCollision": {
+        "spawnInside": true,
+        "areaRoadAccess": true,
+        "spawnInitiallyDrivable": true,
+        "nearestRoad": {
+          "name": "Sparks Street",
+          "highway": "service",
+          "distanceMetres": 14.86
+        },
+        "exitStarted": true,
+        "exitCompleted": true,
+        "blockedMoves": 0,
+        "movementSteps": 34,
+        "outsideExpandedDrivingArea": true,
+        "exitPoint": {
+          "lat": 46.52294653333333,
+          "lng": -80.9497607
+        }
+      },
+      "dispatchRouteCoverage": {
+        "calls": 6,
+        "reachable": 6,
+        "missing": []
+      },
+      "sharedFitWith": "greater-sudbury-fire-3 at the same official address and source coordinates (1190 Leon Avenue)"
+    },
+    {
+      "baseId": "greater-sudbury-ems-post-4",
+      "name": "Long Lake Road Station Paramedic Post",
+      "address": "2069 Long Lake Road",
+      "sourcePoint": {
+        "lat": 46.449897865508376,
+        "lng": -81.00444676134677
+      },
+      "drivingArea": {
+        "center": {
+          "lat": 46.449897865508376,
+          "lng": -81.00444676134677
+        },
+        "widthMetres": 75,
+        "lengthMetres": 90,
+        "rotationDegrees": 45,
+        "spawn": {
+          "lat": 46.449897865508376,
+          "lng": -81.00444676134677,
+          "headingDegrees": 0
+        },
+        "spawnOffsetFromCanonicalMetres": {
+          "east": 0,
+          "north": 0
+        }
+      },
+      "assessment": "estimated",
+      "observation": "Shared imagery fit with greater-sudbury-fire-4 at the same official address and source coordinates (2069 Long Lake Road); the capture shows the co-located facility parcel, visible apron/parking and access aisle. This does not identify an EMS-only bay or entrance.",
+      "imageEvidence": {
+        "screenshot": "artifacts/release-qa/base-fit-greater-sudbury/greater-sudbury-ems-post-4.png",
+        "scaleMetresPerPixel": 0.2054894994503188,
+        "nearbyRoadFeatures": [
+          {
+            "name": "Este Drive",
+            "highway": "residential"
+          },
+          {
+            "name": "Brenda Drive",
+            "highway": "residential"
+          },
+          {
+            "name": "Este Drive",
+            "highway": "residential"
+          },
+          {
+            "name": "Paris Street",
+            "highway": "secondary"
+          },
+          {
+            "name": "Long Lake Road",
+            "highway": "secondary"
+          },
+          {
+            "name": "Regent Street",
+            "highway": "primary"
+          },
+          {
+            "name": null,
+            "highway": "service"
+          },
+          {
+            "name": null,
+            "highway": "service"
+          },
+          {
+            "name": null,
+            "highway": "service"
+          },
+          {
+            "name": null,
+            "highway": "service"
+          },
+          {
+            "name": null,
+            "highway": "service"
+          },
+          {
+            "name": null,
+            "highway": "service"
+          }
+        ]
+      },
+      "runtimeCollision": {
+        "spawnInside": true,
+        "areaRoadAccess": true,
+        "spawnInitiallyDrivable": true,
+        "nearestRoad": {
+          "name": "Long Lake Road",
+          "highway": "secondary",
+          "distanceMetres": 38.95
+        },
+        "exitStarted": true,
+        "exitCompleted": true,
+        "blockedMoves": 0,
+        "movementSteps": 52,
+        "outsideExpandedDrivingArea": true,
+        "exitPoint": {
+          "lat": 46.45008621111111,
+          "lng": -81.00381805555556
+        }
+      },
+      "dispatchRouteCoverage": {
+        "calls": 6,
+        "reachable": 6,
+        "missing": []
+      },
+      "sharedFitWith": "greater-sudbury-fire-4 at the same official address and source coordinates (2069 Long Lake Road)"
+    },
+    {
+      "baseId": "greater-sudbury-ems-post-23",
+      "name": "Coniston Station Paramedic Post",
+      "address": "7 Second Avenue",
+      "sourcePoint": {
+        "lat": 46.48695828702971,
+        "lng": -80.84680863927042
+      },
+      "drivingArea": {
+        "center": {
+          "lat": 46.48695828702971,
+          "lng": -80.84680863927042
+        },
+        "widthMetres": 55,
+        "lengthMetres": 65,
+        "rotationDegrees": 0,
+        "spawn": {
+          "lat": 46.48695828702971,
+          "lng": -80.84680863927042,
+          "headingDegrees": 0
+        },
+        "spawnOffsetFromCanonicalMetres": {
+          "east": 0,
+          "north": 0
+        }
+      },
+      "assessment": "estimated",
+      "observation": "Shared imagery fit with greater-sudbury-fire-23 at the same official address and source coordinates (7 Second Avenue); the capture shows the co-located facility parcel, visible apron/parking and access aisle. This does not identify an EMS-only bay or entrance.",
+      "imageEvidence": {
+        "screenshot": "artifacts/release-qa/base-fit-greater-sudbury/greater-sudbury-ems-post-23.png",
+        "scaleMetresPerPixel": 0.20534963757357313,
+        "nearbyRoadFeatures": [
+          {
+            "name": "Edward Avenue",
+            "highway": "residential"
+          },
+          {
+            "name": "Caruso Street",
+            "highway": "residential"
+          },
+          {
+            "name": "Edward Avenue",
+            "highway": "residential"
+          },
+          {
+            "name": "Edward Avenue",
+            "highway": "residential"
+          },
+          {
+            "name": "Thomas Street",
+            "highway": "residential"
+          },
+          {
+            "name": "Government Road",
+            "highway": "tertiary"
+          },
+          {
+            "name": "First Avenue",
+            "highway": "residential"
+          },
+          {
+            "name": "Edward Avenue",
+            "highway": "residential"
+          },
+          {
+            "name": "Second Avenue",
+            "highway": "secondary"
+          },
+          {
+            "name": "Cedar Street",
+            "highway": "residential"
+          },
+          {
+            "name": "First Avenue",
+            "highway": "residential"
+          },
+          {
+            "name": "Walter Street",
+            "highway": "residential"
+          }
+        ]
+      },
+      "runtimeCollision": {
+        "spawnInside": true,
+        "areaRoadAccess": true,
+        "spawnInitiallyDrivable": true,
+        "nearestRoad": {
+          "name": "Unnamed road",
+          "highway": "service",
+          "distanceMetres": 15.17
+        },
+        "exitStarted": true,
+        "exitCompleted": true,
+        "blockedMoves": 0,
+        "movementSteps": 100,
+        "outsideExpandedDrivingArea": true,
+        "exitPoint": {
+          "lat": 46.48672862222222,
+          "lng": -80.84630372592592
+        }
+      },
+      "dispatchRouteCoverage": {
+        "calls": 6,
+        "reachable": 6,
+        "missing": []
+      },
+      "sharedFitWith": "greater-sudbury-fire-23 at the same official address and source coordinates (7 Second Avenue)"
+    },
+    {
+      "baseId": "greater-sudbury-ems-post-2",
+      "name": "Minnow Lake Station Paramedic Post",
+      "address": "144 Second Avenue South",
+      "sourcePoint": {
+        "lat": 46.48801647090031,
+        "lng": -80.93400460435173
+      },
+      "drivingArea": {
+        "center": {
+          "lat": 46.48801647090031,
+          "lng": -80.93400460435173
+        },
+        "widthMetres": 65,
+        "lengthMetres": 75,
+        "rotationDegrees": 0,
+        "spawn": {
+          "lat": 46.48801647090031,
+          "lng": -80.93400460435173,
+          "headingDegrees": 0
+        },
+        "spawnOffsetFromCanonicalMetres": {
+          "east": 0,
+          "north": 0
+        }
+      },
+      "assessment": "estimated",
+      "observation": "Shared imagery fit with greater-sudbury-fire-2 at the same official address and source coordinates (144 Second Avenue South); the capture shows the co-located facility parcel, visible apron/parking and access aisle. This does not identify an EMS-only bay or entrance.",
+      "imageEvidence": {
+        "screenshot": "artifacts/release-qa/base-fit-greater-sudbury/greater-sudbury-ems-post-2.png",
+        "scaleMetresPerPixel": 0.20534564285206355,
+        "nearbyRoadFeatures": [
+          {
+            "name": "Second Avenue South",
+            "highway": "tertiary"
+          },
+          {
+            "name": "Torbay Road",
+            "highway": "residential"
+          },
+          {
+            "name": "Wilfred Street",
+            "highway": "residential"
+          },
+          {
+            "name": "Wilfred Street",
+            "highway": "residential"
+          },
+          {
+            "name": "Rita Street",
+            "highway": "residential"
+          },
+          {
+            "name": null,
+            "highway": "service"
+          },
+          {
+            "name": null,
+            "highway": "service"
+          },
+          {
+            "name": null,
+            "highway": "service"
+          },
+          {
+            "name": null,
+            "highway": "service"
+          },
+          {
+            "name": null,
+            "highway": "service"
+          },
+          {
+            "name": null,
+            "highway": "service"
+          },
+          {
+            "name": "Bayside Crescent",
+            "highway": "residential"
+          }
+        ]
+      },
+      "runtimeCollision": {
+        "spawnInside": true,
+        "areaRoadAccess": true,
+        "spawnInitiallyDrivable": true,
+        "nearestRoad": {
+          "name": "Second Avenue South",
+          "highway": "tertiary",
+          "distanceMetres": 34.4
+        },
+        "exitStarted": true,
+        "exitCompleted": true,
+        "blockedMoves": 0,
+        "movementSteps": 53,
+        "outsideExpandedDrivingArea": true,
+        "exitPoint": {
+          "lat": 46.48798813333333,
+          "lng": -80.9345643
+        }
+      },
+      "dispatchRouteCoverage": {
+        "calls": 6,
+        "reachable": 6,
+        "missing": []
+      },
+      "sharedFitWith": "greater-sudbury-fire-2 at the same official address and source coordinates (144 Second Avenue South)"
+    },
+    {
+      "baseId": "greater-sudbury-ems-azilda-central",
+      "name": "Lionel E. Lalonde Centre — central deployment",
+      "address": "239 Montee Principale",
+      "sourcePoint": {
+        "lat": 46.55528526983091,
+        "lng": -81.13104513358918
+      },
+      "drivingArea": {
+        "center": {
+          "lat": 46.55528526983091,
+          "lng": -81.13104513358918
+        },
+        "widthMetres": 65,
+        "lengthMetres": 75,
+        "rotationDegrees": 0,
+        "spawn": {
+          "lat": 46.55528526983091,
+          "lng": -81.13104513358918,
+          "headingDegrees": 0
+        },
+        "spawnOffsetFromCanonicalMetres": {
+          "east": 0,
+          "north": 0
+        }
+      },
+      "assessment": "estimated",
+      "observation": "Shared imagery fit with greater-sudbury-fire-10 at the same official address and source coordinates (239 Montee Principale); the capture shows the co-located facility parcel, visible apron/parking and access aisle. This does not identify an EMS-only bay or entrance.",
+      "imageEvidence": {
+        "screenshot": "artifacts/release-qa/base-fit-greater-sudbury/greater-sudbury-ems-azilda-central.png",
+        "scaleMetresPerPixel": 0.20509155133110407,
+        "nearbyRoadFeatures": [
+          {
+            "name": "Montée Principale",
+            "highway": "tertiary"
+          },
+          {
+            "name": "Fleetwood Drive",
+            "highway": "residential"
+          },
+          {
+            "name": "Zina Street",
+            "highway": "residential"
+          },
+          {
+            "name": "Country Club Drive",
+            "highway": "residential"
+          },
+          {
+            "name": null,
+            "highway": "service"
+          },
+          {
+            "name": null,
+            "highway": "service"
+          }
+        ]
+      },
+      "runtimeCollision": {
+        "spawnInside": true,
+        "areaRoadAccess": false,
+        "spawnInitiallyDrivable": true,
+        "nearestRoad": {
+          "name": "Unnamed road",
+          "highway": "service",
+          "distanceMetres": 37.17
+        },
+        "exitStarted": true,
+        "exitCompleted": true,
+        "blockedMoves": 0,
+        "movementSteps": 32,
+        "outsideExpandedDrivingArea": true,
+        "exitPoint": {
+          "lat": 46.55525972727273,
+          "lng": -81.13160361818181
+        }
+      },
+      "dispatchRouteCoverage": {
+        "calls": 6,
+        "reachable": 6,
+        "missing": []
+      },
+      "sharedFitWith": "greater-sudbury-fire-10 at the same official address and source coordinates (239 Montee Principale)"
+    },
+    {
+      "baseId": "greater-sudbury-ems-garson-post",
+      "name": "Garson Paramedic Post",
+      "address": "206 Church Street",
+      "sourcePoint": {
+        "lat": 46.55947628650494,
+        "lng": -80.86118064985578
+      },
+      "drivingArea": {
+        "center": {
+          "lat": 46.55947628650494,
+          "lng": -80.86118064985578
+        },
+        "widthMetres": 65,
+        "lengthMetres": 75,
+        "rotationDegrees": 0,
+        "spawn": {
+          "lat": 46.55947628650494,
+          "lng": -80.86118064985578,
+          "headingDegrees": 0
+        },
+        "spawnOffsetFromCanonicalMetres": {
+          "east": 0,
+          "north": 0
+        }
+      },
+      "assessment": "estimated",
+      "observation": "Shared imagery fit with greater-sudbury-fire-20 at the same official address and source coordinates (206 Church Street); the capture shows the co-located facility parcel, visible apron/parking and access aisle. This does not identify an EMS-only bay or entrance.",
+      "imageEvidence": {
+        "screenshot": "artifacts/release-qa/base-fit-greater-sudbury/greater-sudbury-ems-garson-post.png",
+        "scaleMetresPerPixel": 0.2050757139215053,
+        "nearbyRoadFeatures": [
+          {
+            "name": "Spruce Street",
+            "highway": "residential"
+          },
+          {
+            "name": "Spruce Street",
+            "highway": "residential"
+          },
+          {
+            "name": "Church Street",
+            "highway": "tertiary"
+          },
+          {
+            "name": "Victoria Street",
+            "highway": "residential"
+          },
+          {
+            "name": "Birch Lane",
+            "highway": "residential"
+          },
+          {
+            "name": "Birch Street",
+            "highway": "residential"
+          },
+          {
+            "name": "Devuono Street",
+            "highway": "residential"
+          },
+          {
+            "name": "Spruce Street",
+            "highway": "residential"
+          },
+          {
+            "name": "Beech Street",
+            "highway": "residential"
+          },
+          {
+            "name": "Spruce Street",
+            "highway": "tertiary"
+          },
+          {
+            "name": "Church Street",
+            "highway": "tertiary"
+          },
+          {
+            "name": "Central Lane",
+            "highway": "residential"
+          }
+        ]
+      },
+      "runtimeCollision": {
+        "spawnInside": true,
+        "areaRoadAccess": true,
+        "spawnInitiallyDrivable": true,
+        "nearestRoad": {
+          "name": "Unnamed road",
+          "highway": "service",
+          "distanceMetres": 13.88
+        },
+        "exitStarted": true,
+        "exitCompleted": true,
+        "blockedMoves": 0,
+        "movementSteps": 55,
+        "outsideExpandedDrivingArea": true,
+        "exitPoint": {
+          "lat": 46.55991805,
+          "lng": -80.8615699
+        }
+      },
+      "dispatchRouteCoverage": {
+        "calls": 6,
+        "reachable": 6,
+        "missing": []
+      },
+      "sharedFitWith": "greater-sudbury-fire-20 at the same official address and source coordinates (206 Church Street)"
+    },
+    {
+      "baseId": "greater-sudbury-ems-val-therese",
+      "name": "Val Thérèse Paramedic Station",
+      "address": "4200 Municipal Road 80",
+      "sourcePoint": {
+        "lat": 46.64364379604278,
+        "lng": -81.00773006812001
+      },
+      "drivingArea": {
+        "center": {
+          "lat": 46.64364379604278,
+          "lng": -81.00773006812001
+        },
+        "widthMetres": 75,
+        "lengthMetres": 90,
+        "rotationDegrees": 0,
+        "spawn": {
+          "lat": 46.64364379604278,
+          "lng": -81.00773006812001,
+          "headingDegrees": 0
+        },
+        "spawnOffsetFromCanonicalMetres": {
+          "east": 0,
+          "north": 0
+        }
+      },
+      "assessment": "estimated",
+      "observation": "Shared imagery fit with greater-sudbury-fire-16 at the same official address and source coordinates (4200 Municipal Road 80); the capture shows the co-located facility parcel, visible apron/parking and access aisle. This does not identify an EMS-only bay or entrance.",
+      "imageEvidence": {
+        "screenshot": "artifacts/release-qa/base-fit-greater-sudbury/greater-sudbury-ems-val-therese.png",
+        "scaleMetresPerPixel": 0.2047573759743594,
+        "nearbyRoadFeatures": [
+          {
+            "name": "Gaston Avenue",
+            "highway": "residential"
+          },
+          {
+            "name": "Lillian Street",
+            "highway": "residential"
+          },
+          {
+            "name": "Guimond Avenue",
+            "highway": "residential"
+          },
+          {
+            "name": "Gauthier Street",
+            "highway": "residential"
+          },
+          {
+            "name": "Dutrisac Boulevard",
+            "highway": "residential"
+          },
+          {
+            "name": "Larocque Avenue",
+            "highway": "residential"
+          },
+          {
+            "name": "Alexandre Street",
+            "highway": "residential"
+          },
+          {
+            "name": "La Habre Avenue",
+            "highway": "residential"
+          },
+          {
+            "name": "Jeanne D'arc Street",
+            "highway": "residential"
+          },
+          {
+            "name": "Grandale Street",
+            "highway": "residential"
+          },
+          {
+            "name": "Old Highway 69 North",
+            "highway": "secondary"
+          },
+          {
+            "name": null,
+            "highway": "service"
+          }
+        ]
+      },
+      "runtimeCollision": {
+        "spawnInside": true,
+        "areaRoadAccess": true,
+        "spawnInitiallyDrivable": true,
+        "nearestRoad": {
+          "name": "Jeanne D'arc Street",
+          "highway": "residential",
+          "distanceMetres": 31.3
+        },
+        "exitStarted": true,
+        "exitCompleted": true,
+        "blockedMoves": 0,
+        "movementSteps": 70,
+        "outsideExpandedDrivingArea": true,
+        "exitPoint": {
+          "lat": 46.64313299041096,
+          "lng": -81.00830742054795
+        }
+      },
+      "dispatchRouteCoverage": {
+        "calls": 6,
+        "reachable": 6,
+        "missing": []
+      },
+      "sharedFitWith": "greater-sudbury-fire-16 at the same official address and source coordinates (4200 Municipal Road 80)"
+    },
+    {
+      "baseId": "greater-sudbury-ems-chelmsford",
+      "name": "Chelmsford — Private Andrew Miller Ambulance Station",
+      "address": "3400 Highway 144",
+      "sourcePoint": {
+        "lat": 46.56939070025234,
+        "lng": -81.202950008714
+      },
+      "drivingArea": {
+        "center": {
+          "lat": 46.56939070025234,
+          "lng": -81.202950008714
+        },
+        "widthMetres": 70,
+        "lengthMetres": 85,
+        "rotationDegrees": 0,
+        "spawn": {
+          "lat": 46.56939070025234,
+          "lng": -81.202950008714,
+          "headingDegrees": 0
+        },
+        "spawnOffsetFromCanonicalMetres": {
+          "east": 0,
+          "north": 0
+        }
+      },
+      "assessment": "estimated",
+      "observation": "Shared imagery fit with greater-sudbury-fire-11 at the same official address and source coordinates (3400 Highway 144); the capture shows the co-located facility parcel, visible apron/parking and access aisle. This does not identify an EMS-only bay or entrance.",
+      "imageEvidence": {
+        "screenshot": "artifacts/release-qa/base-fit-greater-sudbury/greater-sudbury-ems-chelmsford.png",
+        "scaleMetresPerPixel": 0.2050382400273898,
+        "nearbyRoadFeatures": [
+          {
+            "name": "Rita Street",
+            "highway": "residential"
+          },
+          {
+            "name": "Balfour Street",
+            "highway": "residential"
+          },
+          {
+            "name": "Rita Street",
+            "highway": "residential"
+          },
+          {
+            "name": "Laurette Street",
+            "highway": "residential"
+          },
+          {
+            "name": "Balfour Street",
+            "highway": "residential"
+          },
+          {
+            "name": "Irene Crescent",
+            "highway": "residential"
+          },
+          {
+            "name": "Saint Onge Street",
+            "highway": "residential"
+          },
+          {
+            "name": "Laurette Street",
+            "highway": "residential"
+          },
+          {
+            "name": "Isidore Street",
+            "highway": "residential"
+          },
+          {
+            "name": "Saint Onge Street",
+            "highway": "residential"
+          },
+          {
+            "name": "Saint Onge Street",
+            "highway": "residential"
+          },
+          {
+            "name": "Highway 144",
+            "highway": "primary"
+          }
+        ]
+      },
+      "runtimeCollision": {
+        "spawnInside": true,
+        "areaRoadAccess": true,
+        "spawnInitiallyDrivable": true,
+        "nearestRoad": {
+          "name": "Unnamed road",
+          "highway": "service",
+          "distanceMetres": 28.9
+        },
+        "exitStarted": true,
+        "exitCompleted": true,
+        "blockedMoves": 0,
+        "movementSteps": 50,
+        "outsideExpandedDrivingArea": true,
+        "exitPoint": {
+          "lat": 46.568905586363634,
+          "lng": -81.2031839909091
+        }
+      },
+      "dispatchRouteCoverage": {
+        "calls": 6,
+        "reachable": 6,
+        "missing": []
+      },
+      "sharedFitWith": "greater-sudbury-fire-11 at the same official address and source coordinates (3400 Highway 144)"
+    },
+    {
+      "baseId": "greater-sudbury-ems-levack",
+      "name": "Levack Paramedic Station",
+      "address": "50 Nickel Street",
+      "sourcePoint": {
+        "lat": 46.64140344244166,
+        "lng": -81.38797218386797
+      },
+      "drivingArea": {
+        "center": {
+          "lat": 46.64140344244166,
+          "lng": -81.38797218386797
+        },
+        "widthMetres": 60,
+        "lengthMetres": 70,
+        "rotationDegrees": 0,
+        "spawn": {
+          "lat": 46.64140344244166,
+          "lng": -81.38797218386797,
+          "headingDegrees": 0
+        },
+        "spawnOffsetFromCanonicalMetres": {
+          "east": 0,
+          "north": 0
+        }
+      },
+      "assessment": "estimated",
+      "observation": "Shared imagery fit with greater-sudbury-fire-14 at the same official address and source coordinates (50 Nickel Street); the capture shows the co-located facility parcel, visible apron/parking and access aisle. This does not identify an EMS-only bay or entrance.",
+      "imageEvidence": {
+        "screenshot": "artifacts/release-qa/base-fit-greater-sudbury/greater-sudbury-ems-levack.png",
+        "scaleMetresPerPixel": 0.20476585092032054,
+        "nearbyRoadFeatures": [
+          {
+            "name": "Fourth Avenue",
+            "highway": "residential"
+          },
+          {
+            "name": "Third Avenue S",
+            "highway": "residential"
+          },
+          {
+            "name": "Fourth Avenue",
+            "highway": "residential"
+          },
+          {
+            "name": "Evergreen Street",
+            "highway": "residential"
+          },
+          {
+            "name": "Balsam Street",
+            "highway": "residential"
+          },
+          {
+            "name": "Fourth Avenue",
+            "highway": "residential"
+          },
+          {
+            "name": "Nickel Street",
+            "highway": "residential"
+          },
+          {
+            "name": "School Street",
+            "highway": "residential"
+          },
+          {
+            "name": "Copper Street",
+            "highway": "residential"
+          },
+          {
+            "name": "Cedar Street",
+            "highway": "residential"
+          },
+          {
+            "name": "Second Avenue",
+            "highway": "residential"
+          },
+          {
+            "name": "First Avenue",
+            "highway": "residential"
+          }
+        ]
+      },
+      "runtimeCollision": {
+        "spawnInside": true,
+        "areaRoadAccess": true,
+        "spawnInitiallyDrivable": true,
+        "nearestRoad": {
+          "name": "Nickel Street",
+          "highway": "residential",
+          "distanceMetres": 23.7
+        },
+        "exitStarted": true,
+        "exitCompleted": true,
+        "blockedMoves": 0,
+        "movementSteps": 43,
+        "outsideExpandedDrivingArea": true,
+        "exitPoint": {
+          "lat": 46.640994344518695,
+          "lng": -81.38799270245072
+        }
+      },
+      "dispatchRouteCoverage": {
+        "calls": 6,
+        "reachable": 6,
+        "missing": []
+      },
+      "sharedFitWith": "greater-sudbury-fire-14 at the same official address and source coordinates (50 Nickel Street)"
+    },
+    {
+      "baseId": "greater-sudbury-ems-walden",
+      "name": "Walden / Waters Paramedic Station",
+      "address": "25 Black Lake Road",
+      "sourcePoint": {
+        "lat": 46.41815363366876,
+        "lng": -81.14023725472087
+      },
+      "drivingArea": {
+        "center": {
+          "lat": 46.4180179,
+          "lng": -81.139848
+        },
+        "widthMetres": 125,
+        "lengthMetres": 95,
+        "rotationDegrees": 0,
+        "spawn": {
+          "lat": 46.41783949619683,
+          "lng": -81.13928493441935,
+          "headingDegrees": 120
+        },
+        "spawnOffsetFromCanonicalMetres": {
+          "east": 73.1,
+          "north": -34.7
+        }
+      },
+      "assessment": "estimated",
+      "observation": "The Esri zoom-19 capture shows the station building and broad paved apron continuing east-southeast to Black Lake Road. The canonical source point remains at the facility; modeled spawn is placed at the visible road edge about 81 m away because the packaged OSM graph has no internal driveway segment. Fit is site-specific and estimated; actual driveway rights and apparatus entrance are unverified.",
+      "imageEvidence": {
+        "screenshot": "artifacts/release-qa/base-fit-greater-sudbury/greater-sudbury-ems-walden.png",
+        "scaleMetresPerPixel": 0.20560923397496997,
+        "nearbyRoadFeatures": [
+          {
+            "name": "Old Highway 17",
+            "highway": "primary"
+          },
+          {
+            "name": "Main Street",
+            "highway": "secondary"
+          },
+          {
+            "name": "Black Lake Road",
+            "highway": "tertiary"
+          },
+          {
+            "name": null,
+            "highway": "primary_link"
+          },
+          {
+            "name": "Main Street",
+            "highway": "secondary"
+          },
+          {
+            "name": "Main Street",
+            "highway": "secondary"
+          },
+          {
+            "name": "Old Soo Road",
+            "highway": "residential"
+          },
+          {
+            "name": "Old Soo Road",
+            "highway": "residential"
+          },
+          {
+            "name": "Old Highway 17",
+            "highway": "primary"
+          },
+          {
+            "name": "Old Highway 17",
+            "highway": "primary"
+          },
+          {
+            "name": "Black Lake Road",
+            "highway": "tertiary"
+          },
+          {
+            "name": "Old Highway 17",
+            "highway": "primary"
+          }
+        ]
+      },
+      "runtimeCollision": {
+        "spawnInside": true,
+        "areaRoadAccess": true,
+        "spawnInitiallyDrivable": true,
+        "nearestRoad": {
+          "name": "Black Lake Road",
+          "highway": "tertiary",
+          "distanceMetres": 0
+        },
+        "exitStarted": true,
+        "exitCompleted": true,
+        "blockedMoves": 0,
+        "movementSteps": 42,
+        "outsideExpandedDrivingArea": true,
+        "exitPoint": {
+          "lat": 46.41831156666667,
+          "lng": -81.1388992952381
+        }
+      },
+      "dispatchRouteCoverage": {
+        "calls": 6,
+        "reachable": 6,
+        "missing": []
+      }
+    },
+    {
+      "baseId": "greater-sudbury-ems-capreol",
+      "name": "Capreol Paramedic Station — Old Hydro Building",
+      "address": "105 Young Street",
+      "sourcePoint": {
+        "lat": 46.70630357437713,
+        "lng": -80.92341571271814
+      },
+      "drivingArea": {
+        "center": {
+          "lat": 46.70630357437713,
+          "lng": -80.92341571271814
+        },
+        "widthMetres": 50,
+        "lengthMetres": 60,
+        "rotationDegrees": 45,
+        "spawn": {
+          "lat": 46.70630357437713,
+          "lng": -80.92341571271814,
+          "headingDegrees": 0
+        },
+        "spawnOffsetFromCanonicalMetres": {
+          "east": 0,
+          "north": 0
+        }
+      },
+      "assessment": "estimated",
+      "observation": "Estimated individually from the captured Esri World Imagery zoom-19 view at 105 Young Street: the visible paramedic facility, immediate paved apron/parking and the site access aisle are fitted within this rectangle. Dimensions and orientation are image estimates; no apparatus door, gate or access right is verified.",
+      "imageEvidence": {
+        "screenshot": "artifacts/release-qa/base-fit-greater-sudbury/greater-sudbury-ems-capreol.png",
+        "scaleMetresPerPixel": 0.20452009311789876,
+        "nearbyRoadFeatures": [
+          {
+            "name": "Crescent Avenue",
+            "highway": "residential"
+          },
+          {
+            "name": "Dennie Street",
+            "highway": "secondary"
+          },
+          {
+            "name": "Kelly Street",
+            "highway": "residential"
+          },
+          {
+            "name": "Ormsby Avenue",
+            "highway": "residential"
+          },
+          {
+            "name": "Kelly Street",
+            "highway": "residential"
+          },
+          {
+            "name": "Dennie Street",
+            "highway": "secondary"
+          },
+          {
+            "name": "Ford Avenue",
+            "highway": "residential"
+          },
+          {
+            "name": "Dennie Street",
+            "highway": "secondary"
+          },
+          {
+            "name": "King Street",
+            "highway": "residential"
+          },
+          {
+            "name": "Vaughan Avenue",
+            "highway": "residential"
+          },
+          {
+            "name": "Crescent Avenue",
+            "highway": "residential"
+          },
+          {
+            "name": "Hanna Avenue",
+            "highway": "residential"
+          }
+        ]
+      },
+      "runtimeCollision": {
+        "spawnInside": true,
+        "areaRoadAccess": true,
+        "spawnInitiallyDrivable": true,
+        "nearestRoad": {
+          "name": "Kelly Street",
+          "highway": "residential",
+          "distanceMetres": 26.47
+        },
+        "exitStarted": true,
+        "exitCompleted": true,
+        "blockedMoves": 0,
+        "movementSteps": 63,
+        "outsideExpandedDrivingArea": true,
+        "exitPoint": {
+          "lat": 46.70635739767442,
+          "lng": -80.92284564883721
+        }
+      },
+      "dispatchRouteCoverage": {
+        "calls": 6,
+        "reachable": 6,
+        "missing": []
+      }
+    }
+  ],
+  "runtimeCollisionChecks": {
+    "artifact": "artifacts/release-qa/base-fit/greater-sudbury-driving-area-checks.json",
+    "bases": 30,
+    "continuousExits": 30,
+    "blockedMoves": 0,
+    "note": "Continuous real-route collision-model samples through the yard boundary; not a physical full-route drive."
+  },
+  "dispatchRouteCoverage": {
+    "checkedLocalDate": "2026-11-02",
+    "device": "mobile browser route-only QA",
+    "fireTotals": {
+      "bases": 18,
+      "calls": 128,
+      "reachable": 128,
+      "failures": 0
+    },
+    "fireBases": [
+      {
+        "baseId": "fire-greater-sudbury-fire-1",
+        "calls": 8,
+        "reachable": 8,
+        "missing": []
+      },
+      {
+        "baseId": "fire-greater-sudbury-fire-2",
+        "calls": 8,
+        "reachable": 8,
+        "missing": []
+      },
+      {
+        "baseId": "fire-greater-sudbury-fire-3",
+        "calls": 8,
+        "reachable": 8,
+        "missing": []
+      },
+      {
+        "baseId": "fire-greater-sudbury-fire-4",
+        "calls": 8,
+        "reachable": 8,
+        "missing": []
+      },
+      {
+        "baseId": "fire-greater-sudbury-fire-6",
+        "calls": 8,
+        "reachable": 8,
+        "missing": []
+      },
+      {
+        "baseId": "fire-greater-sudbury-fire-7",
+        "calls": 8,
+        "reachable": 8,
+        "missing": []
+      },
+      {
+        "baseId": "fire-greater-sudbury-fire-8",
+        "calls": 6,
+        "reachable": 6,
+        "missing": []
+      },
+      {
+        "baseId": "fire-greater-sudbury-fire-10",
+        "calls": 7,
+        "reachable": 7,
+        "missing": []
+      },
+      {
+        "baseId": "fire-greater-sudbury-fire-11",
+        "calls": 6,
+        "reachable": 6,
+        "missing": []
+      },
+      {
+        "baseId": "fire-greater-sudbury-fire-12",
+        "calls": 6,
+        "reachable": 6,
+        "missing": []
+      },
+      {
+        "baseId": "fire-greater-sudbury-fire-14",
+        "calls": 6,
+        "reachable": 6,
+        "missing": []
+      },
+      {
+        "baseId": "fire-greater-sudbury-fire-16",
+        "calls": 8,
+        "reachable": 8,
+        "missing": []
+      },
+      {
+        "baseId": "fire-greater-sudbury-fire-17",
+        "calls": 7,
+        "reachable": 7,
+        "missing": []
+      },
+      {
+        "baseId": "fire-greater-sudbury-fire-18",
+        "calls": 6,
+        "reachable": 6,
+        "missing": []
+      },
+      {
+        "baseId": "fire-greater-sudbury-fire-20",
+        "calls": 6,
+        "reachable": 6,
+        "missing": []
+      },
+      {
+        "baseId": "fire-greater-sudbury-fire-22",
+        "calls": 6,
+        "reachable": 6,
+        "missing": []
+      },
+      {
+        "baseId": "fire-greater-sudbury-fire-23",
+        "calls": 8,
+        "reachable": 8,
+        "missing": []
+      },
+      {
+        "baseId": "fire-greater-sudbury-fire-24",
+        "calls": 8,
+        "reachable": 8,
+        "missing": []
+      }
+    ],
+    "emsTotals": {
+      "bases": 12,
+      "calls": 72,
+      "reachable": 72,
+      "failures": 0
+    },
+    "emsBases": [
+      {
+        "baseId": "ems-greater-sudbury-ems-azilda-central",
+        "calls": 6,
+        "reachable": 6,
+        "missing": []
+      },
+      {
+        "baseId": "ems-greater-sudbury-ems-capreol",
+        "calls": 6,
+        "reachable": 6,
+        "missing": []
+      },
+      {
+        "baseId": "ems-greater-sudbury-ems-chelmsford",
+        "calls": 6,
+        "reachable": 6,
+        "missing": []
+      },
+      {
+        "baseId": "ems-greater-sudbury-ems-garson-post",
+        "calls": 6,
+        "reachable": 6,
+        "missing": []
+      },
+      {
+        "baseId": "ems-greater-sudbury-ems-levack",
+        "calls": 6,
+        "reachable": 6,
+        "missing": []
+      },
+      {
+        "baseId": "ems-greater-sudbury-ems-post-1",
+        "calls": 6,
+        "reachable": 6,
+        "missing": []
+      },
+      {
+        "baseId": "ems-greater-sudbury-ems-post-2",
+        "calls": 6,
+        "reachable": 6,
+        "missing": []
+      },
+      {
+        "baseId": "ems-greater-sudbury-ems-post-23",
+        "calls": 6,
+        "reachable": 6,
+        "missing": []
+      },
+      {
+        "baseId": "ems-greater-sudbury-ems-post-3",
+        "calls": 6,
+        "reachable": 6,
+        "missing": []
+      },
+      {
+        "baseId": "ems-greater-sudbury-ems-post-4",
+        "calls": 6,
+        "reachable": 6,
+        "missing": []
+      },
+      {
+        "baseId": "ems-greater-sudbury-ems-val-therese",
+        "calls": 6,
+        "reachable": 6,
+        "missing": []
+      },
+      {
+        "baseId": "ems-greater-sudbury-ems-walden",
+        "calls": 6,
+        "reachable": 6,
+        "missing": []
+      }
+    ],
+    "artifact": "artifacts/release-qa/base-fit-greater-sudbury/dispatch-qa/route-coverage.json"
+  }
+}
