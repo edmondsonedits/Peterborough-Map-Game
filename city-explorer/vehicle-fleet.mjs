@@ -1,0 +1,20 @@
+import {TRUCK_TUNING} from './gameplay-systems.js';
+
+const definition=(id,name,station,type,changes={})=>Object.freeze({id,name,station,type,tuning:Object.freeze({...TRUCK_TUNING,...changes})});
+export const FLEET_DEFINITIONS=Object.freeze([
+  definition('pump-1','Pump 1',1,'pumper'),definition('pump-2','Pump 2',2,'pumper'),definition('pump-3','Pump 3',3,'pumper'),
+  definition('aerial','Aerial',1,'aerial',{length:11.8,width:2.55,height:3.7,wheelbase:6.2,maximumForwardSpeed:85/3.6,forwardAcceleration:2.8,chaseDistance:13.5,chaseHeight:4.5}),
+  definition('medi','Medi',1,'medi',{length:6.5,width:2.35,height:2.7,wheelbase:3.8,trackWidth:1.95,maximumForwardSpeed:120/3.6,forwardAcceleration:5.5,steeringLowSpeed:.62,chaseDistance:8.5,chaseHeight:3}),
+]);
+export function createVehicleFleet(spawns){
+  const vehicles=FLEET_DEFINITIONS.map(definition=>{
+    const spawn={...spawns[definition.id]};
+    if(![spawn.x,spawn.z,spawn.heading].every(Number.isFinite))throw Error(`Invalid spawn for ${definition.id}`);
+    return {definition,spawn,state:{y:0,speed:0,acceleration:0,steering:0,pitch:0,roll:0,wheelRotation:0,...spawn},actor:null};
+  });
+  let activeId='pump-1';
+  return {vehicles,get activeId(){return activeId;},get active(){return vehicles.find(v=>v.definition.id===activeId);},
+    select(id){const entry=vehicles.find(v=>v.definition.id===id);if(!entry)throw Error(`Unknown vehicle: ${id}`);activeId=id;return entry;},
+    reset(){for(const v of vehicles)Object.assign(v.state,{...v.spawn,speed:0,acceleration:0,steering:0,pitch:0,roll:0,wheelRotation:0});},
+  };
+}

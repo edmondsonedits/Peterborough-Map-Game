@@ -1,0 +1,39 @@
+{
+  "name": "Station 1 medical response pickup",
+  "units": "metres",
+  "forward": "-Z",
+  "up": "+Y",
+  "dimensions": {
+    "length": 6.7,
+    "width": 2.1,
+    "height": 2.6
+  },
+  "measuredBounds": {
+    "length": 6.7,
+    "width": 2.36,
+    "height": 2.59
+  },
+  "wheelbase": 4.07,
+  "wheelNodes": [
+    "Wheel_FL",
+    "Wheel_FR",
+    "Wheel_RL",
+    "Wheel_RR"
+  ],
+  "beaconNodes": [
+    "Beacon_L",
+    "Beacon_R",
+    "Beacon_RearL",
+    "Beacon_RearR"
+  ],
+  "fourDoorCab": true,
+  "fullyEnclosedCanopy": true,
+  "body": "Fire-red four-door pickup cab with a white enclosed equipment canopy and roll-up side lockers",
+  "ambulance": false,
+  "source": "Original pickup cab/canopy with selectively reused generic pumper wheel and beacon meshes",
+  "wheelSimplificationRatio": 0.3,
+  "commercialUse": "Project-created generic geometry and source project meshes; no external assets",
+  "triangles": 12044,
+  "drawCalls": 25,
+  "glbBytes": 766316
+}

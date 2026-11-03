@@ -131,11 +131,11 @@ export function createStationOneRuntime({ THREE, scene, layout, project, baseSur
   function localPose(pose) { return { ...localPoint(pose), heading: (Number(pose.heading) || 0) - yaw }; }
   function collides(position, options = {}) {
     if (!loaded) return false;
-    return stationOneCollision(localPose(position), layout, state.doors, options.player ? { length: 0.7, width: 0.7 } : TRUCK_DIMENSIONS, options);
+    return stationOneCollision(localPose(position), layout, state.doors, options.player ? { length: 0.7, width: 0.7 } : (options.dimensions||TRUCK_DIMENSIONS), options);
   }
-  function sweep(previous, next) {
+  function sweep(previous, next, dimensions=TRUCK_DIMENSIONS) {
     if (!loaded) return false;
-    return sweepStationOneTruck(localPose(previous), localPose(next), layout, state.doors, TRUCK_DIMENSIONS);
+    return sweepStationOneTruck(localPose(previous), localPose(next), layout, state.doors, dimensions);
   }
   function frontDoorForTruck(worldTruck) {
     if (!loaded || !worldTruck) return -1;
@@ -155,9 +155,9 @@ export function createStationOneRuntime({ THREE, scene, layout, project, baseSur
   }
   function update(delta, truck, player) {
     if (!loaded) return;
-    const truckLocal = truck ? localPose(truck) : null;
+    const trucks=(Array.isArray(truck)?truck:[truck]).filter(Boolean);
     const playerLocal = player ? localPoint(player) : null;
-    state.doors = stepStationOneDoors(state.doors, delta, index => stationOneDoorObstructed(layout, index, truckLocal, playerLocal, TRUCK_DIMENSIONS));
+    state.doors = stepStationOneDoors(state.doors, delta, index => trucks.some(t=>stationOneDoorObstructed(layout,index,localPose(t),playerLocal,t.dimensions||TRUCK_DIMENSIONS)));
     for (const [name, node] of state.panels) {
       const [, door, panel] = name.match(PANEL_NODE);
       const base = state.panelBases.get(name);

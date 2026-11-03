@@ -1,3 +1,7 @@
+import {createFleetRuntime} from './fleet-runtime.js';
+import {FLEET_DEFINITIONS} from './vehicle-fleet.mjs';
+import {createAerialRuntime} from './aerial-runtime.js';
+import {createAerialState} from './aerial-controller.mjs';
 import { CAMERA_VIEWS, cameraBayInfluence, cameraFraming, clampBayCamera, installCameraViewControl } from './gameplay-camera.mjs?v=1.6.177';
 import { STATION_THREE_BAY, stationThreeDoorObstructed, stationThreeDoorSweep } from './station-three-bay.mjs?v=1.6.177';
 import { createStationTransition } from './station-transition.mjs?v=1.6.177';
@@ -609,7 +613,10 @@ const fireStationWorld = new THREE.Vector3();
 const gameplayForward = new THREE.Vector3();
 const gameplayRight = new THREE.Vector3();
 const gameplayMove = new THREE.Vector3();
-const truckState = { x: 0, z: 0, y: 0, heading: Math.PI, speed: 0, steering: 0, pitch: 0, roll: 0, wheelRotation: 0 };
+let fleetRuntime=null;
+let aerialRuntime=null;
+let fleetHydroIndex=null;
+let truckState = { x: 0, z: 0, y: 0, heading: Math.PI, speed: 0, steering: 0, pitch: 0, roll: 0, wheelRotation: 0 };
 let gameplayReady = false;
 let stationSwitchReady = false;
 let stationTransitionController = null;
@@ -5554,7 +5561,8 @@ async function buildCity() {
   setProgress(31, terrain.source === 'ontario-lidar-2025'
     ? 'Shaping the landscape from Ontario lidar and hydrographic breaklines…'
     : state.terrainAvailable ? 'Decoding elevation tiles and shaping the landscape…' : 'Terrain service unavailable — using a flat landscape…');
-  createTerrainMesh(preparedHydrography?.surfaceIndex || null);
+  fleetHydroIndex=preparedHydrography?.surfaceIndex||null;
+  createTerrainMesh(fleetHydroIndex);
   placeStationThreeModel();
   if (preparedHydrography) buildOfficialHydrography(preparedHydrography);
   await nextFrame();
@@ -6081,11 +6089,12 @@ function gameplaySurfaceBaseAt(x, z, referenceHeight = null) {
 
 function gameplaySurfaceAt(x, z, referenceHeight = null) {
   const base = gameplaySurfaceBaseAt(x, z, referenceHeight);
-  const runtime = selectedStationRuntime();
-  if (!runtime?.isReady()) return base;
-  const station = runtime.surfaceAt(x, z);
-  if (!station) return base;
-  return { ...base, ...station, onRoad: station.onRoad ? base.onRoad : false, road: base.road, official: base.official };
+  for(const runtime of [stationOneRuntime,stationTwoRuntime]){
+    if(!runtime?.isReady())continue;
+    const station=runtime.surfaceAt(x,z);
+    if(station)return {...base,...station,onRoad:station.onRoad?base.onRoad:false,road:base.road,official:base.official};
+  }
+  return base;
 }
 function syncGameplayRootClasses() {
   els.app.classList.toggle('is-map', state.mode === 'map');
@@ -6104,12 +6113,11 @@ function updateGameplayHint() {
   if (state.mode === 'onFoot') {
     els.modeHint.innerHTML = `<strong>On foot at Fire Station ${number}.</strong> WASD or arrows move · Shift sprints · mouse looks · E enters the fire truck${doorHint} · F free camera.`;
   } else if (state.mode === 'driving') {
-    els.modeHint.innerHTML = `<strong>Driving Fire Rescue Engine ${number}.</strong> W/S throttle and brake · A/D steer · E exits when stopped · C camera · L emergency lights${doorHint}.`;
+    els.modeHint.innerHTML = `<strong>Driving ${fleetRuntime?.fleet.active.definition.name||`Pump ${number}`}.</strong> W/S throttle and brake · A/D steer · E exits when stopped · C camera · L emergency lights${doorHint}.`;
   }
 }
 function startDrivingFromBay() {
   if (!gameplayReady || stationSwitchBusy()) return false;
-  resetGameplay();
   playerActor.visible = false;
   playerVelocity.set(0, 0, 0);
   state.gameplayYaw = truckState.heading;
@@ -6162,11 +6170,11 @@ function stationThreeLocalActor(point) {
 function stationThreeTruckLocalPosition() { return stationThreeLocalActor(truckState); }
 function stationThreeDoorOccupied() {
   if(!stationThreeAssetReady||!playerActor)return false;
-  return stationThreeDoorObstructed(stationThreeLocalActor(truckState)) ||
+  return (fleetRuntime?.fleet.vehicles||[{state:truckState}]).some(v=>stationThreeDoorObstructed(stationThreeLocalActor(v.state))) ||
     (state.mode==='onFoot'&&stationThreeDoorObstructed(stationThreeLocalActor(playerActor.position),{player:true}));
 }
 function stationThreeBlocksMove(from,to,options={}) {
-  return FIRE_STATION_ONE.number===3 && stationThreeAssetReady &&
+  return stationThreeAssetReady &&
     stationThreeDoorSweep(stationThreeLocalActor(from),stationThreeLocalActor(to),{...options,fraction:stationThreeDoorController?.fraction??0});
 }
 const stationThreeDoorRuntime={
@@ -6180,7 +6188,10 @@ const stationThreeDoorRuntime={
     return {side:'front',index:0,blocked};
   },
 };
-function selectedStationDoorRuntime() { return selectedStationRuntime() || (FIRE_STATION_ONE.number===3?stationThreeDoorRuntime:null); }
+function selectedStationDoorRuntime() {
+  return [stationOneRuntime,stationTwoRuntime,stationThreeDoorRuntime].filter(r=>r?.isReady()&&r.frontDoorForTruck(truckState)>=0)
+    .sort((a,b)=>Math.hypot((a.spawn?.x??truckState.x)-truckState.x,(a.spawn?.z??truckState.z)-truckState.z)-Math.hypot((b.spawn?.x??truckState.x)-truckState.x,(b.spawn?.z??truckState.z)-truckState.z))[0]||selectedStationRuntime();
+}
 function stationCameraBay() {
   const runtime=selectedStationRuntime();
   if(runtime?.isReady()){
@@ -6221,6 +6232,95 @@ function selectedStationRuntime() {
   if (STATION_ONE_SELECTED) return stationOneRuntime;
   if (STATION_TWO_SELECTED) return stationTwoRuntime;
   return null;
+}
+
+function initializeVehicleFleet(){
+  const spawns={};
+  for(const definition of FLEET_DEFINITIONS){
+    let p,heading;
+    if(definition.station<3){
+      const r=definition.station===1?stationOneRuntime:stationTwoRuntime;
+      p=definition.id==='aerial'?r.worldPoint({x:0,z:9}):definition.id==='medi'?r.worldPoint({x:4.64,z:9}):r.spawn;
+      heading=r.spawn.heading;
+      spawns[definition.id]={x:p.x,z:p.z,heading,y:r.datum+.035};
+    }else{
+      const station=FIRE_STATION_THREE,anchor=project(station.assetAnchorLat,station.assetAnchorLon);
+      p={x:anchor.x+station.interiorTruckEast,z:anchor.y+station.interiorTruckSouth};heading=station.interiorTruckHeading;
+      spawns[definition.id]={...p,heading,y:gameplaySurfaceBaseAt(p.x,p.z).height+.035};
+    }
+  }
+  const requestedId=new URLSearchParams(location.search).get('vehicle');
+  const initialId=FLEET_DEFINITIONS.some(d=>d.id===requestedId)?requestedId:'pump-'+FIRE_STATION_ONE.number;
+  fleetRuntime=createFleetRuntime({THREE,group:gameplayGroup,createTruck:createFireTruck,spawns,initialId,
+    prepare:async(entry,isCurrent)=>{
+      if(!stationSwitchReady)throw Error('Vehicles are still loading');
+      if(cityEditor?.active)throw Error('Close the editor first');
+      aerialRuntime?.clearInput();stopFlyMotion();
+      const old=fireTruckActor.position;
+      stationTransitionTarget={number:entry.definition.station,x:entry.state.x,z:entry.state.z,protection:{protectX:old.x,protectZ:old.z,protectRadius:graphicsQuality.roadRadius+150}};
+      try{
+        const runtime=entry.definition.station<3?ensureStationRuntime(entry.definition.station,true):null;
+        if(runtime){if(!await waitForStationTask(runtime.load(),entry.definition.name))throw Error('Station model unavailable');runtime.root.visible=true;runtime.root.userData.stationRuntimeOwner=true;}
+        else{await waitForStationTask(loadStationThreeModel(),'Station 3');placeStationThreeModel();}
+        if(!isCurrent())return;
+        if(roadTileLayer)await waitForStationTask(roadTileLayer.update(entry.state.x,entry.state.z,stationTransitionTarget.protection),'Destination roads');
+        const start=performance.now();
+        while(isCurrent()&&(!citySceneryReadyAt(entry.state.x,entry.state.z,false)||(roadTileLayer&&!roadTileLayer.readyAt(entry.state.x,entry.state.z,15)))){
+          if(performance.now()-start>30000)throw Error('Destination is still loading. Please try again.');
+          await new Promise(resolve=>setTimeout(resolve,40));
+        }
+        if(isCurrent()){
+          await waitForStationTask(entry.actor.userData.truck.ready,entry.definition.name+' model');
+          if(entry.actor.userData.truck.assetStatus==='asset-error')throw Error('Vehicle model unavailable');
+        }
+      }finally{if(isCurrent()){stationTransitionTarget=null;roadTileNextUpdate=0;}}
+    },
+    activate:entry=>{
+      fireTruckActor=entry.actor;truckState=entry.state;
+      FIRE_STATION_ONE=FIRE_STATIONS.find(s=>s.number===entry.definition.station);
+      STATION_ONE_SELECTED=FIRE_STATION_ONE.number===1;STATION_TWO_SELECTED=FIRE_STATION_ONE.number===2;
+      const homeRuntime=entry.definition.station===1?stationOneRuntime:entry.definition.station===2?stationTwoRuntime:null;
+      const anchor=homeRuntime?.spawn.anchor||project(FIRE_STATION_ONE.buildingLat,FIRE_STATION_ONE.buildingLon);
+      fireStationWorld.set(anchor.x,0,anchor.z??anchor.y);lastRoadLabel='';
+      window.PTBO_SELECTED_FIRE_STATION=FIRE_STATION_ONE.number;
+      document.documentElement.dataset.fireStation=String(FIRE_STATION_ONE.number);
+      document.documentElement.dataset.vehicle=entry.definition.id;
+      if(!gameplayReady)return;
+      playerActor.visible=false;playerVelocity.set(0,0,0);playerSpeed=0;
+      state.gameplayYaw=truckState.heading;state.gameplayPitch=-.17;
+      state.gameplayLastLookTime=performance.now();setMode('driving',true);
+      syncStationControls();hideSelectedStationReplacement();snapGameplayCamera();updateGameplayHint();
+      const url=new URL(location.href);url.searchParams.set('station',String(FIRE_STATION_ONE.number));url.searchParams.set('vehicle',entry.definition.id);history.replaceState(null,'',url);
+      window.PTBO_SELECTED_FIRE_STATION=FIRE_STATION_ONE.number;document.documentElement.dataset.fireStation=String(FIRE_STATION_ONE.number);
+      document.documentElement.dataset.vehicle=entry.definition.id;window.dispatchEvent(new Event('ptbo:vehicle-selected'));
+      els.canvas.focus({preventScroll:true});
+    },changed:()=>window.dispatchEvent(new Event('ptbo:fleet-state')),
+  });
+  aerialRuntime=createAerialRuntime({THREE,scene:gameplayGroup,fleet:fleetRuntime,gameState:state,canvas:els.canvas,
+    surface:gameplaySurfaceAt,ready:(x,z)=>citySceneryReadyAt(x,z,false)&&(!roadTileLayer||roadTileLayer.readyAt(x,z,3)),
+    inBay:point=>[stationOneRuntime,stationTwoRuntime].some(r=>r?.containsBay(point)),
+    isWater:(x,z)=>{const y=fleetHydroIndex?.heightAt(x,z);return Number.isFinite(y)&&gameplaySurfaceAt(x,z).height<y+.08;},
+    obstacles:point=>fleetObstacleBoxes(point),toast:showToast,
+  });
+}
+
+function fleetObstacleBoxes(point){
+  const boxes=[];
+  for(const [id,feature] of generatedBuildingFeatures){
+    const dimensions=buildingDimensions(featureTags(feature),id);
+    for(const polygon of geometryPolygons(feature)){
+      const ring=polygon[0].map(([lon,lat])=>project(lat,lon));if(ring.length<3)continue;
+      const minX=Math.min(...ring.map(p=>p.x)),maxX=Math.max(...ring.map(p=>p.x)),minZ=Math.min(...ring.map(p=>p.y)),maxZ=Math.max(...ring.map(p=>p.y));
+      if(point.x<minX-38||point.x>maxX+38||point.z<minZ-38||point.z>maxZ+38)continue;
+      const y=Math.max(...ring.map(p=>terrainHeightAtWorld(p.x,p.y)))+dimensions.minHeight;
+      boxes.push({min:{x:minX,y,z:minZ},max:{x:maxX,y:y+dimensions.height+dimensions.roofHeight,z:maxZ}});
+    }
+  }
+  for(const runtime of [stationOneRuntime,stationTwoRuntime])if(runtime?.isReady()){
+    const b=new THREE.Box3().setFromObject(runtime.root);if(b.distanceToPoint(new THREE.Vector3(point.x,point.y,point.z))<38)boxes.push(b);
+  }
+  if(stationThreeModel){const b=new THREE.Box3().setFromObject(stationThreeModel);if(b.distanceToPoint(new THREE.Vector3(point.x,point.y,point.z))<38)boxes.push(b);}
+  return boxes;
 }
 
 function hideSelectedStationReplacement() {
@@ -6298,7 +6398,7 @@ function moveStationOneToFallbackSpawn() {
   state.gameplayPitch = -0.19;
   snapGameplayCamera();
 }
-function stationSwitchBusy() { return Boolean(stationTransitionController?.getStatus().busy); }
+function stationSwitchBusy() { return Boolean(fleetRuntime?.busy||stationTransitionController?.getStatus().busy); }
 
 function ensureStationRuntime(number, initial = false) {
   let runtime = number === 1 ? stationOneRuntime : stationTwoRuntime;
@@ -6435,8 +6535,8 @@ function commitStationSwitch(number, prepared) {
 
 function initializeGameplay() {
   if (gameplayReady) return;
-  if (STATION_ONE_SELECTED) ensureStationRuntime(1, true);
-  if (STATION_TWO_SELECTED) ensureStationRuntime(2, true);
+  ensureStationRuntime(1,true);
+  ensureStationRuntime(2,true);
   const spawn = gameplaySpawnPoints();
   const { playerPoint, truckPoint } = spawn;
   const truckHeading = spawn.heading ?? spawn.truckHeading;
@@ -6453,16 +6553,7 @@ function initializeGameplay() {
   playerActor.rotation.y = playerHeading;
   gameplayGroup.add(playerActor);
 
-  fireTruckActor = createFireTruck(THREE);
-  const truckSurface = gameplaySurfaceAt(truckPoint.x, truckPoint.y);
-  Object.assign(truckState, {
-    x: truckPoint.x, z: truckPoint.y, y: truckSurface.height + 0.035,
-    heading: truckHeading, speed: 0, steering: 0,
-    pitch: 0, roll: 0, wheelRotation: 0,
-  });
-  fireTruckActor.position.set(truckState.x, truckState.y, truckState.z);
-  fireTruckActor.rotation.y = truckState.heading;
-  gameplayGroup.add(fireTruckActor);
+  initializeVehicleFleet();
 
   if (FIRE_STATION_ONE.number !== 2) {
     fireStationDetail = createFireStationFacade(THREE, {
@@ -6520,7 +6611,7 @@ function initializeGameplay() {
     });
     void stationTwoReadyPromise;
   }
-  if ((STATION_ONE_SELECTED || STATION_TWO_SELECTED) && new URLSearchParams(location.search).get('spawn') === 'truck') startDrivingFromBay();
+  startDrivingFromBay();
   stationTransitionController = createStationTransition({getActive:()=>FIRE_STATION_ONE.number,prepare:prepareStationSwitch,commit:commitStationSwitch,onState:updateStationTransitionState});
   globalThis.__PTBO_MAP_VIEW__ = Object.freeze({
     state: () => {
@@ -6536,7 +6627,11 @@ function initializeGameplay() {
   });
   globalThis.__PTBO_GAMEPLAY__ = Object.freeze({
     get station() { return { ...FIRE_STATION_ONE }; },
+    selectVehicle:id=>fleetRuntime.select(id),
+    vehicles:()=>fleetRuntime.snapshot(),
+    aerial:{action:input=>aerialRuntime?.action(input),state:()=>fleetRuntime.fleet.vehicles.find(v=>v.aerial)?.aerial,diagnostics:()=>aerialRuntime?.diagnostics()},
     switchStation(number) {
+      if(fleetRuntime)return fleetRuntime.select('pump-'+number);
       if (!stationSwitchReady || cityEditor?.active) return Promise.resolve({ok:false,stationNumber:FIRE_STATION_ONE.number,error:cityEditor?.active?'Close the editor before switching stations.':'The station is still loading.'});
       return stationTransitionController.switchTo(number);
     },
@@ -6551,6 +6646,10 @@ function initializeGameplay() {
     state() {
       return {
         mode: state.mode,
+        activeVehicleId:fleetRuntime?.fleet.activeId,
+        vehicleName:fleetRuntime?.fleet.active.definition.name,
+        vehicles:fleetRuntime?.snapshot(),
+        fleetError:fleetRuntime?.error,
         stationNumber: FIRE_STATION_ONE.number,
         camera: {view:cameraSettings.view,bayBlend:state.cameraBayBlend,zoom:state.gameplayCameraDistanceScale,...cameraFraming(cameraSettings.view,state.cameraBayBlend)},
         stationThreeDoor: FIRE_STATION_ONE.number===3?{loaded:stationThreeAssetReady,phase:stationThreeDoorController?.phase,fraction:stationThreeDoorController?.fraction,target:stationThreeDoorController?.target}:null,
@@ -6581,12 +6680,22 @@ function initializeGameplay() {
     },
     reset: resetGameplay,
   });
+  for(const runtime of [stationOneRuntime,stationTwoRuntime])void runtime.load().then(ok=>{
+    if(!ok)return;
+    runtime.root.visible=true;runtime.root.userData.stationRuntimeOwner=true;
+    emergencyFacilityLayer?.setRuntimeOwner(runtime===stationOneRuntime?'station1':'station2',true);
+    for(const v of fleetRuntime.fleet.vehicles)if(Math.hypot(v.state.x-v.spawn.x,v.state.z-v.spawn.z)<.01){const surface=runtime.surfaceAt(v.state.x,v.state.z);if(surface){v.state.y=surface.height+.035;v.actor.position.y=v.state.y;}}
+    hideSelectedStationReplacement();
+  });
   syncStationControls();
 }
 
 function resetGameplay({mode='onFoot',stationSwitch=false} = {}) {
   if (!gameplayReady || (stationSwitchBusy() && !stationSwitch)) return false;
-  const spawn = gameplaySpawnPoints();
+  const entry=fleetRuntime?.fleet.active;
+  if(entry?.aerial)Object.assign(entry.aerial,createAerialState());
+  const home=entry?.spawn;
+  const spawn=home?{truckPoint:{x:home.x,y:home.z},playerPoint:{x:home.x+3,y:home.z},truckHeading:home.heading}:gameplaySpawnPoints();
   const { playerPoint, truckPoint } = spawn;
   const truckHeading = spawn.heading ?? spawn.truckHeading;
   const spawnPlayerHeading = spawn.playerHeading ?? ((STATION_ONE_SELECTED || STATION_TWO_SELECTED) ? truckHeading + Math.PI : Math.PI);
@@ -6625,6 +6734,7 @@ function setMode(mode, force = false) {
     return;
   }
   stopFlyMotion();
+  aerialRuntime?.clearInput();
   state.dragLooking = false;
   state.dragPointerId = null;
   state.previousPointer = null;
@@ -6769,7 +6879,7 @@ function ensureVehicleAudio() {
 function updateVehicleAudio() {
   if (!vehicleAudio) return;
   const active = state.mode === 'driving' && ambientAudio?.enabled;
-  const rpm = Math.min(1, Math.abs(truckState.speed) / TRUCK_TUNING.maximumForwardSpeed);
+  const rpm = Math.min(1, Math.abs(truckState.speed) / activeVehicleTuning().maximumForwardSpeed);
   const now = vehicleAudio.context.currentTime;
   vehicleAudio.oscillator.frequency.setTargetAtTime(34 + rpm * 48, now, 0.08);
   vehicleAudio.secondary.frequency.setTargetAtTime(17 + rpm * 24, now, 0.08);
@@ -6856,6 +6966,7 @@ function updatePlayerActor(delta) {
   let nextX = THREE.MathUtils.clamp(previousX + playerVelocity.x * delta, CITY.worldBounds.minX, CITY.worldBounds.maxX);
   let nextZ = THREE.MathUtils.clamp(previousZ + playerVelocity.z * delta, CITY.worldBounds.minZ, CITY.worldBounds.maxZ);
   if (!citySceneryReadyAt(nextX, nextZ)) { nextX = previousX; nextZ = previousZ; playerVelocity.set(0,0,0); }
+  if(fleetRuntime?.blocked({x:nextX,z:nextZ,y:playerActor.position.y,heading:0},{length:.65,width:.65},null)){nextX=previousX;nextZ=previousZ;playerVelocity.set(0,0,0);}
   if(stationThreeBlocksMove({x:previousX,z:previousZ},{x:nextX,z:nextZ},{player:true})){
     nextX=previousX;nextZ=previousZ;playerVelocity.set(0,0,0);
   }
@@ -6894,19 +7005,23 @@ function updatePlayerActor(delta) {
   animation.visual.position.y = playerSpeed > 0.2 ? Math.abs(Math.sin(animation.phase * 2)) * 0.035 : 0;
 }
 
+function activeVehicleTuning(){return fleetRuntime?.fleet.active.definition.tuning||TRUCK_TUNING;}
+
 function updateFireTruck(delta) {
   if (!gameplayReady || stationSwitchBusy()) return;
   if (state.mode === 'driving') {
     const axes = currentGameplayAxes(delta);
-    const throttle = axes.forward;
+    const locked=aerialRuntime?.locksDriving();
+    if(locked){truckState.speed=0;truckState.acceleration=0;truckState.steering=0;}
+    const throttle = locked?0:axes.forward;
     const currentSurface = gameplaySurfaceAt(truckState.x, truckState.z, truckState.y);
     const next = stepFireTruckKinematics(truckState, {
       throttle,
-      steering: axes.steering,
-    }, delta, truckIsOnRoad(currentSurface.onRoad, truckState.lastRoadWheelCount));
+      steering: locked?0:axes.steering,
+    }, delta, truckIsOnRoad(currentSurface.onRoad, truckState.lastRoadWheelCount),activeVehicleTuning());
     next.x = THREE.MathUtils.clamp(next.x, CITY.worldBounds.minX, CITY.worldBounds.maxX);
     next.z = THREE.MathUtils.clamp(next.z, CITY.worldBounds.minZ, CITY.worldBounds.maxZ);
-    if (selectedStationRuntime()?.sweep(truckState, next) || stationThreeBlocksMove(truckState,next)) { next.x = truckState.x; next.z = truckState.z; next.speed = 0; next.acceleration = 0; }
+    if ([stationOneRuntime,stationTwoRuntime].some(r=>r?.sweep(truckState,next,activeVehicleTuning()))||stationThreeBlocksMove(truckState,next)||fleetRuntime?.sweep(truckState,next,activeVehicleTuning())) { next.x = truckState.x; next.z = truckState.z; next.speed = 0; next.acceleration = 0; }
     if(!citySceneryReadyAt(next.x,next.z)||(roadTileLayer&&!roadTileLayer.readyAt(next.x,next.z,12))){next.x=truckState.x;next.z=truckState.z;next.speed=0;next.acceleration=0;document.documentElement.dataset.roadStreaming='waiting';}
     else document.documentElement.dataset.roadStreaming='ready';
     Object.assign(truckState, next);
@@ -6920,7 +7035,7 @@ function updateFireTruck(delta) {
   // Use four actual tire positions rather than independent centreline-only
   // front/rear/side queries. Total number of surface queries is unchanged:
   // one chassis centre + four suspension footprint contacts per frame.
-  const wheelContacts = sampleTruckWheelContacts(truckState, TRUCK_TUNING, gameplaySurfaceAt);
+  const wheelContacts = sampleTruckWheelContacts(truckState,activeVehicleTuning(),gameplaySurfaceAt);
   truckState.lastRoadWheelCount = wheelContacts.roadWheelCount;
   const targetPitch = THREE.MathUtils.clamp(wheelContacts.pitch, -0.22, 0.22);
   const targetRoll = THREE.MathUtils.clamp(wheelContacts.roll, -0.18, 0.18);
@@ -6948,16 +7063,24 @@ function updateFireTruck(delta) {
     beacon.material.emissiveIntensity = state.emergencyLights ? 3.1 : 0.35;
   });
   updateVehicleAudio();
-  selectedStationRuntime()?.update(delta, truckState, state.mode === 'onFoot' ? playerActor.position : null);
+  const parked=fleetRuntime?.fleet.vehicles.map(v=>({...v.state,dimensions:v.definition.tuning}))||[truckState];
+  for(const runtime of [stationOneRuntime,stationTwoRuntime])runtime?.update(delta,parked,state.mode==='onFoot'?playerActor.position:null);
+  fleetRuntime?.updateParked();
+  aerialRuntime?.update(delta);
 }
 
 function updateGameplayCamera(delta, snap = false) {
   if (!gameplayReady || (state.mode !== 'onFoot' && state.mode !== 'driving')) return;
+  const apparatusCamera=aerialRuntime?.cameraPose();
+  if(apparatusCamera){
+    const alpha=snap?1:1-Math.exp(-6*delta);
+    camera.position.lerp(apparatusCamera.position,alpha);gameplayCameraTarget.lerp(apparatusCamera.target,alpha);camera.lookAt(gameplayCameraTarget);camera.fov=58;camera.updateProjectionMatrix();return;
+  }
   const driving = state.mode === 'driving';
   const active = driving ? fireTruckActor.position : playerActor.position;
   const activeHeading = driving ? truckState.heading : playerHeading;
   const activeDirection = directionFromHeading(activeHeading);
-  const speedRatio = driving ? Math.min(1, Math.abs(truckState.speed) / TRUCK_TUNING.maximumForwardSpeed) : 0;
+  const speedRatio = driving ? Math.min(1, Math.abs(truckState.speed) / activeVehicleTuning().maximumForwardSpeed) : 0;
   const lookAhead = driving ? 2.2 + speedRatio * 5.5 : 0.6;
   gameplayDesiredTarget.set(
     active.x + activeDirection.x * lookAhead,
@@ -6972,9 +7095,9 @@ function updateGameplayCamera(delta, snap = false) {
     }
   }
   const mobileCameraScale = !driving && innerWidth < 520 ? 1.45 : 1;
-  const baseDistance = (driving ? TRUCK_TUNING.chaseDistance : PLAYER_TUNING.cameraDistance) * mobileCameraScale;
+  const baseDistance = (driving ? activeVehicleTuning().chaseDistance : PLAYER_TUNING.cameraDistance) * mobileCameraScale;
   const bay=stationCameraBay(),local=bay?.local(active);
-  const bayWeight=bay?cameraBayInfluence(local,bay.bounds,driving?TRUCK_TUNING.length/2:0):0;
+  const bayWeight=bay?cameraBayInfluence(local,bay.bounds,driving?activeVehicleTuning().length/2:0):0;
   state.cameraBayBlend=snap?bayWeight:exponentialStep(state.cameraBayBlend,bayWeight,5,delta);
   const framing=cameraFraming(cameraSettings.view,state.cameraBayBlend);
   const baseHeight=driving?framing.driveHeight:.7;
@@ -7010,8 +7133,8 @@ function updateGameplayCamera(delta, snap = false) {
   const cameraGround = terrainHeightAtWorld(gameplayDesiredCamera.x, gameplayDesiredCamera.z) + 0.65;
   gameplayDesiredCamera.y = Math.max(gameplayDesiredCamera.y, cameraGround);
   if(insideBay)gameplayDesiredCamera.y=THREE.MathUtils.clamp(gameplayDesiredCamera.y,bay.datum+1.2,bay.datum+bay.ceiling);
-  const positionResponse = driving ? TRUCK_TUNING.cameraPositionResponse : PLAYER_TUNING.cameraPositionResponse;
-  const targetResponse = driving ? TRUCK_TUNING.cameraTargetResponse : PLAYER_TUNING.cameraTargetResponse;
+  const positionResponse = driving ? activeVehicleTuning().cameraPositionResponse : PLAYER_TUNING.cameraPositionResponse;
+  const targetResponse = driving ? activeVehicleTuning().cameraTargetResponse : PLAYER_TUNING.cameraTargetResponse;
   const positionAlpha = snap ? 1 : 1 - Math.exp(-positionResponse * delta);
   const targetAlpha = snap ? 1 : 1 - Math.exp(-targetResponse * delta);
   camera.position.lerp(gameplayDesiredCamera, positionAlpha);
@@ -7053,7 +7176,7 @@ function updateGameplayHud() {
       if (button.textContent !== label) button.textContent = label;
     });
   }
-  const labels = { engine: 'Fire Rescue Engine ' + FIRE_STATION_ONE.number };
+  const labels = { engine: fleetRuntime?.fleet.active.definition.name||'Pump '+FIRE_STATION_ONE.number };
   const role = driving ? labels.engine : 'Firefighter · On foot';
   const speedKmh=String(Math.round(Math.abs(truckState.speed)*3.6));
   const speedText=speedKmh.padStart(3,'0');
@@ -7062,9 +7185,10 @@ function updateGameplayHud() {
   if(els.gameplaySpeed.textContent!==speedText)els.gameplaySpeed.textContent=speedText;
   if(els.gameplayGear.textContent!==gear)els.gameplayGear.textContent=gear;
   let prompt = '';
-  if (state.mode === 'onFoot') {
-    const distance = Math.hypot(playerActor.position.x - truckState.x, playerActor.position.z - truckState.z);
-    if (distance <= PLAYER_TUNING.enterDistance) prompt = `<kbd>E</kbd> Enter ${labels.engine}`;
+  if(state.mode==='onFoot'){
+    const nearest=fleetRuntime?.nearest(playerActor.position);
+    const distance=Math.hypot(playerActor.position.x-truckState.x,playerActor.position.z-truckState.z);
+    if (nearest || distance <= PLAYER_TUNING.enterDistance) prompt = `<kbd>E</kbd> Enter ${nearest?.definition.name||labels.engine}`;
   } else if (driving && Math.abs(truckState.speed) <= TRUCK_TUNING.exitSpeed) {
     prompt = '<kbd>E</kbd> Exit fire truck';
   }
@@ -7085,8 +7209,10 @@ function updateGameplayHud() {
 
 function enterOrExitVehicle() {
   if (!gameplayReady || stationSwitchBusy()) return;
-  const labels = stationGameplayLabels(FIRE_STATION_ONE);
+  const labels = {engine:fleetRuntime?.fleet.active.definition.name||stationGameplayLabels(FIRE_STATION_ONE).engine};
   if (state.mode === 'onFoot') {
+    const nearest=fleetRuntime?.nearest(playerActor.position);
+    if(nearest&&nearest!==fleetRuntime.fleet.active){void fleetRuntime.select(nearest.definition.id);return;}
     const distance = Math.hypot(playerActor.position.x - truckState.x, playerActor.position.z - truckState.z);
     if (distance > PLAYER_TUNING.enterDistance) {
       showToast(`Move closer to ${labels.engine}`);
@@ -7110,7 +7236,9 @@ function enterOrExitVehicle() {
   const right = { x: Math.cos(truckState.heading), z: -Math.sin(truckState.heading) };
   const exits = [1, -1].map(sign => ({ x: truckState.x + right.x * 2.45 * sign, z: truckState.z + right.z * 2.45 * sign }));
   const runtime = selectedStationRuntime();
-  const exit = exits.find(point => !runtime?.collides({ ...point, heading: truckState.heading }, { player: true })) || (runtime?.playerSpawn ? { ...runtime.playerSpawn } : exits[0]);
+  const exit=exits.find(point=>![stationOneRuntime,stationTwoRuntime].some(r=>r?.collides({...point,heading:truckState.heading},{player:true}))&&!fleetRuntime?.blocked({...point,y:truckState.y,heading:0},{length:.7,width:.7},null));
+  if(!exit){showToast('No clear space to exit');return;}
+  aerialRuntime?.clearInput();
   const exitX = exit.x;
   const exitZ = exit.z;
   const surface = gameplaySurfaceAt(exitX, exitZ, truckState.y);
@@ -8181,6 +8309,7 @@ function wireEvents() {
   window.addEventListener('keydown', (event) => {
     if (cityEditor?.active) { cityEditor.handleShortcut(event); return; }
     if (keyboardInputIsBlocked(event)) return;
+    if (aerialRuntime?.handleKey(event)) return;
     if (!event.repeat && event.code === 'KeyM') {
       setMode(state.mode === 'map' ? state.lastNonMapMode : 'map');
       els.canvas.focus({ preventScroll: true });
@@ -8221,7 +8350,7 @@ function wireEvents() {
     if (isFlyControlCode(event.code)) state.keys.add(event.code);
     if (isFlyControlCode(event.code) || ['Space', 'ArrowUp', 'ArrowDown', 'ArrowLeft', 'ArrowRight'].includes(event.code)) event.preventDefault();
   });
-  window.addEventListener('keyup', (event) => { if (!cityEditor?.active) state.keys.delete(event.code); });
+  window.addEventListener('keyup',(event)=>{aerialRuntime?.releaseKey(event.code);if(!cityEditor?.active)state.keys.delete(event.code);});
   window.addEventListener('blur', () => { stopFlyMotion(); endCanvasLook(); });
   window.addEventListener('pagehide', () => { citySplatLayer?.dispose(); cityEditor?.dispose();void roadTileLayer?.dispose(); }, { once: true });
   document.addEventListener('visibilitychange', () => {

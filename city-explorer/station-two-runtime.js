@@ -151,25 +151,25 @@ export function createStationTwoRuntime({ THREE, scene, layout, project, baseSur
   function collides(position, options = {}) {
     if (!loaded) return false;
     const local = worldPoseToLocal(position);
-    const dimensions = options.player ? { length: 0.7, width: 0.7 } : TRUCK_DIMENSIONS;
+    const dimensions = options.player ? { length: 0.7, width: 0.7 } : (options.dimensions||TRUCK_DIMENSIONS);
     return stationCollision(local, layout, state.doors, dimensions, options);
   }
 
-  function sweep(previous, next) {
+  function sweep(previous, next, dimensions=TRUCK_DIMENSIONS) {
     if (!loaded) return false;
-    return sweepStationTruck(worldPoseToLocal(previous), worldPoseToLocal(next), layout, state.doors, TRUCK_DIMENSIONS);
+    return sweepStationTruck(worldPoseToLocal(previous), worldPoseToLocal(next), layout, state.doors, dimensions);
   }
 
   function obstruction(index, side, truck, player) {
     if (side !== 'front') return false;
     const truckLocal = truck ? worldPoseToLocal(truck) : null;
     const playerLocal = player ? stationWorldToLocal(player, spawn.anchor, yaw) : null;
-    return stationDoorObstructed(layout, index, truckLocal, playerLocal, TRUCK_DIMENSIONS);
+    return stationDoorObstructed(layout, index, truckLocal, playerLocal, truck?.dimensions||TRUCK_DIMENSIONS);
   }
 
   function update(delta, truck, player) {
     if (!loaded) return;
-    state.doors = stepDoorState(state.doors, delta, (index, side) => obstruction(index, side, truck, player));
+    state.doors = stepDoorState(state.doors, delta, (index,side)=>(Array.isArray(truck)?truck:[truck]).some(t=>obstruction(index,side,t,player)));
     for (const [name, node] of state.frontNodes) {
       const [, doorNumber, side, leaf] = name.match(FRONT_NODE);
       const fraction = state.doors.front[Number(doorNumber) - 1]?.fraction || 0;

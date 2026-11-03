@@ -115,7 +115,7 @@ export const FIRE_STATION_ONE = ACTIVE_FIRE_STATION;
  * Small joystick movement produces a small steering angle instead of full lock,
  * while acceleration and braking ramp rather than stepping instantly.
  */
-export function stepFireTruckKinematics(current, input, delta, onRoad = true) {
+export function stepFireTruckKinematics(current, input, delta, onRoad = true, tuning = TRUCK_TUNING) {
   const dt = Math.min(0.04, Math.max(0, Number(delta) || 0));
   const throttle = clamp(input?.throttle, -1, 1);
   const steeringInput = clamp(input?.steering, -1, 1);
@@ -130,19 +130,19 @@ export function stepFireTruckKinematics(current, input, delta, onRoad = true) {
   let targetAcceleration = 0;
   if (throttle > 0.001) {
     targetAcceleration = speed < -0.2
-      ? TRUCK_TUNING.serviceBrake * Math.max(0.35, throttleResponse)
-      : TRUCK_TUNING.forwardAcceleration * throttleResponse;
+      ? tuning.serviceBrake * Math.max(0.35, throttleResponse)
+      : tuning.forwardAcceleration * throttleResponse;
   } else if (throttle < -0.001) {
     targetAcceleration = speed > 0.2
-      ? -TRUCK_TUNING.serviceBrake * Math.max(0.35, throttleResponse)
-      : -TRUCK_TUNING.reverseAcceleration * throttleResponse;
+      ? -tuning.serviceBrake * Math.max(0.35, throttleResponse)
+      : -tuning.reverseAcceleration * throttleResponse;
   } else if (Math.abs(speed) > 0.001) {
     targetAcceleration = -Math.sign(speed)
-      * (TRUCK_TUNING.rollingDrag + TRUCK_TUNING.aerodynamicDrag * speed * speed);
+      * (tuning.rollingDrag + tuning.aerodynamicDrag * speed * speed);
   }
 
   if (!onRoad && throttleMagnitude > 0.001 && Math.sign(targetAcceleration) === Math.sign(throttle)) {
-    targetAcceleration *= TRUCK_TUNING.offRoadAccelerationScale;
+    targetAcceleration *= tuning.offRoadAccelerationScale;
   }
 
   const currentAcceleration = Number(current.acceleration) || 0;
@@ -156,21 +156,21 @@ export function stepFireTruckKinematics(current, input, delta, onRoad = true) {
     acceleration = 0;
   }
 
-  const forwardLimit = onRoad ? TRUCK_TUNING.maximumForwardSpeed : TRUCK_TUNING.offRoadSpeed;
-  const reverseLimit = onRoad ? TRUCK_TUNING.maximumReverseSpeed : TRUCK_TUNING.maximumReverseSpeed * 0.65;
+  const forwardLimit = onRoad ? tuning.maximumForwardSpeed : tuning.offRoadSpeed;
+  const reverseLimit = onRoad ? tuning.maximumReverseSpeed : tuning.maximumReverseSpeed * 0.65;
   // A lower surface limit is approached through braking, never an instant
   // speed cut at the pavement edge. Opposing input can still brake normally.
   if(previousSpeed>forwardLimit){
-    speed=Math.max(forwardLimit,Math.min(speed,previousSpeed-TRUCK_TUNING.serviceBrake*dt));
+    speed=Math.max(forwardLimit,Math.min(speed,previousSpeed-tuning.serviceBrake*dt));
   }else if(previousSpeed < -reverseLimit){
-    speed=Math.min(-reverseLimit,Math.max(speed,previousSpeed+TRUCK_TUNING.serviceBrake*dt));
+    speed=Math.min(-reverseLimit,Math.max(speed,previousSpeed+tuning.serviceBrake*dt));
   }else speed=clamp(speed,-reverseLimit,forwardLimit);
 
   // Preserve the truck's speed-sensitive steering limit, but make the response
   // progressive. Near-centre input stays gentle; larger input reaches full lock.
-  const speedRatio = Math.min(1, Math.abs(speed) / TRUCK_TUNING.maximumForwardSpeed);
-  const maximumSteer = TRUCK_TUNING.steeringLowSpeed
-    + (TRUCK_TUNING.steeringHighSpeed - TRUCK_TUNING.steeringLowSpeed) * speedRatio;
+  const speedRatio = Math.min(1, Math.abs(speed) / tuning.maximumForwardSpeed);
+  const maximumSteer = tuning.steeringLowSpeed
+    + (tuning.steeringHighSpeed - tuning.steeringLowSpeed) * speedRatio;
   const steeringMagnitude = Math.pow(Math.abs(steeringInput), 1.08);
   const shapedSteeringInput = Math.sign(steeringInput) * steeringMagnitude;
   const targetSteering = shapedSteeringInput * maximumSteer;
@@ -183,7 +183,7 @@ export function stepFireTruckKinematics(current, input, delta, onRoad = true) {
 
   const heading = wrapAngle(
     (Number(current.heading) || 0)
-    + speed / TRUCK_TUNING.wheelbase * Math.tan(steering) * dt,
+    + speed / tuning.wheelbase * Math.tan(steering) * dt,
   );
   const direction = directionFromHeading(heading);
 

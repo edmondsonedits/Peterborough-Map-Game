@@ -1,0 +1,37 @@
+{
+  "created": "2026-11-03",
+  "builder": "tools/blender/build_station1_fleet.py",
+  "source": {
+    "path": "city-explorer/assets/vehicles/generic-pumper.glb",
+    "sha256": "ab616d03025278e057a835fc1d32088071419838115800fb132d568424e63fbb",
+    "basis": "Existing project-created generic pumper geometry; selected cab components, wheel and warning-lens meshes reused. Original pumper file unchanged."
+  },
+  "externalAssets": [],
+  "notes": [
+    "No purchased models or external textures were added.",
+    "Generic original markings; no manufacturer identity or claim of an exact Peterborough fleet replica.",
+    "GLB geometry is authored in Blender; runtime articulation and piston tracking are controlled in Three.js."
+  ],
+  "outputs": [
+    {
+      "path": "assets-source/vehicles/aerial-platform.blend",
+      "sha256": "2b5993bf55d63f61f05c61a1d58131ce4281b9ba18d2ffcefcd1f467d7232411",
+      "bytes": 874770
+    },
+    {
+      "path": "assets-source/vehicles/medi-pickup.blend",
+      "sha256": "e0c319b14ea82bcc76e8496940eef8e644b8ce4effc2af8807ed7dceda061471",
+      "bytes": 688227
+    },
+    {
+      "path": "city-explorer/assets/vehicles/aerial-platform.glb",
+      "sha256": "3ca3e4b66a8977f7d8ea5e8c8e34e5973cf3789248673bbf86c50ffd408f0e74",
+      "bytes": 3161720
+    },
+    {
+      "path": "city-explorer/assets/vehicles/medi-pickup.glb",
+      "sha256": "b6f1ca4b9e21896f54738094436ba0d11b65f34cdce88f21abad5643ed8be78c",
+      "bytes": 766316
+    }
+  ]
+}
