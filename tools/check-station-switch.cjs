@@ -28,7 +28,7 @@ let browser;
   const started=Date.now();
   await page.selectOption('#station-select',String(station));
   await page.waitForFunction(()=>!__PTBO_GAMEPLAY__.state().transition.busy,null,{timeout:60000});
-  const actual=await page.evaluate(()=>({state:__PTBO_GAMEPLAY__.state(),origin:performance.timeOrigin,observed:globalThis.__STATION_SWITCH_OBSERVE__?.(),url:location.href}));
+  const actual=await page.evaluate(()=>({state:__PTBO_GAMEPLAY__.state(),origin:performance.timeOrigin,observed:globalThis.__STATION_SWITCH_OBSERVE__?.(),stationThreeDoorPhase:__PTBO_GAMEPLAY__.stationThree?.doorPhase?.(),url:location.href}));
   assert.equal(actual.state.stationNumber,station,JSON.stringify(actual.state.transition));
   assert.equal(actual.state.mode,'driving');assert.equal(actual.origin,baseline.origin);
   assert.equal(new URL(actual.url).searchParams.get('station'),String(station));
@@ -40,10 +40,11 @@ let browser;
    if(station!==3&&facility?.status==='ready'){assert.equal(facility.runtimeOwned,true);assert.equal(facility.visible,false);}
   }
   const key=station===1?'stationOne':'stationTwo';
-  if(station!==3)assert.ok(actual.state[key].doors.front.every(d=>d.fraction===0));
+  if(station===3)assert.equal(actual.stationThreeDoorPhase,'closed');
+  else assert.ok(actual.state[key].doors.front.every(d=>d.fraction===0));
   await page.screenshot({path:path.join(out,'station'+station+'-spawn.png')});
   const switchMs=Date.now()-started;
-  if(station===3)await page.waitForFunction(()=>__PTBO_GAMEPLAY__.stationThree.doorPhase()==='open',null,{timeout:20000});
+  if(station===3){await page.locator('#station3-door-control').click();await page.waitForFunction(()=>__PTBO_GAMEPLAY__.stationThree.doorPhase()==='open',null,{timeout:20000});}
   else {await page.locator('#station'+station+'-door-control').click();await page.waitForFunction(key=>__PTBO_GAMEPLAY__.state()[key].doors.front.some(d=>d.fraction>=.99),key);}
   const before=await page.evaluate(()=>__PTBO_GAMEPLAY__.state().truck);
   await page.keyboard.down('w');

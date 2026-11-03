@@ -73,8 +73,8 @@ jobs:
       - name: Check authored actors and station architecture
         run: node --test tests/pumper-asset.test.mjs tests/firefighter-asset.test.mjs tests/station-architecture.test.mjs tests/station-one.test.mjs tests/station-one-editor-restore.test.mjs tests/station-two.test.mjs tests/station-two-user-spawn.test.mjs tests/station-three-bay-departure.test.mjs tests/station-three-runtime.test.mjs tests/emergency-facilities.test.mjs tests/researched-buildings.test.mjs
 
-      - name: Check in-place station switching
-        run: node --test tests/station-transition.test.mjs tests/station-selector-transition.test.cjs tests/station-switch-integration.test.cjs tests/mobile-station-menu.test.cjs
+      - name: Check station controls and in-place switching
+        run: node --test tests/station-transition.test.mjs tests/station-selector-transition.test.cjs tests/station-switch-integration.test.cjs tests/mobile-station-menu.test.cjs tests/gameplay-camera.test.mjs tests/station-three-bay.test.mjs
 
       - name: Stress deterministic EMS dispatch transitions
         run: |
