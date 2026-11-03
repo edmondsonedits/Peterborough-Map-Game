@@ -419,51 +419,66 @@
     const installInsideFrame = () => {
       const doc = frame.contentDocument;
       const game = frame.contentWindow;
-      if (!doc || !game) return Promise.resolve();
+      const isCurrent = () => Boolean(doc && game && doc.documentElement && doc.URL !== 'about:blank'
+        && frame.contentDocument === doc && frame.contentWindow === game
+        && new URL(doc.URL, location.href).href === new URL(frame.src, location.href).href);
+      if (!isCurrent()) return Promise.resolve();
       removeNestedBuildBadge(doc);
       if (installPromise && installedDocument === doc) return installPromise;
       installedDocument = doc;
+      // A wrapper can navigate its initial frame while an earlier module is loading.
+      // Never append into that retired document or overwrite the replacement's status.
+      const loadCurrent = (...args) => isCurrent() ? injectIntoFrame(doc, ...args) : Promise.resolve(null);
+      const optionalCurrent = (...args) => isCurrent() ? optionalInnerModule(doc, ...args) : Promise.resolve(null);
       installPromise = (async () => {
         try {
           enhancementStage('iframe-attached', selectedCityId());
           game.PTBO_CITY_RUNTIME_BOOTSTRAP_EXPECTED_VERSION = CITY_RUNTIME_VERSION;
-          await injectIntoFrame(doc, 'ptbo-simulator-readiness', `../response-simulator/simulator-readiness-1.6.17.js?v=${VERSION}`, 'data-ptbo-simulator-readiness', 15000);
-          await injectIntoFrame(doc, 'ptbo-city-runtime-bootstrap', `../response-simulator/city-runtime-bootstrap-1.6.17.js?v=${VERSION}`);
+          await loadCurrent('ptbo-simulator-readiness', `../response-simulator/simulator-readiness-1.6.17.js?v=${VERSION}`, 'data-ptbo-simulator-readiness', 15000);
+          if (!isCurrent()) return;
+          await loadCurrent('ptbo-city-runtime-bootstrap', `../response-simulator/city-runtime-bootstrap-1.6.17.js?v=${VERSION}`);
+          if (!isCurrent()) return;
           enhancementStage('waiting-city-runtime', `protocol v${CITY_RUNTIME_VERSION}`);
           await Promise.race([
             Promise.resolve(game.PTBO_CITY_RUNTIME_READY),
             sleep(15000).then(() => { throw new Error('City runtime readiness timed out after 15000 ms.'); }),
           ]);
+          if (!isCurrent()) return;
           if (game.PTBO_CITY_RUNTIME_ERROR) throw game.PTBO_CITY_RUNTIME_ERROR;
           const city = game.PTBO_CITY_PACKAGE;
           const baseTraining = Boolean(city?.features?.baseTraining || city?.dispatch?.available === false);
           traceOk('Enhancement loader: city runtime accepted', city?.name || selectedCityId());
-          if (baseTraining) void optionalInnerModule(doc, 'ptbo-base-training-mode', `../response-simulator/base-training-mode-1.6.8.js?v=${VERSION}`, '', 6000);
+          if (baseTraining) void optionalCurrent('ptbo-base-training-mode', `../response-simulator/base-training-mode-1.6.8.js?v=${VERSION}`, '', 6000);
           if (isMobile) {
-            void optionalInnerModule(doc, 'ptbo-directional-drive-zoom-loader', `../response-simulator/directional-drive-zoom-1.5.8.js?v=${VERSION}`, '', 6000);
-            void optionalInnerModule(doc, 'ptbo-mobile-ui-layout-loader', `../response-simulator/mobile-ui-layout-1.5.9.js?v=${VERSION}`, '', 6000);
+            void optionalCurrent('ptbo-directional-drive-zoom-loader', `../response-simulator/directional-drive-zoom-1.5.8.js?v=${VERSION}`, '', 6000);
+            void optionalCurrent('ptbo-mobile-ui-layout-loader', `../response-simulator/mobile-ui-layout-1.5.9.js?v=${VERSION}`, '', 6000);
           }
-          await optionalInnerModule(doc, 'ptbo-carto-basemap-policy', `../response-simulator/carto-basemap-policy-1.6.36.js?v=${VERSION}`, '', 6000);
+          await optionalCurrent('ptbo-carto-basemap-policy', `../response-simulator/carto-basemap-policy-1.6.36.js?v=${VERSION}`, '', 6000);
+          if (!isCurrent()) return;
           await Promise.all([
-            city?.features?.hospitalTransport === false ? Promise.resolve() : optionalInnerModule(doc, 'ptbo-hospital-dropoff-runtime-loader', `../response-simulator/hospital-dropoff-runtime-1.6.49.js?v=${VERSION}`, '', 6000),
-            optionalInnerModule(doc, 'ptbo-satellite-map-loader', `../response-simulator/satellite-map-1.5.6.js?v=${VERSION}`, '', 10000),
-            optionalInnerModule(doc, 'ptbo-route-reveal-review-loader', `../response-simulator/route-reveal-review-1.6.26.js?v=${VERSION}`, '', 6000),
-            optionalInnerModule(doc, 'ptbo-quick-tutorial-loader', `../response-simulator/quick-tutorial-1.6.28.js?v=${VERSION}`, '', 6000),
-            optionalInnerModule(doc, 'ptbo-simulated-incident-loader', `../response-simulator/simulated-incident-notice-1.6.33.js?v=${VERSION}`, '', 6000),
-            optionalInnerModule(doc, 'ptbo-incident-formatting-loader', `../response-simulator/incident-formatting-1.6.44.js?v=${VERSION}`, '', 6000),
-            optionalInnerModule(doc, 'ptbo-training-history-loader', `../response-simulator/training-history-1.6.45.js?v=${VERSION}`, '', 6000),
-            optionalInnerModule(doc, 'ptbo-map-attribution-inner-loader', `map-attribution-1.6.35.js?v=${VERSION}`, '', 6000),
+            city?.features?.hospitalTransport === false ? Promise.resolve() : optionalCurrent('ptbo-hospital-dropoff-runtime-loader', `../response-simulator/hospital-dropoff-runtime-1.6.49.js?v=${VERSION}`, '', 6000),
+            optionalCurrent('ptbo-satellite-map-loader', `../response-simulator/satellite-map-1.5.6.js?v=${VERSION}`, '', 10000),
+            optionalCurrent('ptbo-route-reveal-review-loader', `../response-simulator/route-reveal-review-1.6.26.js?v=${VERSION}`, '', 6000),
+            optionalCurrent('ptbo-quick-tutorial-loader', `../response-simulator/quick-tutorial-1.6.28.js?v=${VERSION}`, '', 6000),
+            optionalCurrent('ptbo-simulated-incident-loader', `../response-simulator/simulated-incident-notice-1.6.33.js?v=${VERSION}`, '', 6000),
+            optionalCurrent('ptbo-incident-formatting-loader', `../response-simulator/incident-formatting-1.6.44.js?v=${VERSION}`, '', 6000),
+            optionalCurrent('ptbo-training-history-loader', `../response-simulator/training-history-1.6.45.js?v=${VERSION}`, '', 6000),
+            optionalCurrent('ptbo-map-attribution-inner-loader', `map-attribution-1.6.35.js?v=${VERSION}`, '', 6000),
           ]);
+          if (!isCurrent()) return;
           if (game.PTBO_SATELLITE_MAP_READY) {
             await Promise.race([
               Promise.resolve(game.PTBO_SATELLITE_MAP_READY).catch(error => traceWarn('Satellite map readiness rejected', error)),
               sleep(10000).then(() => traceWarn('Satellite map readiness timed out; continuing')),
             ]);
           }
-          await optionalInnerModule(doc, 'ptbo-driving-ui-loader', `../response-simulator/driving-ui.js?v=${VERSION}`, '', 6000);
+          if (!isCurrent()) return;
+          await optionalCurrent('ptbo-driving-ui-loader', `../response-simulator/driving-ui.js?v=${VERSION}`, '', 6000);
+          if (!isCurrent()) return;
           enhancementStage('complete', city?.name || selectedCityId());
           traceOk('Enhancement loader complete');
         } catch (error) {
+          if (!isCurrent()) return;
           enhancementStage('failed', error?.message || String(error));
           traceWarn('Response enhancement bootstrap failed', error);
           console.error('Response enhancement bootstrap failed.', error);

@@ -108,3 +108,34 @@ test('legacy compatibility bridge resolves through canonical build and stable re
   assert.match(source, /release-bootstrap\.js\?v=\$\{version\}/);
   assert.doesNotMatch(source, /const VERSION\s*=\s*'\d+\.\d+\.\d+'/);
 });
+
+function enhancementLifecycleHarness({blank=false,holdFirst=false,failCurrent=false}={}) {
+  const vm=require('node:vm'),source=bootstrap.slice(bootstrap.indexOf('  function installResponseEnhancements()'),bootstrap.indexOf('  function installPageEnhancements()'));
+  const calls=[],errors=[],stages=[],listeners=new Map(),root={appendChild(){}},url='https://example.test/response-simulator/index.html?city=richmond-hill&v='+releaseVersion;
+  const makeDoc=()=>({URL:url,readyState:'complete',body:root,head:root,documentElement:root});
+  const original=makeDoc();if(blank)original.URL='about:blank';
+  const game={PTBO_CITY_PACKAGE:{name:'Richmond Hill',features:{hospitalTransport:true}},PTBO_CITY_RUNTIME_READY:Promise.resolve()};
+  const frame={src:url,dataset:{},contentDocument:original,contentWindow:game,addEventListener:(name,fn)=>listeners.set(name,fn)};
+  let settle,rejectFirst;const first=new Promise((resolve,reject)=>{settle=resolve;rejectFirst=reject;});
+  const inject=(doc,id)=>{calls.push({doc,id});if(failCurrent&&id==='ptbo-simulator-readiness')return Promise.reject(Error('active module failed'));if(holdFirst&&doc===original&&id==='ptbo-simulator-readiness')return first;return Promise.resolve({});};
+  const context=vm.createContext({VERSION:releaseVersion,CITY_RUNTIME_VERSION:'1.6.17',Promise,URL,location:{pathname:'/response-simulator/play/',href:'https://example.test/response-simulator/play/'},document:{getElementById:()=>frame},redirectWrongSimulatorSurface:()=>false,normalizeSimulatorFrameUrl(){},setCityLoadingCopy(){},removeNestedBuildBadge(){},selectedCityId:()=> 'richmond-hill',enhancementStage:(stage,detail)=>stages.push({stage,detail}),traceOk(){},traceWarn(){},console:{error:(...args)=>errors.push(args)},setTimeout:fn=>queueMicrotask(fn),sleep:()=>new Promise(()=>{}),injectIntoFrame:inject,optionalInnerModule:inject});
+  vm.runInContext(source+'\ninstallResponseEnhancements();',context);
+  return {calls,errors,stages,original,frame,settle,rejectFirst,replace(){frame.contentDocument=makeDoc();listeners.get('load')();return frame.contentDocument;},flush:()=>new Promise(resolve=>setImmediate(resolve))};
+}
+
+test('enhancement loader waits for the simulator document instead of initial about:blank',async()=>{
+  const h=enhancementLifecycleHarness({blank:true});await h.flush();assert.equal(h.calls.length,0);const doc=h.replace();await h.flush();assert.ok(h.calls.length>0);assert.ok(h.calls.every(c=>c.doc===doc));assert.equal(h.stages.at(-1).stage,'complete');
+});
+test('replaced iframe cannot continue injecting modules or overwrite the new completion state',async()=>{
+  const h=enhancementLifecycleHarness({holdFirst:true});await h.flush();assert.equal(h.calls.length,1);const doc=h.replace();await h.flush();assert.equal(h.stages.at(-1).stage,'complete');h.settle({});await h.flush();assert.equal(h.calls.filter(c=>c.doc===h.original).length,1);assert.ok(h.calls.some(c=>c.doc===doc));assert.equal(h.stages.at(-1).stage,'complete');assert.equal(h.errors.length,0);
+});
+test('rejected obsolete iframe injection does not report an active bootstrap failure',async()=>{
+  const h=enhancementLifecycleHarness({holdFirst:true});await h.flush();h.replace();await h.flush();h.rejectFirst(Error('old document removed'));await h.flush();assert.equal(h.errors.length,0);assert.equal(h.stages.at(-1).stage,'complete');
+});
+test('current iframe injection failures remain visible',async()=>{
+  const h=enhancementLifecycleHarness({failCurrent:true});await h.flush();assert.equal(h.stages.at(-1).stage,'failed');assert.match(h.stages.at(-1).detail,/active module failed/);assert.equal(h.errors.length,1);
+});
+
+test('enhancement loader ignores a pre-normalization city document until the requested frame loads',async()=>{
+  const h=enhancementLifecycleHarness();h.original.URL=h.original.URL.replace('city=richmond-hill','city=toronto');await h.flush();assert.equal(h.calls.length,0);const current=h.replace();await h.flush();assert.ok(h.calls.length>0);assert.ok(h.calls.every(c=>c.doc===current));assert.equal(h.stages.at(-1).stage,'complete');
+});
