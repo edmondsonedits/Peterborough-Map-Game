@@ -355,3 +355,14 @@ test('Richmond Hill routing loads its compressed city roads and computes a local
  assert.equal(requested,g.c.PTBO_CITY_PACKAGE.roads.dataUrl);assert.ok(g.c.PTBO_ROUTE_REVEAL.state.graph.nodes.length>1000);
  const route=g.c.PTBO_ROUTE_REVEAL.calculateRoute(43.869213,-79.443971,43.87037792541019,-79.45071040970561);assert.ok(route);assert.ok(route.coordinates.length>2);assert.ok(route.distance>300);
 });
+
+test('Island EMS retains its call and completes the labeled scene-only exercise without inventing transport',()=>{
+ const g=game();g.c.PTBO_CITY_PACKAGE={id:'toronto',features:{hospitalTransport:true}};
+ g.c.PTBO_LOCAL_RESPONSE_POOL=require('../response-simulator/local-pool.js');
+ g.service.select('ems');g.c.PTBO_SERVICE={...g.service,getBase:()=>({...g.service.getBase(),id:'ems-toronto-ems-4173463'})};
+ g.run('triggerDispatchWorkflow()');assert.equal(g.run('mission.transportRequired'),false);
+ assert.match(g.element('hud-content').innerHTML,/Island.*scene-only/i);
+ g.arrive();g.transition();assert.equal(g.run('mission.phase'),'complete');
+ assert.equal(g.c.PTBO_PENDING_TRAINING_HISTORY[0].transportOccurred,false);
+ assert.match(g.element('hud-content').innerHTML,/Island.*scene-only/i);
+});

@@ -336,7 +336,9 @@
     }
     let visited = 0;
 
-    while (heap.size && visited < CONFIG.maxVisitedNodes) {
+    // Large-city journeys may require more visits than the original Peterborough limit.
+    const visitLimit = Math.max(CONFIG.maxVisitedNodes, nodes.length);
+    while (heap.size && visited < visitLimit) {
       const current = heap.pop();
       if (!current) break;
       const currentNode = nodes[current.id];
@@ -611,11 +613,27 @@
     installUi();
     setInterval(syncIncidentState, 300);
     try {
-      const response = await fetch(CONFIG.dataUrl, { cache: 'force-cache' });
-      if (!response.ok) throw new Error(`Routing data request failed: ${response.status}`);
-      const geojson = /\.gz(?:\?|$)/.test(CONFIG.dataUrl)
-        ? await new Response(response.body.pipeThrough(new DecompressionStream('gzip'))).json()
-        : await response.json();
+      let geojson;
+      if (window.PTBO_ROAD_COLLISION?.ready || window.PTBO_ROAD_COLLISION_BOOTSTRAP_READY || document.querySelector('script[data-ptbo-road-collision]')) {
+        // These scripts load independently. Wait for the core API, then reuse its
+        // city-validated road set, including only the reviewed access supplement.
+        const started=Date.now();
+        while (!window.PTBO_ROAD_COLLISION?.ready) {
+          if (Date.now()-started>45000) throw new Error('Validated city roads did not initialize.');
+          await new Promise(resolve=>setTimeout(resolve,50));
+        }
+        const collision=window.PTBO_ROAD_COLLISION;
+        await collision.ready;
+        if (collision.state?.status!=='ready' || !Array.isArray(collision.state.geojson?.features)) throw new Error('Validated city roads are unavailable.');
+        if (window.PTBO_CITY_PACKAGE?.id && collision.config?.cityId!==window.PTBO_CITY_PACKAGE.id) throw new Error('Routing road city mismatch.');
+        geojson=collision.state.geojson;
+      } else {
+        const response = await fetch(CONFIG.dataUrl, { cache: 'force-cache' });
+        if (!response.ok) throw new Error(`Routing data request failed: ${response.status}`);
+        geojson = /\.gz(?:\?|$)/.test(CONFIG.dataUrl)
+          ? await new Response(response.body.pipeThrough(new DecompressionStream('gzip'))).json()
+          : await response.json();
+      }
       state.graph = buildGraph(geojson);
       state.status = 'ready';
       readyResolve({ nodes: state.graph.nodes.length, edges: state.graph.directedEdges });

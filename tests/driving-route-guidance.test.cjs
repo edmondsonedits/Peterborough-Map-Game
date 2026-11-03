@@ -11,11 +11,11 @@ const metersLng = 111320 * Math.cos(44.3091 * Math.PI / 180);
 const point = (x, y = 0) => ({ lat: 44.3091 + y / 110540, lng: -78.3197 + x / metersLng });
 const coordinate = (x, y = 0) => { const p = point(x, y); return [p.lng, p.lat]; };
 const line = (points, properties = {}) => ({ type: 'Feature', properties: { highway: 'residential', name: 'Test road', ...properties }, geometry: { type: 'LineString', coordinates: points.map(p => coordinate(...p)) } });
-async function router(features = packagedRoads.features) {
+async function router(features = packagedRoads.features, extra = {}) {
   const context = vm.createContext({
     console, setInterval() {}, document: { getElementById() { return null; }, querySelector() { return null; }, createElement() { return {}; }, head: { appendChild() {} } },
     fetch: async () => ({ ok: true, json: async () => ({ features }) }),
-    CustomEvent: class {}, dispatchEvent() {},
+    CustomEvent: class {}, dispatchEvent() {}, ...extra,
   });
   context.window = context;
   vm.runInContext(source, context);
@@ -101,4 +101,26 @@ test('packaged North Monaghan contraflow uses graph edges and packaged untagged 
   const to = roundabout.state.graph.nodes.find(n => n.lng === b[0] && n.lat === b[1]);
   assert.equal(from.edges.some(e => e.to === to.id), true);
   assert.equal(to.edges.some(e => e.to === from.id), false);
+});
+
+test('a connected route may visit more than the former fixed 120000-node city limit', async () => {
+  // A large supplied graph must remain routable; all intermediate vertices are required.
+  const count=120005;
+  const api=await router([line(Array.from({length:count},(_,i)=>[i,0]),{oneway:'yes'})]);
+  const route=api.route(point(0),point(count-1));
+  assert.ok(route,'connected long graph must not be reported as unreachable');
+  assert.ok(route.visited>120000);
+  assert.ok(Math.abs(route.distance-(count-1))<.01);
+});
+
+test('routing uses collision-validated merged roads without fetching unapproved fallback ways', async()=>{
+  const approved=line([[0,0],[1000,0]],{trainingEmergencyAccess:true,motor_vehicle:'private'});
+  const forbidden=line([[0,2000],[1000,2000]],{motor_vehicle:'private'});
+  const api=await router([forbidden],{PTBO_ROAD_COLLISION:{ready:Promise.resolve(),state:{status:'ready',geojson:{features:[approved]}}},fetch:async()=>{throw Error('must reuse validated collision roads');}});
+  assert.ok(api.route(point(0),point(1000)));
+  assert.equal(api.route(point(0,2000),point(1000,2000)),null);
+});
+test('routing fails closed when collision road validation fails',async()=>{
+  const ready=Promise.reject(new Error('invalid approved supplement'));ready.catch(()=>{});
+  await assert.rejects(router([line([[0,0],[1000,0]])],{PTBO_ROAD_COLLISION:{ready,state:{status:'failed'}}}),/invalid approved supplement/);
 });

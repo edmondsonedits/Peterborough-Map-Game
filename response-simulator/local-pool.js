@@ -35,5 +35,11 @@
   });
   return [...civic,...intersections];
  }
- return Object.freeze({localPool});
+ // This isolated road network has no modeled mainland transport connection.
+ // Preserve the Island crew and calls as explicitly scene-only exercises.
+ function transportPolicy(base){
+  const island=base?.cityId==='toronto'&&base?.service==='ems'&&base?.id==='ems-toronto-ems-4173463';
+  return Object.freeze({requiresHospital:base?.service==='ems'&&!island,note:island?'Toronto Island scene-only exercise; mainland transport is not simulated.':null});
+ }
+ return Object.freeze({localPool,transportPolicy});
 });

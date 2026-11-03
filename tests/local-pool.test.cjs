@@ -61,7 +61,14 @@ test('Island civic fails closed for altered city, supplement policy, source way,
 test('Island supplement snapshot and reviewed source way retain their audited identity',()=>{
  const fs=require('node:fs'),path=require('node:path'),crypto=require('node:crypto');
  const bytes=fs.readFileSync(path.join(__dirname,'../cities/toronto/emergency-access-roads.geojson'));
- assert.equal(crypto.createHash('sha256').update(bytes).digest('hex'),'e2a3b85c2b10a8b2b6f98610a5d7b33919feacd640180044f7d47fae14cd9e8c');
+ assert.equal(crypto.createHash('sha256').update(bytes.toString('utf8').replace(/\r\n/g,'\n')).digest('hex'),'e2a3b85c2b10a8b2b6f98610a5d7b33919feacd640180044f7d47fae14cd9e8c');
  const extra=JSON.parse(bytes),way=extra.features.find(x=>x.id==='way/7779153');
  assert.equal(extra.features.length,33);assert.equal(way.properties.trainingEmergencyAccess,true);assert.equal(way.properties.motor_vehicle,'private');assert.equal(way.properties.sourceUrl,'https://www.openstreetmap.org/way/7779153');
+});
+
+test('only Toronto Island EMS uses the explicit scene-only transport policy',()=>{
+ const {transportPolicy}=require('../response-simulator/local-pool.js');
+ assert.equal(transportPolicy({cityId:'toronto',id:'ems-toronto-ems-4173463',service:'ems'}).requiresHospital,false);
+ assert.match(transportPolicy({cityId:'toronto',id:'ems-toronto-ems-4173463',service:'ems'}).note,/Island.*scene-only/i);
+ for(const base of [{cityId:'toronto',id:'ems-toronto-ems-2775911',service:'ems'},{cityId:'other',id:'ems-toronto-ems-4173463',service:'ems'}])assert.equal(transportPolicy(base).requiresHospital,true);
 });

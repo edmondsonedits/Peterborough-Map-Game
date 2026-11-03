@@ -936,7 +936,8 @@
             if (filteredPool.length === 0) { alert('No reachable calls match these filters. Check road loading or select another call type.'); return; }
 
             const ems = window.PTBO_SERVICE?.state.mode === 'ems';
-            const transportRequired = ems && window.PTBO_CITY_PACKAGE?.features?.hospitalTransport !== false;
+            const transportPolicy = window.PTBO_LOCAL_RESPONSE_POOL?.transportPolicy?.({cityId:window.PTBO_CITY_PACKAGE?.id,id:window.PTBO_SERVICE?.getBase()?.id,service:selectedService});
+            const transportRequired = ems && window.PTBO_CITY_PACKAGE?.features?.hospitalTransport !== false && transportPolicy?.requiresHospital !== false;
             const hospital = ems && transportRequired ? (window.PTBO_BASE_STORE?.getHospital() || window.PTBO_SERVICE_CONFIG.hospital) : null;
             const hospitalArrival = transportRequired ? resolveIncidentArrival(hospital) : null;
             if (transportRequired && !hospitalArrival) { alert('Hospital access is still loading. Please try again.'); return; }
@@ -952,7 +953,7 @@
             lastDispatchedCallId = activeIncident.id || null;
 
             mission = {generation:missionGeneration,service:ems ? 'ems' : 'fire',scene:{...activeIncident},
-                hospital:hospital ? {...hospital} : null,hospitalArrival,transportRequired,responseMs:0,transportMs:0,phase:'response'};
+                hospital:hospital ? {...hospital} : null,hospitalArrival,transportRequired,trainingNote:transportPolicy?.note || null,responseMs:0,transportMs:0,phase:'response'};
             activeArrivalPoint = resolveIncidentArrival(activeIncident);
             activeArrivalRadius = activeArrivalPoint.radius;
             incidentCircleMarker = L.circle([activeArrivalPoint.lat, activeArrivalPoint.lng], {
@@ -972,6 +973,7 @@
             document.getElementById('hud-content').innerHTML = `
                 <div class="hud-title">🚨 ACTIVE ENROUTE DISPATCH: ${escapeDispatchText(activeIncident.sub.toUpperCase())}</div>
                 <p class="hud-address">${escapeDispatchText(activeIncident.name)}</p>
+                ${mission.trainingNote ? `<div class="hud-meta">${escapeDispatchText(mission.trainingNote)}</div>` : ''}
                 <div class="hud-meta">${drills && activeIncident.locationKind==='mapped-intersection' ? 'Intersection' : 'Address'}: ${escapeDispatchText(activeIncident.addr)}${activeArrivalPoint.accessPoint ? " · Respond to the marked modeled road approach" : ""}${drills ? ` · ${activeIncident.locationKind==='mapped-intersection' ? 'Mapped intersection exercise' : 'Training estimate'}${supportExerciseLabel(activeIncident) ? ` · ${escapeDispatchText(supportExerciseLabel(activeIncident))}` : ''}` : ''}</div>
             `;
 
@@ -1002,7 +1004,7 @@
             const ems = mission.service === 'ems';
             document.getElementById('hud-content').innerHTML = `
                 <div class="hud-title">${ems ? 'EMS' : 'FIRE'} / AVAILABLE</div>
-                <p class="hud-address">${ems && mission.transportRequired ? `Patient delivered to ${escapeDispatchText(mission.hospital.name)}` : ems ? 'Response exercise completed' : 'Assignment completed'}</p>
+                <p class="hud-address">${ems && mission.transportRequired ? `Patient delivered to ${escapeDispatchText(mission.hospital.name)}` : ems ? (mission.trainingNote || 'Response exercise completed') : 'Assignment completed'}</p>
                 <div class="hud-meta">Response: ${(mission.responseMs/1000).toFixed(1)} s${ems && mission.transportRequired ? ` · Transport: ${(mission.transportMs/1000).toFixed(1)} s` : ''}</div>`;
             setDispatchAction('Next Call',false);
         }
