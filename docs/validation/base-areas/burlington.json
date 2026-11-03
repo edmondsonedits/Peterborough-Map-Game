@@ -1,0 +1,930 @@
+{
+  "schemaVersion": 1,
+  "cityId": "burlington",
+  "reviewedLocalDate": "2026-11-02",
+  "assessment": "estimated",
+  "imagery": {
+    "provider": "Esri World Imagery",
+    "tileUrl": "https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}",
+    "capturedLocalDate": "2026-11-02",
+    "captureTimestamp": "2026-11-03T02:28:34.962Z",
+    "zoom": 19,
+    "vintage": "not supplied by tile response",
+    "method": "Reviewed the pre-captured independent Leaflet satellite image for each active site; measured scale is approximately 0.2165 m/pixel. Building, parking/apron, and visible access extents are estimated from imagery.",
+    "captureDirectory": "artifacts/release-qa/base-fit-burlington/"
+  },
+  "roads": {
+    "file": "cities/burlington/roads.geojson.gz",
+    "source": "OpenStreetMap via Geofabrik Ontario extract",
+    "sourceUrl": "https://download.geofabrik.de/north-america/canada/ontario.html",
+    "sourceTimestamp": "2026-09-27T20:23:36Z",
+    "snapshotBuiltAt": "2026-10-29T04:10:50.397Z",
+    "roadSourceSha256": "ebb50b39682d2381ad3c1d21e005b48cec3397e15da0d72c5d76c7d20d8dd249",
+    "attribution": "© OpenStreetMap contributors"
+  },
+  "limits": [
+    "No official parcel or building-footprint polygons were used.",
+    "Dimensions and spawn points are imagery and road-geometry estimates, not surveyed measurements.",
+    "Imagery does not independently verify apparatus doors, gates, access controls, or current pavement.",
+    "Canonical station source coordinates remain on every base record.",
+    "Collision QA exercises the runtime station-exit transition from each modeled spawn to the nearest mapped drivable road point; it does not validate a sustained vehicle drive or a verified apparatus entrance.",
+    "Dispatch route QA covers the selected mobile Fire and EMS call pools; it does not establish real-world emergency response suitability."
+  ],
+  "bases": [
+    {
+      "baseId": "burlington-fire-1",
+      "name": "Fire Station 1",
+      "address": "1255 Fairview Street, Burlington, ON",
+      "sourcePoint": {
+        "lat": 43.33113882611392,
+        "lng": -79.81819737571415
+      },
+      "drivingArea": {
+        "center": {
+          "lat": 43.33113882611392,
+          "lng": -79.81819737571415
+        },
+        "widthMetres": 80,
+        "lengthMetres": 95,
+        "rotationDegrees": 45,
+        "spawn": {
+          "lat": 43.33122929110397,
+          "lng": -79.81780218791428,
+          "headingDegrees": 45
+        },
+        "spawnOffsetFromCanonicalMetres": {
+          "east": 32,
+          "north": 10
+        }
+      },
+      "assessment": "estimated",
+      "observation": "Estimated from Esri imagery: station buildings and the visible paved parking/apron with its east-side approach to Fairview Street. Modeled spawn is on the apparent outdoor drive/apron; exact apparatus door is unverified.",
+      "runtimeCollision": {
+        "spawnInside": true,
+        "areaRoadAccess": true,
+        "spawnInitiallyDrivable": true,
+        "nearestRoad": {
+          "name": "Fairview Street",
+          "highway": "secondary",
+          "distanceMetres": 35.01
+        },
+        "exitStarted": true,
+        "exitCompleted": true,
+        "blockedMoves": 0,
+        "movementSteps": 24,
+        "endDistanceToNearestRoadMetres": 0
+      },
+      "dispatchRouteCoverage": {
+        "calls": 8,
+        "reachable": 8,
+        "responseRouteFailures": 0,
+        "transportRouteFailures": 0
+      }
+    },
+    {
+      "baseId": "burlington-fire-2",
+      "name": "Fire Station 2",
+      "address": "2300 Upper Middle Road, Burlington, ON",
+      "sourcePoint": {
+        "lat": 43.35892754529157,
+        "lng": -79.82834287990839
+      },
+      "drivingArea": {
+        "center": {
+          "lat": 43.358882312796545,
+          "lng": -79.82834287990839
+        },
+        "widthMetres": 70,
+        "lengthMetres": 96,
+        "rotationDegrees": 8,
+        "spawn": {
+          "lat": 43.359153707766694,
+          "lng": -79.82829345881531,
+          "headingDegrees": 0
+        },
+        "spawnOffsetFromCanonicalMetres": {
+          "east": 4,
+          "north": 25
+        }
+      },
+      "assessment": "estimated",
+      "observation": "Estimated from Esri imagery: station structure, its parking and the curved access drive toward Upper Middle Road. Modeled spawn is on the visible access drive; exact bay/exit point is unverified.",
+      "runtimeCollision": {
+        "spawnInside": true,
+        "areaRoadAccess": true,
+        "spawnInitiallyDrivable": true,
+        "nearestRoad": {
+          "name": "Upper Middle Road",
+          "highway": "secondary",
+          "distanceMetres": 18.42
+        },
+        "exitStarted": true,
+        "exitCompleted": true,
+        "blockedMoves": 0,
+        "movementSteps": 13,
+        "endDistanceToNearestRoadMetres": 0
+      },
+      "dispatchRouteCoverage": {
+        "calls": 8,
+        "reachable": 8,
+        "responseRouteFailures": 0,
+        "transportRouteFailures": 0
+      }
+    },
+    {
+      "baseId": "burlington-fire-3",
+      "name": "Fire Station 3",
+      "address": "1044 Waterdown Road, Burlington, ON",
+      "sourcePoint": {
+        "lat": 43.307639572879154,
+        "lng": -79.85462565340165
+      },
+      "drivingArea": {
+        "center": {
+          "lat": 43.30774813086721,
+          "lng": -79.85447751528137
+        },
+        "widthMetres": 60,
+        "lengthMetres": 85,
+        "rotationDegrees": 45,
+        "spawn": {
+          "lat": 43.30789287485129,
+          "lng": -79.85419358388417,
+          "headingDegrees": 45
+        },
+        "spawnOffsetFromCanonicalMetres": {
+          "east": 35,
+          "north": 28
+        }
+      },
+      "assessment": "estimated",
+      "observation": "Estimated from Esri imagery: station building, immediate apron/parking and the visible northeast access driveway to Waterdown Road. Canonical source point is retained; spawn is moved to the mapped Waterdown Road edge because the nearby internal service segment is disconnected in the road graph. Apparatus entrance is unverified; no route fallback is used.",
+      "runtimeCollision": {
+        "spawnInside": true,
+        "areaRoadAccess": true,
+        "spawnInitiallyDrivable": true,
+        "nearestRoad": {
+          "name": "Waterdown Road",
+          "highway": "secondary",
+          "distanceMetres": 0.51
+        },
+        "exitStarted": true,
+        "exitCompleted": true,
+        "blockedMoves": 0,
+        "movementSteps": 1,
+        "endDistanceToNearestRoadMetres": 0
+      },
+      "dispatchRouteCoverage": {
+        "calls": 8,
+        "reachable": 8,
+        "responseRouteFailures": 0,
+        "transportRouteFailures": 0
+      }
+    },
+    {
+      "baseId": "burlington-fire-4",
+      "name": "Fire Station 4",
+      "address": "711 Appleby Line, Burlington, ON",
+      "sourcePoint": {
+        "lat": 43.37422701383581,
+        "lng": -79.76220556914527
+      },
+      "drivingArea": {
+        "center": {
+          "lat": 43.37433557182386,
+          "lng": -79.76204491007658
+        },
+        "widthMetres": 65,
+        "lengthMetres": 82,
+        "rotationDegrees": 45,
+        "spawn": {
+          "lat": 43.374543641300974,
+          "lng": -79.7618101006685,
+          "headingDegrees": 35
+        },
+        "spawnOffsetFromCanonicalMetres": {
+          "east": 32,
+          "north": 35
+        }
+      },
+      "assessment": "estimated",
+      "observation": "Estimated from Esri imagery: station building and its paved apron/parking on the corner parcel, including the visible approach toward Appleby Line. Modeled spawn lies on the mapped connected site approach; exact driveway throat is unverified.",
+      "runtimeCollision": {
+        "spawnInside": true,
+        "areaRoadAccess": true,
+        "spawnInitiallyDrivable": true,
+        "nearestRoad": {
+          "name": "Unnamed road",
+          "highway": "service",
+          "distanceMetres": 7.58
+        },
+        "exitStarted": true,
+        "exitCompleted": true,
+        "blockedMoves": 0,
+        "movementSteps": 6,
+        "endDistanceToNearestRoadMetres": 0
+      },
+      "dispatchRouteCoverage": {
+        "calls": 8,
+        "reachable": 8,
+        "responseRouteFailures": 0,
+        "transportRouteFailures": 0
+      }
+    },
+    {
+      "baseId": "burlington-fire-5",
+      "name": "Fire Station 5",
+      "address": "2241 Kilbride Street, Burlington, ON",
+      "sourcePoint": {
+        "lat": 43.42809806364336,
+        "lng": -79.93466580624666
+      },
+      "drivingArea": {
+        "center": {
+          "lat": 43.42800759865331,
+          "lng": -79.93448026549517
+        },
+        "widthMetres": 80,
+        "lengthMetres": 110,
+        "rotationDegrees": 45,
+        "spawn": {
+          "lat": 43.428342319116496,
+          "lng": -79.93436894104427,
+          "headingDegrees": 45
+        },
+        "spawnOffsetFromCanonicalMetres": {
+          "east": 24,
+          "north": 27
+        }
+      },
+      "assessment": "estimated",
+      "observation": "Estimated from Esri imagery: station building and paved apron/parking with the visible drive to Kilbride Street. Modeled spawn is on the apparent drive; exact apparatus entrance is unverified.",
+      "runtimeCollision": {
+        "spawnInside": true,
+        "areaRoadAccess": true,
+        "spawnInitiallyDrivable": true,
+        "nearestRoad": {
+          "name": "Kilbride Street",
+          "highway": "tertiary",
+          "distanceMetres": 46.04
+        },
+        "exitStarted": true,
+        "exitCompleted": true,
+        "blockedMoves": 0,
+        "movementSteps": 31,
+        "endDistanceToNearestRoadMetres": 0
+      },
+      "dispatchRouteCoverage": {
+        "calls": 6,
+        "reachable": 6,
+        "responseRouteFailures": 0,
+        "transportRouteFailures": 0
+      }
+    },
+    {
+      "baseId": "burlington-fire-6",
+      "name": "Fire Station 6",
+      "address": "455 Cumberland Avenue, Burlington, ON",
+      "sourcePoint": {
+        "lat": 43.346116544116,
+        "lng": -79.77750310987015
+      },
+      "drivingArea": {
+        "center": {
+          "lat": 43.346116544116,
+          "lng": -79.77750310987015
+        },
+        "widthMetres": 85,
+        "lengthMetres": 90,
+        "rotationDegrees": 45,
+        "spawn": {
+          "lat": 43.34598084663093,
+          "lng": -79.7778489845027,
+          "headingDegrees": 225
+        },
+        "spawnOffsetFromCanonicalMetres": {
+          "east": -28,
+          "north": -15
+        }
+      },
+      "assessment": "estimated",
+      "observation": "Estimated from Esri imagery: station building, immediate parking/apron and the visible southwest site approach. Modeled spawn is on the apparent connected approach; exact apparatus entrance is unverified.",
+      "runtimeCollision": {
+        "spawnInside": true,
+        "areaRoadAccess": true,
+        "spawnInitiallyDrivable": true,
+        "nearestRoad": {
+          "name": "Cumberland Avenue",
+          "highway": "tertiary",
+          "distanceMetres": 7.32
+        },
+        "exitStarted": true,
+        "exitCompleted": true,
+        "blockedMoves": 0,
+        "movementSteps": 5,
+        "endDistanceToNearestRoadMetres": 0
+      },
+      "dispatchRouteCoverage": {
+        "calls": 8,
+        "reachable": 8,
+        "responseRouteFailures": 0,
+        "transportRouteFailures": 0
+      }
+    },
+    {
+      "baseId": "burlington-fire-7",
+      "name": "Fire Station 7",
+      "address": "4100 Dundas Street, Burlington, ON",
+      "sourcePoint": {
+        "lat": 43.394236387066755,
+        "lng": -79.82064079183955
+      },
+      "drivingArea": {
+        "center": {
+          "lat": 43.39432685205681,
+          "lng": -79.8207891414757
+        },
+        "widthMetres": 65,
+        "lengthMetres": 90,
+        "rotationDegrees": 35,
+        "spawn": {
+          "lat": 43.394453503042875,
+          "lng": -79.82111056568738,
+          "headingDegrees": 300
+        },
+        "spawnOffsetFromCanonicalMetres": {
+          "east": -38,
+          "north": 24
+        }
+      },
+      "assessment": "estimated",
+      "observation": "Estimated from Esri imagery: station building, curved parking/apron and the visible northwestern access toward Dundas Street. Canonical source point is retained; spawn is moved to the mapped connected Dundas Street edge because the nearby internal service way is disconnected in the road graph. The intervening visible driveway is included in the area; exact bay/entrance is unverified and no route fallback is used.",
+      "runtimeCollision": {
+        "spawnInside": true,
+        "areaRoadAccess": true,
+        "spawnInitiallyDrivable": true,
+        "nearestRoad": {
+          "name": "Dundas Street",
+          "highway": "primary",
+          "distanceMetres": 0.33
+        },
+        "exitStarted": true,
+        "exitCompleted": true,
+        "blockedMoves": 0,
+        "movementSteps": 1,
+        "endDistanceToNearestRoadMetres": 0
+      },
+      "dispatchRouteCoverage": {
+        "calls": 8,
+        "reachable": 8,
+        "responseRouteFailures": 0,
+        "transportRouteFailures": 0
+      }
+    },
+    {
+      "baseId": "burlington-fire-8",
+      "name": "Fire Station 8",
+      "address": "1837 Ironstone Drive, Burlington, ON",
+      "sourcePoint": {
+        "lat": 43.39067677977139,
+        "lng": -79.78966768397063
+      },
+      "drivingArea": {
+        "center": {
+          "lat": 43.39067677977139,
+          "lng": -79.78966768397063
+        },
+        "widthMetres": 75,
+        "lengthMetres": 90,
+        "rotationDegrees": 45,
+        "spawn": {
+          "lat": 43.39067677977139,
+          "lng": -79.78966768397063,
+          "headingDegrees": 0
+        },
+        "spawnOffsetFromCanonicalMetres": {
+          "east": 0,
+          "north": 0
+        }
+      },
+      "assessment": "estimated",
+      "observation": "Estimated from Esri imagery: station building and its immediate parking/apron within the larger commercial parcel, with the visible site approach. The modeled spawn retains the canonical point because the imagery and mapped paths do not establish a distinct connected entrance location; neighboring commercial parking is excluded where visible site edges allow. Apparatus entrance is unverified.",
+      "runtimeCollision": {
+        "spawnInside": true,
+        "areaRoadAccess": true,
+        "spawnInitiallyDrivable": true,
+        "nearestRoad": {
+          "name": "Unnamed road",
+          "highway": "service",
+          "distanceMetres": 22.3
+        },
+        "exitStarted": true,
+        "exitCompleted": true,
+        "blockedMoves": 0,
+        "movementSteps": 15,
+        "endDistanceToNearestRoadMetres": 0
+      },
+      "dispatchRouteCoverage": {
+        "calls": 8,
+        "reachable": 8,
+        "responseRouteFailures": 0,
+        "transportRouteFailures": 0
+      }
+    },
+    {
+      "baseId": "burlington-ems-3",
+      "name": "Halton Paramedic Station 03",
+      "address": "455 Cumberland Avenue, Burlington, ON",
+      "sourcePoint": {
+        "lat": 43.346151342859,
+        "lng": -79.77765583515247
+      },
+      "drivingArea": {
+        "center": {
+          "lat": 43.346151342859,
+          "lng": -79.77765583515247
+        },
+        "widthMetres": 85,
+        "lengthMetres": 90,
+        "rotationDegrees": 45,
+        "spawn": {
+          "lat": 43.34601564537393,
+          "lng": -79.7780017099833,
+          "headingDegrees": 225
+        },
+        "spawnOffsetFromCanonicalMetres": {
+          "east": -28,
+          "north": -15
+        }
+      },
+      "assessment": "estimated",
+      "observation": "Co-located with Fire Station 6. Estimated from imagery: shared building and visible parking/apron/site approach. The imagery does not establish an EMS-only entrance or parcel.",
+      "runtimeCollision": {
+        "spawnInside": true,
+        "areaRoadAccess": true,
+        "spawnInitiallyDrivable": true,
+        "nearestRoad": {
+          "name": "Cumberland Avenue",
+          "highway": "tertiary",
+          "distanceMetres": 1.35
+        },
+        "exitStarted": true,
+        "exitCompleted": true,
+        "blockedMoves": 0,
+        "movementSteps": 1,
+        "endDistanceToNearestRoadMetres": 0
+      },
+      "dispatchRouteCoverage": {
+        "calls": 6,
+        "reachable": 6,
+        "responseRouteFailures": 0,
+        "transportRouteFailures": 0
+      }
+    },
+    {
+      "baseId": "burlington-ems-4",
+      "name": "Halton Paramedic Station 04",
+      "address": "1018 Willowbrook Road, Burlington, ON",
+      "sourcePoint": {
+        "lat": 43.31776826651791,
+        "lng": -79.83977324443156
+      },
+      "drivingArea": {
+        "center": {
+          "lat": 43.31776826651791,
+          "lng": -79.83977324443156
+        },
+        "widthMetres": 75,
+        "lengthMetres": 80,
+        "rotationDegrees": 45,
+        "spawn": {
+          "lat": 43.317605429535824,
+          "lng": -79.83952630641262,
+          "headingDegrees": 155
+        },
+        "spawnOffsetFromCanonicalMetres": {
+          "east": 20,
+          "north": -18
+        }
+      },
+      "assessment": "estimated",
+      "observation": "Estimated from Esri imagery: paramedic building, visible fleet apron/parking and the access aisle toward Willowbrook Road. Shared nearby facilities are excluded where visible edges allow; exact EMS door is unverified.",
+      "runtimeCollision": {
+        "spawnInside": true,
+        "areaRoadAccess": true,
+        "spawnInitiallyDrivable": true,
+        "nearestRoad": {
+          "name": "Unnamed road",
+          "highway": "service",
+          "distanceMetres": 9.09
+        },
+        "exitStarted": true,
+        "exitCompleted": true,
+        "blockedMoves": 0,
+        "movementSteps": 7,
+        "endDistanceToNearestRoadMetres": 0
+      },
+      "dispatchRouteCoverage": {
+        "calls": 6,
+        "reachable": 6,
+        "responseRouteFailures": 0,
+        "transportRouteFailures": 0
+      }
+    },
+    {
+      "baseId": "burlington-ems-5",
+      "name": "Halton Paramedic Station 05",
+      "address": "2130 Brant Street, Burlington, ON",
+      "sourcePoint": {
+        "lat": 43.3544956486812,
+        "lng": -79.84088426753229
+      },
+      "drivingArea": {
+        "center": {
+          "lat": 43.3544956486812,
+          "lng": -79.84088426753229
+        },
+        "widthMetres": 75,
+        "lengthMetres": 85,
+        "rotationDegrees": 30,
+        "spawn": {
+          "lat": 43.35442327668916,
+          "lng": -79.84085955879046,
+          "headingDegrees": 180
+        },
+        "spawnOffsetFromCanonicalMetres": {
+          "east": 2,
+          "north": -8
+        }
+      },
+      "assessment": "estimated",
+      "observation": "Estimated from Esri imagery: paramedic building and its immediate parking/apron with the visible site drive. The broader neighboring parcel is excluded as far as visible edges allow; exact EMS entrance is unverified.",
+      "runtimeCollision": {
+        "spawnInside": true,
+        "areaRoadAccess": true,
+        "spawnInitiallyDrivable": true,
+        "nearestRoad": {
+          "name": "Unnamed road",
+          "highway": "service",
+          "distanceMetres": 8.35
+        },
+        "exitStarted": true,
+        "exitCompleted": true,
+        "blockedMoves": 0,
+        "movementSteps": 6,
+        "endDistanceToNearestRoadMetres": 0
+      },
+      "dispatchRouteCoverage": {
+        "calls": 6,
+        "reachable": 6,
+        "responseRouteFailures": 0,
+        "transportRouteFailures": 0
+      }
+    },
+    {
+      "baseId": "burlington-ems-10",
+      "name": "Halton Paramedic Station 10",
+      "address": "5200 Corporate Drive, Burlington, ON",
+      "sourcePoint": {
+        "lat": 43.39302989936685,
+        "lng": -79.78006425897682
+      },
+      "drivingArea": {
+        "center": {
+          "lat": 43.39302989936685,
+          "lng": -79.78006425897682
+        },
+        "widthMetres": 88,
+        "lengthMetres": 100,
+        "rotationDegrees": 0,
+        "spawn": {
+          "lat": 43.39304799236486,
+          "lng": -79.77976756561125,
+          "headingDegrees": 90
+        },
+        "spawnOffsetFromCanonicalMetres": {
+          "east": 24,
+          "north": 2
+        }
+      },
+      "assessment": "estimated",
+      "observation": "Estimated from Esri imagery: paramedic building footprint and immediately associated parking/apron at the Corporate Drive campus. The wider campus has shared circulation; no EMS-only parcel, door or access control is claimed.",
+      "runtimeCollision": {
+        "spawnInside": true,
+        "areaRoadAccess": true,
+        "spawnInitiallyDrivable": true,
+        "nearestRoad": {
+          "name": "Unnamed road",
+          "highway": "service",
+          "distanceMetres": 28.38
+        },
+        "exitStarted": true,
+        "exitCompleted": true,
+        "blockedMoves": 0,
+        "movementSteps": 19,
+        "endDistanceToNearestRoadMetres": 0
+      },
+      "dispatchRouteCoverage": {
+        "calls": 6,
+        "reachable": 6,
+        "responseRouteFailures": 0,
+        "transportRouteFailures": 0
+      }
+    }
+  ],
+  "runtimeCollisionChecks": {
+    "checkedLocalDate": "2026-11-02",
+    "runtimeVersion": "1.6.170",
+    "roadState": "ready",
+    "activeBaseCount": 12,
+    "method": "Browser QA called PTBO_ROAD_COLLISION.beginStationExit at each modeled spawn, then advanced toward the nearest road projection in 1.5 m steps with resolveMovement; each transition required an unblocked path ending on a drivable point within 2.5 m.",
+    "results": [
+      {
+        "baseId": "burlington-fire-1",
+        "spawnInside": true,
+        "areaRoadAccess": true,
+        "spawnInitiallyDrivable": true,
+        "nearestRoad": {
+          "name": "Fairview Street",
+          "highway": "secondary",
+          "distanceMetres": 35.01
+        },
+        "exitStarted": true,
+        "exitCompleted": true,
+        "blockedMoves": 0,
+        "movementSteps": 24,
+        "endDistanceToRoadMetres": 0
+      },
+      {
+        "baseId": "burlington-fire-2",
+        "spawnInside": true,
+        "areaRoadAccess": true,
+        "spawnInitiallyDrivable": true,
+        "nearestRoad": {
+          "name": "Upper Middle Road",
+          "highway": "secondary",
+          "distanceMetres": 18.42
+        },
+        "exitStarted": true,
+        "exitCompleted": true,
+        "blockedMoves": 0,
+        "movementSteps": 13,
+        "endDistanceToRoadMetres": 0
+      },
+      {
+        "baseId": "burlington-fire-3",
+        "spawnInside": true,
+        "areaRoadAccess": true,
+        "spawnInitiallyDrivable": true,
+        "nearestRoad": {
+          "name": "Waterdown Road",
+          "highway": "secondary",
+          "distanceMetres": 0.51
+        },
+        "exitStarted": true,
+        "exitCompleted": true,
+        "blockedMoves": 0,
+        "movementSteps": 1,
+        "endDistanceToRoadMetres": 0
+      },
+      {
+        "baseId": "burlington-fire-4",
+        "spawnInside": true,
+        "areaRoadAccess": true,
+        "spawnInitiallyDrivable": true,
+        "nearestRoad": {
+          "name": "Unnamed road",
+          "highway": "service",
+          "distanceMetres": 7.58
+        },
+        "exitStarted": true,
+        "exitCompleted": true,
+        "blockedMoves": 0,
+        "movementSteps": 6,
+        "endDistanceToRoadMetres": 0
+      },
+      {
+        "baseId": "burlington-fire-5",
+        "spawnInside": true,
+        "areaRoadAccess": true,
+        "spawnInitiallyDrivable": true,
+        "nearestRoad": {
+          "name": "Kilbride Street",
+          "highway": "tertiary",
+          "distanceMetres": 46.04
+        },
+        "exitStarted": true,
+        "exitCompleted": true,
+        "blockedMoves": 0,
+        "movementSteps": 31,
+        "endDistanceToRoadMetres": 0
+      },
+      {
+        "baseId": "burlington-fire-6",
+        "spawnInside": true,
+        "areaRoadAccess": true,
+        "spawnInitiallyDrivable": true,
+        "nearestRoad": {
+          "name": "Cumberland Avenue",
+          "highway": "tertiary",
+          "distanceMetres": 7.32
+        },
+        "exitStarted": true,
+        "exitCompleted": true,
+        "blockedMoves": 0,
+        "movementSteps": 5,
+        "endDistanceToRoadMetres": 0
+      },
+      {
+        "baseId": "burlington-fire-7",
+        "spawnInside": true,
+        "areaRoadAccess": true,
+        "spawnInitiallyDrivable": true,
+        "nearestRoad": {
+          "name": "Dundas Street",
+          "highway": "primary",
+          "distanceMetres": 0.33
+        },
+        "exitStarted": true,
+        "exitCompleted": true,
+        "blockedMoves": 0,
+        "movementSteps": 1,
+        "endDistanceToRoadMetres": 0
+      },
+      {
+        "baseId": "burlington-fire-8",
+        "spawnInside": true,
+        "areaRoadAccess": true,
+        "spawnInitiallyDrivable": true,
+        "nearestRoad": {
+          "name": "Unnamed road",
+          "highway": "service",
+          "distanceMetres": 22.3
+        },
+        "exitStarted": true,
+        "exitCompleted": true,
+        "blockedMoves": 0,
+        "movementSteps": 15,
+        "endDistanceToRoadMetres": 0
+      },
+      {
+        "baseId": "burlington-ems-3",
+        "spawnInside": true,
+        "areaRoadAccess": true,
+        "spawnInitiallyDrivable": true,
+        "nearestRoad": {
+          "name": "Cumberland Avenue",
+          "highway": "tertiary",
+          "distanceMetres": 1.35
+        },
+        "exitStarted": true,
+        "exitCompleted": true,
+        "blockedMoves": 0,
+        "movementSteps": 1,
+        "endDistanceToRoadMetres": 0
+      },
+      {
+        "baseId": "burlington-ems-4",
+        "spawnInside": true,
+        "areaRoadAccess": true,
+        "spawnInitiallyDrivable": true,
+        "nearestRoad": {
+          "name": "Unnamed road",
+          "highway": "service",
+          "distanceMetres": 9.09
+        },
+        "exitStarted": true,
+        "exitCompleted": true,
+        "blockedMoves": 0,
+        "movementSteps": 7,
+        "endDistanceToRoadMetres": 0
+      },
+      {
+        "baseId": "burlington-ems-5",
+        "spawnInside": true,
+        "areaRoadAccess": true,
+        "spawnInitiallyDrivable": true,
+        "nearestRoad": {
+          "name": "Unnamed road",
+          "highway": "service",
+          "distanceMetres": 8.35
+        },
+        "exitStarted": true,
+        "exitCompleted": true,
+        "blockedMoves": 0,
+        "movementSteps": 6,
+        "endDistanceToRoadMetres": 0
+      },
+      {
+        "baseId": "burlington-ems-10",
+        "spawnInside": true,
+        "areaRoadAccess": true,
+        "spawnInitiallyDrivable": true,
+        "nearestRoad": {
+          "name": "Unnamed road",
+          "highway": "service",
+          "distanceMetres": 28.38
+        },
+        "exitStarted": true,
+        "exitCompleted": true,
+        "blockedMoves": 0,
+        "movementSteps": 19,
+        "endDistanceToRoadMetres": 0
+      }
+    ],
+    "artifact": "artifacts/release-qa/base-fit/burlington-driving-area-checks.json"
+  },
+  "dispatchRouteCoverage": {
+    "checkedLocalDate": "2026-11-02",
+    "device": "mobile browser route-only QA",
+    "fireBases": [
+      {
+        "baseId": "burlington-fire-1",
+        "calls": 8,
+        "reachable": 8,
+        "responseRouteFailures": 0,
+        "transportRouteFailures": 0
+      },
+      {
+        "baseId": "burlington-fire-2",
+        "calls": 8,
+        "reachable": 8,
+        "responseRouteFailures": 0,
+        "transportRouteFailures": 0
+      },
+      {
+        "baseId": "burlington-fire-3",
+        "calls": 8,
+        "reachable": 8,
+        "responseRouteFailures": 0,
+        "transportRouteFailures": 0
+      },
+      {
+        "baseId": "burlington-fire-4",
+        "calls": 8,
+        "reachable": 8,
+        "responseRouteFailures": 0,
+        "transportRouteFailures": 0
+      },
+      {
+        "baseId": "burlington-fire-5",
+        "calls": 6,
+        "reachable": 6,
+        "responseRouteFailures": 0,
+        "transportRouteFailures": 0
+      },
+      {
+        "baseId": "burlington-fire-6",
+        "calls": 8,
+        "reachable": 8,
+        "responseRouteFailures": 0,
+        "transportRouteFailures": 0
+      },
+      {
+        "baseId": "burlington-fire-7",
+        "calls": 8,
+        "reachable": 8,
+        "responseRouteFailures": 0,
+        "transportRouteFailures": 0
+      },
+      {
+        "baseId": "burlington-fire-8",
+        "calls": 8,
+        "reachable": 8,
+        "responseRouteFailures": 0,
+        "transportRouteFailures": 0
+      }
+    ],
+    "emsBases": [
+      {
+        "baseId": "burlington-ems-3",
+        "calls": 6,
+        "reachable": 6,
+        "responseRouteFailures": 0,
+        "transportRouteFailures": 0
+      },
+      {
+        "baseId": "burlington-ems-4",
+        "calls": 6,
+        "reachable": 6,
+        "responseRouteFailures": 0,
+        "transportRouteFailures": 0
+      },
+      {
+        "baseId": "burlington-ems-5",
+        "calls": 6,
+        "reachable": 6,
+        "responseRouteFailures": 0,
+        "transportRouteFailures": 0
+      },
+      {
+        "baseId": "burlington-ems-10",
+        "calls": 6,
+        "reachable": 6,
+        "responseRouteFailures": 0,
+        "transportRouteFailures": 0
+      }
+    ],
+    "artifact": "artifacts/release-qa/base-fit-burlington/dispatch-qa/route-coverage.json"
+  }
+}

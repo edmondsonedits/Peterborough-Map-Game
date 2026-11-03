@@ -1,0 +1,701 @@
+{
+  "schemaVersion": 1,
+  "cityId": "brampton",
+  "reviewedLocalDate": "2026-11-02",
+  "assessment": "estimated",
+  "imagery": {
+    "provider": "Esri World Imagery",
+    "tileUrl": "https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}",
+    "capturedLocalDate": "2026-11-02",
+    "capturedAt": "2026-11-03T02:27:52.079Z",
+    "vintage": "not independently provided by the tile response",
+    "method": "Independent Leaflet captures per active base at zoom 19 with Brampton road centerlines overlaid; building, parking, driveway and apron extents estimated against each screenshot scale.",
+    "captureDirectory": "artifacts/release-qa/base-fit-brampton"
+  },
+  "roads": {
+    "file": "cities/brampton/roads.geojson.gz",
+    "source": "OpenStreetMap via Geofabrik Ontario extract",
+    "sourceUrl": "https://download.geofabrik.de/north-america/canada/ontario.html",
+    "sourceTimestamp": "2026-09-27T20:23:36Z",
+    "snapshotBuiltAt": "2026-10-29T04:10:29.164Z",
+    "snapshotSha256": "5f33ea75237f8aa4c31689eb3a722a0ff94db514e78e44c60ff4d97a1a8952bf",
+    "attribution": "© OpenStreetMap contributors",
+    "assessment": "Road/service-drive centerlines were inspected with imagery and used as modeled spawn references. Centerlines do not verify station gates, apparatus entrances, or legal access."
+  },
+  "limits": [
+    "No official station parcel or building footprint was used.",
+    "Imagery-based fit dimensions, rotations and spawn points are estimates, not surveyed measurements.",
+    "No apparatus door, gate, or emergency access route was independently verified.",
+    "Canonical source coordinates and base IDs remain unchanged.",
+    "No road geometry or route constraints were modified."
+  ],
+  "bases": [
+    {
+      "baseId": "brampton-fire-203",
+      "name": "Fire Station 203",
+      "address": "425 CHRYSLER DR, Brampton, ON",
+      "sourcePoint": {
+        "lat": 43.7479915849621,
+        "lng": -79.71232290339097
+      },
+      "drivingArea": {
+        "center": {
+          "lat": 43.7479915849621,
+          "lng": -79.71232290339097
+        },
+        "widthMetres": 120,
+        "lengthMetres": 125,
+        "rotationDegrees": 45,
+        "spawn": {
+          "lat": 43.74799334,
+          "lng": -79.71232615,
+          "headingDegrees": 37
+        }
+      },
+      "assessment": "estimated",
+      "capturePath": "artifacts/release-qa/base-fit-brampton/brampton-fire-203.png",
+      "metresPerPixel": 0.21545085827620117,
+      "imageryObservation": "The imagery shows the response facility, its nearby parking courts and paved service circulation on a broad campus parcel; the fit covers the visible building and immediately associated paved area.",
+      "spawnBasis": "Nearest local OSM road/service-drive centerline projection near the visible paved station access; not a verified apparatus entrance.",
+      "rotationBasis": "Image-estimated alignment of building, parking and access aisle; coarse 45-degree fit, not survey-derived."
+    },
+    {
+      "baseId": "brampton-fire-204",
+      "name": "Fire Station 204",
+      "address": "657 QUEEN ST W, Brampton, ON",
+      "sourcePoint": {
+        "lat": 43.671466667937935,
+        "lng": -79.77523992283122
+      },
+      "drivingArea": {
+        "center": {
+          "lat": 43.671466667937935,
+          "lng": -79.77523992283122
+        },
+        "widthMetres": 70,
+        "lengthMetres": 80,
+        "rotationDegrees": 45,
+        "spawn": {
+          "lat": 43.6715071,
+          "lng": -79.7752249,
+          "headingDegrees": 134
+        }
+      },
+      "assessment": "estimated",
+      "capturePath": "artifacts/release-qa/base-fit-brampton/brampton-fire-204.png",
+      "metresPerPixel": 0.21572611881124237,
+      "imageryObservation": "The compact station building, nearby parking stalls and paved apron sit on a diagonally aligned lot; the fit excludes the neighboring large commercial roof.",
+      "spawnBasis": "Nearest local OSM road/service-drive centerline projection near the visible paved station access; not a verified apparatus entrance.",
+      "rotationBasis": "Image-estimated alignment of building, parking and access aisle; coarse 45-degree fit, not survey-derived."
+    },
+    {
+      "baseId": "brampton-fire-205",
+      "name": "Fire Station 205",
+      "address": "95 SANDALWOOD PKWY E, Brampton, ON",
+      "sourcePoint": {
+        "lat": 43.72260884688878,
+        "lng": -79.79727220632073
+      },
+      "drivingArea": {
+        "center": {
+          "lat": 43.72260884688878,
+          "lng": -79.79727220632073
+        },
+        "widthMetres": 70,
+        "lengthMetres": 80,
+        "rotationDegrees": 45,
+        "spawn": {
+          "lat": 43.72258988,
+          "lng": -79.79729014,
+          "headingDegrees": 305
+        }
+      },
+      "assessment": "estimated",
+      "capturePath": "artifacts/release-qa/base-fit-brampton/brampton-fire-205.png",
+      "metresPerPixel": 0.21554220631276658,
+      "imageryObservation": "The station building and adjacent parking/apron are visible beside the arterial; the rectangle covers the station lot and immediate service circulation.",
+      "spawnBasis": "Nearest local OSM road/service-drive centerline projection near the visible paved station access; not a verified apparatus entrance.",
+      "rotationBasis": "Image-estimated alignment of building, parking and access aisle; coarse 45-degree fit, not survey-derived."
+    },
+    {
+      "baseId": "brampton-fire-206",
+      "name": "Fire Station 206",
+      "address": "7880 HURONTARIO ST, Brampton, ON",
+      "sourcePoint": {
+        "lat": 43.66282257807938,
+        "lng": -79.72959702338052
+      },
+      "drivingArea": {
+        "center": {
+          "lat": 43.66282257807938,
+          "lng": -79.72959702338052
+        },
+        "widthMetres": 90,
+        "lengthMetres": 95,
+        "rotationDegrees": 45,
+        "spawn": {
+          "lat": 43.66278259,
+          "lng": -79.72953794,
+          "headingDegrees": 43
+        }
+      },
+      "assessment": "estimated",
+      "capturePath": "artifacts/release-qa/base-fit-brampton/brampton-fire-206.png",
+      "metresPerPixel": 0.2157571855079264,
+      "imageryObservation": "The station-associated building, nearby stalls and paved approach sit in a dense commercial block; the fit stays within the immediate station site.",
+      "spawnBasis": "Nearest local OSM road/service-drive centerline projection near the visible paved station access; not a verified apparatus entrance.",
+      "rotationBasis": "Image-estimated alignment of building, parking and access aisle; coarse 45-degree fit, not survey-derived."
+    },
+    {
+      "baseId": "brampton-fire-207",
+      "name": "Fire Station 207",
+      "address": "75 VODDEN ST E, Brampton, ON",
+      "sourcePoint": {
+        "lat": 43.696492351443446,
+        "lng": -79.76510997480867
+      },
+      "drivingArea": {
+        "center": {
+          "lat": 43.696492351443446,
+          "lng": -79.76510997480867
+        },
+        "widthMetres": 75,
+        "lengthMetres": 90,
+        "rotationDegrees": 45,
+        "spawn": {
+          "lat": 43.69649554,
+          "lng": -79.76510585,
+          "headingDegrees": 133
+        }
+      },
+      "assessment": "estimated",
+      "capturePath": "artifacts/release-qa/base-fit-brampton/brampton-fire-207.png",
+      "metresPerPixel": 0.21563614498247968,
+      "imageryObservation": "The detached station, adjacent parking and paved entry are visible; the fit excludes the sports field and unrelated recreation ground.",
+      "spawnBasis": "Nearest local OSM road/service-drive centerline projection near the visible paved station access; not a verified apparatus entrance.",
+      "rotationBasis": "Image-estimated alignment of building, parking and access aisle; coarse 45-degree fit, not survey-derived."
+    },
+    {
+      "baseId": "brampton-fire-202",
+      "name": "Fire Station 202",
+      "address": "280 BRAMALEA RD, Brampton, ON",
+      "sourcePoint": {
+        "lat": 43.71412507955182,
+        "lng": -79.70415824075594
+      },
+      "drivingArea": {
+        "center": {
+          "lat": 43.71412507955182,
+          "lng": -79.70415824075594
+        },
+        "widthMetres": 75,
+        "lengthMetres": 85,
+        "rotationDegrees": 45,
+        "spawn": {
+          "lat": 43.714127,
+          "lng": -79.7040755,
+          "headingDegrees": 224
+        }
+      },
+      "assessment": "estimated",
+      "capturePath": "artifacts/release-qa/base-fit-brampton/brampton-fire-202.png",
+      "metresPerPixel": 0.2155727245988787,
+      "imageryObservation": "The station building, nearby parking stalls and paved approach occupy a compact parcel; the fit includes only those visible station grounds.",
+      "spawnBasis": "Nearest local OSM road/service-drive centerline projection near the visible paved station access; not a verified apparatus entrance.",
+      "rotationBasis": "Image-estimated alignment of building, parking and access aisle; coarse 45-degree fit, not survey-derived."
+    },
+    {
+      "baseId": "brampton-fire-208",
+      "name": "Fire Station 208",
+      "address": "120 FERNFOREST DR, Brampton, ON",
+      "sourcePoint": {
+        "lat": 43.73870642044285,
+        "lng": -79.75259990358147
+      },
+      "drivingArea": {
+        "center": {
+          "lat": 43.73870642044285,
+          "lng": -79.75259990358147
+        },
+        "widthMetres": 80,
+        "lengthMetres": 90,
+        "rotationDegrees": 45,
+        "spawn": {
+          "lat": 43.73868468,
+          "lng": -79.75257044,
+          "headingDegrees": 45
+        }
+      },
+      "assessment": "estimated",
+      "capturePath": "artifacts/release-qa/base-fit-brampton/brampton-fire-208.png",
+      "metresPerPixel": 0.21548427904417852,
+      "imageryObservation": "The station building and its nearby parking/apron are visible within a residential and commercial block; the fit is limited to the station lot.",
+      "spawnBasis": "Nearest local OSM road/service-drive centerline projection near the visible paved station access; not a verified apparatus entrance.",
+      "rotationBasis": "Image-estimated alignment of building, parking and access aisle; coarse 45-degree fit, not survey-derived."
+    },
+    {
+      "baseId": "brampton-fire-209",
+      "name": "Fire Station 209",
+      "address": "2691 SANDALWOOD PKWY E, Brampton, ON",
+      "sourcePoint": {
+        "lat": 43.766141166416375,
+        "lng": -79.74093838524422
+      },
+      "drivingArea": {
+        "center": {
+          "lat": 43.766141166416375,
+          "lng": -79.74093838524422
+        },
+        "widthMetres": 90,
+        "lengthMetres": 120,
+        "rotationDegrees": 0,
+        "spawn": {
+          "lat": 43.76647950547916,
+          "lng": -79.74075428597759,
+          "headingDegrees": 96
+        }
+      },
+      "assessment": "estimated",
+      "capturePath": "artifacts/release-qa/base-fit-brampton/brampton-fire-209.png",
+      "metresPerPixel": 0.21538552182065807,
+      "imageryObservation": "The image shows the detached station, paved parking/apron and an approach toward Sandalwood Parkway East. The nearby mapped service segment is isolated from the connected public-road component, so the modeled spawn is placed on the connected Sandalwood Parkway centerline beside the visible access side. This is not a verified driveway, gate or apparatus entrance.",
+      "spawnBasis": "Connected Sandalwood Parkway OSM centerline point adjacent to the visible access side; the isolated mapped service segment is not used as the route origin.",
+      "rotationBasis": "Image-estimated cardinal alignment of the station and approach; not survey-derived."
+    },
+    {
+      "baseId": "brampton-fire-210",
+      "name": "Fire Station 210",
+      "address": "10530 CREDITVIEW RD, Brampton, ON",
+      "sourcePoint": {
+        "lat": 43.68706708396555,
+        "lng": -79.83378270703996
+      },
+      "drivingArea": {
+        "center": {
+          "lat": 43.68706708396555,
+          "lng": -79.83378270703996
+        },
+        "widthMetres": 75,
+        "lengthMetres": 85,
+        "rotationDegrees": 45,
+        "spawn": {
+          "lat": 43.6870829,
+          "lng": -79.83376074,
+          "headingDegrees": 315
+        }
+      },
+      "assessment": "estimated",
+      "capturePath": "artifacts/release-qa/base-fit-brampton/brampton-fire-210.png",
+      "metresPerPixel": 0.21567003726864103,
+      "imageryObservation": "The station building, parking stalls and paved turning/approach area are visible on a compact parcel; surrounding open field and road lanes are excluded.",
+      "spawnBasis": "Nearest local OSM road/service-drive centerline projection near the visible paved station access; not a verified apparatus entrance.",
+      "rotationBasis": "Image-estimated alignment of building, parking and access aisle; coarse 45-degree fit, not survey-derived."
+    },
+    {
+      "baseId": "brampton-fire-213",
+      "name": "Fire Station 213",
+      "address": "4075 EBENEZER RD, Brampton, ON",
+      "sourcePoint": {
+        "lat": 43.76532516350645,
+        "lng": -79.67032917017694
+      },
+      "drivingArea": {
+        "center": {
+          "lat": 43.76532516350645,
+          "lng": -79.67032917017694
+        },
+        "widthMetres": 80,
+        "lengthMetres": 90,
+        "rotationDegrees": 45,
+        "spawn": {
+          "lat": 43.76532506,
+          "lng": -79.67032929,
+          "headingDegrees": 129
+        }
+      },
+      "assessment": "estimated",
+      "capturePath": "artifacts/release-qa/base-fit-brampton/brampton-fire-213.png",
+      "metresPerPixel": 0.21538845809395282,
+      "imageryObservation": "The station building, adjacent stalls and access pavement are bounded within the station parcel; neighboring parking and road areas are excluded.",
+      "spawnBasis": "Nearest local OSM road/service-drive centerline projection near the visible paved station access; not a verified apparatus entrance.",
+      "rotationBasis": "Image-estimated alignment of building, parking and access aisle; coarse 45-degree fit, not survey-derived."
+    },
+    {
+      "baseId": "brampton-fire-212",
+      "name": "Fire Station 212",
+      "address": "8220 MISSISSAUGA RD, Brampton, ON",
+      "sourcePoint": {
+        "lat": 43.631172801479345,
+        "lng": -79.78210887665166
+      },
+      "drivingArea": {
+        "center": {
+          "lat": 43.631172801479345,
+          "lng": -79.78210887665166
+        },
+        "widthMetres": 85,
+        "lengthMetres": 95,
+        "rotationDegrees": 45,
+        "spawn": {
+          "lat": 43.63103955,
+          "lng": -79.78228393,
+          "headingDegrees": 134
+        }
+      },
+      "assessment": "estimated",
+      "capturePath": "artifacts/release-qa/base-fit-brampton/brampton-fire-212.png",
+      "metresPerPixel": 0.2158708977160543,
+      "imageryObservation": "The station and its immediate parking/apron are visible within a mixed industrial block; the fit excludes the adjoining work yards and arterial.",
+      "spawnBasis": "Nearest local OSM road/service-drive centerline projection near the visible paved station access; not a verified apparatus entrance.",
+      "rotationBasis": "Image-estimated alignment of building, parking and access aisle; coarse 45-degree fit, not survey-derived."
+    },
+    {
+      "baseId": "brampton-fire-211",
+      "name": "Fire Station 211",
+      "address": "10775 THE GORE RD, Brampton, ON",
+      "sourcePoint": {
+        "lat": 43.80708551329935,
+        "lng": -79.70959009144681
+      },
+      "drivingArea": {
+        "center": {
+          "lat": 43.80708551329935,
+          "lng": -79.70959009144681
+        },
+        "widthMetres": 75,
+        "lengthMetres": 85,
+        "rotationDegrees": 45,
+        "spawn": {
+          "lat": 43.8070524,
+          "lng": -79.7097442,
+          "headingDegrees": 225
+        }
+      },
+      "assessment": "estimated",
+      "capturePath": "artifacts/release-qa/base-fit-brampton/brampton-fire-211.png",
+      "metresPerPixel": 0.21523804099381355,
+      "imageryObservation": "The rural station building, parking apron and immediate paved approach are visible; surrounding agricultural fields are excluded.",
+      "spawnBasis": "Nearest local OSM road/service-drive centerline projection near the visible paved station access; not a verified apparatus entrance.",
+      "rotationBasis": "Image-estimated alignment of building, parking and access aisle; coarse 45-degree fit, not survey-derived."
+    },
+    {
+      "baseId": "brampton-fire-214",
+      "name": "Fire Station 214",
+      "address": "925 BOVAIRD DR W, Brampton, ON",
+      "sourcePoint": {
+        "lat": 43.6874592299184,
+        "lng": -79.80614315596668
+      },
+      "drivingArea": {
+        "center": {
+          "lat": 43.6874592299184,
+          "lng": -79.80614315596668
+        },
+        "widthMetres": 85,
+        "lengthMetres": 95,
+        "rotationDegrees": 45,
+        "spawn": {
+          "lat": 43.68737934,
+          "lng": -79.80602279,
+          "headingDegrees": 222
+        }
+      },
+      "assessment": "estimated",
+      "capturePath": "artifacts/release-qa/base-fit-brampton/brampton-fire-214.png",
+      "metresPerPixel": 0.2156686285870728,
+      "imageryObservation": "The station building and paved access/parking area are visible beside Bovaird Drive; unrelated buildings and public lanes are excluded.",
+      "spawnBasis": "Nearest local OSM road/service-drive centerline projection near the visible paved station access; not a verified apparatus entrance.",
+      "rotationBasis": "Image-estimated alignment of building, parking and access aisle; coarse 45-degree fit, not survey-derived."
+    },
+    {
+      "baseId": "brampton-fire-201",
+      "name": "Fire Station 201",
+      "address": "27 RUTHERFORD RD S, Brampton, ON",
+      "sourcePoint": {
+        "lat": 43.69932880553068,
+        "lng": -79.7397161081823
+      },
+      "drivingArea": {
+        "center": {
+          "lat": 43.69932880553068,
+          "lng": -79.7397161081823
+        },
+        "widthMetres": 90,
+        "lengthMetres": 100,
+        "rotationDegrees": 45,
+        "spawn": {
+          "lat": 43.69954592,
+          "lng": -79.74007135,
+          "headingDegrees": 220
+        }
+      },
+      "assessment": "estimated",
+      "capturePath": "artifacts/release-qa/base-fit-brampton/brampton-fire-201.png",
+      "metresPerPixel": 0.21562594232843388,
+      "imageryObservation": "The station-associated building, nearby vehicle parking and paved approach are visible on the municipal site; the fit is limited to those grounds.",
+      "spawnBasis": "Nearest local OSM road/service-drive centerline projection near the visible paved station access; not a verified apparatus entrance.",
+      "rotationBasis": "Image-estimated alignment of building, parking and access aisle; coarse 45-degree fit, not survey-derived."
+    },
+    {
+      "baseId": "brampton-ems-fernforest",
+      "name": "Fernforest Paramedic Reporting Station and Administrative Offices",
+      "address": "1600 Bovaird Drive East, Brampton, ON",
+      "sourcePoint": {
+        "lat": 43.737952041919414,
+        "lng": -79.75267271831635
+      },
+      "drivingArea": {
+        "center": {
+          "lat": 43.737952041919414,
+          "lng": -79.75267271831635
+        },
+        "widthMetres": 140,
+        "lengthMetres": 150,
+        "rotationDegrees": 45,
+        "spawn": {
+          "lat": 43.73792429,
+          "lng": -79.75301311,
+          "headingDegrees": 174
+        }
+      },
+      "assessment": "estimated",
+      "capturePath": "artifacts/release-qa/base-fit-brampton/brampton-ems-fernforest.png",
+      "metresPerPixel": 0.21548699200826402,
+      "imageryObservation": "The imagery shows the large paramedic and administrative building, nearby parking courts and internal circulation; the fit excludes the rest of the institutional campus.",
+      "spawnBasis": "Nearest local OSM road/service-drive centerline projection near the visible paved station access; not a verified apparatus entrance.",
+      "rotationBasis": "Image-estimated alignment of building, parking and access aisle; coarse 45-degree fit, not survey-derived."
+    },
+    {
+      "baseId": "brampton-ems-rising-hill",
+      "name": "Rising Hill Paramedic Reporting Station",
+      "address": "25 Rising Hill Ridge, Brampton, ON",
+      "sourcePoint": {
+        "lat": 43.6318163258126,
+        "lng": -79.78311901102185
+      },
+      "drivingArea": {
+        "center": {
+          "lat": 43.6318163258126,
+          "lng": -79.78311901102185
+        },
+        "widthMetres": 110,
+        "lengthMetres": 125,
+        "rotationDegrees": 45,
+        "spawn": {
+          "lat": 43.63176826,
+          "lng": -79.78318456,
+          "headingDegrees": 135
+        }
+      },
+      "assessment": "estimated",
+      "capturePath": "artifacts/release-qa/base-fit-brampton/brampton-ems-rising-hill.png",
+      "metresPerPixel": 0.21586858964133288,
+      "imageryObservation": "The large facility building, parking rows and paved circulation are visible; the fit excludes Bovaird Drive and neighboring parcels.",
+      "spawnBasis": "Nearest local OSM road/service-drive centerline projection near the visible paved station access; not a verified apparatus entrance.",
+      "rotationBasis": "Image-estimated alignment of building, parking and access aisle; coarse 45-degree fit, not survey-derived."
+    },
+    {
+      "baseId": "brampton-ems-bovaird-west",
+      "name": "Bovaird West Satellite Station",
+      "address": "925 Bovaird Drive West, Brampton, ON",
+      "sourcePoint": {
+        "lat": 43.687598117904834,
+        "lng": -79.80640073969738
+      },
+      "drivingArea": {
+        "center": {
+          "lat": 43.687598117904834,
+          "lng": -79.80640073969738
+        },
+        "widthMetres": 85,
+        "lengthMetres": 95,
+        "rotationDegrees": 45,
+        "spawn": {
+          "lat": 43.6875391,
+          "lng": -79.8065763,
+          "headingDegrees": 126
+        }
+      },
+      "assessment": "estimated",
+      "capturePath": "artifacts/release-qa/base-fit-brampton/brampton-ems-bovaird-west.png",
+      "metresPerPixel": 0.21566812647111144,
+      "imageryObservation": "This satellite is at the shared 925 Bovaird site; the fit covers the visible station building, shared parking/apron and immediate access circulation.",
+      "spawnBasis": "Nearest local OSM road/service-drive centerline projection near the visible paved station access; not a verified apparatus entrance.",
+      "rotationBasis": "Image-estimated alignment of building, parking and access aisle; coarse 45-degree fit, not survey-derived."
+    },
+    {
+      "baseId": "brampton-ems-inspire",
+      "name": "Inspire / Bramalea Satellite Station",
+      "address": "11801 Bramalea Road, Brampton, ON",
+      "sourcePoint": {
+        "lat": 43.77101975046737,
+        "lng": -79.77932131322459
+      },
+      "drivingArea": {
+        "center": {
+          "lat": 43.77101975046737,
+          "lng": -79.77932131322459
+        },
+        "widthMetres": 95,
+        "lengthMetres": 105,
+        "rotationDegrees": 45,
+        "spawn": {
+          "lat": 43.77102487,
+          "lng": -79.77931365,
+          "headingDegrees": 317
+        }
+      },
+      "assessment": "estimated",
+      "capturePath": "artifacts/release-qa/base-fit-brampton/brampton-ems-inspire.png",
+      "metresPerPixel": 0.21536795292736396,
+      "imageryObservation": "The satellite building and nearby parking aisles are visible within a larger Bramalea Road campus; the fit is limited to the immediate site.",
+      "spawnBasis": "Nearest local OSM road/service-drive centerline projection near the visible paved station access; not a verified apparatus entrance.",
+      "rotationBasis": "Image-estimated alignment of building, parking and access aisle; coarse 45-degree fit, not survey-derived."
+    },
+    {
+      "baseId": "brampton-ems-exchange",
+      "name": "Exchange Satellite Station",
+      "address": "75 Exchange Drive, Brampton, ON",
+      "sourcePoint": {
+        "lat": 43.75362248089732,
+        "lng": -79.68873839108241
+      },
+      "drivingArea": {
+        "center": {
+          "lat": 43.75362248089732,
+          "lng": -79.68873839108241
+        },
+        "widthMetres": 65,
+        "lengthMetres": 75,
+        "rotationDegrees": 45,
+        "spawn": {
+          "lat": 43.75364527,
+          "lng": -79.68870499,
+          "headingDegrees": 317
+        }
+      },
+      "assessment": "estimated",
+      "capturePath": "artifacts/release-qa/base-fit-brampton/brampton-ems-exchange.png",
+      "metresPerPixel": 0.21543059078792645,
+      "imageryObservation": "The small satellite building, its parking stalls and paved approach are visible within an industrial parcel; the fit excludes the larger adjoining yards.",
+      "spawnBasis": "Nearest local OSM road/service-drive centerline projection near the visible paved station access; not a verified apparatus entrance.",
+      "rotationBasis": "Image-estimated alignment of building, parking and access aisle; coarse 45-degree fit, not survey-derived."
+    },
+    {
+      "baseId": "brampton-ems-sandalwood",
+      "name": "Sandalwood Satellite Station",
+      "address": "91 Sandalwood Parkway East, Brampton, ON",
+      "sourcePoint": {
+        "lat": 43.722282702656294,
+        "lng": -79.79759645167634
+      },
+      "drivingArea": {
+        "center": {
+          "lat": 43.722282702656294,
+          "lng": -79.79759645167634
+        },
+        "widthMetres": 60,
+        "lengthMetres": 70,
+        "rotationDegrees": 45,
+        "spawn": {
+          "lat": 43.7222627,
+          "lng": -79.7975291,
+          "headingDegrees": 328
+        }
+      },
+      "assessment": "estimated",
+      "capturePath": "artifacts/release-qa/base-fit-brampton/brampton-ems-sandalwood.png",
+      "metresPerPixel": 0.21554337794319117,
+      "imageryObservation": "The small satellite building and nearby paved parking/apron are visible on the Sandalwood site; the fit covers the immediate station grounds.",
+      "spawnBasis": "Nearest local OSM road/service-drive centerline projection near the visible paved station access; not a verified apparatus entrance.",
+      "rotationBasis": "Image-estimated alignment of building, parking and access aisle; coarse 45-degree fit, not survey-derived."
+    },
+    {
+      "baseId": "brampton-ems-gore",
+      "name": "The Gore Satellite Station",
+      "address": "10775 The Gore Road, Brampton, ON",
+      "sourcePoint": {
+        "lat": 43.80717304218937,
+        "lng": -79.70968795314221
+      },
+      "drivingArea": {
+        "center": {
+          "lat": 43.80717304218937,
+          "lng": -79.70968795314221
+        },
+        "widthMetres": 75,
+        "lengthMetres": 85,
+        "rotationDegrees": 45,
+        "spawn": {
+          "lat": 43.8070524,
+          "lng": -79.7097442,
+          "headingDegrees": 225
+        }
+      },
+      "assessment": "estimated",
+      "capturePath": "artifacts/release-qa/base-fit-brampton/brampton-ems-gore.png",
+      "metresPerPixel": 0.2152377271211501,
+      "imageryObservation": "This satellite is colocated with the Fire 211 site; the fit covers the visible station building, parking apron and shared access area.",
+      "spawnBasis": "Nearest local OSM road/service-drive centerline projection near the visible paved station access; not a verified apparatus entrance.",
+      "rotationBasis": "Image-estimated alignment of building, parking and access aisle; coarse 45-degree fit, not survey-derived."
+    },
+    {
+      "baseId": "brampton-ems-trueman",
+      "name": "Trueman / Lynch Satellite Station",
+      "address": "55 Trueman Street, Brampton, ON",
+      "sourcePoint": {
+        "lat": 43.690506418119206,
+        "lng": -79.7490070717782
+      },
+      "drivingArea": {
+        "center": {
+          "lat": 43.690506418119206,
+          "lng": -79.7490070717782
+        },
+        "widthMetres": 75,
+        "lengthMetres": 90,
+        "rotationDegrees": 0,
+        "spawn": {
+          "lat": 43.69065527,
+          "lng": -79.7488454,
+          "headingDegrees": 128
+        }
+      },
+      "assessment": "estimated",
+      "capturePath": "artifacts/release-qa/base-fit-brampton/brampton-ems-trueman.png",
+      "metresPerPixel": 0.21565767290817528,
+      "imageryObservation": "The small paramedic building, adjacent parking and paved access road are visible; the fit excludes the nearby rail corridor and larger parking field.",
+      "spawnBasis": "Nearest local OSM road/service-drive centerline projection near the visible paved station access; not a verified apparatus entrance.",
+      "rotationBasis": "Image-estimated cardinal alignment of the station and approach; not survey-derived."
+    },
+    {
+      "baseId": "brampton-ems-victoria",
+      "name": "Victoria Satellite Station",
+      "address": "40 Victoria Crescent, Brampton, ON",
+      "sourcePoint": {
+        "lat": 43.7049850026963,
+        "lng": -79.69455390221162
+      },
+      "drivingArea": {
+        "center": {
+          "lat": 43.7049850026963,
+          "lng": -79.69455390221162
+        },
+        "widthMetres": 80,
+        "lengthMetres": 90,
+        "rotationDegrees": 45,
+        "spawn": {
+          "lat": 43.7050655,
+          "lng": -79.69445162,
+          "headingDegrees": 133
+        }
+      },
+      "assessment": "estimated",
+      "capturePath": "artifacts/release-qa/base-fit-brampton/brampton-ems-victoria.png",
+      "metresPerPixel": 0.21560559964754059,
+      "imageryObservation": "The small satellite building, nearby parking and internal paved circulation are visible within a larger institutional parcel; the fit excludes unrelated campus space.",
+      "spawnBasis": "Nearest local OSM road/service-drive centerline projection near the visible paved station access; not a verified apparatus entrance.",
+      "rotationBasis": "Image-estimated alignment of building, parking and access aisle; coarse 45-degree fit, not survey-derived."
+    }
+  ]
+}

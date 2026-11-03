@@ -1,0 +1,740 @@
+{
+  "schemaVersion": 1,
+  "cityId": "kitchener",
+  "reviewedLocalDate": "2026-11-02",
+  "assessment": "estimated",
+  "imagery": {
+    "provider": "Esri World Imagery",
+    "tileUrl": "https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}",
+    "capturedLocalDate": "2026-11-02",
+    "zoom": 19,
+    "vintage": "not supplied by tile response",
+    "method": "Independent Leaflet captures centered at each canonical base coordinate; measured image scale is approximately 0.2165 m/pixel; building, apron, parking and access extents estimated from imagery.",
+    "captureDirectory": "artifacts/release-qa/base-fit-kitchener/"
+  },
+  "roads": {
+    "file": "cities/kitchener/roads.geojson.gz",
+    "source": "OpenStreetMap via Geofabrik Ontario extract",
+    "sourceUrl": "https://download.geofabrik.de/north-america/canada/ontario.html",
+    "sourceTimestamp": "2026-09-27T20:23:36Z",
+    "snapshotBuiltAt": "2026-10-29T04:12:54.232Z",
+    "attribution": "© OpenStreetMap contributors"
+  },
+  "limits": [
+    "No official parcel or building-footprint polygons were used.",
+    "Dimensions and spawn points are image/road-geometry estimates, not surveyed measurements.",
+    "Imagery does not independently verify apparatus doors, gates, access controls or current pavement.",
+    "Canonical station source coordinates remain on every base record.",
+    "The collision QA exercises the runtime road-collision transition from each modeled spawn to the nearest mapped drivable road point; it does not validate a sustained vehicle drive or a verified apparatus entrance."
+  ],
+  "bases": [
+    {
+      "baseId": "kitchener-fire-1",
+      "name": "Kitchener Fire Station 1",
+      "address": "270 Strasburg Road, Kitchener, ON",
+      "sourcePoint": {
+        "lat": 43.4235988,
+        "lng": -80.4893146
+      },
+      "drivingArea": {
+        "center": {
+          "lat": 43.4235988,
+          "lng": -80.4893146
+        },
+        "widthMetres": 115,
+        "lengthMetres": 130,
+        "rotationDegrees": 34,
+        "spawn": {
+          "lat": 43.42387924,
+          "lng": -80.48886934,
+          "headingDegrees": 77
+        },
+        "spawnOffsetFromCanonicalMetres": {
+          "east": 36,
+          "north": 31
+        }
+      },
+      "assessment": "estimated",
+      "observation": "Estimated from Esri imagery: Station 1 building, adjacent parking/apron, and the east-side internal service aisle leading to Strasburg Road. Spawn lies on the mapped internal service way connected to Strasburg; apparatus door and exact exit throat are not independently verified."
+    },
+    {
+      "baseId": "kitchener-fire-2",
+      "name": "Kitchener Fire Station 2",
+      "address": "187 Lancaster Street West, Kitchener, ON",
+      "sourcePoint": {
+        "lat": 43.4651369,
+        "lng": -80.4847053
+      },
+      "drivingArea": {
+        "center": {
+          "lat": 43.46522736,
+          "lng": -80.48480425
+        },
+        "widthMetres": 95,
+        "lengthMetres": 100,
+        "rotationDegrees": 0,
+        "spawn": {
+          "lat": 43.46517309,
+          "lng": -80.48485372,
+          "headingDegrees": 280
+        },
+        "spawnOffsetFromCanonicalMetres": {
+          "east": -12,
+          "north": 4
+        }
+      },
+      "assessment": "estimated",
+      "observation": "Estimated from Esri imagery: Station 2 building, west-side apron/parking, and the visible access drive to Englewood Place. The canonical source point is about 11.4 m from a separate nearby service segment that is disconnected in the road graph. Spawn is placed on the other mapped internal service way (way/144125227), which connects through the visible drive to Englewood Place. Canonical coordinates above are retained; no route fallback or entrance verification is claimed."
+    },
+    {
+      "baseId": "kitchener-fire-3",
+      "name": "Kitchener Fire Station 3",
+      "address": "1035 Ottawa Street North, Kitchener, ON",
+      "sourcePoint": {
+        "lat": 43.4509726,
+        "lng": -80.4431864
+      },
+      "drivingArea": {
+        "center": {
+          "lat": 43.45093641,
+          "lng": -80.4431864
+        },
+        "widthMetres": 95,
+        "lengthMetres": 115,
+        "rotationDegrees": 15,
+        "spawn": {
+          "lat": 43.45100879,
+          "lng": -80.4431864,
+          "headingDegrees": 335
+        },
+        "spawnOffsetFromCanonicalMetres": {
+          "east": 0,
+          "north": 4
+        }
+      },
+      "assessment": "estimated",
+      "observation": "Estimated from Esri imagery: Station 3 building, its front apron and nearby service aisle connected to Ottawa Street North. Spawn lies on a mapped internal service way that joins the public road graph; exact bay/driveway is not independently verified."
+    },
+    {
+      "baseId": "kitchener-fire-4",
+      "name": "Kitchener Fire Station 4",
+      "address": "25 Fairway Road North, Kitchener, ON",
+      "sourcePoint": {
+        "lat": 43.428855,
+        "lng": -80.4313966
+      },
+      "drivingArea": {
+        "center": {
+          "lat": 43.42876454,
+          "lng": -80.43145844
+        },
+        "widthMetres": 95,
+        "lengthMetres": 115,
+        "rotationDegrees": 15,
+        "spawn": {
+          "lat": 43.428855,
+          "lng": -80.43164397,
+          "headingDegrees": 310
+        },
+        "spawnOffsetFromCanonicalMetres": {
+          "east": -20,
+          "north": 0
+        }
+      },
+      "assessment": "estimated",
+      "observation": "Estimated from Esri imagery: Station 4 building, immediate parking/apron and the west-side internal drive to Fairway Road North. The broader neighboring commercial parcel is excluded as far as visible site edges allow; exact gate is not independently verified."
+    },
+    {
+      "baseId": "kitchener-fire-5",
+      "name": "Kitchener Fire Station 5",
+      "address": "1700 Queens Boulevard, Kitchener, ON",
+      "sourcePoint": {
+        "lat": 43.4274902,
+        "lng": -80.5279944
+      },
+      "drivingArea": {
+        "center": {
+          "lat": 43.4273545,
+          "lng": -80.5279944
+        },
+        "widthMetres": 80,
+        "lengthMetres": 105,
+        "rotationDegrees": 18,
+        "spawn": {
+          "lat": 43.42736355,
+          "lng": -80.52798203,
+          "headingDegrees": 150
+        },
+        "spawnOffsetFromCanonicalMetres": {
+          "east": 1,
+          "north": -14
+        }
+      },
+      "assessment": "estimated",
+      "observation": "Estimated from Esri imagery: Station 5 building, its paved apron/circular approach and the service aisle connecting to Queen’s Boulevard. Spawn is on the mapped internal service way; no apparatus bay door or controlled entrance is claimed verified."
+    },
+    {
+      "baseId": "kitchener-fire-6",
+      "name": "Kitchener Fire Station 6",
+      "address": "149 Pioneer Drive, Kitchener, ON",
+      "sourcePoint": {
+        "lat": 43.393269,
+        "lng": -80.4371055
+      },
+      "drivingArea": {
+        "center": {
+          "lat": 43.393269,
+          "lng": -80.43714261
+        },
+        "widthMetres": 80,
+        "lengthMetres": 85,
+        "rotationDegrees": 12,
+        "spawn": {
+          "lat": 43.39355849,
+          "lng": -80.43721682,
+          "headingDegrees": 270
+        },
+        "spawnOffsetFromCanonicalMetres": {
+          "east": -9,
+          "north": 32
+        }
+      },
+      "assessment": "estimated",
+      "observation": "Estimated from Esri imagery: Station 6 structure and its immediate paved apron/parking, including the mapped north-side connection to Pioneer Drive. Spawn is on the connected public/internal frontage; exact station gate is not independently verified."
+    },
+    {
+      "baseId": "kitchener-fire-7",
+      "name": "Kitchener Fire Station 7",
+      "address": "1440 Huron Road, Kitchener, ON",
+      "sourcePoint": {
+        "lat": 43.3814033,
+        "lng": -80.4912843
+      },
+      "drivingArea": {
+        "center": {
+          "lat": 43.3814033,
+          "lng": -80.4912843
+        },
+        "widthMetres": 90,
+        "lengthMetres": 110,
+        "rotationDegrees": 0,
+        "spawn": {
+          "lat": 43.38149376,
+          "lng": -80.49139562,
+          "headingDegrees": 340
+        },
+        "spawnOffsetFromCanonicalMetres": {
+          "east": -9,
+          "north": 10
+        }
+      },
+      "assessment": "estimated",
+      "observation": "Estimated from Esri imagery: Station 7 building, parking apron and the mapped northbound service approach to Huron Road. The area excludes the adjacent recreation field; exact entrance is not independently verified."
+    },
+    {
+      "baseId": "kitchener-ems-doon",
+      "name": "Kitchener Paramedic Base doon",
+      "address": "299 Doon Valley Drive, Kitchener, ON",
+      "sourcePoint": {
+        "lat": 43.3914968,
+        "lng": -80.4042642
+      },
+      "drivingArea": {
+        "center": {
+          "lat": 43.3914968,
+          "lng": -80.4042642
+        },
+        "widthMetres": 120,
+        "lengthMetres": 130,
+        "rotationDegrees": 10,
+        "spawn": {
+          "lat": 43.39171392,
+          "lng": -80.40410341,
+          "headingDegrees": 154
+        },
+        "spawnOffsetFromCanonicalMetres": {
+          "east": 13,
+          "north": 24
+        }
+      },
+      "assessment": "estimated",
+      "observation": "Estimated from Esri imagery: Doon paramedic building, immediate apron and the internal service aisle that reaches Doon Valley Drive. Campus contains other facilities and shared circulation; no EMS-only parcel or door is claimed."
+    },
+    {
+      "baseId": "kitchener-ems-ottawa",
+      "name": "Kitchener Paramedic Base ottawa",
+      "address": "1035 Ottawa Street North, Kitchener, ON",
+      "sourcePoint": {
+        "lat": 43.4508147,
+        "lng": -80.4428319
+      },
+      "drivingArea": {
+        "center": {
+          "lat": 43.4508147,
+          "lng": -80.4428319
+        },
+        "widthMetres": 80,
+        "lengthMetres": 90,
+        "rotationDegrees": 15,
+        "spawn": {
+          "lat": 43.45074233,
+          "lng": -80.44265874,
+          "headingDegrees": 240
+        },
+        "spawnOffsetFromCanonicalMetres": {
+          "east": 14,
+          "north": -8
+        }
+      },
+      "assessment": "estimated",
+      "observation": "Estimated from Esri imagery: Ottawa Street paramedic base building and the adjacent service aisle leading into the campus road network. Nearby Fire Station 3 occupies the same campus; the individual apron boundary is approximate."
+    },
+    {
+      "baseId": "kitchener-ems-queens",
+      "name": "Kitchener Paramedic Base queens",
+      "address": "1700 Queens Boulevard, Kitchener, ON",
+      "sourcePoint": {
+        "lat": 43.4279728,
+        "lng": -80.5280883
+      },
+      "drivingArea": {
+        "center": {
+          "lat": 43.4279728,
+          "lng": -80.52796462
+        },
+        "widthMetres": 100,
+        "lengthMetres": 110,
+        "rotationDegrees": 15,
+        "spawn": {
+          "lat": 43.42815373,
+          "lng": -80.52764304,
+          "headingDegrees": 154
+        },
+        "spawnOffsetFromCanonicalMetres": {
+          "east": 36,
+          "north": 20
+        }
+      },
+      "assessment": "estimated",
+      "observation": "Estimated from Esri imagery: Queens Boulevard paramedic building, its immediate parking/circular apron and connected internal service lane. The EMS and Fire Station 5 sites share campus circulation; no EMS-only parcel boundary is claimed."
+    }
+  ],
+  "fire2GraphDiagnosis": {
+    "baseId": "kitchener-fire-2",
+    "canonicalCoordinate": {
+      "lat": 43.4651369,
+      "lng": -80.4847053
+    },
+    "nearestUnconnectedFeature": {
+      "id": "way/144125228",
+      "highway": "service",
+      "name": null,
+      "distanceFromCanonicalMetres": 11.4
+    },
+    "selectedConnectedServiceFeature": {
+      "id": "way/144125227",
+      "highway": "service",
+      "name": null,
+      "spawnDistanceMetres": 0.49
+    },
+    "spawnOffsetFromCanonicalMetres": {
+      "west": 12,
+      "north": 4
+    },
+    "connectedRoutePath": [
+      "way/144125227",
+      "way/32307175"
+    ],
+    "namedRoadReached": "Englewood Place",
+    "method": "Selected the visible west/north apron service lane that has an exact-node connection to the public road graph. The nearer east-side service segment remains in the road pack but is not used as the response origin. No graph fallback or source-coordinate rewrite."
+  },
+  "roadNetworkChecks": {
+    "method": "Nearest road centerline and connected feature path from each modeled spawn against the packaged Kitchener OSM graph using shared exact vertices.",
+    "results": [
+      {
+        "baseId": "kitchener-fire-1",
+        "nearest": {
+          "featureId": "way/463565120",
+          "highway": "service",
+          "distanceMetres": 0.19
+        },
+        "path": [
+          "way/463565120",
+          "way/468738926"
+        ],
+        "namedRoadReached": "Strasburg Road"
+      },
+      {
+        "baseId": "kitchener-fire-2",
+        "nearest": {
+          "featureId": "way/144125227",
+          "highway": "service",
+          "distanceMetres": 0.49
+        },
+        "path": [
+          "way/144125227",
+          "way/32307175"
+        ],
+        "namedRoadReached": "Englewood Place"
+      },
+      {
+        "baseId": "kitchener-fire-3",
+        "nearest": {
+          "featureId": "way/903656343",
+          "highway": "service",
+          "distanceMetres": 0.21
+        },
+        "path": [
+          "way/903656343",
+          "way/1408708110"
+        ],
+        "namedRoadReached": "Ottawa Street North"
+      },
+      {
+        "baseId": "kitchener-fire-4",
+        "nearest": {
+          "featureId": "way/144104983",
+          "highway": "service",
+          "distanceMetres": 0.43
+        },
+        "path": [
+          "way/144104983",
+          "way/1356852821"
+        ],
+        "namedRoadReached": "Fairway Road North"
+      },
+      {
+        "baseId": "kitchener-fire-5",
+        "nearest": {
+          "featureId": "way/1379001160",
+          "highway": "service",
+          "distanceMetres": 0.31
+        },
+        "path": [
+          "way/1379001160",
+          "way/468456470"
+        ],
+        "namedRoadReached": "Queen’s Boulevard"
+      },
+      {
+        "baseId": "kitchener-fire-6",
+        "nearest": {
+          "featureId": "way/1376775989",
+          "highway": "service",
+          "distanceMetres": 0.37
+        },
+        "path": [
+          "way/1376775989",
+          "way/144176645"
+        ],
+        "namedRoadReached": "Pioneer Drive"
+      },
+      {
+        "baseId": "kitchener-fire-7",
+        "nearest": {
+          "featureId": "way/1376775990",
+          "highway": "service",
+          "distanceMetres": 0.01
+        },
+        "path": [
+          "way/1376775990",
+          "way/26201240"
+        ],
+        "namedRoadReached": "Huron Road"
+      },
+      {
+        "baseId": "kitchener-ems-doon",
+        "nearest": {
+          "featureId": "way/35531162",
+          "highway": "service",
+          "distanceMetres": 0.01
+        },
+        "path": [
+          "way/35531162",
+          "way/37926149"
+        ],
+        "namedRoadReached": "Doon Valley Drive"
+      },
+      {
+        "baseId": "kitchener-ems-ottawa",
+        "nearest": {
+          "featureId": "way/1011002313",
+          "highway": "service",
+          "distanceMetres": 0.3
+        },
+        "path": [
+          "way/1011002313",
+          "way/144110631",
+          "way/1033382459"
+        ],
+        "namedRoadReached": "River Road East"
+      },
+      {
+        "baseId": "kitchener-ems-queens",
+        "nearest": {
+          "featureId": "way/199148809",
+          "highway": "service",
+          "distanceMetres": 0.02
+        },
+        "path": [
+          "way/199148809",
+          "way/198707964",
+          "way/935223665",
+          "way/43250547",
+          "way/468736245"
+        ],
+        "namedRoadReached": "Queen’s Boulevard"
+      }
+    ]
+  },
+  "runtimeCollisionChecks": {
+    "checkedLocalDate": "2026-11-02",
+    "runtimeVersion": "1.6.17",
+    "roadState": "ready",
+    "activeBaseCount": 10,
+    "method": "Called PTBO_ROAD_COLLISION.beginStationExit at each spawn, advanced toward the nearest road projection in 1.5 m steps with resolveMovement, and required an unblocked path ending on a drivable point within 2.5 m.",
+    "results": [
+      {
+        "baseId": "kitchener-fire-1",
+        "spawnInside": true,
+        "areaRoadAccess": true,
+        "spawnInitiallyDrivable": true,
+        "nearestRoad": {
+          "name": "Unnamed road",
+          "highway": "service",
+          "distanceMetres": 0.19
+        },
+        "exitStarted": true,
+        "exitCompleted": true,
+        "blockedMoves": 0,
+        "movementSteps": 1,
+        "endDistanceToRoadMetres": 0
+      },
+      {
+        "baseId": "kitchener-fire-2",
+        "spawnInside": true,
+        "areaRoadAccess": true,
+        "spawnInitiallyDrivable": true,
+        "nearestRoad": {
+          "name": "Unnamed road",
+          "highway": "service",
+          "distanceMetres": 0.49
+        },
+        "exitStarted": true,
+        "exitCompleted": true,
+        "blockedMoves": 0,
+        "movementSteps": 1,
+        "endDistanceToRoadMetres": 0
+      },
+      {
+        "baseId": "kitchener-fire-3",
+        "spawnInside": true,
+        "areaRoadAccess": true,
+        "spawnInitiallyDrivable": true,
+        "nearestRoad": {
+          "name": "Unnamed road",
+          "highway": "service",
+          "distanceMetres": 0.21
+        },
+        "exitStarted": true,
+        "exitCompleted": true,
+        "blockedMoves": 0,
+        "movementSteps": 1,
+        "endDistanceToRoadMetres": 0
+      },
+      {
+        "baseId": "kitchener-fire-4",
+        "spawnInside": true,
+        "areaRoadAccess": true,
+        "spawnInitiallyDrivable": true,
+        "nearestRoad": {
+          "name": "Unnamed road",
+          "highway": "service",
+          "distanceMetres": 0.43
+        },
+        "exitStarted": true,
+        "exitCompleted": true,
+        "blockedMoves": 0,
+        "movementSteps": 1,
+        "endDistanceToRoadMetres": 0
+      },
+      {
+        "baseId": "kitchener-fire-5",
+        "spawnInside": true,
+        "areaRoadAccess": true,
+        "spawnInitiallyDrivable": true,
+        "nearestRoad": {
+          "name": "Unnamed road",
+          "highway": "service",
+          "distanceMetres": 0.31
+        },
+        "exitStarted": true,
+        "exitCompleted": true,
+        "blockedMoves": 0,
+        "movementSteps": 1,
+        "endDistanceToRoadMetres": 0
+      },
+      {
+        "baseId": "kitchener-fire-6",
+        "spawnInside": true,
+        "areaRoadAccess": true,
+        "spawnInitiallyDrivable": true,
+        "nearestRoad": {
+          "name": "Unnamed road",
+          "highway": "service",
+          "distanceMetres": 0.37
+        },
+        "exitStarted": true,
+        "exitCompleted": true,
+        "blockedMoves": 0,
+        "movementSteps": 1,
+        "endDistanceToRoadMetres": 0
+      },
+      {
+        "baseId": "kitchener-fire-7",
+        "spawnInside": true,
+        "areaRoadAccess": true,
+        "spawnInitiallyDrivable": true,
+        "nearestRoad": {
+          "name": "Unnamed road",
+          "highway": "service",
+          "distanceMetres": 0.01
+        },
+        "exitStarted": true,
+        "exitCompleted": true,
+        "blockedMoves": 0,
+        "movementSteps": 1,
+        "endDistanceToRoadMetres": 0
+      },
+      {
+        "baseId": "kitchener-ems-doon",
+        "spawnInside": true,
+        "areaRoadAccess": true,
+        "spawnInitiallyDrivable": true,
+        "nearestRoad": {
+          "name": "Unnamed road",
+          "highway": "service",
+          "distanceMetres": 0.01
+        },
+        "exitStarted": true,
+        "exitCompleted": true,
+        "blockedMoves": 0,
+        "movementSteps": 1,
+        "endDistanceToRoadMetres": 0
+      },
+      {
+        "baseId": "kitchener-ems-ottawa",
+        "spawnInside": true,
+        "areaRoadAccess": true,
+        "spawnInitiallyDrivable": true,
+        "nearestRoad": {
+          "name": "Unnamed road",
+          "highway": "service",
+          "distanceMetres": 0.3
+        },
+        "exitStarted": true,
+        "exitCompleted": true,
+        "blockedMoves": 0,
+        "movementSteps": 1,
+        "endDistanceToRoadMetres": 0
+      },
+      {
+        "baseId": "kitchener-ems-queens",
+        "spawnInside": true,
+        "areaRoadAccess": true,
+        "spawnInitiallyDrivable": true,
+        "nearestRoad": {
+          "name": "Unnamed road",
+          "highway": "service",
+          "distanceMetres": 0.02
+        },
+        "exitStarted": true,
+        "exitCompleted": true,
+        "blockedMoves": 0,
+        "movementSteps": 1,
+        "endDistanceToRoadMetres": 0
+      }
+    ],
+    "artifact": "artifacts/release-qa/base-fit/kitchener-driving-area-checks.json"
+  },
+  "dispatchRouteCoverage": {
+    "checkedLocalDate": "2026-11-02",
+    "device": "mobile browser route-only QA",
+    "fireBases": [
+      {
+        "baseId": "kitchener-fire-1",
+        "calls": 8,
+        "reachable": 8,
+        "responseRouteFailures": 0,
+        "transportRouteFailures": 0
+      },
+      {
+        "baseId": "kitchener-fire-2",
+        "calls": 8,
+        "reachable": 8,
+        "responseRouteFailures": 0,
+        "transportRouteFailures": 0
+      },
+      {
+        "baseId": "kitchener-fire-3",
+        "calls": 8,
+        "reachable": 8,
+        "responseRouteFailures": 0,
+        "transportRouteFailures": 0
+      },
+      {
+        "baseId": "kitchener-fire-4",
+        "calls": 8,
+        "reachable": 8,
+        "responseRouteFailures": 0,
+        "transportRouteFailures": 0
+      },
+      {
+        "baseId": "kitchener-fire-5",
+        "calls": 8,
+        "reachable": 8,
+        "responseRouteFailures": 0,
+        "transportRouteFailures": 0
+      },
+      {
+        "baseId": "kitchener-fire-6",
+        "calls": 8,
+        "reachable": 8,
+        "responseRouteFailures": 0,
+        "transportRouteFailures": 0
+      },
+      {
+        "baseId": "kitchener-fire-7",
+        "calls": 8,
+        "reachable": 8,
+        "responseRouteFailures": 0,
+        "transportRouteFailures": 0
+      }
+    ],
+    "emsBases": [
+      {
+        "baseId": "kitchener-ems-doon",
+        "calls": 6,
+        "reachable": 6,
+        "responseRouteFailures": 0,
+        "transportRouteFailures": 0
+      },
+      {
+        "baseId": "kitchener-ems-ottawa",
+        "calls": 6,
+        "reachable": 6,
+        "responseRouteFailures": 0,
+        "transportRouteFailures": 0
+      },
+      {
+        "baseId": "kitchener-ems-queens",
+        "calls": 6,
+        "reachable": 6,
+        "responseRouteFailures": 0,
+        "transportRouteFailures": 0
+      }
+    ],
+    "fire2ResponseFailures": 0,
+    "artifact": "artifacts/release-qa/base-fit-kitchener/dispatch-qa/route-coverage.json"
+  }
+}

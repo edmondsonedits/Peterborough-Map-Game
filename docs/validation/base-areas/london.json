@@ -1,0 +1,759 @@
+{
+  "schemaVersion": 1,
+  "cityId": "london",
+  "reviewedLocalDate": "2026-11-02",
+  "assessment": "estimated",
+  "imagery": {
+    "provider": "Esri World Imagery",
+    "tileUrl": "https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}",
+    "capturedLocalDate": "2026-11-02",
+    "vintage": "not independently provided by the tile response",
+    "method": "Independent Leaflet captures centered at zoom 19; visible station building, parking, apron and access extents estimated from screenshots at recorded scale."
+  },
+  "roads": {
+    "file": "cities/london/roads.geojson.gz",
+    "source": "OpenStreetMap via Geofabrik Ontario extract",
+    "sourceTimestamp": "2026-09-27T20:23:36Z",
+    "snapshotBuiltAt": "2026-10-29T04:20:50.277Z",
+    "packagedSha256": "4d6b837b852071aa58319d7fd7ddcbfd2d026620f12b6a453b89521c763723ac",
+    "sourceSha256": "ebb50b39682d2381ad3c1d21e005b48cec3397e15da0d72c5d76c7d20d8dd249",
+    "sourceUrl": "https://download.geofabrik.de/north-america/canada/ontario.html",
+    "attribution": "© OpenStreetMap contributors",
+    "assessment": "Mapped road/service-drive centerlines were inspected with imagery as plausibility evidence. A modeled spawn is snapped to a packaged road centerline; this does not verify station gates, apparatus entrances, or access permissions."
+  },
+  "limits": [
+    "No official station parcel or building footprint was used.",
+    "Image-estimated fit dimensions, centers and modeled spawn points are not surveyed measurements.",
+    "No apparatus door, gate, driveway right-of-way, or emergency access route was independently verified.",
+    "Original source coordinates and base IDs are preserved.",
+    "For Fire Station 13, nearby mapped service roads did not provide response routes; the modeled spawn uses the connected Fanshawe Park Road East centerline, not a verified station driveway."
+  ],
+  "bases": [
+    {
+      "baseId": "london-fire-1",
+      "name": "Fire Headquarters Station #1",
+      "address": "400 Horton St E, London, Ontario",
+      "sourcePoint": {
+        "lat": 42.98193272492747,
+        "lng": -81.23798246175798
+      },
+      "drivingArea": {
+        "center": {
+          "lat": 42.98191476,
+          "lng": -81.23798246
+        },
+        "widthMetres": 120,
+        "lengthMetres": 110,
+        "rotationDegrees": 0,
+        "spawn": {
+          "lat": 42.9816928,
+          "lng": -81.2380049,
+          "headingDegrees": 78
+        },
+        "roadSnap": {
+          "roadName": null,
+          "highway": "service",
+          "distanceFromSourceMetres": 26.8
+        }
+      },
+      "assessment": "estimated",
+      "imageryCapture": "artifacts/release-qa/base-fit-london/london-fire-1.png",
+      "metresPerPixel": 0.2182,
+      "imageryObservation": "Image-estimated site fit for the visible Fire Headquarters Station #1 building, adjacent on-site parking and circulation/apron. The canonical source coordinate above is retained. Modeled spawn follows the nearest plausible mapped service centerline (service); it is a simulation start point, not a confirmed vehicle entrance.",
+      "rotationBasis": "Kept axis-aligned to local street/grid for a coarse rectangle; not survey-derived."
+    },
+    {
+      "baseId": "london-fire-2",
+      "name": "Fire Station #2",
+      "address": "1101 Florence St, London, Ontario",
+      "sourcePoint": {
+        "lat": 42.99063191164649,
+        "lng": -81.21172359144863
+      },
+      "drivingArea": {
+        "center": {
+          "lat": 42.99063191,
+          "lng": -81.21182184
+        },
+        "widthMetres": 110,
+        "lengthMetres": 110,
+        "rotationDegrees": 0,
+        "spawn": {
+          "lat": 42.9910736,
+          "lng": -81.2115379,
+          "headingDegrees": 161
+        },
+        "roadSnap": {
+          "roadName": null,
+          "highway": "service",
+          "distanceFromSourceMetres": 51.4
+        }
+      },
+      "assessment": "estimated",
+      "imageryCapture": "artifacts/release-qa/base-fit-london/london-fire-2.png",
+      "metresPerPixel": 0.2182,
+      "imageryObservation": "Image-estimated site fit for the visible Fire Station #2 building, adjacent on-site parking and circulation/apron. The canonical source coordinate above is retained. Modeled spawn follows the nearest plausible mapped service centerline (service); it is a simulation start point, not a confirmed vehicle entrance.",
+      "rotationBasis": "Kept axis-aligned to local street/grid for a coarse rectangle; not survey-derived."
+    },
+    {
+      "baseId": "london-fire-3",
+      "name": "Fire Station #3",
+      "address": "550 Commissioners Rd W, London, Ontario",
+      "sourcePoint": {
+        "lat": 42.95361871377826,
+        "lng": -81.29179800405096
+      },
+      "drivingArea": {
+        "center": {
+          "lat": 42.95352888,
+          "lng": -81.29155253
+        },
+        "widthMetres": 110,
+        "lengthMetres": 130,
+        "rotationDegrees": 0,
+        "spawn": {
+          "lat": 42.95362154,
+          "lng": -81.2917819,
+          "headingDegrees": 346
+        },
+        "roadSnap": {
+          "roadName": null,
+          "highway": "service",
+          "distanceFromSourceMetres": 1.3
+        }
+      },
+      "assessment": "estimated",
+      "imageryCapture": "artifacts/release-qa/base-fit-london/london-fire-3.png",
+      "metresPerPixel": 0.2183,
+      "imageryObservation": "Image-estimated site fit for the visible Fire Station #3 building, adjacent on-site parking and circulation/apron. The canonical source coordinate above is retained. Modeled spawn follows the nearest plausible mapped service centerline (service); it is a simulation start point, not a confirmed vehicle entrance.",
+      "rotationBasis": "Kept axis-aligned to local street/grid for a coarse rectangle; not survey-derived."
+    },
+    {
+      "baseId": "london-fire-4",
+      "name": "Fire Station #4",
+      "address": "807 Colborne St, London, Ontario",
+      "sourcePoint": {
+        "lat": 42.99939391897508,
+        "lng": -81.24674897348606
+      },
+      "drivingArea": {
+        "center": {
+          "lat": 42.99930409,
+          "lng": -81.24674897
+        },
+        "widthMetres": 60,
+        "lengthMetres": 65,
+        "rotationDegrees": 0,
+        "spawn": {
+          "lat": 42.9996239,
+          "lng": -81.24686649,
+          "headingDegrees": 70
+        },
+        "roadSnap": {
+          "roadName": "Saint James Street",
+          "highway": "residential",
+          "distanceFromSourceMetres": 27.3
+        }
+      },
+      "assessment": "estimated",
+      "imageryCapture": "artifacts/release-qa/base-fit-london/london-fire-4.png",
+      "metresPerPixel": 0.2181,
+      "imageryObservation": "Image-estimated site fit for the visible Fire Station #4 building, adjacent on-site parking and circulation/apron. The canonical source coordinate above is retained. Modeled spawn follows the nearest plausible mapped Saint James Street centerline (residential); it is a simulation start point, not a confirmed vehicle entrance.",
+      "rotationBasis": "Kept axis-aligned to local street/grid for a coarse rectangle; not survey-derived."
+    },
+    {
+      "baseId": "london-fire-5",
+      "name": "Fire Station #5",
+      "address": "751 Deveron Cres, London, Ontario",
+      "sourcePoint": {
+        "lat": 42.96271311811693,
+        "lng": -81.19572637199573
+      },
+      "drivingArea": {
+        "center": {
+          "lat": 42.96262329,
+          "lng": -81.19578775
+        },
+        "widthMetres": 105,
+        "lengthMetres": 115,
+        "rotationDegrees": 0,
+        "spawn": {
+          "lat": 42.9627331,
+          "lng": -81.19551,
+          "headingDegrees": 266
+        },
+        "roadSnap": {
+          "roadName": null,
+          "highway": "service",
+          "distanceFromSourceMetres": 17.8
+        }
+      },
+      "assessment": "estimated",
+      "imageryCapture": "artifacts/release-qa/base-fit-london/london-fire-5.png",
+      "metresPerPixel": 0.2183,
+      "imageryObservation": "Image-estimated site fit for the visible Fire Station #5 building, adjacent on-site parking and circulation/apron. The canonical source coordinate above is retained. Modeled spawn follows the nearest plausible mapped service centerline (service); it is a simulation start point, not a confirmed vehicle entrance.",
+      "rotationBasis": "Kept axis-aligned to local street/grid for a coarse rectangle; not survey-derived."
+    },
+    {
+      "baseId": "london-fire-6",
+      "name": "Fire Station #6",
+      "address": "580 Oxford St W, London, Ontario",
+      "sourcePoint": {
+        "lat": 42.9829263494502,
+        "lng": -81.29360601108979
+      },
+      "drivingArea": {
+        "center": {
+          "lat": 42.9827916,
+          "lng": -81.29348322
+        },
+        "widthMetres": 130,
+        "lengthMetres": 130,
+        "rotationDegrees": 0,
+        "spawn": {
+          "lat": 42.9830041,
+          "lng": -81.2936629,
+          "headingDegrees": 158
+        },
+        "roadSnap": {
+          "roadName": null,
+          "highway": "service",
+          "distanceFromSourceMetres": 9.8
+        }
+      },
+      "assessment": "estimated",
+      "imageryCapture": "artifacts/release-qa/base-fit-london/london-fire-6.png",
+      "metresPerPixel": 0.2182,
+      "imageryObservation": "Image-estimated site fit for the visible Fire Station #6 building, adjacent on-site parking and circulation/apron. The canonical source coordinate above is retained. Modeled spawn follows the nearest plausible mapped service centerline (service); it is a simulation start point, not a confirmed vehicle entrance.",
+      "rotationBasis": "Kept axis-aligned to local street/grid for a coarse rectangle; not survey-derived."
+    },
+    {
+      "baseId": "london-fire-7",
+      "name": "Fire Station #7",
+      "address": "1295 Webster St, London, Ontario",
+      "sourcePoint": {
+        "lat": 43.02213364317955,
+        "lng": -81.21164371782419
+      },
+      "drivingArea": {
+        "center": {
+          "lat": 43.02204381,
+          "lng": -81.21164372
+        },
+        "widthMetres": 95,
+        "lengthMetres": 110,
+        "rotationDegrees": 0,
+        "spawn": {
+          "lat": 43.02219077,
+          "lng": -81.2117132,
+          "headingDegrees": 228
+        },
+        "roadSnap": {
+          "roadName": null,
+          "highway": "service",
+          "distanceFromSourceMetres": 8.5
+        }
+      },
+      "assessment": "estimated",
+      "imageryCapture": "artifacts/release-qa/base-fit-london/london-fire-7.png",
+      "metresPerPixel": 0.218,
+      "imageryObservation": "Image-estimated site fit for the visible Fire Station #7 building, adjacent on-site parking and circulation/apron. The canonical source coordinate above is retained. Modeled spawn follows the nearest plausible mapped service centerline (service); it is a simulation start point, not a confirmed vehicle entrance.",
+      "rotationBasis": "Kept axis-aligned to local street/grid for a coarse rectangle; not survey-derived."
+    },
+    {
+      "baseId": "london-fire-8",
+      "name": "Fire Station #8",
+      "address": "1565 Western Rd, London, Ontario",
+      "sourcePoint": {
+        "lat": 43.0187391510784,
+        "lng": -81.27910515308866
+      },
+      "drivingArea": {
+        "center": {
+          "lat": 43.01861339,
+          "lng": -81.27900686
+        },
+        "widthMetres": 90,
+        "lengthMetres": 105,
+        "rotationDegrees": 0,
+        "spawn": {
+          "lat": 43.0188173,
+          "lng": -81.2790039,
+          "headingDegrees": 247
+        },
+        "roadSnap": {
+          "roadName": null,
+          "highway": "service",
+          "distanceFromSourceMetres": 12
+        }
+      },
+      "assessment": "estimated",
+      "imageryCapture": "artifacts/release-qa/base-fit-london/london-fire-8.png",
+      "metresPerPixel": 0.2181,
+      "imageryObservation": "Image-estimated site fit for the visible Fire Station #8 building, adjacent on-site parking and circulation/apron. The canonical source coordinate above is retained. Modeled spawn follows the nearest plausible mapped service centerline (service); it is a simulation start point, not a confirmed vehicle entrance.",
+      "rotationBasis": "Kept axis-aligned to local street/grid for a coarse rectangle; not survey-derived."
+    },
+    {
+      "baseId": "london-fire-9",
+      "name": "Fire Station #9",
+      "address": "746 Wellington Rd, London, Ontario",
+      "sourcePoint": {
+        "lat": 42.94659649833671,
+        "lng": -81.22669180935533
+      },
+      "drivingArea": {
+        "center": {
+          "lat": 42.9465965,
+          "lng": -81.22663045
+        },
+        "widthMetres": 130,
+        "lengthMetres": 145,
+        "rotationDegrees": 0,
+        "spawn": {
+          "lat": 42.9465385,
+          "lng": -81.2267571,
+          "headingDegrees": 72
+        },
+        "roadSnap": {
+          "roadName": null,
+          "highway": "service",
+          "distanceFromSourceMetres": 8.4
+        }
+      },
+      "assessment": "estimated",
+      "imageryCapture": "artifacts/release-qa/base-fit-london/london-fire-9.png",
+      "metresPerPixel": 0.2183,
+      "imageryObservation": "Image-estimated site fit for the visible Fire Station #9 building, adjacent on-site parking and circulation/apron. The canonical source coordinate above is retained. Modeled spawn follows the nearest plausible mapped service centerline (service); it is a simulation start point, not a confirmed vehicle entrance.",
+      "rotationBasis": "Kept axis-aligned to local street/grid for a coarse rectangle; not survey-derived."
+    },
+    {
+      "baseId": "london-fire-10",
+      "name": "Fire Station #10",
+      "address": "2125 Trafalgar St, London, Ontario",
+      "sourcePoint": {
+        "lat": 42.995934529741184,
+        "lng": -81.15509532444595
+      },
+      "drivingArea": {
+        "center": {
+          "lat": 42.9958447,
+          "lng": -81.15499707
+        },
+        "widthMetres": 100,
+        "lengthMetres": 120,
+        "rotationDegrees": 0,
+        "spawn": {
+          "lat": 42.9961576,
+          "lng": -81.1550767,
+          "headingDegrees": 158
+        },
+        "roadSnap": {
+          "roadName": null,
+          "highway": "service",
+          "distanceFromSourceMetres": 24.9
+        }
+      },
+      "assessment": "estimated",
+      "imageryCapture": "artifacts/release-qa/base-fit-london/london-fire-10.png",
+      "metresPerPixel": 0.2181,
+      "imageryObservation": "Image-estimated site fit for the visible Fire Station #10 building, adjacent on-site parking and circulation/apron. The canonical source coordinate above is retained. Modeled spawn follows the nearest plausible mapped service centerline (service); it is a simulation start point, not a confirmed vehicle entrance.",
+      "rotationBasis": "Kept axis-aligned to local street/grid for a coarse rectangle; not survey-derived."
+    },
+    {
+      "baseId": "london-fire-11",
+      "name": "Fire Station #11",
+      "address": "3970 Savoy St, London, Ontario",
+      "sourcePoint": {
+        "lat": 42.91880983260498,
+        "lng": -81.28535889393298
+      },
+      "drivingArea": {
+        "center": {
+          "lat": 42.91879187,
+          "lng": -81.28535889
+        },
+        "widthMetres": 100,
+        "lengthMetres": 100,
+        "rotationDegrees": 0,
+        "spawn": {
+          "lat": 42.9188458,
+          "lng": -81.2852736,
+          "headingDegrees": 224
+        },
+        "roadSnap": {
+          "roadName": null,
+          "highway": "service",
+          "distanceFromSourceMetres": 8
+        }
+      },
+      "assessment": "estimated",
+      "imageryCapture": "artifacts/release-qa/base-fit-london/london-fire-11.png",
+      "metresPerPixel": 0.2184,
+      "imageryObservation": "Image-estimated site fit for the visible Fire Station #11 building, adjacent on-site parking and circulation/apron. The canonical source coordinate above is retained. Modeled spawn follows the nearest plausible mapped service centerline (service); it is a simulation start point, not a confirmed vehicle entrance.",
+      "rotationBasis": "Kept axis-aligned to local street/grid for a coarse rectangle; not survey-derived."
+    },
+    {
+      "baseId": "london-fire-12",
+      "name": "Fire Station #12",
+      "address": "275 Boler Rd, London, Ontario",
+      "sourcePoint": {
+        "lat": 42.96102500533335,
+        "lng": -81.33355280939001
+      },
+      "drivingArea": {
+        "center": {
+          "lat": 42.96102501,
+          "lng": -81.33355281
+        },
+        "widthMetres": 125,
+        "lengthMetres": 135,
+        "rotationDegrees": 0,
+        "spawn": {
+          "lat": 42.9612854,
+          "lng": -81.3334971,
+          "headingDegrees": 120
+        },
+        "roadSnap": {
+          "roadName": null,
+          "highway": "service",
+          "distanceFromSourceMetres": 29.3
+        }
+      },
+      "assessment": "estimated",
+      "imageryCapture": "artifacts/release-qa/base-fit-london/london-fire-12.png",
+      "metresPerPixel": 0.2183,
+      "imageryObservation": "Image-estimated site fit for the visible Fire Station #12 building, adjacent on-site parking and circulation/apron. The canonical source coordinate above is retained. Modeled spawn follows the nearest plausible mapped service centerline (service); it is a simulation start point, not a confirmed vehicle entrance.",
+      "rotationBasis": "Kept axis-aligned to local street/grid for a coarse rectangle; not survey-derived."
+    },
+    {
+      "baseId": "london-fire-13",
+      "name": "Fire Station #13",
+      "address": "790 Fanshawe Park Rd E, London, Ontario",
+      "sourcePoint": {
+        "lat": 43.037341385787165,
+        "lng": -81.24767969091283
+      },
+      "drivingArea": {
+        "center": {
+          "lat": 43.03723359,
+          "lng": -81.24761824
+        },
+        "widthMetres": 110,
+        "lengthMetres": 130,
+        "rotationDegrees": 0,
+        "spawn": {
+          "lat": 43.03705817,
+          "lng": -81.24752526,
+          "headingDegrees": 68
+        },
+        "roadSnap": {
+          "roadName": "Fanshawe Park Road East",
+          "highway": "secondary",
+          "distanceFromSourceMetres": 33.9
+        }
+      },
+      "assessment": "estimated",
+      "imageryCapture": "artifacts/release-qa/base-fit-london/london-fire-13.png",
+      "metresPerPixel": 0.218,
+      "imageryObservation": "Image-estimated site fit for the visible Fire Station #13 building, adjacent on-site parking and circulation/apron. The canonical source coordinate above is retained. Modeled spawn follows the nearest plausible mapped Fanshawe Park Road East centerline (secondary); it is a simulation start point, not a confirmed vehicle entrance.",
+      "rotationBasis": "Kept axis-aligned to local street/grid for a coarse rectangle; not survey-derived."
+    },
+    {
+      "baseId": "london-fire-14",
+      "name": "Fire Station #14",
+      "address": "2225 Hyde Park Rd, London, Ontario",
+      "sourcePoint": {
+        "lat": 43.01530187082112,
+        "lng": -81.3395824703774
+      },
+      "drivingArea": {
+        "center": {
+          "lat": 43.01521204,
+          "lng": -81.33958247
+        },
+        "widthMetres": 110,
+        "lengthMetres": 125,
+        "rotationDegrees": 0,
+        "spawn": {
+          "lat": 43.0151343,
+          "lng": -81.3396916,
+          "headingDegrees": 339
+        },
+        "roadSnap": {
+          "roadName": null,
+          "highway": "service",
+          "distanceFromSourceMetres": 20.7
+        }
+      },
+      "assessment": "estimated",
+      "imageryCapture": "artifacts/release-qa/base-fit-london/london-fire-14.png",
+      "metresPerPixel": 0.2181,
+      "imageryObservation": "Image-estimated site fit for the visible Fire Station #14 building, adjacent on-site parking and circulation/apron. The canonical source coordinate above is retained. Modeled spawn follows the nearest plausible mapped service centerline (service); it is a simulation start point, not a confirmed vehicle entrance.",
+      "rotationBasis": "Kept axis-aligned to local street/grid for a coarse rectangle; not survey-derived."
+    },
+    {
+      "baseId": "london-fire-15",
+      "name": "Fire Station #15",
+      "address": "2340 Old Victoria Road, London, Ontario",
+      "sourcePoint": {
+        "lat": 42.96281265743707,
+        "lng": -81.13888478965036
+      },
+      "drivingArea": {
+        "center": {
+          "lat": 42.96277672,
+          "lng": -81.13876204
+        },
+        "widthMetres": 130,
+        "lengthMetres": 145,
+        "rotationDegrees": 0,
+        "spawn": {
+          "lat": 42.96267238,
+          "lng": -81.13939072,
+          "headingDegrees": 159
+        },
+        "roadSnap": {
+          "roadName": "Old Victoria Road",
+          "highway": "tertiary",
+          "distanceFromSourceMetres": 44.1
+        }
+      },
+      "assessment": "estimated",
+      "imageryCapture": "artifacts/release-qa/base-fit-london/london-fire-15.png",
+      "metresPerPixel": 0.2183,
+      "imageryObservation": "Image-estimated site fit for the visible Fire Station #15 building, adjacent on-site parking and circulation/apron. The canonical source coordinate above is retained. Modeled spawn follows the nearest plausible mapped Old Victoria Road centerline (tertiary); it is a simulation start point, not a confirmed vehicle entrance.",
+      "rotationBasis": "Kept axis-aligned to local street/grid for a coarse rectangle; not survey-derived."
+    },
+    {
+      "baseId": "london-ems-adelaide",
+      "name": "Adelaide Street Base",
+      "address": "1035 Adelaide Street South, London, Ontario",
+      "sourcePoint": {
+        "lat": 42.930019307501794,
+        "lng": -81.20739372707382
+      },
+      "drivingArea": {
+        "center": {
+          "lat": 42.92994744,
+          "lng": -81.20727104
+        },
+        "widthMetres": 150,
+        "lengthMetres": 150,
+        "rotationDegrees": 0,
+        "spawn": {
+          "lat": 42.92984026,
+          "lng": -81.207712,
+          "headingDegrees": 142
+        },
+        "roadSnap": {
+          "roadName": null,
+          "highway": "service",
+          "distanceFromSourceMetres": 32.7
+        }
+      },
+      "assessment": "estimated",
+      "imageryCapture": "artifacts/release-qa/base-fit-london/london-ems-adelaide.png",
+      "metresPerPixel": 0.2184,
+      "imageryObservation": "Image-estimated site fit for the visible Adelaide Street Base building, adjacent on-site parking and circulation/apron. The canonical source coordinate above is retained. Modeled spawn follows the nearest plausible mapped service centerline (service); it is a simulation start point, not a confirmed vehicle entrance.",
+      "rotationBasis": "Kept axis-aligned to local street/grid for a coarse rectangle; not survey-derived."
+    },
+    {
+      "baseId": "london-ems-byron",
+      "name": "Byron Base",
+      "address": "3100 Colonel Talbot Rd, London, Ontario",
+      "sourcePoint": {
+        "lat": 42.93393385543777,
+        "lng": -81.31615250233793
+      },
+      "drivingArea": {
+        "center": {
+          "lat": 42.9340686,
+          "lng": -81.31602981
+        },
+        "widthMetres": 120,
+        "lengthMetres": 110,
+        "rotationDegrees": 0,
+        "spawn": {
+          "lat": 42.9338383,
+          "lng": -81.3162986,
+          "headingDegrees": 78
+        },
+        "roadSnap": {
+          "roadName": null,
+          "highway": "service",
+          "distanceFromSourceMetres": 16
+        }
+      },
+      "assessment": "estimated",
+      "imageryCapture": "artifacts/release-qa/base-fit-london/london-ems-byron.png",
+      "metresPerPixel": 0.2184,
+      "imageryObservation": "Image-estimated site fit for the visible Byron Base building, adjacent on-site parking and circulation/apron. The canonical source coordinate above is retained. Modeled spawn follows the nearest plausible mapped service centerline (service); it is a simulation start point, not a confirmed vehicle entrance.",
+      "rotationBasis": "Kept axis-aligned to local street/grid for a coarse rectangle; not survey-derived."
+    },
+    {
+      "baseId": "london-ems-horizon",
+      "name": "Horizon Base",
+      "address": "745 Horizon Drive, London, Ontario",
+      "sourcePoint": {
+        "lat": 42.98925559779322,
+        "lng": -81.29327762660202
+      },
+      "drivingArea": {
+        "center": {
+          "lat": 42.98919272,
+          "lng": -81.29333903
+        },
+        "widthMetres": 95,
+        "lengthMetres": 110,
+        "rotationDegrees": 0,
+        "spawn": {
+          "lat": 42.98925183,
+          "lng": -81.29329071,
+          "headingDegrees": 339
+        },
+        "roadSnap": {
+          "roadName": null,
+          "highway": "service",
+          "distanceFromSourceMetres": 1.1
+        }
+      },
+      "assessment": "estimated",
+      "imageryCapture": "artifacts/release-qa/base-fit-london/london-ems-horizon.png",
+      "metresPerPixel": 0.2182,
+      "imageryObservation": "Image-estimated site fit for the visible Horizon Base building, adjacent on-site parking and circulation/apron. The canonical source coordinate above is retained. Modeled spawn follows the nearest plausible mapped service centerline (service); it is a simulation start point, not a confirmed vehicle entrance.",
+      "rotationBasis": "Kept axis-aligned to local street/grid for a coarse rectangle; not survey-derived."
+    },
+    {
+      "baseId": "london-ems-hyde-park",
+      "name": "Hyde Park Base",
+      "address": "2225 Hyde Park Rd, London, Ontario",
+      "sourcePoint": {
+        "lat": 43.01521374263106,
+        "lng": -81.33994897600437
+      },
+      "drivingArea": {
+        "center": {
+          "lat": 43.01512391,
+          "lng": -81.3399244
+        },
+        "widthMetres": 110,
+        "lengthMetres": 125,
+        "rotationDegrees": 0,
+        "spawn": {
+          "lat": 43.0153864,
+          "lng": -81.34003864,
+          "headingDegrees": 249
+        },
+        "roadSnap": {
+          "roadName": null,
+          "highway": "service",
+          "distanceFromSourceMetres": 20.6
+        }
+      },
+      "assessment": "estimated",
+      "imageryCapture": "artifacts/release-qa/base-fit-london/london-ems-hyde-park.png",
+      "metresPerPixel": 0.2181,
+      "imageryObservation": "Image-estimated site fit for the visible Hyde Park Base building, adjacent on-site parking and circulation/apron. The canonical source coordinate above is retained. Modeled spawn follows the nearest plausible mapped service centerline (service); it is a simulation start point, not a confirmed vehicle entrance.",
+      "rotationBasis": "Kept axis-aligned to local street/grid for a coarse rectangle; not survey-derived."
+    },
+    {
+      "baseId": "london-ems-trafalgar",
+      "name": "Trafalgar Base",
+      "address": "2330 Trafalgar Street, London, Ontario",
+      "sourcePoint": {
+        "lat": 43.000429679618925,
+        "lng": -81.14331359914542
+      },
+      "drivingArea": {
+        "center": {
+          "lat": 43.00042968,
+          "lng": -81.14337501
+        },
+        "widthMetres": 100,
+        "lengthMetres": 120,
+        "rotationDegrees": 0,
+        "spawn": {
+          "lat": 43.00003847,
+          "lng": -81.14310664,
+          "headingDegrees": 69
+        },
+        "roadSnap": {
+          "roadName": "Trafalgar Street",
+          "highway": "secondary",
+          "distanceFromSourceMetres": 46.7
+        }
+      },
+      "assessment": "estimated",
+      "imageryCapture": "artifacts/release-qa/base-fit-london/london-ems-trafalgar.png",
+      "metresPerPixel": 0.2181,
+      "imageryObservation": "Image-estimated site fit for the visible Trafalgar Base building, adjacent on-site parking and circulation/apron. The canonical source coordinate above is retained. Modeled spawn follows the nearest plausible mapped Trafalgar Street centerline (secondary); it is a simulation start point, not a confirmed vehicle entrance.",
+      "rotationBasis": "Kept axis-aligned to local street/grid for a coarse rectangle; not survey-derived."
+    },
+    {
+      "baseId": "london-ems-waterloo",
+      "name": "Waterloo Base",
+      "address": "340 Waterloo Street, London, Ontario",
+      "sourcePoint": {
+        "lat": 42.983691382742855,
+        "lng": -81.24105696840276
+      },
+      "drivingArea": {
+        "center": {
+          "lat": 42.98361952,
+          "lng": -81.24099557
+        },
+        "widthMetres": 110,
+        "lengthMetres": 120,
+        "rotationDegrees": 0,
+        "spawn": {
+          "lat": 42.9837138,
+          "lng": -81.2408483,
+          "headingDegrees": 251
+        },
+        "roadSnap": {
+          "roadName": null,
+          "highway": "service",
+          "distanceFromSourceMetres": 17.2
+        }
+      },
+      "assessment": "estimated",
+      "imageryCapture": "artifacts/release-qa/base-fit-london/london-ems-waterloo.png",
+      "metresPerPixel": 0.2182,
+      "imageryObservation": "Image-estimated site fit for the visible Waterloo Base building, adjacent on-site parking and circulation/apron. The canonical source coordinate above is retained. Modeled spawn follows the nearest plausible mapped service centerline (service); it is a simulation start point, not a confirmed vehicle entrance.",
+      "rotationBasis": "Kept axis-aligned to local street/grid for a coarse rectangle; not survey-derived."
+    },
+    {
+      "baseId": "london-ems-trossacks",
+      "name": "Trossacks Base",
+      "address": "1601 Trossacks Ave, London, Ontario",
+      "sourcePoint": {
+        "lat": 43.04064790120374,
+        "lng": -81.24534098713384
+      },
+      "drivingArea": {
+        "center": {
+          "lat": 43.04062993,
+          "lng": -81.24527953
+        },
+        "widthMetres": 75,
+        "lengthMetres": 90,
+        "rotationDegrees": 0,
+        "spawn": {
+          "lat": 43.04048834,
+          "lng": -81.24534394,
+          "headingDegrees": 91
+        },
+        "roadSnap": {
+          "roadName": "McTaggart Court",
+          "highway": "residential",
+          "distanceFromSourceMetres": 17.8
+        }
+      },
+      "assessment": "estimated",
+      "imageryCapture": "artifacts/release-qa/base-fit-london/london-ems-trossacks.png",
+      "metresPerPixel": 0.218,
+      "imageryObservation": "Image-estimated site fit for the visible Trossacks Base building, adjacent on-site parking and circulation/apron. The canonical source coordinate above is retained. Modeled spawn follows the nearest plausible mapped McTaggart Court centerline (residential); it is a simulation start point, not a confirmed vehicle entrance.",
+      "rotationBasis": "Kept axis-aligned to local street/grid for a coarse rectangle; not survey-derived."
+    }
+  ]
+}
