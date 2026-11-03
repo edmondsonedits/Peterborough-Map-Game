@@ -201,7 +201,11 @@
   });
   menuScrim?.addEventListener('click', closeMenu);
   controlPanel?.addEventListener('click', event => {
+    if (event.target.closest('select')) return;
     if (event.target.closest('.hud-button')) window.setTimeout(closeMenu, 80);
+  });
+  controlPanel?.addEventListener('change', event => {
+    if (event.target.matches('select')) closeMenu();
   });
 
   function syncActionButton(mode, ready, mapMode, flyMode) {
@@ -253,7 +257,7 @@
   syncMode();
 
   window.addEventListener('blur', () => {
-    closeMenu();
+    if (!document.activeElement?.closest('select')) closeMenu();
     resetJoystick();
     [...activeKeys].forEach(code => emitKey(code, false));
   });
