@@ -1,2 +1,5 @@
-/* Demo uses the packaged canonical roster; full dispatch stays data-dependent. */
-(() => {const sourceUrl=new URL(document.currentScript.src,location.href);window.PTBO_PREVIEW_CITY_FACTORY.create({...{"id":"kitchener","name":"Kitchener","map":{"bounds":[[43.35386587967345,-80.57357724212599],[43.50684540815559,-80.37905517795065]],"defaultCenter":[43.4235988,-80.4893146],"defaultZoom":18,"minZoom":7,"maxZoom":19},"canonicalRoster":true,"sources":{}},sourceUrl});})();
+/* Shared Dispatch demo with canonical city data and a sourced hospital site. */
+(() => {
+  const sourceUrl=new URL(document.currentScript.src,location.href);
+  window.PTBO_PREVIEW_CITY_FACTORY.create({...{"id":"kitchener","name":"Kitchener","map":{"bounds":[[43.35386587967345,-80.57357724212599],[43.50684540815559,-80.37905517795065]],"defaultCenter":[43.4235988,-80.4893146],"defaultZoom":18,"minZoom":7,"maxZoom":19},"canonicalRoster":true,"sceneResponseDrills":true,"routeGuidance":true,"sources":{},"hospitalSite":{"id":"kitchener-wrhn-midtown","name":"Waterloo Regional Health Network @ Midtown (formerly Grand River Hospital KW site)","addr":"835 King Street West, Kitchener, ON N2G 4K9","lat":43.45621,"lng":-80.51205,"radius":40,"sourceUrl":"https://www.wrhn.ca/healthcare-services/emergency-departments","coordinateSourceUrl":"https://www.openstreetmap.org/way/140180455","coordinateMethod":"osm-hospital-feature-point; exact primary-source geometry not independently checked","trainingArrivalKind":"sourced-site-point"}},sourceUrl});
+})();

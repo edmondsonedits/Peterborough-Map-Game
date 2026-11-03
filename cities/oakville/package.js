@@ -1,2 +1,5 @@
-/* Demo uses the packaged canonical roster; full dispatch stays data-dependent. */
-(() => {const sourceUrl=new URL(document.currentScript.src,location.href);window.PTBO_PREVIEW_CITY_FACTORY.create({...{"id":"oakville","name":"Oakville","map":{"bounds":[[43.3021701117181,-79.81094940084876],[43.528255347215165,-79.46145258337704]],"defaultCenter":[43.470748970897404,-79.75469654706342],"defaultZoom":18,"minZoom":7,"maxZoom":19},"canonicalRoster":true,"sources":{}},sourceUrl});})();
+/* Shared Dispatch demo with canonical city data and a sourced hospital site. */
+(() => {
+  const sourceUrl=new URL(document.currentScript.src,location.href);
+  window.PTBO_PREVIEW_CITY_FACTORY.create({...{"id":"oakville","name":"Oakville","map":{"bounds":[[43.3021701117181,-79.81094940084876],[43.528255347215165,-79.46145258337704]],"defaultCenter":[43.470748970897404,-79.75469654706342],"defaultZoom":18,"minZoom":7,"maxZoom":19},"canonicalRoster":true,"sceneResponseDrills":true,"routeGuidance":true,"sources":{},"hospitalSite":{"id":"oakville-otmh","name":"Oakville Trafalgar Memorial Hospital","addr":"3001 Hospital Gate, Oakville, ON L6M 0L8","lat":43.45031,"lng":-79.7648,"radius":40,"sourceUrl":"https://www.haltonhealthcare.on.ca/site_Files/Content/pdfs/01_Services/02_Emergency-Department/OTMH/OTMH---Emergency-Department-Directions.pdf","coordinateSourceUrl":"https://www.openstreetmap.org/way/386564895","coordinateMethod":"osm-hospital-feature-point; exact primary-source geometry not independently checked","trainingArrivalKind":"sourced-site-point"}},sourceUrl});
+})();

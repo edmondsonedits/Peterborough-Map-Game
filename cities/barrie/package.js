@@ -1,2 +1,5 @@
-/* Demo uses the packaged canonical roster; full dispatch stays data-dependent. */
-(() => {const sourceUrl=new URL(document.currentScript.src,location.href);window.PTBO_PREVIEW_CITY_FACTORY.create({...{"id":"barrie","name":"Barrie","map":{"bounds":[[44.29368978018843,-79.75851847130781],[44.45002421043758,-79.585910211136]],"defaultCenter":[44.38577426192153,-79.6964919501417],"defaultZoom":18,"minZoom":7,"maxZoom":19},"canonicalRoster":true,"sources":{}},sourceUrl});})();
+/* Shared Dispatch demo with canonical city data and a sourced hospital site. */
+(() => {
+  const sourceUrl=new URL(document.currentScript.src,location.href);
+  window.PTBO_PREVIEW_CITY_FACTORY.create({...{"id":"barrie","name":"Barrie","map":{"bounds":[[44.29368978018843,-79.75851847130781],[44.45002421043758,-79.585910211136]],"defaultCenter":[44.38577426192153,-79.6964919501417],"defaultZoom":18,"minZoom":7,"maxZoom":19},"canonicalRoster":true,"sceneResponseDrills":true,"routeGuidance":true,"sources":{},"hospitalSite":{"id":"barrie-call-01","name":"Royal Victoria Regional Health Centre","addr":"201 Georgian Drive, Barrie, ON L4M 6M2","lat":44.41441634017788,"lng":-79.66118223059493,"radius":40,"sourceUrl":"https://www.rvh.on.ca/areas-of-care/emergency-services/","coordinateSourceUrl":"https://gispublic.barrie.ca/arcgis/rest/services/Public/OperationalLayers_Dynamic/MapServer/12/query?where=OBJECTID%3D10&outFields=%2A&outSR=4326&f=pjson","coordinateMethod":"canonical-official-facility-point","trainingArrivalKind":"sourced-site-point"}},sourceUrl});
+})();

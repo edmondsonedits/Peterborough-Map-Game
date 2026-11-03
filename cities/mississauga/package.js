@@ -1,2 +1,5 @@
-/* Demo uses the packaged canonical roster; full dispatch stays data-dependent. */
-(() => {const sourceUrl=new URL(document.currentScript.src,location.href);window.PTBO_PREVIEW_CITY_FACTORY.create({...{"id":"mississauga","name":"Mississauga","map":{"bounds":[[43.361099429953754,-79.81010111417292],[43.73703438782441,-79.41785747084073]],"defaultCenter":[43.69232288253442,-79.62549081534043],"defaultZoom":18,"minZoom":7,"maxZoom":19},"canonicalRoster":true,"sources":{}},sourceUrl});})();
+/* Shared Dispatch demo with canonical city data and a sourced hospital site. */
+(() => {
+  const sourceUrl=new URL(document.currentScript.src,location.href);
+  window.PTBO_PREVIEW_CITY_FACTORY.create({...{"id":"mississauga","name":"Mississauga","map":{"bounds":[[43.361099429953754,-79.81010111417292],[43.73703438782441,-79.41785747084073]],"defaultCenter":[43.69232288253442,-79.62549081534043],"defaultZoom":18,"minZoom":7,"maxZoom":19},"canonicalRoster":true,"sceneResponseDrills":true,"routeGuidance":true,"sources":{},"hospitalSite":{"id":"mississauga-odhf-ac3b24f6bd6309a1a3db9518940d932f","name":"Trillium Health Partners, Mississauga Hospital","addr":"100 Queensway West, Mississauga, ON L5B 1B8","lat":43.5722475603248,"lng":-79.6096203489638,"radius":40,"sourceUrl":"https://www.trilliumhealthpartners.ca/patientservices/emergency","coordinateSourceUrl":"https://www150.statcan.gc.ca/n1/pub/13-26-0001/2020001/zip/odhf_v2_geojson.zip","coordinateMethod":"canonical-hospital-site-point","trainingArrivalKind":"sourced-site-point"}},sourceUrl});
+})();

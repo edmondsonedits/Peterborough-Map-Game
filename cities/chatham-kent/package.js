@@ -1,2 +1,5 @@
-/* Demo uses the packaged canonical roster; full dispatch stays data-dependent. */
-(() => {const sourceUrl=new URL(document.currentScript.src,location.href);window.PTBO_PREVIEW_CITY_FACTORY.create({...{"id":"chatham-kent","name":"Chatham-Kent","map":{"bounds":[[41.6765674895705,-82.80334914415752],[42.65148318982502,-81.37929928143433]],"defaultCenter":[42.40458100516701,-82.19165049253854],"defaultZoom":18,"minZoom":7,"maxZoom":19},"canonicalRoster":true,"sources":{}},sourceUrl});})();
+/* Shared Dispatch demo with canonical city data and a sourced hospital site. */
+(() => {
+  const sourceUrl=new URL(document.currentScript.src,location.href);
+  window.PTBO_PREVIEW_CITY_FACTORY.create({...{"id":"chatham-kent","name":"Chatham-Kent","map":{"bounds":[[41.6765674895705,-82.80334914415752],[42.65148318982502,-81.37929928143433]],"defaultCenter":[42.40458100516701,-82.19165049253854],"defaultZoom":18,"minZoom":7,"maxZoom":19},"canonicalRoster":true,"sceneResponseDrills":true,"routeGuidance":true,"sources":{},"hospitalSite":{"id":"chatham-kent-ckha-chatham","name":"Chatham-Kent Health Alliance, Chatham Campus","addr":"80 Grand Avenue West, Chatham, ON N7M 5L9","lat":42.40474,"lng":-82.19383,"radius":40,"sourceUrl":"https://www.chatham-kent.ca/livingck/livinginck/healthandwellness/Pages/Hospitals-and-Emergencies.aspx","coordinateSourceUrl":"https://www.openstreetmap.org/way/651356327","coordinateMethod":"osm-hospital-feature-point; exact primary-source geometry not independently checked","trainingArrivalKind":"sourced-site-point"}},sourceUrl});
+})();

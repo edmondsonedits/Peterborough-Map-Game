@@ -1,2 +1,5 @@
-/* Demo uses the packaged canonical roster; full dispatch stays data-dependent. */
-(() => {const sourceUrl=new URL(document.currentScript.src,location.href);window.PTBO_PREVIEW_CITY_FACTORY.create({...{"id":"london","name":"London","map":{"bounds":[[42.82452364815259,-81.3906594566655],[43.07305519722224,-81.10708216489755]],"defaultCenter":[42.98193272492747,-81.23798246175798],"defaultZoom":18,"minZoom":7,"maxZoom":19},"canonicalRoster":true,"sources":{}},sourceUrl});})();
+/* Shared Dispatch demo with canonical city data and a sourced hospital site. */
+(() => {
+  const sourceUrl=new URL(document.currentScript.src,location.href);
+  window.PTBO_PREVIEW_CITY_FACTORY.create({...{"id":"london","name":"London","map":{"bounds":[[42.82452364815259,-81.3906594566655],[43.07305519722224,-81.10708216489755]],"defaultCenter":[42.98193272492747,-81.23798246175798],"defaultZoom":18,"minZoom":7,"maxZoom":19},"canonicalRoster":true,"sceneResponseDrills":true,"routeGuidance":true,"sources":{},"hospitalSite":{"id":"london-call-08","name":"London Health Sciences Centre, University Hospital","addr":"339 Windermere Road, London, ON N6A 5A5","lat":43.012382331917244,"lng":-81.27474898843334,"radius":40,"sourceUrl":"https://www.lhsc.on.ca/emergency-department","coordinateSourceUrl":"https://maps.london.ca/server/rest/services/PointsOfInterest/MapServer/3/query?where=OBJECTID%3D10&outFields=%2A&outSR=4326&f=json","coordinateMethod":"canonical-official-facility-point","trainingArrivalKind":"sourced-site-point"}},sourceUrl});
+})();

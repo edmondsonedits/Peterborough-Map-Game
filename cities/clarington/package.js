@@ -1,2 +1,5 @@
-/* Demo uses the packaged canonical roster; full dispatch stays data-dependent. */
-(() => {const sourceUrl=new URL(document.currentScript.src,location.href);window.PTBO_PREVIEW_CITY_FACTORY.create({...{"id":"clarington","name":"Clarington","map":{"bounds":[[43.628934512235816,-78.8720704544943],[44.098806602887926,-78.32381944306856]],"defaultCenter":[43.91101074419609,-78.77688318358734],"defaultZoom":18,"minZoom":7,"maxZoom":19},"canonicalRoster":true,"sources":{}},sourceUrl});})();
+/* Shared Dispatch demo with canonical city data and a sourced hospital site. */
+(() => {
+  const sourceUrl=new URL(document.currentScript.src,location.href);
+  window.PTBO_PREVIEW_CITY_FACTORY.create({...{"id":"clarington","name":"Clarington","map":{"bounds":[[43.628934512235816,-78.8720704544943],[44.098806602887926,-78.32381944306856]],"defaultCenter":[43.91101074419609,-78.77688318358734],"defaultZoom":18,"minZoom":7,"maxZoom":19},"canonicalRoster":true,"sceneResponseDrills":true,"routeGuidance":true,"sources":{},"hospitalSite":{"id":"clarington-lakeridge-bowmanville","name":"Lakeridge Health Bowmanville Hospital","addr":"47 Liberty Street South, Bowmanville, ON L1C 2N4","lat":43.90927,"lng":-78.67783,"radius":40,"sourceUrl":"https://www.lh.ca/our-services/emergency-and-urgent-care/","coordinateSourceUrl":"https://www.openstreetmap.org/way/681027956","coordinateMethod":"osm-hospital-feature-point; exact primary-source geometry not independently checked","trainingArrivalKind":"sourced-site-point"}},sourceUrl});
+})();

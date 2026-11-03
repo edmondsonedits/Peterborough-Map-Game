@@ -108,10 +108,13 @@ async function mission(page, context, base, city, service, mobile) {
   const frame = await openSimulator(page, base, city, service, mobile);
   await frame.locator('#hud-action-btn').click();
   const start = await frame.evaluate(() => ({phase:mission?.phase,service:mission?.service,base:PTBO_SERVICE.getBase().id,incident:activeIncident?.id,
-    routeBase:activeIncident?.routeBaseId,kind:activeIncident?.locationKind,hospital:mission?.hospital,arrival:activeArrivalPoint,
+    routeBase:activeIncident?.routeBaseId,kind:activeIncident?.locationKind,hospital:mission?.hospital,transport:mission?.transportRequired,arrival:activeArrivalPoint,
     voice:window.buildCityDispatchPhrase?.(activeIncident)}));
   assert.equal(start.phase, 'response'); assert.equal(start.service, service); assert.equal(start.base, start.routeBase);
-  assert.ok(['sourced-address', 'mapped-intersection'].includes(start.kind)); assert.equal(start.hospital, null);
+  assert.ok(['sourced-address', 'mapped-intersection'].includes(start.kind));
+  assert.equal(start.transport,service==='ems');
+  if(service==='ems')assert.ok(start.hospital?.id&&Number.isFinite(start.hospital.lat)&&Number.isFinite(start.hospital.lng));
+  else assert.equal(start.hospital,null);
   const movement = await depart(page, context, frame, mobile);
   let enrouteScreenshot=null;
   if (city==='belleville' && ((!mobile && service==='fire') || (mobile && service==='ems'))) {
@@ -121,11 +124,17 @@ async function mission(page, context, base, city, service, mobile) {
   // Position injection intentionally isolates the arrival state machine from a full road drive.
   await frame.evaluate(() => { simLat=activeArrivalPoint.lat; simLng=activeArrivalPoint.lng; evaluateDistanceToTarget(); });
   await page.waitForTimeout(4300);
+  if(service==='ems'){
+    const transport=await frame.evaluate(()=>({phase:mission?.phase,arrival:activeArrivalPoint}));
+    assert.equal(transport.phase,'transport');assert.ok(Number.isFinite(transport.arrival?.lat)&&Number.isFinite(transport.arrival?.lng));
+    await frame.evaluate(()=>{simLat=activeArrivalPoint.lat;simLng=activeArrivalPoint.lng;evaluateDistanceToTarget();});
+    await page.waitForTimeout(4300);
+  }
   const done = await frame.evaluate(() => ({phase:mission?.phase,total:totalTrackedCalls,history:PTBO_TRAINING_HISTORY?.summary(),
     transport:mission?.transportRequired,hud:document.getElementById('hud-content').innerText}));
-  assert.equal(done.phase, 'complete'); assert.equal(done.total, 1); assert.equal(done.transport, false);
-  assert.equal(done.history?.calls, 1); assert.equal(done.history?.emsTransports, 0);
-  if (service === 'ems') assert.match(done.hud, /Response exercise completed/i);
+  assert.equal(done.phase, 'complete'); assert.equal(done.total, 1); assert.equal(done.transport, service==='ems');
+  assert.equal(done.history?.calls, 1); assert.equal(done.history?.emsTransports, service==='ems'?1:0);
+  if (service === 'ems') assert.match(done.hud, /Patient delivered to .+/i);
   await frame.evaluate(() => { completeAssignment(); executeIncidentArrivalProcedures(); });
   assert.equal(await frame.evaluate(() => totalTrackedCalls), 1, 'completion recorded exactly once');
   await frame.locator('#hud-action-btn').click();

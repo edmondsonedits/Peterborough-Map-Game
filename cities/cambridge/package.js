@@ -1,2 +1,5 @@
-/* Demo uses the packaged canonical roster; full dispatch stays data-dependent. */
-(() => {const sourceUrl=new URL(document.currentScript.src,location.href);window.PTBO_PREVIEW_CITY_FACTORY.create({...{"id":"cambridge","name":"Cambridge","map":{"bounds":[[43.33252048463954,-80.4138008860393],[43.47421461023125,-80.25132343209673]],"defaultCenter":[43.3986282,-80.3057941],"defaultZoom":18,"minZoom":7,"maxZoom":19},"canonicalRoster":true,"sources":{}},sourceUrl});})();
+/* Shared Dispatch demo with canonical city data and a sourced hospital site. */
+(() => {
+  const sourceUrl=new URL(document.currentScript.src,location.href);
+  window.PTBO_PREVIEW_CITY_FACTORY.create({...{"id":"cambridge","name":"Cambridge","map":{"bounds":[[43.33252048463954,-80.4138008860393],[43.47421461023125,-80.25132343209673]],"defaultCenter":[43.3986282,-80.3057941],"defaultZoom":18,"minZoom":7,"maxZoom":19},"canonicalRoster":true,"sceneResponseDrills":true,"routeGuidance":true,"sources":{},"hospitalSite":{"id":"cambridge-call-02","name":"Cambridge Memorial Hospital","addr":"700 Coronation Boulevard, Cambridge, ON N1R 3G2","lat":43.3786714,"lng":-80.3281861,"radius":40,"sourceUrl":"https://www.cmh.org/services/emergency","coordinateSourceUrl":"https://maps.cambridge.ca/arcgispub03/rest/services/OpenData1/MapServer/13/query?objectIds=15200&outFields=%2A&outSR=4326&f=pjson","coordinateMethod":"canonical-official-facility-point","trainingArrivalKind":"sourced-site-point"}},sourceUrl});
+})();

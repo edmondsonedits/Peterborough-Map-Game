@@ -1,36 +1,5 @@
+/* Shared Dispatch demo with canonical city data and a sourced hospital site. */
 (() => {
-  'use strict';
-  const VERSION='1.6.13';
-  const sourceUrl=new URL(document.currentScript?.src || location.href,location.href);
-  const CACHE_VERSION=sourceUrl.searchParams.get('v') || VERSION;
-  const config={
-    sceneResponseDrills:true,id:'oshawa',name:'Oshawa',
-    map:{defaultCenter:[43.8971,-78.8658],defaultHeading:180,defaultZoom:15,minZoom:10,maxZoom:19,bounds:[[43.6009699037119,-78.95857818124192],[44.0474236775095,-78.69666526240337]]},
-    sources:{
-      fire:{type:'static',entries:[
-        {number:1,name:'Fire Station 1',shortName:'Stn 1',address:'199 Adelaide Ave W',lat:43.901134,lng:-78.873094},
-        {number:2,name:'Fire Station 2',shortName:'Stn 2',address:'1111 Simcoe St S',lat:43.873098,lng:-78.842404},
-        {number:3,name:'Fire Station 3',shortName:'Stn 3',address:'50 Beatrice St E',lat:43.926985,lng:-78.873865},
-        {number:4,name:'Fire Station 4',shortName:'Stn 4',address:'50 Harmony Rd N',lat:43.905658,lng:-78.835179},
-        {number:5,name:'Fire Station 5',shortName:'Stn 5',address:'1550 Harmony Rd N',lat:43.945033,lng:-78.852329},
-        {number:6,name:'Fire Station 6',shortName:'Stn 6',address:'2339 Simcoe St N',lat:43.956749,lng:-78.899303}
-      ]},
-      ems:{type:'durham-paramedic',municipality:'OSHAWA',url:'https://maps.durham.ca/arcgis/rest/services/Open_Data/Durham_OpenData/MapServer/9',outFields:'NAME,ADDRESS,TOWN,MUNICIPALITY,POSTAL_CODE',preferFallback:true,fallback:[
-        {number:1,name:'Oshawa North RDPS',shortName:'North RDPS',address:'1260 Wilson Rd N',lat:43.934665,lng:-78.858686},
-        {number:2,name:'Oshawa South RDPS',shortName:'South RDPS',address:'497 Bloor St E',lat:43.884028,lng:-78.837869}
-      ]}
-    }
-  };
-  const start=()=>window.PTBO_PREVIEW_CITY_FACTORY.create({...config,sourceUrl});
-  if(window.PTBO_PREVIEW_CITY_FACTORY?.version===VERSION){start();return;}
-  const factoryUrl=new URL('../preview-package-factory.js?v='+CACHE_VERSION,sourceUrl).href;
-  if(document.readyState==='loading'&&typeof document.write==='function'){
-    // The inserted external script runs after this script returns. Queue its
-    // initializer after it so following parser scripts see the city package.
-    const payload=JSON.stringify({...config,sourceUrl:sourceUrl.href}).replace(/</g,'\\u003c');
-    document.write('<script src="'+factoryUrl.replace(/&/g,'&amp;').replace(/"/g,'&quot;')+'"><'+'/script>'+
-      '<script>window.PTBO_PREVIEW_CITY_FACTORY.create('+payload+');<'+'/script>');
-    return;
-  }
-  const script=document.createElement('script');script.src=factoryUrl;script.onload=start;script.onerror=()=>console.error('Unable to load base-training city package factory.');document.head.appendChild(script);
+  const sourceUrl=new URL(document.currentScript.src,location.href);
+  window.PTBO_PREVIEW_CITY_FACTORY.create({...{"id":"oshawa","name":"Oshawa","map":{"bounds":[[43.6009699037119,-78.95857818124192],[44.0474236775095,-78.69666526240337]],"defaultCenter":[43.8971,-78.8658],"defaultZoom":15,"minZoom":10,"maxZoom":19},"canonicalRoster":true,"sceneResponseDrills":true,"routeGuidance":true,"sources":{},"hospitalSite":{"id":"oshawa-lakeridge-oshawa","name":"Lakeridge Health Oshawa Hospital","addr":"1 Hospital Court, Oshawa, ON L1G 2B9","lat":43.9055,"lng":-78.86921,"radius":40,"sourceUrl":"https://www.lh.ca/our-services/emergency-and-urgent-care/","coordinateSourceUrl":"https://www.openstreetmap.org/way/475350569","coordinateMethod":"osm-hospital-feature-point; exact primary-source geometry not independently checked","trainingArrivalKind":"sourced-site-point"}},sourceUrl});
 })();

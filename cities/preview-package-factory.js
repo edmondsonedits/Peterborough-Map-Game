@@ -234,13 +234,13 @@
     const unavailableHospital=Object.freeze({id:`${config.id}-hospital-unavailable`,main:'Medical',sub:'Hospital Transport',name:'Hospital transport unavailable',addr:'Dispatch calls are not available for this city yet.',lat:config.map.defaultCenter[0],lng:config.map.defaultCenter[1],radius:30,disabled:true});
     const profiles=Object.freeze({fire:Object.freeze({id:'fire',label:'Fire',vehicle:'Fire truck',bases:fireBases}),ems:Object.freeze({id:'ems',label:'EMS',vehicle:'Ambulance',bases:emsBases})});
     const drills=config.sceneResponseDrills===true;
-    const hospital = config.hospitalLocationId ? {} : null;
+    const hospital = (config.hospitalLocationId || config.hospitalSite) ? {} : null;
     const serviceConfig=Object.freeze({profiles,hospital:hospital || (drills?null:unavailableHospital),alarmCategories});
-    const features=Object.freeze({baseTraining:!drills,dispatch:drills,sceneResponseDrills:drills,roadBoundaries:drills,routeGuidance:config.routeGuidance===true,hospitalTransport:Boolean(config.hospitalLocationId)});
+    const features=Object.freeze({baseTraining:!drills,dispatch:drills,sceneResponseDrills:drills,roadBoundaries:drills,routeGuidance:config.routeGuidance===true,hospitalTransport:Boolean(hospital)});
     const roads=Object.freeze({available:drills,center:Object.freeze([...config.map.defaultCenter]),dataUrl:drills?new URL('./roads.geojson.gz',config.sourceUrl).href:null,manifestUrl:drills?new URL('./training-data.json',config.sourceUrl).href:null});
     const dispatch=Object.freeze({available:drills,controlName:`${config.name} Control`,dataVersion:'preview-1',descriptorUrl:new URL('./dispatch-data.js',config.sourceUrl).href});
     const map=Object.freeze({...config.map,defaultCenter:Object.freeze([...config.map.defaultCenter]),bounds:Object.freeze(config.map.bounds.map(pair=>Object.freeze([...pair])))});
-    const cityPackage=Object.freeze({schemaVersion:3,version:VERSION,id:config.id,name:config.name,province:'Ontario',country:'Canada',playable:true,status:drills?'scene-response':'base-training',features,map,roads,dispatch,serviceConfig,sources:Object.freeze({...config.sources})});
+    const cityPackage=Object.freeze({schemaVersion:3,version:VERSION,id:config.id,name:config.name,province:'Ontario',country:'Canada',playable:true,status:drills?(hospital?'dispatch-demo':'scene-response'):'base-training',features,map,roads,dispatch,serviceConfig,sources:Object.freeze({...config.sources})});
 
     window.PTBO_CITY_PACKAGE=cityPackage;window.PTBO_ACTIVE_CITY=cityPackage;window.PTBO_SERVICE_CONFIG=serviceConfig;window.PTBO_STATIONS=fireBases;
     window.getPtboStation=number=>fireBases.find(station=>station.number===Number(number));
@@ -250,14 +250,29 @@
     const ready=(async()=>{
       let fire,ems;
       if (drills || config.canonicalRoster === true) {
-        const response=await fetch(new URL('./geo-data.json',config.sourceUrl).href,{cache:'force-cache'});
+        const sourceUrl=new URL(config.sourceUrl,location.href);
+        const geoDataUrl=new URL('./geo-data.json',sourceUrl);
+        const releaseVersion=sourceUrl.searchParams.get('v') || window.PTBO_BUILD?.version;
+        if(releaseVersion)geoDataUrl.searchParams.set('v',releaseVersion);
+        const response=await fetch(geoDataUrl.href,{cache:'force-cache'});
         if(!response.ok)throw new Error(`${config.name} canonical bases could not load.`);
         const geo=await response.json();
         if(geo?.schemaVersion!==1 || geo.id!==config.id || !Array.isArray(geo.bases) || !Array.isArray(geo.locations))throw new Error(`${config.name} canonical base data is invalid.`);
         if (hospital) {
-          const source = geo.locations.find(row => row.id === config.hospitalLocationId);
-          if (!source || !Number.isFinite(source.lat) || !Number.isFinite(source.lng)) throw new Error(`${config.name} hospital training destination is missing.`);
-          Object.assign(hospital, source, {main:'Medical',sub:'Hospital Transport',sourceCallId:source.id,trainingArrivalKind:'sourced-site-point'});
+          const source = config.hospitalLocationId
+            ? geo.locations.find(row => row.id === config.hospitalLocationId)
+            : config.hospitalSite;
+          const radius = source?.radius ?? 40;
+          const text = value => typeof value === 'string' && value.trim().length > 0;
+          if (!source || !Number.isFinite(source.lat) || Math.abs(source.lat)>85
+            || !Number.isFinite(source.lng) || Math.abs(source.lng)>180
+            || !text(source.id) || !text(source.name) || !text(source.addr)
+            || !Number.isFinite(radius) || radius<10 || radius>200
+            || (!config.hospitalLocationId && !text(source.sourceUrl))) {
+            throw new Error(`${config.name} hospital training destination is missing or invalid.`);
+          }
+          Object.assign(hospital, source, {radius,main:'Medical',sub:'Hospital Transport',
+            ...(config.hospitalLocationId ? {sourceCallId:source.id} : {}),trainingArrivalKind:'sourced-site-point'});
           Object.freeze(hospital);
         }
         window.PTBO_DISPATCH_DATA_VERSION=typeof geo.dispatchDataVersion==='string' && geo.dispatchDataVersion.trim() ? geo.dispatchDataVersion.trim() : 'ontario-geo-1';
@@ -269,7 +284,7 @@
       if(!fire.length||!ems.length)throw new Error(`${config.name} needs at least one Fire and one EMS base.`);
       fireBases.splice(0,fireBases.length,...fire);emsBases.splice(0,emsBases.length,...ems);window.PTBO_STATIONS=fireBases;
       document.documentElement.dataset.fireBaseCount=String(fireBases.length);document.documentElement.dataset.emsBaseCount=String(emsBases.length);
-      window.dispatchEvent(new CustomEvent('ptbo-city-package-data-ready',{detail:{id:config.id,version:VERSION,fireBases:fireBases.length,emsBases:emsBases.length,dispatch:false}}));
+      window.dispatchEvent(new CustomEvent('ptbo-city-package-data-ready',{detail:{id:config.id,version:VERSION,fireBases:fireBases.length,emsBases:emsBases.length,dispatch:drills}}));
       return cityPackage;
     })();
     window.PTBO_CITY_PACKAGE_READY=ready;

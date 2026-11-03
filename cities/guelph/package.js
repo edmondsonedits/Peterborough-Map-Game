@@ -1,2 +1,5 @@
-/* Demo uses the packaged canonical roster; full dispatch stays data-dependent. */
-(() => {const sourceUrl=new URL(document.currentScript.src,location.href);window.PTBO_PREVIEW_CITY_FACTORY.create({...{"id":"guelph","name":"Guelph","map":{"bounds":[[43.47383021580297,-80.32691267333436],[43.594361533143115,-80.15350481534446]],"defaultCenter":[43.5435157,-80.243612],"defaultZoom":18,"minZoom":7,"maxZoom":19},"canonicalRoster":true,"sources":{}},sourceUrl});})();
+/* Shared Dispatch demo with canonical city data and a sourced hospital site. */
+(() => {
+  const sourceUrl=new URL(document.currentScript.src,location.href);
+  window.PTBO_PREVIEW_CITY_FACTORY.create({...{"id":"guelph","name":"Guelph","map":{"bounds":[[43.47383021580297,-80.32691267333436],[43.594361533143115,-80.15350481534446]],"defaultCenter":[43.5435157,-80.243612],"defaultZoom":18,"minZoom":7,"maxZoom":19},"canonicalRoster":true,"sceneResponseDrills":true,"routeGuidance":true,"sources":{},"hospitalSite":{"id":"guelph-call-03","name":"Guelph General Hospital","addr":"115 Delhi Street, Guelph, ON N1E 4J4","lat":43.5560508,"lng":-80.2534481,"radius":40,"sourceUrl":"https://gghorg.ca/patients-visitors/emergency-department/","coordinateSourceUrl":"https://gismaps.guelph.ca/hosting/rest/services/OpenData/OpenData1/FeatureServer/0/query?objectIds=10340&outFields=%2A&outSR=4326&f=pjson","coordinateMethod":"canonical-official-facility-point","trainingArrivalKind":"sourced-site-point"}},sourceUrl});
+})();

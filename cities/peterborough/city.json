@@ -40,6 +40,11 @@
   },
   "features": {
     "geoGuesser": true,
-    "routeMapping": true
+    "routeMapping": true,
+    "baseTraining": false,
+    "dispatch": true,
+    "roadBoundaries": true,
+    "routeGuidance": true,
+    "hospitalTransport": true
   }
 }

@@ -1,2 +1,5 @@
-/* Demo uses the packaged canonical roster; full dispatch stays data-dependent. */
-(() => {const sourceUrl=new URL(document.currentScript.src,location.href);window.PTBO_PREVIEW_CITY_FACTORY.create({...{"id":"brantford","name":"Brantford","map":{"bounds":[[43.094072144874396,-80.3535853481985],[43.20851486570947,-80.18967939749706]],"defaultCenter":[43.14202450140971,-80.25947528700333],"defaultZoom":18,"minZoom":7,"maxZoom":19},"canonicalRoster":true,"sources":{}},sourceUrl});})();
+/* Shared Dispatch demo with canonical city data and a sourced hospital site. */
+(() => {
+  const sourceUrl=new URL(document.currentScript.src,location.href);
+  window.PTBO_PREVIEW_CITY_FACTORY.create({...{"id":"brantford","name":"Brantford","map":{"bounds":[[43.094072144874396,-80.3535853481985],[43.20851486570947,-80.18967939749706]],"defaultCenter":[43.14202450140971,-80.25947528700333],"defaultZoom":18,"minZoom":7,"maxZoom":19},"canonicalRoster":true,"sceneResponseDrills":true,"routeGuidance":true,"sources":{},"hospitalSite":{"id":"brantford-odhf-caea7c5b9a96667cc653ed34a31817ad","name":"Brantford General Hospital","addr":"200 Terrace Hill Street, Brantford, ON N3R 1G9","lat":43.1526097550986,"lng":-80.2758068231958,"radius":40,"sourceUrl":"https://www.bchsys.org/care-services/emergency-department/","coordinateSourceUrl":"https://www150.statcan.gc.ca/n1/pub/13-26-0001/2020001/zip/odhf_v2_geojson.zip","coordinateMethod":"canonical-hospital-site-point","trainingArrivalKind":"sourced-site-point"}},sourceUrl});
+})();

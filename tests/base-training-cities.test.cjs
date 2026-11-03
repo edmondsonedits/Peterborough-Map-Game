@@ -48,8 +48,8 @@ test('existing driving cities launch through the same shared desktop and mobile 
   }
   for(const id of cities){
     const city=c.PTBO_CITIES.find(item=>item.id===id);
-    assert.equal(city.status,'scene-response',id);
-    assert.match(city.note,/scene-response exercises; no hospital transport/,id);
+    assert.equal(city.status,'dispatch-demo',id);
+    assert.match(city.note,/hospital transport/,id);
     assert.equal(city.modes.geo,true,id);assert.equal(city.modes.route,true,id);
   }
 });
@@ -61,23 +61,24 @@ test('base-training routes no longer reference the separate base-training wrappe
   assert.match(registry,/response-simulator\/mobile\//);
 });
 
-test('every base-training city ships a packaged city definition and deliberately empty dispatch descriptor', () => {
+test('every former base-training city ships a packaged city definition and canonical dispatch descriptor', () => {
   for(const id of cities){
     const packageSource=read(`cities/${id}/package.js`);
     const dispatchSource=read(`cities/${id}/dispatch-data.js`);
     assert.match(packageSource,/PTBO_PREVIEW_CITY_FACTORY/,id);
-    assert.match(packageSource,/lat:\d/,`${id} latitude`);
-    assert.match(packageSource,/lng:-\d/,`${id} longitude`);
-    assert.match(dispatchSource,/available:false/,id);
+    assert.match(packageSource,/"lat":\d/,`${id} hospital latitude`);
+    assert.match(packageSource,/"lng":-\d/,`${id} hospital longitude`);
+    assert.match(dispatchSource,/available\s*:\s*true/,id);
+    assert.match(dispatchSource,/geo-data\.json/,`${id} canonical dispatch data`);
   }
 });
 
 test('all six base-training city packages start without live network services', async () => {
   for(const id of cities){
     let fetchCount=0;
-    const c=browserContext({fetch:async url=>{fetchCount+=1;assert.equal(String(url),`https://example.com/cities/${id}/geo-data.json`);return {ok:true,json:async()=>JSON.parse(read(`cities/${id}/geo-data.json`))};}});
+    const c=browserContext({fetch:async url=>{fetchCount+=1;assert.equal(String(url),`https://example.com/cities/${id}/geo-data.json?v=${canonicalBuildVersion}`);return {ok:true,json:async()=>JSON.parse(read(`cities/${id}/geo-data.json`))};}});
     vm.runInContext(read('cities/preview-package-factory.js'),c);
-    c.document.currentScript.src=`https://example.com/cities/${id}/package.js`;
+    c.document.currentScript.src=`https://example.com/cities/${id}/package.js?v=${canonicalBuildVersion}`;
     vm.runInContext(read(`cities/${id}/package.js`),c);
     await Promise.race([
       c.PTBO_CITY_PACKAGE_READY,
@@ -218,7 +219,7 @@ test('compact settings accepts the base-training Incident Types label instead of
 test('city selector keeps the shared mobile and desktop wrapper URLs', () => {
   const source=read('shared/city-selector.js');
   assert.match(source,/const VERSION = '\d+\.\d+\.\d+'/);
-  assert.match(source,/Peterborough includes hospital transport/);
+  assert.match(source,/All listed cities support Fire and EMS response demos with hospital transport and route review/);
   assert.match(source,/url\.searchParams\.set\('surface', mobile \? 'mobile' : 'desktop'\)/);
   assert.match(source,/url\.searchParams\.set\('fresh', String\(Date\.now\(\)\)\)/);
 });
@@ -378,13 +379,14 @@ test('inner simulator loads Leaflet locally without a blocking CDN dependency', 
   }
 });
 
-test('every additional city demo boots from its own canonical roster without external services',async()=>{
+test('every additional dispatch demo boots from its own canonical roster without external services',async()=>{
  const registry=browserContext();vm.runInContext(read('cities/city-registry.js'),registry);
  for(const city of registry.PTBO_CITIES.filter(c=>c.id!=='peterborough'&&c.id!=='richmond-hill'&&!cities.includes(c.id))){
-  let calls=0;const c=browserContext({fetch:async url=>{calls++;assert.equal(String(url),`https://example.com/cities/${city.id}/geo-data.json`);return{ok:true,json:async()=>JSON.parse(read(`cities/${city.id}/geo-data.json`))};}});
-  vm.runInContext(read('cities/preview-package-factory.js'),c);c.document.currentScript.src=`https://example.com/cities/${city.id}/package.js`;
+  let calls=0;const c=browserContext({fetch:async url=>{calls++;assert.equal(String(url),`https://example.com/cities/${city.id}/geo-data.json?v=${canonicalBuildVersion}`);return{ok:true,json:async()=>JSON.parse(read(`cities/${city.id}/geo-data.json`))};}});
+  vm.runInContext(read('cities/preview-package-factory.js'),c);c.document.currentScript.src=`https://example.com/cities/${city.id}/package.js?v=${canonicalBuildVersion}`;
   vm.runInContext(read(`cities/${city.id}/package.js`),c);await c.PTBO_CITY_PACKAGE_READY;
-  assert.equal(c.PTBO_CITY_PACKAGE.id,city.id);assert.equal(c.PTBO_CITY_PACKAGE.features.baseTraining,true);
+  assert.equal(c.PTBO_CITY_PACKAGE.id,city.id);assert.equal(c.PTBO_CITY_PACKAGE.features.baseTraining,false);
+  assert.equal(c.PTBO_CITY_PACKAGE.status,'dispatch-demo');assert.equal(c.PTBO_CITY_PACKAGE.features.hospitalTransport,true);
   assert.ok(c.PTBO_SERVICE_CONFIG.profiles.fire.bases.length,city.id);assert.ok(c.PTBO_SERVICE_CONFIG.profiles.ems.bases.length,city.id);assert.equal(calls,1);
  }
 });
@@ -423,4 +425,24 @@ test('Richmond Hill loads fitted rotated base areas and keeps canonical source p
   for(const [x,y] of [[b.yardWidth*.49,0],[0,b.yardLength*.49]])assert.ok(c.PTBO_BASE_STORE.contains(b,b.lat+(x*Math.sin(angle)+y*Math.cos(angle))/my,b.lng+(x*Math.cos(angle)-y*Math.sin(angle))/mx));
  }
  const station28=bases.find(b=>b.id.endsWith('ems-28'));assert.ok(station28.spawnLat>43.8688);assert.equal(data.bases.find(b=>b.id==='richmond-hill-ems-28').lat,43.867171820603346);
+});
+
+
+async function explicitHospitalPackage(site){
+ const geo=JSON.parse(read('cities/richmond-hill/geo-data.json'));
+ const c=browserContext({console:{error(){},warn(){}},fetch:async()=>({ok:true,json:async()=>geo})});
+ vm.runInContext(read('cities/preview-package-factory.js'),c);
+ const config={id:geo.id,name:geo.name,map:geo.map,sources:{},canonicalRoster:true,sceneResponseDrills:true,routeGuidance:true,sourceUrl:new URL('https://example.com/cities/richmond-hill/package.js'),hospitalSite:site};
+ return {c,geo,ready:c.PTBO_PREVIEW_CITY_FACTORY.create(config)};
+}
+const hospitalFixture={id:'hospital-fixture',name:'Fixture Emergency Hospital',addr:'1 Test Road',lat:43.87,lng:-79.45,radius:40,sourceUrl:'https://example.org/emergency'};
+test('a sourced hospital site can enable EMS transport without adding a recognition call',async()=>{
+ const {c,geo,ready}=await explicitHospitalPackage(hospitalFixture);await ready;
+ const city=c.PTBO_CITY_PACKAGE;assert.equal(city.features.hospitalTransport,true);assert.equal(city.status,'dispatch-demo');
+ const h=city.serviceConfig.hospital;assert.equal(h.id,hospitalFixture.id);assert.equal(h.lat,hospitalFixture.lat);assert.equal(h.addr,hospitalFixture.addr);assert.equal(h.sub,'Hospital Transport');assert.ok(Object.isFrozen(h));
+ assert.ok(!geo.locations.some(row=>row.id===h.id));assert.equal(hospitalFixture.sub,undefined);
+ assert.equal(c.__events.find(e=>e.type==='ptbo-city-package-data-ready').detail.dispatch,true);
+});
+for(const patch of [{lat:95},{lng:null},{name:''},{addr:''},{sourceUrl:''},{radius:0}])test('invalid explicit hospital data rejects package readiness '+JSON.stringify(patch),async()=>{
+ const {ready}=await explicitHospitalPackage({...hospitalFixture,...patch});await assert.rejects(ready,/hospital training destination/i);
 });

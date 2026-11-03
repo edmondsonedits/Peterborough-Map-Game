@@ -1,2 +1,5 @@
-/* Demo uses the packaged canonical roster; full dispatch stays data-dependent. */
-(() => {const sourceUrl=new URL(document.currentScript.src,location.href);window.PTBO_PREVIEW_CITY_FACTORY.create({...{"id":"burlington","name":"Burlington","map":{"bounds":[[43.26801300112401,-79.95928964637378],[43.47654603016583,-79.63034733192568]],"defaultCenter":[43.33113882611392,-79.81819737571415],"defaultZoom":18,"minZoom":7,"maxZoom":19},"canonicalRoster":true,"sources":{}},sourceUrl});})();
+/* Shared Dispatch demo with canonical city data and a sourced hospital site. */
+(() => {
+  const sourceUrl=new URL(document.currentScript.src,location.href);
+  window.PTBO_PREVIEW_CITY_FACTORY.create({...{"id":"burlington","name":"Burlington","map":{"bounds":[[43.26801300112401,-79.95928964637378],[43.47654603016583,-79.63034733192568]],"defaultCenter":[43.33113882611392,-79.81819737571415],"defaultZoom":18,"minZoom":7,"maxZoom":19},"canonicalRoster":true,"sceneResponseDrills":true,"routeGuidance":true,"sources":{},"hospitalSite":{"id":"burlington-joseph-brant","name":"Joseph Brant Hospital","addr":"1245 Lakeshore Road, Burlington, ON L7S 0A2","lat":43.3167,"lng":-79.80331,"radius":40,"sourceUrl":"https://www.josephbranthospital.ca/areas-of-care/emergency-department","coordinateSourceUrl":"https://www.openstreetmap.org/way/438279844","coordinateMethod":"osm-hospital-feature-point; exact primary-source geometry not independently checked","trainingArrivalKind":"sourced-site-point"}},sourceUrl});
+})();

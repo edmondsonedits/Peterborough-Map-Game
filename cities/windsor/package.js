@@ -1,2 +1,5 @@
-/* Demo uses the packaged canonical roster; full dispatch stays data-dependent. */
-(() => {const sourceUrl=new URL(document.currentScript.src,location.href);window.PTBO_PREVIEW_CITY_FACTORY.create({...{"id":"windsor","name":"Windsor","map":{"bounds":[[42.23416616074525,-83.11485732707514],[42.3567820867277,-82.89114076347133]],"defaultCenter":[42.3118656218,-83.0334707359],"defaultZoom":18,"minZoom":7,"maxZoom":19},"canonicalRoster":true,"sources":{}},sourceUrl});})();
+/* Shared Dispatch demo with canonical city data and a sourced hospital site. */
+(() => {
+  const sourceUrl=new URL(document.currentScript.src,location.href);
+  window.PTBO_PREVIEW_CITY_FACTORY.create({...{"id":"windsor","name":"Windsor","map":{"bounds":[[42.23416616074525,-83.11485732707514],[42.3567820867277,-82.89114076347133]],"defaultCenter":[42.3118656218,-83.0334707359],"defaultZoom":18,"minZoom":7,"maxZoom":19},"canonicalRoster":true,"sceneResponseDrills":true,"routeGuidance":true,"sources":{},"hospitalSite":{"id":"windsor-odhf-d726940d97b081854f1d5c376f638312","name":"Windsor Regional Hospital, Ouellette Campus","addr":"1030 Ouellette Avenue, Windsor, ON N9A 1E1","lat":42.307797871516,"lng":-83.0327029065453,"radius":40,"sourceUrl":"https://www.wrh.on.ca/emergency-department","coordinateSourceUrl":"https://www150.statcan.gc.ca/n1/pub/13-26-0001/2020001/zip/odhf_v2_geojson.zip","coordinateMethod":"canonical-hospital-site-point","trainingArrivalKind":"sourced-site-point"}},sourceUrl});
+})();

@@ -1,0 +1,977 @@
+{
+  "schemaVersion": 1,
+  "checkedDate": "2026-11-02",
+  "sourceInventory": "artifacts/release-qa/all-city-dispatch/inventory.json",
+  "coordinatePolicy": "Coordinates are site/building points for routing targets, not surveyed ambulance entrances. Existing coordinates are reused only when the canonical record identifies the same campus; new coordinates are OpenStreetMap-backed Mapcarta feature points at the named hospital campus.",
+  "cities": [
+    {
+      "cityId": "peterborough",
+      "hospital": {
+        "id": "prhc",
+        "name": "Peterborough Regional Health Centre",
+        "address": "1 Hospital Drive, Peterborough, ON K9J 7C6",
+        "lat": 44.300744,
+        "lng": -78.347467,
+        "canonicalExisting": {
+          "id": "prhc",
+          "sourceFile": "cities/peterborough/package.js"
+        },
+        "officialEdUrl": "https://www.prhc.on.ca/healthcare-services/emergency-department/",
+        "coordinateSourceUrl": null,
+        "coordinateMethod": "canonical-package-site-point",
+        "verificationStatus": "verified-official-ed-and-site",
+        "unresolvedNotes": null,
+        "coordinateSourceFile": "cities/peterborough/package.js#hospital",
+        "coordinateSourceNote": "Coordinates are hard-coded in the canonical package; no separate public numeric-coordinate URL is present. The official PRHC page confirms campus identity/address, not this numeric point."
+      }
+    },
+    {
+      "cityId": "oshawa",
+      "hospital": {
+        "id": "oshawa-lakeridge-oshawa",
+        "name": "Lakeridge Health Oshawa Hospital",
+        "address": "1 Hospital Court, Oshawa, ON L1G 2B9",
+        "lat": 43.9055,
+        "lng": -78.86921,
+        "canonicalExisting": null,
+        "officialEdUrl": "https://www.lh.ca/our-services/emergency-and-urgent-care/",
+        "coordinateSourceUrl": "https://www.openstreetmap.org/way/475350569",
+        "coordinateMethod": "osm-hospital-feature-point; exact primary-source geometry not independently checked",
+        "verificationStatus": "verified-official-ed-and-site",
+        "unresolvedNotes": "Hospital campus point, not ED entrance.",
+        "osmFeatureUrl": "https://www.openstreetmap.org/way/475350569",
+        "secondaryCoordinateSourceUrl": "https://mapcarta.com/W475350569",
+        "coordinateSourceNote": "Direct OSM API geometry confirms the named hospital/campus feature and address tags; Mapcarta remains secondary provenance for the matrix point. Point falls within the way bounding box; it is not asserted to be the feature centroid, polygon interior, or ambulance entrance.",
+        "osmFeatureEvidence": {
+          "type": "way",
+          "id": 475350569,
+          "version": 10,
+          "featureTimestamp": "2024-11-07T04:50:46Z",
+          "tags": {
+            "healthcare": "hospital",
+            "name": "Lakeridge Health Oshawa",
+            "addr:street": "Hospital Court",
+            "amenity": "hospital",
+            "addr:postcode": "L1G 2B9",
+            "addr:city": "Oshawa",
+            "emergency": "yes",
+            "addr:housenumber": "1"
+          },
+          "geometryBounds": {
+            "south": 43.9037831,
+            "west": -78.8712805,
+            "north": 43.9072106,
+            "east": -78.8671719
+          },
+          "coordinateWithinFeatureBounds": true,
+          "evidenceUrl": "https://api.openstreetmap.org/api/0.6/way/475350569/full.json",
+          "evidenceChecked": "2026-11-02",
+          "evidenceLimit": "Bounding-box inclusion does not prove point-in-polygon containment, centroid match, or ambulance entrance."
+        },
+        "osmPrimaryVerification": "verified-name-address-and-bbox-proximity"
+      }
+    },
+    {
+      "cityId": "belleville",
+      "hospital": {
+        "id": "belleville-odhf-aa401eef18302f500152ebc3d776895f",
+        "name": "Belleville General Hospital",
+        "address": "265 Dundas Street East, Belleville, ON K8N 5A9",
+        "lat": 44.1637039655893,
+        "lng": -77.3649057785832,
+        "canonicalExisting": {
+          "id": "belleville-odhf-aa401eef18302f500152ebc3d776895f",
+          "sourceFile": "cities/belleville/training-data.json"
+        },
+        "officialEdUrl": "https://quintehealth.ca/care-service/emergency-department/",
+        "coordinateSourceUrl": "https://www150.statcan.gc.ca/n1/pub/13-26-0001/2020001/zip/odhf_v2_geojson.zip",
+        "coordinateMethod": "canonical-location-site-point",
+        "verificationStatus": "verified-official-ed-and-site",
+        "unresolvedNotes": null,
+        "coordinateSourceNote": "Coordinate provenance is the canonical ODHF geospatial dataset archive used by the source record; officialEdUrl separately verifies facility identity/address."
+      }
+    },
+    {
+      "cityId": "scarborough",
+      "hospital": {
+        "id": "scarborough-odhf-4ae2d5164afc6dbb62b9434405e0a78a",
+        "name": "Scarborough Health Network Birchmount Hospital",
+        "address": "3030 Birchmount Road, Scarborough, ON M1W 3W3",
+        "lat": 43.8017150145943,
+        "lng": -79.3080119730392,
+        "canonicalExisting": {
+          "id": "scarborough-odhf-4ae2d5164afc6dbb62b9434405e0a78a",
+          "sourceFile": "cities/scarborough/training-data.json"
+        },
+        "officialEdUrl": "https://www.shn.ca/hospitals/birchmount-hospital/",
+        "coordinateSourceUrl": "https://www150.statcan.gc.ca/n1/pub/13-26-0001/2020001/zip/odhf_v2_geojson.zip",
+        "coordinateMethod": "canonical-location-site-point",
+        "verificationStatus": "verified-official-ed-and-site",
+        "unresolvedNotes": null,
+        "coordinateSourceNote": "Coordinate provenance is the canonical ODHF geospatial dataset archive used by the source record; officialEdUrl separately verifies facility identity/address."
+      }
+    },
+    {
+      "cityId": "pickering",
+      "hospital": {
+        "id": "ajax-call-01",
+        "name": "Lakeridge Health Ajax Pickering Hospital",
+        "address": "580 Harwood Avenue South, Ajax, ON L1S 2J4",
+        "lat": 43.836896936989,
+        "lng": -79.01708479805743,
+        "canonicalExisting": {
+          "id": "ajax-call-01",
+          "sourceFile": "cities/ajax/geo-data.json"
+        },
+        "officialEdUrl": "https://www.lh.ca/our-services/emergency-and-urgent-care/",
+        "coordinateSourceUrl": "https://ajaxmaps.ajax.ca/gisernie/rest/services/Public/Ajax_On_The_Map/FeatureServer/2/query?objectIds=932&outFields=*&outSR=4326&f=pjson",
+        "coordinateMethod": "canonical-site-point-shared-across-ajax-pickering-service-area",
+        "verificationStatus": "verified-official-ed-and-site",
+        "unresolvedNotes": "Physical hospital is in Ajax and officially serves people living and working in Pickering; cross-boundary road routing is required.",
+        "coordinateSourceNote": "Coordinate provenance URL is the canonical city GIS/geocoder source referenced by the source record."
+      }
+    },
+    {
+      "cityId": "markham",
+      "hospital": {
+        "id": "markham-call-07",
+        "name": "Markham Stouffville Hospital",
+        "address": "381 Church Street, Markham, ON L3P 7P3",
+        "lat": 43.88385600494087,
+        "lng": -79.2314903638149,
+        "canonicalExisting": {
+          "id": "markham-call-07",
+          "sourceFile": "cities/markham/geo-data.json"
+        },
+        "officialEdUrl": "https://www.oakvalleyhealth.ca/clinics-departments/emergency-department/",
+        "coordinateSourceUrl": "https://ww3.yorkmaps.ca/arcgis/rest/services/YorkLocators_Pro/YorkRegionAddressesPlus_WGS84/GeocodeServer/findAddressCandidates?SingleLine=381+Church+Street%2C+Markham&outFields=%2A&outSR=4326&f=pjson",
+        "coordinateMethod": "canonical-official-address-geocode",
+        "verificationStatus": "verified-official-ed-and-site",
+        "unresolvedNotes": null,
+        "coordinateSourceNote": "Coordinate provenance URL is the canonical city GIS/geocoder source referenced by the source record."
+      }
+    },
+    {
+      "cityId": "toronto",
+      "hospital": {
+        "id": "toronto-odhf-2dabce28cf3989a3b18d1d5ffe37afb5",
+        "name": "North York General Hospital, General Site",
+        "address": "4001 Leslie Street, North York, ON M2K 1E1",
+        "lat": 43.7695093063462,
+        "lng": -79.3642389881527,
+        "canonicalExisting": {
+          "id": "toronto-odhf-2dabce28cf3989a3b18d1d5ffe37afb5",
+          "sourceFile": "cities/toronto/training-data.json"
+        },
+        "officialEdUrl": "https://www.nygh.on.ca/care-service/emergency-care/",
+        "coordinateSourceUrl": "https://www150.statcan.gc.ca/n1/pub/13-26-0001/2020001/zip/odhf_v2_geojson.zip",
+        "coordinateMethod": "canonical-hospital-site-point",
+        "verificationStatus": "verified-official-ed-and-site",
+        "unresolvedNotes": "Selected one representative Toronto ED site; citywide emergency destinations remain distributed among other Toronto hospitals.",
+        "coordinateSourceNote": "Coordinate provenance is the canonical ODHF geospatial dataset archive used by the source record; officialEdUrl separately verifies facility identity/address."
+      }
+    },
+    {
+      "cityId": "ajax",
+      "hospital": {
+        "id": "ajax-call-01",
+        "name": "Lakeridge Health Ajax Pickering Hospital",
+        "address": "580 Harwood Avenue South, Ajax, ON L1S 2J4",
+        "lat": 43.836896936989,
+        "lng": -79.01708479805743,
+        "canonicalExisting": {
+          "id": "ajax-call-01",
+          "sourceFile": "cities/ajax/geo-data.json"
+        },
+        "officialEdUrl": "https://www.lh.ca/our-services/emergency-and-urgent-care/",
+        "coordinateSourceUrl": "https://ajaxmaps.ajax.ca/gisernie/rest/services/Public/Ajax_On_The_Map/FeatureServer/2/query?objectIds=932&outFields=*&outSR=4326&f=pjson",
+        "coordinateMethod": "canonical-official-facility-point",
+        "verificationStatus": "verified-official-ed-and-site",
+        "unresolvedNotes": null,
+        "coordinateSourceNote": "Coordinate provenance URL is the canonical city GIS/geocoder source referenced by the source record."
+      }
+    },
+    {
+      "cityId": "barrie",
+      "hospital": {
+        "id": "barrie-call-01",
+        "name": "Royal Victoria Regional Health Centre",
+        "address": "201 Georgian Drive, Barrie, ON L4M 6M2",
+        "lat": 44.41441634017788,
+        "lng": -79.66118223059493,
+        "canonicalExisting": {
+          "id": "barrie-call-01",
+          "sourceFile": "cities/barrie/geo-data.json"
+        },
+        "officialEdUrl": "https://www.rvh.on.ca/areas-of-care/emergency-services/",
+        "coordinateSourceUrl": "https://gispublic.barrie.ca/arcgis/rest/services/Public/OperationalLayers_Dynamic/MapServer/12/query?where=OBJECTID%3D10&outFields=%2A&outSR=4326&f=pjson",
+        "coordinateMethod": "canonical-official-facility-point",
+        "verificationStatus": "verified-official-ed-and-site",
+        "unresolvedNotes": null,
+        "coordinateSourceNote": "Coordinate provenance URL is the canonical city GIS/geocoder source referenced by the source record."
+      }
+    },
+    {
+      "cityId": "brampton",
+      "hospital": {
+        "id": "brampton-civic",
+        "name": "Brampton Civic Hospital",
+        "address": "2100 Bovaird Drive East, Brampton, ON L6R 3J7",
+        "lat": 43.74707,
+        "lng": -79.74313,
+        "canonicalExisting": null,
+        "officialEdUrl": "https://www.williamoslerhs.ca/areas-of-care/emergency-and-urgent-care",
+        "coordinateSourceUrl": "https://www.openstreetmap.org/way/177614384",
+        "coordinateMethod": "osm-hospital-feature-point; exact primary-source geometry not independently checked",
+        "verificationStatus": "verified-official-ed-and-site",
+        "unresolvedNotes": "Uses acute Brampton Civic ED; existing Peel Memorial record is not selected as the acute ED destination.",
+        "osmFeatureUrl": "https://www.openstreetmap.org/way/177614384",
+        "secondaryCoordinateSourceUrl": "https://mapcarta.com/W177614384",
+        "coordinateSourceNote": "Direct OSM API geometry confirms the named hospital/campus feature and address tags; Mapcarta remains secondary provenance for the matrix point. Point falls within the way bounding box; it is not asserted to be the feature centroid, polygon interior, or ambulance entrance.",
+        "osmFeatureEvidence": {
+          "type": "way",
+          "id": 177614384,
+          "version": 6,
+          "featureTimestamp": "2022-01-01T19:33:53Z",
+          "tags": {
+            "healthcare": "hospital",
+            "name": "Brampton Civic Hospital",
+            "addr:street": "Bovaird Drive East",
+            "amenity": "hospital",
+            "addr:postcode": "L6R 3J7",
+            "addr:city": "Brampton",
+            "emergency": "yes",
+            "addr:housenumber": "2100"
+          },
+          "geometryBounds": {
+            "south": 43.7447522,
+            "west": -79.7461104,
+            "north": 43.7493885,
+            "east": -79.7401536
+          },
+          "coordinateWithinFeatureBounds": true,
+          "evidenceUrl": "https://api.openstreetmap.org/api/0.6/way/177614384/full.json",
+          "evidenceChecked": "2026-11-02",
+          "evidenceLimit": "Bounding-box inclusion does not prove point-in-polygon containment, centroid match, or ambulance entrance."
+        },
+        "osmPrimaryVerification": "verified-name-address-and-bbox-proximity"
+      }
+    },
+    {
+      "cityId": "brantford",
+      "hospital": {
+        "id": "brantford-odhf-caea7c5b9a96667cc653ed34a31817ad",
+        "name": "Brantford General Hospital",
+        "address": "200 Terrace Hill Street, Brantford, ON N3R 1G9",
+        "lat": 43.1526097550986,
+        "lng": -80.2758068231958,
+        "canonicalExisting": {
+          "id": "brantford-odhf-caea7c5b9a96667cc653ed34a31817ad",
+          "sourceFile": "cities/brantford/training-data.json"
+        },
+        "officialEdUrl": "https://www.bchsys.org/care-services/emergency-department/",
+        "coordinateSourceUrl": "https://www150.statcan.gc.ca/n1/pub/13-26-0001/2020001/zip/odhf_v2_geojson.zip",
+        "coordinateMethod": "canonical-hospital-site-point",
+        "verificationStatus": "verified-official-ed-and-site",
+        "unresolvedNotes": null,
+        "coordinateSourceNote": "Coordinate provenance is the canonical ODHF geospatial dataset archive used by the source record; officialEdUrl separately verifies facility identity/address."
+      }
+    },
+    {
+      "cityId": "burlington",
+      "hospital": {
+        "id": "burlington-joseph-brant",
+        "name": "Joseph Brant Hospital",
+        "address": "1245 Lakeshore Road, Burlington, ON L7S 0A2",
+        "lat": 43.3167,
+        "lng": -79.80331,
+        "canonicalExisting": null,
+        "officialEdUrl": "https://www.josephbranthospital.ca/areas-of-care/emergency-department",
+        "coordinateSourceUrl": "https://www.openstreetmap.org/way/438279844",
+        "coordinateMethod": "osm-hospital-feature-point; exact primary-source geometry not independently checked",
+        "verificationStatus": "verified-official-ed-and-site",
+        "unresolvedNotes": "Coordinate is campus point, not the Emergency Department driveway; hospital address is 1245 Lakeshore Road.",
+        "osmFeatureUrl": "https://www.openstreetmap.org/way/438279844",
+        "secondaryCoordinateSourceUrl": "https://mapcarta.com/W438279844",
+        "coordinateSourceNote": "Direct OSM API geometry confirms the named hospital/campus feature and address tags; Mapcarta remains secondary provenance for the matrix point. Point falls within the way bounding box; it is not asserted to be the feature centroid, polygon interior, or ambulance entrance.",
+        "osmFeatureEvidence": {
+          "type": "way",
+          "id": 438279844,
+          "version": 4,
+          "featureTimestamp": "2020-07-07T18:30:24Z",
+          "tags": {
+            "healthcare": "hospital",
+            "name": "Joseph Brant Hospital",
+            "addr:street": "North Shore Boulevard",
+            "amenity": "hospital",
+            "addr:postcode": "L7S 1W7",
+            "addr:city": "Burlington",
+            "emergency": "yes",
+            "addr:housenumber": "1230"
+          },
+          "geometryBounds": {
+            "south": 43.31466,
+            "west": -79.8053295,
+            "north": 43.3187431,
+            "east": -79.8012955
+          },
+          "coordinateWithinFeatureBounds": true,
+          "evidenceUrl": "https://api.openstreetmap.org/api/0.6/way/438279844/full.json",
+          "evidenceChecked": "2026-11-02",
+          "evidenceLimit": "Bounding-box inclusion does not prove point-in-polygon containment, centroid match, or ambulance entrance."
+        },
+        "osmPrimaryVerification": "verified-name-address-and-bbox-proximity"
+      }
+    },
+    {
+      "cityId": "cambridge",
+      "hospital": {
+        "id": "cambridge-call-02",
+        "name": "Cambridge Memorial Hospital",
+        "address": "700 Coronation Boulevard, Cambridge, ON N1R 3G2",
+        "lat": 43.3786714,
+        "lng": -80.3281861,
+        "canonicalExisting": {
+          "id": "cambridge-call-02",
+          "sourceFile": "cities/cambridge/geo-data.json"
+        },
+        "officialEdUrl": "https://www.cmh.org/services/emergency",
+        "coordinateSourceUrl": "https://maps.cambridge.ca/arcgispub03/rest/services/OpenData1/MapServer/13/query?objectIds=15200&outFields=%2A&outSR=4326&f=pjson",
+        "coordinateMethod": "canonical-official-facility-point",
+        "verificationStatus": "verified-official-ed-and-site",
+        "unresolvedNotes": null,
+        "coordinateSourceNote": "Coordinate provenance URL is the canonical city GIS/geocoder source referenced by the source record."
+      }
+    },
+    {
+      "cityId": "chatham-kent",
+      "hospital": {
+        "id": "chatham-kent-ckha-chatham",
+        "name": "Chatham-Kent Health Alliance, Chatham Campus",
+        "address": "80 Grand Avenue West, Chatham, ON N7M 5L9",
+        "lat": 42.40474,
+        "lng": -82.19383,
+        "canonicalExisting": null,
+        "officialEdUrl": "https://www.chatham-kent.ca/livingck/livinginck/healthandwellness/Pages/Hospitals-and-Emergencies.aspx",
+        "coordinateSourceUrl": "https://www.openstreetmap.org/way/651356327",
+        "coordinateMethod": "osm-hospital-feature-point; exact primary-source geometry not independently checked",
+        "verificationStatus": "verified-official-ed-and-site",
+        "unresolvedNotes": "Municipality confirms 24/7 Emergency Room; coordinate is campus point, not the ED entrance.",
+        "osmFeatureUrl": "https://www.openstreetmap.org/way/651356327",
+        "secondaryCoordinateSourceUrl": "https://mapcarta.com/W651356327/Map",
+        "coordinateSourceNote": "Direct OSM API geometry confirms the named hospital/campus feature and address tags; Mapcarta remains secondary provenance for the matrix point. Point falls within the way bounding box; it is not asserted to be the feature centroid, polygon interior, or ambulance entrance.",
+        "osmFeatureEvidence": {
+          "type": "way",
+          "id": 651356327,
+          "version": 7,
+          "featureTimestamp": "2025-11-11T21:20:26Z",
+          "tags": {
+            "healthcare": "hospital",
+            "name": "Chatham-Kent Health Alliance - Chatham Site",
+            "addr:street": "Grand Avenue West",
+            "amenity": "hospital",
+            "addr:postcode": "N7M 5L9",
+            "addr:city": "Chatham",
+            "emergency": "yes",
+            "addr:housenumber": "80"
+          },
+          "geometryBounds": {
+            "south": 42.4029131,
+            "west": -82.1956145,
+            "north": 42.4065661,
+            "east": -82.192052
+          },
+          "coordinateWithinFeatureBounds": true,
+          "evidenceUrl": "https://api.openstreetmap.org/api/0.6/way/651356327/full.json",
+          "evidenceChecked": "2026-11-02",
+          "evidenceLimit": "Bounding-box inclusion does not prove point-in-polygon containment, centroid match, or ambulance entrance."
+        },
+        "osmPrimaryVerification": "verified-name-address-and-bbox-proximity"
+      }
+    },
+    {
+      "cityId": "clarington",
+      "hospital": {
+        "id": "clarington-lakeridge-bowmanville",
+        "name": "Lakeridge Health Bowmanville Hospital",
+        "address": "47 Liberty Street South, Bowmanville, ON L1C 2N4",
+        "lat": 43.90927,
+        "lng": -78.67783,
+        "canonicalExisting": null,
+        "officialEdUrl": "https://www.lh.ca/our-services/emergency-and-urgent-care/",
+        "coordinateSourceUrl": "https://www.openstreetmap.org/way/681027956",
+        "coordinateMethod": "osm-hospital-feature-point; exact primary-source geometry not independently checked",
+        "verificationStatus": "verified-official-ed-and-site",
+        "unresolvedNotes": "Official facility page confirms Emergency and Critical Care; campus point, not ED entrance.",
+        "osmFeatureUrl": "https://www.openstreetmap.org/way/681027956",
+        "secondaryCoordinateSourceUrl": "https://mapcarta.com/W681027956",
+        "coordinateSourceNote": "Direct OSM API geometry confirms the named hospital/campus feature and address tags; Mapcarta remains secondary provenance for the matrix point. Point falls within the way bounding box; it is not asserted to be the feature centroid, polygon interior, or ambulance entrance.",
+        "osmFeatureEvidence": {
+          "type": "way",
+          "id": 681027956,
+          "version": 3,
+          "featureTimestamp": "2022-01-07T23:51:30Z",
+          "tags": {
+            "healthcare": "hospital",
+            "name": "Lakeridge Health Bowmanville",
+            "addr:street": "Liberty Street South",
+            "amenity": "hospital",
+            "addr:city": "Bowmanville",
+            "emergency": "yes",
+            "addr:housenumber": "47"
+          },
+          "geometryBounds": {
+            "south": 43.9084307,
+            "west": -78.6795732,
+            "north": 43.9101041,
+            "east": -78.6760891
+          },
+          "coordinateWithinFeatureBounds": true,
+          "evidenceUrl": "https://api.openstreetmap.org/api/0.6/way/681027956/full.json",
+          "evidenceChecked": "2026-11-02",
+          "evidenceLimit": "Bounding-box inclusion does not prove point-in-polygon containment, centroid match, or ambulance entrance."
+        },
+        "osmPrimaryVerification": "verified-name-address-and-bbox-proximity"
+      }
+    },
+    {
+      "cityId": "greater-sudbury",
+      "hospital": {
+        "id": "greater-sudbury-hsn",
+        "name": "Health Sciences North, Ramsey Lake Health Centre",
+        "address": "41 Ramsey Lake Road, Sudbury, ON P3E 5J1",
+        "lat": 46.46686,
+        "lng": -80.99498,
+        "canonicalExisting": null,
+        "officialEdUrl": "https://hsnsudbury.ca/en/emergency",
+        "coordinateSourceUrl": "https://www.openstreetmap.org/way/781430754",
+        "coordinateMethod": "osm-hospital-feature-point; exact primary-source geometry not independently checked",
+        "verificationStatus": "verified-official-ed-and-site",
+        "unresolvedNotes": "Existing candidates are unrelated North Bay/continuing-care sites; chosen local acute hospital campus.",
+        "osmFeatureUrl": "https://www.openstreetmap.org/way/781430754",
+        "secondaryCoordinateSourceUrl": "https://mapcarta.com/W781430754",
+        "coordinateSourceNote": "Direct OSM API geometry confirms the named hospital/campus feature and address tags; Mapcarta remains secondary provenance for the matrix point. Point falls within the way bounding box; it is not asserted to be the feature centroid, polygon interior, or ambulance entrance.",
+        "osmFeatureEvidence": {
+          "type": "way",
+          "id": 781430754,
+          "version": 8,
+          "featureTimestamp": "2026-01-30T01:48:12Z",
+          "tags": {
+            "healthcare": "hospital",
+            "name": "Health Sciences North",
+            "addr:street": "Ramsey Lake Road",
+            "amenity": "hospital",
+            "addr:postcode": "P3E 5J1",
+            "addr:city": "Sudbury",
+            "emergency": "yes",
+            "addr:housenumber": "41"
+          },
+          "geometryBounds": {
+            "south": 46.4641512,
+            "west": -80.9994161,
+            "north": 46.4695589,
+            "east": -80.9905348
+          },
+          "coordinateWithinFeatureBounds": true,
+          "evidenceUrl": "https://api.openstreetmap.org/api/0.6/way/781430754/full.json",
+          "evidenceChecked": "2026-11-02",
+          "evidenceLimit": "Bounding-box inclusion does not prove point-in-polygon containment, centroid match, or ambulance entrance."
+        },
+        "osmPrimaryVerification": "verified-name-address-and-bbox-proximity"
+      }
+    },
+    {
+      "cityId": "guelph",
+      "hospital": {
+        "id": "guelph-call-03",
+        "name": "Guelph General Hospital",
+        "address": "115 Delhi Street, Guelph, ON N1E 4J4",
+        "lat": 43.5560508,
+        "lng": -80.2534481,
+        "canonicalExisting": {
+          "id": "guelph-call-03",
+          "sourceFile": "cities/guelph/geo-data.json"
+        },
+        "officialEdUrl": "https://gghorg.ca/patients-visitors/emergency-department/",
+        "coordinateSourceUrl": "https://gismaps.guelph.ca/hosting/rest/services/OpenData/OpenData1/FeatureServer/0/query?objectIds=10340&outFields=%2A&outSR=4326&f=pjson",
+        "coordinateMethod": "canonical-official-facility-point",
+        "verificationStatus": "verified-official-ed-and-site",
+        "unresolvedNotes": null,
+        "coordinateSourceNote": "Coordinate provenance URL is the canonical city GIS/geocoder source referenced by the source record."
+      }
+    },
+    {
+      "cityId": "hamilton",
+      "hospital": {
+        "id": "hamilton-call-01",
+        "name": "Hamilton General Hospital",
+        "address": "237 Barton Street East, Hamilton, ON L8L 2X2",
+        "lat": 43.26194349155009,
+        "lng": -79.85433493263145,
+        "canonicalExisting": {
+          "id": "hamilton-call-01",
+          "sourceFile": "cities/hamilton/geo-data.json"
+        },
+        "officialEdUrl": "https://www.hamiltonhealthsciences.ca/areas-of-care/emergency-care/emergency-departments/",
+        "coordinateSourceUrl": "https://services.arcgis.com/rYz782eMbySr2srL/arcgis/rest/services/Hospitals/FeatureServer/14/query?objectIds=4&outFields=%2A&outSR=4326&f=json",
+        "coordinateMethod": "canonical-official-facility-point",
+        "verificationStatus": "verified-official-ed-and-site",
+        "unresolvedNotes": null,
+        "coordinateSourceNote": "Coordinate provenance URL is the canonical city GIS/geocoder source referenced by the source record."
+      }
+    },
+    {
+      "cityId": "kingston",
+      "hospital": {
+        "id": "kingston-call-02",
+        "name": "Kingston General Hospital (Kingston Health Sciences Centre)",
+        "address": "76 Stuart Street, Kingston, ON K7L 2V7",
+        "lat": 44.22369718630111,
+        "lng": -76.4933952421073,
+        "canonicalExisting": {
+          "id": "kingston-call-02",
+          "sourceFile": "cities/kingston/geo-data.json"
+        },
+        "officialEdUrl": "https://www.kingstonhsc.ca/emergency-care",
+        "coordinateSourceUrl": "https://services1.arcgis.com/5GRYvurYYUwAecLQ/arcgis/rest/services/Hospitals/FeatureServer/69/query?where=OBJECTID%3D27479&outFields=%2A&outSR=4326&f=pjson",
+        "coordinateMethod": "canonical-hospital-site-point",
+        "verificationStatus": "verified-official-ed-and-site",
+        "unresolvedNotes": "ED entry is at King Street West; selected coordinates identify the campus, not the specific ED ramp.",
+        "coordinateSourceNote": "Coordinate provenance URL is the canonical city GIS/geocoder source referenced by the source record."
+      }
+    },
+    {
+      "cityId": "kitchener",
+      "hospital": {
+        "id": "kitchener-wrhn-midtown",
+        "name": "Waterloo Regional Health Network @ Midtown (formerly Grand River Hospital KW site)",
+        "address": "835 King Street West, Kitchener, ON N2G 4K9",
+        "lat": 43.45621,
+        "lng": -80.51205,
+        "canonicalExisting": null,
+        "officialEdUrl": "https://www.wrhn.ca/healthcare-services/emergency-departments",
+        "coordinateSourceUrl": "https://www.openstreetmap.org/way/140180455",
+        "coordinateMethod": "osm-hospital-feature-point; exact primary-source geometry not independently checked",
+        "verificationStatus": "verified-official-ed-and-site",
+        "unresolvedNotes": "Inventory's Chicopee/Freeport candidate is not this ED site; campus coordinates are used.",
+        "osmFeatureUrl": "https://www.openstreetmap.org/way/140180455",
+        "secondaryCoordinateSourceUrl": "https://mapcarta.com/W140180455",
+        "coordinateSourceNote": "Direct OSM API geometry confirms the named hospital/campus feature and address tags; Mapcarta remains secondary provenance for the matrix point. Point falls within the way bounding box; it is not asserted to be the feature centroid, polygon interior, or ambulance entrance.",
+        "osmFeatureEvidence": {
+          "type": "way",
+          "id": 140180455,
+          "version": 11,
+          "featureTimestamp": "2025-04-01T18:34:58Z",
+          "tags": {
+            "full_name": "Waterloo Regional Health Network @ Midtown",
+            "healthcare": "hospital",
+            "name": "WRHN @ Midtown",
+            "addr:street": "King Street West",
+            "amenity": "hospital",
+            "addr:postcode": "N2G 4K9",
+            "addr:city": "Kitchener",
+            "emergency": "yes",
+            "addr:housenumber": "835"
+          },
+          "geometryBounds": {
+            "south": 43.4548084,
+            "west": -80.5141749,
+            "north": 43.4576194,
+            "east": -80.5099269
+          },
+          "coordinateWithinFeatureBounds": true,
+          "evidenceUrl": "https://api.openstreetmap.org/api/0.6/way/140180455/full.json",
+          "evidenceChecked": "2026-11-02",
+          "evidenceLimit": "Bounding-box inclusion does not prove point-in-polygon containment, centroid match, or ambulance entrance."
+        },
+        "osmPrimaryVerification": "verified-name-address-and-bbox-proximity"
+      }
+    },
+    {
+      "cityId": "london",
+      "hospital": {
+        "id": "london-call-08",
+        "name": "London Health Sciences Centre, University Hospital",
+        "address": "339 Windermere Road, London, ON N6A 5A5",
+        "lat": 43.012382331917244,
+        "lng": -81.27474898843334,
+        "canonicalExisting": {
+          "id": "london-call-08",
+          "sourceFile": "cities/london/geo-data.json"
+        },
+        "officialEdUrl": "https://www.lhsc.on.ca/emergency-department",
+        "coordinateSourceUrl": "https://maps.london.ca/server/rest/services/PointsOfInterest/MapServer/3/query?where=OBJECTID%3D10&outFields=%2A&outSR=4326&f=json",
+        "coordinateMethod": "canonical-official-facility-point",
+        "verificationStatus": "verified-official-ed-and-site",
+        "unresolvedNotes": null,
+        "coordinateSourceNote": "Coordinate provenance URL is the canonical city GIS/geocoder source referenced by the source record."
+      }
+    },
+    {
+      "cityId": "milton",
+      "hospital": {
+        "id": "milton-district-hospital",
+        "name": "Milton District Hospital",
+        "address": "725 Bronte Street South, Milton, ON L9T 9K1",
+        "lat": 43.49713,
+        "lng": -79.86846,
+        "canonicalExisting": null,
+        "officialEdUrl": "https://www.haltonhealthcare.on.ca/site_Files/Content/pdfs/01_Services/02_Emergency-Department/MDH/MDH---Emergency-Department-Directions.pdf",
+        "coordinateSourceUrl": "https://www.openstreetmap.org/way/712100615",
+        "coordinateMethod": "osm-hospital-feature-point; exact primary-source geometry not independently checked",
+        "verificationStatus": "verified-official-ed-and-site",
+        "unresolvedNotes": "Official ED directions confirm the site; coordinate is hospital-campus point, not emergency driveway.",
+        "osmFeatureUrl": "https://www.openstreetmap.org/way/712100615",
+        "secondaryCoordinateSourceUrl": "https://mapcarta.com/W712100615",
+        "coordinateSourceNote": "Direct OSM API geometry confirms the named hospital/campus feature and address tags; Mapcarta remains secondary provenance for the matrix point. Point falls within the way bounding box; it is not asserted to be the feature centroid, polygon interior, or ambulance entrance.",
+        "osmFeatureEvidence": {
+          "type": "way",
+          "id": 712100615,
+          "version": 6,
+          "featureTimestamp": "2026-03-12T21:06:39Z",
+          "tags": {
+            "healthcare": "hospital",
+            "name": "Milton District Hospital",
+            "addr:street": "Bronte Street South",
+            "amenity": "hospital",
+            "addr:postcode": "L9T 9K1",
+            "addr:city": "Milton",
+            "emergency": "yes",
+            "addr:housenumber": "725"
+          },
+          "geometryBounds": {
+            "south": 43.4944304,
+            "west": -79.8717815,
+            "north": 43.4998357,
+            "east": -79.8651462
+          },
+          "coordinateWithinFeatureBounds": true,
+          "evidenceUrl": "https://api.openstreetmap.org/api/0.6/way/712100615/full.json",
+          "evidenceChecked": "2026-11-02",
+          "evidenceLimit": "Bounding-box inclusion does not prove point-in-polygon containment, centroid match, or ambulance entrance."
+        },
+        "osmPrimaryVerification": "verified-name-address-and-bbox-proximity"
+      }
+    },
+    {
+      "cityId": "mississauga",
+      "hospital": {
+        "id": "mississauga-odhf-ac3b24f6bd6309a1a3db9518940d932f",
+        "name": "Trillium Health Partners, Mississauga Hospital",
+        "address": "100 Queensway West, Mississauga, ON L5B 1B8",
+        "lat": 43.5722475603248,
+        "lng": -79.6096203489638,
+        "canonicalExisting": {
+          "id": "mississauga-odhf-ac3b24f6bd6309a1a3db9518940d932f",
+          "sourceFile": "cities/mississauga/training-data.json"
+        },
+        "officialEdUrl": "https://www.trilliumhealthpartners.ca/patientservices/emergency",
+        "coordinateSourceUrl": "https://www150.statcan.gc.ca/n1/pub/13-26-0001/2020001/zip/odhf_v2_geojson.zip",
+        "coordinateMethod": "canonical-hospital-site-point",
+        "verificationStatus": "verified-official-ed-and-site",
+        "unresolvedNotes": null,
+        "coordinateSourceNote": "Coordinate provenance is the canonical ODHF geospatial dataset archive used by the source record; officialEdUrl separately verifies facility identity/address."
+      }
+    },
+    {
+      "cityId": "niagara-falls",
+      "hospital": {
+        "id": "niagara-falls-odhf-287eb27a00eee08a6c0a5c4f8fc8e94e",
+        "name": "Greater Niagara General Hospital (Niagara Health)",
+        "address": "5546 Portage Road, Niagara Falls, ON L2E 6X8",
+        "lat": 43.0935780992445,
+        "lng": -79.0917943430063,
+        "canonicalExisting": {
+          "id": "niagara-falls-odhf-287eb27a00eee08a6c0a5c4f8fc8e94e",
+          "sourceFile": "cities/niagara-falls/training-data.json"
+        },
+        "officialEdUrl": "https://www.niagarahealth.on.ca/site/when-to-visit-an-emergency-department",
+        "coordinateSourceUrl": "https://www150.statcan.gc.ca/n1/pub/13-26-0001/2020001/zip/odhf_v2_geojson.zip",
+        "coordinateMethod": "canonical-hospital-site-point",
+        "verificationStatus": "verified-official-ed-and-site",
+        "unresolvedNotes": null,
+        "coordinateSourceNote": "Coordinate provenance is the canonical ODHF geospatial dataset archive used by the source record; officialEdUrl separately verifies facility identity/address."
+      }
+    },
+    {
+      "cityId": "oakville",
+      "hospital": {
+        "id": "oakville-otmh",
+        "name": "Oakville Trafalgar Memorial Hospital",
+        "address": "3001 Hospital Gate, Oakville, ON L6M 0L8",
+        "lat": 43.45031,
+        "lng": -79.7648,
+        "canonicalExisting": null,
+        "officialEdUrl": "https://www.haltonhealthcare.on.ca/site_Files/Content/pdfs/01_Services/02_Emergency-Department/OTMH/OTMH---Emergency-Department-Directions.pdf",
+        "coordinateSourceUrl": "https://www.openstreetmap.org/way/386564895",
+        "coordinateMethod": "osm-hospital-feature-point; exact primary-source geometry not independently checked",
+        "verificationStatus": "verified-official-ed-and-site",
+        "unresolvedNotes": "Official ED directions/maps identify the active site; campus point, not ED entrance.",
+        "osmFeatureUrl": "https://www.openstreetmap.org/way/386564895",
+        "secondaryCoordinateSourceUrl": "https://mapcarta.com/W386564895/Map",
+        "coordinateSourceNote": "Direct OSM API geometry confirms the named hospital/campus feature and address tags; Mapcarta remains secondary provenance for the matrix point. Point falls within the way bounding box; it is not asserted to be the feature centroid, polygon interior, or ambulance entrance.",
+        "osmFeatureEvidence": {
+          "type": "way",
+          "id": 386564895,
+          "version": 5,
+          "featureTimestamp": "2024-04-05T21:58:42Z",
+          "tags": {
+            "name": "Oakville Trafalgar Memorial Hospital",
+            "addr:street": "Hospital Gate",
+            "amenity": "hospital",
+            "addr:postcode": "L6M 0L8",
+            "healthcare": "hospital",
+            "emergency": "yes",
+            "addr:housenumber": "3001"
+          },
+          "geometryBounds": {
+            "south": 43.4474839,
+            "west": -79.7684019,
+            "north": 43.4531396,
+            "east": -79.7611994
+          },
+          "coordinateWithinFeatureBounds": true,
+          "evidenceUrl": "https://api.openstreetmap.org/api/0.6/way/386564895/full.json",
+          "evidenceChecked": "2026-11-02",
+          "evidenceLimit": "Bounding-box inclusion does not prove point-in-polygon containment, centroid match, or ambulance entrance."
+        },
+        "osmPrimaryVerification": "verified-name-address-and-bbox-proximity"
+      }
+    },
+    {
+      "cityId": "ottawa",
+      "hospital": {
+        "id": "ottawa-civic-campus",
+        "name": "The Ottawa Hospital, Civic Campus",
+        "address": "1053 Carling Avenue, Ottawa, ON K1Y 4E9",
+        "lat": 45.39302,
+        "lng": -75.72119,
+        "canonicalExisting": null,
+        "officialEdUrl": "https://www.ottawahospital.on.ca/en/patients-and-visitors/directions-and-maps/",
+        "coordinateSourceUrl": "https://www.openstreetmap.org/way/68657562",
+        "coordinateMethod": "osm-hospital-feature-point; exact primary-source geometry not independently checked",
+        "verificationStatus": "verified-official-ed-and-site",
+        "unresolvedNotes": "Officially verified 24/7 ED at Civic; inventory Riverside and Rehabilitation campuses are excluded as no-ED sites.",
+        "osmFeatureUrl": "https://www.openstreetmap.org/way/68657562",
+        "secondaryCoordinateSourceUrl": "https://mapcarta.com/W68657562",
+        "coordinateSourceNote": "Direct OSM API geometry confirms the named hospital/campus feature and address tags; Mapcarta remains secondary provenance for the matrix point. Point falls within the way bounding box; it is not asserted to be the feature centroid, polygon interior, or ambulance entrance.",
+        "osmFeatureEvidence": {
+          "type": "way",
+          "id": 68657562,
+          "version": 23,
+          "featureTimestamp": "2019-01-25T15:15:23Z",
+          "tags": {
+            "addr:housenumber": "1053",
+            "building": "hospital",
+            "addr:street": "Carling Avenue",
+            "name": "Ottawa Hospital Civic Campus"
+          },
+          "geometryBounds": {
+            "south": 45.392239,
+            "west": -75.722576,
+            "north": 45.393797,
+            "east": -75.719798
+          },
+          "coordinateWithinFeatureBounds": true,
+          "evidenceUrl": "https://api.openstreetmap.org/api/0.6/way/68657562/full.json",
+          "evidenceChecked": "2026-11-02",
+          "evidenceLimit": "Bounding-box inclusion does not prove point-in-polygon containment, centroid match, or ambulance entrance."
+        },
+        "osmPrimaryVerification": "verified-name-address-and-bbox-proximity"
+      }
+    },
+    {
+      "cityId": "richmond-hill",
+      "hospital": {
+        "id": "richmond-hill-call-10",
+        "name": "Mackenzie Richmond Hill Hospital",
+        "address": "10 Trench Street, Richmond Hill, ON L4C 4Z3",
+        "lat": 43.87037792541019,
+        "lng": -79.45071040970561,
+        "canonicalExisting": {
+          "id": "richmond-hill-call-10",
+          "sourceFile": "cities/richmond-hill/geo-data.json"
+        },
+        "officialEdUrl": "https://www.mackenziehealth.ca/programs-services/emergency-and-urgent-care",
+        "coordinateSourceUrl": "https://ww3.yorkmaps.ca/arcgis/rest/services/YorkLocators_Pro/YorkRegionAddressesPlus_WGS84/GeocodeServer/findAddressCandidates?SingleLine=10+Trench+Street%2C+Richmond+Hill&outFields=%2A&outSR=4326&f=pjson",
+        "coordinateMethod": "canonical-official-address-geocode",
+        "verificationStatus": "verified-official-ed-and-site",
+        "unresolvedNotes": null,
+        "coordinateSourceNote": "Coordinate provenance URL is the canonical city GIS/geocoder source referenced by the source record."
+      }
+    },
+    {
+      "cityId": "st-catharines",
+      "hospital": {
+        "id": "st-catharines-call-01",
+        "name": "Marotta Family Hospital (Niagara Health St. Catharines Site)",
+        "address": "1200 Fourth Avenue, St. Catharines, ON L2S 0A9",
+        "lat": 43.153176969024,
+        "lng": -79.278105753908,
+        "canonicalExisting": {
+          "id": "st-catharines-call-01",
+          "sourceFile": "cities/st-catharines/geo-data.json"
+        },
+        "officialEdUrl": "https://www.niagarahealth.on.ca/site/when-to-visit-an-emergency-department",
+        "coordinateSourceUrl": "https://utility.arcgis.com/usrsvcs/servers/21332341b9364d05bf276dd4a9c68d30/rest/services/General/STC_Address_Locator/GeocodeServer/findAddressCandidates?SingleLine=1200+Fourth+Avenue&outFields=%2A&outSR=4326&f=json",
+        "coordinateMethod": "canonical-official-address-geocode",
+        "verificationStatus": "verified-official-ed-and-site",
+        "unresolvedNotes": null,
+        "coordinateSourceNote": "Coordinate provenance URL is the canonical city GIS/geocoder source referenced by the source record."
+      }
+    },
+    {
+      "cityId": "thunder-bay",
+      "hospital": {
+        "id": "thunder-bay-odhf-938205b435c2590e9d76059416356f15",
+        "name": "Thunder Bay Regional Health Sciences Centre",
+        "address": "984 Oliver Road, Thunder Bay, ON P7B 6V4",
+        "lat": 48.421780760666,
+        "lng": -89.2676604716029,
+        "canonicalExisting": {
+          "id": "thunder-bay-odhf-938205b435c2590e9d76059416356f15",
+          "sourceFile": "cities/thunder-bay/training-data.json"
+        },
+        "officialEdUrl": "https://tbrhsc.net/programs-services/emergency-critical-care-services/",
+        "coordinateSourceUrl": "https://www150.statcan.gc.ca/n1/pub/13-26-0001/2020001/zip/odhf_v2_geojson.zip",
+        "coordinateMethod": "canonical-hospital-site-point",
+        "verificationStatus": "verified-official-ed-and-site",
+        "unresolvedNotes": null,
+        "coordinateSourceNote": "Coordinate provenance is the canonical ODHF geospatial dataset archive used by the source record; officialEdUrl separately verifies facility identity/address."
+      }
+    },
+    {
+      "cityId": "vaughan",
+      "hospital": {
+        "id": "vaughan-call-08",
+        "name": "Cortellucci Vaughan Hospital",
+        "address": "3200 Major Mackenzie Drive West, Vaughan, ON L6A 4Z3",
+        "lat": 43.85006456621015,
+        "lng": -79.54013788931019,
+        "canonicalExisting": {
+          "id": "vaughan-call-08",
+          "sourceFile": "cities/vaughan/geo-data.json"
+        },
+        "officialEdUrl": "https://www.mackenziehealth.ca/programs-services/emergency-and-urgent-care",
+        "coordinateSourceUrl": "https://ww3.yorkmaps.ca/arcgis/rest/services/YorkLocators_Pro/YorkRegionAddressesPlus_WGS84/GeocodeServer/findAddressCandidates?SingleLine=3200+Major+Mackenzie+Drive+West%2C+Vaughan&outFields=%2A&outSR=4326&f=pjson",
+        "coordinateMethod": "canonical-official-address-geocode",
+        "verificationStatus": "verified-official-ed-and-site",
+        "unresolvedNotes": null,
+        "coordinateSourceNote": "Coordinate provenance URL is the canonical city GIS/geocoder source referenced by the source record."
+      }
+    },
+    {
+      "cityId": "waterloo",
+      "hospital": {
+        "id": "kitchener-wrhn-midtown",
+        "name": "Waterloo Regional Health Network @ Midtown (formerly Grand River Hospital KW site)",
+        "address": "835 King Street West, Kitchener, ON N2G 4K9",
+        "lat": 43.45621,
+        "lng": -80.51205,
+        "canonicalExisting": null,
+        "officialEdUrl": "https://www.wrhn.ca/healthcare-services/emergency-departments",
+        "coordinateSourceUrl": "https://www.openstreetmap.org/way/140180455",
+        "coordinateMethod": "osm-hospital-feature-point; exact primary-source geometry not independently checked",
+        "verificationStatus": "verified-official-ed-and-site",
+        "unresolvedNotes": "Waterloo has no local ED at the selected record; closest confirmed regional ED is in Kitchener and requires cross-boundary road connectivity.",
+        "osmFeatureUrl": "https://www.openstreetmap.org/way/140180455",
+        "secondaryCoordinateSourceUrl": "https://mapcarta.com/W140180455",
+        "coordinateSourceNote": "Direct OSM API geometry confirms the named hospital/campus feature and address tags; Mapcarta remains secondary provenance for the matrix point. Point falls within the way bounding box; it is not asserted to be the feature centroid, polygon interior, or ambulance entrance.",
+        "osmFeatureEvidence": {
+          "type": "way",
+          "id": 140180455,
+          "version": 11,
+          "featureTimestamp": "2025-04-01T18:34:58Z",
+          "tags": {
+            "full_name": "Waterloo Regional Health Network @ Midtown",
+            "healthcare": "hospital",
+            "name": "WRHN @ Midtown",
+            "addr:street": "King Street West",
+            "amenity": "hospital",
+            "addr:postcode": "N2G 4K9",
+            "addr:city": "Kitchener",
+            "emergency": "yes",
+            "addr:housenumber": "835"
+          },
+          "geometryBounds": {
+            "south": 43.4548084,
+            "west": -80.5141749,
+            "north": 43.4576194,
+            "east": -80.5099269
+          },
+          "coordinateWithinFeatureBounds": true,
+          "evidenceUrl": "https://api.openstreetmap.org/api/0.6/way/140180455/full.json",
+          "evidenceChecked": "2026-11-02",
+          "evidenceLimit": "Bounding-box inclusion does not prove point-in-polygon containment, centroid match, or ambulance entrance."
+        },
+        "osmPrimaryVerification": "verified-name-address-and-bbox-proximity"
+      }
+    },
+    {
+      "cityId": "whitby",
+      "hospital": {
+        "id": "oshawa-lakeridge-oshawa",
+        "name": "Lakeridge Health Oshawa Hospital",
+        "address": "1 Hospital Court, Oshawa, ON L1G 2B9",
+        "lat": 43.9055,
+        "lng": -78.86921,
+        "canonicalExisting": null,
+        "officialEdUrl": "https://www.lh.ca/our-services/emergency-and-urgent-care/",
+        "coordinateSourceUrl": "https://www.openstreetmap.org/way/475350569",
+        "coordinateMethod": "osm-hospital-feature-point; exact primary-source geometry not independently checked",
+        "verificationStatus": "verified-official-ed-and-site",
+        "unresolvedNotes": "Lakeridge confirms Whitby Hospital is specialty care without ED; nearby Oshawa ED is selected and requires cross-boundary road connectivity.",
+        "osmFeatureUrl": "https://www.openstreetmap.org/way/475350569",
+        "secondaryCoordinateSourceUrl": "https://mapcarta.com/W475350569",
+        "coordinateSourceNote": "Direct OSM API geometry confirms the named hospital/campus feature and address tags; Mapcarta remains secondary provenance for the matrix point. Point falls within the way bounding box; it is not asserted to be the feature centroid, polygon interior, or ambulance entrance.",
+        "osmFeatureEvidence": {
+          "type": "way",
+          "id": 475350569,
+          "version": 10,
+          "featureTimestamp": "2024-11-07T04:50:46Z",
+          "tags": {
+            "healthcare": "hospital",
+            "name": "Lakeridge Health Oshawa",
+            "addr:street": "Hospital Court",
+            "amenity": "hospital",
+            "addr:postcode": "L1G 2B9",
+            "addr:city": "Oshawa",
+            "emergency": "yes",
+            "addr:housenumber": "1"
+          },
+          "geometryBounds": {
+            "south": 43.9037831,
+            "west": -78.8712805,
+            "north": 43.9072106,
+            "east": -78.8671719
+          },
+          "coordinateWithinFeatureBounds": true,
+          "evidenceUrl": "https://api.openstreetmap.org/api/0.6/way/475350569/full.json",
+          "evidenceChecked": "2026-11-02",
+          "evidenceLimit": "Bounding-box inclusion does not prove point-in-polygon containment, centroid match, or ambulance entrance."
+        },
+        "osmPrimaryVerification": "verified-name-address-and-bbox-proximity"
+      }
+    },
+    {
+      "cityId": "windsor",
+      "hospital": {
+        "id": "windsor-odhf-d726940d97b081854f1d5c376f638312",
+        "name": "Windsor Regional Hospital, Ouellette Campus",
+        "address": "1030 Ouellette Avenue, Windsor, ON N9A 1E1",
+        "lat": 42.307797871516,
+        "lng": -83.0327029065453,
+        "canonicalExisting": {
+          "id": "windsor-odhf-d726940d97b081854f1d5c376f638312",
+          "sourceFile": "cities/windsor/training-data.json"
+        },
+        "officialEdUrl": "https://www.wrh.on.ca/emergency-department",
+        "coordinateSourceUrl": "https://www150.statcan.gc.ca/n1/pub/13-26-0001/2020001/zip/odhf_v2_geojson.zip",
+        "coordinateMethod": "canonical-hospital-site-point",
+        "verificationStatus": "verified-official-ed-and-site",
+        "unresolvedNotes": null,
+        "coordinateSourceNote": "Coordinate provenance is the canonical ODHF geospatial dataset archive used by the source record; officialEdUrl separately verifies facility identity/address."
+      }
+    }
+  ]
+}

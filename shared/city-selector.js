@@ -75,7 +75,7 @@
   dialog.innerHTML = `
     <p class="city-kicker">Emergency Response Simulator</p>
     <h2 id="ptbo-city-title">Choose a city</h2>
-    <p class="city-intro">Peterborough includes hospital transport. Other listed cities offer modeled Fire and EMS scene-response exercises.</p>
+    <p class="city-intro">All listed cities support Fire and EMS response demos with hospital transport and route review.</p>
     <div class="city-grid"></div>
     <div class="city-foot"><span>Some bases may not yet have enough sourced exercises. These are navigation exercises, not operational dispatch advice.</span><button class="city-close" type="button">Cancel</button></div>`;
 

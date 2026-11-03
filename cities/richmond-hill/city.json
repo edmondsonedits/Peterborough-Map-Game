@@ -6,7 +6,7 @@
   "country": "Canada",
   "status": "dispatch-demo",
   "playable": true,
-  "note": "Fire and EMS response demo with hospital transport and route review using existing sourced exercises.",
+  "note": "Fire and EMS response demo with hospital transport and route review.",
   "map": {
     "bounds": [
       [
@@ -41,9 +41,11 @@
     "roads": "roads.geojson.gz",
     "dispatchLocations": "dispatch-data.js",
     "bases": "geo-data.json",
-    "hospitals": "geo-data.json",
+    "hospitals": "package.js",
     "geoGuesser": "geo-data.json",
     "routeMapping": "training-data.json",
-    "serviceConfig": "package.js"
-  }
+    "serviceConfig": "package.js",
+    "services": "package.js"
+  },
+  "runtime": "./package.js"
 }

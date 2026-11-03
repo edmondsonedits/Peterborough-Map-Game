@@ -4,9 +4,9 @@
   "name": "Belleville",
   "province": "Ontario",
   "country": "Canada",
-  "status": "scene-response",
+  "status": "dispatch-demo",
   "playable": true,
-  "note": "Modeled Fire and EMS address-response exercises end at the scene; hospital transport is unavailable. Some bases may not yet have exercises.",
+  "note": "Fire and EMS response demo with hospital transport and route review.",
   "map": {
     "defaultCenter": [
       44.1628,
@@ -30,9 +30,9 @@
     "baseTraining": false,
     "dispatch": true,
     "roadBoundaries": true,
-    "routeGuidance": false,
+    "routeGuidance": true,
     "sceneResponseDrills": true,
-    "hospitalTransport": false,
+    "hospitalTransport": true,
     "geoGuesser": true,
     "routeMapping": true
   },
@@ -42,8 +42,10 @@
     "dispatchLocations": "dispatch-data.js",
     "serviceConfig": "package.js",
     "bases": "geo-data.json",
-    "hospitals": null,
+    "hospitals": "package.js",
     "routeMapping": "training-data.json",
-    "geoGuesser": "geo-data.json"
-  }
+    "geoGuesser": "geo-data.json",
+    "services": "package.js"
+  },
+  "runtime": "./package.js"
 }

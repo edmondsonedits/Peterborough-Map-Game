@@ -1,2 +1,5 @@
-/* Demo uses the packaged canonical roster; full dispatch stays data-dependent. */
-(() => {const sourceUrl=new URL(document.currentScript.src,location.href);window.PTBO_PREVIEW_CITY_FACTORY.create({...{"id":"ottawa","name":"Ottawa","map":{"bounds":[[44.96178267078443,-76.35558815499778],[45.53766048961865,-75.24658048377195]],"defaultCenter":[45.37278981498543,-75.68984164908812],"defaultZoom":18,"minZoom":7,"maxZoom":19},"canonicalRoster":true,"sources":{}},sourceUrl});})();
+/* Shared Dispatch demo with canonical city data and a sourced hospital site. */
+(() => {
+  const sourceUrl=new URL(document.currentScript.src,location.href);
+  window.PTBO_PREVIEW_CITY_FACTORY.create({...{"id":"ottawa","name":"Ottawa","map":{"bounds":[[44.96178267078443,-76.35558815499778],[45.53766048961865,-75.24658048377195]],"defaultCenter":[45.37278981498543,-75.68984164908812],"defaultZoom":18,"minZoom":7,"maxZoom":19},"canonicalRoster":true,"sceneResponseDrills":true,"routeGuidance":true,"sources":{},"hospitalSite":{"id":"ottawa-civic-campus","name":"The Ottawa Hospital, Civic Campus","addr":"1053 Carling Avenue, Ottawa, ON K1Y 4E9","lat":45.39302,"lng":-75.72119,"radius":40,"sourceUrl":"https://www.ottawahospital.on.ca/en/patients-and-visitors/directions-and-maps/","coordinateSourceUrl":"https://www.openstreetmap.org/way/68657562","coordinateMethod":"osm-hospital-feature-point; exact primary-source geometry not independently checked","trainingArrivalKind":"sourced-site-point"}},sourceUrl});
+})();
