@@ -1,6 +1,6 @@
 # All-city Dispatch rollout validation
 
-Status: locally verified v1.6.174 release candidate; publication/live verification pending.
+Status: locally verified v1.6.175 release candidate; publication/live verification pending.
 
 ## Current evidence
 
@@ -16,7 +16,7 @@ Status: locally verified v1.6.174 release candidate; publication/live verificati
 
 ## Release gates
 
-- Final v1.6.174 checks passed: 1,255 tests across 17 groups, five road geometry/asset checks and the four Richmond Hill desktop/mobile Fire/EMS workflows.
+- Final v1.6.175 checks passed: 1,260 tests across 17 groups, five road geometry/asset checks and the four Richmond Hill desktop/mobile Fire/EMS workflows.
 - Publish through GitHub Pages and verify fresh live assets and city startup/playability.
 
 ## Evidence and limits

@@ -1795,14 +1795,14 @@
     "Long mission legs use controlled arrivals; short driving uses real keyboard/touch input.",
     "Toronto Island EMS is explicitly scene-only; no ferry transport simulated."
   ],
-  "releaseVersion": "1.6.174",
+  "releaseVersion": "1.6.175",
   "sourcePreservation": {
     "canonicalGeoDatasets": 32,
     "unchangedOutsideDrivingArea": true,
     "historicalPreviewAliasesChecked": true
   },
   "finalRegression": {
-    "tests": 1255,
+    "tests": 1260,
     "groups": 17,
     "failed": 0,
     "roadAssetChecks": 5,
@@ -1817,5 +1817,13 @@
       "passed": true
     },
     "preservedUpstream": "85abdaff"
+  },
+  "iframeLifecycleFix": {
+    "cases": 5,
+    "initialBlank": true,
+    "preNormalizationCity": true,
+    "staleResolution": true,
+    "staleRejection": true,
+    "currentFailureVisible": true
   }
 }
