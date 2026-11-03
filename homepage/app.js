@@ -173,7 +173,7 @@
     if (explorerDescription) explorerDescription.textContent = available('explorer') ? `Drive through ${city.name} streets.` : `Request a ${city.name} 3D demo.`;
     if (state.status) state.status.textContent = fullDispatch
       ? 'All training modes available in Peterborough.'
-      : `${city.name} demos · ${available('geo') ? 'Geo Guesser ready' : 'Geo Guesser on request'}${available('route') ? ' · Route Mapping ready' : ''}${freeDriving ? ' · Free driving ready' : ''}. Request other modes below.`;
+      : `${city.name} demos · ${available('geo') ? 'Geo Guesser ready' : 'Geo Guesser on request'}${available('route') ? ' · Route Mapping ready' : ''}${responseDemo ? ' · Dispatch response demo ready' : freeDriving ? ' · Free driving ready' : ''}. Request other modes below.`;
     updateLinks();
     if (changed) {
       // A background storage update must not hide the preview link someone is using.
@@ -207,7 +207,7 @@
       const ready = available(mode) && Boolean(routes[mode]);
       link.dataset.modeAvailable = String(ready);
       link.setAttribute('aria-label', ready
-        ? mode === 'dispatch' && state.city.id !== 'peterborough' ? `Open Fire & EMS free driving in ${state.city.name}` : `Open ${state.city.name} ${MODES[mode]}`
+        ? mode === 'dispatch' && state.city.id !== 'peterborough' ? `Open Fire & EMS ${state.city.status === 'dispatch-demo' ? 'response demo' : 'free driving'} in ${state.city.name}` : `Open ${state.city.name} ${MODES[mode]}`
         : `Request a ${state.city.name} ${MODES[mode]} demo`);
       if (ready) {
         const url = new URL(routes[mode], location.href);

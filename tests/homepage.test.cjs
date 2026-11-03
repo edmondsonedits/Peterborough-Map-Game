@@ -253,7 +253,7 @@ test('initialization waits safely for a usable registry', () => {
 });
 
 
-test('Dispatch preview distinguishes calls from free driving and keeps screenshot geography truthful', () => {
+test('Dispatch preview describes response demos and keeps screenshot geography truthful', () => {
   const h = fixture();
   assert.equal(h.get('home-dispatch-description').textContent, 'Drive Fire & EMS responses.');
   assert.equal(h.dispatchPreviewTitles[0].textContent, 'Take the next call.');
@@ -261,10 +261,11 @@ test('Dispatch preview distinguishes calls from free driving and keeps screensho
   assert.equal(h.dispatchPreviewDescriptions[0].textContent, 'Choose Fire or EMS and practise your response.');
   assert.equal(h.launches[2].querySelector('[data-launch-label]').textContent, 'Play Dispatch Simulator');
   h.changeCity('toronto');
-  assert.equal(h.get('home-dispatch-description').textContent, 'Drive Fire & EMS in Toronto.');
-  assert.equal(h.dispatchPreviewTitles[0].textContent, 'Get to know the streets.');
+  assert.equal(h.get('home-dispatch-description').textContent, 'Practise Fire and EMS responses, hospital transport, and route review in Toronto.');
+  assert.equal(h.launches[2].getAttribute('aria-label'), 'Open Fire & EMS response demo in Toronto');
+  assert.equal(h.dispatchPreviewTitles[0].textContent, 'Take the next call.');
   assert.equal(h.dispatchModeLabels[0].textContent, 'Dispatch Simulator');
-  assert.equal(h.dispatchPreviewDescriptions[0].textContent, 'Choose Fire or EMS for free driving.');
+  assert.equal(h.dispatchPreviewDescriptions[0].textContent, 'Choose Fire or EMS. Complete the call, then review your route.');
   assert.equal(h.launches[2].querySelector('[data-launch-label]').textContent, 'Play Demo');
   assert.equal(h.panels[2].querySelector('img').alt, 'Peterborough Dispatch Simulator gameplay');
   h.changeCity('peterborough');
