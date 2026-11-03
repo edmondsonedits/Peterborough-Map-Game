@@ -114,6 +114,72 @@ test('door controller waits for reveal delay, lifts doors, and reset returns all
   assert.equal(inspection.doors[0].slats[0].rotation.x, 0);
 });
 
+test('manual Station 3 door stays closed until requested and then opens immediately',()=>{
+ const inspection=inspectStationThreeModel(modelWithDoors());
+ const controller=createStationThreeDoorController({doors:inspection.doors,doorNames:['Station3_Door_01'],durationMs:1000});
+ controller.update(10000);
+ assert.equal(controller.phase,'closed');assert.equal(controller.fraction,0);assert.equal(controller.target,0);
+ assert.equal(inspection.doors[0].slats[0].position.y,.21);
+ controller.open(10000);
+ assert.equal(controller.phase,'opening');assert.equal(controller.target,1);
+ controller.update(11000);
+ assert.equal(controller.fraction,1);assert.equal(controller.phase,'open');
+ assert.deepEqual(inspection.doors.slice(1).map(door=>door.slats[0].position.y),[.21,.21]);
+});
+
+test('manual opening and closing reversals preserve the current animated position',()=>{
+ const inspection=inspectStationThreeModel(modelWithDoors());
+ const controller=createStationThreeDoorController({doors:inspection.doors,doorNames:['Station3_Door_01'],durationMs:1000});
+ controller.open(0);controller.update(500);
+ assert.equal(controller.fraction,.5);assert.equal(controller.phase,'opening');
+ const halfway=inspection.doors[0].slats.map(slat=>({y:slat.position.y,z:slat.position.z,rotation:slat.rotation.x}));
+ controller.close(500);
+ assert.equal(controller.target,0);assert.equal(controller.phase,'closing');
+ controller.update(500);
+ assert.deepEqual(inspection.doors[0].slats.map(slat=>({y:slat.position.y,z:slat.position.z,rotation:slat.rotation.x})),halfway);
+ controller.update(750);
+ assert.ok(Math.abs(controller.fraction-.25)<1e-9);
+ const beforeReverse=inspection.doors[0].slats[0].position.y;
+ controller.toggle(750);controller.update(750);
+ assert.equal(controller.target,1);assert.equal(controller.phase,'opening');
+ assert.equal(inspection.doors[0].slats[0].position.y,beforeReverse);
+ controller.update(1000);assert.ok(controller.fraction>.25&&controller.fraction<1);
+});
+
+test('obstruction reverses a closing door back toward open without a position jump',()=>{
+ const inspection=inspectStationThreeModel(modelWithDoors());
+ const controller=createStationThreeDoorController({doors:inspection.doors,doorNames:['Station3_Door_01'],durationMs:1000});
+ controller.open(0);controller.update(1000);controller.close(1000);controller.update(1250);
+ const obstructedFraction=controller.fraction,position=inspection.doors[0].slats[0].position.y;
+ controller.update(1250,{obstructed:true});
+ assert.equal(controller.target,1);assert.equal(controller.phase,'opening');
+ assert.equal(controller.fraction,obstructedFraction);assert.equal(inspection.doors[0].slats[0].position.y,position);
+ controller.update(1500);assert.ok(controller.fraction>obstructedFraction);
+});
+
+test('obstruction after a long frame holds the last fraction instead of closing through an actor',()=>{
+ const inspection=inspectStationThreeModel(modelWithDoors());
+ const controller=createStationThreeDoorController({doors:inspection.doors,doorNames:['Station3_Door_01'],durationMs:1000});
+ controller.open(0);controller.update(1000);controller.close(1000);controller.update(1250);
+ const lastSafeFraction=controller.fraction,position=inspection.doors[0].slats[0].position.y;
+ controller.update(20000,{obstructed:true});
+ assert.equal(controller.target,1);assert.equal(controller.phase,'opening');
+ assert.equal(controller.fraction,lastSafeFraction);assert.equal(inspection.doors[0].slats[0].position.y,position);
+ controller.update(20500);assert.equal(controller.phase,'open');assert.equal(controller.fraction,1);
+});
+
+test('reset synchronously closes the door and cancels active motion',()=>{
+ const inspection=inspectStationThreeModel(modelWithDoors());
+ const closed=inspection.doors[0].slats.map(slat=>({x:slat.position.x,y:slat.position.y,z:slat.position.z,rotation:slat.rotation.x}));
+ const controller=createStationThreeDoorController({doors:inspection.doors,doorNames:['Station3_Door_01'],durationMs:1000});
+ controller.open(0);controller.update(500);assert.ok(controller.fraction>0&&controller.fraction<1);
+ controller.reset();
+ assert.equal(controller.phase,'closed');assert.equal(controller.fraction,0);assert.equal(controller.target,0);
+ assert.deepEqual(inspection.doors[0].slats.map(slat=>({x:slat.position.x,y:slat.position.y,z:slat.position.z,rotation:slat.rotation.x})),closed);
+ controller.update(5000);assert.equal(controller.phase,'closed');assert.equal(controller.fraction,0);
+ assert.deepEqual(inspection.doors.slice(1).map(door=>door.slats[0].position.y),[.21,.21]);
+});
+
 test('interior spawn is selected only for Station 3 with a ready model', () => {
   const fallback = { x: 10, z: 20, heading: 1 };
   const interior = { x: 2, z: 3, heading: 4 };

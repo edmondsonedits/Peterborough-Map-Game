@@ -45,6 +45,11 @@
       @media (pointer: coarse) { #station1-game-controls:not([hidden]) { display: none; } }
       @media (max-width: 760px) { #station2-game-controls:not([hidden]) { right: 12px; bottom: calc(134px + env(safe-area-inset-bottom, 0px)); gap: 5px; } }
       @media (pointer: coarse) { #station2-game-controls:not([hidden]) { display: none; } }
+      #station3-game-controls:not([hidden]) { position: fixed; right: 28px; bottom: calc(116px + env(safe-area-inset-bottom, 0px)); z-index: 19; display: flex; align-items: center; flex-wrap: wrap; gap: 7px; max-width: min(660px, calc(100vw - 24px)); pointer-events: auto; }
+      #station3-game-controls .hud-button { min-height: 34px; padding: 0 11px; font-size: 10px; }
+      #station3-model-status { color: #d5e0da; font-size: 10px; text-shadow: 0 1px 4px #07131b; }
+      @media (max-width: 760px) { #station3-game-controls:not([hidden]) { right: 12px; bottom: calc(134px + env(safe-area-inset-bottom, 0px)); gap: 5px; } }
+      @media (pointer: coarse) { #station3-game-controls:not([hidden]) { display: none; } }
     </style>
 
     <!--
@@ -85,7 +90,7 @@
       <!-- Buttons switch explorer modes or open dialogs; JavaScript owns behaviour. -->
       <nav class="control-panel" aria-label="Simulator controls">
         <a class="hud-button menu-link" href="../" aria-label="Return to all games">Main menu</a>
-        <button class="hud-button" id="graphics-quality-open" type="button">Graphics</button>
+        <button class="hud-button" id="graphics-quality-open" type="button">Settings</button>
         <button id="play-mode" class="hud-button is-active" type="button">Play</button>
         <button id="fly-mode" class="hud-button" type="button">Fly mode</button>
         <button id="map-mode" class="hud-button" type="button">Map</button>
@@ -143,6 +148,11 @@
       </div>
 
       <!-- Runtime diagnostics make data/performance problems easier to identify. -->
+      <div id="station3-game-controls" aria-label="Station 3 start and bay door controls" hidden>
+        <button id="station3-start-truck" class="hud-button" type="button">Start in truck</button>
+        <button id="station3-door-control" class="hud-button" type="button" disabled>Open front bay door</button>
+        <span id="station3-model-status" role="status" aria-live="polite">Station 3 model loading</span>
+      </div>
       <footer class="stats-bar">
         <div>
           <strong>Open geospatial city model</strong>
@@ -178,12 +188,22 @@
 
       <dialog id="graphics-quality-dialog" class="explorer-dialog" aria-labelledby="graphics-quality-title">
         <form method="dialog" class="dialog-shell">
-          <header><h2 id="graphics-quality-title">Graphics quality</h2><button class="hud-button" value="cancel" aria-label="Close graphics settings">Close</button></header>
+          <header><h2 id="graphics-quality-title">Settings</h2><button class="hud-button" value="cancel" aria-label="Close settings">Close</button></header>
+          <h3>Camera</h3>
+          <label for="camera-view-select">View</label>
+          <select id="camera-view-select" style="width:100%;min-height:44px;padding:10px;margin:10px 0;color:inherit;background:#14252c;border:1px solid #647580;border-radius:8px">
+            <option value="auto">Automatic — closer in the bay</option>
+            <option value="close">Close</option>
+            <option value="standard">Standard</option>
+            <option value="wide">Wide</option>
+          </select>
+          <p>Camera changes apply immediately and are saved. Automatic returns to the standard view as you leave the bay. Indoor views adjust to clear walls and ceilings.</p>
+          <h3>Graphics quality</h3>
           <p>Choose the detail level that runs smoothly on your device. Roads and driving stay the same.</p>
           <label for="graphics-quality-select">Quality</label>
           <select id="graphics-quality-select" style="width:100%;min-height:44px;padding:10px;margin:10px 0 18px;color:inherit;background:#14252c;border:1px solid #647580;border-radius:8px">
             <option value="low">Low � lighter on battery and memory</option>
-            <option value="balanced" selected>Balanced � recommended</option>
+            <option value="balanced" selected>Balanced — recommended</option>
             <option value="high">High � more detail and shadows</option>
           </select>
           <button id="graphics-quality-apply" type="button" class="hud-button">Apply and restart</button>
@@ -213,6 +233,8 @@
           <button id="station2-mobile-door" type="button" style="width:100%;min-height:28px;font-size:8px" disabled hidden>Open front bay door</button>
           <button id="station1-mobile-start" type="button" style="width:100%;min-height:28px;font-size:8px" hidden>Start in truck</button>
           <button id="station1-mobile-door" type="button" style="width:100%;min-height:28px;font-size:8px" disabled hidden>Open front bay door</button>
+          <button id="station3-mobile-start" type="button" style="width:100%;min-height:28px;font-size:8px" hidden>Start in truck</button>
+          <button id="station3-mobile-door" type="button" style="width:100%;min-height:28px;font-size:8px" disabled hidden>Open front bay door</button>
           <span class="mobile-control-caption">Action</span>
         </div>
         <div class="mobile-flight-pad" aria-label="Fly mode altitude controls">

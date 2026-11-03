@@ -1,3 +1,5 @@
+import { CAMERA_VIEWS, cameraBayInfluence, cameraFraming, clampBayCamera, installCameraViewControl } from './gameplay-camera.mjs?v=1.6.173';
+import { STATION_THREE_BAY, stationThreeDoorObstructed, stationThreeDoorSweep } from './station-three-bay.mjs?v=1.6.173';
 import { createStationTransition } from './station-transition.mjs?v=1.6.173';
 import { groupFeaturesByTile, isInInitialCityBuildCohort, runProgressiveCityBuild } from './progressive-city-build.mjs?v=1.6.173';
 import {buildWaterStreetPaint} from './water-street-paint.js?v=1.6.173';
@@ -34,7 +36,7 @@ import { createEmergencyFacilityLayer, suppressFacilitySource } from './emergenc
 import { emergencyFacilityEntries } from './emergency-facilities-catalog.js?v=1.6.173';
 import { createStationOneRuntime, preloadStationOneAsset, stationOneRequested } from './station-one-runtime.js?v=1.6.173';
 import { createStationTwoRuntime, preloadStationTwoAsset, stationTwoRequested } from './station-two-runtime.js?v=1.6.173';
-import { attachStationThreeModel, createStationThreeDoorController, hideStationThreeReplacementRecords, inspectStationThreeModel, loadStationThreeAsset, selectStationThreeSpawn, stationGameplayLabels, stationThreeLocalPosition, stationThreeThrottleInput, STATION_THREE_BAY_EXIT_LOCAL_Z, STATION_THREE_INITIAL_CAMERA_DISTANCE_SCALE, STATION_THREE_INTERIOR_DRIVE_CAMERA_HEIGHT } from './station-three-runtime.js?v=1.6.173';
+import { attachStationThreeModel, createStationThreeDoorController, hideStationThreeReplacementRecords, inspectStationThreeModel, loadStationThreeAsset, selectStationThreeSpawn, stationGameplayLabels, stationThreeLocalPosition } from './station-three-runtime.js?v=1.6.173';
 import { reconcileStationPavement } from './station-pavement-layer.js?v=1.6.57';
 import { CURB_REVEAL, curbIsRaised, stationRoadWeight, splitRoadDetailSegment, pavementSupportBottom } from './station-road-detail.js?v=1.6.58';
 import { installQualityCapture } from './quality-capture.js?v=sherbrooke-20260915';
@@ -199,6 +201,12 @@ const CITY = {
 
 const els = {
   app: document.querySelector('#app'),
+  stationThreeDoor: document.querySelector('#station3-door-control'),
+  stationThreeMobileDoor: document.querySelector('#station3-mobile-door'),
+  stationThreeMobileStart: document.querySelector('#station3-mobile-start'),
+  stationThreeControls: document.querySelector('#station3-game-controls'),
+  stationThreeModelStatus: document.querySelector('#station3-model-status'),
+  stationThreeStartTruck: document.querySelector('#station3-start-truck'),
   stationOneDoor: document.querySelector('#station1-door-control'),
   stationOneMobileDoor: document.querySelector('#station1-mobile-door'),
   stationOneMobileStart: document.querySelector('#station1-mobile-start'),
@@ -296,6 +304,7 @@ const state = {
   gameplayYaw: Math.PI,
   gameplayPitch: -0.2,
   gameplayCameraDistanceScale: 1,
+  cameraBayBlend: 0,
   gameplayLastLookTime: 0,
   emergencyLights: false,
   theme: 'day',
@@ -379,6 +388,10 @@ const compatibilityMode = new URLSearchParams(location.search).get('lite') === '
 const lowPowerProfile = graphicsQuality.name !== 'high';
 document.documentElement.dataset.graphicsQuality=graphicsQuality.name;
 installGraphicsQualityControl({document,location,storage:graphicsStorage,profile:graphicsQuality});
+const cameraSettings=installCameraViewControl({document,storage:graphicsStorage,onChange(view){
+  state.gameplayCameraDistanceScale=1;
+  showToast('Camera: '+({auto:'Automatic',close:'Close',standard:'Standard',wide:'Wide'})[view]);
+}});
 const cityVisuals = visualSettings(location.search, lowPowerProfile);
 scene.fog.density=graphicsQuality.fogDensity;
 const roadAppearanceEnabled = new URLSearchParams(location.search).get('roadAppearance') !== 'legacy';
@@ -555,7 +568,7 @@ let stationThreeAssetReady = false;
 let stationThreeModel = null;
 let stationThreeGltf = null;
 let stationThreeDoorController = null;
-let stationThreeRevealTimer = null;
+const stationThreeModelYaw = Math.atan2(-Math.sin(FIRE_STATION_THREE.interiorTruckHeading), -Math.cos(FIRE_STATION_THREE.interiorTruckHeading));
 let semanticSurveyCollection = null;
 let semanticSurveyOverlay = null;
 let semanticSurveyOverlayDefinition = null;
@@ -5685,12 +5698,6 @@ async function buildCity() {
   stationSwitchReady = true;
   window.dispatchEvent(new Event('ptbo:gameplay-ready'));
   progressiveCityStatus.playableMs = Math.round(performance.now() - explorerStartedAt);
-  if (FIRE_STATION_ONE.number === 3 && stationThreeAssetReady && stationThreeDoorController) {
-    stationThreeRevealTimer = setTimeout(() => {
-      stationThreeRevealTimer = null;
-      stationThreeDoorController?.start(performance.now());
-    }, 760);
-  }
   if (!ROAD_PACK_BUILD && FIRE_STATION_ONE.number !== 3) {
     // Keep the authored Station 3 exterior in the city without making its
     // GLB part of another station's spawn/readiness path.
@@ -5960,7 +5967,7 @@ function syncGameplayRootClasses() {
 
 function updateGameplayHint() {
   const number = FIRE_STATION_ONE.number;
-  const doorHint = number === 1 || number === 2 ? ' · G opens/closes the front bay door aligned with the truck' : '';
+  const doorHint = [1,2,3].includes(number) ? ' · G opens/closes the front bay door aligned with the truck' : '';
   if (state.mode === 'onFoot') {
     els.modeHint.innerHTML = `<strong>On foot at Fire Station ${number}.</strong> WASD or arrows move · Shift sprints · mouse looks · E enters the fire truck${doorHint} · F free camera.`;
   } else if (state.mode === 'driving') {
@@ -5969,7 +5976,7 @@ function updateGameplayHint() {
 }
 function startDrivingFromBay() {
   if (!gameplayReady || stationSwitchBusy()) return false;
-  if (STATION_ONE_SELECTED || STATION_TWO_SELECTED) resetGameplay();
+  resetGameplay();
   playerActor.visible = false;
   playerVelocity.set(0, 0, 0);
   state.gameplayYaw = truckState.heading;
@@ -6009,16 +6016,48 @@ function stationThreeSpawnPoints(activeStation = FIRE_STATION_ONE) {
   });
 }
 
-function stationThreeTruckLocalPosition() {
+function stationThreeLocalActor(point) {
   const anchor = project(FIRE_STATION_THREE.assetAnchorLat, FIRE_STATION_THREE.assetAnchorLon);
-  const forward = directionFromHeading(FIRE_STATION_THREE.interiorTruckHeading);
-  return stationThreeLocalPosition({
-    x: truckState.x,
-    z: truckState.z,
+  return {...stationThreeLocalPosition({
+    x: point.x,
+    z: point.z,
     anchorX: anchor.x,
     anchorZ: anchor.y,
-    modelYaw: Math.atan2(forward.x, forward.z),
-  });
+    modelYaw: stationThreeModelYaw,
+  }),heading:(point.heading??0)-stationThreeModelYaw};
+}
+function stationThreeTruckLocalPosition() { return stationThreeLocalActor(truckState); }
+function stationThreeDoorOccupied() {
+  if(!stationThreeAssetReady||!playerActor)return false;
+  return stationThreeDoorObstructed(stationThreeLocalActor(truckState)) ||
+    (state.mode==='onFoot'&&stationThreeDoorObstructed(stationThreeLocalActor(playerActor.position),{player:true}));
+}
+function stationThreeBlocksMove(from,to,options={}) {
+  return FIRE_STATION_ONE.number===3 && stationThreeAssetReady &&
+    stationThreeDoorSweep(stationThreeLocalActor(from),stationThreeLocalActor(to),{...options,fraction:stationThreeDoorController?.fraction??0});
+}
+const stationThreeDoorRuntime={
+  isReady:()=>stationThreeAssetReady&&Boolean(stationThreeDoorController),
+  frontDoorForTruck(point){const p=stationThreeLocalActor(point);return Math.abs(p.x+.7)<2.3&&Math.abs(p.z)<24?0:-1;},
+  getStatus(){return {loaded:this.isReady(),doors:{front:[{fraction:stationThreeDoorController?.fraction??0,target:stationThreeDoorController?.target??0}]}};},
+  toggleFrontDoorForTruck(point){
+    if(!this.isReady()||this.frontDoorForTruck(point)<0)return null;
+    const blocked=stationThreeDoorController.target===1&&stationThreeDoorOccupied();
+    if(!blocked)stationThreeDoorController.toggle(performance.now());
+    return {side:'front',index:0,blocked};
+  },
+};
+function selectedStationDoorRuntime() { return selectedStationRuntime() || (FIRE_STATION_ONE.number===3?stationThreeDoorRuntime:null); }
+function stationCameraBay() {
+  const runtime=selectedStationRuntime();
+  if(runtime?.isReady()){
+    const b=(STATION_ONE_SELECTED?stationOneLayout:stationTwoLayout).bay;
+    return {bounds:{minX:b.minX,maxX:b.maxX,minZ:b.frontZ,maxZ:b.rearZ},datum:runtime.datum,ceiling:b.roofTop-1.3,local:runtime.localPoint,world:runtime.worldPoint};
+  }
+  if(FIRE_STATION_ONE.number!==3||!stationThreeAssetReady||!stationThreeModel)return null;
+  const anchor=project(FIRE_STATION_THREE.assetAnchorLat,FIRE_STATION_THREE.assetAnchorLon),c=Math.cos(stationThreeModelYaw),sn=Math.sin(stationThreeModelYaw);
+  return {bounds:STATION_THREE_BAY,datum:stationThreeModel.position.y,ceiling:STATION_THREE_BAY.ceiling-1.3,local:stationThreeLocalActor,
+    world:p=>({x:anchor.x+c*p.x+sn*p.z,z:anchor.y-sn*p.x+c*p.z})};
 }
 
 function snapGameplayCamera() {
@@ -6224,6 +6263,7 @@ async function prepareStationSwitch(number, context) {
 
 function syncStationControls() {
   for(const [active,controls,start,door,status,runtime]of[
+    [FIRE_STATION_ONE.number===3,els.stationThreeControls,els.stationThreeMobileStart,els.stationThreeMobileDoor,els.stationThreeModelStatus,stationThreeDoorRuntime],
     [STATION_ONE_SELECTED,els.stationOneControls,els.stationOneMobileStart,els.stationOneMobileDoor,els.stationOneModelStatus,stationOneRuntime],
     [STATION_TWO_SELECTED,els.stationTwoControls,els.stationTwoMobileStart,els.stationTwoMobileDoor,els.stationTwoModelStatus,stationTwoRuntime],
   ]) { controls.hidden=!active; start.hidden=!active; door.hidden=!active; if(active)status.textContent=runtime?.isReady()?'':'Station model unavailable'; }
@@ -6306,8 +6346,7 @@ function initializeGameplay() {
   gameplayReady = true;
   state.gameplayYaw = STATION_ONE_SELECTED || STATION_TWO_SELECTED ? truckHeading : (FIRE_STATION_ONE.number === 3 && stationThreeAssetReady ? spawn.heading : 0);
   state.gameplayPitch = -0.19;
-  state.gameplayCameraDistanceScale = FIRE_STATION_ONE.number === 3 && stationThreeAssetReady
-    ? STATION_THREE_INITIAL_CAMERA_DISTANCE_SCALE : 1;
+  state.gameplayCameraDistanceScale = 1;
   gameplayCameraTarget.copy(playerActor.position).add(new THREE.Vector3(0, PLAYER_TUNING.cameraHeight, 0));
   playerActor.visible = state.mode !== 'driving';
   syncGameplayRootClasses();
@@ -6359,13 +6398,17 @@ function initializeGameplay() {
     stationThree: {
       get assetReady() { return stationThreeAssetReady; },
       doorPhase: () => stationThreeDoorController?.phase || 'unavailable',
-      forwardThrottleEnabled: () => FIRE_STATION_ONE.number !== 3
-        || !stationThreeAssetReady || stationThreeDoorController?.phase === 'open',
+      forwardThrottleEnabled: () => {
+        const forward=directionFromHeading(truckState.heading);
+        return !stationThreeBlocksMove(truckState,{...truckState,x:truckState.x+forward.x,z:truckState.z+forward.z});
+      },
     },
     state() {
       return {
         mode: state.mode,
         stationNumber: FIRE_STATION_ONE.number,
+        camera: {view:cameraSettings.view,bayBlend:state.cameraBayBlend,zoom:state.gameplayCameraDistanceScale,...cameraFraming(cameraSettings.view,state.cameraBayBlend)},
+        stationThreeDoor: FIRE_STATION_ONE.number===3?{loaded:stationThreeAssetReady,phase:stationThreeDoorController?.phase,fraction:stationThreeDoorController?.fraction,target:stationThreeDoorController?.target}:null,
         canSwitchStations: stationSwitchReady,
         transition: stationTransitionController?.getStatus(),
         player: playerActor ? { x: playerActor.position.x, y: playerActor.position.y, z: playerActor.position.z } : null,
@@ -6393,6 +6436,7 @@ function initializeGameplay() {
     },
     reset: resetGameplay,
   });
+  syncStationControls();
 }
 
 function resetGameplay({mode='onFoot',stationSwitch=false} = {}) {
@@ -6420,17 +6464,9 @@ function resetGameplay({mode='onFoot',stationSwitch=false} = {}) {
   selectedStationRuntime()?.update(0, truckState, playerActor.position);
   state.gameplayYaw = STATION_ONE_SELECTED || STATION_TWO_SELECTED ? truckHeading : (FIRE_STATION_ONE.number === 3 && stationThreeAssetReady ? spawn.heading : 0);
   state.gameplayPitch = -0.19;
-  state.gameplayCameraDistanceScale = FIRE_STATION_ONE.number === 3 && stationThreeAssetReady
-    ? STATION_THREE_INITIAL_CAMERA_DISTANCE_SCALE : 1;
+  state.gameplayCameraDistanceScale = 1;
   setMode(mode === 'driving' ? 'driving' : 'onFoot', true);
-  if (stationThreeRevealTimer !== null) clearTimeout(stationThreeRevealTimer);
-  stationThreeRevealTimer = null;
-  if (stationThreeDoorController) {
-    stationThreeDoorController.reset();
-    if (FIRE_STATION_ONE.number === 3 && stationThreeAssetReady) {
-      stationThreeDoorController.start(performance.now());
-    }
-  }
+  stationThreeDoorController?.reset();
   snapGameplayCamera();
   return true;
 }
@@ -6590,13 +6626,8 @@ function updateVehicleAudio() {
 }
 
 function cycleGameplayCameraDistance() {
-  const choices = [0.72, 1, 1.38];
-  const closest = choices.reduce((best, value, index) => (
-    Math.abs(value - state.gameplayCameraDistanceScale) < Math.abs(choices[best] - state.gameplayCameraDistanceScale) ? index : best
-  ), 0);
-  const next = (closest + 1) % choices.length;
-  state.gameplayCameraDistanceScale = choices[next];
-  showToast(`Camera distance ${next === 0 ? 'near' : next === 1 ? 'standard' : 'far'}`);
+  const next=(CAMERA_VIEWS.indexOf(cameraSettings.view)+1)%CAMERA_VIEWS.length;
+  cameraSettings.setView(CAMERA_VIEWS[next]);
 }
 
 function currentGameplayAxes(delta) {
@@ -6673,6 +6704,9 @@ function updatePlayerActor(delta) {
   let nextX = THREE.MathUtils.clamp(previousX + playerVelocity.x * delta, CITY.worldBounds.minX, CITY.worldBounds.maxX);
   let nextZ = THREE.MathUtils.clamp(previousZ + playerVelocity.z * delta, CITY.worldBounds.minZ, CITY.worldBounds.maxZ);
   if (!citySceneryReadyAt(nextX, nextZ)) { nextX = previousX; nextZ = previousZ; playerVelocity.set(0,0,0); }
+  if(stationThreeBlocksMove({x:previousX,z:previousZ},{x:nextX,z:nextZ},{player:true})){
+    nextX=previousX;nextZ=previousZ;playerVelocity.set(0,0,0);
+  }
   const stationRuntime = selectedStationRuntime();
   if (stationRuntime?.collides({ x: nextX, z: nextZ, heading: playerHeading }, { player: true })) {
     const clearX = !stationRuntime.collides({ x: nextX, z: previousZ, heading: playerHeading }, { player: true });
@@ -6712,12 +6746,7 @@ function updateFireTruck(delta) {
   if (!gameplayReady || stationSwitchBusy()) return;
   if (state.mode === 'driving') {
     const axes = currentGameplayAxes(delta);
-    const throttle = stationThreeThrottleInput({
-      stationNumber: FIRE_STATION_ONE.number,
-      assetReady: stationThreeAssetReady,
-      doorPhase: stationThreeDoorController?.phase,
-      throttle: axes.forward,
-    });
+    const throttle = axes.forward;
     const currentSurface = gameplaySurfaceAt(truckState.x, truckState.z, truckState.y);
     const next = stepFireTruckKinematics(truckState, {
       throttle,
@@ -6725,7 +6754,7 @@ function updateFireTruck(delta) {
     }, delta, truckIsOnRoad(currentSurface.onRoad, truckState.lastRoadWheelCount));
     next.x = THREE.MathUtils.clamp(next.x, CITY.worldBounds.minX, CITY.worldBounds.maxX);
     next.z = THREE.MathUtils.clamp(next.z, CITY.worldBounds.minZ, CITY.worldBounds.maxZ);
-    if (selectedStationRuntime()?.sweep(truckState, next)) { next.x = truckState.x; next.z = truckState.z; next.speed = 0; next.acceleration = 0; }
+    if (selectedStationRuntime()?.sweep(truckState, next) || stationThreeBlocksMove(truckState,next)) { next.x = truckState.x; next.z = truckState.z; next.speed = 0; next.acceleration = 0; }
     if(!citySceneryReadyAt(next.x,next.z)||(roadTileLayer&&!roadTileLayer.readyAt(next.x,next.z,12))){next.x=truckState.x;next.z=truckState.z;next.speed=0;next.acceleration=0;document.documentElement.dataset.roadStreaming='waiting';}
     else document.documentElement.dataset.roadStreaming='ready';
     Object.assign(truckState, next);
@@ -6792,12 +6821,12 @@ function updateGameplayCamera(delta, snap = false) {
   }
   const mobileCameraScale = !driving && innerWidth < 520 ? 1.45 : 1;
   const baseDistance = (driving ? TRUCK_TUNING.chaseDistance : PLAYER_TUNING.cameraDistance) * mobileCameraScale;
-  const stationThreeDrivingInside = driving && FIRE_STATION_ONE.number === 3 && stationThreeAssetReady
-    && stationThreeTruckLocalPosition().z < STATION_THREE_BAY_EXIT_LOCAL_Z;
-  const baseHeight = driving
-    ? stationThreeDrivingInside ? STATION_THREE_INTERIOR_DRIVE_CAMERA_HEIGHT : TRUCK_TUNING.chaseHeight
-    : 0.7;
-  const distance = baseDistance * state.gameplayCameraDistanceScale;
+  const bay=stationCameraBay(),local=bay?.local(active);
+  const bayWeight=bay?cameraBayInfluence(local,bay.bounds,driving?TRUCK_TUNING.length/2:0):0;
+  state.cameraBayBlend=snap?bayWeight:exponentialStep(state.cameraBayBlend,bayWeight,5,delta);
+  const framing=cameraFraming(cameraSettings.view,state.cameraBayBlend);
+  const baseHeight=driving?framing.driveHeight:.7;
+  const distance=baseDistance*framing.scale*state.gameplayCameraDistanceScale;
   const horizontalDistance = Math.cos(state.gameplayPitch) * distance;
   const cameraDirection = directionFromHeading(state.gameplayYaw);
   gameplayDesiredCamera.set(
@@ -6810,7 +6839,9 @@ function updateGameplayCamera(delta, snap = false) {
     const targetLocal = stationRuntime.localPoint({ x: gameplayDesiredTarget.x, z: gameplayDesiredTarget.z });
     const cameraLocal = stationRuntime.localPoint({ x: gameplayDesiredCamera.x, z: gameplayDesiredCamera.z });
     const blocker = STATION_ONE_SELECTED ? stationOneLayout.cameraBlocker : stationTwoLayout.rearService;
-    const offsetScale = stationCameraOffsetScale(targetLocal, cameraLocal, blocker, 0.65);
+    let offsetScale = stationCameraOffsetScale(targetLocal, cameraLocal, blocker, 0.65);
+    const heightAtBlocker=gameplayDesiredTarget.y+(gameplayDesiredCamera.y-gameplayDesiredTarget.y)*offsetScale;
+    if(heightAtBlocker>stationRuntime.datum+blocker.height+.35)offsetScale=1;
     if (offsetScale < 1) {
       gameplayDesiredCamera.set(
         gameplayDesiredTarget.x + (gameplayDesiredCamera.x - gameplayDesiredTarget.x) * offsetScale,
@@ -6819,12 +6850,14 @@ function updateGameplayCamera(delta, snap = false) {
       );
     }
   }
+  const insideBay=bay&&local.x>=bay.bounds.minX&&local.x<=bay.bounds.maxX&&local.z>=bay.bounds.minZ&&local.z<=bay.bounds.maxZ;
+  if(insideBay){
+    const clipped=clampBayCamera(bay.local(gameplayDesiredTarget),bay.local(gameplayDesiredCamera),bay.bounds);
+    const world=bay.world(clipped);gameplayDesiredCamera.x=world.x;gameplayDesiredCamera.z=world.z;
+  }
   const cameraGround = terrainHeightAtWorld(gameplayDesiredCamera.x, gameplayDesiredCamera.z) + 0.65;
   gameplayDesiredCamera.y = Math.max(gameplayDesiredCamera.y, cameraGround);
-  if (stationRuntime?.containsBay(active)) {
-    const ceilingClearance = STATION_ONE_SELECTED ? stationOneLayout.bay.roofTop - 1.3 : 6.1;
-    gameplayDesiredCamera.y = THREE.MathUtils.clamp(gameplayDesiredCamera.y, stationRuntime.datum + 1.2, stationRuntime.datum + ceilingClearance);
-  }
+  if(insideBay)gameplayDesiredCamera.y=THREE.MathUtils.clamp(gameplayDesiredCamera.y,bay.datum+1.2,bay.datum+bay.ceiling);
   const positionResponse = driving ? TRUCK_TUNING.cameraPositionResponse : PLAYER_TUNING.cameraPositionResponse;
   const targetResponse = driving ? TRUCK_TUNING.cameraTargetResponse : PLAYER_TUNING.cameraTargetResponse;
   const positionAlpha = snap ? 1 : 1 - Math.exp(-positionResponse * delta);
@@ -6853,13 +6886,13 @@ function updateGameplayHud() {
     lastRoadLabel = label;
     els.gameplayRoad.textContent = label;
   }
-  if (STATION_ONE_SELECTED || STATION_TWO_SELECTED) {
-    const runtime = selectedStationRuntime();
+  if ([1,2,3].includes(FIRE_STATION_ONE.number)) {
+    const runtime = selectedStationDoorRuntime();
     const doorIndex = runtime?.frontDoorForTruck(truckState) ?? -1;
     const door = doorIndex >= 0 ? runtime.getStatus().doors.front[doorIndex] : null;
     const enabled = Boolean(!stationSwitchBusy() && runtime?.isReady() && door);
     const text = door?.target > 0.5 ? 'Close bay door' : 'Open bay door';
-    const buttons = STATION_ONE_SELECTED ? [els.stationOneDoor, els.stationOneMobileDoor] : [els.stationTwoDoor, els.stationTwoMobileDoor];
+    const buttons = STATION_ONE_SELECTED ? [els.stationOneDoor, els.stationOneMobileDoor] : STATION_TWO_SELECTED ? [els.stationTwoDoor, els.stationTwoMobileDoor] : [els.stationThreeDoor, els.stationThreeMobileDoor];
     buttons.forEach(button => {
       if (!button) return;
       const disabled = !enabled;
@@ -6910,9 +6943,6 @@ function enterOrExitVehicle() {
     playerActor.visible = false;
     playerVelocity.set(0, 0, 0);
     state.gameplayYaw = STATION_ONE_SELECTED || STATION_TWO_SELECTED || (FIRE_STATION_ONE.number === 3 && stationThreeAssetReady) ? truckState.heading : 0;
-    if (FIRE_STATION_ONE.number === 3 && stationThreeAssetReady) {
-      state.gameplayCameraDistanceScale = STATION_THREE_INITIAL_CAMERA_DISTANCE_SCALE;
-    }
     state.gameplayLastLookTime = performance.now();
     state.gameplayPitch = -0.17;
     setMode('driving', true);
@@ -7367,7 +7397,7 @@ function animate() {
     return;
   }
   const delta = Math.min(clock.getDelta(), 0.05);
-  stationThreeDoorController?.update(performance.now());
+  stationThreeDoorController?.update(performance.now(),{obstructed:stationThreeDoorOccupied()});
   if (!captureFrame) {
     if(document.querySelector('dialog[open]')){state.keys.clear();currentGameplayAxes(0);}
     else if (cityEditor?.active) cityEditor.update(delta);
@@ -7882,15 +7912,19 @@ function onWheel(event) {
 function wireEvents() {
   const toggleSelectedFrontDoor = () => {
     if (stationSwitchBusy()) return;
-    const runtime = selectedStationRuntime();
+    const runtime = selectedStationDoorRuntime();
     if (!runtime?.isReady()) return;
     const door = runtime.toggleFrontDoorForTruck(truckState);
     if (door) {
       const opening = runtime.getStatus().doors.front[door.index].target > 0.5;
-      showToast(`${opening ? 'Opening' : 'Closing'} front bay door ${door.index + 1}`);
+      showToast(door.blocked?'Bay door held open: clear the doorway first.':`${opening ? 'Opening' : 'Closing'} front bay door ${door.index + 1}`);
     } else showToast('Move the truck nearer a front bay door');
     els.canvas.focus({ preventScroll: true });
   };
+  els.stationThreeDoor?.addEventListener('click', toggleSelectedFrontDoor);
+  els.stationThreeMobileDoor?.addEventListener('click', toggleSelectedFrontDoor);
+  els.stationThreeStartTruck?.addEventListener('click', startDrivingFromBay);
+  els.stationThreeMobileStart?.addEventListener('click', startDrivingFromBay);
   els.stationOneDoor?.addEventListener('click', toggleSelectedFrontDoor);
   els.stationOneMobileDoor?.addEventListener('click', toggleSelectedFrontDoor);
   els.stationTwoDoor?.addEventListener('click', toggleSelectedFrontDoor);
@@ -7975,13 +8009,8 @@ function wireEvents() {
       enterOrExitVehicle();
       event.preventDefault();
     }
-    if (!stationSwitchBusy() && !event.repeat && event.code === 'KeyG' && (STATION_ONE_SELECTED || STATION_TWO_SELECTED) && !event.ctrlKey && !event.altKey && (state.mode === 'onFoot' || state.mode === 'driving')) {
-      const runtime = selectedStationRuntime();
-      if (runtime?.isReady()) {
-        const door = runtime.toggleFrontDoorForTruck(truckState);
-        if (door) showToast(`${runtime.getStatus().doors.front[door.index].target > 0.5 ? 'Opening' : 'Closing'} front bay door ${door.index + 1}`);
-      }
-      event.preventDefault();
+    if (!stationSwitchBusy() && !event.repeat && event.code === 'KeyG' && !event.ctrlKey && !event.altKey && (state.mode === 'onFoot' || state.mode === 'driving')) {
+      toggleSelectedFrontDoor();event.preventDefault();
     }
     if (!event.repeat && event.code === 'KeyC' && (state.mode === 'onFoot' || state.mode === 'driving')) {
       cycleGameplayCameraDistance();

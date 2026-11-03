@@ -200,47 +200,85 @@ export function createStationThreeDoorController({
   const duration = Math.max(1, Number(durationMs) || 1);
   let startedAt = null;
   let phase = 'closed';
+  let fraction = 0;
+  let target = 0;
+  let startFraction = 0;
+  let motionDuration = duration;
+
+  function applyFraction(value) {
+    entries.forEach(({ closed }) => {
+      closed.forEach(({ slat, position, rotationX }) => {
+        const trackPosition = position.y + Number(openHeight) * value;
+        const cornerStart = Number(openHeight) - Number(slatSpacing) / 2;
+        const turn = Math.min(1, Math.max(0, (trackPosition - cornerStart) / Number(slatSpacing)));
+        slat.position.x = position.x;
+        slat.position.y = Math.min(trackPosition, Number(openHeight));
+        slat.position.z = position.z - Math.max(0, trackPosition - Number(openHeight));
+        slat.rotation.x = rotationX - (Math.PI / 2) * turn;
+      });
+    });
+  }
+
+  function advance(nowMs, { obstructed = false } = {}) {
+    if (startedAt === null || phase === 'closed' || phase === 'open') return phase;
+    const now = Number(nowMs);
+    if (obstructed && target === 0 && phase === 'closing' && fraction > 0) {
+      startFraction = fraction;
+      target = 1;
+      startedAt = now;
+      motionDuration = Math.max(1, duration * (target - startFraction));
+      return phase = 'opening';
+    }
+    if (now < startedAt) return phase = 'waiting';
+    const progress = Math.min(1, Math.max(0, (now - startedAt) / motionDuration));
+    const eased = progress * progress * (3 - 2 * progress);
+    fraction = startFraction + (target - startFraction) * eased;
+    applyFraction(fraction);
+    if (progress >= 1) {
+      fraction = target;
+      applyFraction(fraction);
+      startedAt = null;
+      return phase = target === 1 ? 'open' : 'closed';
+    }
+    return phase = target === 1 ? 'opening' : 'closing';
+  }
+
+  function moveTo(next, nowMs, delayMsForStart = 0) {
+    const now = Number(nowMs);
+    if (startedAt !== null) advance(now);
+    target = next;
+    startFraction = fraction;
+    if (Math.abs(target - fraction) < 1e-9) {
+      fraction = target;
+      startedAt = null;
+      applyFraction(fraction);
+      phase = target === 1 ? 'open' : 'closed';
+      return target;
+    }
+    startedAt = now + delayMsForStart;
+    motionDuration = Math.max(1, duration * Math.abs(target - startFraction));
+    phase = delayMsForStart > 0 ? 'waiting' : target === 1 ? 'opening' : 'closing';
+    return target;
+  }
 
   const controller = {
     get phase() { return phase; },
+    get fraction() { return fraction; },
+    get target() { return target; },
     start(nowMs = 0) {
-      startedAt = Number(nowMs) + delay;
-      phase = delay > 0 ? 'waiting' : 'opening';
+      return moveTo(1, nowMs, delay);
     },
-    update(nowMs) {
-      if (startedAt === null || phase === 'closed' || phase === 'open') return phase;
-      const elapsed = Number(nowMs) - startedAt;
-      if (elapsed < 0) {
-        phase = 'waiting';
-        return phase;
-      }
-      const linear = Math.min(1, Math.max(0, elapsed / duration));
-      const eased = linear * linear * (3 - 2 * linear);
-      entries.forEach(({ closed }) => {
-        closed.forEach(({ slat, position, rotationX }) => {
-          const trackPosition = position.y + Number(openHeight) * eased;
-          const cornerStart = Number(openHeight) - Number(slatSpacing) / 2;
-          const turn = Math.min(1, Math.max(0, (trackPosition - cornerStart) / Number(slatSpacing)));
-          slat.position.x = position.x;
-          slat.position.y = Math.min(trackPosition, Number(openHeight));
-          slat.position.z = position.z - Math.max(0, trackPosition - Number(openHeight));
-          slat.rotation.x = rotationX - (Math.PI / 2) * turn;
-        });
-      });
-      phase = linear >= 1 ? 'open' : 'opening';
-      return phase;
-    },
+    open(nowMs = 0) { return moveTo(1, nowMs); },
+    close(nowMs = 0) { return moveTo(0, nowMs); },
+    toggle(nowMs = 0) { return moveTo(target === 1 ? 0 : 1, nowMs); },
+    update(nowMs, options) { return advance(nowMs, options); },
     reset() {
-      entries.forEach(({ closed }) => {
-        closed.forEach(({ slat, position, rotationX }) => {
-          slat.position.x = position.x;
-          slat.position.y = position.y;
-          slat.position.z = position.z;
-          slat.rotation.x = rotationX;
-        });
-      });
+      fraction = 0;
+      target = 0;
+      startFraction = 0;
       startedAt = null;
       phase = 'closed';
+      applyFraction(fraction);
     },
   };
   return controller;
