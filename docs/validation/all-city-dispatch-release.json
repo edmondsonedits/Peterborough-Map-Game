@@ -1,0 +1,1820 @@
+{
+  "checkedDate": "2026-11-02",
+  "published": false,
+  "cities": [
+    {
+      "cityId": "peterborough",
+      "bases": 5,
+      "continuousExits": 5,
+      "blockedMoves": 0,
+      "workflows": [
+        {
+          "surface": "mobile",
+          "service": "fire",
+          "completed": "complete",
+          "nextCall": "response",
+          "realControlMoved": true,
+          "cameraCenterErrorPixels": 0,
+          "routePools": 3,
+          "routeCalls": 600,
+          "artifact": "artifacts/release-qa/all-city-dispatch/peterborough/dispatch-browser.json"
+        },
+        {
+          "surface": "mobile",
+          "service": "ems",
+          "completed": "complete",
+          "nextCall": "response",
+          "realControlMoved": true,
+          "cameraCenterErrorPixels": 0,
+          "routePools": 2,
+          "routeCalls": 408,
+          "artifact": "artifacts/release-qa/all-city-dispatch/peterborough/dispatch-browser.json"
+        },
+        {
+          "surface": "desktop",
+          "service": "fire",
+          "completed": "complete",
+          "nextCall": "response",
+          "realControlMoved": true,
+          "cameraCenterErrorPixels": 0,
+          "routePools": 3,
+          "routeCalls": 600,
+          "artifact": "artifacts/release-qa/all-city-dispatch/peterborough/desktop-dispatch-browser.json"
+        },
+        {
+          "surface": "desktop",
+          "service": "ems",
+          "completed": "complete",
+          "nextCall": "response",
+          "realControlMoved": true,
+          "cameraCenterErrorPixels": 0,
+          "routePools": 2,
+          "routeCalls": 408,
+          "artifact": "artifacts/release-qa/all-city-dispatch/peterborough/desktop-dispatch-browser.json"
+        }
+      ],
+      "geometryProof": "artifacts/release-qa/base-fit/peterborough-driving-area-checks.json",
+      "geoSha256": null
+    },
+    {
+      "cityId": "oshawa",
+      "bases": 8,
+      "continuousExits": 8,
+      "blockedMoves": 0,
+      "workflows": [
+        {
+          "surface": "mobile",
+          "service": "fire",
+          "completed": "complete",
+          "nextCall": "response",
+          "realControlMoved": true,
+          "cameraCenterErrorPixels": 0,
+          "routePools": 6,
+          "routeCalls": 48,
+          "artifact": "artifacts/release-qa/all-city-dispatch/oshawa/dispatch-browser.json"
+        },
+        {
+          "surface": "mobile",
+          "service": "ems",
+          "completed": "complete",
+          "nextCall": "response",
+          "realControlMoved": true,
+          "cameraCenterErrorPixels": 0,
+          "routePools": 2,
+          "routeCalls": 12,
+          "artifact": "artifacts/release-qa/all-city-dispatch/oshawa/dispatch-browser.json"
+        },
+        {
+          "surface": "desktop",
+          "service": "fire",
+          "completed": "complete",
+          "nextCall": "response",
+          "realControlMoved": true,
+          "cameraCenterErrorPixels": 0,
+          "routePools": 6,
+          "routeCalls": 48,
+          "artifact": "artifacts/release-qa/all-city-dispatch/oshawa/desktop-dispatch-browser.json"
+        },
+        {
+          "surface": "desktop",
+          "service": "ems",
+          "completed": "complete",
+          "nextCall": "response",
+          "realControlMoved": true,
+          "cameraCenterErrorPixels": 0,
+          "routePools": 2,
+          "routeCalls": 12,
+          "artifact": "artifacts/release-qa/all-city-dispatch/oshawa/desktop-dispatch-browser.json"
+        }
+      ],
+      "geometryProof": "artifacts/release-qa/base-fit/oshawa-driving-area-checks.json",
+      "geoSha256": "da431e621cbaf690349398f8df1a57ab82d206458ba570c480d87a2a60b2966e"
+    },
+    {
+      "cityId": "belleville",
+      "bases": 7,
+      "continuousExits": 7,
+      "blockedMoves": 0,
+      "workflows": [
+        {
+          "surface": "mobile",
+          "service": "fire",
+          "completed": "complete",
+          "nextCall": "response",
+          "realControlMoved": true,
+          "cameraCenterErrorPixels": 0,
+          "routePools": 5,
+          "routeCalls": 36,
+          "artifact": "artifacts/release-qa/all-city-dispatch/belleville/dispatch-browser.json"
+        },
+        {
+          "surface": "mobile",
+          "service": "ems",
+          "completed": "complete",
+          "nextCall": "response",
+          "realControlMoved": true,
+          "cameraCenterErrorPixels": 0,
+          "routePools": 2,
+          "routeCalls": 12,
+          "artifact": "artifacts/release-qa/all-city-dispatch/belleville/dispatch-browser.json"
+        },
+        {
+          "surface": "desktop",
+          "service": "fire",
+          "completed": "complete",
+          "nextCall": "response",
+          "realControlMoved": true,
+          "cameraCenterErrorPixels": 0,
+          "routePools": 5,
+          "routeCalls": 36,
+          "artifact": "artifacts/release-qa/all-city-dispatch/belleville/desktop-dispatch-browser.json"
+        },
+        {
+          "surface": "desktop",
+          "service": "ems",
+          "completed": "complete",
+          "nextCall": "response",
+          "realControlMoved": true,
+          "cameraCenterErrorPixels": 0,
+          "routePools": 2,
+          "routeCalls": 12,
+          "artifact": "artifacts/release-qa/all-city-dispatch/belleville/desktop-dispatch-browser.json"
+        }
+      ],
+      "geometryProof": "artifacts/release-qa/base-fit/belleville-driving-area-checks.json",
+      "geoSha256": "895f49200060466b9575886fab766013157d7bb6097c768106f10825a196ee1e"
+    },
+    {
+      "cityId": "scarborough",
+      "bases": 29,
+      "continuousExits": 29,
+      "blockedMoves": 0,
+      "workflows": [
+        {
+          "surface": "desktop",
+          "service": "fire",
+          "completed": "complete",
+          "nextCall": "response",
+          "realControlMoved": true,
+          "cameraCenterErrorPixels": 0,
+          "routePools": 17,
+          "routeCalls": 136,
+          "artifact": "artifacts/release-qa/all-city-dispatch/scarborough/desktop-dispatch-browser.json"
+        },
+        {
+          "surface": "desktop",
+          "service": "ems",
+          "completed": "complete",
+          "nextCall": "response",
+          "realControlMoved": true,
+          "cameraCenterErrorPixels": 0,
+          "routePools": 12,
+          "routeCalls": 72,
+          "artifact": "artifacts/release-qa/all-city-dispatch/scarborough/desktop-dispatch-browser.json"
+        },
+        {
+          "surface": "mobile",
+          "service": "fire",
+          "completed": "complete",
+          "nextCall": "response",
+          "realControlMoved": true,
+          "cameraCenterErrorPixels": 0,
+          "routePools": 17,
+          "routeCalls": 136,
+          "artifact": "artifacts/release-qa/all-city-dispatch/scarborough/dispatch-browser.json"
+        },
+        {
+          "surface": "mobile",
+          "service": "ems",
+          "completed": "complete",
+          "nextCall": "response",
+          "realControlMoved": true,
+          "cameraCenterErrorPixels": 0,
+          "routePools": 12,
+          "routeCalls": 72,
+          "artifact": "artifacts/release-qa/all-city-dispatch/scarborough/dispatch-browser.json"
+        }
+      ],
+      "geometryProof": "artifacts/release-qa/base-fit/scarborough-driving-area-checks.json",
+      "geoSha256": "2f81e4f61fa9a79b0a9b4c0b0ba04c8642b674e3a37b9b04fc12ac511e422bd1"
+    },
+    {
+      "cityId": "pickering",
+      "bases": 7,
+      "continuousExits": 7,
+      "blockedMoves": 0,
+      "workflows": [
+        {
+          "surface": "mobile",
+          "service": "fire",
+          "completed": "complete",
+          "nextCall": "response",
+          "realControlMoved": true,
+          "cameraCenterErrorPixels": 0,
+          "routePools": 5,
+          "routeCalls": 38,
+          "artifact": "artifacts/release-qa/all-city-dispatch/pickering/dispatch-browser.json"
+        },
+        {
+          "surface": "mobile",
+          "service": "ems",
+          "completed": "complete",
+          "nextCall": "response",
+          "realControlMoved": true,
+          "cameraCenterErrorPixels": 0,
+          "routePools": 2,
+          "routeCalls": 12,
+          "artifact": "artifacts/release-qa/all-city-dispatch/pickering/dispatch-browser.json"
+        },
+        {
+          "surface": "desktop",
+          "service": "fire",
+          "completed": "complete",
+          "nextCall": "response",
+          "realControlMoved": true,
+          "cameraCenterErrorPixels": 0,
+          "routePools": 5,
+          "routeCalls": 38,
+          "artifact": "artifacts/release-qa/all-city-dispatch/pickering/desktop-dispatch-browser.json"
+        },
+        {
+          "surface": "desktop",
+          "service": "ems",
+          "completed": "complete",
+          "nextCall": "response",
+          "realControlMoved": true,
+          "cameraCenterErrorPixels": 0,
+          "routePools": 2,
+          "routeCalls": 12,
+          "artifact": "artifacts/release-qa/all-city-dispatch/pickering/desktop-dispatch-browser.json"
+        }
+      ],
+      "geometryProof": "artifacts/release-qa/base-fit/pickering-driving-area-checks.json",
+      "geoSha256": "b02bf78e930555c37eea82907b6cb40112320d5c759cf5119147cafe9de5b531"
+    },
+    {
+      "cityId": "markham",
+      "bases": 15,
+      "continuousExits": 15,
+      "blockedMoves": 0,
+      "workflows": [
+        {
+          "surface": "desktop",
+          "service": "fire",
+          "completed": "complete",
+          "nextCall": "response",
+          "realControlMoved": true,
+          "cameraCenterErrorPixels": 0,
+          "routePools": 9,
+          "routeCalls": 72,
+          "artifact": "artifacts/release-qa/all-city-dispatch/markham/desktop-dispatch-browser.json"
+        },
+        {
+          "surface": "desktop",
+          "service": "ems",
+          "completed": "complete",
+          "nextCall": "response",
+          "realControlMoved": true,
+          "cameraCenterErrorPixels": 0,
+          "routePools": 6,
+          "routeCalls": 36,
+          "artifact": "artifacts/release-qa/all-city-dispatch/markham/desktop-dispatch-browser.json"
+        },
+        {
+          "surface": "mobile",
+          "service": "fire",
+          "completed": "complete",
+          "nextCall": "response",
+          "realControlMoved": true,
+          "cameraCenterErrorPixels": 0,
+          "routePools": 9,
+          "routeCalls": 72,
+          "artifact": "artifacts/release-qa/all-city-dispatch/markham/dispatch-browser.json"
+        },
+        {
+          "surface": "mobile",
+          "service": "ems",
+          "completed": "complete",
+          "nextCall": "response",
+          "realControlMoved": true,
+          "cameraCenterErrorPixels": 0,
+          "routePools": 6,
+          "routeCalls": 36,
+          "artifact": "artifacts/release-qa/all-city-dispatch/markham/dispatch-browser.json"
+        }
+      ],
+      "geometryProof": "artifacts/release-qa/base-fit/markham-driving-area-checks.json",
+      "geoSha256": "a54b5b2aa8b1ea74e4bfc9ba179d15f36321e5b5265cba8ff8c568d72a04194d"
+    },
+    {
+      "cityId": "toronto",
+      "bases": 133,
+      "continuousExits": 133,
+      "blockedMoves": 0,
+      "workflows": [
+        {
+          "surface": "desktop",
+          "service": "fire",
+          "completed": "complete",
+          "nextCall": "response",
+          "realControlMoved": true,
+          "cameraCenterErrorPixels": 0,
+          "routePools": 84,
+          "routeCalls": 668,
+          "artifact": "artifacts/release-qa/all-city-dispatch/toronto/dispatch-browser.json"
+        },
+        {
+          "surface": "desktop",
+          "service": "ems",
+          "completed": "complete",
+          "nextCall": "response",
+          "realControlMoved": true,
+          "cameraCenterErrorPixels": 0,
+          "routePools": 49,
+          "routeCalls": 298,
+          "artifact": "artifacts/release-qa/all-city-dispatch/toronto/dispatch-browser.json"
+        },
+        {
+          "surface": "mobile",
+          "service": "fire",
+          "completed": "complete",
+          "nextCall": "response",
+          "realControlMoved": true,
+          "cameraCenterErrorPixels": 0,
+          "routePools": 84,
+          "routeCalls": 668,
+          "artifact": "artifacts/release-qa/all-city-dispatch/toronto/dispatch-browser.json"
+        },
+        {
+          "surface": "mobile",
+          "service": "ems",
+          "completed": "complete",
+          "nextCall": "response",
+          "realControlMoved": true,
+          "cameraCenterErrorPixels": 0,
+          "routePools": 49,
+          "routeCalls": 298,
+          "artifact": "artifacts/release-qa/all-city-dispatch/toronto/dispatch-browser.json"
+        }
+      ],
+      "geometryProof": "artifacts/release-qa/base-fit/toronto-driving-area-checks.json",
+      "geoSha256": "7484b1e45539b2a22c78826123dd06449fc2ab7b65557c89b592c8e92a894cfe"
+    },
+    {
+      "cityId": "ajax",
+      "bases": 4,
+      "continuousExits": 4,
+      "blockedMoves": 0,
+      "workflows": [
+        {
+          "surface": "mobile",
+          "service": "fire",
+          "completed": "complete",
+          "nextCall": "response",
+          "realControlMoved": true,
+          "cameraCenterErrorPixels": 0,
+          "routePools": 3,
+          "routeCalls": 24,
+          "artifact": "artifacts/release-qa/all-city-dispatch/ajax/dispatch-browser.json"
+        },
+        {
+          "surface": "mobile",
+          "service": "ems",
+          "completed": "complete",
+          "nextCall": "response",
+          "realControlMoved": true,
+          "cameraCenterErrorPixels": 0,
+          "routePools": 1,
+          "routeCalls": 6,
+          "artifact": "artifacts/release-qa/all-city-dispatch/ajax/dispatch-browser.json"
+        },
+        {
+          "surface": "desktop",
+          "service": "fire",
+          "completed": "complete",
+          "nextCall": "response",
+          "realControlMoved": true,
+          "cameraCenterErrorPixels": 0,
+          "routePools": 3,
+          "routeCalls": 24,
+          "artifact": "artifacts/release-qa/all-city-dispatch/ajax/desktop-dispatch-browser.json"
+        },
+        {
+          "surface": "desktop",
+          "service": "ems",
+          "completed": "complete",
+          "nextCall": "response",
+          "realControlMoved": true,
+          "cameraCenterErrorPixels": 0,
+          "routePools": 1,
+          "routeCalls": 6,
+          "artifact": "artifacts/release-qa/all-city-dispatch/ajax/desktop-dispatch-browser.json"
+        }
+      ],
+      "geometryProof": "artifacts/release-qa/base-fit/ajax-driving-area-checks.json",
+      "geoSha256": "28a61cf6fa55762efbd712892b80a89f9e41ab3f0683d6ef85b8679cc77aa34c"
+    },
+    {
+      "cityId": "barrie",
+      "bases": 8,
+      "continuousExits": 8,
+      "blockedMoves": 0,
+      "workflows": [
+        {
+          "surface": "mobile",
+          "service": "fire",
+          "completed": "complete",
+          "nextCall": "response",
+          "realControlMoved": true,
+          "cameraCenterErrorPixels": 0,
+          "routePools": 6,
+          "routeCalls": 48,
+          "artifact": "artifacts/release-qa/all-city-dispatch/barrie/dispatch-browser.json"
+        },
+        {
+          "surface": "mobile",
+          "service": "ems",
+          "completed": "complete",
+          "nextCall": "response",
+          "realControlMoved": true,
+          "cameraCenterErrorPixels": 0,
+          "routePools": 2,
+          "routeCalls": 12,
+          "artifact": "artifacts/release-qa/all-city-dispatch/barrie/dispatch-browser.json"
+        },
+        {
+          "surface": "desktop",
+          "service": "fire",
+          "completed": "complete",
+          "nextCall": "response",
+          "realControlMoved": true,
+          "cameraCenterErrorPixels": 0,
+          "routePools": 6,
+          "routeCalls": 48,
+          "artifact": "artifacts/release-qa/all-city-dispatch/barrie/desktop-dispatch-browser.json"
+        },
+        {
+          "surface": "desktop",
+          "service": "ems",
+          "completed": "complete",
+          "nextCall": "response",
+          "realControlMoved": true,
+          "cameraCenterErrorPixels": 0,
+          "routePools": 2,
+          "routeCalls": 12,
+          "artifact": "artifacts/release-qa/all-city-dispatch/barrie/desktop-dispatch-browser.json"
+        }
+      ],
+      "geometryProof": "artifacts/release-qa/base-fit/barrie-driving-area-checks.json",
+      "geoSha256": "5f309a00b317871972a434e72dc3a9f540b1f8c487b88527b314758eec6b25ed"
+    },
+    {
+      "cityId": "brampton",
+      "bases": 23,
+      "continuousExits": 23,
+      "blockedMoves": 0,
+      "workflows": [
+        {
+          "surface": "mobile",
+          "service": "fire",
+          "completed": "complete",
+          "nextCall": "response",
+          "realControlMoved": true,
+          "cameraCenterErrorPixels": 0,
+          "routePools": 14,
+          "routeCalls": 112,
+          "artifact": "artifacts/release-qa/all-city-dispatch/brampton/dispatch-browser.json"
+        },
+        {
+          "surface": "mobile",
+          "service": "ems",
+          "completed": "complete",
+          "nextCall": "response",
+          "realControlMoved": true,
+          "cameraCenterErrorPixels": 0,
+          "routePools": 9,
+          "routeCalls": 54,
+          "artifact": "artifacts/release-qa/all-city-dispatch/brampton/dispatch-browser.json"
+        },
+        {
+          "surface": "desktop",
+          "service": "fire",
+          "completed": "complete",
+          "nextCall": "response",
+          "realControlMoved": true,
+          "cameraCenterErrorPixels": 0,
+          "routePools": 14,
+          "routeCalls": 112,
+          "artifact": "artifacts/release-qa/all-city-dispatch/brampton/desktop-dispatch-browser.json"
+        },
+        {
+          "surface": "desktop",
+          "service": "ems",
+          "completed": "complete",
+          "nextCall": "response",
+          "realControlMoved": true,
+          "cameraCenterErrorPixels": 0,
+          "routePools": 9,
+          "routeCalls": 54,
+          "artifact": "artifacts/release-qa/all-city-dispatch/brampton/desktop-dispatch-browser.json"
+        }
+      ],
+      "geometryProof": "artifacts/release-qa/base-fit/brampton-driving-area-checks.json",
+      "geoSha256": "0a27b5141f6b5b2c04a272224b6a5beb6016e8bf17890e225275284a4c7d82bf"
+    },
+    {
+      "cityId": "brantford",
+      "bases": 7,
+      "continuousExits": 7,
+      "blockedMoves": 0,
+      "workflows": [
+        {
+          "surface": "mobile",
+          "service": "fire",
+          "completed": "complete",
+          "nextCall": "response",
+          "realControlMoved": true,
+          "cameraCenterErrorPixels": 0,
+          "routePools": 4,
+          "routeCalls": 32,
+          "artifact": "artifacts/release-qa/all-city-dispatch/brantford/dispatch-browser.json"
+        },
+        {
+          "surface": "mobile",
+          "service": "ems",
+          "completed": "complete",
+          "nextCall": "response",
+          "realControlMoved": true,
+          "cameraCenterErrorPixels": 0,
+          "routePools": 3,
+          "routeCalls": 18,
+          "artifact": "artifacts/release-qa/all-city-dispatch/brantford/dispatch-browser.json"
+        },
+        {
+          "surface": "desktop",
+          "service": "fire",
+          "completed": "complete",
+          "nextCall": "response",
+          "realControlMoved": true,
+          "cameraCenterErrorPixels": 0,
+          "routePools": 4,
+          "routeCalls": 32,
+          "artifact": "artifacts/release-qa/all-city-dispatch/brantford/desktop-dispatch-browser.json"
+        },
+        {
+          "surface": "desktop",
+          "service": "ems",
+          "completed": "complete",
+          "nextCall": "response",
+          "realControlMoved": true,
+          "cameraCenterErrorPixels": 0,
+          "routePools": 3,
+          "routeCalls": 18,
+          "artifact": "artifacts/release-qa/all-city-dispatch/brantford/desktop-dispatch-browser.json"
+        }
+      ],
+      "geometryProof": "artifacts/release-qa/base-fit/brantford-driving-area-checks.json",
+      "geoSha256": "fb2cf16645ccbfcb07bc360436b511e8073ce72646b10db896aa9149c73fff6c"
+    },
+    {
+      "cityId": "burlington",
+      "bases": 12,
+      "continuousExits": 12,
+      "blockedMoves": 0,
+      "workflows": [
+        {
+          "surface": "mobile",
+          "service": "fire",
+          "completed": "complete",
+          "nextCall": "response",
+          "realControlMoved": true,
+          "cameraCenterErrorPixels": 0,
+          "routePools": 8,
+          "routeCalls": 62,
+          "artifact": "artifacts/release-qa/all-city-dispatch/burlington/dispatch-browser.json"
+        },
+        {
+          "surface": "mobile",
+          "service": "ems",
+          "completed": "complete",
+          "nextCall": "response",
+          "realControlMoved": true,
+          "cameraCenterErrorPixels": 0,
+          "routePools": 4,
+          "routeCalls": 24,
+          "artifact": "artifacts/release-qa/all-city-dispatch/burlington/dispatch-browser.json"
+        },
+        {
+          "surface": "desktop",
+          "service": "fire",
+          "completed": "complete",
+          "nextCall": "response",
+          "realControlMoved": true,
+          "cameraCenterErrorPixels": 0,
+          "routePools": 8,
+          "routeCalls": 62,
+          "artifact": "artifacts/release-qa/all-city-dispatch/burlington/desktop-dispatch-browser.json"
+        },
+        {
+          "surface": "desktop",
+          "service": "ems",
+          "completed": "complete",
+          "nextCall": "response",
+          "realControlMoved": true,
+          "cameraCenterErrorPixels": 0,
+          "routePools": 4,
+          "routeCalls": 24,
+          "artifact": "artifacts/release-qa/all-city-dispatch/burlington/desktop-dispatch-browser.json"
+        }
+      ],
+      "geometryProof": "artifacts/release-qa/base-fit/burlington-driving-area-checks.json",
+      "geoSha256": "c8c758c59c114af3da177bd8385f9267eb47ac8c16d8dbd7b7ad1bd896f9790e"
+    },
+    {
+      "cityId": "cambridge",
+      "bases": 9,
+      "continuousExits": 9,
+      "blockedMoves": 0,
+      "workflows": [
+        {
+          "surface": "mobile",
+          "service": "fire",
+          "completed": "complete",
+          "nextCall": "response",
+          "realControlMoved": true,
+          "cameraCenterErrorPixels": 0,
+          "routePools": 6,
+          "routeCalls": 48,
+          "artifact": "artifacts/release-qa/all-city-dispatch/cambridge/dispatch-browser.json"
+        },
+        {
+          "surface": "mobile",
+          "service": "ems",
+          "completed": "complete",
+          "nextCall": "response",
+          "realControlMoved": true,
+          "cameraCenterErrorPixels": 0,
+          "routePools": 3,
+          "routeCalls": 18,
+          "artifact": "artifacts/release-qa/all-city-dispatch/cambridge/dispatch-browser.json"
+        },
+        {
+          "surface": "desktop",
+          "service": "fire",
+          "completed": "complete",
+          "nextCall": "response",
+          "realControlMoved": true,
+          "cameraCenterErrorPixels": 0,
+          "routePools": 6,
+          "routeCalls": 48,
+          "artifact": "artifacts/release-qa/all-city-dispatch/cambridge/desktop-dispatch-browser.json"
+        },
+        {
+          "surface": "desktop",
+          "service": "ems",
+          "completed": "complete",
+          "nextCall": "response",
+          "realControlMoved": true,
+          "cameraCenterErrorPixels": 0,
+          "routePools": 3,
+          "routeCalls": 18,
+          "artifact": "artifacts/release-qa/all-city-dispatch/cambridge/desktop-dispatch-browser.json"
+        }
+      ],
+      "geometryProof": "artifacts/release-qa/base-fit/cambridge-driving-area-checks.json",
+      "geoSha256": "4348066d2afcc43c81fbe18e2195b3023ddd23a1de5c6a5f8f36cb2d6f2c354b"
+    },
+    {
+      "cityId": "chatham-kent",
+      "bases": 25,
+      "continuousExits": 25,
+      "blockedMoves": 0,
+      "workflows": [
+        {
+          "surface": "mobile",
+          "service": "fire",
+          "completed": "complete",
+          "nextCall": "response",
+          "realControlMoved": true,
+          "cameraCenterErrorPixels": 0,
+          "routePools": 19,
+          "routeCalls": 126,
+          "artifact": "artifacts/release-qa/all-city-dispatch/chatham-kent/dispatch-browser.json"
+        },
+        {
+          "surface": "mobile",
+          "service": "ems",
+          "completed": "complete",
+          "nextCall": "response",
+          "realControlMoved": true,
+          "cameraCenterErrorPixels": 0,
+          "routePools": 6,
+          "routeCalls": 36,
+          "artifact": "artifacts/release-qa/all-city-dispatch/chatham-kent/dispatch-browser.json"
+        },
+        {
+          "surface": "desktop",
+          "service": "fire",
+          "completed": "complete",
+          "nextCall": "response",
+          "realControlMoved": true,
+          "cameraCenterErrorPixels": 0,
+          "routePools": 19,
+          "routeCalls": 126,
+          "artifact": "artifacts/release-qa/all-city-dispatch/chatham-kent/desktop-dispatch-browser.json"
+        },
+        {
+          "surface": "desktop",
+          "service": "ems",
+          "completed": "complete",
+          "nextCall": "response",
+          "realControlMoved": true,
+          "cameraCenterErrorPixels": 0,
+          "routePools": 6,
+          "routeCalls": 36,
+          "artifact": "artifacts/release-qa/all-city-dispatch/chatham-kent/desktop-dispatch-browser.json"
+        }
+      ],
+      "geometryProof": "artifacts/release-qa/base-fit/chatham-kent-driving-area-checks.json",
+      "geoSha256": "06526a883955f0b6e4a69b4d46c98c5f454c66a0ccd96b820b2cc9e887a89d96"
+    },
+    {
+      "cityId": "clarington",
+      "bases": 7,
+      "continuousExits": 7,
+      "blockedMoves": 0,
+      "workflows": [
+        {
+          "surface": "mobile",
+          "service": "fire",
+          "completed": "complete",
+          "nextCall": "response",
+          "realControlMoved": true,
+          "cameraCenterErrorPixels": 0,
+          "routePools": 5,
+          "routeCalls": 30,
+          "artifact": "artifacts/release-qa/all-city-dispatch/clarington/dispatch-browser.json"
+        },
+        {
+          "surface": "mobile",
+          "service": "ems",
+          "completed": "complete",
+          "nextCall": "response",
+          "realControlMoved": true,
+          "cameraCenterErrorPixels": 0,
+          "routePools": 2,
+          "routeCalls": 12,
+          "artifact": "artifacts/release-qa/all-city-dispatch/clarington/dispatch-browser.json"
+        },
+        {
+          "surface": "desktop",
+          "service": "fire",
+          "completed": "complete",
+          "nextCall": "response",
+          "realControlMoved": true,
+          "cameraCenterErrorPixels": 0,
+          "routePools": 5,
+          "routeCalls": 30,
+          "artifact": "artifacts/release-qa/all-city-dispatch/clarington/desktop-dispatch-browser.json"
+        },
+        {
+          "surface": "desktop",
+          "service": "ems",
+          "completed": "complete",
+          "nextCall": "response",
+          "realControlMoved": true,
+          "cameraCenterErrorPixels": 0,
+          "routePools": 2,
+          "routeCalls": 12,
+          "artifact": "artifacts/release-qa/all-city-dispatch/clarington/desktop-dispatch-browser.json"
+        }
+      ],
+      "geometryProof": "artifacts/release-qa/base-fit/clarington-driving-area-checks.json",
+      "geoSha256": "fa05611276f6efdfe599f22e3001a993d966660449b86a1a9d0a59c86013dd7a"
+    },
+    {
+      "cityId": "greater-sudbury",
+      "bases": 30,
+      "continuousExits": 30,
+      "blockedMoves": 0,
+      "workflows": [
+        {
+          "surface": "mobile",
+          "service": "fire",
+          "completed": "complete",
+          "nextCall": "response",
+          "realControlMoved": true,
+          "cameraCenterErrorPixels": 0,
+          "routePools": 18,
+          "routeCalls": 128,
+          "artifact": "artifacts/release-qa/all-city-dispatch/greater-sudbury/dispatch-browser.json"
+        },
+        {
+          "surface": "mobile",
+          "service": "ems",
+          "completed": "complete",
+          "nextCall": "response",
+          "realControlMoved": true,
+          "cameraCenterErrorPixels": 0,
+          "routePools": 12,
+          "routeCalls": 72,
+          "artifact": "artifacts/release-qa/all-city-dispatch/greater-sudbury/dispatch-browser.json"
+        },
+        {
+          "surface": "desktop",
+          "service": "fire",
+          "completed": "complete",
+          "nextCall": "response",
+          "realControlMoved": true,
+          "cameraCenterErrorPixels": 0,
+          "routePools": 18,
+          "routeCalls": 128,
+          "artifact": "artifacts/release-qa/all-city-dispatch/greater-sudbury/desktop-dispatch-browser.json"
+        },
+        {
+          "surface": "desktop",
+          "service": "ems",
+          "completed": "complete",
+          "nextCall": "response",
+          "realControlMoved": true,
+          "cameraCenterErrorPixels": 0,
+          "routePools": 12,
+          "routeCalls": 72,
+          "artifact": "artifacts/release-qa/all-city-dispatch/greater-sudbury/desktop-dispatch-browser.json"
+        }
+      ],
+      "geometryProof": "artifacts/release-qa/base-fit/greater-sudbury-driving-area-checks.json",
+      "geoSha256": "7b3a6c4a936c0c232505e1fecfbcf069c07cd824cd956748d9e85bf61e531981"
+    },
+    {
+      "cityId": "guelph",
+      "bases": 8,
+      "continuousExits": 8,
+      "blockedMoves": 0,
+      "workflows": [
+        {
+          "surface": "mobile",
+          "service": "fire",
+          "completed": "complete",
+          "nextCall": "response",
+          "realControlMoved": true,
+          "cameraCenterErrorPixels": 0,
+          "routePools": 6,
+          "routeCalls": 48,
+          "artifact": "artifacts/release-qa/all-city-dispatch/guelph/dispatch-browser.json"
+        },
+        {
+          "surface": "mobile",
+          "service": "ems",
+          "completed": "complete",
+          "nextCall": "response",
+          "realControlMoved": true,
+          "cameraCenterErrorPixels": 0,
+          "routePools": 2,
+          "routeCalls": 12,
+          "artifact": "artifacts/release-qa/all-city-dispatch/guelph/dispatch-browser.json"
+        },
+        {
+          "surface": "desktop",
+          "service": "fire",
+          "completed": "complete",
+          "nextCall": "response",
+          "realControlMoved": true,
+          "cameraCenterErrorPixels": 0,
+          "routePools": 6,
+          "routeCalls": 48,
+          "artifact": "artifacts/release-qa/all-city-dispatch/guelph/desktop-dispatch-browser.json"
+        },
+        {
+          "surface": "desktop",
+          "service": "ems",
+          "completed": "complete",
+          "nextCall": "response",
+          "realControlMoved": true,
+          "cameraCenterErrorPixels": 0,
+          "routePools": 2,
+          "routeCalls": 12,
+          "artifact": "artifacts/release-qa/all-city-dispatch/guelph/desktop-dispatch-browser.json"
+        }
+      ],
+      "geometryProof": "artifacts/release-qa/base-fit/guelph-driving-area-checks.json",
+      "geoSha256": "a445b9e31cc10c98a6f1d0b1aab84185733dc1ce4dc6a645a1393842db621f5c"
+    },
+    {
+      "cityId": "hamilton",
+      "bases": 44,
+      "continuousExits": 44,
+      "blockedMoves": 0,
+      "workflows": [
+        {
+          "surface": "mobile",
+          "service": "fire",
+          "completed": "complete",
+          "nextCall": "response",
+          "realControlMoved": true,
+          "cameraCenterErrorPixels": 0,
+          "routePools": 26,
+          "routeCalls": 194,
+          "artifact": "artifacts/release-qa/all-city-dispatch/hamilton/dispatch-browser.json"
+        },
+        {
+          "surface": "mobile",
+          "service": "ems",
+          "completed": "complete",
+          "nextCall": "response",
+          "realControlMoved": true,
+          "cameraCenterErrorPixels": 0,
+          "routePools": 18,
+          "routeCalls": 108,
+          "artifact": "artifacts/release-qa/all-city-dispatch/hamilton/dispatch-browser.json"
+        },
+        {
+          "surface": "desktop",
+          "service": "fire",
+          "completed": "complete",
+          "nextCall": "response",
+          "realControlMoved": true,
+          "cameraCenterErrorPixels": 0,
+          "routePools": 26,
+          "routeCalls": 194,
+          "artifact": "artifacts/release-qa/all-city-dispatch/hamilton/desktop-dispatch-browser.json"
+        },
+        {
+          "surface": "desktop",
+          "service": "ems",
+          "completed": "complete",
+          "nextCall": "response",
+          "realControlMoved": true,
+          "cameraCenterErrorPixels": 0,
+          "routePools": 18,
+          "routeCalls": 108,
+          "artifact": "artifacts/release-qa/all-city-dispatch/hamilton/desktop-dispatch-browser.json"
+        }
+      ],
+      "geometryProof": "artifacts/release-qa/base-fit/hamilton-driving-area-checks.json",
+      "geoSha256": "3c9871166ca40b31b863f71b17d45300bc55518a67ab8ae5bd7a145c4277d576"
+    },
+    {
+      "cityId": "kingston",
+      "bases": 14,
+      "continuousExits": 14,
+      "blockedMoves": 0,
+      "workflows": [
+        {
+          "surface": "mobile",
+          "service": "fire",
+          "completed": "complete",
+          "nextCall": "response",
+          "realControlMoved": true,
+          "cameraCenterErrorPixels": 0,
+          "routePools": 10,
+          "routeCalls": 74,
+          "artifact": "artifacts/release-qa/all-city-dispatch/kingston/dispatch-browser.json"
+        },
+        {
+          "surface": "mobile",
+          "service": "ems",
+          "completed": "complete",
+          "nextCall": "response",
+          "realControlMoved": true,
+          "cameraCenterErrorPixels": 0,
+          "routePools": 4,
+          "routeCalls": 24,
+          "artifact": "artifacts/release-qa/all-city-dispatch/kingston/dispatch-browser.json"
+        },
+        {
+          "surface": "desktop",
+          "service": "fire",
+          "completed": "complete",
+          "nextCall": "response",
+          "realControlMoved": true,
+          "cameraCenterErrorPixels": 0,
+          "routePools": 10,
+          "routeCalls": 74,
+          "artifact": "artifacts/release-qa/all-city-dispatch/kingston/desktop-dispatch-browser.json"
+        },
+        {
+          "surface": "desktop",
+          "service": "ems",
+          "completed": "complete",
+          "nextCall": "response",
+          "realControlMoved": true,
+          "cameraCenterErrorPixels": 0,
+          "routePools": 4,
+          "routeCalls": 24,
+          "artifact": "artifacts/release-qa/all-city-dispatch/kingston/desktop-dispatch-browser.json"
+        }
+      ],
+      "geometryProof": "artifacts/release-qa/base-fit/kingston-driving-area-checks.json",
+      "geoSha256": "d7608ec7d0e8477f371bfa9e385b6373b8b154b661d478e3a318d174bf821025"
+    },
+    {
+      "cityId": "kitchener",
+      "bases": 10,
+      "continuousExits": 10,
+      "blockedMoves": 0,
+      "workflows": [
+        {
+          "surface": "mobile",
+          "service": "fire",
+          "completed": "complete",
+          "nextCall": "response",
+          "realControlMoved": true,
+          "cameraCenterErrorPixels": 0,
+          "routePools": 7,
+          "routeCalls": 56,
+          "artifact": "artifacts/release-qa/all-city-dispatch/kitchener/dispatch-browser.json"
+        },
+        {
+          "surface": "mobile",
+          "service": "ems",
+          "completed": "complete",
+          "nextCall": "response",
+          "realControlMoved": true,
+          "cameraCenterErrorPixels": 0,
+          "routePools": 3,
+          "routeCalls": 18,
+          "artifact": "artifacts/release-qa/all-city-dispatch/kitchener/dispatch-browser.json"
+        },
+        {
+          "surface": "desktop",
+          "service": "fire",
+          "completed": "complete",
+          "nextCall": "response",
+          "realControlMoved": true,
+          "cameraCenterErrorPixels": 0,
+          "routePools": 7,
+          "routeCalls": 56,
+          "artifact": "artifacts/release-qa/all-city-dispatch/kitchener/desktop-dispatch-browser.json"
+        },
+        {
+          "surface": "desktop",
+          "service": "ems",
+          "completed": "complete",
+          "nextCall": "response",
+          "realControlMoved": true,
+          "cameraCenterErrorPixels": 0,
+          "routePools": 3,
+          "routeCalls": 18,
+          "artifact": "artifacts/release-qa/all-city-dispatch/kitchener/desktop-dispatch-browser.json"
+        }
+      ],
+      "geometryProof": "artifacts/release-qa/base-fit/kitchener-driving-area-checks.json",
+      "geoSha256": "2ef25913dff0bdc3df4ac7eb2cf59d386247e6511f9f0a35634e5d29b540c099"
+    },
+    {
+      "cityId": "london",
+      "bases": 22,
+      "continuousExits": 22,
+      "blockedMoves": 0,
+      "workflows": [
+        {
+          "surface": "mobile",
+          "service": "fire",
+          "completed": "complete",
+          "nextCall": "response",
+          "realControlMoved": true,
+          "cameraCenterErrorPixels": 0,
+          "routePools": 15,
+          "routeCalls": 120,
+          "artifact": "artifacts/release-qa/all-city-dispatch/london/dispatch-browser.json"
+        },
+        {
+          "surface": "mobile",
+          "service": "ems",
+          "completed": "complete",
+          "nextCall": "response",
+          "realControlMoved": true,
+          "cameraCenterErrorPixels": 0,
+          "routePools": 7,
+          "routeCalls": 42,
+          "artifact": "artifacts/release-qa/all-city-dispatch/london/dispatch-browser.json"
+        },
+        {
+          "surface": "desktop",
+          "service": "fire",
+          "completed": "complete",
+          "nextCall": "response",
+          "realControlMoved": true,
+          "cameraCenterErrorPixels": 0,
+          "routePools": 15,
+          "routeCalls": 120,
+          "artifact": "artifacts/release-qa/all-city-dispatch/london/desktop-dispatch-browser.json"
+        },
+        {
+          "surface": "desktop",
+          "service": "ems",
+          "completed": "complete",
+          "nextCall": "response",
+          "realControlMoved": true,
+          "cameraCenterErrorPixels": 0,
+          "routePools": 7,
+          "routeCalls": 42,
+          "artifact": "artifacts/release-qa/all-city-dispatch/london/desktop-dispatch-browser.json"
+        }
+      ],
+      "geometryProof": "artifacts/release-qa/base-fit/london-driving-area-checks.json",
+      "geoSha256": "9994fbd73ab3e8ad8746de1092e9a8515f94982602d6311d05a8d4a608f20b7b"
+    },
+    {
+      "cityId": "milton",
+      "bases": 9,
+      "continuousExits": 9,
+      "blockedMoves": 0,
+      "workflows": [
+        {
+          "surface": "mobile",
+          "service": "fire",
+          "completed": "complete",
+          "nextCall": "response",
+          "realControlMoved": true,
+          "cameraCenterErrorPixels": 0,
+          "routePools": 5,
+          "routeCalls": 38,
+          "artifact": "artifacts/release-qa/all-city-dispatch/milton/dispatch-browser.json"
+        },
+        {
+          "surface": "mobile",
+          "service": "ems",
+          "completed": "complete",
+          "nextCall": "response",
+          "realControlMoved": true,
+          "cameraCenterErrorPixels": 0,
+          "routePools": 4,
+          "routeCalls": 24,
+          "artifact": "artifacts/release-qa/all-city-dispatch/milton/dispatch-browser.json"
+        },
+        {
+          "surface": "desktop",
+          "service": "fire",
+          "completed": "complete",
+          "nextCall": "response",
+          "realControlMoved": true,
+          "cameraCenterErrorPixels": 0,
+          "routePools": 5,
+          "routeCalls": 38,
+          "artifact": "artifacts/release-qa/all-city-dispatch/milton/desktop-dispatch-browser.json"
+        },
+        {
+          "surface": "desktop",
+          "service": "ems",
+          "completed": "complete",
+          "nextCall": "response",
+          "realControlMoved": true,
+          "cameraCenterErrorPixels": 0,
+          "routePools": 4,
+          "routeCalls": 24,
+          "artifact": "artifacts/release-qa/all-city-dispatch/milton/desktop-dispatch-browser.json"
+        }
+      ],
+      "geometryProof": "artifacts/release-qa/base-fit/milton-driving-area-checks.json",
+      "geoSha256": "f8921ad1eee7b7c88ddcd510a392d2f53a5f51ff02c54bd3c6a44d64ce1653fe"
+    },
+    {
+      "cityId": "mississauga",
+      "bases": 36,
+      "continuousExits": 36,
+      "blockedMoves": 0,
+      "workflows": [
+        {
+          "surface": "desktop",
+          "service": "fire",
+          "completed": "complete",
+          "nextCall": "response",
+          "realControlMoved": true,
+          "cameraCenterErrorPixels": 0,
+          "routePools": 23,
+          "routeCalls": 184,
+          "artifact": "artifacts/release-qa/all-city-dispatch/mississauga/desktop-dispatch-browser.json"
+        },
+        {
+          "surface": "desktop",
+          "service": "ems",
+          "completed": "complete",
+          "nextCall": "response",
+          "realControlMoved": true,
+          "cameraCenterErrorPixels": 0,
+          "routePools": 13,
+          "routeCalls": 78,
+          "artifact": "artifacts/release-qa/all-city-dispatch/mississauga/desktop-dispatch-browser.json"
+        },
+        {
+          "surface": "mobile",
+          "service": "fire",
+          "completed": "complete",
+          "nextCall": "response",
+          "realControlMoved": true,
+          "cameraCenterErrorPixels": 0,
+          "routePools": 23,
+          "routeCalls": 184,
+          "artifact": "artifacts/release-qa/all-city-dispatch/mississauga/dispatch-browser.json"
+        },
+        {
+          "surface": "mobile",
+          "service": "ems",
+          "completed": "complete",
+          "nextCall": "response",
+          "realControlMoved": true,
+          "cameraCenterErrorPixels": 0,
+          "routePools": 13,
+          "routeCalls": 78,
+          "artifact": "artifacts/release-qa/all-city-dispatch/mississauga/dispatch-browser.json"
+        }
+      ],
+      "geometryProof": "artifacts/release-qa/base-fit/mississauga-driving-area-checks.json",
+      "geoSha256": "0a6d50891bae9b989e6ff8a9f112a1bbf64279ea3a9f88b91d4a9bbf3c751054"
+    },
+    {
+      "cityId": "niagara-falls",
+      "bases": 9,
+      "continuousExits": 9,
+      "blockedMoves": 0,
+      "workflows": [
+        {
+          "surface": "mobile",
+          "service": "fire",
+          "completed": "complete",
+          "nextCall": "response",
+          "realControlMoved": true,
+          "cameraCenterErrorPixels": 0,
+          "routePools": 7,
+          "routeCalls": 54,
+          "artifact": "artifacts/release-qa/all-city-dispatch/niagara-falls/dispatch-browser.json"
+        },
+        {
+          "surface": "mobile",
+          "service": "ems",
+          "completed": "complete",
+          "nextCall": "response",
+          "realControlMoved": true,
+          "cameraCenterErrorPixels": 0,
+          "routePools": 2,
+          "routeCalls": 12,
+          "artifact": "artifacts/release-qa/all-city-dispatch/niagara-falls/dispatch-browser.json"
+        },
+        {
+          "surface": "desktop",
+          "service": "fire",
+          "completed": "complete",
+          "nextCall": "response",
+          "realControlMoved": true,
+          "cameraCenterErrorPixels": 0,
+          "routePools": 7,
+          "routeCalls": 54,
+          "artifact": "artifacts/release-qa/all-city-dispatch/niagara-falls/desktop-dispatch-browser.json"
+        },
+        {
+          "surface": "desktop",
+          "service": "ems",
+          "completed": "complete",
+          "nextCall": "response",
+          "realControlMoved": true,
+          "cameraCenterErrorPixels": 0,
+          "routePools": 2,
+          "routeCalls": 12,
+          "artifact": "artifacts/release-qa/all-city-dispatch/niagara-falls/desktop-dispatch-browser.json"
+        }
+      ],
+      "geometryProof": "artifacts/release-qa/base-fit/niagara-falls-driving-area-checks.json",
+      "geoSha256": "2f62d517346ee81a87ee6e2e5d67f477f9c7240f5af2ccdd945c933b31448504"
+    },
+    {
+      "cityId": "oakville",
+      "bases": 13,
+      "continuousExits": 13,
+      "blockedMoves": 0,
+      "workflows": [
+        {
+          "surface": "mobile",
+          "service": "fire",
+          "completed": "complete",
+          "nextCall": "response",
+          "realControlMoved": true,
+          "cameraCenterErrorPixels": 0,
+          "routePools": 9,
+          "routeCalls": 72,
+          "artifact": "artifacts/release-qa/all-city-dispatch/oakville/dispatch-browser.json"
+        },
+        {
+          "surface": "mobile",
+          "service": "ems",
+          "completed": "complete",
+          "nextCall": "response",
+          "realControlMoved": true,
+          "cameraCenterErrorPixels": 0,
+          "routePools": 4,
+          "routeCalls": 24,
+          "artifact": "artifacts/release-qa/all-city-dispatch/oakville/dispatch-browser.json"
+        },
+        {
+          "surface": "desktop",
+          "service": "fire",
+          "completed": "complete",
+          "nextCall": "response",
+          "realControlMoved": true,
+          "cameraCenterErrorPixels": 0,
+          "routePools": 9,
+          "routeCalls": 72,
+          "artifact": "artifacts/release-qa/all-city-dispatch/oakville/desktop-dispatch-browser.json"
+        },
+        {
+          "surface": "desktop",
+          "service": "ems",
+          "completed": "complete",
+          "nextCall": "response",
+          "realControlMoved": true,
+          "cameraCenterErrorPixels": 0,
+          "routePools": 4,
+          "routeCalls": 24,
+          "artifact": "artifacts/release-qa/all-city-dispatch/oakville/desktop-dispatch-browser.json"
+        }
+      ],
+      "geometryProof": "artifacts/release-qa/base-fit/oakville-driving-area-checks.json",
+      "geoSha256": "9b362a75225c8768880d16ba4b234e27b785d82510dd0d5d363b70ea54a4de8e"
+    },
+    {
+      "cityId": "ottawa",
+      "bases": 65,
+      "continuousExits": 65,
+      "blockedMoves": 0,
+      "workflows": [
+        {
+          "surface": "mobile",
+          "service": "fire",
+          "completed": "complete",
+          "nextCall": "response",
+          "realControlMoved": true,
+          "cameraCenterErrorPixels": 0,
+          "routePools": 45,
+          "routeCalls": 336,
+          "artifact": "artifacts/release-qa/all-city-dispatch/ottawa/dispatch-browser.json"
+        },
+        {
+          "surface": "mobile",
+          "service": "ems",
+          "completed": "complete",
+          "nextCall": "response",
+          "realControlMoved": true,
+          "cameraCenterErrorPixels": 0,
+          "routePools": 20,
+          "routeCalls": 122,
+          "artifact": "artifacts/release-qa/all-city-dispatch/ottawa/dispatch-browser.json"
+        },
+        {
+          "surface": "desktop",
+          "service": "fire",
+          "completed": "complete",
+          "nextCall": "response",
+          "realControlMoved": true,
+          "cameraCenterErrorPixels": 0,
+          "routePools": 45,
+          "routeCalls": 336,
+          "artifact": "artifacts/release-qa/all-city-dispatch/ottawa/desktop-dispatch-browser.json"
+        },
+        {
+          "surface": "desktop",
+          "service": "ems",
+          "completed": "complete",
+          "nextCall": "response",
+          "realControlMoved": true,
+          "cameraCenterErrorPixels": 0,
+          "routePools": 20,
+          "routeCalls": 122,
+          "artifact": "artifacts/release-qa/all-city-dispatch/ottawa/desktop-dispatch-browser.json"
+        }
+      ],
+      "geometryProof": "artifacts/release-qa/base-fit/ottawa-driving-area-checks.json",
+      "geoSha256": "ec1427b1ec18aa6ba182bd0d01ecaa63f21cf95fff866adf6549a0fb0e682e90"
+    },
+    {
+      "cityId": "richmond-hill",
+      "bases": 8,
+      "continuousExits": 8,
+      "blockedMoves": 0,
+      "workflows": [
+        {
+          "surface": "desktop",
+          "service": "fire",
+          "completed": "complete",
+          "nextCall": "response",
+          "realControlMoved": true,
+          "cameraCenterErrorPixels": 0,
+          "routePools": 6,
+          "routeCalls": 48,
+          "artifact": "artifacts/release-qa/all-city-dispatch/richmond-hill/desktop-dispatch-browser.json"
+        },
+        {
+          "surface": "desktop",
+          "service": "ems",
+          "completed": "complete",
+          "nextCall": "response",
+          "realControlMoved": true,
+          "cameraCenterErrorPixels": 0,
+          "routePools": 2,
+          "routeCalls": 12,
+          "artifact": "artifacts/release-qa/all-city-dispatch/richmond-hill/desktop-dispatch-browser.json"
+        },
+        {
+          "surface": "mobile",
+          "service": "fire",
+          "completed": "complete",
+          "nextCall": "response",
+          "realControlMoved": true,
+          "cameraCenterErrorPixels": 0,
+          "routePools": 6,
+          "routeCalls": 48,
+          "artifact": "artifacts/release-qa/all-city-dispatch/richmond-hill/dispatch-browser.json"
+        },
+        {
+          "surface": "mobile",
+          "service": "ems",
+          "completed": "complete",
+          "nextCall": "response",
+          "realControlMoved": true,
+          "cameraCenterErrorPixels": 0,
+          "routePools": 2,
+          "routeCalls": 12,
+          "artifact": "artifacts/release-qa/all-city-dispatch/richmond-hill/dispatch-browser.json"
+        }
+      ],
+      "geometryProof": "artifacts/release-qa/base-fit/richmond-hill-driving-area-checks.json",
+      "geoSha256": "698fae0945f3f8a955f379a0e56426dd5ba220f9a914107316102290bf77dd9d"
+    },
+    {
+      "cityId": "st-catharines",
+      "bases": 8,
+      "continuousExits": 8,
+      "blockedMoves": 0,
+      "workflows": [
+        {
+          "surface": "mobile",
+          "service": "fire",
+          "completed": "complete",
+          "nextCall": "response",
+          "realControlMoved": true,
+          "cameraCenterErrorPixels": 0,
+          "routePools": 6,
+          "routeCalls": 48,
+          "artifact": "artifacts/release-qa/all-city-dispatch/st-catharines/dispatch-browser.json"
+        },
+        {
+          "surface": "mobile",
+          "service": "ems",
+          "completed": "complete",
+          "nextCall": "response",
+          "realControlMoved": true,
+          "cameraCenterErrorPixels": 0,
+          "routePools": 2,
+          "routeCalls": 12,
+          "artifact": "artifacts/release-qa/all-city-dispatch/st-catharines/dispatch-browser.json"
+        },
+        {
+          "surface": "desktop",
+          "service": "fire",
+          "completed": "complete",
+          "nextCall": "response",
+          "realControlMoved": true,
+          "cameraCenterErrorPixels": 0,
+          "routePools": 6,
+          "routeCalls": 48,
+          "artifact": "artifacts/release-qa/all-city-dispatch/st-catharines/desktop-dispatch-browser.json"
+        },
+        {
+          "surface": "desktop",
+          "service": "ems",
+          "completed": "complete",
+          "nextCall": "response",
+          "realControlMoved": true,
+          "cameraCenterErrorPixels": 0,
+          "routePools": 2,
+          "routeCalls": 12,
+          "artifact": "artifacts/release-qa/all-city-dispatch/st-catharines/desktop-dispatch-browser.json"
+        }
+      ],
+      "geometryProof": "artifacts/release-qa/base-fit/st-catharines-driving-area-checks.json",
+      "geoSha256": "28d3f4f5175c2ac991fd902f16aee3a99294a2db348180fd96766e99c8e7fe72"
+    },
+    {
+      "cityId": "thunder-bay",
+      "bases": 12,
+      "continuousExits": 12,
+      "blockedMoves": 0,
+      "workflows": [
+        {
+          "surface": "mobile",
+          "service": "fire",
+          "completed": "complete",
+          "nextCall": "response",
+          "realControlMoved": true,
+          "cameraCenterErrorPixels": 0,
+          "routePools": 8,
+          "routeCalls": 62,
+          "artifact": "artifacts/release-qa/all-city-dispatch/thunder-bay/dispatch-browser.json"
+        },
+        {
+          "surface": "mobile",
+          "service": "ems",
+          "completed": "complete",
+          "nextCall": "response",
+          "realControlMoved": true,
+          "cameraCenterErrorPixels": 0,
+          "routePools": 4,
+          "routeCalls": 24,
+          "artifact": "artifacts/release-qa/all-city-dispatch/thunder-bay/dispatch-browser.json"
+        },
+        {
+          "surface": "desktop",
+          "service": "fire",
+          "completed": "complete",
+          "nextCall": "response",
+          "realControlMoved": true,
+          "cameraCenterErrorPixels": 0,
+          "routePools": 8,
+          "routeCalls": 62,
+          "artifact": "artifacts/release-qa/all-city-dispatch/thunder-bay/desktop-dispatch-browser.json"
+        },
+        {
+          "surface": "desktop",
+          "service": "ems",
+          "completed": "complete",
+          "nextCall": "response",
+          "realControlMoved": true,
+          "cameraCenterErrorPixels": 0,
+          "routePools": 4,
+          "routeCalls": 24,
+          "artifact": "artifacts/release-qa/all-city-dispatch/thunder-bay/desktop-dispatch-browser.json"
+        }
+      ],
+      "geometryProof": "artifacts/release-qa/base-fit/thunder-bay-driving-area-checks.json",
+      "geoSha256": "4699996506e5db60393083f34a88304f93216a1cdab440eb8f7c05dcacc8c4e1"
+    },
+    {
+      "cityId": "vaughan",
+      "bases": 14,
+      "continuousExits": 14,
+      "blockedMoves": 0,
+      "workflows": [
+        {
+          "surface": "mobile",
+          "service": "fire",
+          "completed": "complete",
+          "nextCall": "response",
+          "realControlMoved": true,
+          "cameraCenterErrorPixels": 0,
+          "routePools": 10,
+          "routeCalls": 80,
+          "artifact": "artifacts/release-qa/all-city-dispatch/vaughan/dispatch-browser.json"
+        },
+        {
+          "surface": "mobile",
+          "service": "ems",
+          "completed": "complete",
+          "nextCall": "response",
+          "realControlMoved": true,
+          "cameraCenterErrorPixels": 0,
+          "routePools": 4,
+          "routeCalls": 24,
+          "artifact": "artifacts/release-qa/all-city-dispatch/vaughan/dispatch-browser.json"
+        },
+        {
+          "surface": "desktop",
+          "service": "fire",
+          "completed": "complete",
+          "nextCall": "response",
+          "realControlMoved": true,
+          "cameraCenterErrorPixels": 0,
+          "routePools": 10,
+          "routeCalls": 80,
+          "artifact": "artifacts/release-qa/all-city-dispatch/vaughan/desktop-dispatch-browser.json"
+        },
+        {
+          "surface": "desktop",
+          "service": "ems",
+          "completed": "complete",
+          "nextCall": "response",
+          "realControlMoved": true,
+          "cameraCenterErrorPixels": 0,
+          "routePools": 4,
+          "routeCalls": 24,
+          "artifact": "artifacts/release-qa/all-city-dispatch/vaughan/desktop-dispatch-browser.json"
+        }
+      ],
+      "geometryProof": "artifacts/release-qa/base-fit/vaughan-driving-area-checks.json",
+      "geoSha256": "5116704eab3bfe2679063b6eede1f4d11ff68bea64dd7df556d45fa20474ed44"
+    },
+    {
+      "cityId": "waterloo",
+      "bases": 5,
+      "continuousExits": 5,
+      "blockedMoves": 0,
+      "workflows": [
+        {
+          "surface": "desktop",
+          "service": "fire",
+          "completed": "complete",
+          "nextCall": "response",
+          "realControlMoved": true,
+          "cameraCenterErrorPixels": 0,
+          "routePools": 4,
+          "routeCalls": 32,
+          "artifact": "artifacts/release-qa/all-city-dispatch/waterloo/desktop-dispatch-browser.json"
+        },
+        {
+          "surface": "desktop",
+          "service": "ems",
+          "completed": "complete",
+          "nextCall": "response",
+          "realControlMoved": true,
+          "cameraCenterErrorPixels": 0,
+          "routePools": 1,
+          "routeCalls": 6,
+          "artifact": "artifacts/release-qa/all-city-dispatch/waterloo/desktop-dispatch-browser.json"
+        },
+        {
+          "surface": "mobile",
+          "service": "fire",
+          "completed": "complete",
+          "nextCall": "response",
+          "realControlMoved": true,
+          "cameraCenterErrorPixels": 0,
+          "routePools": 4,
+          "routeCalls": 32,
+          "artifact": "artifacts/release-qa/all-city-dispatch/waterloo/dispatch-browser.json"
+        },
+        {
+          "surface": "mobile",
+          "service": "ems",
+          "completed": "complete",
+          "nextCall": "response",
+          "realControlMoved": true,
+          "cameraCenterErrorPixels": 0,
+          "routePools": 1,
+          "routeCalls": 6,
+          "artifact": "artifacts/release-qa/all-city-dispatch/waterloo/dispatch-browser.json"
+        }
+      ],
+      "geometryProof": "artifacts/release-qa/base-fit/waterloo-driving-area-checks.json",
+      "geoSha256": "fb144a11a29d00594bd7f1fe27cc089c4e7de881cae177a6e1aa86b6a843bf11"
+    },
+    {
+      "cityId": "whitby",
+      "bases": 6,
+      "continuousExits": 6,
+      "blockedMoves": 0,
+      "workflows": [
+        {
+          "surface": "mobile",
+          "service": "fire",
+          "completed": "complete",
+          "nextCall": "response",
+          "realControlMoved": true,
+          "cameraCenterErrorPixels": 0,
+          "routePools": 5,
+          "routeCalls": 40,
+          "artifact": "artifacts/release-qa/all-city-dispatch/whitby/dispatch-browser.json"
+        },
+        {
+          "surface": "mobile",
+          "service": "ems",
+          "completed": "complete",
+          "nextCall": "response",
+          "realControlMoved": true,
+          "cameraCenterErrorPixels": 0,
+          "routePools": 1,
+          "routeCalls": 6,
+          "artifact": "artifacts/release-qa/all-city-dispatch/whitby/dispatch-browser.json"
+        },
+        {
+          "surface": "desktop",
+          "service": "fire",
+          "completed": "complete",
+          "nextCall": "response",
+          "realControlMoved": true,
+          "cameraCenterErrorPixels": 0,
+          "routePools": 5,
+          "routeCalls": 40,
+          "artifact": "artifacts/release-qa/all-city-dispatch/whitby/desktop-dispatch-browser.json"
+        },
+        {
+          "surface": "desktop",
+          "service": "ems",
+          "completed": "complete",
+          "nextCall": "response",
+          "realControlMoved": true,
+          "cameraCenterErrorPixels": 0,
+          "routePools": 1,
+          "routeCalls": 6,
+          "artifact": "artifacts/release-qa/all-city-dispatch/whitby/desktop-dispatch-browser.json"
+        }
+      ],
+      "geometryProof": "artifacts/release-qa/base-fit/whitby-driving-area-checks.json",
+      "geoSha256": "d73c6c863e4e7e1548ea05ce8cf3427d867bd06db3c50c25a6165e3954321622"
+    },
+    {
+      "cityId": "windsor",
+      "bases": 10,
+      "continuousExits": 10,
+      "blockedMoves": 0,
+      "workflows": [
+        {
+          "surface": "mobile",
+          "service": "fire",
+          "completed": "complete",
+          "nextCall": "response",
+          "realControlMoved": true,
+          "cameraCenterErrorPixels": 0,
+          "routePools": 7,
+          "routeCalls": 56,
+          "artifact": "artifacts/release-qa/all-city-dispatch/windsor/dispatch-browser.json"
+        },
+        {
+          "surface": "mobile",
+          "service": "ems",
+          "completed": "complete",
+          "nextCall": "response",
+          "realControlMoved": true,
+          "cameraCenterErrorPixels": 0,
+          "routePools": 3,
+          "routeCalls": 18,
+          "artifact": "artifacts/release-qa/all-city-dispatch/windsor/dispatch-browser.json"
+        },
+        {
+          "surface": "desktop",
+          "service": "fire",
+          "completed": "complete",
+          "nextCall": "response",
+          "realControlMoved": true,
+          "cameraCenterErrorPixels": 0,
+          "routePools": 7,
+          "routeCalls": 56,
+          "artifact": "artifacts/release-qa/all-city-dispatch/windsor/desktop-dispatch-browser.json"
+        },
+        {
+          "surface": "desktop",
+          "service": "ems",
+          "completed": "complete",
+          "nextCall": "response",
+          "realControlMoved": true,
+          "cameraCenterErrorPixels": 0,
+          "routePools": 3,
+          "routeCalls": 18,
+          "artifact": "artifacts/release-qa/all-city-dispatch/windsor/desktop-dispatch-browser.json"
+        }
+      ],
+      "geometryProof": "artifacts/release-qa/base-fit/windsor-driving-area-checks.json",
+      "geoSha256": "4dd2fcb4a4e3014793764823843f0e00ba573335e6f86ec5d89d008a3b3e209a"
+    }
+  ],
+  "summary": {
+    "cities": 33,
+    "bases": 622,
+    "workflows": 132
+  },
+  "limits": [
+    "Modeled areas are imagery estimates with source coordinates preserved.",
+    "Long mission legs use controlled arrivals; short driving uses real keyboard/touch input.",
+    "Toronto Island EMS is explicitly scene-only; no ferry transport simulated."
+  ],
+  "releaseVersion": "1.6.173",
+  "sourcePreservation": {
+    "canonicalGeoDatasets": 32,
+    "unchangedOutsideDrivingArea": true,
+    "historicalPreviewAliasesChecked": true
+  },
+  "finalRegression": {
+    "tests": 1237,
+    "groups": 17,
+    "failed": 0,
+    "roadAssetChecks": 5,
+    "roadAssetFailures": 0,
+    "candidateSmoke": {
+      "city": "richmond-hill",
+      "desktopAndMobile": true,
+      "services": [
+        "fire",
+        "ems"
+      ],
+      "passed": true
+    }
+  }
+}

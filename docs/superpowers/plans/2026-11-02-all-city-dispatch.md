@@ -16,11 +16,11 @@
 - Saved user base edits remain authoritative over changed defaults.
 
 ## Tasks
-- [ ] 1. Build a repeatable all-city inventory (tools/audit-all-city-dispatch.cjs). Record registry/package/manifest capabilities, road assets, active eligible base counts, fitted areas, local call pools and sourced hospital candidates. Output ignored QA JSON for decisions.
-- [ ] 2. Implement generic all-city dispatch capability configuration with meaningful regression coverage. Enable city-specific road graph loading, response dispatch, correct demo menus and full service lifecycle. Keep selected-city loading only.
-- [ ] 3. Resolve hospital candidates against source records and connected road access. Configure per-city destinations; support cases needing a destination outside the city extent only with adequate sourced road coverage. Verify every offered EMS call-to-hospital leg.
-- [ ] 4. Audit and fit all active base driving areas, spawns and exit connections. Reuse existing reviewed records. Use building/parking imagery or suitable source geometry for missing fits; retain evidence and flag unresolved facilities rather than blindly filling default squares.
-- [ ] 5. Generalize Richmond Hill workflow QA to every city. Check each base's offered calls on the actual directed graph, both services, base area containment/access, real short keyboard/touch input, camera, corner/off-road checks, completion, hospital transition, route review/history and next call. Keep fixture-driven long arrivals distinguished from actual drives.
+- [x] 1. Build a repeatable all-city inventory (tools/audit-all-city-dispatch.cjs). Record registry/package/manifest capabilities, road assets, active eligible base counts, fitted areas, local call pools and sourced hospital candidates. Output ignored QA JSON for decisions.
+- [x] 2. Implement generic all-city dispatch capability configuration with meaningful regression coverage. Enable city-specific road graph loading, response dispatch, correct demo menus and full service lifecycle. Keep selected-city loading only.
+- [x] 3. Resolve hospital candidates against source records and connected road access. Configure per-city destinations; support cases needing a destination outside the city extent only with adequate sourced road coverage. Verify every offered EMS call-to-hospital leg.
+- [x] 4. Audit and fit all active base driving areas, spawns and exit connections. Reuse existing reviewed records. Use building/parking imagery or suitable source geometry for missing fits; retain evidence and flag unresolved facilities rather than blindly filling default squares.
+- [x] 5. Generalize Richmond Hill workflow QA to every city. Check each base's offered calls on the actual directed graph, both services, base area containment/access, real short keyboard/touch input, camera, corner/off-road checks, completion, hospital transition, route review/history and next call. Keep fixture-driven long arrivals distinguished from actual drives.
 - [ ] 6. Fix all exposed failures, run related regression/CI checks, review material risks, update release/cache versions, integrate latest upstream, publish and verify live assets and city workflows. Do not mark goal complete while a required city remains unresolved.
 
 ## Review focus

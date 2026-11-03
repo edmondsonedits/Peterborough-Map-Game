@@ -1,26 +1,26 @@
 # All-city Dispatch rollout validation
 
-Status: in progress, not published. Local checks are not release acceptance.
+Status: locally verified v1.6.173 release candidate; publication/live verification pending.
 
-## Completed checks (2026-11-02)
+## Current evidence
 
-- All 33 packages expose local roads, Fire/EMS response, route guidance and a sourced hospital destination. Toronto Island EMS is explicitly scene-only because ferry transport is not simulated.
-- All 33 cities have completed desktop and mobile Fire/EMS browser workflows. Checks cover short real-control driving, camera centering, response, EMS transport/handover where applicable, completion, route review/history and Next Call. Long journeys use controlled arrival fixtures, not physical route drives.
-- 514 fitted base entries pass continuous collision checks along a real call route to ten metres beyond each yard, with zero blocked moves. These cover Peterborough, Richmond Hill, Ajax, Barrie, Kitchener, Brampton, Burlington, London, Windsor, Mississauga, Ottawa, Waterloo, Oshawa, Pickering, Clarington, Whitby, Toronto, Scarborough, Hamilton, Guelph, Cambridge, Chatham-Kent and Greater Sudbury. Image-based geometry is estimated; canonical coordinates and IDs are preserved.
-- Scarborough reuses 29 Toronto fits only after exact service/address/canonical-coordinate matching; its road exits and all assignment routes were independently checked.
-- Mississauga Falbourne was corrected from the pond-side source point to the address-matched station building and immediate parking/apron. Official address, OSM-derived named facility point and imagery evidence are recorded in its sidecar. All 36 Mississauga exits and four workflows passed after correction.
-- All-city package tests: 33 passed after the latest fits. Earlier focused package/EMS/access/store tests: 137 passed; shared gameplay/camera/corner checks: 40 passed. A subsequent 17-group workflow regression sweep found only the unfinished base-coverage gate and outdated homepage expectations. Homepage response wording and its accessible label are corrected; all 56 tests in that group now pass. The post-merge standalone package-loader regression was fixed in the generator and tested for all 32 generated cities.
-- Existing dataset identities are preserved; canonical roster fetches use the release cache version.
-- Hospital matrix records official destination sources and coordinate provenance. Campus bounds checks do not claim an ambulance entrance.
-- Toronto routing reuses collision-validated roads including the approved Island supplement; larger graph searches resolve previously failing long mainland hospital routes. Both Island workflows passed. Full Toronto desktop/mobile workflows passed without page errors or alerts.
+- 33 cities expose local roads, Fire/EMS response, route guidance and a sourced hospital destination. Toronto Island EMS is explicitly scene-only because ferry transport is not simulated.
+- All 33 cities completed desktop and mobile Fire/EMS browser workflows: 132 surface/service cases. Checks cover short real-control driving, camera centering, response, EMS transport/handover where applicable, completion, route review/history and Next Call.
+- All 622 eligible bases have fitted areas and pass continuous route-based collision checks beyond the yard, with zero blocked moves. The final audit compares recorded centers, dimensions, rotations and spawns against current geometry; it rejects stale evidence.
+- All 32 canonical geo datasets retain every source field outside the modeled drivingArea. Historical preview aliases are checked against a fixture extracted from the pre-rollout packages, including runtime exposure.
+- Mississauga Falbourne and Markham EMS27 were recentered onto address-confirmed buildings rather than their inaccurate canonical station points. Markham's official YorkMaps address point lies inside York's 2023 building footprint; the matching image supports building/parking/apron sizing. Canonical points remain unchanged.
+- Scarborough reuses 29 Toronto fits only after exact service/address/canonical-coordinate matching; road exits and local routes were independently checked.
+- The independent runtime review found no important correctness/security issue. Its historical-ID coverage concern was addressed.
+- The final complete-base geometry, all-city package and Ontario-data test run passed 43 tests. Wider final release regressions are recorded separately under ignored artifacts.
+- Mobile route-review overlap was reproduced, fixed and checked for both services, including restoration of controls. Newer upstream station-switching/mobile-picker fixes are preserved.
 
-## Remaining acceptance work
+## Release gates
 
-- Fit and validate the remaining 108 eligible base entries. Workers are reviewing Belleville/Brantford/St Catharines/Milton/Niagara Falls/Oakville and Kingston/Thunder Bay/Markham/Vaughan.
-- Keep the new complete-base-geometry test as a release gate; it intentionally fails until every eligible base has fitted runtime geometry.
-- Review ambiguous facility identity against address and imagery; route checks alone do not establish correct placement.
-- Complete regression review, reconcile concurrent upstream changes, version bump, deployment and fresh live verification.
+- Final v1.6.173 checks passed: 1,237 tests across 17 groups, five road geometry/asset checks and the four Richmond Hill desktop/mobile Fire/EMS workflows.
+- Publish through GitHub Pages and verify fresh live assets and city startup/playability.
 
-## Evidence limits
+## Evidence and limits
 
-Browser JSON lives under ignored `artifacts/release-qa/all-city-dispatch/`; fitted-area evidence is tracked under `docs/validation/base-areas/`. Automated collision traces and browser input are not physical-phone or full-route driving acceptance. Imagery fits are not surveyed parcels, confirmed entrances, or guarantees of current access.
+`all-city-dispatch-release.json` records all 33 cities and 132 workflows. `base-areas/` records facility-specific fit provenance; `all-city-dispatch-hospitals.json` records hospital sources. Raw browser/exit evidence is under ignored `artifacts/release-qa/`.
+
+The geometry is estimated, not surveyed parcel or verified entrance data. Long mission legs use controlled arrival fixtures; short driving uses actual keyboard/touch input. Browser tests are not physical-phone or full-route driving acceptance. See `dispatch-city-rollout-checklist.md` for the reusable 23-item city checklist.
