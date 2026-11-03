@@ -1,0 +1,304 @@
+{
+  "schemaVersion": 1,
+  "cityId": "oshawa",
+  "reviewedLocalDate": "2026-11-02",
+  "assessment": "estimated",
+  "imagery": {
+    "provider": "Esri World Imagery",
+    "tileUrl": "https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}",
+    "capturedLocalDate": "2026-11-02",
+    "vintage": "not independently provided by the tile response",
+    "method": "Independent Leaflet captures of every active site at zoom 19; visible station building, adjacent parking and on-site apron/circulation were estimated against the displayed map scale."
+  },
+  "roads": {
+    "file": "cities/oshawa/roads.geojson.gz",
+    "source": "OpenStreetMap via Geofabrik Ontario extract",
+    "sourceTimestamp": "2026-09-27T20:23:36Z",
+    "snapshotBuiltAt": "2026-10-29T04:20:28.714Z",
+    "packagedSha256": "3f7cec72eace965e4316ee4560f158eb346afbcd3c3bc929001df287a29eab5e",
+    "sourceSha256": "ebb50b39682d2381ad3c1d21e005b48cec3397e15da0d72c5d76c7d20d8dd249",
+    "sourceUrl": "https://download.geofabrik.de/north-america/canada/ontario.html",
+    "attribution": "© OpenStreetMap contributors",
+    "assessment": "Packaged road/service-drive centerlines were inspected alongside imagery. Modeled spawns are snapped to selected local road centerlines as simulation starts; they do not verify driveway ownership, gates or apparatus entrances."
+  },
+  "limits": [
+    "Rectangle centers, dimensions, rotations and spawn coordinates are imagery- and road-map-based estimates, not surveyed measurements.",
+    "No official station parcel plans, building footprints or apparatus entrance locations were used.",
+    "Satellite imagery dates are not supplied by the tile response.",
+    "Canonical source coordinates, base IDs and statuses are preserved."
+  ],
+  "bases": [
+    {
+      "baseId": "oshawa-ems-514",
+      "name": "Oshawa North Paramedic Station",
+      "address": "1260 Wilson Rd N, Oshawa, ON",
+      "sourcePoint": {
+        "lat": 43.93466545797818,
+        "lng": -78.85868565003685
+      },
+      "drivingArea": {
+        "center": {
+          "lat": 43.93466546,
+          "lng": -78.85868565
+        },
+        "widthMetres": 105,
+        "lengthMetres": 125,
+        "rotationDegrees": 0,
+        "spawn": {
+          "lat": 43.9347097,
+          "lng": -78.8587086,
+          "headingDegrees": 254
+        },
+        "roadSnap": {
+          "roadName": null,
+          "highway": "service",
+          "distanceFromSourceMetres": 5.3
+        }
+      },
+      "assessment": "estimated",
+      "imageryCapture": "artifacts/release-qa/base-fit-oshawa/oshawa-ems-514.png",
+      "imageryZoom": 19,
+      "metresPerPixel": 0.2148,
+      "imageryObservation": "The zoom-19 image was reviewed for Oshawa North Paramedic Station: fitted footprint covers the visible station building and associated parking/apron/circulation at this site. Source point is preserved. Spawn is a modeled point on the mapped service centerline (service), not a confirmed entrance.",
+      "rotationBasis": "Axis-aligned estimate follows the visible local parcel and street grid; not survey-derived."
+    },
+    {
+      "baseId": "oshawa-ems-537",
+      "name": "Oshawa South Paramedic Station",
+      "address": "497 Bloor St E, Oshawa, ON",
+      "sourcePoint": {
+        "lat": 43.88402811150792,
+        "lng": -78.8378689434523
+      },
+      "drivingArea": {
+        "center": {
+          "lat": 43.88402811,
+          "lng": -78.83786894
+        },
+        "widthMetres": 95,
+        "lengthMetres": 115,
+        "rotationDegrees": 0,
+        "spawn": {
+          "lat": 43.88442492,
+          "lng": -78.83804287,
+          "headingDegrees": 72
+        },
+        "roadSnap": {
+          "roadName": "Bloor Street East",
+          "highway": "secondary",
+          "distanceFromSourceMetres": 46.3
+        }
+      },
+      "assessment": "estimated",
+      "imageryCapture": "artifacts/release-qa/base-fit-oshawa/oshawa-ems-537.png",
+      "imageryZoom": 19,
+      "metresPerPixel": 0.215,
+      "imageryObservation": "The zoom-19 image was reviewed for Oshawa South Paramedic Station: fitted footprint covers the visible station building and associated parking/apron/circulation at this site. Source point is preserved. Spawn is a modeled point on the mapped Bloor Street East centerline (secondary), not a confirmed entrance.",
+      "rotationBasis": "Axis-aligned estimate follows the visible local parcel and street grid; not survey-derived."
+    },
+    {
+      "baseId": "oshawa-fire-1",
+      "name": "Fire Station 1",
+      "address": "199 Adelaide Avenue West, Oshawa, ON",
+      "sourcePoint": {
+        "lat": 43.90113390228075,
+        "lng": -78.87309370762237
+      },
+      "drivingArea": {
+        "center": {
+          "lat": 43.9011339,
+          "lng": -78.87309371
+        },
+        "widthMetres": 100,
+        "lengthMetres": 120,
+        "rotationDegrees": 45,
+        "spawn": {
+          "lat": 43.9011436,
+          "lng": -78.87308062,
+          "headingDegrees": 134
+        },
+        "roadSnap": {
+          "roadName": null,
+          "highway": "service",
+          "distanceFromSourceMetres": 1.5
+        }
+      },
+      "assessment": "estimated",
+      "imageryCapture": "artifacts/release-qa/base-fit-oshawa/oshawa-fire-1.png",
+      "imageryZoom": 19,
+      "metresPerPixel": 0.2149,
+      "imageryObservation": "The zoom-19 image was reviewed for Fire Station 1: fitted footprint covers the visible station building and associated parking/apron/circulation at this site. Source point is preserved. Spawn is a modeled point on the mapped service centerline (service), not a confirmed entrance.",
+      "rotationBasis": "Approximate alignment estimated from the visible parcel and approach geometry (45°); not survey-derived."
+    },
+    {
+      "baseId": "oshawa-fire-2",
+      "name": "Fire Station 2",
+      "address": "1111 Simcoe Street South, Oshawa, ON",
+      "sourcePoint": {
+        "lat": 43.873098096287386,
+        "lng": -78.84240397056634
+      },
+      "drivingArea": {
+        "center": {
+          "lat": 43.8730981,
+          "lng": -78.84240397
+        },
+        "widthMetres": 90,
+        "lengthMetres": 110,
+        "rotationDegrees": 45,
+        "spawn": {
+          "lat": 43.87291744,
+          "lng": -78.84258793,
+          "headingDegrees": 126
+        },
+        "roadSnap": {
+          "roadName": "Simcoe Street South",
+          "highway": "tertiary",
+          "distanceFromSourceMetres": 24.9
+        }
+      },
+      "assessment": "estimated",
+      "imageryCapture": "artifacts/release-qa/base-fit-oshawa/oshawa-fire-2.png",
+      "imageryZoom": 19,
+      "metresPerPixel": 0.215,
+      "imageryObservation": "The zoom-19 image was reviewed for Fire Station 2: fitted footprint covers the visible station building and associated parking/apron/circulation at this site. Source point is preserved. Spawn is a modeled point on the mapped Simcoe Street South centerline (tertiary), not a confirmed entrance.",
+      "rotationBasis": "Approximate alignment estimated from the visible parcel and approach geometry (45°); not survey-derived."
+    },
+    {
+      "baseId": "oshawa-fire-3",
+      "name": "Fire Station 3",
+      "address": "50 Beatrice Street East, Oshawa, ON",
+      "sourcePoint": {
+        "lat": 43.926985046528564,
+        "lng": -78.87386487877451
+      },
+      "drivingArea": {
+        "center": {
+          "lat": 43.92698505,
+          "lng": -78.87386488
+        },
+        "widthMetres": 80,
+        "lengthMetres": 100,
+        "rotationDegrees": 0,
+        "spawn": {
+          "lat": 43.92666022,
+          "lng": -78.87371969,
+          "headingDegrees": 72
+        },
+        "roadSnap": {
+          "roadName": "Beatrice Street East",
+          "highway": "tertiary",
+          "distanceFromSourceMetres": 38
+        }
+      },
+      "assessment": "estimated",
+      "imageryCapture": "artifacts/release-qa/base-fit-oshawa/oshawa-fire-3.png",
+      "imageryZoom": 19,
+      "metresPerPixel": 0.2148,
+      "imageryObservation": "The zoom-19 image was reviewed for Fire Station 3: fitted footprint covers the visible station building and associated parking/apron/circulation at this site. Source point is preserved. Spawn is a modeled point on the mapped Beatrice Street East centerline (tertiary), not a confirmed entrance.",
+      "rotationBasis": "Axis-aligned estimate follows the visible local parcel and street grid; not survey-derived."
+    },
+    {
+      "baseId": "oshawa-fire-4",
+      "name": "Fire Station 4",
+      "address": "50 Harmony Road North, Oshawa, ON",
+      "sourcePoint": {
+        "lat": 43.905657914819756,
+        "lng": -78.8351791505714
+      },
+      "drivingArea": {
+        "center": {
+          "lat": 43.90565791,
+          "lng": -78.83505447
+        },
+        "widthMetres": 90,
+        "lengthMetres": 105,
+        "rotationDegrees": 0,
+        "spawn": {
+          "lat": 43.90576001,
+          "lng": -78.83471862,
+          "headingDegrees": 343
+        },
+        "roadSnap": {
+          "roadName": "Harmony Road North",
+          "highway": "secondary",
+          "distanceFromSourceMetres": 38.6
+        }
+      },
+      "assessment": "estimated",
+      "imageryCapture": "artifacts/release-qa/base-fit-oshawa/oshawa-fire-4.png",
+      "imageryZoom": 19,
+      "metresPerPixel": 0.2149,
+      "imageryObservation": "The zoom-19 image was reviewed for Fire Station 4: fitted footprint covers the visible station building and associated parking/apron/circulation at this site. Source point is preserved. Spawn is a modeled point on the mapped Harmony Road North centerline (secondary), not a confirmed entrance.",
+      "rotationBasis": "Axis-aligned estimate follows the visible local parcel and street grid; not survey-derived."
+    },
+    {
+      "baseId": "oshawa-fire-5",
+      "name": "Fire Station 5",
+      "address": "1550 Harmony Road North, Oshawa, ON",
+      "sourcePoint": {
+        "lat": 43.94503297073623,
+        "lng": -78.8523292762657
+      },
+      "drivingArea": {
+        "center": {
+          "lat": 43.94503297,
+          "lng": -78.85232928
+        },
+        "widthMetres": 100,
+        "lengthMetres": 120,
+        "rotationDegrees": 0,
+        "spawn": {
+          "lat": 43.945111,
+          "lng": -78.85199081,
+          "headingDegrees": 162
+        },
+        "roadSnap": {
+          "roadName": "Harmony Road North",
+          "highway": "secondary",
+          "distanceFromSourceMetres": 28.5
+        }
+      },
+      "assessment": "estimated",
+      "imageryCapture": "artifacts/release-qa/base-fit-oshawa/oshawa-fire-5.png",
+      "imageryZoom": 19,
+      "metresPerPixel": 0.2147,
+      "imageryObservation": "The zoom-19 image was reviewed for Fire Station 5: fitted footprint covers the visible station building and associated parking/apron/circulation at this site. Source point is preserved. Spawn is a modeled point on the mapped Harmony Road North centerline (secondary), not a confirmed entrance.",
+      "rotationBasis": "Axis-aligned estimate follows the visible local parcel and street grid; not survey-derived."
+    },
+    {
+      "baseId": "oshawa-fire-6",
+      "name": "Fire Station 6",
+      "address": "2339 Simcoe Street North, Oshawa, ON",
+      "sourcePoint": {
+        "lat": 43.956618778931706,
+        "lng": -78.8990871309804
+      },
+      "drivingArea": {
+        "center": {
+          "lat": 43.95661878,
+          "lng": -78.89908713
+        },
+        "widthMetres": 90,
+        "lengthMetres": 115,
+        "rotationDegrees": 0,
+        "spawn": {
+          "lat": 43.95648904,
+          "lng": -78.89902927,
+          "headingDegrees": 252
+        },
+        "roadSnap": {
+          "roadName": null,
+          "highway": "service",
+          "distanceFromSourceMetres": 15.2
+        }
+      },
+      "assessment": "estimated",
+      "imageryCapture": "artifacts/release-qa/base-fit-oshawa/oshawa-fire-6.png",
+      "imageryZoom": 19,
+      "metresPerPixel": 0.2147,
+      "imageryObservation": "The zoom-19 image was reviewed for Fire Station 6: fitted footprint covers the visible station building and associated parking/apron/circulation at this site. Source point is preserved. Spawn is a modeled point on the mapped service centerline (service), not a confirmed entrance.",
+      "rotationBasis": "Axis-aligned estimate follows the visible local parcel and street grid; not survey-derived."
+    }
+  ]
+}

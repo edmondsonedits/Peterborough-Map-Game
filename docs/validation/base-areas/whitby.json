@@ -1,0 +1,236 @@
+{
+  "schemaVersion": 1,
+  "cityId": "whitby",
+  "reviewedLocalDate": "2026-11-02",
+  "assessment": "estimated",
+  "imagery": {
+    "provider": "Esri World Imagery",
+    "tileUrl": "https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}",
+    "capturedLocalDate": "2026-11-02",
+    "vintage": "not independently provided by the tile response",
+    "method": "Independent Leaflet captures of every active site at zoom 19; visible station building, adjacent parking and on-site apron/circulation were estimated against the displayed map scale."
+  },
+  "roads": {
+    "file": "cities/whitby/roads.geojson.gz",
+    "source": "OpenStreetMap via Geofabrik Ontario extract",
+    "sourceTimestamp": "2026-09-27T20:23:36Z",
+    "snapshotBuiltAt": "2026-10-29T04:13:58.135Z",
+    "packagedSha256": "0a059322adfea1f1beee5b51d03419c3b454e07e75be06058f136f53c96d45af",
+    "sourceSha256": "ebb50b39682d2381ad3c1d21e005b48cec3397e15da0d72c5d76c7d20d8dd249",
+    "sourceUrl": "https://download.geofabrik.de/north-america/canada/ontario.html",
+    "attribution": "© OpenStreetMap contributors",
+    "assessment": "Packaged road/service-drive centerlines were inspected alongside imagery. Modeled spawns are snapped to selected local road centerlines as simulation starts; they do not verify driveway ownership, gates or apparatus entrances."
+  },
+  "limits": [
+    "Rectangle centers, dimensions, rotations and spawn coordinates are imagery- and road-map-based estimates, not surveyed measurements.",
+    "No official station parcel plans, building footprints or apparatus entrance locations were used.",
+    "Satellite imagery dates are not supplied by the tile response.",
+    "Canonical source coordinates, base IDs and statuses are preserved."
+  ],
+  "bases": [
+    {
+      "baseId": "whitby-ems-513",
+      "name": "Whitby Paramedic Station - Headquarters",
+      "address": "4040 Anderson St, Whitby, ON",
+      "sourcePoint": {
+        "lat": 43.92188290782409,
+        "lng": -78.9391260286899
+      },
+      "drivingArea": {
+        "center": {
+          "lat": 43.92188291,
+          "lng": -78.93912603
+        },
+        "widthMetres": 100,
+        "lengthMetres": 125,
+        "rotationDegrees": 0,
+        "spawn": {
+          "lat": 43.9219899,
+          "lng": -78.9389261,
+          "headingDegrees": 341
+        },
+        "roadSnap": {
+          "roadName": null,
+          "highway": "service",
+          "distanceFromSourceMetres": 20
+        }
+      },
+      "assessment": "estimated",
+      "imageryCapture": "artifacts/release-qa/base-fit-whitby/whitby-ems-513.png",
+      "imageryZoom": 19,
+      "metresPerPixel": 0.2148,
+      "imageryObservation": "The zoom-19 image was reviewed for Whitby Paramedic Station - Headquarters: fitted footprint covers the visible station building and associated parking/apron/circulation at this site. Source point is preserved. Spawn is a modeled point on the mapped service centerline (service), not a confirmed entrance.",
+      "rotationBasis": "Axis-aligned estimate follows the visible local parcel and street grid; not survey-derived."
+    },
+    {
+      "baseId": "whitby-fire-1",
+      "name": "Fire Hall No. 1",
+      "address": "6745 Baldwin St N, Whitby, ON",
+      "sourcePoint": {
+        "lat": 43.96821051160354,
+        "lng": -78.9583438243165
+      },
+      "drivingArea": {
+        "center": {
+          "lat": 43.96821051,
+          "lng": -78.95834382
+        },
+        "widthMetres": 100,
+        "lengthMetres": 125,
+        "rotationDegrees": 0,
+        "spawn": {
+          "lat": 43.96793758,
+          "lng": -78.95823553,
+          "headingDegrees": 74
+        },
+        "roadSnap": {
+          "roadName": "Sorbara Way",
+          "highway": "residential",
+          "distanceFromSourceMetres": 31.6
+        }
+      },
+      "assessment": "estimated",
+      "imageryCapture": "artifacts/release-qa/base-fit-whitby/whitby-fire-1.png",
+      "imageryZoom": 19,
+      "metresPerPixel": 0.2147,
+      "imageryObservation": "The zoom-19 image was reviewed for Fire Hall No. 1: fitted footprint covers the visible station building and associated parking/apron/circulation at this site. Source point is preserved. Spawn is a modeled point on the mapped Sorbara Way centerline (residential), not a confirmed entrance.",
+      "rotationBasis": "Axis-aligned estimate follows the visible local parcel and street grid; not survey-derived."
+    },
+    {
+      "baseId": "whitby-fire-2",
+      "name": "Fire Hall No. 2",
+      "address": "1600 Manning Rd, Whitby, ON",
+      "sourcePoint": {
+        "lat": 43.89560820031335,
+        "lng": -78.9160952068239
+      },
+      "drivingArea": {
+        "center": {
+          "lat": 43.8956082,
+          "lng": -78.91609521
+        },
+        "widthMetres": 85,
+        "lengthMetres": 105,
+        "rotationDegrees": 0,
+        "spawn": {
+          "lat": 43.89531856,
+          "lng": -78.91593902,
+          "headingDegrees": 249
+        },
+        "roadSnap": {
+          "roadName": "Manning Road",
+          "highway": "secondary",
+          "distanceFromSourceMetres": 34.6
+        }
+      },
+      "assessment": "estimated",
+      "imageryCapture": "artifacts/release-qa/base-fit-whitby/whitby-fire-2.png",
+      "imageryZoom": 19,
+      "metresPerPixel": 0.2149,
+      "imageryObservation": "The zoom-19 image was reviewed for Fire Hall No. 2: fitted footprint covers the visible station building and associated parking/apron/circulation at this site. Source point is preserved. Spawn is a modeled point on the mapped Manning Road centerline (secondary), not a confirmed entrance.",
+      "rotationBasis": "Axis-aligned estimate follows the visible local parcel and street grid; not survey-derived."
+    },
+    {
+      "baseId": "whitby-fire-3",
+      "name": "Fire Hall No. 3",
+      "address": "1501 Brock St S, Whitby, ON",
+      "sourcePoint": {
+        "lat": 43.86195775156409,
+        "lng": -78.93396041243169
+      },
+      "drivingArea": {
+        "center": {
+          "lat": 43.86195775,
+          "lng": -78.93396041
+        },
+        "widthMetres": 90,
+        "lengthMetres": 110,
+        "rotationDegrees": 45,
+        "spawn": {
+          "lat": 43.86184966,
+          "lng": -78.93439973,
+          "headingDegrees": 341
+        },
+        "roadSnap": {
+          "roadName": "Brock Street South",
+          "highway": "secondary",
+          "distanceFromSourceMetres": 37.3
+        }
+      },
+      "assessment": "estimated",
+      "imageryCapture": "artifacts/release-qa/base-fit-whitby/whitby-fire-3.png",
+      "imageryZoom": 19,
+      "metresPerPixel": 0.215,
+      "imageryObservation": "The zoom-19 image was reviewed for Fire Hall No. 3: fitted footprint covers the visible station building and associated parking/apron/circulation at this site. Source point is preserved. Spawn is a modeled point on the mapped Brock Street South centerline (secondary), not a confirmed entrance.",
+      "rotationBasis": "Approximate alignment estimated from the visible parcel and approach geometry (45°); not survey-derived."
+    },
+    {
+      "baseId": "whitby-fire-4",
+      "name": "Fire Hall No. 4",
+      "address": "734 Dundas St W, Whitby, ON",
+      "sourcePoint": {
+        "lat": 43.87727030201178,
+        "lng": -78.95535830678381
+      },
+      "drivingArea": {
+        "center": {
+          "lat": 43.8772703,
+          "lng": -78.95535831
+        },
+        "widthMetres": 85,
+        "lengthMetres": 100,
+        "rotationDegrees": 0,
+        "spawn": {
+          "lat": 43.8771582,
+          "lng": -78.9554244,
+          "headingDegrees": 164
+        },
+        "roadSnap": {
+          "roadName": null,
+          "highway": "service",
+          "distanceFromSourceMetres": 13.6
+        }
+      },
+      "assessment": "estimated",
+      "imageryCapture": "artifacts/release-qa/base-fit-whitby/whitby-fire-4.png",
+      "imageryZoom": 19,
+      "metresPerPixel": 0.215,
+      "imageryObservation": "The zoom-19 image was reviewed for Fire Hall No. 4: fitted footprint covers the visible station building and associated parking/apron/circulation at this site. Source point is preserved. Spawn is a modeled point on the mapped service centerline (service), not a confirmed entrance.",
+      "rotationBasis": "Axis-aligned estimate follows the visible local parcel and street grid; not survey-derived."
+    },
+    {
+      "baseId": "whitby-fire-5",
+      "name": "Fire Hall No. 5 - Headquarters",
+      "address": "111 McKinney Dr, Whitby, ON",
+      "sourcePoint": {
+        "lat": 43.917444377843076,
+        "lng": -78.95200323430599
+      },
+      "drivingArea": {
+        "center": {
+          "lat": 43.91744438,
+          "lng": -78.95200323
+        },
+        "widthMetres": 110,
+        "lengthMetres": 130,
+        "rotationDegrees": 0,
+        "spawn": {
+          "lat": 43.91711455,
+          "lng": -78.95260896,
+          "headingDegrees": 323
+        },
+        "roadSnap": {
+          "roadName": "McKinney Drive",
+          "highway": "unclassified",
+          "distanceFromSourceMetres": 60.9
+        }
+      },
+      "assessment": "estimated",
+      "imageryCapture": "artifacts/release-qa/base-fit-whitby/whitby-fire-5.png",
+      "imageryZoom": 19,
+      "metresPerPixel": 0.2148,
+      "imageryObservation": "The zoom-19 image was reviewed for Fire Hall No. 5 - Headquarters: fitted footprint covers the visible station building and associated parking/apron/circulation at this site. Source point is preserved. Spawn is a modeled point on the mapped McKinney Drive centerline (unclassified), not a confirmed entrance.",
+      "rotationBasis": "Axis-aligned estimate follows the visible local parcel and street grid; not survey-derived."
+    }
+  ]
+}

@@ -1,0 +1,270 @@
+{
+  "schemaVersion": 1,
+  "cityId": "pickering",
+  "reviewedLocalDate": "2026-11-02",
+  "assessment": "estimated",
+  "imagery": {
+    "provider": "Esri World Imagery",
+    "tileUrl": "https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}",
+    "capturedLocalDate": "2026-11-02",
+    "vintage": "not independently provided by the tile response",
+    "method": "Independent Leaflet captures of every active site at zoom 19; visible station building, adjacent parking and on-site apron/circulation were estimated against the displayed map scale."
+  },
+  "roads": {
+    "file": "cities/pickering/roads.geojson.gz",
+    "source": "OpenStreetMap via Geofabrik Ontario extract",
+    "sourceTimestamp": "2026-09-27T20:23:36Z",
+    "snapshotBuiltAt": "2026-10-29T04:15:34.113Z",
+    "packagedSha256": "17bec6ff2407db6f118051744801726e97bb68a40a574b0b7f1dcd6e9d6328bb",
+    "sourceSha256": "ebb50b39682d2381ad3c1d21e005b48cec3397e15da0d72c5d76c7d20d8dd249",
+    "sourceUrl": "https://download.geofabrik.de/north-america/canada/ontario.html",
+    "attribution": "© OpenStreetMap contributors",
+    "assessment": "Packaged road/service-drive centerlines were inspected alongside imagery. Modeled spawns are snapped to selected local road centerlines as simulation starts; they do not verify driveway ownership, gates or apparatus entrances."
+  },
+  "limits": [
+    "Rectangle centers, dimensions, rotations and spawn coordinates are imagery- and road-map-based estimates, not surveyed measurements.",
+    "No official station parcel plans, building footprints or apparatus entrance locations were used.",
+    "Satellite imagery dates are not supplied by the tile response.",
+    "Canonical source coordinates, base IDs and statuses are preserved."
+  ],
+  "bases": [
+    {
+      "baseId": "pickering-ems-506",
+      "name": "Pickering Paramedic Station",
+      "address": "1103 Kingston Rd, Pickering, ON",
+      "sourcePoint": {
+        "lat": 43.829866376437806,
+        "lng": -79.09724117714009
+      },
+      "drivingArea": {
+        "center": {
+          "lat": 43.82986638,
+          "lng": -79.09724118
+        },
+        "widthMetres": 100,
+        "lengthMetres": 120,
+        "rotationDegrees": 0,
+        "spawn": {
+          "lat": 43.82976052,
+          "lng": -79.09704099,
+          "headingDegrees": 216
+        },
+        "roadSnap": {
+          "roadName": null,
+          "highway": "service",
+          "distanceFromSourceMetres": 19.9
+        }
+      },
+      "assessment": "estimated",
+      "imageryCapture": "artifacts/release-qa/base-fit-pickering/pickering-ems-506.png",
+      "imageryZoom": 19,
+      "metresPerPixel": 0.2152,
+      "imageryObservation": "The zoom-19 image was reviewed for Pickering Paramedic Station: fitted footprint covers the visible station building and associated parking/apron/circulation at this site. Source point is preserved. Spawn is a modeled point on the mapped service centerline (service), not a confirmed entrance.",
+      "rotationBasis": "Axis-aligned estimate follows the visible local parcel and street grid; not survey-derived."
+    },
+    {
+      "baseId": "pickering-ems-899",
+      "name": "Seaton Paramedic Response Station",
+      "address": "1890 Fifth Concession Road, Pickering, ON",
+      "sourcePoint": {
+        "lat": 43.90479568136318,
+        "lng": -79.08959121322879
+      },
+      "drivingArea": {
+        "center": {
+          "lat": 43.90479568,
+          "lng": -79.08959121
+        },
+        "widthMetres": 140,
+        "lengthMetres": 160,
+        "rotationDegrees": 0,
+        "spawn": {
+          "lat": 43.90496896,
+          "lng": -79.08889487,
+          "headingDegrees": 341
+        },
+        "roadSnap": {
+          "roadName": "16th Sideline",
+          "highway": "unclassified",
+          "distanceFromSourceMetres": 59.1
+        }
+      },
+      "assessment": "estimated",
+      "imageryCapture": "artifacts/release-qa/base-fit-pickering/pickering-ems-899.png",
+      "imageryZoom": 19,
+      "metresPerPixel": 0.2149,
+      "imageryObservation": "The zoom-19 image was reviewed for Seaton Paramedic Response Station: fitted footprint covers the visible station building and associated parking/apron/circulation at this site. Source point is preserved. Spawn is a modeled point on the mapped 16th Sideline centerline (unclassified), not a confirmed entrance.",
+      "rotationBasis": "Axis-aligned estimate follows the visible local parcel and street grid; not survey-derived."
+    },
+    {
+      "baseId": "pickering-fire-1",
+      "name": "Fire Station 1",
+      "address": "1700 Zents Drive, Pickering, ON",
+      "sourcePoint": {
+        "lat": 43.88016882897072,
+        "lng": -79.08924210036842
+      },
+      "drivingArea": {
+        "center": {
+          "lat": 43.88016883,
+          "lng": -79.0892421
+        },
+        "widthMetres": 95,
+        "lengthMetres": 115,
+        "rotationDegrees": 0,
+        "spawn": {
+          "lat": 43.8801308,
+          "lng": -79.08921642,
+          "headingDegrees": 64
+        },
+        "roadSnap": {
+          "roadName": null,
+          "highway": "service",
+          "distanceFromSourceMetres": 4.7
+        }
+      },
+      "assessment": "estimated",
+      "imageryCapture": "artifacts/release-qa/base-fit-pickering/pickering-fire-1.png",
+      "imageryZoom": 19,
+      "metresPerPixel": 0.215,
+      "imageryObservation": "The zoom-19 image was reviewed for Fire Station 1: fitted footprint covers the visible station building and associated parking/apron/circulation at this site. Source point is preserved. Spawn is a modeled point on the mapped service centerline (service), not a confirmed entrance.",
+      "rotationBasis": "Axis-aligned estimate follows the visible local parcel and street grid; not survey-derived."
+    },
+    {
+      "baseId": "pickering-fire-2",
+      "name": "Fire Station 2",
+      "address": "553 Kingston Road, Pickering, ON",
+      "sourcePoint": {
+        "lat": 43.813804525198655,
+        "lng": -79.12159478952854
+      },
+      "drivingArea": {
+        "center": {
+          "lat": 43.81380453,
+          "lng": -79.12159479
+        },
+        "widthMetres": 90,
+        "lengthMetres": 110,
+        "rotationDegrees": 45,
+        "spawn": {
+          "lat": 43.81371037,
+          "lng": -79.12200311,
+          "headingDegrees": 162
+        },
+        "roadSnap": {
+          "roadName": null,
+          "highway": "service",
+          "distanceFromSourceMetres": 34.4
+        }
+      },
+      "assessment": "estimated",
+      "imageryCapture": "artifacts/release-qa/base-fit-pickering/pickering-fire-2.png",
+      "imageryZoom": 19,
+      "metresPerPixel": 0.2152,
+      "imageryObservation": "The zoom-19 image was reviewed for Fire Station 2: fitted footprint covers the visible station building and associated parking/apron/circulation at this site. Source point is preserved. Spawn is a modeled point on the mapped service centerline (service), not a confirmed entrance.",
+      "rotationBasis": "Approximate alignment estimated from the visible parcel and approach geometry (45°); not survey-derived."
+    },
+    {
+      "baseId": "pickering-fire-4",
+      "name": "Fire Station 4",
+      "address": "4941 Old Brock Road, Pickering, ON",
+      "sourcePoint": {
+        "lat": 43.970200011625494,
+        "lng": -79.12877905959674
+      },
+      "drivingArea": {
+        "center": {
+          "lat": 43.97020001,
+          "lng": -79.12877906
+        },
+        "widthMetres": 100,
+        "lengthMetres": 125,
+        "rotationDegrees": 0,
+        "spawn": {
+          "lat": 43.97003225,
+          "lng": -79.12869944,
+          "headingDegrees": 71
+        },
+        "roadSnap": {
+          "roadName": null,
+          "highway": "service",
+          "distanceFromSourceMetres": 19.7
+        }
+      },
+      "assessment": "estimated",
+      "imageryCapture": "artifacts/release-qa/base-fit-pickering/pickering-fire-4.png",
+      "imageryZoom": 19,
+      "metresPerPixel": 0.2146,
+      "imageryObservation": "The zoom-19 image was reviewed for Fire Station 4: fitted footprint covers the visible station building and associated parking/apron/circulation at this site. Source point is preserved. Spawn is a modeled point on the mapped service centerline (service), not a confirmed entrance.",
+      "rotationBasis": "Axis-aligned estimate follows the visible local parcel and street grid; not survey-derived."
+    },
+    {
+      "baseId": "pickering-fire-5",
+      "name": "Fire Station 5",
+      "address": "1616 Bayly Street, Pickering, ON",
+      "sourcePoint": {
+        "lat": 43.832679377369246,
+        "lng": -79.07206782023115
+      },
+      "drivingArea": {
+        "center": {
+          "lat": 43.83267938,
+          "lng": -79.07206782
+        },
+        "widthMetres": 100,
+        "lengthMetres": 125,
+        "rotationDegrees": 0,
+        "spawn": {
+          "lat": 43.83273087,
+          "lng": -79.07194696,
+          "headingDegrees": 149
+        },
+        "roadSnap": {
+          "roadName": null,
+          "highway": "service",
+          "distanceFromSourceMetres": 11.3
+        }
+      },
+      "assessment": "estimated",
+      "imageryCapture": "artifacts/release-qa/base-fit-pickering/pickering-fire-5.png",
+      "imageryZoom": 19,
+      "metresPerPixel": 0.2151,
+      "imageryObservation": "The zoom-19 image was reviewed for Fire Station 5: fitted footprint covers the visible station building and associated parking/apron/circulation at this site. Source point is preserved. Spawn is a modeled point on the mapped service centerline (service), not a confirmed entrance.",
+      "rotationBasis": "Axis-aligned estimate follows the visible local parcel and street grid; not survey-derived."
+    },
+    {
+      "baseId": "pickering-fire-6",
+      "name": "Fire Station 6",
+      "address": "1115 Finch Avenue, Pickering, ON",
+      "sourcePoint": {
+        "lat": 43.843354449616704,
+        "lng": -79.10330916658282
+      },
+      "drivingArea": {
+        "center": {
+          "lat": 43.84335445,
+          "lng": -79.10330917
+        },
+        "widthMetres": 90,
+        "lengthMetres": 110,
+        "rotationDegrees": 0,
+        "spawn": {
+          "lat": 43.8432821,
+          "lng": -79.1036635,
+          "headingDegrees": 252
+        },
+        "roadSnap": {
+          "roadName": null,
+          "highway": "service",
+          "distanceFromSourceMetres": 29.6
+        }
+      },
+      "assessment": "estimated",
+      "imageryCapture": "artifacts/release-qa/base-fit-pickering/pickering-fire-6.png",
+      "imageryZoom": 19,
+      "metresPerPixel": 0.2151,
+      "imageryObservation": "The zoom-19 image was reviewed for Fire Station 6: fitted footprint covers the visible station building and associated parking/apron/circulation at this site. Source point is preserved. Spawn is a modeled point on the mapped service centerline (service), not a confirmed entrance.",
+      "rotationBasis": "Axis-aligned estimate follows the visible local parcel and street grid; not survey-derived."
+    }
+  ]
+}

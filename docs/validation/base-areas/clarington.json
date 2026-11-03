@@ -1,0 +1,270 @@
+{
+  "schemaVersion": 1,
+  "cityId": "clarington",
+  "reviewedLocalDate": "2026-11-02",
+  "assessment": "estimated",
+  "imagery": {
+    "provider": "Esri World Imagery",
+    "tileUrl": "https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}",
+    "capturedLocalDate": "2026-11-02",
+    "vintage": "not independently provided by the tile response",
+    "method": "Independent Leaflet captures of every active site at zoom 19; visible station building, adjacent parking and on-site apron/circulation were estimated against the displayed map scale."
+  },
+  "roads": {
+    "file": "cities/clarington/roads.geojson.gz",
+    "source": "OpenStreetMap via Geofabrik Ontario extract",
+    "sourceTimestamp": "2026-09-27T20:23:36Z",
+    "snapshotBuiltAt": "2026-10-29T04:20:38.118Z",
+    "packagedSha256": "1a3827ad4057b6f7065da1b58aa0244cf5f87d2ba484cf7804fdcb5c39677226",
+    "sourceSha256": "ebb50b39682d2381ad3c1d21e005b48cec3397e15da0d72c5d76c7d20d8dd249",
+    "sourceUrl": "https://download.geofabrik.de/north-america/canada/ontario.html",
+    "attribution": "© OpenStreetMap contributors",
+    "assessment": "Packaged road/service-drive centerlines were inspected alongside imagery. Modeled spawns are snapped to selected local road centerlines as simulation starts; they do not verify driveway ownership, gates or apparatus entrances."
+  },
+  "limits": [
+    "Rectangle centers, dimensions, rotations and spawn coordinates are imagery- and road-map-based estimates, not surveyed measurements.",
+    "No official station parcel plans, building footprints or apparatus entrance locations were used.",
+    "Satellite imagery dates are not supplied by the tile response.",
+    "Canonical source coordinates, base IDs and statuses are preserved."
+  ],
+  "bases": [
+    {
+      "baseId": "clarington-ems-519",
+      "name": "Courtice Paramedic Station",
+      "address": "2701 Courtice Road, Clarington, ON",
+      "sourcePoint": {
+        "lat": 43.91101074419609,
+        "lng": -78.77688318358734
+      },
+      "drivingArea": {
+        "center": {
+          "lat": 43.91101074,
+          "lng": -78.77688318
+        },
+        "widthMetres": 100,
+        "lengthMetres": 120,
+        "rotationDegrees": 0,
+        "spawn": {
+          "lat": 43.91082851,
+          "lng": -78.77677984,
+          "headingDegrees": 68
+        },
+        "roadSnap": {
+          "roadName": null,
+          "highway": "service",
+          "distanceFromSourceMetres": 21.9
+        }
+      },
+      "assessment": "estimated",
+      "imageryCapture": "artifacts/release-qa/base-fit-clarington/clarington-ems-519.png",
+      "imageryZoom": 19,
+      "metresPerPixel": 0.2149,
+      "imageryObservation": "The zoom-19 image was reviewed for Courtice Paramedic Station: fitted footprint covers the visible station building and associated parking/apron/circulation at this site. Source point is preserved. Spawn is a modeled point on the mapped service centerline (service), not a confirmed entrance.",
+      "rotationBasis": "Axis-aligned estimate follows the visible local parcel and street grid; not survey-derived."
+    },
+    {
+      "baseId": "clarington-ems-548",
+      "name": "Bowmanville Paramedic Station",
+      "address": "9 St George St S, Clarington, ON",
+      "sourcePoint": {
+        "lat": 43.91025411352932,
+        "lng": -78.67699108065558
+      },
+      "drivingArea": {
+        "center": {
+          "lat": 43.91025411,
+          "lng": -78.67699108
+        },
+        "widthMetres": 85,
+        "lengthMetres": 100,
+        "rotationDegrees": 0,
+        "spawn": {
+          "lat": 43.910195,
+          "lng": -78.67729606,
+          "headingDegrees": 345
+        },
+        "roadSnap": {
+          "roadName": "St. George Street South",
+          "highway": "residential",
+          "distanceFromSourceMetres": 25.3
+        }
+      },
+      "assessment": "estimated",
+      "imageryCapture": "artifacts/release-qa/base-fit-clarington/clarington-ems-548.png",
+      "imageryZoom": 19,
+      "metresPerPixel": 0.2149,
+      "imageryObservation": "The zoom-19 image was reviewed for Bowmanville Paramedic Station: fitted footprint covers the visible station building and associated parking/apron/circulation at this site. Source point is preserved. Spawn is a modeled point on the mapped St. George Street South centerline (residential), not a confirmed entrance.",
+      "rotationBasis": "Axis-aligned estimate follows the visible local parcel and street grid; not survey-derived."
+    },
+    {
+      "baseId": "clarington-fire-1",
+      "name": "Fire Station 1",
+      "address": "2430 Highway 2, Clarington, ON",
+      "sourcePoint": {
+        "lat": 43.91092675836328,
+        "lng": -78.70577457269572
+      },
+      "drivingArea": {
+        "center": {
+          "lat": 43.91092676,
+          "lng": -78.70577457
+        },
+        "widthMetres": 100,
+        "lengthMetres": 120,
+        "rotationDegrees": 0,
+        "spawn": {
+          "lat": 43.91101028,
+          "lng": -78.70575788,
+          "headingDegrees": 278
+        },
+        "roadSnap": {
+          "roadName": null,
+          "highway": "service",
+          "distanceFromSourceMetres": 9.4
+        }
+      },
+      "assessment": "estimated",
+      "imageryCapture": "artifacts/release-qa/base-fit-clarington/clarington-fire-1.png",
+      "imageryZoom": 19,
+      "metresPerPixel": 0.2149,
+      "imageryObservation": "The zoom-19 image was reviewed for Fire Station 1: fitted footprint covers the visible station building and associated parking/apron/circulation at this site. Source point is preserved. Spawn is a modeled point on the mapped service centerline (service), not a confirmed entrance.",
+      "rotationBasis": "Axis-aligned estimate follows the visible local parcel and street grid; not survey-derived."
+    },
+    {
+      "baseId": "clarington-fire-2",
+      "name": "Fire Station 2",
+      "address": "3333 Highway 2, Clarington, ON",
+      "sourcePoint": {
+        "lat": 43.91291449825969,
+        "lng": -78.60651621109926
+      },
+      "drivingArea": {
+        "center": {
+          "lat": 43.9129145,
+          "lng": -78.60651621
+        },
+        "widthMetres": 85,
+        "lengthMetres": 105,
+        "rotationDegrees": 0,
+        "spawn": {
+          "lat": 43.91291057,
+          "lng": -78.6065319,
+          "headingDegrees": 341
+        },
+        "roadSnap": {
+          "roadName": null,
+          "highway": "service",
+          "distanceFromSourceMetres": 1.3
+        }
+      },
+      "assessment": "estimated",
+      "imageryCapture": "artifacts/release-qa/base-fit-clarington/clarington-fire-2.png",
+      "imageryZoom": 19,
+      "metresPerPixel": 0.2149,
+      "imageryObservation": "The zoom-19 image was reviewed for Fire Station 2: fitted footprint covers the visible station building and associated parking/apron/circulation at this site. Source point is preserved. Spawn is a modeled point on the mapped service centerline (service), not a confirmed entrance.",
+      "rotationBasis": "Axis-aligned estimate follows the visible local parcel and street grid; not survey-derived."
+    },
+    {
+      "baseId": "clarington-fire-3",
+      "name": "Fire Station 3",
+      "address": "5708 Main Street, Clarington, ON",
+      "sourcePoint": {
+        "lat": 43.98413352327233,
+        "lng": -78.62105049190104
+      },
+      "drivingArea": {
+        "center": {
+          "lat": 43.98413352,
+          "lng": -78.62105049
+        },
+        "widthMetres": 90,
+        "lengthMetres": 110,
+        "rotationDegrees": 0,
+        "spawn": {
+          "lat": 43.98424837,
+          "lng": -78.62060159,
+          "headingDegrees": 160
+        },
+        "roadSnap": {
+          "roadName": "Main Street",
+          "highway": "secondary",
+          "distanceFromSourceMetres": 38.2
+        }
+      },
+      "assessment": "estimated",
+      "imageryCapture": "artifacts/release-qa/base-fit-clarington/clarington-fire-3.png",
+      "imageryZoom": 19,
+      "metresPerPixel": 0.2146,
+      "imageryObservation": "The zoom-19 image was reviewed for Fire Station 3: fitted footprint covers the visible station building and associated parking/apron/circulation at this site. Source point is preserved. Spawn is a modeled point on the mapped Main Street centerline (secondary), not a confirmed entrance.",
+      "rotationBasis": "Axis-aligned estimate follows the visible local parcel and street grid; not survey-derived."
+    },
+    {
+      "baseId": "clarington-fire-4",
+      "name": "Fire Station 4",
+      "address": "2611 Trulls Road, Clarington, ON",
+      "sourcePoint": {
+        "lat": 43.90711982421871,
+        "lng": -78.78592039149727
+      },
+      "drivingArea": {
+        "center": {
+          "lat": 43.90711982421871,
+          "lng": -78.78598273
+        },
+        "widthMetres": 120,
+        "lengthMetres": 130,
+        "rotationDegrees": 0,
+        "spawn": {
+          "lat": 43.9069502,
+          "lng": -78.78659574,
+          "headingDegrees": 161
+        },
+        "roadSnap": {
+          "roadName": "Trulls Road",
+          "highway": "tertiary",
+          "distanceFromSourceMetres": 57.4
+        }
+      },
+      "assessment": "estimated",
+      "imageryCapture": "artifacts/release-qa/base-fit-clarington/clarington-fire-4.png",
+      "imageryZoom": 19,
+      "metresPerPixel": 0.2149,
+      "imageryObservation": "Imagery fit includes the visible Fire Station 4 building, on-site paved circulation and its approach toward Trulls Road. The source point is preserved. The modeled spawn is snapped to the mapped Trulls Road centerline; this is not a verified station entrance.",
+      "rotationBasis": "Axis-aligned estimate follows the visible local parcel and street grid; not survey-derived."
+    },
+    {
+      "baseId": "clarington-fire-5",
+      "name": "Fire Station 5",
+      "address": "2354 Concession Rd 8, Clarington, ON",
+      "sourcePoint": {
+        "lat": 44.01798135691509,
+        "lng": -78.75959420859458
+      },
+      "drivingArea": {
+        "center": {
+          "lat": 44.01798136,
+          "lng": -78.75959421
+        },
+        "widthMetres": 90,
+        "lengthMetres": 110,
+        "rotationDegrees": 0,
+        "spawn": {
+          "lat": 44.01780888,
+          "lng": -78.75953165,
+          "headingDegrees": 255
+        },
+        "roadSnap": {
+          "roadName": "Concession Road 8",
+          "highway": "tertiary",
+          "distanceFromSourceMetres": 19.8
+        }
+      },
+      "assessment": "estimated",
+      "imageryCapture": "artifacts/release-qa/base-fit-clarington/clarington-fire-5.png",
+      "imageryZoom": 19,
+      "metresPerPixel": 0.2145,
+      "imageryObservation": "The zoom-19 image was reviewed for Fire Station 5: fitted footprint covers the visible station building and associated parking/apron/circulation at this site. Source point is preserved. Spawn is a modeled point on the mapped Concession Road 8 centerline (tertiary), not a confirmed entrance.",
+      "rotationBasis": "Axis-aligned estimate follows the visible local parcel and street grid; not survey-derived."
+    }
+  ]
+}
