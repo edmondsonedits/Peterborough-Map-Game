@@ -76,7 +76,7 @@
       .ptbo-route-marker-label{padding:3px 6px!important;color:#f8fafc!important;border:1px solid rgba(255,255,255,.28)!important;border-radius:6px!important;background:rgba(15,23,42,.9)!important;box-shadow:0 4px 12px rgba(0,0,0,.3)!important;font-size:8px!important;font-weight:850!important}.ptbo-route-marker-label:before{display:none!important}
       #ptbo-version-badge{font-size:0!important}#ptbo-version-badge::after{content:'v${VERSION}';font-size:8px;font-weight:700;letter-spacing:.08em}
       @media(max-width:900px),(pointer:coarse){
-        html.ptbo-mobile-route-review #dispatch-hud,html.ptbo-mobile-route-review #game-home,html.ptbo-mobile-route-review #menu-toggle,html.ptbo-mobile-route-review #map-orientation-controls,html.ptbo-mobile-route-review #ptbo-speedometer,html.ptbo-mobile-route-review .leaflet-control-zoom,html.ptbo-mobile-route-review .leaflet-control-scale{opacity:0!important;visibility:hidden!important;pointer-events:none!important}
+        html.ptbo-mobile-route-review #dispatch-hud,html.ptbo-mobile-route-review #game-home,html.ptbo-mobile-route-review #menu-toggle,html.ptbo-mobile-route-review #map-orientation-controls,html.ptbo-mobile-route-review #ptbo-driving-instruments,html.ptbo-mobile-route-review #ptbo-map-toggle,html.ptbo-mobile-route-review #ptbo-current-street-hud,html.ptbo-mobile-route-review #ptbo-speedometer,html.ptbo-mobile-route-review .leaflet-control-zoom,html.ptbo-mobile-route-review .leaflet-control-scale{opacity:0!important;visibility:hidden!important;pointer-events:none!important}
         html.ptbo-mobile-route-review #ptbo-route-legend{position:fixed!important;top:max(8px,env(safe-area-inset-top))!important;left:8px!important;right:8px!important;width:auto!important;max-width:520px!important;max-height:calc(100dvh - 18px - env(safe-area-inset-top))!important;margin:0 auto!important;padding:11px!important;overflow:auto!important;border-radius:14px!important}
         #ptbo-route-legend .ptbo-review-leg{padding:8px;margin-top:8px}#ptbo-route-legend .ptbo-review-route{padding:7px}#ptbo-route-legend .ptbo-review-distance{font-size:12px}#ptbo-route-legend .ptbo-review-tip{display:none}
       }
@@ -87,7 +87,7 @@
       const parentDoc = window.parent.document;
       let parentStyle = parentDoc.getElementById('ptbo-parent-review-style');
       if (!parentStyle) { parentStyle = parentDoc.createElement('style'); parentStyle.id = 'ptbo-parent-review-style'; parentDoc.head.appendChild(parentStyle); }
-      parentStyle.textContent = `html.ptbo-mobile-route-review-active .mobile-topbar,html.ptbo-mobile-route-review-active .mobile-controls,html.ptbo-mobile-route-review-active .control-hint{opacity:0!important;visibility:hidden!important;pointer-events:none!important}`;
+      parentStyle.textContent = `html.ptbo-mobile-route-review-active .mobile-topbar,html.ptbo-mobile-route-review-active .mobile-controls,html.ptbo-mobile-route-review-active #ptbo-driving-menu,html.ptbo-mobile-route-review-active .control-hint{opacity:0!important;visibility:hidden!important;pointer-events:none!important}`;
     } catch (_) {}
   }
 
