@@ -32,8 +32,12 @@ for(const mobile of (process.env.PTBO_QA_MOBILE_ONLY==='1'?[true]:process.env.PT
  await frame.evaluate(()=>{releaseDrivingInput();simLat=activeArrivalPoint.lat;simLng=activeArrivalPoint.lng;vehicleMarker.setLatLng([simLat,simLng]);evaluateDistanceToTarget();});
  let transport=null;
  if(service==='ems'){
- await frame.waitForFunction(()=>mission?.phase==='transport',null,{timeout:12000});transport=await frame.evaluate(async()=>({hospital:activeIncident.name,route:!!(await PTBO_ROUTE_REVEAL.calculateRoute(simLat,simLng,activeArrivalPoint.lat,activeArrivalPoint.lng)),arrival:activeArrivalPoint}));assert.ok(transport.route);assert.equal(transport.hospital,initial.hospital.name);
- await frame.evaluate(()=>{simLat=activeArrivalPoint.lat;simLng=activeArrivalPoint.lng;vehicleMarker.setLatLng([simLat,simLng]);evaluateDistanceToTarget();});
+ // A scene at the hospital can proceed directly into handover between frames.
+ await frame.waitForFunction(()=>['transport','handover','complete'].includes(mission?.phase),null,{timeout:12000});
+ transport=await frame.evaluate(()=>{const from=resolveIncidentArrival(mission.scene),arrival=mission.hospitalArrival;return{hospital:mission.hospital.name,route:!!PTBO_ROUTE_REVEAL.calculateRoute(from.lat,from.lng,arrival.lat,arrival.lng),arrival,phase:mission.phase,alreadyAtHospital:mapInstance.distance([simLat,simLng],[arrival.lat,arrival.lng])<=arrival.radius};});
+ assert.ok(transport.route);assert.equal(transport.hospital,initial.hospital.name);
+ if(transport.phase==='transport')await frame.evaluate(()=>{simLat=activeArrivalPoint.lat;simLng=activeArrivalPoint.lng;vehicleMarker.setLatLng([simLat,simLng]);evaluateDistanceToTarget();});
+ else assert.equal(transport.alreadyAtHospital,true,'early handover requires actual hospital proximity');
  }
  await frame.waitForFunction(()=>mission?.phase==='complete',null,{timeout:12000});await frame.waitForFunction(()=>PTBO_ROUTE_COMPARE.state.completed,null,{timeout:10000});
  const completed=await frame.evaluate(()=>({phase:mission.phase,service:mission.service,transportRequired:mission.transportRequired,responseLeg:!!PTBO_ROUTE_COMPARE.state.responseLeg,comparison:PTBO_ROUTE_COMPARE.state.completed,button:document.getElementById('hud-action-btn').textContent,total:totalTrackedCalls}));assert.equal(completed.button,'Next Call');

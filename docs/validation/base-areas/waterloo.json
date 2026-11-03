@@ -1,0 +1,362 @@
+{
+  "schemaVersion": 1,
+  "cityId": "waterloo",
+  "reviewedLocalDate": "2026-11-02",
+  "assessment": "estimated",
+  "imagery": {
+    "provider": "Esri World Imagery",
+    "tileUrl": "https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}",
+    "vintage": "not independently verified",
+    "method": "Reviewed zoom-19 screenshots; manually selected building/parking/apron polygon enclosed in an aligned rectangle with a 3m margin."
+  },
+  "roads": {
+    "file": "cities/waterloo/roads.geojson.gz",
+    "url": "https://download.geofabrik.de/north-america/canada/ontario.html",
+    "timestamp": "2026-09-27T20:23:36Z",
+    "sha256": "ebb50b39682d2381ad3c1d21e005b48cec3397e15da0d72c5d76c7d20d8dd249",
+    "license": "ODbL-1.0",
+    "attribution": "OpenStreetMap contributors"
+  },
+  "limits": [
+    "Image-derived dimensions and modeled spawn points are estimates, not surveyed parcels or verified apparatus entrances.",
+    "A rectangle may include intervening lawn at irregular sites.",
+    "Canonical source coordinates and IDs are preserved."
+  ],
+  "bases": [
+    {
+      "baseId": "waterloo-fire-1",
+      "name": "Waterloo Fire Station 1",
+      "address": "216 Weber Street North, Waterloo, ON",
+      "sourcePoint": {
+        "lat": 43.4771548,
+        "lng": -80.5182471
+      },
+      "drivingArea": {
+        "center": {
+          "lat": 43.477224640527005,
+          "lng": -80.51831533023315
+        },
+        "widthMetres": 126,
+        "lengthMetres": 67,
+        "rotationDegrees": 26,
+        "spawn": {
+          "lat": 43.477232653617484,
+          "lng": -80.5187164865776,
+          "headingDegrees": 244
+        }
+      },
+      "assessment": "estimated",
+      "observations": "Station roof, long west apron/driveway, northern drive and eastern parking; adjacent northern building excluded.",
+      "screenshot": "artifacts/release-qa/base-fit-waterloo/waterloo-fire-1.png",
+      "imageReview": {
+        "viewport": [
+          1120,
+          860
+        ],
+        "zoom": 19,
+        "metresPerPixel": 0.21642331828822534,
+        "polygonPixels": [
+          [
+            225,
+            390
+          ],
+          [
+            745,
+            195
+          ],
+          [
+            820,
+            410
+          ],
+          [
+            515,
+            535
+          ],
+          [
+            310,
+            560
+          ]
+        ],
+        "spawnPixel": [
+          385,
+          390
+        ],
+        "marginMetres": 3
+      }
+    },
+    {
+      "baseId": "waterloo-fire-2",
+      "name": "Waterloo Fire Station 2",
+      "address": "470 Columbia Street West, Waterloo, ON",
+      "sourcePoint": {
+        "lat": 43.4662454,
+        "lng": -80.5712331
+      },
+      "drivingArea": {
+        "center": {
+          "lat": 43.46613842855962,
+          "lng": -80.57151437983592
+        },
+        "widthMetres": 114,
+        "lengthMetres": 76,
+        "rotationDegrees": 40,
+        "spawn": {
+          "lat": 43.466245399999984,
+          "lng": -80.57164884239731,
+          "headingDegrees": 218
+        }
+      },
+      "assessment": "estimated",
+      "observations": "Irregular station roof with long rear parking aisle and street-facing apron; rectangular fit includes some intervening lawn.",
+      "screenshot": "artifacts/release-qa/base-fit-waterloo/waterloo-fire-2.png",
+      "imageReview": {
+        "viewport": [
+          1120,
+          860
+        ],
+        "zoom": 19,
+        "metresPerPixel": 0.21646239112156937,
+        "polygonPixels": [
+          [
+            210,
+            580
+          ],
+          [
+            505,
+            235
+          ],
+          [
+            650,
+            330
+          ],
+          [
+            715,
+            475
+          ],
+          [
+            335,
+            700
+          ]
+        ],
+        "spawnPixel": [
+          405,
+          430
+        ],
+        "marginMetres": 3
+      }
+    },
+    {
+      "baseId": "waterloo-fire-3",
+      "name": "Waterloo Fire Station 3",
+      "address": "150 Northfield Drive West, Waterloo, ON",
+      "sourcePoint": {
+        "lat": 43.4979005,
+        "lng": -80.5444982
+      },
+      "drivingArea": {
+        "center": {
+          "lat": 43.497931561681064,
+          "lng": -80.54452743547282
+        },
+        "widthMetres": 109,
+        "lengthMetres": 52,
+        "rotationDegrees": 26,
+        "spawn": {
+          "lat": 43.49802696863402,
+          "lng": -80.54402076679537,
+          "headingDegrees": 166
+        }
+      },
+      "assessment": "estimated",
+      "observations": "Narrow roadside station footprint with east parking and western access; imagery shows site/construction features and does not establish current apparatus doors.",
+      "screenshot": "artifacts/release-qa/base-fit-waterloo/waterloo-fire-3.png",
+      "imageReview": {
+        "viewport": [
+          1120,
+          860
+        ],
+        "zoom": 19,
+        "metresPerPixel": 0.21634900452882155,
+        "polygonPixels": [
+          [
+            350,
+            545
+          ],
+          [
+            400,
+            430
+          ],
+          [
+            715,
+            215
+          ],
+          [
+            790,
+            390
+          ],
+          [
+            410,
+            600
+          ]
+        ],
+        "spawnPixel": [
+          738,
+          365
+        ],
+        "marginMetres": 3
+      }
+    },
+    {
+      "baseId": "waterloo-fire-4",
+      "name": "Waterloo Fire Station 4",
+      "address": "911 University Avenue East, Waterloo, ON",
+      "sourcePoint": {
+        "lat": 43.5141349,
+        "lng": -80.4980716
+      },
+      "drivingArea": {
+        "center": {
+          "lat": 43.514147829900836,
+          "lng": -80.49789089612032
+        },
+        "widthMetres": 118,
+        "lengthMetres": 77,
+        "rotationDegrees": 26,
+        "spawn": {
+          "lat": 43.51374197839417,
+          "lng": -80.4981788883606,
+          "headingDegrees": 244
+        }
+      },
+      "assessment": "estimated",
+      "observations": "Building, front apron, rear parking and curved perimeter drive; rectangle includes intervening lawn at the irregular lot.",
+      "screenshot": "artifacts/release-qa/base-fit-waterloo/waterloo-fire-4.png",
+      "imageReview": {
+        "viewport": [
+          1120,
+          860
+        ],
+        "zoom": 19,
+        "metresPerPixel": 0.21629082729160015,
+        "polygonPixels": [
+          [
+            385,
+            430
+          ],
+          [
+            670,
+            220
+          ],
+          [
+            845,
+            280
+          ],
+          [
+            800,
+            455
+          ],
+          [
+            660,
+            590
+          ],
+          [
+            465,
+            680
+          ]
+        ],
+        "spawnPixel": [
+          520,
+          632
+        ],
+        "marginMetres": 3
+      }
+    },
+    {
+      "baseId": "waterloo-ems-westmount",
+      "name": "Waterloo Paramedic Base westmount",
+      "address": "90 Westmount Road North, Waterloo, ON",
+      "sourcePoint": {
+        "lat": 43.4633745,
+        "lng": -80.5392112
+      },
+      "drivingArea": {
+        "center": {
+          "lat": 43.463403627835476,
+          "lng": -80.5391362748503
+        },
+        "widthMetres": 89,
+        "lengthMetres": 62,
+        "rotationDegrees": 40,
+        "spawn": {
+          "lat": 43.46328300101193,
+          "lng": -80.53937749695892,
+          "headingDegrees": 234
+        }
+      },
+      "assessment": "estimated",
+      "observations": "Source-address building, immediate east parking and northern loop; adjacent southern building excluded. Modeled spawn follows the west-facing mapped access.",
+      "screenshot": "artifacts/release-qa/base-fit-waterloo/waterloo-ems-westmount.png",
+      "imageReview": {
+        "viewport": [
+          1120,
+          860
+        ],
+        "zoom": 19,
+        "metresPerPixel": 0.2164726733138227,
+        "polygonPixels": [
+          [
+            365,
+            435
+          ],
+          [
+            550,
+            290
+          ],
+          [
+            720,
+            275
+          ],
+          [
+            805,
+            400
+          ],
+          [
+            630,
+            535
+          ],
+          [
+            460,
+            560
+          ]
+        ],
+        "spawnPixel": [
+          498,
+          477
+        ],
+        "marginMetres": 3
+      }
+    }
+  ],
+  "runtimeVerification": {
+    "checkedDate": "2026-11-02",
+    "tool": "tools/check-base-driving-areas.cjs",
+    "artifact": "artifacts/release-qa/base-fit/waterloo-driving-area-checks.json",
+    "bases": 5,
+    "continuousExits": 5,
+    "blockedMoves": 0,
+    "method": "Collision API follows a real call route to at least ten metres beyond the fitted yard."
+  },
+  "workflowVerification": {
+    "artifact": "artifacts/release-qa/all-city-dispatch/waterloo/dispatch-browser.json",
+    "scenarios": 4,
+    "services": [
+      "fire",
+      "ems"
+    ],
+    "viewports": [
+      "desktop",
+      "mobile"
+    ],
+    "limitations": "Short real input movement; controlled position fixtures complete long response/hospital legs."
+  }
+}
