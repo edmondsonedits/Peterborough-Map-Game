@@ -1,6 +1,6 @@
 # Lawful city-reference workflow
 
-The player-facing City Explorer contains no street-view or satellite texture layer. Its authoritative layers remain Ontario/municipal/open geospatial data and OpenStreetMap geometry. A bounded, attributed Ontario 2023 orthophoto extract is included only in the developer semantic-survey view; it is used to identify errors and decide how procedural materials, roofs, facades, curbs, parking areas, and vegetation should be represented.
+Map mode can display on-demand OpenStreetMap standard tiles or Esri World Imagery, with provider attribution kept visible. Public demo endpoints are used only for the public demo; private, department, or commercial deployments require their configured licensed street-map service and ArcGIS imagery token or another licensed satellite provider. The city build remains based on Ontario/municipal/open geospatial data and OpenStreetMap geometry. A bounded, attributed Ontario 2023 orthophoto extract remains limited to the developer semantic-survey view; it is used to identify errors and decide how procedural materials, roofs, facades, curbs, parking areas, and vegetation should be represented.
 
 ## Recommended sources
 

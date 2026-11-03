@@ -21,13 +21,13 @@
     <meta name="city-editor-publisher" content="">
     <meta name="description" content="A playable full-city 3D simulation of Peterborough, Ontario, generated from validated road, building, land-cover, and elevation data.">
     <meta name="road-release" content="citywide-road-2026-10-09">
-    <title>Peterborough 3D Simulator — v1.6.176</title>
+    <title>Peterborough 3D Simulator — v1.6.177</title>
 
     <!-- Terrain has an optional live fallback; the rendering runtime is shipped locally. -->
     <link rel="preconnect" href="https://s3.amazonaws.com">
-    <link rel="stylesheet" href="styles.css?v=1.6.176">
-    <link rel="stylesheet" href="mobile-controls-1.6.68.css?v=1.6.176">
-    <link rel="stylesheet" href="current-street-hud-1.6.77.css?v=1.6.176">
+    <link rel="stylesheet" href="styles.css?v=1.6.177">
+    <link rel="stylesheet" href="mobile-controls-1.6.68.css?v=1.6.177">
+    <link rel="stylesheet" href="current-street-hud-1.6.77.css?v=1.6.177">
     <style>
       #station2-game-controls:not([hidden]) {
         position: fixed; right: 28px; bottom: calc(116px + env(safe-area-inset-bottom, 0px)); z-index: 19;
@@ -63,12 +63,12 @@
           "three": "./vendor/three-r180/build/three.module.min.js",
           "three/addons/": "./vendor/three-r180/examples/jsm/",
           "@sparkjsdev/spark": "./vendor/spark-2.1.0/spark.module.min.js",
-          "./gameplay-systems.js?v=firefighter4": "./gameplay-systems-1.6.69.js?v=1.6.176",
-          "./editor/override-runtime.js": "./editor/override-runtime.js?v=1.6.176",
-          "./pumper-asset.js": "./pumper-asset.js?v=1.6.176",
-          "./firefighter-asset.js?v=4": "./firefighter-asset.js?v=1.6.176",
-          "./editor/generated-registry.js": "./editor/generated-registry.js?v=1.6.176",
-          "./editor/generated-registry.js?v=footage-20261020": "./editor/generated-registry.js?v=1.6.176&variant=footage"
+          "./gameplay-systems.js?v=firefighter4": "./gameplay-systems-1.6.69.js?v=1.6.177",
+          "./editor/override-runtime.js": "./editor/override-runtime.js?v=1.6.177",
+          "./pumper-asset.js": "./pumper-asset.js?v=1.6.177",
+          "./firefighter-asset.js?v=4": "./firefighter-asset.js?v=1.6.177",
+          "./editor/generated-registry.js": "./editor/generated-registry.js?v=1.6.177",
+          "./editor/generated-registry.js?v=footage-20261020": "./editor/generated-registry.js?v=1.6.177&variant=footage"
         }
       }
     </script>
@@ -121,6 +121,20 @@
         <div class="north-arrow"><strong>N</strong><span aria-hidden="true">↑</span></div>
         <div class="map-scale"><span id="map-scale-line"></span><small id="map-scale-label">1 km</small></div>
       </aside>
+
+      <section id="map-view-controls" aria-label="Map view controls">
+        <div class="map-layer-buttons" role="group" aria-label="Map style">
+          <button id="map-layer-3d" type="button" aria-pressed="true">3D</button>
+          <button id="map-layer-osm" type="button" aria-pressed="false">OSM street map</button>
+          <button id="map-layer-satellite" type="button" aria-pressed="false">Satellite</button>
+        </div>
+        <div class="map-zoom-buttons" role="group" aria-label="Map zoom">
+          <button id="map-zoom-in" type="button" aria-label="Zoom in">+</button>
+          <button id="map-zoom-out" type="button" aria-label="Zoom out">−</button>
+        </div>
+        <a id="map-attribution" href="https://www.openstreetmap.org/copyright" target="_blank" rel="noopener noreferrer">3D city</a>
+        <span id="map-layer-status" role="status" aria-live="polite">Drag to pan · scroll or pinch to zoom</span>
+      </section>
 
       <section class="help-panel hud-panel">
         <p id="mode-hint"><strong>Loading selected fire station.</strong> WASD or arrows move · Shift sprints · E enters the truck · mouse controls the camera.</p>
@@ -446,12 +460,12 @@
         }, 2000);
       })();
     </script>
-    <script src="../shared/build-version.js?v=1.6.176"></script>
-    <script src="release.js?v=1.6.176"></script>
-    <script type="module" src="data-loader.js?v=1.6.176"></script>
-    <script src="vendor/osmtogeojson-3.0.0-beta.5/osmtogeojson.js?v=1.6.176"></script>
-    <script type="module" src="road-orientation-fix.js?v=1.6.176&streetEvidence=2"></script>
-    <script src="mobile-controls-1.6.68.js?v=1.6.176"></script>
-    <script src="driving-refinement-1.6.69.js?v=1.6.176"></script>
+    <script src="../shared/build-version.js?v=1.6.177"></script>
+    <script src="release.js?v=1.6.177"></script>
+    <script type="module" src="data-loader.js?v=1.6.177"></script>
+    <script src="vendor/osmtogeojson-3.0.0-beta.5/osmtogeojson.js?v=1.6.177"></script>
+    <script type="module" src="road-orientation-fix.js?v=1.6.177&streetEvidence=2"></script>
+    <script src="mobile-controls-1.6.68.js?v=1.6.177"></script>
+    <script src="driving-refinement-1.6.69.js?v=1.6.177"></script>
   </body>
 </html>

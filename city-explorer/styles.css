@@ -103,6 +103,20 @@ button { color: inherit; }
 
 #map-guide { position: absolute; right: 30px; bottom: 72px; z-index: 12; display: none; align-items: flex-end; gap: 18px; color: #f4ead0; filter: drop-shadow(0 2px 8px rgba(0,0,0,.6)); pointer-events: none; }
 .is-map #map-guide { display: flex; }
+#map-view-controls { position: absolute; top: 16px; left: 50%; z-index: 16; display: none; transform: translateX(-50%); align-items: center; gap: 7px; max-width: calc(100vw - 28px); padding: 7px; border: 1px solid rgba(255,255,255,.17); border-radius: 12px; background: rgba(5,14,20,.84); box-shadow: 0 8px 28px rgba(0,0,0,.28); color: #eef1ec; backdrop-filter: blur(12px); }
+.is-map #map-view-controls { display: flex; }
+.is-map #gameplay-hud, .is-map #interaction-prompt, .is-map .current-street-box { display: none !important; }
+.is-map #station1-game-controls, .is-map #station2-game-controls, .is-map #station3-game-controls { display: none !important; }
+.map-layer-buttons, .map-zoom-buttons { display: flex; align-items: center; gap: 3px; }
+#map-view-controls button { min-height: 34px; padding: 0 11px; border: 1px solid rgba(255,255,255,.15); border-radius: 8px; background: rgba(255,255,255,.06); color: #eef1ec; font: 750 10px/1 system-ui, sans-serif; cursor: pointer; touch-action: manipulation; }
+#map-view-controls button[aria-pressed="true"] { border-color: rgba(237,212,141,.78); background: rgba(200,172,102,.22); color: #f3dfaa; }
+#map-view-controls button:hover { background: rgba(255,255,255,.14); }
+#map-view-controls button:focus-visible, #map-attribution:focus-visible { outline: 2px solid #edcf80; outline-offset: 2px; }
+#map-zoom-in, #map-zoom-out { width: 34px; padding: 0 !important; font-size: 19px !important; }
+#map-attribution { padding: 0 5px; color: #e7ece8; font-size: 9px; font-weight: 650; text-decoration: underline; white-space: nowrap; }
+#map-layer-status { max-width: 210px; overflow: hidden; color: #aab5ae; font-size: 9px; text-overflow: ellipsis; white-space: nowrap; }
+.is-map #city-canvas { cursor: grab; }
+.is-map #city-canvas:active { cursor: grabbing; }
 .north-arrow { display: grid; justify-items: center; font-size: 12px; letter-spacing: .12em; }
 .north-arrow strong { font-size: 11px; }
 .north-arrow span { margin-top: -2px; color: var(--gold-bright); font-size: 30px; line-height: 1; }
@@ -335,6 +349,11 @@ button { color: inherit; }
   .stats-values { gap: 8px; }
   .stats-values span { font-size: 8px; }
   #map-guide { right: 14px; bottom: 58px; transform: scale(.9); transform-origin: right bottom; }
+  #map-view-controls { top: calc(122px + env(safe-area-inset-top, 0px)); width: calc(100vw - 20px); justify-content: center; flex-wrap: wrap; gap: 5px; padding: 5px; }
+  #map-view-controls button { min-height: 44px; padding: 0 10px; font-size: 9px; }
+  #map-view-controls #map-zoom-in, #map-view-controls #map-zoom-out { width: 44px; }
+  #map-attribution { font-size: 8px; }
+  #map-layer-status { max-width: 100%; flex-basis: 100%; text-align: center; }
   #splat-calibration { right: 12px; bottom: 54px; font-size: 8px; }
   #reference-panel { right: 12px; bottom: 54px; font-size: 8px; }
   #survey-panel { top: 10px; right: 10px; width: min(300px, calc(100vw - 20px)); max-height: calc(100vh - 20px); overflow: auto; }

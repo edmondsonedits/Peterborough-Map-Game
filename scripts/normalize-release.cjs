@@ -133,10 +133,12 @@ for (const file of ['city-explorer/app.js', ...visualModules.map(name => `city-e
 
 
 // Shared neighborhood textures and geometry follow the current app cache token.
-write('city-explorer/app.js', read('city-explorer/app.js').replace(
-  /(\.\/(?:station2-neighborhood-(?:facades|openings|roofs)|citywide-building-facades|progressive-city-build|station-transition|gameplay-camera|station-three-bay)\.mjs)(?:\?v=[^"']*)?(?=["'])/g,
-  `$1?v=${VERSION}`,
-));
+for (const file of ['city-explorer/app.js', 'city-explorer/map-basemap.mjs']) {
+  write(file, read(file).replace(
+    /(\.\/(?:station2-neighborhood-(?:facades|openings|roofs)|citywide-building-facades|progressive-city-build|station-transition|gameplay-camera|station-three-bay|map-view|map-basemap)\.mjs)(?:\?v=[^"']*)?(?=["'])/g,
+    `$1?v=${VERSION}`,
+  ));
+}
 // The runtime requires the new selection export even when an older core is cached.
 write('city-explorer/station-one-runtime.js', read('city-explorer/station-one-runtime.js').replace(
   /(\.\/station-one-core\.mjs)(?:\?v=[^"']*)?(?=["'])/g,
