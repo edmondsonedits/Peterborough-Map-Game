@@ -229,6 +229,8 @@ function summarizeCity(registryCity) {
   const hospitalAudit = hospitalCandidates(geo, training, packageSettings);
   const candidateHospitals = hospitalAudit.candidates;
   const hospitalReference = packageSettings?.hospitalLocationId || null;
+  const hospitalSite = packageSettings?.hospitalSite;
+  const sourcedHospitalSite = hospitalSite?.id && hospitalSite?.sourceUrl && validCoordinates(hospitalSite) ? hospitalSite : null;
   const expectedDispatch = registryCity.modes?.dispatch === true;
   const enabledDispatch = manifestFeatures?.dispatch === true || packageFeatures?.dispatch === true;
   const missingData = [];
@@ -243,12 +245,12 @@ function summarizeCity(registryCity) {
     if (responseByService[service].baseAssignments === 0) missingData.push(`no ${service.toUpperCase()} route-response base assignments`);
   }
   if (enabledDispatch && !routeLocations) missingData.push('dispatch enabled but routeCalls empty');
-  if ((manifestFeatures?.hospitalTransport || packageFeatures?.hospitalTransport) && !candidateHospitals.length && !hospitalReference) missingData.push('hospital transport enabled without canonical hospital candidate/reference');
+  if ((manifestFeatures?.hospitalTransport || packageFeatures?.hospitalTransport) && !candidateHospitals.length && !hospitalReference && !sourcedHospitalSite) missingData.push('hospital transport enabled without canonical hospital candidate/reference');
   if (!enabledDispatch) readinessGaps.push('dispatch capability is not enabled by the manifest or package');
   if (!(manifestFeatures?.routeGuidance === true || packageFeatures?.routeGuidance === true || packageSettings?.routeGuidance === true)) readinessGaps.push('route guidance is not enabled');
   if (!(manifestFeatures?.hospitalTransport === true || packageFeatures?.hospitalTransport === true || packageSettings?.hospitalLocationId)) readinessGaps.push('hospital transport is not enabled');
   if (basesByService.fire.missingDrivingAreaIds.length || basesByService.ems.missingDrivingAreaIds.length) readinessGaps.push('some active eligible bases lack fitted driving areas');
-  if (!candidateHospitals.length) readinessGaps.push('no canonical name/category hospital candidate found');
+  if (!candidateHospitals.length && !hospitalReference && !sourcedHospitalSite) readinessGaps.push('no canonical hospital candidate or sourced destination configured');
 
   return {
     id, name: registryCity.name,
@@ -263,6 +265,7 @@ function summarizeCity(registryCity) {
         sceneResponseDrills: packageSettings.sceneResponseDrills === true,
         routeGuidance: packageSettings.routeGuidance === true,
         hospitalLocationId: hospitalReference,
+        hospitalSite: sourcedHospitalSite,
         roadSource: packageSettings.roads?.sourceAsset || packageSettings.roads?.dataUrl || null,
       } : null,
       registryDispatchMode: expectedDispatch,
@@ -285,6 +288,7 @@ function summarizeCity(registryCity) {
         routeCalls.filter(row => Array.isArray(row.trainingServices) && row.trainingServices.includes(service)).length])),
       responseAssignmentsByService: responseByService,
       hospitalCandidates: candidateHospitals,
+      configuredSourcedHospital: sourcedHospitalSite,
       excludedNonHumanHospitalLikeRecords: hospitalAudit.excludedNonHuman,
     },
     missingData,
@@ -304,6 +308,7 @@ function main() {
       || city.capabilities.packageFeatures?.hospitalTransport === true || Boolean(city.capabilities.packageSettings?.hospitalLocationId)).length,
     citiesWithRoadAssets: cities.filter(city => city.roads.existingLocalAsset).length,
     citiesWithHospitals: cities.filter(city => city.calls.hospitalCandidates.length > 0).length,
+    citiesWithConfiguredSourcedHospital: cities.filter(city => city.calls.configuredSourcedHospital).length,
     potentialHospitalCandidateRecords: cities.reduce((total, city) => total + city.calls.hospitalCandidates.length, 0),
     verifiedEmergencyDepartments: 0,
     citiesMissingAnyDispatchInput: cities.filter(city => city.missingData.length > 0).length,

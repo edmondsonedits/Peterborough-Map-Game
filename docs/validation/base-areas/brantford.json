@@ -1,0 +1,278 @@
+{
+  "schemaVersion": 1,
+  "cityId": "brantford",
+  "reviewedLocalDate": "2026-11-02",
+  "assessment": "estimated",
+  "eligibility": "Active Fire/EMS bases with selectionEligible not false.",
+  "imagery": {
+    "provider": "Esri World Imagery",
+    "tileUrl": "https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}",
+    "capturedLocalDate": "2026-11-02",
+    "vintage": "not independently provided by the tile response",
+    "method": "Independent Leaflet captures per eligible active site at zoom 19; Belleville Fire Station 5 was additionally reviewed at zoom 18 because zoom-19 imagery tiles were unavailable."
+  },
+  "roads": {
+    "file": "cities/brantford/roads.geojson.gz",
+    "source": "OpenStreetMap via Geofabrik Ontario extract",
+    "sourceTimestamp": "2026-09-27T20:23:36Z",
+    "packagedSha256": "93e2342a33742538c05d9168b70eb2a34e43940e9dbd8ae94db6d4da08fc8120",
+    "sourceSha256": "ebb50b39682d2381ad3c1d21e005b48cec3397e15da0d72c5d76c7d20d8dd249",
+    "sourceUrl": "https://download.geofabrik.de/north-america/canada/ontario.html",
+    "attribution": "© OpenStreetMap contributors",
+    "assessment": "Packaged local road and service centerlines were reviewed beside imagery. Spawn points are modeled projections to selected centerlines; they do not establish driveway ownership, gates or apparatus entrances."
+  },
+  "limits": [
+    "Rectangle centers, dimensions, rotations and spawn coordinates are imagery- and road-map-based estimates, not surveyed measurements.",
+    "No official parcel plans, surveyed building footprints or apparatus entrance locations were used.",
+    "Satellite imagery dates are not supplied by the tile response.",
+    "Canonical source coordinates, base IDs, statuses and selection eligibility are preserved."
+  ],
+  "bases": [
+    {
+      "baseId": "brantford-fire-1",
+      "name": "Central Services / Fire Station 1",
+      "address": "60 Clarence Street, Brantford, Ontario",
+      "sourcePoint": {
+        "lat": 43.14202450140971,
+        "lng": -80.25947528700333
+      },
+      "drivingArea": {
+        "center": {
+          "lat": 43.1420245,
+          "lng": -80.25947529
+        },
+        "widthMetres": 65,
+        "lengthMetres": 82,
+        "rotationDegrees": 0,
+        "spawn": {
+          "lat": 43.1421848,
+          "lng": -80.2595244,
+          "headingDegrees": 267
+        },
+        "roadSnap": {
+          "roadName": null,
+          "highway": "service",
+          "distanceFromSourceMetres": 18.3
+        }
+      },
+      "assessment": "estimated",
+      "identitySourceUrl": "https://www.brantford.ca/en/your-government/resources/Documents/AnnualReporting/BrantfordFireDepartment-AnnualReport-2020.pdf",
+      "imageryCapture": "artifacts/release-qa/base-fit-brantford/brantford-fire-1.png",
+      "imageryZoom": 19,
+      "metresPerPixel": 0.2176,
+      "imageryObservation": "The zoom-19 imagery capture was reviewed for Central Services / Fire Station 1; fit estimates the visible address-matched facility building, adjacent parking and on-site apron/circulation.  Canonical source coordinates are preserved. Spawn is a modeled projection onto the mapped service centerline, not a confirmed apparatus entrance.",
+      "rotationBasis": "Axis-aligned imagery estimate of the site and visible access circulation; not survey-derived."
+    },
+    {
+      "baseId": "brantford-fire-2",
+      "name": "Fire Station 2",
+      "address": "21 Fairview Drive, Brantford, Ontario",
+      "sourcePoint": {
+        "lat": 43.16890694593897,
+        "lng": -80.27381125071773
+      },
+      "drivingArea": {
+        "center": {
+          "lat": 43.16908661,
+          "lng": -80.27387283
+        },
+        "widthMetres": 85,
+        "lengthMetres": 100,
+        "rotationDegrees": 0,
+        "spawn": {
+          "lat": 43.16933031,
+          "lng": -80.2739321,
+          "headingDegrees": 258
+        },
+        "roadSnap": {
+          "roadName": "Norman Street",
+          "highway": "residential",
+          "distanceFromSourceMetres": 48.1
+        }
+      },
+      "assessment": "estimated",
+      "identitySourceUrl": "https://www.brantford.ca/en/your-government/resources/Documents/AnnualReporting/BrantfordFireDepartment-AnnualReport-2020.pdf",
+      "imageryCapture": "artifacts/release-qa/base-fit-brantford/brantford-fire-2.png",
+      "imageryZoom": 19,
+      "metresPerPixel": 0.2175,
+      "imageryObservation": "The zoom-19 imagery capture was reviewed for Fire Station 2; fit estimates the visible address-matched facility building, adjacent parking and on-site apron/circulation.  Canonical source coordinates are preserved. Spawn is a modeled projection onto the mapped Norman Street centerline, not a confirmed apparatus entrance.",
+      "rotationBasis": "Axis-aligned imagery estimate of the site and visible access circulation; not survey-derived."
+    },
+    {
+      "baseId": "brantford-fire-3",
+      "name": "Fire Station 3",
+      "address": "7 Lynden Road, Brantford, Ontario",
+      "sourcePoint": {
+        "lat": 43.173231881221994,
+        "lng": -80.2461057215702
+      },
+      "drivingArea": {
+        "center": {
+          "lat": 43.17323188,
+          "lng": -80.24610572
+        },
+        "widthMetres": 78,
+        "lengthMetres": 94,
+        "rotationDegrees": 0,
+        "spawn": {
+          "lat": 43.1731513,
+          "lng": -80.2462103,
+          "headingDegrees": 207
+        },
+        "roadSnap": {
+          "roadName": null,
+          "highway": "service",
+          "distanceFromSourceMetres": 12.4
+        }
+      },
+      "assessment": "estimated",
+      "identitySourceUrl": "https://www.brantford.ca/en/your-government/resources/Documents/AnnualReporting/BrantfordFireDepartment-AnnualReport-2020.pdf",
+      "imageryCapture": "artifacts/release-qa/base-fit-brantford/brantford-fire-3.png",
+      "imageryZoom": 19,
+      "metresPerPixel": 0.2175,
+      "imageryObservation": "The zoom-19 imagery capture was reviewed for Fire Station 3; fit estimates the visible address-matched facility building, adjacent parking and on-site apron/circulation.  Canonical source coordinates are preserved. Spawn is a modeled projection onto the mapped service centerline, not a confirmed apparatus entrance.",
+      "rotationBasis": "Axis-aligned imagery estimate of the site and visible access circulation; not survey-derived."
+    },
+    {
+      "baseId": "brantford-fire-4",
+      "name": "Fire Station 4",
+      "address": "400 Colborne Street West, Brantford, Ontario",
+      "sourcePoint": {
+        "lat": 43.13124103393614,
+        "lng": -80.29280629536012
+      },
+      "drivingArea": {
+        "center": {
+          "lat": 43.13124103,
+          "lng": -80.2928063
+        },
+        "widthMetres": 90,
+        "lengthMetres": 115,
+        "rotationDegrees": 0,
+        "spawn": {
+          "lat": 43.13122114,
+          "lng": -80.2928871,
+          "headingDegrees": 341
+        },
+        "roadSnap": {
+          "roadName": null,
+          "highway": "service",
+          "distanceFromSourceMetres": 6.9
+        }
+      },
+      "assessment": "estimated",
+      "identitySourceUrl": "https://www.brantford.ca/en/your-government/resources/Documents/AnnualReporting/BrantfordFireDepartment-AnnualReport-2020.pdf",
+      "imageryCapture": "artifacts/release-qa/base-fit-brantford/brantford-fire-4.png",
+      "imageryZoom": 19,
+      "metresPerPixel": 0.2177,
+      "imageryObservation": "The zoom-19 imagery capture was reviewed for Fire Station 4; fit estimates the visible address-matched facility building, adjacent parking and on-site apron/circulation.  Canonical source coordinates are preserved. Spawn is a modeled projection onto the mapped service centerline, not a confirmed apparatus entrance.",
+      "rotationBasis": "Axis-aligned imagery estimate of the site and visible access circulation; not survey-derived."
+    },
+    {
+      "baseId": "brantford-ems-325",
+      "name": "Ambulance Station 00 Henry",
+      "address": "303 Henry St, Brantford, Ontario",
+      "sourcePoint": {
+        "lat": 43.15757139835908,
+        "lng": -80.22626129938546
+      },
+      "drivingArea": {
+        "center": {
+          "lat": 43.1575714,
+          "lng": -80.2262613
+        },
+        "widthMetres": 65,
+        "lengthMetres": 80,
+        "rotationDegrees": 0,
+        "spawn": {
+          "lat": 43.15727483,
+          "lng": -80.22615776,
+          "headingDegrees": 256
+        },
+        "roadSnap": {
+          "roadName": "Henry Street",
+          "highway": "secondary",
+          "distanceFromSourceMetres": 34.1
+        }
+      },
+      "assessment": "estimated",
+      "identitySourceUrl": "https://maps.brant.ca/arcgis/rest/services/PublicData/CountyOfBrantGIS/MapServer/70/query?where=OBJECTID%3D325&outFields=%2A&outSR=4326&f=json",
+      "imageryCapture": "artifacts/release-qa/base-fit-brantford/brantford-ems-325.png",
+      "imageryZoom": 19,
+      "metresPerPixel": 0.2176,
+      "imageryObservation": "The zoom-19 imagery capture was reviewed for Ambulance Station 00 Henry; fit estimates the visible address-matched facility building, adjacent parking and on-site apron/circulation.  Canonical source coordinates are preserved. Spawn is a modeled projection onto the mapped Henry Street centerline, not a confirmed apparatus entrance.",
+      "rotationBasis": "Axis-aligned imagery estimate of the site and visible access circulation; not survey-derived."
+    },
+    {
+      "baseId": "brantford-ems-326",
+      "name": "Ambulance Station 04 Colborne",
+      "address": "400 Colborne St West, Brantford, Ontario",
+      "sourcePoint": {
+        "lat": 43.13110267565951,
+        "lng": -80.29239500701512
+      },
+      "drivingArea": {
+        "center": {
+          "lat": 43.13110268,
+          "lng": -80.29239501
+        },
+        "widthMetres": 90,
+        "lengthMetres": 115,
+        "rotationDegrees": 0,
+        "spawn": {
+          "lat": 43.13122114,
+          "lng": -80.2928871,
+          "headingDegrees": 341
+        },
+        "roadSnap": {
+          "roadName": null,
+          "highway": "service",
+          "distanceFromSourceMetres": 42.1
+        }
+      },
+      "assessment": "estimated",
+      "identitySourceUrl": "https://www.brantford.ca/en/your-government/resources/Documents/AnnualReporting/BrantfordFireDepartment-AnnualReport-2020.pdf",
+      "imageryCapture": "artifacts/release-qa/base-fit-brantford/brantford-fire-4.png",
+      "imageryZoom": 19,
+      "metresPerPixel": 0.2177,
+      "imageryObservation": "The zoom-19 imagery capture was reviewed for Fire Station 4; fit estimates the visible address-matched facility building, adjacent parking and on-site apron/circulation.  Canonical source coordinates are preserved. Spawn is a modeled projection onto the mapped service centerline, not a confirmed apparatus entrance.",
+      "rotationBasis": "Axis-aligned imagery estimate of the site and visible access circulation; not survey-derived.",
+      "sameSiteAs": "brantford-fire-4"
+    },
+    {
+      "baseId": "brantford-ems-327",
+      "name": "Ambulance Station 05 Tranquility",
+      "address": "135 Francis St, Brantford, Ontario",
+      "sourcePoint": {
+        "lat": 43.18655969460948,
+        "lng": -80.27661817361208
+      },
+      "drivingArea": {
+        "center": {
+          "lat": 43.18655969,
+          "lng": -80.27661817
+        },
+        "widthMetres": 70,
+        "lengthMetres": 88,
+        "rotationDegrees": 0,
+        "spawn": {
+          "lat": 43.18647934,
+          "lng": -80.27699562,
+          "headingDegrees": 164
+        },
+        "roadSnap": {
+          "roadName": "Francis Street",
+          "highway": "residential",
+          "distanceFromSourceMetres": 31.9
+        }
+      },
+      "assessment": "estimated",
+      "identitySourceUrl": "https://maps.brant.ca/arcgis/rest/services/PublicData/CountyOfBrantGIS/MapServer/70/query?where=OBJECTID%3D327&outFields=%2A&outSR=4326&f=json",
+      "imageryCapture": "artifacts/release-qa/base-fit-brantford/brantford-ems-327.png",
+      "imageryZoom": 19,
+      "metresPerPixel": 0.2175,
+      "imageryObservation": "The zoom-19 imagery capture was reviewed for Ambulance Station 05 Tranquility; fit estimates the visible address-matched facility building, adjacent parking and on-site apron/circulation.  Canonical source coordinates are preserved. Spawn is a modeled projection onto the mapped Francis Street centerline, not a confirmed apparatus entrance.",
+      "rotationBasis": "Axis-aligned imagery estimate of the site and visible access circulation; not survey-derived."
+    }
+  ]
+}

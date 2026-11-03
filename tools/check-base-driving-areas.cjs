@@ -22,6 +22,11 @@ const cities = (process.env.PTBO_QA_CITIES || 'peterborough,richmond-hill')
     }
     browser = await chromium.launch({ headless: true, ...(process.platform === 'win32' ? { channel: 'msedge' } : {}) });
     for (const city of cities) {
+      if(city!=='peterborough'){
+        const geo=JSON.parse(fs.readFileSync(`cities/${city}/geo-data.json`,'utf8'));
+        const missing=geo.bases.filter(b=>b.status==='active'&&b.selectionEligible!==false&&['fire','ems'].includes(b.service)&&!b.drivingArea).map(b=>b.id);
+        assert.deepEqual(missing,[],`${city}: explicit fitted areas required before exit verification; runtime fallback squares are not fitted sites`);
+      }
       const page = await browser.newPage();
       try {
         await page.goto(`${base}/response-simulator/play/?city=${encodeURIComponent(city)}`, { waitUntil: 'domcontentloaded' });

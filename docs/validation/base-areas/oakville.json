@@ -1,0 +1,487 @@
+{
+  "schemaVersion": 1,
+  "cityId": "oakville",
+  "reviewedLocalDate": "2026-11-02",
+  "assessment": "estimated",
+  "eligibility": "Active Fire/EMS bases with selectionEligible not false.",
+  "imagery": {
+    "provider": "Esri World Imagery",
+    "tileUrl": "https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}",
+    "capturedLocalDate": "2026-11-02",
+    "vintage": "not independently provided by the tile response",
+    "method": "Independent Leaflet captures per eligible active site at zoom 19; Belleville Fire Station 5 was additionally reviewed at zoom 18 because zoom-19 imagery tiles were unavailable."
+  },
+  "roads": {
+    "file": "cities/oakville/roads.geojson.gz",
+    "source": "OpenStreetMap via Geofabrik Ontario extract",
+    "sourceTimestamp": "2026-09-27T20:23:36Z",
+    "packagedSha256": "ac503df11415c1bdb8abf2c86bfffe17362b1ea930b03a53caac1fccc9335f77",
+    "sourceSha256": "ebb50b39682d2381ad3c1d21e005b48cec3397e15da0d72c5d76c7d20d8dd249",
+    "sourceUrl": "https://download.geofabrik.de/north-america/canada/ontario.html",
+    "attribution": "© OpenStreetMap contributors",
+    "assessment": "Packaged local road and service centerlines were reviewed beside imagery. Spawn points are modeled projections to selected centerlines; they do not establish driveway ownership, gates or apparatus entrances."
+  },
+  "limits": [
+    "Rectangle centers, dimensions, rotations and spawn coordinates are imagery- and road-map-based estimates, not surveyed measurements.",
+    "No official parcel plans, surveyed building footprints or apparatus entrance locations were used.",
+    "Satellite imagery dates are not supplied by the tile response.",
+    "Canonical source coordinates, base IDs, statuses and selection eligibility are preserved."
+  ],
+  "bases": [
+    {
+      "baseId": "oakville-fire-9",
+      "name": "Fire Station 9",
+      "address": "3250 NEYAGAWA BLVD, Oakville, ON",
+      "sourcePoint": {
+        "lat": 43.470748970897404,
+        "lng": -79.75469654706342
+      },
+      "drivingArea": {
+        "center": {
+          "lat": 43.47074897,
+          "lng": -79.75469655
+        },
+        "widthMetres": 88,
+        "lengthMetres": 105,
+        "rotationDegrees": 0,
+        "spawn": {
+          "lat": 43.47071917,
+          "lng": -79.75472913,
+          "headingDegrees": 128
+        },
+        "roadSnap": {
+          "roadName": null,
+          "highway": "service",
+          "distanceFromSourceMetres": 4.2
+        }
+      },
+      "assessment": "estimated",
+      "identitySourceUrl": "https://maps.oakville.ca/oakgis/rest/services/ArcGISOnline/AGO_Communications/MapServer/5",
+      "imageryCapture": "artifacts/release-qa/base-fit-oakville/oakville-fire-9.png",
+      "imageryZoom": 19,
+      "metresPerPixel": 0.2164,
+      "imageryObservation": "The zoom-19 imagery capture was reviewed for Fire Station 9; fit estimates the visible address-matched facility building, adjacent parking and on-site apron/circulation.  Canonical source coordinates are preserved. Spawn is a modeled projection onto the mapped service centerline, not a confirmed apparatus entrance.",
+      "rotationBasis": "Axis-aligned imagery estimate of the visible facility and access circulation; not survey-derived."
+    },
+    {
+      "baseId": "oakville-fire-3",
+      "name": "Fire Station 3",
+      "address": "168 KERR ST, Oakville, ON",
+      "sourcePoint": {
+        "lat": 43.44071982266907,
+        "lng": -79.67668434276946
+      },
+      "drivingArea": {
+        "center": {
+          "lat": 43.44071982,
+          "lng": -79.67668434
+        },
+        "widthMetres": 65,
+        "lengthMetres": 80,
+        "rotationDegrees": 0,
+        "spawn": {
+          "lat": 43.44085263,
+          "lng": -79.67654254,
+          "headingDegrees": 128
+        },
+        "roadSnap": {
+          "roadName": "Kerr Street",
+          "highway": "secondary",
+          "distanceFromSourceMetres": 18.7
+        }
+      },
+      "assessment": "estimated",
+      "identitySourceUrl": "https://maps.oakville.ca/oakgis/rest/services/ArcGISOnline/AGO_Communications/MapServer/5",
+      "imageryCapture": "artifacts/release-qa/base-fit-oakville/oakville-fire-3.png",
+      "imageryZoom": 19,
+      "metresPerPixel": 0.2166,
+      "imageryObservation": "The zoom-19 imagery capture was reviewed for Fire Station 3; fit estimates the visible address-matched facility building, adjacent parking and on-site apron/circulation.  Canonical source coordinates are preserved. Spawn is a modeled projection onto the mapped Kerr Street centerline, not a confirmed apparatus entrance.",
+      "rotationBasis": "Axis-aligned imagery estimate of the visible facility and access circulation; not survey-derived."
+    },
+    {
+      "baseId": "oakville-fire-4",
+      "name": "Fire Station 4",
+      "address": "2024 SIXTH LINE, Oakville, ON",
+      "sourcePoint": {
+        "lat": 43.466476217433474,
+        "lng": -79.71237628231557
+      },
+      "drivingArea": {
+        "center": {
+          "lat": 43.46647622,
+          "lng": -79.71237628
+        },
+        "widthMetres": 75,
+        "lengthMetres": 90,
+        "rotationDegrees": 0,
+        "spawn": {
+          "lat": 43.46678411,
+          "lng": -79.71216574,
+          "headingDegrees": 296
+        },
+        "roadSnap": {
+          "roadName": "Sixth Line",
+          "highway": "tertiary",
+          "distanceFromSourceMetres": 38.3
+        }
+      },
+      "assessment": "estimated",
+      "identitySourceUrl": "https://maps.oakville.ca/oakgis/rest/services/ArcGISOnline/AGO_Communications/MapServer/5",
+      "imageryCapture": "artifacts/release-qa/base-fit-oakville/oakville-fire-4.png",
+      "imageryZoom": 19,
+      "metresPerPixel": 0.2165,
+      "imageryObservation": "The zoom-19 imagery capture was reviewed for Fire Station 4; fit estimates the visible address-matched facility building, adjacent parking and on-site apron/circulation.  Canonical source coordinates are preserved. Spawn is a modeled projection onto the mapped Sixth Line centerline, not a confirmed apparatus entrance.",
+      "rotationBasis": "Axis-aligned imagery estimate of the visible facility and access circulation; not survey-derived."
+    },
+    {
+      "baseId": "oakville-fire-6",
+      "name": "Fire Station 6",
+      "address": "1510 POSTMASTER DR, Oakville, ON",
+      "sourcePoint": {
+        "lat": 43.434680416344705,
+        "lng": -79.74521528772271
+      },
+      "drivingArea": {
+        "center": {
+          "lat": 43.43468042,
+          "lng": -79.74521529
+        },
+        "widthMetres": 78,
+        "lengthMetres": 96,
+        "rotationDegrees": 0,
+        "spawn": {
+          "lat": 43.43484026,
+          "lng": -79.74503835,
+          "headingDegrees": 129
+        },
+        "roadSnap": {
+          "roadName": "Postmaster Drive",
+          "highway": "tertiary",
+          "distanceFromSourceMetres": 22.8
+        }
+      },
+      "assessment": "estimated",
+      "identitySourceUrl": "https://maps.oakville.ca/oakgis/rest/services/ArcGISOnline/AGO_Communications/MapServer/5",
+      "imageryCapture": "artifacts/release-qa/base-fit-oakville/oakville-fire-6.png",
+      "imageryZoom": 19,
+      "metresPerPixel": 0.2166,
+      "imageryObservation": "The zoom-19 imagery capture was reviewed for Fire Station 6; fit estimates the visible address-matched facility building, adjacent parking and on-site apron/circulation.  Canonical source coordinates are preserved. Spawn is a modeled projection onto the mapped Postmaster Drive centerline, not a confirmed apparatus entrance.",
+      "rotationBasis": "Axis-aligned imagery estimate of the visible facility and access circulation; not survey-derived."
+    },
+    {
+      "baseId": "oakville-fire-1",
+      "name": "Fire Station 1",
+      "address": "2535 REBECCA ST, Oakville, ON",
+      "sourcePoint": {
+        "lat": 43.39658383225897,
+        "lng": -79.72206289759846
+      },
+      "drivingArea": {
+        "center": {
+          "lat": 43.39658383,
+          "lng": -79.7220629
+        },
+        "widthMetres": 105,
+        "lengthMetres": 125,
+        "rotationDegrees": 0,
+        "spawn": {
+          "lat": 43.39644584,
+          "lng": -79.72204382,
+          "headingDegrees": 264
+        },
+        "roadSnap": {
+          "roadName": null,
+          "highway": "service",
+          "distanceFromSourceMetres": 15.4
+        }
+      },
+      "assessment": "estimated",
+      "identitySourceUrl": "https://maps.oakville.ca/oakgis/rest/services/ArcGISOnline/AGO_Communications/MapServer/5",
+      "imageryCapture": "artifacts/release-qa/base-fit-oakville/oakville-fire-1.png",
+      "imageryZoom": 19,
+      "metresPerPixel": 0.2167,
+      "imageryObservation": "The zoom-19 imagery capture was reviewed for Fire Station 1; fit estimates the visible address-matched facility building, adjacent parking and on-site apron/circulation.  Canonical source coordinates are preserved. Spawn is a modeled projection onto the mapped service centerline, not a confirmed apparatus entrance.",
+      "rotationBasis": "Axis-aligned imagery estimate of the visible facility and access circulation; not survey-derived."
+    },
+    {
+      "baseId": "oakville-fire-7",
+      "name": "Fire Station 7",
+      "address": "2010 JOSHUAS CREEK DR, Oakville, ON",
+      "sourcePoint": {
+        "lat": 43.49242052262341,
+        "lng": -79.6832068784419
+      },
+      "drivingArea": {
+        "center": {
+          "lat": 43.49242052,
+          "lng": -79.68320688
+        },
+        "widthMetres": 90,
+        "lengthMetres": 110,
+        "rotationDegrees": 0,
+        "spawn": {
+          "lat": 43.49266456,
+          "lng": -79.68306128,
+          "headingDegrees": 113
+        },
+        "roadSnap": {
+          "roadName": "Joshuas Creek Drive",
+          "highway": "tertiary",
+          "distanceFromSourceMetres": 29.6
+        }
+      },
+      "assessment": "estimated",
+      "identitySourceUrl": "https://maps.oakville.ca/oakgis/rest/services/ArcGISOnline/AGO_Communications/MapServer/5",
+      "imageryCapture": "artifacts/release-qa/base-fit-oakville/oakville-fire-7.png",
+      "imageryZoom": 19,
+      "metresPerPixel": 0.2164,
+      "imageryObservation": "The zoom-19 imagery capture was reviewed for Fire Station 7; fit estimates the visible address-matched facility building, adjacent parking and on-site apron/circulation.  Canonical source coordinates are preserved. Spawn is a modeled projection onto the mapped Joshuas Creek Drive centerline, not a confirmed apparatus entrance.",
+      "rotationBasis": "Axis-aligned imagery estimate of the visible facility and access circulation; not survey-derived."
+    },
+    {
+      "baseId": "oakville-fire-5",
+      "name": "Fire Station 5",
+      "address": "1146 S SERVICE RD W, Oakville, ON",
+      "sourcePoint": {
+        "lat": 43.43165081183337,
+        "lng": -79.71121006219701
+      },
+      "drivingArea": {
+        "center": {
+          "lat": 43.43165081,
+          "lng": -79.71121006
+        },
+        "widthMetres": 95,
+        "lengthMetres": 115,
+        "rotationDegrees": 0,
+        "spawn": {
+          "lat": 43.43148579,
+          "lng": -79.71117689,
+          "headingDegrees": 262
+        },
+        "roadSnap": {
+          "roadName": null,
+          "highway": "service",
+          "distanceFromSourceMetres": 18.6
+        }
+      },
+      "assessment": "estimated",
+      "identitySourceUrl": "https://maps.oakville.ca/oakgis/rest/services/ArcGISOnline/AGO_Communications/MapServer/5",
+      "imageryCapture": "artifacts/release-qa/base-fit-oakville/oakville-fire-5.png",
+      "imageryZoom": 19,
+      "metresPerPixel": 0.2166,
+      "imageryObservation": "The zoom-19 imagery capture was reviewed for Fire Station 5; fit estimates the visible address-matched facility building, adjacent parking and on-site apron/circulation.  Canonical source coordinates are preserved. Spawn is a modeled projection onto the mapped service centerline, not a confirmed apparatus entrance.",
+      "rotationBasis": "Axis-aligned imagery estimate of the visible facility and access circulation; not survey-derived."
+    },
+    {
+      "baseId": "oakville-fire-2",
+      "name": "Fire Station 2",
+      "address": "2264 CORNWALL RD, Oakville, ON",
+      "sourcePoint": {
+        "lat": 43.487130385523045,
+        "lng": -79.65118910852387
+      },
+      "drivingArea": {
+        "center": {
+          "lat": 43.48713039,
+          "lng": -79.65118911
+        },
+        "widthMetres": 85,
+        "lengthMetres": 100,
+        "rotationDegrees": 0,
+        "spawn": {
+          "lat": 43.48727125,
+          "lng": -79.65141498,
+          "headingDegrees": 221
+        },
+        "roadSnap": {
+          "roadName": "Cornwall Road",
+          "highway": "secondary",
+          "distanceFromSourceMetres": 24.1
+        }
+      },
+      "assessment": "estimated",
+      "identitySourceUrl": "https://maps.oakville.ca/oakgis/rest/services/ArcGISOnline/AGO_Communications/MapServer/5",
+      "imageryCapture": "artifacts/release-qa/base-fit-oakville/oakville-fire-2.png",
+      "imageryZoom": 19,
+      "metresPerPixel": 0.2164,
+      "imageryObservation": "The zoom-19 imagery capture was reviewed for Fire Station 2; fit estimates the visible address-matched facility building, adjacent parking and on-site apron/circulation.  Canonical source coordinates are preserved. Spawn is a modeled projection onto the mapped Cornwall Road centerline, not a confirmed apparatus entrance.",
+      "rotationBasis": "Axis-aligned imagery estimate of the visible facility and access circulation; not survey-derived."
+    },
+    {
+      "baseId": "oakville-fire-8",
+      "name": "Fire Station 8",
+      "address": "3025 PINE GLEN RD, Oakville, ON",
+      "sourcePoint": {
+        "lat": 43.43330149880097,
+        "lng": -79.77485032404667
+      },
+      "drivingArea": {
+        "center": {
+          "lat": 43.4333015,
+          "lng": -79.77485032
+        },
+        "widthMetres": 90,
+        "lengthMetres": 115,
+        "rotationDegrees": 0,
+        "spawn": {
+          "lat": 43.43335355,
+          "lng": -79.77479068,
+          "headingDegrees": 310
+        },
+        "roadSnap": {
+          "roadName": null,
+          "highway": "service",
+          "distanceFromSourceMetres": 7.5
+        }
+      },
+      "assessment": "estimated",
+      "identitySourceUrl": "https://maps.oakville.ca/oakgis/rest/services/ArcGISOnline/AGO_Communications/MapServer/5",
+      "imageryCapture": "artifacts/release-qa/base-fit-oakville/oakville-fire-8.png",
+      "imageryZoom": 19,
+      "metresPerPixel": 0.2166,
+      "imageryObservation": "The zoom-19 imagery capture was reviewed for Fire Station 8; fit estimates the visible address-matched facility building, adjacent parking and on-site apron/circulation.  Canonical source coordinates are preserved. Spawn is a modeled projection onto the mapped service centerline, not a confirmed apparatus entrance.",
+      "rotationBasis": "Axis-aligned imagery estimate of the visible facility and access circulation; not survey-derived."
+    },
+    {
+      "baseId": "oakville-ems-2",
+      "name": "Halton Paramedic Station 02",
+      "address": "139 Georgian Drive, Oakville, ON",
+      "sourcePoint": {
+        "lat": 43.47964304615187,
+        "lng": -79.71796657155106
+      },
+      "drivingArea": {
+        "center": {
+          "lat": 43.47964305,
+          "lng": -79.71796657
+        },
+        "widthMetres": 75,
+        "lengthMetres": 90,
+        "rotationDegrees": 0,
+        "spawn": {
+          "lat": 43.4797101,
+          "lng": -79.7179502,
+          "headingDegrees": 352
+        },
+        "roadSnap": {
+          "roadName": null,
+          "highway": "service",
+          "distanceFromSourceMetres": 7.6
+        }
+      },
+      "assessment": "estimated",
+      "identitySourceUrl": "https://haltonregion.bidsandtenders.ca/Module/Tenders/en/Tender/Detail/31706e59-6a1e-4c19-8ce4-cd94a8a37a97",
+      "imageryCapture": "artifacts/release-qa/base-fit-oakville/oakville-ems-2.png",
+      "imageryZoom": 19,
+      "metresPerPixel": 0.2164,
+      "imageryObservation": "The zoom-19 imagery capture was reviewed for Halton Paramedic Station 02; fit estimates the visible address-matched facility building, adjacent parking and on-site apron/circulation.  Canonical source coordinates are preserved. Spawn is a modeled projection onto the mapped service centerline, not a confirmed apparatus entrance.",
+      "rotationBasis": "Axis-aligned imagery estimate of the visible facility and access circulation; not survey-derived."
+    },
+    {
+      "baseId": "oakville-ems-12",
+      "name": "Halton Paramedic Station 12",
+      "address": "1080 Cornwall Road, Oakville, ON",
+      "sourcePoint": {
+        "lat": 43.46659156502034,
+        "lng": -79.67124629404314
+      },
+      "drivingArea": {
+        "center": {
+          "lat": 43.46659157,
+          "lng": -79.67124629
+        },
+        "widthMetres": 80,
+        "lengthMetres": 100,
+        "rotationDegrees": 0,
+        "spawn": {
+          "lat": 43.4666761,
+          "lng": -79.6710762,
+          "headingDegrees": 119
+        },
+        "roadSnap": {
+          "roadName": null,
+          "highway": "service",
+          "distanceFromSourceMetres": 16.7
+        }
+      },
+      "assessment": "estimated",
+      "identitySourceUrl": "https://canada.constructconnect.com/dcn/certificates-and-notices/C245E9AF-E38D-43CD-9169-AFDC0235BFBB",
+      "imageryCapture": "artifacts/release-qa/base-fit-oakville/oakville-ems-12.png",
+      "imageryZoom": 19,
+      "metresPerPixel": 0.2165,
+      "imageryObservation": "The zoom-19 imagery capture was reviewed for Halton Paramedic Station 12; fit estimates the visible address-matched facility building, adjacent parking and on-site apron/circulation.  Canonical source coordinates are preserved. Spawn is a modeled projection onto the mapped service centerline, not a confirmed apparatus entrance.",
+      "rotationBasis": "Axis-aligned imagery estimate of the visible facility and access circulation; not survey-derived."
+    },
+    {
+      "baseId": "oakville-ems-14",
+      "name": "Halton Paramedic Station 14",
+      "address": "3019 Pine Glen Road, Oakville, ON",
+      "sourcePoint": {
+        "lat": 43.432746546608854,
+        "lng": -79.77391572408587
+      },
+      "drivingArea": {
+        "center": {
+          "lat": 43.43274655,
+          "lng": -79.77391572
+        },
+        "widthMetres": 88,
+        "lengthMetres": 110,
+        "rotationDegrees": 0,
+        "spawn": {
+          "lat": 43.43282183,
+          "lng": -79.77382435,
+          "headingDegrees": 311
+        },
+        "roadSnap": {
+          "roadName": null,
+          "highway": "service",
+          "distanceFromSourceMetres": 11.2
+        }
+      },
+      "assessment": "estimated",
+      "identitySourceUrl": "https://haltonregion.bidsandtenders.ca/Module/Tenders/fr/Tender/Detail/f321ac4f-e39b-44ba-8105-4b13fc6b0bcb",
+      "imageryCapture": "artifacts/release-qa/base-fit-oakville/oakville-ems-14.png",
+      "imageryZoom": 19,
+      "metresPerPixel": 0.2166,
+      "imageryObservation": "The zoom-19 imagery capture was reviewed for Halton Paramedic Station 14; fit estimates the visible address-matched facility building, adjacent parking and on-site apron/circulation.  Canonical source coordinates are preserved. Spawn is a modeled projection onto the mapped service centerline, not a confirmed apparatus entrance.",
+      "rotationBasis": "Axis-aligned imagery estimate of the visible facility and access circulation; not survey-derived."
+    },
+    {
+      "baseId": "oakville-ems-15",
+      "name": "Halton Paramedic Station 15",
+      "address": "289 Woodside Drive, Oakville, ON",
+      "sourcePoint": {
+        "lat": 43.416741301781634,
+        "lng": -79.6978570924212
+      },
+      "drivingArea": {
+        "center": {
+          "lat": 43.4167413,
+          "lng": -79.69785709
+        },
+        "widthMetres": 75,
+        "lengthMetres": 90,
+        "rotationDegrees": 0,
+        "spawn": {
+          "lat": 43.41684312,
+          "lng": -79.69805008,
+          "headingDegrees": 36
+        },
+        "roadSnap": {
+          "roadName": null,
+          "highway": "service",
+          "distanceFromSourceMetres": 19.3
+        }
+      },
+      "assessment": "estimated",
+      "identitySourceUrl": "https://www.halton.ca/news/media-releases/2020/halton-region-opens-new-paramedic-services-station",
+      "imageryCapture": "artifacts/release-qa/base-fit-oakville/oakville-ems-15.png",
+      "imageryZoom": 19,
+      "metresPerPixel": 0.2166,
+      "imageryObservation": "The zoom-19 imagery capture was reviewed for Halton Paramedic Station 15; fit estimates the visible address-matched facility building, adjacent parking and on-site apron/circulation.  Canonical source coordinates are preserved. Spawn is a modeled projection onto the mapped service centerline, not a confirmed apparatus entrance.",
+      "rotationBasis": "Axis-aligned imagery estimate of the visible facility and access circulation; not survey-derived."
+    }
+  ]
+}

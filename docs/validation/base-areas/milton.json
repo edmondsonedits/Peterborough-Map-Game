@@ -1,0 +1,349 @@
+{
+  "schemaVersion": 1,
+  "cityId": "milton",
+  "reviewedLocalDate": "2026-11-02",
+  "assessment": "estimated",
+  "eligibility": "Active Fire/EMS bases with selectionEligible not false.",
+  "imagery": {
+    "provider": "Esri World Imagery",
+    "tileUrl": "https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}",
+    "capturedLocalDate": "2026-11-02",
+    "vintage": "not independently provided by the tile response",
+    "method": "Independent Leaflet captures per eligible active site at zoom 19; Belleville Fire Station 5 was additionally reviewed at zoom 18 because zoom-19 imagery tiles were unavailable."
+  },
+  "roads": {
+    "file": "cities/milton/roads.geojson.gz",
+    "source": "OpenStreetMap via Geofabrik Ontario extract",
+    "sourceTimestamp": "2026-09-27T20:23:36Z",
+    "packagedSha256": "6bb4a1dd5342726746d8a0deda910a3895fa4e25889483bfa5454b8604962b69",
+    "sourceSha256": "ebb50b39682d2381ad3c1d21e005b48cec3397e15da0d72c5d76c7d20d8dd249",
+    "sourceUrl": "https://download.geofabrik.de/north-america/canada/ontario.html",
+    "attribution": "© OpenStreetMap contributors",
+    "assessment": "Packaged local road and service centerlines were reviewed beside imagery. Spawn points are modeled projections to selected centerlines; they do not establish driveway ownership, gates or apparatus entrances."
+  },
+  "limits": [
+    "Rectangle centers, dimensions, rotations and spawn coordinates are imagery- and road-map-based estimates, not surveyed measurements.",
+    "No official parcel plans, surveyed building footprints or apparatus entrance locations were used.",
+    "Satellite imagery dates are not supplied by the tile response.",
+    "Canonical source coordinates, base IDs, statuses and selection eligibility are preserved."
+  ],
+  "bases": [
+    {
+      "baseId": "milton-fire-1",
+      "name": "Fire Station 1",
+      "address": "405 Steeles Avenue East, Milton, ON",
+      "sourcePoint": {
+        "lat": 43.52601331966486,
+        "lng": -79.88986174439137
+      },
+      "drivingArea": {
+        "center": {
+          "lat": 43.52583366,
+          "lng": -79.89004759
+        },
+        "widthMetres": 110,
+        "lengthMetres": 130,
+        "rotationDegrees": 0,
+        "spawn": {
+          "lat": 43.52565729,
+          "lng": -79.89023716,
+          "headingDegrees": 307
+        },
+        "roadSnap": {
+          "roadName": null,
+          "highway": "service",
+          "distanceFromSourceMetres": 49.9
+        }
+      },
+      "assessment": "estimated",
+      "identitySourceUrl": "https://www.milton.ca/safety-emergencies/milton-fire-and-rescue-services/fire-department-operations-and-planning/stations-and-fleet/",
+      "imageryCapture": "artifacts/release-qa/base-fit-milton/milton-fire-1.png",
+      "imageryZoom": 19,
+      "metresPerPixel": 0.2162,
+      "imageryObservation": "The zoom-19 imagery capture was reviewed for Fire Station 1; fit estimates the visible address-matched facility building, adjacent parking and on-site apron/circulation.  Canonical source coordinates are preserved. Spawn is a modeled projection onto the mapped service centerline, not a confirmed apparatus entrance.",
+      "rotationBasis": "Axis-aligned imagery estimate of the site and visible access circulation; not survey-derived."
+    },
+    {
+      "baseId": "milton-fire-2",
+      "name": "Fire Station 2",
+      "address": "2665 Reid Side Road, Milton, ON",
+      "sourcePoint": {
+        "lat": 43.48776043601529,
+        "lng": -79.9905899973211
+      },
+      "drivingArea": {
+        "center": {
+          "lat": 43.48776044,
+          "lng": -79.99059
+        },
+        "widthMetres": 85,
+        "lengthMetres": 100,
+        "rotationDegrees": 0,
+        "spawn": {
+          "lat": 43.48776554,
+          "lng": -79.9905985,
+          "headingDegrees": 220
+        },
+        "roadSnap": {
+          "roadName": null,
+          "highway": "service",
+          "distanceFromSourceMetres": 0.9
+        }
+      },
+      "assessment": "estimated",
+      "identitySourceUrl": "https://www.milton.ca/safety-emergencies/milton-fire-and-rescue-services/fire-department-operations-and-planning/stations-and-fleet/",
+      "imageryCapture": "artifacts/release-qa/base-fit-milton/milton-fire-2.png",
+      "imageryZoom": 19,
+      "metresPerPixel": 0.2164,
+      "imageryObservation": "The zoom-19 imagery capture was reviewed for Fire Station 2; fit estimates the visible address-matched facility building, adjacent parking and on-site apron/circulation.  Canonical source coordinates are preserved. Spawn is a modeled projection onto the mapped service centerline, not a confirmed apparatus entrance.",
+      "rotationBasis": "Axis-aligned imagery estimate of the site and visible access circulation; not survey-derived."
+    },
+    {
+      "baseId": "milton-fire-3",
+      "name": "Fire Station 3",
+      "address": "610 Savoline Boulevard, Milton, ON",
+      "sourcePoint": {
+        "lat": 43.48798026694833,
+        "lng": -79.88089877400233
+      },
+      "drivingArea": {
+        "center": {
+          "lat": 43.48798027,
+          "lng": -79.88089877
+        },
+        "widthMetres": 100,
+        "lengthMetres": 120,
+        "rotationDegrees": 0,
+        "spawn": {
+          "lat": 43.48795694,
+          "lng": -79.88092199,
+          "headingDegrees": 306
+        },
+        "roadSnap": {
+          "roadName": null,
+          "highway": "service",
+          "distanceFromSourceMetres": 3.2
+        }
+      },
+      "assessment": "estimated",
+      "identitySourceUrl": "https://www.milton.ca/safety-emergencies/milton-fire-and-rescue-services/fire-department-operations-and-planning/stations-and-fleet/",
+      "imageryCapture": "artifacts/release-qa/base-fit-milton/milton-fire-3.png",
+      "imageryZoom": 19,
+      "metresPerPixel": 0.2164,
+      "imageryObservation": "The zoom-19 imagery capture was reviewed for Fire Station 3; fit estimates the visible address-matched facility building, adjacent parking and on-site apron/circulation.  Canonical source coordinates are preserved. Spawn is a modeled projection onto the mapped service centerline, not a confirmed apparatus entrance.",
+      "rotationBasis": "Axis-aligned imagery estimate of the site and visible access circulation; not survey-derived."
+    },
+    {
+      "baseId": "milton-fire-4",
+      "name": "Fire Station 4",
+      "address": "405 James Snow Parkway South, Milton, ON",
+      "sourcePoint": {
+        "lat": 43.53440145518882,
+        "lng": -79.84071394330466
+      },
+      "drivingArea": {
+        "center": {
+          "lat": 43.53440146,
+          "lng": -79.84071394
+        },
+        "widthMetres": 95,
+        "lengthMetres": 115,
+        "rotationDegrees": 0,
+        "spawn": {
+          "lat": 43.53437217,
+          "lng": -79.84066177,
+          "headingDegrees": 218
+        },
+        "roadSnap": {
+          "roadName": null,
+          "highway": "service",
+          "distanceFromSourceMetres": 5.3
+        }
+      },
+      "assessment": "estimated",
+      "identitySourceUrl": "https://www.milton.ca/safety-emergencies/milton-fire-and-rescue-services/fire-department-operations-and-planning/stations-and-fleet/",
+      "imageryCapture": "artifacts/release-qa/base-fit-milton/milton-fire-4.png",
+      "imageryZoom": 19,
+      "metresPerPixel": 0.2162,
+      "imageryObservation": "The zoom-19 imagery capture was reviewed for Fire Station 4; fit estimates the visible address-matched facility building, adjacent parking and on-site apron/circulation.  Canonical source coordinates are preserved. Spawn is a modeled projection onto the mapped service centerline, not a confirmed apparatus entrance.",
+      "rotationBasis": "Axis-aligned imagery estimate of the site and visible access circulation; not survey-derived."
+    },
+    {
+      "baseId": "milton-fire-5",
+      "name": "Fire Station 5",
+      "address": "7825 Louis St. Laurent Avenue, Milton, ON",
+      "sourcePoint": {
+        "lat": 43.49534400944472,
+        "lng": -79.85006439949017
+      },
+      "drivingArea": {
+        "center": {
+          "lat": 43.49534401,
+          "lng": -79.8500644
+        },
+        "widthMetres": 110,
+        "lengthMetres": 135,
+        "rotationDegrees": 0,
+        "spawn": {
+          "lat": 43.49536301,
+          "lng": -79.85004319,
+          "headingDegrees": 309
+        },
+        "roadSnap": {
+          "roadName": null,
+          "highway": "service",
+          "distanceFromSourceMetres": 2.7
+        }
+      },
+      "assessment": "estimated",
+      "identitySourceUrl": "https://www.milton.ca/safety-emergencies/milton-fire-and-rescue-services/fire-department-operations-and-planning/stations-and-fleet/",
+      "imageryCapture": "artifacts/release-qa/base-fit-milton/milton-fire-5.png",
+      "imageryZoom": 19,
+      "metresPerPixel": 0.2164,
+      "imageryObservation": "The zoom-19 imagery capture was reviewed for Fire Station 5; fit estimates the visible address-matched facility building, adjacent parking and on-site apron/circulation.  Canonical source coordinates are preserved. Spawn is a modeled projection onto the mapped service centerline, not a confirmed apparatus entrance.",
+      "rotationBasis": "Axis-aligned imagery estimate of the site and visible access circulation; not survey-derived."
+    },
+    {
+      "baseId": "milton-ems-6",
+      "name": "Halton Paramedic Station 06",
+      "address": "2665 Reid Side Road, Milton, ON",
+      "sourcePoint": {
+        "lat": 43.48755533969946,
+        "lng": -79.99041353523805
+      },
+      "drivingArea": {
+        "center": {
+          "lat": 43.48755534,
+          "lng": -79.99041354
+        },
+        "widthMetres": 85,
+        "lengthMetres": 100,
+        "rotationDegrees": 0,
+        "spawn": {
+          "lat": 43.48776554,
+          "lng": -79.9905985,
+          "headingDegrees": 220
+        },
+        "roadSnap": {
+          "roadName": null,
+          "highway": "service",
+          "distanceFromSourceMetres": 27.8
+        }
+      },
+      "assessment": "estimated",
+      "identitySourceUrl": "https://www.milton.ca/safety-emergencies/milton-fire-and-rescue-services/fire-department-operations-and-planning/stations-and-fleet/",
+      "imageryCapture": "artifacts/release-qa/base-fit-milton/milton-fire-2.png",
+      "imageryZoom": 19,
+      "metresPerPixel": 0.2164,
+      "imageryObservation": "The zoom-19 imagery capture was reviewed for Fire Station 2; fit estimates the visible address-matched facility building, adjacent parking and on-site apron/circulation.  Canonical source coordinates are preserved. Spawn is a modeled projection onto the mapped service centerline, not a confirmed apparatus entrance.",
+      "rotationBasis": "Axis-aligned imagery estimate of the site and visible access circulation; not survey-derived.",
+      "sameSiteAs": "milton-fire-2"
+    },
+    {
+      "baseId": "milton-ems-7",
+      "name": "Halton Paramedic Station 07",
+      "address": "492 Childs Drive, Milton, ON",
+      "sourcePoint": {
+        "lat": 43.51784731525945,
+        "lng": -79.87241862081302
+      },
+      "drivingArea": {
+        "center": {
+          "lat": 43.51784732,
+          "lng": -79.87241862
+        },
+        "widthMetres": 70,
+        "lengthMetres": 85,
+        "rotationDegrees": 0,
+        "spawn": {
+          "lat": 43.51787393,
+          "lng": -79.87238054,
+          "headingDegrees": 136
+        },
+        "roadSnap": {
+          "roadName": null,
+          "highway": "service",
+          "distanceFromSourceMetres": 4.3
+        }
+      },
+      "assessment": "estimated",
+      "identitySourceUrl": "https://haltonregion.bidsandtenders.ca/Module/Tenders/en/Tender/Detail/118d0a44-0917-4795-ac25-e3f27464c3e0",
+      "imageryCapture": "artifacts/release-qa/base-fit-milton/milton-ems-7.png",
+      "imageryZoom": 19,
+      "metresPerPixel": 0.2163,
+      "imageryObservation": "The zoom-19 imagery capture was reviewed for Halton Paramedic Station 07; fit estimates the visible address-matched facility building, adjacent parking and on-site apron/circulation.  Canonical source coordinates are preserved. Spawn is a modeled projection onto the mapped service centerline, not a confirmed apparatus entrance.",
+      "rotationBasis": "Axis-aligned imagery estimate of the site and visible access circulation; not survey-derived."
+    },
+    {
+      "baseId": "milton-ems-16",
+      "name": "Halton Paramedic Station 16",
+      "address": "6650 Fifth Line, Milton, ON",
+      "sourcePoint": {
+        "lat": 43.53172977999372,
+        "lng": -79.82462620772681
+      },
+      "drivingArea": {
+        "center": {
+          "lat": 43.53172978,
+          "lng": -79.82462621
+        },
+        "widthMetres": 90,
+        "lengthMetres": 115,
+        "rotationDegrees": 0,
+        "spawn": {
+          "lat": 43.53188859,
+          "lng": -79.82440716,
+          "headingDegrees": 135
+        },
+        "roadSnap": {
+          "roadName": "Fifth Line",
+          "highway": "tertiary",
+          "distanceFromSourceMetres": 25
+        }
+      },
+      "assessment": "estimated",
+      "identitySourceUrl": "https://www.halton.ca/news/media-releases/2020/halton-region-opens-new-paramedic-services-station",
+      "imageryCapture": "artifacts/release-qa/base-fit-milton/milton-ems-16.png",
+      "imageryZoom": 19,
+      "metresPerPixel": 0.2162,
+      "imageryObservation": "The zoom-19 imagery capture was reviewed for Halton Paramedic Station 16; fit estimates the visible address-matched facility building, adjacent parking and on-site apron/circulation.  Canonical source coordinates are preserved. Spawn is a modeled projection onto the mapped Fifth Line centerline, not a confirmed apparatus entrance.",
+      "rotationBasis": "Axis-aligned imagery estimate of the site and visible access circulation; not survey-derived."
+    },
+    {
+      "baseId": "milton-ems-17",
+      "name": "Halton Paramedic Station 17",
+      "address": "7815 Louis St. Laurent Avenue, Milton, ON",
+      "sourcePoint": {
+        "lat": 43.49498506024321,
+        "lng": -79.85055213663804
+      },
+      "drivingArea": {
+        "center": {
+          "lat": 43.49534401,
+          "lng": -79.8500644
+        },
+        "widthMetres": 110,
+        "lengthMetres": 135,
+        "rotationDegrees": 0,
+        "spawn": {
+          "lat": 43.49536301,
+          "lng": -79.85004319,
+          "headingDegrees": 309
+        },
+        "roadSnap": {
+          "roadName": null,
+          "highway": "service",
+          "distanceFromSourceMetres": 2.7
+        }
+      },
+      "assessment": "estimated",
+      "identitySourceUrl": "https://www.milton.ca/safety-emergencies/milton-fire-and-rescue-services/fire-department-operations-and-planning/stations-and-fleet/",
+      "imageryCapture": "artifacts/release-qa/base-fit-milton/milton-fire-5.png",
+      "imageryZoom": 19,
+      "metresPerPixel": 0.2164,
+      "imageryObservation": "Same imagery-reviewed parcel geometry as milton-fire-5. Canonical source coordinate remains unchanged; spawn is modeled on the facility's mapped access centerline and is not a verified apparatus entrance.",
+      "rotationBasis": "Image-estimated fit aligned with the visible facility and local access axis; not survey-derived.",
+      "sameSiteAs": "milton-fire-5"
+    }
+  ]
+}

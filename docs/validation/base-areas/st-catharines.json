@@ -1,0 +1,312 @@
+{
+  "schemaVersion": 1,
+  "cityId": "st-catharines",
+  "reviewedLocalDate": "2026-11-02",
+  "assessment": "estimated",
+  "eligibility": "Active Fire/EMS bases with selectionEligible not false.",
+  "imagery": {
+    "provider": "Esri World Imagery",
+    "tileUrl": "https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}",
+    "capturedLocalDate": "2026-11-02",
+    "vintage": "not independently provided by the tile response",
+    "method": "Independent Leaflet captures per eligible active site at zoom 19; Belleville Fire Station 5 was additionally reviewed at zoom 18 because zoom-19 imagery tiles were unavailable."
+  },
+  "roads": {
+    "file": "cities/st-catharines/roads.geojson.gz",
+    "source": "OpenStreetMap via Geofabrik Ontario extract",
+    "sourceTimestamp": "2026-09-27T20:23:36Z",
+    "packagedSha256": "85a1b1f9a8f6543d973561020b7cbef2038b07ff8403c5c9563224f7c4a66728",
+    "sourceSha256": "ebb50b39682d2381ad3c1d21e005b48cec3397e15da0d72c5d76c7d20d8dd249",
+    "sourceUrl": "https://download.geofabrik.de/north-america/canada/ontario.html",
+    "attribution": "© OpenStreetMap contributors",
+    "assessment": "Packaged local road and service centerlines were reviewed beside imagery. Spawn points are modeled projections to selected centerlines; they do not establish driveway ownership, gates or apparatus entrances."
+  },
+  "limits": [
+    "Rectangle centers, dimensions, rotations and spawn coordinates are imagery- and road-map-based estimates, not surveyed measurements.",
+    "No official parcel plans, surveyed building footprints or apparatus entrance locations were used.",
+    "Satellite imagery dates are not supplied by the tile response.",
+    "Canonical source coordinates, base IDs, statuses and selection eligibility are preserved."
+  ],
+  "bases": [
+    {
+      "baseId": "st-catharines-fire-1",
+      "name": "Fire Station 1",
+      "address": "64 Geneva Street, St. Catharines, ON",
+      "sourcePoint": {
+        "lat": 43.163031150051,
+        "lng": -79.239771514153
+      },
+      "drivingArea": {
+        "center": {
+          "lat": 43.16303115,
+          "lng": -79.23977151
+        },
+        "widthMetres": 65,
+        "lengthMetres": 80,
+        "rotationDegrees": 0,
+        "spawn": {
+          "lat": 43.1628804,
+          "lng": -79.2401436,
+          "headingDegrees": 57
+        },
+        "roadSnap": {
+          "roadName": null,
+          "highway": "service",
+          "distanceFromSourceMetres": 34.6
+        }
+      },
+      "assessment": "estimated",
+      "identitySourceUrl": "https://stcatharines.bidsandtenders.ca/Module/Tenders/en/Tender/Detail/a9f38543-f322-4158-a31a-17b5af512f67",
+      "imageryCapture": "artifacts/release-qa/base-fit-st-catharines/st-catharines-fire-1.png",
+      "imageryZoom": 19,
+      "metresPerPixel": 0.2175,
+      "imageryObservation": "The zoom-19 imagery capture was reviewed for Fire Station 1; fit estimates the visible address-matched facility building, adjacent parking and on-site apron/circulation.  Canonical source coordinates are preserved. Spawn is a modeled projection onto the mapped service centerline, not a confirmed apparatus entrance.",
+      "rotationBasis": "Axis-aligned imagery estimate of the site and visible access circulation; not survey-derived."
+    },
+    {
+      "baseId": "st-catharines-fire-2",
+      "name": "Fire Station 2",
+      "address": "192 Linwell Road, St. Catharines, ON",
+      "sourcePoint": {
+        "lat": 43.191949255032,
+        "lng": -79.247306813207
+      },
+      "drivingArea": {
+        "center": {
+          "lat": 43.19194926,
+          "lng": -79.24730681
+        },
+        "widthMetres": 65,
+        "lengthMetres": 80,
+        "rotationDegrees": 0,
+        "spawn": {
+          "lat": 43.1919371,
+          "lng": -79.2476784,
+          "headingDegrees": 177
+        },
+        "roadSnap": {
+          "roadName": null,
+          "highway": "service",
+          "distanceFromSourceMetres": 30.2
+        }
+      },
+      "assessment": "estimated",
+      "identitySourceUrl": "https://stcatharines.bidsandtenders.ca/Module/Tenders/en/Tender/Detail/a9f38543-f322-4158-a31a-17b5af512f67",
+      "imageryCapture": "artifacts/release-qa/base-fit-st-catharines/st-catharines-fire-2.png",
+      "imageryZoom": 19,
+      "metresPerPixel": 0.2174,
+      "imageryObservation": "The zoom-19 imagery capture was reviewed for Fire Station 2; fit estimates the visible address-matched facility building, adjacent parking and on-site apron/circulation.  Canonical source coordinates are preserved. Spawn is a modeled projection onto the mapped service centerline, not a confirmed apparatus entrance.",
+      "rotationBasis": "Axis-aligned imagery estimate of the site and visible access circulation; not survey-derived."
+    },
+    {
+      "baseId": "st-catharines-fire-3",
+      "name": "Fire Station 3",
+      "address": "285 Pelham Road, St. Catharines, ON",
+      "sourcePoint": {
+        "lat": 43.129893647624,
+        "lng": -79.259081270828
+      },
+      "drivingArea": {
+        "center": {
+          "lat": 43.12989365,
+          "lng": -79.2585643
+        },
+        "widthMetres": 110,
+        "lengthMetres": 140,
+        "rotationDegrees": 0,
+        "spawn": {
+          "lat": 43.1300852,
+          "lng": -79.2587555,
+          "headingDegrees": 178
+        },
+        "roadSnap": {
+          "roadName": null,
+          "highway": "service",
+          "distanceFromSourceMetres": 34
+        }
+      },
+      "assessment": "estimated",
+      "identitySourceUrl": "https://stcatharines.bidsandtenders.ca/Module/Tenders/en/Tender/Detail/a9f38543-f322-4158-a31a-17b5af512f67",
+      "imageryCapture": "artifacts/release-qa/base-fit-st-catharines/st-catharines-fire-3.png",
+      "imageryZoom": 19,
+      "metresPerPixel": 0.2177,
+      "imageryObservation": "The zoom-19 imagery capture was reviewed for Fire Station 3; fit estimates the visible address-matched facility building, adjacent parking and on-site apron/circulation. The canonical source point lies on the west lawn of this station property. The imagery-visible developed fire station building and apron are to the east, so the modeled fit center is recentered over that station facility while preserving the source coordinate. Canonical source coordinates are preserved. Spawn is a modeled projection onto the mapped service centerline, not a confirmed apparatus entrance. The canonical source point lies on the west lawn of this station property. The imagery-visible developed fire station building and apron are to the east, so the modeled fit center is recentered over that station facility while preserving the source coordinate.",
+      "rotationBasis": "Axis-aligned imagery estimate of the site and visible access circulation; not survey-derived."
+    },
+    {
+      "baseId": "st-catharines-fire-4",
+      "name": "Fire Station 4",
+      "address": "427 Merritt Street, St. Catharines, ON",
+      "sourcePoint": {
+        "lat": 43.144108210527,
+        "lng": -79.214876179325
+      },
+      "drivingArea": {
+        "center": {
+          "lat": 43.14415313,
+          "lng": -79.21518397
+        },
+        "widthMetres": 95,
+        "lengthMetres": 110,
+        "rotationDegrees": 0,
+        "spawn": {
+          "lat": 43.1441929,
+          "lng": -79.2155462,
+          "headingDegrees": 192
+        },
+        "roadSnap": {
+          "roadName": "Irwin Common",
+          "highway": "residential",
+          "distanceFromSourceMetres": 55.2
+        }
+      },
+      "assessment": "estimated",
+      "identitySourceUrl": "https://stcatharines.bidsandtenders.ca/Module/Tenders/en/Tender/Detail/a9f38543-f322-4158-a31a-17b5af512f67",
+      "imageryCapture": "artifacts/release-qa/base-fit-st-catharines/st-catharines-fire-4.png",
+      "imageryZoom": 19,
+      "metresPerPixel": 0.2176,
+      "imageryObservation": "The zoom-19 imagery capture was reviewed for Fire Station 4; fit estimates the visible address-matched facility building, adjacent parking and on-site apron/circulation.  Canonical source coordinates are preserved. Spawn is a modeled projection onto the mapped Irwin Common centerline, not a confirmed apparatus entrance.",
+      "rotationBasis": "Axis-aligned imagery estimate of the site and visible access circulation; not survey-derived."
+    },
+    {
+      "baseId": "st-catharines-fire-5",
+      "name": "Fire Station 5",
+      "address": "149 Martindale Road, St. Catharines, ON",
+      "sourcePoint": {
+        "lat": 43.16789701828,
+        "lng": -79.27095742248
+      },
+      "drivingArea": {
+        "center": {
+          "lat": 43.16789702,
+          "lng": -79.27095742
+        },
+        "widthMetres": 72,
+        "lengthMetres": 90,
+        "rotationDegrees": 0,
+        "spawn": {
+          "lat": 43.1679715,
+          "lng": -79.27077308,
+          "headingDegrees": 331
+        },
+        "roadSnap": {
+          "roadName": null,
+          "highway": "service",
+          "distanceFromSourceMetres": 17.1
+        }
+      },
+      "assessment": "estimated",
+      "identitySourceUrl": "https://stcatharines.bidsandtenders.ca/Module/Tenders/en/Tender/Detail/07643c98-e2a2-41d5-b715-e42215edd8b0",
+      "imageryCapture": "artifacts/release-qa/base-fit-st-catharines/st-catharines-fire-5.png",
+      "imageryZoom": 19,
+      "metresPerPixel": 0.2175,
+      "imageryObservation": "The zoom-19 imagery capture was reviewed for Fire Station 5; fit estimates the visible address-matched facility building, adjacent parking and on-site apron/circulation.  Canonical source coordinates are preserved. Spawn is a modeled projection onto the mapped service centerline, not a confirmed apparatus entrance.",
+      "rotationBasis": "Axis-aligned imagery estimate of the site and visible access circulation; not survey-derived."
+    },
+    {
+      "baseId": "st-catharines-fire-6",
+      "name": "Fire Station 6",
+      "address": "465 Scott Street, St. Catharines, ON",
+      "sourcePoint": {
+        "lat": 43.192115730388,
+        "lng": -79.221410006791
+      },
+      "drivingArea": {
+        "center": {
+          "lat": 43.19211573,
+          "lng": -79.22141001
+        },
+        "widthMetres": 65,
+        "lengthMetres": 82,
+        "rotationDegrees": 0,
+        "spawn": {
+          "lat": 43.1921308,
+          "lng": -79.22103155,
+          "headingDegrees": 177
+        },
+        "roadSnap": {
+          "roadName": "Grantham Avenue",
+          "highway": "tertiary",
+          "distanceFromSourceMetres": 30.8
+        }
+      },
+      "assessment": "estimated",
+      "identitySourceUrl": "https://stcatharines.bidsandtenders.ca/Module/Tenders/en/Tender/Detail/a9f38543-f322-4158-a31a-17b5af512f67",
+      "imageryCapture": "artifacts/release-qa/base-fit-st-catharines/st-catharines-fire-6.png",
+      "imageryZoom": 19,
+      "metresPerPixel": 0.2174,
+      "imageryObservation": "The zoom-19 imagery capture was reviewed for Fire Station 6; fit estimates the visible address-matched facility building, adjacent parking and on-site apron/circulation.  Canonical source coordinates are preserved. Spawn is a modeled projection onto the mapped Grantham Avenue centerline, not a confirmed apparatus entrance.",
+      "rotationBasis": "Axis-aligned imagery estimate of the site and visible access circulation; not survey-derived."
+    },
+    {
+      "baseId": "st-catharines-ems-linwell",
+      "name": "Linwell Road Ambulance Base",
+      "address": "337 Linwell Road, St. Catharines, ON",
+      "sourcePoint": {
+        "lat": 43.197612966414,
+        "lng": -79.232256299459
+      },
+      "drivingArea": {
+        "center": {
+          "lat": 43.19761297,
+          "lng": -79.2322563
+        },
+        "widthMetres": 60,
+        "lengthMetres": 75,
+        "rotationDegrees": 0,
+        "spawn": {
+          "lat": 43.19769535,
+          "lng": -79.2324866,
+          "headingDegrees": 206
+        },
+        "roadSnap": {
+          "roadName": null,
+          "highway": "service",
+          "distanceFromSourceMetres": 20.8
+        }
+      },
+      "assessment": "estimated",
+      "identitySourceUrl": "https://pub-niagararegion.escribemeetings.com/filestream.ashx?DocumentId=4025",
+      "imageryCapture": "artifacts/release-qa/base-fit-st-catharines/st-catharines-ems-linwell.png",
+      "imageryZoom": 19,
+      "metresPerPixel": 0.2174,
+      "imageryObservation": "The zoom-19 imagery capture was reviewed for Linwell Road Ambulance Base; fit estimates the visible address-matched facility building, adjacent parking and on-site apron/circulation.  Canonical source coordinates are preserved. Spawn is a modeled projection onto the mapped service centerline, not a confirmed apparatus entrance.",
+      "rotationBasis": "Axis-aligned imagery estimate of the site and visible access circulation; not survey-derived."
+    },
+    {
+      "baseId": "st-catharines-ems-ontario",
+      "name": "Ontario Street Ambulance Base",
+      "address": "139 Ontario Street, St. Catharines, ON",
+      "sourcePoint": {
+        "lat": 43.158299770734,
+        "lng": -79.253198724861
+      },
+      "drivingArea": {
+        "center": {
+          "lat": 43.15829977,
+          "lng": -79.25319872
+        },
+        "widthMetres": 70,
+        "lengthMetres": 88,
+        "rotationDegrees": 0,
+        "spawn": {
+          "lat": 43.15832789,
+          "lng": -79.25323496,
+          "headingDegrees": 47
+        },
+        "roadSnap": {
+          "roadName": null,
+          "highway": "service",
+          "distanceFromSourceMetres": 4.3
+        }
+      },
+      "assessment": "estimated",
+      "identitySourceUrl": "https://pub-niagararegion.escribemeetings.com/filestream.ashx?DocumentId=4025",
+      "imageryCapture": "artifacts/release-qa/base-fit-st-catharines/st-catharines-ems-ontario.png",
+      "imageryZoom": 19,
+      "metresPerPixel": 0.2176,
+      "imageryObservation": "The zoom-19 imagery capture was reviewed for Ontario Street Ambulance Base; fit estimates the visible address-matched facility building, adjacent parking and on-site apron/circulation.  Canonical source coordinates are preserved. Spawn is a modeled projection onto the mapped service centerline, not a confirmed apparatus entrance.",
+      "rotationBasis": "Axis-aligned imagery estimate of the site and visible access circulation; not survey-derived."
+    }
+  ]
+}

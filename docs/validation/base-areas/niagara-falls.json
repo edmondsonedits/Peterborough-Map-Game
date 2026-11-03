@@ -1,0 +1,347 @@
+{
+  "schemaVersion": 1,
+  "cityId": "niagara-falls",
+  "reviewedLocalDate": "2026-11-02",
+  "assessment": "estimated",
+  "eligibility": "Active Fire/EMS bases with selectionEligible not false.",
+  "imagery": {
+    "provider": "Esri World Imagery",
+    "tileUrl": "https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}",
+    "capturedLocalDate": "2026-11-02",
+    "vintage": "not independently provided by the tile response",
+    "method": "Independent Leaflet captures per eligible active site at zoom 19; Belleville Fire Station 5 was additionally reviewed at zoom 18 because zoom-19 imagery tiles were unavailable."
+  },
+  "roads": {
+    "file": "cities/niagara-falls/roads.geojson.gz",
+    "source": "OpenStreetMap via Geofabrik Ontario extract",
+    "sourceTimestamp": "2026-09-27T20:23:36Z",
+    "packagedSha256": "660be23aac3d83575e3ff4c268d230816c50c6a6c3ddcf155be152f44ddb273f",
+    "sourceSha256": "ebb50b39682d2381ad3c1d21e005b48cec3397e15da0d72c5d76c7d20d8dd249",
+    "sourceUrl": "https://download.geofabrik.de/north-america/canada/ontario.html",
+    "attribution": "© OpenStreetMap contributors",
+    "assessment": "Packaged local road and service centerlines were reviewed beside imagery. Spawn points are modeled projections to selected centerlines; they do not establish driveway ownership, gates or apparatus entrances."
+  },
+  "limits": [
+    "Rectangle centers, dimensions, rotations and spawn coordinates are imagery- and road-map-based estimates, not surveyed measurements.",
+    "No official parcel plans, surveyed building footprints or apparatus entrance locations were used.",
+    "Satellite imagery dates are not supplied by the tile response.",
+    "Canonical source coordinates, base IDs, statuses and selection eligibility are preserved."
+  ],
+  "bases": [
+    {
+      "baseId": "niagara-falls-fire-2",
+      "name": "Fire Station 2",
+      "address": "7036 McLeod Rd, Niagara Falls, ON",
+      "sourcePoint": {
+        "lat": 43.070105467000076,
+        "lng": -79.11242146399996
+      },
+      "drivingArea": {
+        "center": {
+          "lat": 43.07010547,
+          "lng": -79.11242146
+        },
+        "widthMetres": 70,
+        "lengthMetres": 85,
+        "rotationDegrees": 0,
+        "spawn": {
+          "lat": 43.07010923,
+          "lng": -79.11204359,
+          "headingDegrees": 179
+        },
+        "roadSnap": {
+          "roadName": null,
+          "highway": "service",
+          "distanceFromSourceMetres": 30.7
+        }
+      },
+      "assessment": "estimated",
+      "identitySourceUrl": "https://services9.arcgis.com/oMFQlUUrLd1Uh1bd/arcgis/rest/services/Niagara_Falls_Fire_Services_WGS_1984/FeatureServer/0",
+      "imageryCapture": "artifacts/release-qa/base-fit-niagara-falls/niagara-falls-fire-2.png",
+      "imageryZoom": 19,
+      "metresPerPixel": 0.2179,
+      "imageryObservation": "The zoom-19 imagery capture was reviewed for Fire Station 2; fit estimates the visible address-matched facility building, adjacent parking and on-site apron/circulation.  Canonical source coordinates are preserved. Spawn is a modeled projection onto the mapped service centerline, not a confirmed apparatus entrance.",
+      "rotationBasis": "Axis-aligned imagery estimate of the site and visible access circulation; not survey-derived."
+    },
+    {
+      "baseId": "niagara-falls-fire-4",
+      "name": "Fire Station 4",
+      "address": "8696 Banting Avenue, Niagara Falls, ON",
+      "sourcePoint": {
+        "lat": 43.05193693700005,
+        "lng": -79.05377368199999
+      },
+      "drivingArea": {
+        "center": {
+          "lat": 43.05193694,
+          "lng": -79.05377368
+        },
+        "widthMetres": 78,
+        "lengthMetres": 95,
+        "rotationDegrees": 0,
+        "spawn": {
+          "lat": 43.0518342,
+          "lng": -79.05360766,
+          "headingDegrees": 40
+        },
+        "roadSnap": {
+          "roadName": null,
+          "highway": "service",
+          "distanceFromSourceMetres": 17.7
+        }
+      },
+      "assessment": "estimated",
+      "identitySourceUrl": "https://niagarafalls.ca/property-home-and-environment/emergency-services/fire-department/firefighter-recruitment-and-training/",
+      "imageryCapture": "artifacts/release-qa/base-fit-niagara-falls/niagara-falls-fire-4.png",
+      "imageryZoom": 19,
+      "metresPerPixel": 0.2179,
+      "imageryObservation": "The zoom-19 imagery capture was reviewed for Fire Station 4; fit estimates the visible address-matched facility building, adjacent parking and on-site apron/circulation.  Canonical source coordinates are preserved. Spawn is a modeled projection onto the mapped service centerline, not a confirmed apparatus entrance.",
+      "rotationBasis": "Axis-aligned imagery estimate of the site and visible access circulation; not survey-derived."
+    },
+    {
+      "baseId": "niagara-falls-fire-5",
+      "name": "Fire Station 5",
+      "address": "11208 Sodom Rd, Niagara Falls, ON",
+      "sourcePoint": {
+        "lat": 43.01583900600008,
+        "lng": -79.05762809399994
+      },
+      "drivingArea": {
+        "center": {
+          "lat": 43.01583901,
+          "lng": -79.05762809
+        },
+        "widthMetres": 72,
+        "lengthMetres": 88,
+        "rotationDegrees": 0,
+        "spawn": {
+          "lat": 43.01583281,
+          "lng": -79.05803843,
+          "headingDegrees": 359
+        },
+        "roadSnap": {
+          "roadName": "Sodom Road",
+          "highway": "secondary",
+          "distanceFromSourceMetres": 33.4
+        }
+      },
+      "assessment": "estimated",
+      "identitySourceUrl": "https://services9.arcgis.com/oMFQlUUrLd1Uh1bd/arcgis/rest/services/Niagara_Falls_Fire_Services_WGS_1984/FeatureServer/0",
+      "imageryCapture": "artifacts/release-qa/base-fit-niagara-falls/niagara-falls-fire-5.png",
+      "imageryZoom": 19,
+      "metresPerPixel": 0.2181,
+      "imageryObservation": "The zoom-19 imagery capture was reviewed for Fire Station 5; fit estimates the visible address-matched facility building, adjacent parking and on-site apron/circulation.  Canonical source coordinates are preserved. Spawn is a modeled projection onto the mapped Sodom Road centerline, not a confirmed apparatus entrance.",
+      "rotationBasis": "Axis-aligned imagery estimate of the site and visible access circulation; not survey-derived."
+    },
+    {
+      "baseId": "niagara-falls-fire-6",
+      "name": "Fire Station 6",
+      "address": "8037 Schisler Road, Niagara Falls, ON",
+      "sourcePoint": {
+        "lat": 43.00409558800004,
+        "lng": -79.13066766199995
+      },
+      "drivingArea": {
+        "center": {
+          "lat": 43.00409559,
+          "lng": -79.13066766
+        },
+        "widthMetres": 90,
+        "lengthMetres": 115,
+        "rotationDegrees": 0,
+        "spawn": {
+          "lat": 43.0039459,
+          "lng": -79.1307513,
+          "headingDegrees": 180
+        },
+        "roadSnap": {
+          "roadName": null,
+          "highway": "service",
+          "distanceFromSourceMetres": 18
+        }
+      },
+      "assessment": "estimated",
+      "identitySourceUrl": "https://niagarafalls.ca/property-home-and-environment/emergency-services/fire-department/firefighter-recruitment-and-training/",
+      "imageryCapture": "artifacts/release-qa/base-fit-niagara-falls/niagara-falls-fire-6.png",
+      "imageryZoom": 19,
+      "metresPerPixel": 0.2181,
+      "imageryObservation": "The zoom-19 imagery capture was reviewed for Fire Station 6; fit estimates the visible address-matched facility building, adjacent parking and on-site apron/circulation.  Canonical source coordinates are preserved. Spawn is a modeled projection onto the mapped service centerline, not a confirmed apparatus entrance.",
+      "rotationBasis": "Axis-aligned imagery estimate of the site and visible access circulation; not survey-derived."
+    },
+    {
+      "baseId": "niagara-falls-fire-1",
+      "name": "Fire Station 1",
+      "address": "5815 Morrison St, Niagara Falls, ON",
+      "sourcePoint": {
+        "lat": 43.104593918000035,
+        "lng": -79.09186348199995
+      },
+      "drivingArea": {
+        "center": {
+          "lat": 43.10459392,
+          "lng": -79.09186348
+        },
+        "widthMetres": 80,
+        "lengthMetres": 96,
+        "rotationDegrees": 0,
+        "spawn": {
+          "lat": 43.10459244,
+          "lng": -79.09173,
+          "headingDegrees": 181
+        },
+        "roadSnap": {
+          "roadName": null,
+          "highway": "service",
+          "distanceFromSourceMetres": 10.9
+        }
+      },
+      "assessment": "estimated",
+      "identitySourceUrl": "https://services9.arcgis.com/oMFQlUUrLd1Uh1bd/arcgis/rest/services/Niagara_Falls_Fire_Services_WGS_1984/FeatureServer/0",
+      "imageryCapture": "artifacts/release-qa/base-fit-niagara-falls/niagara-falls-fire-1.png",
+      "imageryZoom": 19,
+      "metresPerPixel": 0.2178,
+      "imageryObservation": "The zoom-19 imagery capture was reviewed for Fire Station 1; fit estimates the visible address-matched facility building, adjacent parking and on-site apron/circulation.  Canonical source coordinates are preserved. Spawn is a modeled projection onto the mapped service centerline, not a confirmed apparatus entrance.",
+      "rotationBasis": "Axis-aligned imagery estimate of the site and visible access circulation; not survey-derived."
+    },
+    {
+      "baseId": "niagara-falls-fire-3",
+      "name": "Fire Station 3",
+      "address": "3401 Dorchester Rd, Niagara Falls, ON",
+      "sourcePoint": {
+        "lat": 43.12328422000007,
+        "lng": -79.11270895399997
+      },
+      "drivingArea": {
+        "center": {
+          "lat": 43.12328422,
+          "lng": -79.11270895
+        },
+        "widthMetres": 80,
+        "lengthMetres": 85,
+        "rotationDegrees": 0,
+        "spawn": {
+          "lat": 43.12329319,
+          "lng": -79.1122737,
+          "headingDegrees": 178
+        },
+        "roadSnap": {
+          "roadName": "Dorchester Road",
+          "highway": "secondary",
+          "distanceFromSourceMetres": 35.4
+        }
+      },
+      "assessment": "estimated",
+      "identitySourceUrl": "https://services9.arcgis.com/oMFQlUUrLd1Uh1bd/arcgis/rest/services/Niagara_Falls_Fire_Services_WGS_1984/FeatureServer/0",
+      "imageryCapture": "artifacts/release-qa/base-fit-niagara-falls/niagara-falls-fire-3.png",
+      "imageryZoom": 19,
+      "metresPerPixel": 0.2177,
+      "imageryObservation": "The zoom-19 imagery capture was reviewed for Fire Station 3; fit estimates the visible address-matched facility building, adjacent parking and on-site apron/circulation.  Canonical source coordinates are preserved. Spawn is a modeled projection onto the mapped Dorchester Road centerline, not a confirmed apparatus entrance.",
+      "rotationBasis": "Axis-aligned imagery estimate of the site and visible access circulation; not survey-derived."
+    },
+    {
+      "baseId": "niagara-falls-fire-7",
+      "name": "Fire Station 7",
+      "address": "8530 Lundy's Ln, Niagara Falls, ON",
+      "sourcePoint": {
+        "lat": 43.08812822900006,
+        "lng": -79.14129645999998
+      },
+      "drivingArea": {
+        "center": {
+          "lat": 43.08812823,
+          "lng": -79.14095205
+        },
+        "widthMetres": 90,
+        "lengthMetres": 110,
+        "rotationDegrees": 0,
+        "spawn": {
+          "lat": 43.08813276,
+          "lng": -79.14062213,
+          "headingDegrees": 359
+        },
+        "roadSnap": {
+          "roadName": null,
+          "highway": "service",
+          "distanceFromSourceMetres": 54.8
+        }
+      },
+      "assessment": "estimated",
+      "identitySourceUrl": "https://services9.arcgis.com/oMFQlUUrLd1Uh1bd/arcgis/rest/services/Niagara_Falls_Fire_Services_WGS_1984/FeatureServer/0",
+      "imageryCapture": "artifacts/release-qa/base-fit-niagara-falls/niagara-falls-fire-7.png",
+      "imageryZoom": 19,
+      "metresPerPixel": 0.2178,
+      "imageryObservation": "The zoom-19 imagery capture was reviewed for Fire Station 7; fit estimates the visible address-matched facility building, adjacent parking and on-site apron/circulation.  Canonical source coordinates are preserved. Spawn is a modeled projection onto the mapped service centerline, not a confirmed apparatus entrance.",
+      "rotationBasis": "Axis-aligned imagery estimate of the site and visible access circulation; not survey-derived."
+    },
+    {
+      "baseId": "niagara-falls-ems-north",
+      "name": "Niagara Falls Ambulance Base — North Street",
+      "address": "5685 North Street, Niagara Falls, ON",
+      "sourcePoint": {
+        "lat": 43.09357348169084,
+        "lng": -79.08852981976136
+      },
+      "drivingArea": {
+        "center": {
+          "lat": 43.09357348,
+          "lng": -79.08852982
+        },
+        "widthMetres": 85,
+        "lengthMetres": 100,
+        "rotationDegrees": 0,
+        "spawn": {
+          "lat": 43.0935766,
+          "lng": -79.08830643,
+          "headingDegrees": 179
+        },
+        "roadSnap": {
+          "roadName": null,
+          "highway": "service",
+          "distanceFromSourceMetres": 18.2
+        }
+      },
+      "assessment": "estimated",
+      "identitySourceUrl": "https://pub-niagararegion.escribemeetings.com/filestream.ashx?DocumentId=4025",
+      "imageryCapture": "artifacts/release-qa/base-fit-niagara-falls/niagara-falls-ems-north.png",
+      "imageryZoom": 19,
+      "metresPerPixel": 0.2178,
+      "imageryObservation": "The zoom-19 imagery capture was reviewed for Niagara Falls Ambulance Base — North Street; fit estimates the visible address-matched facility building, adjacent parking and on-site apron/circulation.  Canonical source coordinates are preserved. Spawn is a modeled projection onto the mapped service centerline, not a confirmed apparatus entrance.",
+      "rotationBasis": "Axis-aligned imagery estimate of the site and visible access circulation; not survey-derived."
+    },
+    {
+      "baseId": "niagara-falls-ems-st-paul",
+      "name": "St. Paul Avenue Ambulance Base",
+      "address": "2722 St. Paul Avenue, Niagara Falls, ON",
+      "sourcePoint": {
+        "lat": 43.13281460800005,
+        "lng": -79.09931436999995
+      },
+      "drivingArea": {
+        "center": {
+          "lat": 43.13281461,
+          "lng": -79.09931437
+        },
+        "widthMetres": 82,
+        "lengthMetres": 100,
+        "rotationDegrees": 0,
+        "spawn": {
+          "lat": 43.13270649,
+          "lng": -79.09931373,
+          "headingDegrees": 90
+        },
+        "roadSnap": {
+          "roadName": null,
+          "highway": "service",
+          "distanceFromSourceMetres": 12
+        }
+      },
+      "assessment": "estimated",
+      "identitySourceUrl": "https://www.niagararegion.ca/business/property/pdf/development-charge-background-study.pdf",
+      "imageryCapture": "artifacts/release-qa/base-fit-niagara-falls/niagara-falls-ems-st-paul.png",
+      "imageryZoom": 19,
+      "metresPerPixel": 0.2177,
+      "imageryObservation": "The zoom-19 imagery capture was reviewed for St. Paul Avenue Ambulance Base; fit estimates the visible address-matched facility building, adjacent parking and on-site apron/circulation.  Canonical source coordinates are preserved. Spawn is a modeled projection onto the mapped service centerline, not a confirmed apparatus entrance.",
+      "rotationBasis": "Axis-aligned imagery estimate of the site and visible access circulation; not survey-derived."
+    }
+  ]
+}

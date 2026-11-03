@@ -1,0 +1,277 @@
+{
+  "schemaVersion": 1,
+  "cityId": "belleville",
+  "reviewedLocalDate": "2026-11-02",
+  "assessment": "estimated",
+  "eligibility": "Active Fire/EMS bases with selectionEligible not false.",
+  "imagery": {
+    "provider": "Esri World Imagery",
+    "tileUrl": "https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}",
+    "capturedLocalDate": "2026-11-02",
+    "vintage": "not independently provided by the tile response",
+    "method": "Independent Leaflet captures per eligible active site at zoom 19; Belleville Fire Station 5 was additionally reviewed at zoom 18 because zoom-19 imagery tiles were unavailable."
+  },
+  "roads": {
+    "file": "cities/belleville/roads.geojson.gz",
+    "source": "OpenStreetMap via Geofabrik Ontario extract",
+    "sourceTimestamp": "2026-10-28T21:21:02Z",
+    "packagedSha256": "20db0378147b90a301d4252d580481cfed2b7d265535b5a827f82a3734a6b473",
+    "sourceSha256": "4d53c536cd90335cd051190c23493218e002a3314d9b20a227e1a8ee15463273",
+    "sourceUrl": "https://download.geofabrik.de/north-america/canada/ontario.html",
+    "attribution": "© OpenStreetMap contributors",
+    "assessment": "Packaged local road and service centerlines were reviewed beside imagery. Spawn points are modeled projections to selected centerlines; they do not establish driveway ownership, gates or apparatus entrances."
+  },
+  "limits": [
+    "Rectangle centers, dimensions, rotations and spawn coordinates are imagery- and road-map-based estimates, not surveyed measurements.",
+    "No official parcel plans, surveyed building footprints or apparatus entrance locations were used.",
+    "Satellite imagery dates are not supplied by the tile response.",
+    "Canonical source coordinates, base IDs, statuses and selection eligibility are preserved."
+  ],
+  "bases": [
+    {
+      "baseId": "ems-base-00-headquarters-1",
+      "name": "Base 00 — Headquarters",
+      "address": "111 Millennium Parkway",
+      "sourcePoint": {
+        "lat": 44.192834149999996,
+        "lng": -77.40611642333934
+      },
+      "drivingArea": {
+        "center": {
+          "lat": 44.19263652,
+          "lng": -77.40601619
+        },
+        "widthMetres": 80,
+        "lengthMetres": 105,
+        "rotationDegrees": 0,
+        "spawn": {
+          "lat": 44.1924317,
+          "lng": -77.40590118,
+          "headingDegrees": 249
+        },
+        "roadSnap": {
+          "roadName": "Millennium Parkway",
+          "highway": "tertiary",
+          "distanceFromSourceMetres": 48
+        }
+      },
+      "assessment": "estimated",
+      "identitySourceUrl": "https://hastingscounty.com/communities/services/emergency-services",
+      "imageryCapture": "artifacts/release-qa/base-fit-belleville/ems-base-00-headquarters-1.png",
+      "imageryZoom": 19,
+      "metresPerPixel": 0.2138,
+      "imageryObservation": "The zoom-19 imagery capture was reviewed for Base 00 — Headquarters; fit estimates the visible address-matched facility building, adjacent parking and on-site apron/circulation.  Canonical source coordinates are preserved. Spawn is a modeled projection onto the mapped Millennium Parkway centerline, not a confirmed apparatus entrance.",
+      "rotationBasis": "Axis-aligned imagery estimate of the site and visible access circulation; not survey-derived."
+    },
+    {
+      "baseId": "ems-base-01-farley-2",
+      "name": "Base 01 — Farley",
+      "address": "38 Farley Ave",
+      "sourcePoint": {
+        "lat": 44.16672235,
+        "lng": -77.3489036
+      },
+      "drivingArea": {
+        "center": {
+          "lat": 44.16672235,
+          "lng": -77.3489036
+        },
+        "widthMetres": 60,
+        "lengthMetres": 75,
+        "rotationDegrees": 0,
+        "spawn": {
+          "lat": 44.16685135,
+          "lng": -77.3490682,
+          "headingDegrees": 48
+        },
+        "roadSnap": {
+          "roadName": null,
+          "highway": "service",
+          "distanceFromSourceMetres": 19.5
+        }
+      },
+      "assessment": "estimated",
+      "identitySourceUrl": "https://hastingscounty.com/communities/services/emergency-services",
+      "imageryCapture": "artifacts/release-qa/base-fit-belleville/ems-base-01-farley-2.png",
+      "imageryZoom": 19,
+      "metresPerPixel": 0.2139,
+      "imageryObservation": "The zoom-19 imagery capture was reviewed for Base 01 — Farley; fit estimates the visible address-matched facility building, adjacent parking and on-site apron/circulation.  Canonical source coordinates are preserved. Spawn is a modeled projection onto the mapped service centerline, not a confirmed apparatus entrance.",
+      "rotationBasis": "Axis-aligned imagery estimate of the site and visible access circulation; not survey-derived."
+    },
+    {
+      "baseId": "fire-fire-station-1-1",
+      "name": "Fire Station 1",
+      "address": "60 Bettes St",
+      "sourcePoint": {
+        "lat": 44.1781883,
+        "lng": -77.37418941601382
+      },
+      "drivingArea": {
+        "center": {
+          "lat": 44.1781883,
+          "lng": -77.37418942
+        },
+        "widthMetres": 60,
+        "lengthMetres": 75,
+        "rotationDegrees": 0,
+        "spawn": {
+          "lat": 44.17809127,
+          "lng": -77.37436061,
+          "headingDegrees": 322
+        },
+        "roadSnap": {
+          "roadName": null,
+          "highway": "service",
+          "distanceFromSourceMetres": 17.4
+        }
+      },
+      "assessment": "estimated",
+      "identitySourceUrl": "https://www.belleville.ca/home-and-property/fire-and-emergency-services/about-belleville-fire-and-emergency-services/",
+      "imageryCapture": "artifacts/release-qa/base-fit-belleville/fire-fire-station-1-1.png",
+      "imageryZoom": 19,
+      "metresPerPixel": 0.2139,
+      "imageryObservation": "The zoom-19 imagery capture was reviewed for Fire Station 1; fit estimates the visible address-matched facility building, adjacent parking and on-site apron/circulation.  Canonical source coordinates are preserved. Spawn is a modeled projection onto the mapped service centerline, not a confirmed apparatus entrance.",
+      "rotationBasis": "Axis-aligned imagery estimate of the site and visible access circulation; not survey-derived."
+    },
+    {
+      "baseId": "fire-fire-station-2-2",
+      "name": "Fire Station 2",
+      "address": "72 Moira St W",
+      "sourcePoint": {
+        "lat": 44.16807745,
+        "lng": -77.3911658889237
+      },
+      "drivingArea": {
+        "center": {
+          "lat": 44.16807745,
+          "lng": -77.39116589
+        },
+        "widthMetres": 60,
+        "lengthMetres": 78,
+        "rotationDegrees": 0,
+        "spawn": {
+          "lat": 44.1684206,
+          "lng": -77.3912265,
+          "headingDegrees": 157
+        },
+        "roadSnap": {
+          "roadName": "Fahey Street",
+          "highway": "residential",
+          "distanceFromSourceMetres": 38.5
+        }
+      },
+      "assessment": "estimated",
+      "identitySourceUrl": "https://www.belleville.ca/home-and-property/fire-and-emergency-services/about-belleville-fire-and-emergency-services/",
+      "imageryCapture": "artifacts/release-qa/base-fit-belleville/fire-fire-station-2-2.png",
+      "imageryZoom": 19,
+      "metresPerPixel": 0.2139,
+      "imageryObservation": "The zoom-19 imagery capture was reviewed for Fire Station 2; fit estimates the visible address-matched facility building, adjacent parking and on-site apron/circulation.  Canonical source coordinates are preserved. Spawn is a modeled projection onto the mapped Fahey Street centerline, not a confirmed apparatus entrance.",
+      "rotationBasis": "Axis-aligned imagery estimate of the site and visible access circulation; not survey-derived."
+    },
+    {
+      "baseId": "fire-fire-station-3-3",
+      "name": "Fire Station 3",
+      "address": "4867 Old Hwy 2",
+      "sourcePoint": {
+        "lat": 44.18317945,
+        "lng": -77.27781219226566
+      },
+      "drivingArea": {
+        "center": {
+          "lat": 44.18286504,
+          "lng": -77.27762429
+        },
+        "widthMetres": 90,
+        "lengthMetres": 110,
+        "rotationDegrees": 0,
+        "spawn": {
+          "lat": 44.1825212,
+          "lng": -77.27742902,
+          "headingDegrees": 247
+        },
+        "roadSnap": {
+          "roadName": "Old Highway 2",
+          "highway": "primary",
+          "distanceFromSourceMetres": 79.4
+        }
+      },
+      "assessment": "estimated",
+      "identitySourceUrl": "https://www.belleville.ca/home-and-property/fire-and-emergency-services/about-belleville-fire-and-emergency-services/",
+      "imageryCapture": "artifacts/release-qa/base-fit-belleville/fire-fire-station-3-3.png",
+      "imageryZoom": 19,
+      "metresPerPixel": 0.2139,
+      "imageryObservation": "The zoom-19 imagery capture was reviewed for Fire Station 3; fit estimates the visible address-matched facility building, adjacent parking and on-site apron/circulation.  Canonical source coordinates are preserved. Spawn is a modeled projection onto the mapped Old Highway 2 centerline, not a confirmed apparatus entrance. The mapped public-road line is about 80 m from the source point; the fitted area includes the imagery-visible developed facility and the mapped access approach, since the packaged road data has no nearby site driveway.",
+      "rotationBasis": "Axis-aligned imagery estimate of the site and visible access circulation; not survey-derived."
+    },
+    {
+      "baseId": "fire-fire-station-4-4",
+      "name": "Fire Station 4",
+      "address": "516 Harmony Rd",
+      "sourcePoint": {
+        "lat": 44.2395756,
+        "lng": -77.3910552
+      },
+      "drivingArea": {
+        "center": {
+          "lat": 44.23980916,
+          "lng": -77.39118059
+        },
+        "widthMetres": 90,
+        "lengthMetres": 110,
+        "rotationDegrees": 0,
+        "spawn": {
+          "lat": 44.24005528,
+          "lng": -77.3912924,
+          "headingDegrees": 250
+        },
+        "roadSnap": {
+          "roadName": "Harmony Road",
+          "highway": "tertiary",
+          "distanceFromSourceMetres": 56.6
+        }
+      },
+      "assessment": "estimated",
+      "identitySourceUrl": "https://www.belleville.ca/home-and-property/fire-and-emergency-services/about-belleville-fire-and-emergency-services/",
+      "imageryCapture": "artifacts/release-qa/base-fit-belleville/fire-fire-station-4-4.png",
+      "imageryZoom": 19,
+      "metresPerPixel": 0.2137,
+      "imageryObservation": "The zoom-19 imagery capture was reviewed for Fire Station 4; fit estimates the visible address-matched facility building, adjacent parking and on-site apron/circulation.  Canonical source coordinates are preserved. Spawn is a modeled projection onto the mapped Harmony Road centerline, not a confirmed apparatus entrance.",
+      "rotationBasis": "Axis-aligned imagery estimate of the site and visible access circulation; not survey-derived."
+    },
+    {
+      "baseId": "fire-fire-station-5-5",
+      "name": "Fire Station 5",
+      "address": "26 Hoskin Rd",
+      "sourcePoint": {
+        "lat": 44.2900043,
+        "lng": -77.35068298889313
+      },
+      "drivingArea": {
+        "center": {
+          "lat": 44.29038159,
+          "lng": -77.35085868
+        },
+        "widthMetres": 78,
+        "lengthMetres": 105,
+        "rotationDegrees": 0,
+        "spawn": {
+          "lat": 44.2907626,
+          "lng": -77.35103916,
+          "headingDegrees": 251
+        },
+        "roadSnap": {
+          "roadName": "Hoskin Road",
+          "highway": "residential",
+          "distanceFromSourceMetres": 89.1
+        }
+      },
+      "assessment": "estimated",
+      "identitySourceUrl": "https://www.belleville.ca/home-and-property/fire-and-emergency-services/about-belleville-fire-and-emergency-services/",
+      "imageryCapture": "artifacts/release-qa/base-fit-belleville/fire-fire-station-5-5-z18.png",
+      "imageryZoom": 18,
+      "metresPerPixel": 0.427,
+      "imageryObservation": "The zoom-18 imagery capture was reviewed for Fire Station 5; fit estimates the visible address-matched facility building, adjacent parking and on-site apron/circulation. The zoom-19 imagery tiles were unavailable at this rural site; a zoom-18 capture clearly shows the address-matched fire station roof, driveway and apron. Fit dimensions are estimates from that lower-zoom image. Canonical source coordinates are preserved. Spawn is a modeled projection onto the mapped Hoskin Road centerline, not a confirmed apparatus entrance. The zoom-19 imagery tiles were unavailable at this rural site; a zoom-18 capture clearly shows the station building, driveway and apron. The fitted rectangle includes the visible access throat toward Hoskin Road; its spawn is still modeled, not a surveyed entrance.",
+      "rotationBasis": "Axis-aligned imagery estimate of the site and visible access circulation; not survey-derived."
+    }
+  ]
+}
