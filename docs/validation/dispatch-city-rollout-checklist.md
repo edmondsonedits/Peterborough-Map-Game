@@ -1,6 +1,6 @@
 # Dispatch city rollout checklist
 
-This is the Richmond Hill/Peterborough feature set applied to all 33 registered cities in the v1.6.173 release candidate. A city receives the shared game runtime plus local data; it does not get a separate fork of the engine. Completion evidence is recorded in `all-city-dispatch-release.json` and `base-areas/`.
+This is the Richmond Hill/Peterborough feature set applied to all 33 registered cities in the v1.6.174 release candidate. A city receives the shared game runtime plus local data; it does not get a separate fork of the engine. Completion evidence is recorded in `all-city-dispatch-release.json` and `base-areas/`.
 
 | # | Feature required for each city | Configuration or verification |
 |---|---|---|

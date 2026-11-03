@@ -1,6 +1,6 @@
 # All-city Dispatch rollout validation
 
-Status: locally verified v1.6.173 release candidate; publication/live verification pending.
+Status: locally verified v1.6.174 release candidate; publication/live verification pending.
 
 ## Current evidence
 
@@ -12,11 +12,11 @@ Status: locally verified v1.6.173 release candidate; publication/live verificati
 - Scarborough reuses 29 Toronto fits only after exact service/address/canonical-coordinate matching; road exits and local routes were independently checked.
 - The independent runtime review found no important correctness/security issue. Its historical-ID coverage concern was addressed.
 - The final complete-base geometry, all-city package and Ontario-data test run passed 43 tests. Wider final release regressions are recorded separately under ignored artifacts.
-- Mobile route-review overlap was reproduced, fixed and checked for both services, including restoration of controls. Newer upstream station-switching/mobile-picker fixes are preserved.
+- Mobile route-review overlap was reproduced, fixed and checked for both services, including restoration of controls. Newer upstream station-switching/mobile-picker and bay-camera/manual-door fixes are preserved.
 
 ## Release gates
 
-- Final v1.6.173 checks passed: 1,237 tests across 17 groups, five road geometry/asset checks and the four Richmond Hill desktop/mobile Fire/EMS workflows.
+- Final v1.6.174 checks passed: 1,255 tests across 17 groups, five road geometry/asset checks and the four Richmond Hill desktop/mobile Fire/EMS workflows.
 - Publish through GitHub Pages and verify fresh live assets and city startup/playability.
 
 ## Evidence and limits
