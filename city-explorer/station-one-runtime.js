@@ -4,9 +4,10 @@ import {
   stationOneDoorState, stationOneTruckSpawn, stationOneLocalToWorld, stationOneWorldToLocal,
   stationOnePanelPose, stationOneCollision, sweepStationOneTruck, stationOneDoorObstructed,
   sampleStationOneFloor, stepStationOneDoors, toggleStationOneDoor,
-} from './station-one-core.mjs';
+  stationOneRequested as stationOneRequestedForSearch,
+} from './station-one-core.mjs?v=1.6.176';
 
-const STATION_MODEL = new URL('./assets/station1/station1.glb?v=1.6.175', import.meta.url);
+const STATION_MODEL = new URL('./assets/station1/station1.glb?v=1.6.176', import.meta.url);
 const cacheAssetRequest = createPromiseCache();
 export function preloadStationOneAsset() {
   return cacheAssetRequest(STATION_MODEL.href, async () => {
@@ -19,7 +20,7 @@ const TRUCK_DIMENSIONS = Object.freeze({ length: 10.5, width: 3.2 });
 const PANEL_NODE = /^Door_F([1-5])_Panel([0-7])$/;
 
 export function stationOneRequested(search = globalThis.location?.search || '') {
-  return new URLSearchParams(search).get('station') === '1';
+  return stationOneRequestedForSearch(search);
 }
 
 function validateModel(model, THREE, layout) {

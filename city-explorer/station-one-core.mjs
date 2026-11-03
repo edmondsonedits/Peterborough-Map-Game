@@ -9,6 +9,14 @@ const smoothstep = (a, b, value) => {
   return t * t * (3 - 2 * t);
 };
 
+export function stationOneRequested(search = '') {
+  let number;
+  try { number = Number(new URLSearchParams(search).get('station')); }
+  catch { number = 1; }
+  if (![1, 2, 3].includes(number)) number = 1;
+  return number === 1;
+}
+
 export function stationOneTruckSpawn(layout, project) { return stationTruckSpawn(layout, project); }
 export function stationOneLocalToWorld(point, anchor, yaw) { return stationLocalToWorld(point, anchor, yaw); }
 export function stationOneWorldToLocal(point, anchor, yaw) { return stationWorldToLocal(point, anchor, yaw); }

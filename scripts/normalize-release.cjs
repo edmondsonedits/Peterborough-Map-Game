@@ -137,6 +137,11 @@ write('city-explorer/app.js', read('city-explorer/app.js').replace(
   /(\.\/(?:station2-neighborhood-(?:facades|openings|roofs)|citywide-building-facades|progressive-city-build|station-transition|gameplay-camera|station-three-bay)\.mjs)(?:\?v=[^"']*)?(?=["'])/g,
   `$1?v=${VERSION}`,
 ));
+// The runtime requires the new selection export even when an older core is cached.
+write('city-explorer/station-one-runtime.js', read('city-explorer/station-one-runtime.js').replace(
+  /(\.\/station-one-core\.mjs)(?:\?v=[^"']*)?(?=["'])/g,
+  `$1?v=${VERSION}`,
+));
 // Authored facility geometry and layout revisions must bypass earlier cached copies.
 for (const file of ['city-explorer/app.js','city-explorer/station-one-runtime.js','city-explorer/station-two-runtime.js','city-explorer/emergency-facilities-catalog.js','city-explorer/building-reconstruction-catalog.js']) {
   const assetImport = /(\.\/assets\/(?:station1|station2|station3|stations|ems-armour|ems-clonsilla|building-reconstruction)\/[^'"?]+\.(?:glb|json))(?:\?v=[^"']*)?(?=["'])/g;
