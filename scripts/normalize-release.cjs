@@ -134,7 +134,7 @@ for (const file of ['city-explorer/app.js', ...visualModules.map(name => `city-e
 
 // Shared neighborhood textures and geometry follow the current app cache token.
 write('city-explorer/app.js', read('city-explorer/app.js').replace(
-  /(\.\/(?:station2-neighborhood-(?:facades|openings|roofs)|citywide-building-facades)\.mjs)(?:\?v=[^"']*)?(?=["'])/g,
+  /(\.\/(?:station2-neighborhood-(?:facades|openings|roofs)|citywide-building-facades|progressive-city-build)\.mjs)(?:\?v=[^"']*)?(?=["'])/g,
   `$1?v=${VERSION}`,
 ));
 // Authored facility geometry and layout revisions must bypass earlier cached copies.

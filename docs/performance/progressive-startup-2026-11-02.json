@@ -1,0 +1,103 @@
+{
+  "version": "1.6.170",
+  "scope": "Station-first startup with identical final building geometry and exact per-pass sidewalk query memoization",
+  "implementation": {
+    "initialArea": "Existing building visibility / 0.2% residual fog distance plus 750 metre travel margin; whole source features and visible render tiles, with reviewed assets prioritized",
+    "metadata": "Full footprint and road indexes before official gap fill and playable state",
+    "background": "5 ms target for whole-feature generation and mesh/registry commit slices, nearest pending group first; partial meshes stay hidden until committed",
+    "safety": "Selected station and actor readiness remain required; walking/driving stay within finished scenery and existing road readiness; quick travel waits for full city; failed distant build retains local play and exposes failure",
+    "completePaths": "Road compiler, explicit capture, source-road fallback, QA destination and road recovery retain serial full construction"
+  },
+  "verification": {
+    "focusedTests": 72,
+    "review": "Sol reviewer found no remaining must-fix after failure, fallback and partial-visibility fixes",
+    "buildingParity": {
+      "ok": true,
+      "sourceBuildings": 30564,
+      "vertices": 6751140,
+      "ranges": 173726,
+      "facadeQuads": 7591,
+      "roofUnits": 8,
+      "registryIds": 38625,
+      "duplicateRegistryIds": 0,
+      "aggregateHash": "61e0114d",
+      "mismatchCounts": {
+        "missingFromProgressive": 0,
+        "missingFromBaseline": 0,
+        "changedRecords": 0,
+        "differingSourceIds": 0,
+        "cityMetrics": false,
+        "facades": false,
+        "rooftopUnits": false,
+        "registryMissingFromProgressive": 0,
+        "registryMissingFromBaseline": 0,
+        "registryDuplicates": 0
+      },
+      "note": "Parity audit timings include expensive fingerprint extraction and are not startup benchmarks."
+    },
+    "station1": {
+      "entryMs": 18826,
+      "initialFeatures": 25787,
+      "totalFeatures": 30564,
+      "pendingGroups": 38,
+      "driveOutMetres": 25.78221575851646,
+      "maxBuildSliceMs": 5.9000000059604645,
+      "maxCommitSliceMs": 10.599999994039536,
+      "errors": []
+    },
+    "station2HeldBackground": {
+      "entryMs": 17934,
+      "initialFeatures": 18472,
+      "totalFeatures": 30564,
+      "pendingGroupsDuringDrive": 39,
+      "driveOutMetres": 40.707390717365925,
+      "maxBuildSliceMs": 6.699999988079071,
+      "maxCommitSliceMs": 15.599999994039536,
+      "errors": []
+    },
+    "injectedFailure": {
+      "phase": "failed",
+      "fullReady": false,
+      "loadingHidden": true,
+      "fatal": false,
+      "guards": {
+        "ready": false,
+        "walkBlocked": true,
+        "flyBlocked": true
+      },
+      "driveOutMetres": 40.45505332337652,
+      "errors": []
+    },
+    "visual": "Reviewed station spawn and drive-out screenshots; no new blank nearby buildings or missing door geometry",
+    "limitation": "Desktop Chromium balanced; physical phone unavailable by user instruction. Startup figures from local tests are not a controlled comparison against published network performance.",
+    "selectedStationTests": [
+      {
+        "station": 3,
+        "readyMs": 15421,
+        "delayedModel": false,
+        "delayedRequestFinishedMs": null,
+        "distance": 39.059338092139875,
+        "errors": []
+      },
+      {
+        "station": 1,
+        "readyMs": 30855,
+        "delayedModel": true,
+        "delayedRequestFinishedMs": 30300,
+        "distance": 22.970844865252943,
+        "errors": []
+      }
+    ]
+  },
+  "release": {
+    "version": "1.6.170",
+    "roadPack": "d6560a7e3d918616c5f2",
+    "tiles": 669,
+    "triangles": 4349747,
+    "gzipBytes": 74689607,
+    "changedRawRoadTiles": 0,
+    "roadPackVerified": true,
+    "roadPaintFailures": 0,
+    "publicationEvidence": "GitHub Pages deployment plus separate public-hash and live-browser reports"
+  }
+}
