@@ -1,3 +1,6 @@
+import {clipTerrainToShorelines, reviewedWaterHoles} from './water-shorelines.js';
+import {installWaterAppearance} from './water-appearance.js';
+import {buildPathCorners, pathCoverageOverlaps, pathSurface, recreationTreeClearance, treeForm} from './park-scenery.mjs';
 import {createFleetRuntime} from './fleet-runtime.js';
 import {FLEET_DEFINITIONS} from './vehicle-fleet.mjs';
 import {createAerialRuntime} from './aerial-runtime.js';
@@ -751,8 +754,11 @@ const materials = {
   railway: standard(0x514b45, { roughness: 0.72, metalness: 0.2 }),
   bridge: standard(0x6f7977, { roughness: 0.62, metalness: 0.16 }),
   bridgeRail: standard(0x9a9f96, { roughness: 0.38, metalness: 0.3 }),
-  water: standard(0x286b78, { roughness: 0.2, metalness: 0.06, transparent: true, opacity: 0.88, depthWrite: false, side: THREE.DoubleSide }),
-  park: standard(0x245e3d, { side: THREE.DoubleSide }),
+  water: standard(0x2d5557, { roughness: 0.29, side: THREE.DoubleSide }),
+  park: standard(0x416846, { side: THREE.DoubleSide }),
+  sportsGrass: standard(0x58734a),
+  sportsHard: standard(0x77756b),
+  woodland: standard(0x294934),
   grass: standard(0x386c46, { side: THREE.DoubleSide }),
   residentialLand: standard(0x315b40, { side: THREE.DoubleSide }),
   commercialLand: standard(0x475a52, { side: THREE.DoubleSide }),
@@ -1185,7 +1191,6 @@ async function loadTerrain() {
 function disposeLandCoverRaster() {
   if (landCoverRaster.mesh) {
     terrainGroup.remove(landCoverRaster.mesh);
-    landCoverRaster.mesh.geometry.dispose();
     landCoverRaster.mesh.material.dispose();
   }
   landCoverRaster.texture?.dispose();
@@ -1225,16 +1230,6 @@ function initializeLandCoverRaster(terrainGeometry) {
   texture.generateMipmaps = true;
   texture.anisotropy = Math.min(8, renderer.capabilities.getMaxAnisotropy());
 
-  const geometry = terrainGeometry.clone();
-  const positions = geometry.attributes.position;
-  // The terrain base is 3.5 cm below the physical datum. Put land cover only
-  // 2.5 cm above that base, leaving a measured clearance below roads and water.
-  for (let index = 0; index < positions.count; index += 1) {
-    positions.setY(index, positions.getY(index) + 0.025);
-  }
-  positions.needsUpdate = true;
-  geometry.computeBoundingSphere();
-
   const material = new THREE.MeshStandardMaterial({
     map: texture,
     roughness: 0.98,
@@ -1246,7 +1241,9 @@ function initializeLandCoverRaster(terrainGeometry) {
     polygonOffsetFactor: -1,
     polygonOffsetUnits: -1,
   });
-  const mesh = new THREE.Mesh(geometry, material);
+  const mesh = new THREE.Mesh(terrainGeometry, material);
+  // Share the terrain buffers and keep the overlay below roads and water.
+  mesh.position.y = 0.025;
   mesh.receiveShadow = !lowPowerProfile;
   mesh.renderOrder = -20;
   installWorldSurfaceDetail(material, 'asphalt');
@@ -1281,9 +1278,10 @@ function flushLandCoverRaster() {
     'industrial-land': 20,
     'commercial-land': 30,
     grass: 40,
-    wood: 45,
     park: 50,
     'official-city-park': 55,
+    wood: 60,
+    'sports-ground': 65,
     parking: 70,
     water: 100,
   };
@@ -1309,7 +1307,10 @@ function flushLandCoverRaster() {
   document.documentElement.dataset.landCoverVertices = String(landCoverRaster.vertices);
 }
 
-function createTerrainMesh(hydroSurfaceIndex = null) {
+const waterTime = installWaterAppearance(materials.water);
+
+function createTerrainMesh(hydrography = null) {
+  const hydroSurfaceIndex = hydrography?.surfaceIndex;
   const geometry = new THREE.PlaneGeometry(CITY.terrainSize, CITY.terrainSize, CITY.terrainSegments, CITY.terrainSegments);
   geometry.rotateX(-Math.PI / 2);
   // Keep the terrain square centered on the measured city extent rather than
@@ -1358,6 +1359,11 @@ function createTerrainMesh(hydroSurfaceIndex = null) {
     colors[index * 3 + 2] = color.b;
   }
   geometry.setAttribute('color', new THREE.BufferAttribute(colors, 3));
+  if (hydrography?.shorelines.length) {
+    const started = performance.now();
+    clipTerrainToShorelines(THREE, geometry, CITY.terrainSegments, hydrography.shorelines, (x, z) => hydroSurfaceIndex.heightAt(x, z));
+    document.documentElement.dataset.shorelineBuildMs = String(Math.round(performance.now() - started));
+  }
   const mesh = new THREE.Mesh(geometry, new THREE.MeshStandardMaterial({ vertexColors: true, roughness: 1, metalness: 0 }));
   installWorldSurfaceDetail(mesh.material, 'grass');
   installStationApron(mesh.material, project);
@@ -1482,6 +1488,7 @@ function prepareHydrography(collection) {
   const surfaceIndex = new HydroSurfaceIndex(120);
   const positions = [];
   const watercourses = [];
+  const shorelines = [];
   let polygonCount = 0;
 
   for (const feature of collection?.features || []) {
@@ -1533,11 +1540,17 @@ function prepareHydrography(collection) {
         holes2d.push(hole2d);
       }
 
+      const stageSampler = createWaterStageSampler([contour, ...holes], { fallbackHeight, sampleSpacing: 30, cellSize: 90 });
+      for (const coordinates of reviewedWaterHoles(feature.id, polygonCoordinates)) {
+        const hole2d = coordinates.map(([lon, lat]) => project(lat, lon));
+        if (THREE.ShapeUtils.isClockWise(hole2d)) hole2d.reverse();
+        holes.push(hole2d.map(({x, y: z}) => ({x, z, y: stageSampler(x, z)})));
+        holes2d.push(hole2d);
+      }
       const faces = THREE.ShapeUtils.triangulateShape(contour2d, holes2d);
       const vertices = contour.concat(...holes);
       const authoritativeStages = vertices.map((vertex) => vertex.y).filter(Number.isFinite);
       const stageRange = authoritativeStages.length ? Math.max(...authoritativeStages) - Math.min(...authoritativeStages) : 0;
-      const stageSampler = createWaterStageSampler([contour, ...holes], { fallbackHeight, sampleSpacing: 30, cellSize: 90 });
       for (const face of faces) {
         const a = vertices[face[0]];
         const b = vertices[face[1]];
@@ -1556,10 +1569,16 @@ function prepareHydrography(collection) {
           surfaceIndex.addTriangle(first, second, third);
         }
       }
+      if (faces.length) {
+        shorelines.push([contour, ...holes].map(ring => {
+          const outline = ring.map(({x, z}) => [x, z]);
+          return [...outline, outline[0]];
+        }));
+      }
       polygonCount += 1;
     }
   }
-  return { positions, surfaceIndex, watercourses, polygonCount };
+  return { positions, surfaceIndex, shorelines, watercourses, polygonCount };
 }
 
 function appendWatercourseRibbon(target, a, b, width, surfaceIndex) {
@@ -2564,6 +2583,8 @@ function getRoadWidth(tags = {}) {
   const profile = roadProfile(tags);
   if (profile) return profile.width;
   const highway = tags.highway || 'path';
+  const mappedWidth = parseMeters(tags.width) || parseMeters(tags.est_width);
+  if (mappedWidth > 0) return THREE.MathUtils.clamp(mappedWidth, 0.65, 8);
   return ({ footway: 1.6, cycleway: 1.8, path: 1.3, pedestrian: 3, steps: 1.3 })[highway] || 1.5;
 }
 
@@ -2990,8 +3011,73 @@ function groupSegmentsByTile(segments) {
   return groups;
 }
 
+const parkPathColors = {
+  paved: new THREE.Color(0x525554),
+  concrete: new THREE.Color(0xa5a394),
+  gravel: new THREE.Color(0x8e8069),
+  earth: new THREE.Color(0x6d5b43),
+};
+const parkPathMaterial = new THREE.MeshStandardMaterial({vertexColors: true, roughness: 0.96});
+let mappedPathIndex = null;
+
+function buildParkPathRibbons(segments, bucket) {
+  if (!segments.length) return;
+  const corners = buildPathCorners(segments);
+  const elevation = bucket === 'trail' ? 0.045 : 0.105;
+  if (bucket === 'path') mappedPathIndex = createCityRoadSegmentIndex(segments);
+  for (const {tile, segments: local} of groupSegmentsByTile(segments).values()) {
+    const positions = [], colors = [], indices = [];
+    for (const segment of local) {
+      const color = parkPathColors[pathSurface(segment.tags, bucket === 'trail')];
+      const [al, ar] = corners(segment.a, segment);
+      const [bl, br] = corners(segment.b, segment);
+      const steps = Math.ceil(segment.a.distanceTo(segment.b) / 14);
+      let previous = -1;
+      for (let step = 0; step <= steps; step += 1) {
+        const t = step / steps;
+        const next = positions.length / 3;
+        for (const [start, end] of [[al, bl], [ar, br]]) {
+          const x = THREE.MathUtils.lerp(start.x, end.x, t);
+          const z = THREE.MathUtils.lerp(start.z, end.z, t);
+          positions.push(x, terrainHeightAtWorld(x, z) + elevation, z);
+          colors.push(Math.round(color.r * 255), Math.round(color.g * 255), Math.round(color.b * 255));
+        }
+        if (previous >= 0) {
+          const duplicate = bucket === 'trail' && mappedPathIndex && [0.15, 0.5, 0.85].every(fraction => {
+            const t = (step - 1 + fraction) / steps;
+            const x = THREE.MathUtils.lerp(segment.a.x, segment.b.x, t);
+            const z = THREE.MathUtils.lerp(segment.a.y, segment.b.y, t);
+            return mappedPathIndex.query({minX: x, maxX: x, minZ: z, maxZ: z}, {padding: 2})
+              .some(other => pathCoverageOverlaps(segment, other, x, z));
+          });
+          if (!duplicate) indices.push(previous, previous + 1, next + 1, previous, next + 1, next);
+        }
+        previous = next;
+      }
+    }
+    if (!indices.length) continue;
+    const geometry = new THREE.BufferGeometry();
+    geometry.setAttribute('position', new THREE.Float32BufferAttribute(positions, 3));
+    geometry.setAttribute('color', new THREE.Uint8BufferAttribute(colors, 3, true));
+    geometry.setIndex(indices);
+    geometry.computeVertexNormals();
+    geometry.computeBoundingSphere();
+    const mesh = new THREE.Mesh(geometry, parkPathMaterial);
+    mesh.userData = {type: bucket, tile, tileSize: RENDER_TILE_SIZE};
+    mesh.receiveShadow = !lowPowerProfile;
+    roadGroup.add(mesh);
+  }
+  state.objectCount += segments.length;
+}
+
 function buildInstancedLines(segments, bucket) {
   if (!segments.length) return;
+  if (bucket === 'path' || bucket === 'trail') {
+    const elevated = segment => ['bridge', 'tunnel'].some(key => segment.tags[key] && segment.tags[key] !== 'no') || segment.tags.highway === 'steps';
+    buildParkPathRibbons(segments.filter(segment => !elevated(segment)), bucket);
+    segments = segments.filter(elevated);
+    if (!segments.length) return;
+  }
   if (bucket === 'sidewalk') {
     const local = segments.filter(segment => stationRoadDetailWeight(segment.a.x, segment.a.y) && stationRoadDetailWeight(segment.b.x, segment.b.y));
     buildStationSidewalkRibbons(local.flatMap(segment => splitRoadDetailSegment(segment)));
@@ -4811,9 +4897,9 @@ function buildCityOpenData(collection) {
     if (layer === 'sidewalks_pathways' || layer === 'major_trails') {
       const lineType = String(propertyValue(properties, 'LINE_TYPE', 'CLASS') || '').toLowerCase();
       const width = layer === 'major_trails' ? 2.35 : /pathway|multi.use|trail/.test(lineType) ? 1.9 : 1.45;
-      const target = layer === 'major_trails' ? trails : sidewalks;
+      const target = layer === 'major_trails' || /footpath|trail|pathway/.test(lineType) ? trails : sidewalks;
       const name = String(propertyValue(properties, 'STREET_NAME') || '');
-      geometryLines(feature).forEach((line) => appendOfficialLine(line, width, { name, source: layer }, target));
+      geometryLines(feature).forEach((line) => appendOfficialLine(line, width, { name, source: layer, surface: propertyValue(properties, 'SURFACE') }, target));
     } else if (layer === 'parks') {
       geometryPolygons(feature).forEach((polygonCoordinates) => {
         const rings = polygonCoordinates.map(coordinatesToLandRing).filter((ring) => ring.length >= 4);
@@ -4856,6 +4942,12 @@ function buildCityOpenData(collection) {
   return { features: collection.features.length, parks, stops: stops.length, paths: sidewalks.length + trails.length };
 }
 
+let parkTreeExclusions = createFootprintCentroidIndex();
+
+function isOpenRecreation(tags) {
+  return ['pitch', 'playground', 'track', 'sports_centre'].includes(tags.leisure);
+}
+
 function landMaterialFor(tags) {
   if (tags.natural === 'water' || tags.water || tags.waterway === 'riverbank') {
     if (state.officialHydroAvailable) return null;
@@ -4868,8 +4960,13 @@ function landMaterialFor(tags) {
   // at its centroid created floating slabs on sloped blocks and could cover
   // adjacent road ribbons.
   if (tags.amenity === 'parking' || tags.parking) return { material: materials.parking, materialKey: 'parking', flat: false, type: 'parking' };
+  if (isOpenRecreation(tags)) {
+    const hard = /^(asphalt|concrete|paving_stones|acrylic|rubber)$/.test(tags.surface || '')
+      || (!tags.surface && /^(tennis|basketball|skateboard)$/.test(tags.sport || ''));
+    return {material: hard ? materials.sportsHard : materials.sportsGrass, materialKey: 'sports-ground', type: 'sports-ground'};
+  }
   if (['park', 'recreation_ground', 'garden'].includes(tags.leisure)) return { material: materials.park, materialKey: 'park', type: 'park', trees: true };
-  if (tags.natural === 'wood' || tags.landuse === 'forest') return { material: materials.grass, materialKey: 'wood', type: 'wood', trees: true };
+  if (tags.natural === 'wood' || tags.landuse === 'forest') return { material: materials.woodland, materialKey: 'wood', type: 'wood', trees: true };
   if (['grass', 'meadow'].includes(tags.landuse)) return { material: materials.grass, materialKey: 'grass', type: 'grass' };
   if (tags.landuse === 'industrial') return { material: materials.industrialLand, materialKey: 'industrial-land', type: 'industrial-land' };
   if (tags.landuse === 'residential') return { material: materials.residentialLand, materialKey: 'residential-land', type: 'residential-land' };
@@ -4904,18 +5001,35 @@ function scatterTreesInPolygon(rings, featureId, target, maxTotal, sourceId = nu
   while (target.length < maxTotal && target.length - startCount < desired && attempts < desired * 18) {
     attempts += 1;
     const point = new THREE.Vector2(THREE.MathUtils.lerp(minX, maxX, random()), THREE.MathUtils.lerp(minZ, maxZ, random()));
-    if (!pointInPolygon(point, rings)) continue;
-    target.push({ x: point.x, z: point.y, scale: deterministicNumber(`${featureId}:${attempts}`, 0.75, 1.35), sourceId, sourceSubId: `${polygonId}:${attempts}` });
+    if (!pointInPolygon(point, rings) || parkTreeExclusions.contains(point.x, point.y, 1.8)
+      || Number.isFinite(fleetHydroIndex?.heightAt(point.x, point.y))) continue;
+    target.push({ x: point.x, z: point.y, inferred: true, scale: deterministicNumber(`${featureId}:${attempts}`, 0.75, 1.35), sourceId, sourceSubId: `${polygonId}:${attempts}` });
   }
 }
 
 function buildTrees(treePoints, { append = false, limit, type = 'trees' } = {}) {
   if (!treePoints.length) return;
   const treeLimit = limit ?? (lowPowerProfile ? 1400 : 6400);
-  const capped = treePoints.slice().sort((a, b) => (
-    Number(worldPointInVerticalSlice(b.x, b.z, verticalSliceBounds))
-    - Number(worldPointInVerticalSlice(a.x, a.z, verticalSliceBounds))
-  )).slice(0, treeLimit);
+  const capped = [];
+  const districts = new Map();
+  for (const tree of treePoints) {
+    if (!tree.inferred || worldPointInVerticalSlice(tree.x, tree.z, verticalSliceBounds)) {
+      if (capped.length < treeLimit) capped.push(tree);
+      continue;
+    }
+    const key = Math.floor(tree.x / 600) + ':' + Math.floor(tree.z / 600);
+    if (!districts.has(key)) districts.set(key, []);
+    districts.get(key).push(tree);
+  }
+  // Spread the same cap across the city instead of exhausting it in OSM order.
+  let remaining = [...districts.values()];
+  for (let index = 0; capped.length < treeLimit && remaining.length; index += 1) {
+    remaining = remaining.filter(trees => trees.length > index);
+    for (const trees of remaining) {
+      if (capped.length === treeLimit) break;
+      capped.push(trees[index]);
+    }
+  }
   const trunkGeometry = new THREE.CylinderGeometry(0.38, 0.5, 4.4, 6);
   const crownParts = [
     new THREE.IcosahedronGeometry(2.62, 0).translate(-1.05, -0.25, 0.15),
@@ -4924,25 +5038,37 @@ function buildTrees(treePoints, { append = false, limit, type = 'trees' } = {}) 
   ];
   const deciduousGeometry = mergeGeometries(crownParts, false);
   crownParts.forEach((geometry) => geometry.dispose());
-  const coniferGeometry = new THREE.ConeGeometry(2.5, 7.2, 7);
+  const coniferGeometry = new THREE.LatheGeometry([
+    new THREE.Vector2(0, -3.2), new THREE.Vector2(2.45, -2.6),
+    new THREE.Vector2(1.25, -0.25), new THREE.Vector2(1.75, -0.65),
+    new THREE.Vector2(0, 3.6),
+  ], 7);
   const farCrownGeometry = new THREE.IcosahedronGeometry(3.05, 0);
   const trunks = new THREE.InstancedMesh(trunkGeometry, materials.treeTrunk, capped.length);
-  const deciduous = capped.filter((tree) => stableHash(`${tree.x}:${tree.z}:species`) % 5 !== 0);
-  const conifers = capped.filter((tree) => stableHash(`${tree.x}:${tree.z}:species`) % 5 === 0);
-  const crowns = new THREE.InstancedMesh(deciduousGeometry, materials.treeCrown, deciduous.length);
-  const lightCrowns = new THREE.InstancedMesh(deciduousGeometry, materials.treeCrownLight, deciduous.length);
-  const coniferCrowns = new THREE.InstancedMesh(coniferGeometry, materials.treeConifer, conifers.length);
+  const forms = capped.map(tree => {
+    const seed = deterministicNumber(`${tree.x}:${tree.z}:form`, 0, 1);
+    const form = treeForm(tree.tags, seed);
+    const scale = tree.scale || 1;
+    return {...form, seed, scaleY: form.height ? form.height / (form.conifer ? 9.85 : 10.15) : scale * (0.86 + 0.28 * seed)};
+  });
+  const coniferCount = forms.filter(form => form.conifer).length;
+  const deciduousCount = capped.length - coniferCount;
+  const crowns = new THREE.InstancedMesh(deciduousGeometry, materials.treeCrown, deciduousCount);
+  const lightCrowns = new THREE.InstancedMesh(deciduousGeometry, materials.treeCrownLight, deciduousCount);
+  const coniferCrowns = new THREE.InstancedMesh(coniferGeometry, materials.treeConifer, coniferCount);
   const farCrowns = new THREE.InstancedMesh(farCrownGeometry, materials.treeCrown, capped.length);
   const dummy = new THREE.Object3D();
   capped.forEach((tree, index) => {
     const terrainY = terrainHeightAtWorld(tree.x, tree.z);
     const scale = tree.scale || 1;
-    dummy.position.set(tree.x, terrainY + 2.2 * scale, tree.z);
+    const {scaleY} = forms[index];
+    dummy.position.set(tree.x, terrainY + 2.2 * scaleY, tree.z);
     dummy.rotation.set(0, deterministicNumber(`${tree.x}:${tree.z}`, 0, Math.PI * 2), 0);
-    dummy.scale.set(scale, scale, scale);
+    dummy.scale.set(scale, scaleY, scale);
     dummy.updateMatrix();
     trunks.setMatrixAt(index, dummy.matrix);
   });
+  const crownTint = new THREE.Color();
   let deciduousIndex = 0;
   let lightIndex = 0;
   let coniferIndex = 0;
@@ -4953,19 +5079,24 @@ function buildTrees(treePoints, { append = false, limit, type = 'trees' } = {}) 
   capped.forEach((tree, farIndex) => {
     const terrainY = terrainHeightAtWorld(tree.x, tree.z);
     const scale = tree.scale || 1;
-    const seed = stableHash(`${tree.x}:${tree.z}:species`);
-    dummy.position.set(tree.x, terrainY + (seed % 5 === 0 ? 6.25 : 6.05) * scale, tree.z);
+    const {conifer, crown, scaleY, seed} = forms[farIndex];
+    dummy.position.set(tree.x, terrainY + (conifer ? 6.25 : 6.05) * scaleY, tree.z);
+    crownTint.setRGB(0.78 + seed * 0.22, 0.83 + seed * 0.17, 0.72 + seed * 0.21);
     dummy.rotation.set(0, deterministicNumber(`${tree.x}:${tree.z}`, 0, Math.PI * 2), 0);
-    dummy.scale.set(scale, scale, scale);
+    dummy.scale.set(scale * crown, scaleY, scale * crown * (0.86 + seed * 0.24));
     dummy.updateMatrix();
     farCrowns.setMatrixAt(farIndex, dummy.matrix);
-    if (seed % 5 === 0) {
+    farCrowns.setColorAt(farIndex, crownTint);
+    if (conifer) {
+      coniferCrowns.setColorAt(coniferIndex, crownTint);
       coniferCrowns.setMatrixAt(coniferIndex, dummy.matrix);
       treeParts[farIndex].push({ object: coniferCrowns, instanceIndex: coniferIndex++ });
-    } else if (seed % 3 === 0) {
+    } else if (seed > 0.66) {
+      lightCrowns.setColorAt(lightIndex, crownTint);
       lightCrowns.setMatrixAt(lightIndex, dummy.matrix);
       treeParts[farIndex].push({ object: lightCrowns, instanceIndex: lightIndex++ });
     } else {
+      crowns.setColorAt(deciduousIndex, crownTint);
       crowns.setMatrixAt(deciduousIndex, dummy.matrix);
       treeParts[farIndex].push({ object: crowns, instanceIndex: deciduousIndex++ });
     }
@@ -5097,7 +5228,7 @@ async function finishProgressiveBuildings() {
   }
 }
 
-async function parseOsmWithGeoJson(data) {
+async function parseOsmWithGeoJson(data, cityOpenData) {
   if (typeof globalThis.osmtogeojson !== 'function') throw new Error('osmtogeojson browser library is unavailable');
   const geojson = globalThis.osmtogeojson(data, { flatProperties: true });
   state.multipolygonsAvailable = true;
@@ -5120,6 +5251,29 @@ async function parseOsmWithGeoJson(data) {
   let land = 0;
 
   const features = geojson.features || [];
+  parkTreeExclusions = createFootprintCentroidIndex();
+  // Municipal recreation points do not supply field outlines. Use them
+  // only as modest clearance zones for procedurally scattered trees.
+  for (const feature of cityOpenData?.features || []) {
+    if (feature.properties?.ptbo_layer !== 'recreation') continue;
+    const clearance = recreationTreeClearance(feature.properties.Type);
+    if (!clearance) continue;
+    for (const [lon, lat] of geometryPoints(feature)) {
+      const center = project(lat, lon);
+      const ring = Array.from({length: 8}, (_, index) => {
+        const angle = index * Math.PI / 4;
+        return {x: center.x + clearance * Math.cos(angle), y: center.y + clearance * Math.sin(angle)};
+      });
+      parkTreeExclusions.add([ring]);
+    }
+  }
+  for (const feature of features) {
+    const tags = featureTags(feature);
+    if (!isOpenRecreation(tags) && tags.amenity !== 'parking') continue;
+    for (const polygon of geometryPolygons(feature)) {
+      parkTreeExclusions.add(polygon.map(coordinatesToLandRing).filter(ring => ring.length >= 4));
+    }
+  }
   station2PilotRoadSegments = [];
   const citywideRoadSegments=[];
   for (const feature of features) {
@@ -5197,7 +5351,7 @@ async function parseOsmWithGeoJson(data) {
     if (tags.natural === 'tree') {
       geometryPoints(feature).forEach(([lon, lat], pointIndex) => {
         const p = project(lat, lon);
-        treePoints.push({ x: p.x, z: p.y, scale: deterministicNumber(featureId, 0.8, 1.25), sourceId: feature.id || tags.id ? `${feature.id || tags.id}:point:${pointIndex}` : null });
+        treePoints.push({ x: p.x, z: p.y, tags, scale: deterministicNumber(featureId, 0.8, 1.25), sourceId: feature.id || tags.id ? `${feature.id || tags.id}:point:${pointIndex}` : null });
       });
       continue;
     }
@@ -5215,11 +5369,11 @@ async function parseOsmWithGeoJson(data) {
         offset: landStyle.type === 'water' ? 0.24 : 0.08,
       });
       land += 1;
-      if (landStyle.trees && treePoints.length < treeInstanceLimit) {
+      if (landStyle.trees) {
         const before = treePoints.length;
         const centroid = polygonCentroid(rings[0]);
         const squareMetresPerTree = worldPointInVerticalSlice(centroid.x, centroid.y, verticalSliceBounds) ? 620 : 2100;
-        const maxToAdd = Math.min(treeInstanceLimit - before, Math.max(1, Math.floor(polygonArea(rings[0]) / squareMetresPerTree)));
+        const maxToAdd = Math.min(lowPowerProfile ? 32 : 128, Math.max(1, Math.floor(polygonArea(rings[0]) / squareMetresPerTree)));
         scatterTreesInPolygon(rings, featureId, treePoints, before + maxToAdd, feature.id || tags.id || null);
       }
     }
@@ -5411,19 +5565,13 @@ function buildFallbackCity() {
   state.roadMarkingSegments = roadSegments;
 
 
-  const river = [
-    new THREE.Vector2(450, -2300), new THREE.Vector2(400, -900), new THREE.Vector2(490, 250),
-    new THREE.Vector2(420, 2300), new THREE.Vector2(565, 2300), new THREE.Vector2(620, 300),
-    new THREE.Vector2(550, -850), new THREE.Vector2(640, -2300), new THREE.Vector2(450, -2300),
-  ];
-  addLandPolygon([river], materials.water, { flat: true, type: 'water', offset: 0.24 });
   const parkShape = [];
   for (let index = 0; index <= 48; index += 1) {
     const angle = index / 48 * Math.PI * 2;
     parkShape.push(new THREE.Vector2(-980 + Math.cos(angle) * 580, -760 + Math.sin(angle) * 580));
   }
   addLandPolygon([parkShape], materials.park, { type: 'park' });
-  return { buildings, roads: roadSegments.length, land: 2, trees: 0 };
+  return { buildings, roads: roadSegments.length, land: 1, trees: 0 };
 }
 
 async function fetchOsm() {
@@ -5550,11 +5698,12 @@ async function buildCity() {
     return null;
   });
 
-  const [, hydrography, officialRoadSurfaces, officialBuildings] = await Promise.all([
+  const [, hydrography, officialRoadSurfaces, officialBuildings, cityOpenData] = await Promise.all([
     terrainPromise,
     hydrographyPromise,
     officialRoadSurfacePromise,
     officialBuildingPromise,
+    cityOpenDataPromise,
     stationThreeModelPromise,
   ]);
   const preparedHydrography = hydrography ? prepareHydrography(hydrography) : null;
@@ -5562,7 +5711,7 @@ async function buildCity() {
     ? 'Shaping the landscape from Ontario lidar and hydrographic breaklines…'
     : state.terrainAvailable ? 'Decoding elevation tiles and shaping the landscape…' : 'Terrain service unavailable — using a flat landscape…');
   fleetHydroIndex=preparedHydrography?.surfaceIndex||null;
-  createTerrainMesh(fleetHydroIndex);
+  createTerrainMesh(preparedHydrography);
   placeStationThreeModel();
   if (preparedHydrography) buildOfficialHydrography(preparedHydrography);
   await nextFrame();
@@ -5574,7 +5723,7 @@ async function buildCity() {
     setProgress(52, 'Resolving OSM multipolygons, roads, water, and land cover…');
     await nextFrame();
     try {
-      summary = await parseOsmWithGeoJson(data);
+      summary = await parseOsmWithGeoJson(data, cityOpenData);
     } catch (conversionError) {
       pendingCityBuildingGroups = []; progressiveCityStatus.enabled = false; progressiveCityStatus.phase = 'source-fallback';
       console.warn('Multipolygon conversion failed; using the internal way parser.', conversionError);
@@ -5617,12 +5766,12 @@ async function buildCity() {
     document.documentElement.dataset.hunterBridge = 'bank-profile-and-source-panels';
   }
 
-  const cityOpenData = await cityOpenDataPromise;
   if (cityOpenData) {
     setProgress(92, 'Adding official parks, trails, sidewalks, civic places, and transit stops...');
     await nextFrame();
     summary.cityOpenData = buildCityOpenData(cityOpenData);
   }
+  mappedPathIndex = null;
   if(CONNECTED_ROADS_ENABLED&&!roadTileLayer){
     setProgress(93,'Joining road surfaces and smoothing shared pavement grades...');
     await nextFrame();
@@ -7631,7 +7780,7 @@ function updateCityVisualLod(viewCamera = camera) {
   streetscapeGroup.visible=!mapOverlay;
   authoredDetailGroup.visible=!mapOverlay;
   streetLabelGroup.visible=state.mode==='map'&&map3d&&innerWidth>=760;
-  vegetationGroup.visible=state.mode!=='map';
+  vegetationGroup.visible = state.mode !== 'map' || mapNearDetail;
   gameplayGroup.visible=state.mode!=='map';
   landmarkGroup.visible=state.mode!=='map';
   mapRoadGroup.visible=map3d&&!mapNearDetail;
@@ -7684,10 +7833,10 @@ function updateCityVisualLod(viewCamera = camera) {
     const tiled = object.userData?.tile && object.userData?.tileSize;
     object.visible = nearDetail && !mapOverlay && (!tiled || distanceToRenderTile(object, viewCamera) < graphicsQuality.streetDetailRadius);
   });
+  const nearTrees = nearDetail && state.mode !== 'map';
   vegetationGroup.children.forEach((object) => {
-    if (state.mode === 'map') return;
-    if (object.userData?.lodRole === 'near') object.visible = nearDetail;
-    else if (object.userData?.lodRole === 'far') object.visible = !nearDetail;
+    if (object.userData?.lodRole === 'near') object.visible = nearTrees;
+    else if (object.userData?.lodRole === 'far') object.visible = !nearTrees;
   });
   semanticSurveyGroup.visible = state.mode !== 'map' || semanticSurveyActive;
   if (!lowPowerProfile) sun.castShadow = nearDetail && state.mode !== 'map';
@@ -7768,6 +7917,7 @@ function animate() {
     const protection=stationTransitionTarget?stationTransitionTarget.protection:{protectX:truckState.x,protectZ:truckState.z,protectRadius:100};
     void roadTileLayer.update(x,z,protection).then(stats=>{document.documentElement.dataset.roadTiles=JSON.stringify(stats);}).catch(error=>console.warn('Road tile update retained existing geometry.',error));
   }
+  waterTime.value = ((captureFrame ? 0 : performance.now()) / 1000) % (200 * Math.PI);
   renderer.render(scene, viewCamera);
   captureFrame?.(performance.now());
   animationFrameId = requestAnimationFrame(animate);

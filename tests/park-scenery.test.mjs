@@ -1,0 +1,21 @@
+import assert from 'node:assert/strict';
+import {pathSurface, buildPathCorners, pathCoverageOverlaps, recreationTreeClearance, treeForm} from '../city-explorer/park-scenery.mjs';
+
+assert.equal(pathSurface({surface:'compacted',highway:'cycleway'}), 'gravel');
+assert.equal(pathSurface({surface:'paving_stones'}), 'concrete');
+assert.equal(pathSurface({highway:'path'}), 'earth');
+assert.equal(pathSurface({highway:'cycleway'}), 'paved');
+const a={x:0,y:0}, b={x:10,y:0}, c={x:10,y:10};
+const first={a,b,width:2}, second={a:b,b:c,width:2};
+const corners=buildPathCorners([first,second]);
+assert.deepEqual(corners(b,first),corners(b,second));
+assert.deepEqual(corners(b,first),[{x:11,z:-1},{x:9,z:1}]);
+assert.equal(pathCoverageOverlaps(first, {a:b,b:a}, 5, 1), true);
+assert.equal(pathCoverageOverlaps(first, second, 10, 1), false);
+assert.equal(pathCoverageOverlaps(first, {a:b,b:a}, 5, 3), false);
+assert.equal(treeForm({leaf_type:'needleleaved'},0.5).conifer,true);
+assert.equal(treeForm({leaf_type:'broadleaved'},0).conifer,false);
+assert.equal(treeForm({height:'14 m'},0.5).height,14);
+assert.ok(recreationTreeClearance('Multi-Use Sports Field') > recreationTreeClearance('Tennis Court'));
+assert.equal(recreationTreeClearance('Viewpoint'), 0);
+console.log('Park scenery surface, join, and mapped tree cases passed.');
