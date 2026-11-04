@@ -1,0 +1,43 @@
+✔ index.html loads exactly one current shared build bootstrap (2.9655ms)
+✔ route-mapping/index.html loads exactly one current shared build bootstrap (0.8636ms)
+✔ route-mapping/play.html loads exactly one current shared build bootstrap (0.5804ms)
+✔ response-simulator/play/index.html loads exactly one current shared build bootstrap (0.7047ms)
+✔ response-simulator/mobile/index.html loads exactly one current shared build bootstrap (0.6805ms)
+✔ geo-guesser/index.html loads exactly one current shared build bootstrap (0.6072ms)
+✔ geo-guesser/desktop/index.html loads exactly one current shared build bootstrap (0.5555ms)
+✔ geo-guesser/mobile/index.html loads exactly one current shared build bootstrap (0.7082ms)
+✔ geo-guesser/online/index.html loads exactly one current shared build bootstrap (1.4494ms)
+✔ city-explorer/index.html loads exactly one current shared build bootstrap (0.8014ms)
+✔ geo-guesser/desktop/index.html wrapper release identity matches the canonical build (0.7836ms)
+✔ geo-guesser/mobile/index.html wrapper release identity matches the canonical build (0.5464ms)
+✔ geo-guesser/online/index.html wrapper release identity matches the canonical build (0.6011ms)
+✔ shared build version is the single production release authority (1.6202ms)
+✔ live release entry points use stable filenames and the canonical cache version (1.699ms)
+✔ deployment and browser QA use the stable release-management entry points (1.0596ms)
+✔ numbered release bootstraps are compatibility-only forwarders (5.7157ms)
+✔ legacy compatibility bridge resolves through canonical build and stable release (0.9757ms)
+✔ enhancement loader waits for the simulator document instead of initial about:blank (9.0509ms)
+✔ replaced iframe cannot continue injecting modules or overwrite the new completion state (2.4664ms)
+✔ rejected obsolete iframe injection does not report an active bootstrap failure (1.289ms)
+✔ current iframe injection failures remain visible (1.0476ms)
+✔ enhancement loader ignores a pre-normalization city document until the requested frame loads (1.0803ms)
+✔ finalization preserves binary terrain inputs bit for bit (0.9378ms)
+✔ text source fingerprints normalize line endings and release cache tokens (0.4501ms)
+✔ only additive finalizer blocks are removed from the source-stage controller identity (0.1939ms)
+✔ partition preserves every Float32 triangle and shared seam exactly once (1.6659ms)
+✔ editor source ranges survive a source group split across geographic tiles (0.326ms)
+✔ surface and paint groups retain separate contact policy and finite payloads (1.0754ms)
+✔ accepts raw-packet-addressed tiles whose tile hash differs from global build ID (12.7579ms)
+✔ rejects a tile whose content-addressed filename does not match its raw packet hash (7.9106ms)
+✔ rejects stale source build identity (6.1522ms)
+✔ accepts conservative bounds that contain all decoded geometry (7.4179ms)
+✔ compiler fingerprint normalizes Windows line endings across deployments (12.2821ms)
+✔ startup modules bypass older cache entries while actor preload and install share imports (6.4408ms)
+ℹ tests 35
+ℹ suites 0
+ℹ pass 35
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 145.7884

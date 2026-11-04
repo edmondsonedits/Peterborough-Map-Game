@@ -76,6 +76,9 @@ jobs:
       - name: Check station controls, map navigation and in-place switching
         run: node --test tests/station-transition.test.mjs tests/station-selector-transition.test.cjs tests/station-switch-integration.test.cjs tests/mobile-station-menu.test.cjs tests/gameplay-camera.test.mjs tests/station-three-bay.test.mjs tests/station-one-selection.test.mjs tests/map-view.test.mjs tests/map-basemap.test.mjs tests/map-city-lod.test.mjs
 
+      - name: Check persistent fleet and rescue aerial
+        run: node --test tests/vehicle-fleet.test.mjs tests/fleet-selection.test.mjs tests/aerial-controller.test.mjs tests/apparatus-collision.test.mjs tests/aerial-runtime.test.mjs tests/fleet-assets.test.mjs
+
       - name: Stress deterministic EMS dispatch transitions
         run: |
           for pass in 1 2 3 4 5; do
