@@ -2,7 +2,7 @@ import {createVehicleFleet} from './vehicle-fleet.mjs';
 import {installFleetAsset} from './fleet-assets.js';
 import {vehicleFootprint,polygonsOverlap,sweepVehicle,segmentBoxHit} from './apparatus-collision.mjs';
 import {createAerialState} from './aerial-controller.mjs';
-export function createFleetRuntime({THREE,group,createTruck,spawns,initialId,prepare,activate,changed=()=>{},installModel=installFleetAsset}){
+export function createFleetRuntime({THREE,group,createTruck,spawns,initialId,prepare,activate,changed=()=>{},canSelect=()=>null,installModel=installFleetAsset}){
   const fleet=createVehicleFleet(spawns);let request=0,busy=false,error='';
   for(const entry of fleet.vehicles){
     const root=createTruck(THREE);entry.actor=root;root.name=entry.definition.name;root.userData.vehicleId=entry.definition.id;
@@ -22,6 +22,7 @@ export function createFleetRuntime({THREE,group,createTruck,spawns,initialId,pre
   function park(){const active=fleet.active;active.state.speed=0;active.state.acceleration=0;active.state.steering=0;if(active.aerial){active.aerial.flow=false;active.aerial.stopped=true;}}
   async function select(id){
     const entry=fleet.vehicles.find(v=>v.definition.id===id);if(!entry)return {ok:false,error:'Unknown vehicle'};
+    const reason=canSelect(entry);if(reason)return {ok:false,error:reason};
     const token=++request;park();busy=true;error='';changed();
     try{
       await prepare(entry,()=>token===request);
@@ -35,7 +36,7 @@ export function createFleetRuntime({THREE,group,createTruck,spawns,initialId,pre
     const body={min:{x:Math.min(...polygon.map(p=>p.x)),y,z:Math.min(...polygon.map(p=>p.z))},max:{x:Math.max(...polygon.map(p=>p.x)),y:y+(dimensions.height||1.8),z:Math.max(...polygon.map(p=>p.z))}};
     return fleet.vehicles.some(v=>{
       if(v.definition.id===excludeId)return false;
-      const size={...v.definition.tuning,width:v.definition.tuning.width+(v.aerial?.beams||0)*3.2};
+      const size={...v.definition.tuning,width:v.definition.tuning.width+(v.aerial?.beams||0)*2*(v.actor.userData.truck.metadata?.stabilizerBeamTravel??1.6)};
       if(Math.abs(y-v.state.y)<4&&polygonsOverlap(polygon,vehicleFootprint(v.state,size)))return true;
       return (v.actor.userData.aerialSegments||[]).some(([a,b,r])=>segmentBoxHit(a,b,body,r)!==null);
     });

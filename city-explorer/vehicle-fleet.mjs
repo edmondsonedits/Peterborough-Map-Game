@@ -3,8 +3,8 @@ import {TRUCK_TUNING} from './gameplay-systems.js';
 const definition=(id,name,station,type,changes={})=>Object.freeze({id,name,station,type,tuning:Object.freeze({...TRUCK_TUNING,...changes})});
 export const FLEET_DEFINITIONS=Object.freeze([
   definition('pump-1','Pump 1',1,'pumper'),definition('pump-2','Pump 2',2,'pumper'),definition('pump-3','Pump 3',3,'pumper'),
-  definition('aerial','Aerial',1,'aerial',{length:11.8,width:2.55,height:3.7,wheelbase:6.2,maximumForwardSpeed:85/3.6,forwardAcceleration:2.8,chaseDistance:13.5,chaseHeight:4.5}),
-  definition('medi','Medi',1,'medi',{length:6.5,width:2.35,height:2.7,wheelbase:3.8,trackWidth:1.95,maximumForwardSpeed:120/3.6,forwardAcceleration:5.5,steeringLowSpeed:.62,chaseDistance:8.5,chaseHeight:3}),
+  definition('aerial','Aerial',1,'aerial',{length:12.8,width:2.55,height:4.28,wheelbase:6.55,maximumForwardSpeed:85/3.6,forwardAcceleration:2.8,steeringLowSpeed:.41,steeringHighSpeed:.12,chaseDistance:15,chaseHeight:4.5}),
+  definition('medi','Medi',1,'medi',{length:6.5,width:2.35,height:2.7,wheelbase:3.8,trackWidth:1.95,maximumForwardSpeed:200/3.6,forwardAcceleration:6.2,serviceBrake:10,steeringLowSpeed:.62,steeringHighSpeed:.075,chaseDistance:8.5,chaseHeight:3}),
 ]);
 export function createVehicleFleet(spawns){
   const vehicles=FLEET_DEFINITIONS.map(definition=>{

@@ -4,16 +4,29 @@
   "forward": "-Z",
   "up": "+Y",
   "dimensions": {
-    "length": 6.7,
-    "width": 2.1,
-    "height": 2.6
+    "length": 7.2,
+    "width": 2.58,
+    "height": 2.9
   },
   "measuredBounds": {
-    "length": 6.7,
-    "width": 2.36,
-    "height": 2.59
+    "length": 7.2,
+    "width": 2.58,
+    "height": 2.9
   },
   "wheelbase": 4.07,
+  "cabClearance": {
+    "min": [
+      -1.0,
+      0.58,
+      -3.62
+    ],
+    "max": [
+      1.0,
+      2.62,
+      0.02
+    ]
+  },
+  "wheelRadius": 0.53,
   "wheelNodes": [
     "Wheel_FL",
     "Wheel_FR",
@@ -28,12 +41,12 @@
   ],
   "fourDoorCab": true,
   "fullyEnclosedCanopy": true,
-  "body": "Fire-red four-door pickup cab with a white enclosed equipment canopy and roll-up side lockers",
+  "body": "Fire-red crew-cab pickup with integrated molded wheel arches, grille guard, fitted charcoal equipment canopy, light rescue stripe and panel seams",
   "ambulance": false,
-  "source": "Original pickup cab/canopy with selectively reused generic pumper wheel and beacon meshes",
+  "source": "Original shaped pickup cab/canopy and wheel hubs with selectively reused generic pumper wheel and beacon meshes",
   "wheelSimplificationRatio": 0.3,
-  "commercialUse": "Project-created generic geometry and source project meshes; no external assets",
-  "triangles": 12044,
-  "drawCalls": 25,
-  "glbBytes": 766316
+  "commercialUse": "Project-created generic geometry and source project meshes",
+  "triangles": 21254,
+  "drawCalls": 35,
+  "glbBytes": 1314444
 }

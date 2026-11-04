@@ -8,9 +8,11 @@ const {GLTFLoader}=await import('../city-explorer/vendor/three-r180/examples/jsm
 const {prepareFleetAsset}=await import('../city-explorer/fleet-assets.js');
 const {applyAerialPose,createAerialRuntime}=await import('../city-explorer/aerial-runtime.js');
 const {createAerialState}=await import('../city-explorer/aerial-controller.mjs');
-async function load(){const bytes=await readFile(new URL('../city-explorer/assets/vehicles/aerial-platform.glb',import.meta.url));const {scene}=await new GLTFLoader().parseAsync(bytes.buffer.slice(bytes.byteOffset,bytes.byteOffset+bytes.byteLength),'');const model=prepareFleetAsset(scene,{},'aerial'),actor=new THREE.Group();actor.userData.truck=model;actor.add(scene);return {actor,state:{pitch:0,roll:0}};}
+async function load(){const bytes=await readFile(new URL('../city-explorer/assets/vehicles/aerial-platform.glb',import.meta.url));const {scene}=await new GLTFLoader().parseAsync(bytes.buffer.slice(bytes.byteOffset,bytes.byteOffset+bytes.byteLength),'');const metadata=JSON.parse(await readFile(new URL('../city-explorer/assets/vehicles/aerial-platform.json',import.meta.url),'utf8'));const model=prepareFleetAsset(scene,metadata,'aerial'),actor=new THREE.Group();actor.userData.truck=model;actor.add(scene);return {actor,state:{pitch:0,roll:0}};}
 test('basket stows at truck center and levels at raised rotated extended poses',async()=>{
  const e=await load(),s=createAerialState();applyAerialPose(THREE,e,s);const rig=e.actor.userData.truck.rig;
+ const bounds=new THREE.Box3().setFromObject(e.actor);
+ assert.ok(Math.abs(bounds.max.z+bounds.min.z)<.035,'the collision footprint is centered on the rendered bumpers');
  const basket=rig.Basket.getWorldPosition(new THREE.Vector3());assert.ok(Math.abs(basket.z)<2,JSON.stringify(basket));
  Object.assign(s,{fold:0,basketFold:0,pitch:.7,yaw:.8,extension:3,beams:1,jacks:1});applyAerialPose(THREE,e,s);
  const up=new THREE.Vector3(0,1,0).applyQuaternion(rig.Basket.getWorldQuaternion(new THREE.Quaternion()));assert.ok(up.distanceTo(new THREE.Vector3(0,1,0))<.001,JSON.stringify(up));
@@ -24,21 +26,67 @@ test('real controller and GLB can deploy on clear dry ground without throwing',a
  const dom=new JSDOM('<main id="app"><canvas></canvas></main>');globalThis.window=dom.window;globalThis.document=dom.window.document;t.after(()=>{dom.window.close();delete globalThis.window;delete globalThis.document;});
  const entry=await load();entry.aerial=createAerialState();entry.definition={tuning:{height:4.3,length:11.8,width:2.55}};entry.spawn={x:0,z:0};Object.assign(entry.state,{x:0,y:.035,z:0,heading:0,speed:0});entry.actor.position.y=.035;entry.actor.userData.truck.assetStatus='blender-ready';
  const scene=new THREE.Group();scene.add(entry.actor);
- let ground=0;
- const runtime=createAerialRuntime({THREE,scene,fleet:{fleet:{vehicles:[entry],active:entry}},gameState:{mode:'driving'},canvas:document.querySelector('canvas'),surface:()=>({height:ground}),ready:()=>true,inBay:()=>false,isWater:()=>false,obstacles:()=>[],toast:()=>{}});
- runtime.action({deploy:true});for(let i=0;i<400;i++)runtime.update(.04);
+ let ground=0,crossSlope=0,inBay=true;
+ const gameState={mode:'driving',gameplayYaw:0,gameplayPitch:0};
+ const rear=entry.actor.userData.truck.rig.RearOperator?.getWorldPosition(new THREE.Vector3())??new THREE.Vector3(0,0,7.05);
+ const player=rear.clone();player.y=.025;
+ const runtime=createAerialRuntime({THREE,scene,fleet:{fleet:{vehicles:[entry],active:entry}},gameState,canvas:document.querySelector('canvas'),surface:x=>({height:ground+x*crossSlope}),ready:()=>true,inBay:()=>inBay,isWater:()=>false,obstacles:()=>[],toast:()=>{},playerPosition:()=>player,placeOperator:p=>player.copy(p)});
+ assert.equal(runtime.action({deploy:true}),false,'the driver cannot extend the jacks from the cab');
+ gameState.mode='onFoot';player.x+=10;assert.equal(runtime.action({rear:true}),false);player.x-=10;
+ assert.equal(runtime.action({rear:true}),true);
+ assert.equal(runtime.action({board:true}),false);
+ runtime.action({deploy:true});for(let i=0;i<5;i++)runtime.update(.04);
+ assert.equal(entry.aerial.phase,'travel');
+ assert.match(entry.aerial.reason,/clear of the bay/i);
+ inBay=false;
+ runtime.action({deploy:true});for(let i=0;i<420;i++)runtime.update(.04);
  assert.equal(entry.aerial.phase,'operating',JSON.stringify({state:entry.aerial,debug:runtime.diagnostics()}));
- runtime.action({view:true});const nozzleCamera=runtime.cameraPose();
+ assert.ok(Math.abs(runtime.diagnostics().chassisLift-.14)<1e-6);
+ const model=entry.actor.userData.truck;
+ for(const side of ['FL','FR','RL','RR']){
+   const jack=model.rig[`Jack_${side}`];
+   const sole=jack.localToWorld(new THREE.Vector3(0,model.metadata.jackFootSole??-.06,0));
+   assert.ok(Math.abs(sole.y)<.005,JSON.stringify({side,sole}));
+   const piston=jack.children.find(node=>node.userData.fleetCylinder);
+   assert.ok(piston,'a telescoping piston must connect the pad to its housing');
+   const bottom=piston.localToWorld(new THREE.Vector3(0,-.5,0));
+   const top=piston.localToWorld(new THREE.Vector3(0,.5,0));
+   assert.ok(bottom.distanceTo(jack.getWorldPosition(new THREE.Vector3()))<.01&&top.y>bottom.y+.6);
+ }
+ assert.equal(runtime.action({board:true}),true);
  const floor=entry.actor.userData.truck.rig.Basket.getWorldPosition(new THREE.Vector3());
+ const eye=runtime.cameraPose();assert.ok(eye.position.y>floor.y+1.5&&eye.attached);
+ runtime.action({view:true});runtime.action({view:true});const nozzleCamera=runtime.cameraPose();
  assert.ok(nozzleCamera.position.y<floor.y,'nozzle camera must clear the basket floor and front wall');runtime.action({view:true});
+ assert.equal(runtime.action({stow:true}),false,'cannot stow with a player aboard');
+ runtime.handleKey({code:'KeyW',preventDefault(){}});
+ runtime.handleKey({code:'KeyE',preventDefault(){}});
+ for(let i=0;i<180;i++)runtime.update(.04);
+ runtime.releaseKey('KeyW');runtime.releaseKey('KeyE');
+ assert.ok(player.y>floor.y+9);
+ assert.ok(player.y>27,'the extended basket should reach a multi-storey height');
+ assert.equal(runtime.action({exit:true}),false,'cannot dismount aloft');
+ runtime.action({return:true});for(let i=0;i<420;i++)runtime.update(.04);
+ assert.equal(runtime.action({exit:true}),true);
+ assert.ok(Math.abs(player.y-ground-.025)<.005);
  runtime.action({stow:true});for(let i=0;i<600;i++)runtime.update(.04);assert.equal(entry.aerial.phase,'travel');
  ground=-.2;runtime.action({deploy:true});for(let i=0;i<400;i++)runtime.update(.04);
  assert.equal(entry.aerial.phase,'operating','telescoping jacks accommodate an ordinary curb-height difference');
  runtime.action({stow:true});for(let i=0;i<600;i++)runtime.update(.04);
+ ground=0;crossSlope=.035;entry.state.roll=.035;applyAerialPose(THREE,entry,entry.aerial);
+ runtime.action({deploy:true});for(let i=0;i<420;i++)runtime.update(.04);
+ assert.equal(entry.aerial.phase,'operating');
+ assert.ok(Math.abs(entry.actor.rotation.z)<.001);
+ for(const side of ['FL','FR','RL','RR']){
+   const sole=model.rig[`Jack_${side}`].localToWorld(new THREE.Vector3(0,model.metadata.jackFootSole??-.06,0));
+   assert.ok(Math.abs(sole.y-crossSlope*sole.x)<.005,'each foot meets the sloped surface');
+ }
+ runtime.action({stow:true});for(let i=0;i<600;i++)runtime.update(.04);
+ crossSlope=0;entry.state.roll=0;applyAerialPose(THREE,entry,entry.aerial);
  ground=-.6;runtime.action({deploy:true});runtime.update(.04);
  assert.equal(entry.aerial.phase,'travel','setup must reject contacts beyond the real jack stroke');
  assert.match(entry.aerial.reason,/travel/i);
- ground=-.30;entry.actor.rotation.z=5*Math.PI/180;entry.state.roll=5*Math.PI/180;applyAerialPose(THREE,entry,entry.aerial);
+ ground=-.40;entry.actor.rotation.z=5*Math.PI/180;entry.state.roll=5*Math.PI/180;applyAerialPose(THREE,entry,entry.aerial);
  runtime.action({deploy:true});runtime.update(.04);
  assert.equal(entry.aerial.phase,'travel','rolled chassis must validate stroke at fully extended beam, not retracted beam');
 });

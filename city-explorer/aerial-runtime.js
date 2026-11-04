@@ -1,16 +1,38 @@
-import {stepAerial,aerialTravelReady,AERIAL_LIMITS} from './aerial-controller.mjs';
+import {stepAerial,aerialTravelReady,aerialBoardingReady,AERIAL_LIMITS} from './aerial-controller.mjs';
 import {segmentBoxHit,vehicleFootprint} from './apparatus-collision.mjs';
 
 const keys={KeyW:['raise',1],KeyS:['raise',-1],KeyA:['rotate',1],KeyD:['rotate',-1],KeyE:['extend',1],KeyQ:['extend',-1],ArrowLeft:['nozzleYaw',1],ArrowRight:['nozzleYaw',-1],ArrowUp:['nozzlePitch',1],ArrowDown:['nozzlePitch',-1],Space:['flow',true]};
 const ends=['FL','FR','RL','RR'];
+const upAxis=[0,1,0];
+const sideFor=index=>index%2===0?-1:1;
+const beamTravel=model=>model.metadata?.stabilizerBeamTravel??1.6;
+const footSole=model=>model.metadata?.jackFootSole??-.06;
+
+function setChassisPose(entry,lift,liftHeight=AERIAL_LIMITS.lift){
+  const {actor,state}=entry;
+  actor.position.y=(state.y||0)+lift*liftHeight;
+  actor.rotation.set((state.pitch||0)*(1-lift),state.heading||0,(state.roll||0)*(1-lift),'YXZ');
+  actor.updateMatrixWorld(true);
+}
+
+function strokeToGround(THREE,model,beam,jack,height,extraX=0){
+  const rest=jack.userData.fleetRest.position.clone();
+  rest.x+=extraX;
+  rest.y+=footSole(model);
+  const sole=beam.localToWorld(rest);
+  const up=new THREE.Vector3(...upAxis).transformDirection(beam.matrixWorld);
+  return (sole.y-height)/up.y;
+}
 export function applyAerialPose(THREE,entry,s){
-  const rig=entry.actor.userData.truck.rig;if(!rig?.TurntableYaw)return;
+  const model=entry.actor.userData.truck,rig=model.rig;if(!rig?.TurntableYaw)return;
+  setChassisPose(entry,s.lift||0,s.liftHeight);
   rig.TurntableYaw.rotation.y=s.yaw;
   rig.LadderPitch.rotation.x=s.pitch;
-  for(const index of [2,3]){const n=rig[`LadderSection_${index}`];n.position.z=n.userData.fleetRest.position.z-s.extension;}
+  for(const section of model.ladderSections){
+    const node=rig[section.node];
+    node.position.z=node.userData.fleetRest.position.z-section.travel*(s.extension/AERIAL_LIMITS.extension);
+  }
   rig.KnuckleFold.rotation.x=s.fold*Math.PI;
-  rig.BasketLevel.rotation.x=-(s.pitch+s.fold*Math.PI+(entry.state.pitch||0));
-  rig.BasketLevel.rotation.z=-(entry.state.roll||0);
   rig.BasketFold.rotation.x=s.basketFold*Math.PI/2;
   rig.MonitorYaw.rotation.y=s.nozzleYaw;
   rig.MonitorPitch.rotation.x=s.nozzlePitch;
@@ -19,14 +41,12 @@ export function applyAerialPose(THREE,entry,s){
   const levelRotation=new THREE.Quaternion().setFromAxisAngle(new THREE.Vector3(0,1,0),(entry.state.heading||0)+s.yaw);
   rig.BasketLevel.quaternion.copy(parentRotation.invert().multiply(levelRotation));
   for(let i=0;i<4;i++){
-    const beam=rig[`Outrigger_${ends[i]}`],jack=rig[`Jack_${ends[i]}`],sign=i%2===0?-1:1;
-    beam.position.x=beam.userData.fleetRest.position.x+sign*s.beams*1.6;
+    const beam=rig[`Outrigger_${ends[i]}`],jack=rig[`Jack_${ends[i]}`];
+    beam.position.x=beam.userData.fleetRest.position.x+sideFor(i)*s.beams*beamTravel(model);
     beam.updateWorldMatrix(true,false);
     const rest=jack.userData.fleetRest.position;
-    const restCenter=beam.localToWorld(rest.clone());
-    const up=new THREE.Vector3(0,1,0).transformDirection(beam.matrixWorld);
-    const ground=entry.state.y+(s.feet[i]||0);
-    const stroke=Math.max(0,Math.min(AERIAL_LIMITS.jackStroke,(restCenter.y-ground-.06)/Math.max(.5,up.y)));
+    const ground=(entry.state.y||0)+(s.feet[i]||0);
+    const stroke=Math.max(0,Math.min(AERIAL_LIMITS.jackStroke,strokeToGround(THREE,model,beam,jack,ground)));
     jack.position.y=rest.y-s.jacks*stroke;
     const piston=jack.children.find(n=>n.isMesh&&n.name.startsWith('Hydraulic_ram'))||jack.children.find(n=>n.isMesh&&n.name.startsWith('Hydraulic ram'));
     if(piston){
@@ -46,9 +66,9 @@ export function applyAerialPose(THREE,entry,s){
   }
 }
 
-export function createAerialRuntime({THREE,scene,fleet,gameState,canvas,surface,ready,inBay,isWater,obstacles,toast}){
+export function createAerialRuntime({THREE,scene,fleet,gameState,canvas,surface,ready,inBay,isWater,obstacles,toast,playerPosition,placeOperator}){
   const entry=fleet.fleet.vehicles.find(v=>v.aerial),s=entry.aerial;
-  const input={},held=new Map();let mode=false,pending={},boxes=[],boxTime=-Infinity,lastBlocked=null,nozzleView=false;
+  const input={},held=new Map();let station=null,pending={},boxes=[],boxTime=-Infinity,lastBlocked=null,view='basket',boardingHeading=0,travelPoseReady=false;
   const point=new THREE.Vector3(),end=new THREE.Vector3(),direction=new THREE.Vector3();
   const group=new THREE.Group();group.name='Aerial_Water';scene.add(group);
   const points=new Float32Array(65*3),geometry=new THREE.BufferGeometry();geometry.setAttribute('position',new THREE.BufferAttribute(points,3));
@@ -57,47 +77,123 @@ export function createAerialRuntime({THREE,scene,fleet,gameState,canvas,surface,
   jet.frustumCulled=false;jet.instanceMatrix.setUsage(THREE.DynamicDrawUsage);group.add(jet);const jetPart=new THREE.Object3D();
   const impact=new THREE.Mesh(new THREE.SphereGeometry(.22,10,6),new THREE.MeshBasicMaterial({color:0xe5faff,transparent:true,opacity:.5}));impact.scale.set(1,.4,1);group.add(impact);group.visible=false;
 
-  const panel=document.createElement('details');panel.id='aerial-controls';panel.hidden=true;panel.open=false;
-  panel.innerHTML='<summary>Aerial</summary><div class="aerial-actions"><button type="button" data-action="mode">Operate</button><button type="button" data-action="deploy">Stabilize</button><button type="button" data-action="stow">Stow</button><button type="button" data-action="stop">Stop</button><button type="button" data-action="refill">Refill</button><button type="button" data-action="view">Nozzle view</button></div><output aria-live="polite"></output><div class="aerial-holds"></div><small>W/S raise · A/D rotate · Q/E telescope · arrows aim · Space water</small>';
+  const prompt=document.createElement('button');prompt.type='button';prompt.id='aerial-rear-prompt';
+  prompt.innerHTML='<kbd>E</kbd><span>Rear aerial controls</span>';prompt.hidden=true;
+  const panel=document.createElement('section');panel.id='aerial-controls';panel.hidden=true;panel.setAttribute('aria-label','Aerial controls');
+  panel.innerHTML=`<header><div><span class="aerial-eyebrow">Aerial 1</span><h2>Rear controls</h2></div><button type="button" data-action="leave" aria-label="Leave rear controls">×</button></header>
+    <output aria-live="polite"></output>
+    <div class="aerial-readouts"></div>
+    <div class="aerial-actions">
+      <button type="button" data-action="deploy">Extend &amp; level</button>
+      <button type="button" data-action="board">Climb into basket</button>
+      <button type="button" data-action="return">Return to boarding</button>
+      <button type="button" data-action="takeControl">Manual control</button>
+      <button type="button" data-action="exit">Exit basket</button>
+      <button type="button" data-action="stow">Stow apparatus</button>
+      <button type="button" data-action="refill">Refill water</button>
+      <button type="button" data-action="view">Change view</button>
+      <button type="button" data-action="resume">Resume</button>
+      <button type="button" data-action="stop">Stop</button>
+    </div>
+    <div class="aerial-holds"></div><small>W/S raise · A/D rotate · Q/E telescope · arrows aim · Space water · X return or exit</small>`;
   const controls=panel.querySelector('.aerial-holds');
   for(const [label,axis,value] of [['Raise','raise',1],['Lower','raise',-1],['Rotate left','rotate',1],['Rotate right','rotate',-1],['Extend','extend',1],['Retract','extend',-1],['Aim left','nozzleYaw',1],['Aim right','nozzleYaw',-1],['Aim up','nozzlePitch',1],['Aim down','nozzlePitch',-1],['Water','flow',true]]){
     const b=document.createElement('button');b.type='button';b.textContent=label;b.dataset.axis=axis;controls.append(b);
-    b.onpointerdown=e=>{e.preventDefault();if(Math.abs(entry.state.speed)>.1){toast('Stop before operating the aerial');return;}if(!mode)mode=true;b.setPointerCapture(e.pointerId);held.set(b,[axis,value]);b.classList.add('is-held');rebuild();};
+    b.onpointerdown=e=>{if(b.disabled||station!=='basket')return;e.preventDefault();b.setPointerCapture(e.pointerId);held.set(b,[axis,value]);b.classList.add('is-held');rebuild();};
+    b.onkeydown=e=>{if(e.code==='Enter'&&!b.disabled&&station==='basket'){e.preventDefault();held.set(b,[axis,value]);b.classList.add('is-held');rebuild();}};
+    b.onkeyup=e=>{if(e.code==='Enter')release();};b.onblur=()=>release();
     const release=()=>{held.delete(b);b.classList.remove('is-held');rebuild();};b.onpointerup=release;b.onpointercancel=release;b.onlostpointercapture=release;
   }
-  const output=panel.querySelector('output');
-  document.getElementById('app').append(panel);
-  const css=document.createElement('link');css.rel='stylesheet';css.href=new URL('./fleet.css',import.meta.url).href;document.head.append(css);
+  const output=panel.querySelector('output'),title=panel.querySelector('h2'),readouts=panel.querySelector('.aerial-readouts');
+  const buttons=Object.fromEntries([...panel.querySelectorAll('[data-action]')].map(b=>[b.dataset.action,b]));
+  document.getElementById('app').append(prompt,panel);
+  const css=document.createElement('link');css.rel='stylesheet';css.href=new URL('./fleet.css?rev=2',import.meta.url).href;document.head.append(css);
   function rebuild(){for(const k of Object.keys(input))delete input[k];for(const [axis,v] of held.values())input[axis]=v;}
   function clearInput(){held.clear();rebuild();pending={};s.flow=false;group.visible=false;panel.querySelectorAll('.is-held').forEach(n=>n.classList.remove('is-held'));}
-  function action(value){
-    if(!active())return;
-    panel.open=true;
-    if(value.view){nozzleView=!nozzleView;return;}
-    if(Math.abs(entry.state.speed)>.1&&(value.mode||value.deploy)){toast('Stop before operating the aerial');return;}
-    if(value.mode){mode=!mode;clearInput();}else{mode=true;pending={...pending,...value};if(value.stop){clearInput();pending={stop:true};}}
-    canvas.focus({preventScroll:true});
+  function onFoot(){return gameState.mode==='onFoot';}
+  function rearPosition(){
+    const rear=entry.actor.userData.truck.rig?.RearOperator;
+    const ground=rear?rear.getWorldPosition(new THREE.Vector3()):entry.actor.localToWorld(new THREE.Vector3(0,0,entry.definition.tuning.length/2+1.15));
+    ground.y=surface(ground.x,ground.z).height+.025;
+    return ground;
   }
-  panel.querySelectorAll('[data-action]').forEach(b=>b.onclick=()=>action({[b.dataset.action]:true}));
-  window.addEventListener('blur',clearInput);document.addEventListener('visibilitychange',()=>{if(document.hidden)clearInput();});
-  window.addEventListener('ptbo:vehicle-selected',()=>{clearInput();mode=false;});
-  panel.addEventListener('toggle',()=>{if(!panel.open){clearInput();mode=false;if(s.phase!=='travel')s.stopped=true;}});
-  function active(){return fleet.fleet.active===entry&&gameState.mode==='driving';}
+  function nearRear(){
+    const pos=playerPosition();
+    if(!onFoot()||!pos||entry.actor.userData.truck.assetStatus!=='blender-ready'||Math.abs(entry.state.speed)>.1)return false;
+    const rear=rearPosition();
+    return Math.hypot(pos.x-rear.x,pos.z-rear.z)<1.65&&Math.abs(pos.y-rear.y)<1.4;
+  }
+  function basketPosition(){
+    const rig=entry.actor.userData.truck.rig;
+    return (rig.BasketStand??rig.Basket).getWorldPosition(new THREE.Vector3());
+  }
+  function dismiss(){
+    clearInput();station=null;view='basket';panel.hidden=true;prompt.hidden=true;
+    document.documentElement.classList.remove('aerial-operating','aerial-near-rear');
+  }
+  function action(value){
+    if(!onFoot()||document.querySelector('dialog[open]'))return false;
+    if(value.rear&&nearRear()){
+      station='rear';clearInput();placeOperator(rearPosition(),entry.state.heading);
+    }else if(value.leave&&station==='rear'){
+      dismiss();
+    }else if(value.board&&station==='rear'&&aerialBoardingReady(s)&&!s.stopped){
+      clearInput();station='basket';view='basket';boardingHeading=entry.state.heading;
+      gameState.gameplayYaw=boardingHeading;gameState.gameplayPitch=-.37;
+      placeOperator(basketPosition(),boardingHeading);
+    }else if(value.exit&&station==='basket'&&aerialBoardingReady(s)){
+      const rear=rearPosition();refreshBoxes(true);
+      if(!rearPadClear(rear)){
+        toast('Rear access is blocked');return false;
+      }
+      clearInput();station='rear';placeOperator(rear,entry.state.heading);
+      gameState.gameplayYaw=entry.state.heading;gameState.gameplayPitch=-.16;
+    }else if(value.view&&station==='basket'){
+      view=view==='basket'?'overview':view==='overview'?'nozzle':'basket';
+    }else if(station&&(value.stop||value.resume)){
+      clearInput();pending=value.stop?{stop:true}:{resume:true};
+    }else if(station==='rear'&&(value.deploy||value.stow||value.refill)){
+      clearInput();pending=value;
+    }else if(station==='basket'&&(value.return||value.takeControl)){
+      clearInput();pending=value;
+    }else return false;
+    canvas.focus({preventScroll:true});
+    return true;
+  }
+  prompt.onclick=()=>action({rear:true});
+  Object.entries(buttons).forEach(([name,b])=>b.onclick=()=>action({[name]:true}));
+  window.addEventListener('blur',clearInput);
+  document.addEventListener('visibilitychange',()=>{if(document.hidden)clearInput();});
+  window.addEventListener('ptbo:vehicle-selected',()=>{
+    if(s.phase!=='travel')s.stopped=true;
+    dismiss();
+  });
   function refreshBoxes(force=false){if(force||performance.now()-boxTime>2000){boxes=obstacles(entry.state);boxTime=performance.now();}}
   function solidBoxes(){
     const result=[...boxes];
     for(const other of fleet.fleet.vehicles)if(other!==entry){const corners=vehicleFootprint(other.state,other.definition.tuning);result.push({min:{x:Math.min(...corners.map(p=>p.x)),y:other.state.y,z:Math.min(...corners.map(p=>p.z))},max:{x:Math.max(...corners.map(p=>p.x)),y:other.state.y+other.definition.tuning.height,z:Math.max(...corners.map(p=>p.z))}});}
     return result;
   }
+  function rearPadClear(rear,solids=solidBoxes()){
+    if(!ready(rear.x,rear.z)||isWater(rear.x,rear.z))return false;
+    const head=rear.clone();head.y+=2.1;
+    return !solids.some(box=>segmentBoxHit(rear,head,box,.34)!==null)&&
+      !fleet.blocked?.({...rear,heading:0},{length:.65,width:.65},entry.definition.id);
+  }
   function rigSegments(){
     const rig=entry.actor.userData.truck.rig,result=[];
-    for(let i=1;i<=4;i++){const node=rig[`LadderSection_${i}`];point.set(0,0,0);node.localToWorld(point);end.set(0,0,i===4?-3.2:-5.6);node.localToWorld(end);result.push([point.clone(),end.clone(),.27]);}
+    for(const section of entry.actor.userData.truck.ladderSections){
+      const node=rig[section.node];
+      node.localToWorld(point.set(0,0,0));node.localToWorld(end.set(0,0,-section.length));
+      result.push([point.clone(),end.clone(),section.radius??.27]);
+    }
     const basket=rig.Basket;point.set(0,.5,0);basket.localToWorld(point);end.copy(point);end.y+=.25;result.push([point.clone(),end.clone(),.8]);
     return result;
   }
   function poseClear(pose,solids){
     applyAerialPose(THREE,entry,pose);
     const segments=rigSegments();
+    const cab=entry.actor.userData.truck.cabClearance??{min:{x:-1.35,z:-5.8},max:{x:1.35,y:3.2,z:-.95}};
     for(const [a,b,radius] of segments){
       const solid=solids.find(box=>segmentBoxHit(a,b,box,radius)!==null);
       if(solid){lastBlocked={kind:'solid',a:a.toArray(),b:b.toArray(),box:{min:solid.min,max:solid.max}};return false;}
@@ -107,47 +203,81 @@ export function createAerialRuntime({THREE,scene,fleet,gameState,canvas,surface,
         // Conservative cab clearance; all parts of every section are sampled.
         const p=entry.actor.worldToLocal(new THREE.Vector3(x,y,z));
         const halfHeight=radius>.5?radius:.1;
-        if(Math.abs(p.x)<1.35+radius&&p.z<-.95&&p.z>-5.8&&p.y<3.2+halfHeight){lastBlocked={kind:'cab',local:p.toArray()};return false;}
+        if(p.x>cab.min.x-radius&&p.x<cab.max.x+radius&&p.z<cab.max.z&&p.z>cab.min.z&&p.y<cab.max.y+halfHeight){lastBlocked={kind:'cab',local:p.toArray()};return false;}
       }
     }
     return true;
   }
   function motion(a,b){
     const rig=entry.actor.userData.truck.rig;if(!rig?.TurntableYaw)return false;
-    if(a.pitch===b.pitch&&a.yaw===b.yaw&&a.fold===b.fold&&a.basketFold===b.basketFold&&a.extension===b.extension)return true;
+    if(a.lift===b.lift&&a.pitch===b.pitch&&a.yaw===b.yaw&&a.fold===b.fold&&a.basketFold===b.basketFold&&a.extension===b.extension)return true;
     refreshBoxes();const solids=solidBoxes();
-    const steps=Math.max(1,Math.ceil((Math.abs(a.pitch-b.pitch)*25+Math.abs(a.yaw-b.yaw)*25+Math.abs(a.fold-b.fold)*Math.PI*4+Math.abs(a.basketFold-b.basketFold)*2+Math.abs(a.extension-b.extension)*2)/.12));
+    const steps=Math.max(1,Math.ceil((Math.abs(a.pitch-b.pitch)*33+Math.abs(a.yaw-b.yaw)*33+Math.abs(a.fold-b.fold)*Math.PI*4+Math.abs(a.basketFold-b.basketFold)*2+Math.abs(a.extension-b.extension)*4+Math.abs(a.lift-b.lift)*.8)/.12));
     let ok=true;
-    for(let i=1;i<=steps;i++){const t=i/steps,pose={...a};for(const k of ['pitch','yaw','fold','basketFold','extension'])pose[k]=a[k]+(b[k]-a[k])*t;if(!poseClear(pose,solids)){ok=false;break;}}
+    for(let i=1;i<=steps;i++){
+      const t=i/steps,pose={...a};
+      for(const k of ['pitch','yaw','fold','basketFold','extension','lift'])pose[k]=a[k]+(b[k]-a[k])*t;
+      if(!poseClear(pose,solids)){ok=false;break;}
+      if(b.lift>a.lift){
+        const bounds=new THREE.Box3().setFromObject(entry.actor);
+        if(solids.some(box=>bounds.intersectsBox(box))){
+          lastBlocked={kind:'chassis-lift',bounds:{min:bounds.min,max:bounds.max}};ok=false;break;
+        }
+      }
+    }
     applyAerialPose(THREE,entry,a);return ok;
   }
   function setup(){
     if(entry.actor.userData.truck.assetStatus!=='blender-ready')return {ok:false,reason:'Aerial model is not ready'};
     if(inBay(entry.state))return {ok:false,reason:'Drive clear of the bay before stabilizing'};
     refreshBoxes(true);
-    const positions=ends.map((_,i)=>new THREE.Vector3(i%2===0?-2.75:2.75,0,i<2?-3.75:3.45));
-    const feet=[],heights=[];
-    for(const [i,p] of positions.entries()){entry.actor.localToWorld(p);if(!ready(p.x,p.z)||isWater(p.x,p.z))return {ok:false,reason:'Supported dry ground required'};
-      const height=surface(p.x,p.z).height;heights.push(height);feet.push(height-entry.state.y);
-      if(Math.abs(height-entry.state.y)>.42)return {ok:false,reason:'Ground exceeds stabilizer travel'};
-      const beam=entry.actor.userData.truck.rig[`Outrigger_${ends[i]}`],jack=entry.actor.userData.truck.rig[`Jack_${ends[i]}`];
-      const deployedRest=jack.userData.fleetRest.position.clone();
-      deployedRest.x+=(i%2===0?-1:1)*1.6*(1-s.beams);
-      const restCenter=beam.localToWorld(deployedRest);
+    const model=entry.actor.userData.truck,rig=model.rig,solids=solidBoxes();
+    if(!rearPadClear(rearPosition(),solids))return {ok:false,reason:'Rear access is blocked'};
+    const feet=[],contacts=[];
+    for(let i=0;i<ends.length;i++){
+      const beam=rig[`Outrigger_${ends[i]}`],jack=rig[`Jack_${ends[i]}`];
+      const extraX=sideFor(i)*beamTravel(model)*(1-s.beams);
+      const p=jack.userData.fleetRest.position.clone();p.x+=extraX;p.y+=footSole(model);beam.localToWorld(p);
       const up=new THREE.Vector3(0,1,0).transformDirection(beam.matrixWorld);
-      const requiredStroke=(restCenter.y-height-.06)/Math.max(.5,up.y);
-      if(requiredStroke<-.01||requiredStroke>AERIAL_LIMITS.jackStroke)return {ok:false,reason:'Ground exceeds stabilizer travel'};
-      if(solidBoxes().some(box=>segmentBoxHit({...p,y:height+.1},{...p,y:entry.state.y+1.7},box,.4)!==null))return {ok:false,reason:'Stabilizer space is blocked'};
-      const center=new THREE.Vector3(0,1,i<2?-3.75:3.45);entry.actor.localToWorld(center);
-      if(solidBoxes().some(box=>segmentBoxHit(center,{x:p.x,y:entry.state.y+1,z:p.z},box,.25)!==null))return {ok:false,reason:'Stabilizer space is blocked'};
+      // Sample under the pad's projected ground contact rather than under its housing.
+      let height=surface(p.x,p.z).height;
+      for(let j=0;j<3;j++){
+        const distance=(p.y-height)/up.y;
+        height=surface(p.x-up.x*distance,p.z-up.z*distance).height;
+      }
+      const foot=p.clone().addScaledVector(up,-(p.y-height)/up.y);
+      if(!ready(foot.x,foot.z)||isWater(foot.x,foot.z))return {ok:false,reason:'Supported dry ground required'};
+      if(Math.abs(height-entry.state.y)>.42)return {ok:false,reason:'Ground exceeds stabilizer travel'};
+      feet.push(height-entry.state.y);contacts.push({beam,jack,height,extraX});
+      const center=beam.localToWorld(new THREE.Vector3(-beam.position.x,.2,0));
+      if(solids.some(box=>segmentBoxHit(foot,p,box,.37)!==null||segmentBoxHit(center,p,box,.28)!==null))
+        return {ok:false,reason:'Stabilizer space is blocked'};
     }
-    if(Math.max(...heights)-Math.min(...heights)>Math.tan(5*Math.PI/180)*5.5)return {ok:false,reason:'Ground is too steep'};
-    // Validate the complete unfold path before deploying; no partly trapped platform.
-    const start={...s};let valid=true;
-    for(let i=1;i<=20;i++){const t=i/20,pose={...s,pitch:.4*t,fold:1};if(!poseClear(pose,solidBoxes())){valid=false;break;}}
-    applyAerialPose(THREE,entry,start);
-    if(!valid)return {ok:false,reason:'Overhead space is blocked'};
-    return {ok:true,feet};
+    if(Math.max(...feet)-Math.min(...feet)>Math.tan(5*Math.PI/180)*5.5||
+        Math.max(Math.abs(entry.state.pitch||0),Math.abs(entry.state.roll||0))>5*Math.PI/180)
+      return {ok:false,reason:'Ground is too steep'};
+    // Leave tire clearance on the high side as the suspension levels.
+    setChassisPose(entry,1,0);
+    const wheelRadius=model.metadata?.wheelRadius??.56;
+    const rise=Math.max(AERIAL_LIMITS.lift,...model.wheels.map(({pivot})=>{
+      const center=pivot.getWorldPosition(new THREE.Vector3());
+      return surface(center.x,center.z).height+wheelRadius+.055-center.y;
+    }));
+    if(rise>AERIAL_LIMITS.maxLift){applyAerialPose(THREE,entry,s);return {ok:false,reason:'Ground is too uneven to level'};}
+    for(const lift of [0,.5,1]){
+      setChassisPose(entry,lift,rise);
+      const reachable=contacts.every(({beam,jack,height,extraX})=>{
+        const stroke=strokeToGround(THREE,model,beam,jack,height,extraX);
+        return stroke>=0&&stroke<=AERIAL_LIMITS.jackStroke;
+      });
+      if(!reachable){applyAerialPose(THREE,entry,s);return {ok:false,reason:'Ground exceeds stabilizer travel'};}
+    }
+    // Validate the boarding sequence before committing the stabilizers.
+    const stable={...s,feet,beams:1,jacks:1,lift:1,liftHeight:rise},raised={...stable,pitch:AERIAL_LIMITS.boardingPitch};
+    const unfolded={...raised,fold:0};
+    const valid=motion({...stable,lift:0},stable)&&motion(stable,raised)&&motion(raised,unfolded)&&motion(unfolded,{...unfolded,basketFold:0});
+    applyAerialPose(THREE,entry,s);
+    return valid?{ok:true,feet,liftHeight:rise}:{ok:false,reason:'Overhead space is blocked'};
   }
   function updateWater(){
     group.visible=s.flow;if(!s.flow)return;
@@ -161,7 +291,7 @@ export function createAerialRuntime({THREE,scene,fleet,gameState,canvas,surface,
       for(const box of solids){const h=segmentBoxHit(previous,next,box);if(h!==null)nearest=Math.min(nearest,h);}
       // Stop on the emitting truck too, e.g. aiming vertically down through its body.
       const localA=entry.actor.worldToLocal(previous.clone()),localB=entry.actor.worldToLocal(next.clone());
-      const bodyHit=segmentBoxHit(localA,localB,{min:{x:-1.3,y:0,z:-5.8},max:{x:1.3,y:2.5,z:5.8}});if(bodyHit!==null)nearest=Math.min(nearest,bodyHit);
+      const bodyHit=segmentBoxHit(localA,localB,{min:{x:-1.3,y:0,z:-entry.definition.tuning.length/2},max:{x:1.3,y:2.5,z:entry.definition.tuning.length/2}});if(bodyHit!==null)nearest=Math.min(nearest,bodyHit);
       let groundHit=null;
       for(let j=1;j<=4;j++){const f=j/4,q=previous.clone().lerp(next,f);if(surface(q.x,q.z).height>=q.y){groundHit=f;break;}}
       if(groundHit!==null)nearest=Math.min(nearest,groundHit);
@@ -173,34 +303,91 @@ export function createAerialRuntime({THREE,scene,fleet,gameState,canvas,surface,
     geometry.setDrawRange(0,used);geometry.attributes.position.needsUpdate=true;jet.count=used-1;jet.instanceMatrix.needsUpdate=true;impact.visible=hit;impact.position.copy(last);
   }
   function update(delta){
-    panel.hidden=!active();const rig=entry.actor.userData.truck.rig;
-    document.documentElement.classList.toggle('aerial-operating',active()&&mode);
+    if(station&&!onFoot())dismiss();
+    if(station==='rear'&&!nearRear())dismiss();
+    const rig=entry.actor.userData.truck.rig,bucket=station==='basket',rear=station==='rear';
+    panel.hidden=!station;prompt.hidden=Boolean(station)||!nearRear();
+    document.documentElement.classList.toggle('aerial-operating',Boolean(station));
+    document.documentElement.classList.toggle('aerial-near-rear',!prompt.hidden);
     if(!rig?.TurntableYaw)return;
-    if(active()){
-      if(document.querySelector('dialog[open]')||!panel.open)clearInput();
-      const home=Math.hypot(entry.state.x-entry.spawn.x,entry.state.z-entry.spawn.z)<4;
-      stepAerial(s,{...(mode?input:{}),...pending},delta,{speed:entry.state.speed,atHome:home,setup,motion});pending={};
-    }else{s.flow=false;}
-    applyAerialPose(THREE,entry,s);
-    entry.actor.userData.aerialSegments=s.phase==='travel'?[]:rigSegments();
+    if(document.querySelector('dialog[open]'))clearInput();
+    const home=Math.hypot(entry.state.x-entry.spawn.x,entry.state.z-entry.spawn.z)<4;
+    if(s.phase!=='travel'||station){
+      stepAerial(s,{...(bucket?input:{}),...pending},delta,{speed:entry.state.speed,atHome:home,occupied:bucket,setup,motion});
+      pending={};
+    }
+    if(s.phase!=='travel'||!travelPoseReady)applyAerialPose(THREE,entry,s);
+    travelPoseReady=s.phase==='travel';
+    entry.actor.userData.aerialSegments=travelPoseReady?[]:rigSegments();
+    if(bucket)placeOperator(basketPosition(),entry.state.heading+s.yaw);
     updateWater();
-    const label=s.phase==='travel'?'Stowed':s.phase==='operating'?'Stabilized':s.phase;
-    output.textContent=`${label} · Water ${Math.ceil(s.supply/45*100)}%${s.stopped?' · Stopped':''}${s.reason?' · '+s.reason:''}`;
-    panel.querySelector('[data-action="mode"]').textContent=mode?'Drive controls':'Operate';
-    panel.querySelector('[data-action="deploy"]').textContent=s.stopped&&s.phase!=='travel'?'Resume':'Stabilize';
-    panel.querySelector('[data-action="view"]').textContent=nozzleView?'Overview':'Nozzle view';
+    if(!station)return;
+
+    const canBoard=aerialBoardingReady(s);
+    const label={travel:'Stowed',deploying:s.beams<1?'Extending outriggers':s.jacks<1?'Lowering jacks':s.lift<1?'Leveling chassis':'Unfolding platform',
+      operating:canBoard?(bucket?'At boarding position':'Ready to board'):'Platform clear',returning:'Returning to boarding position',stowing:'Stowing apparatus'}[s.phase];
+    const message=s.reason||label;
+    if(output.textContent!==message)output.textContent=message;
+    const heading=bucket?'Basket controls':'Rear controls';
+    if(title.textContent!==heading)title.textContent=heading;
+    const height=rig.Basket.getWorldPosition(point).y-(entry.state.y||0);
+    const meters=Math.max(0,height);
+    const stats=bucket?`Height ${meters.toFixed(1)} m · Water ${Math.ceil(s.supply/AERIAL_LIMITS.supply*100)}%`:`Outriggers ${Math.round(s.beams*100)}% · ${s.lift===1?'Level':s.jacks===1?'Jacks grounded':s.jacks>0?'Lowering jacks':'Jacks up'}`;
+    if(readouts.textContent!==stats)readouts.textContent=stats;
+    buttons.leave.hidden=!rear;
+    buttons.deploy.hidden=!rear||s.phase!=='travel';
+    buttons.board.hidden=!rear||!canBoard||s.stopped;
+    buttons.stow.hidden=!rear||s.phase==='travel'||s.phase==='stowing';
+    buttons.refill.hidden=!rear||!home||s.phase!=='travel'||s.supply===AERIAL_LIMITS.supply;
+    buttons.return.hidden=!bucket||canBoard||s.phase==='returning';
+    buttons.takeControl.hidden=!bucket||s.phase!=='returning';
+    buttons.exit.hidden=!bucket||!canBoard;
+    buttons.view.hidden=!bucket;
+    const viewLabel=view==='basket'?'Overview':view==='overview'?'Nozzle view':'Basket view';
+    if(buttons.view.textContent!==viewLabel)buttons.view.textContent=viewLabel;
+    buttons.resume.hidden=!s.stopped||s.phase==='travel';
+    buttons.stop.hidden=s.stopped||s.phase==='travel';
+    controls.hidden=!bucket;
+    panel.querySelector('small').hidden=!bucket;
+    for(const button of controls.children)button.disabled=s.stopped||s.phase!=='operating';
   }
-  return {update,action,clearInput,locksDriving:()=>fleet.fleet.active===entry&&(!aerialTravelReady(s)||mode),
-    diagnostics:()=>({lastBlocked,mode,staticObstacleCount:boxes.length}),
+  return {update,action,clearInput,dismiss,atControls:()=>Boolean(station),aboard:()=>station==='basket',
+    locksDriving:()=>fleet.fleet.active===entry&&!aerialTravelReady(s),
+    diagnostics:()=>({lastBlocked,station,view,staticObstacleCount:boxes.length,
+      rear:entry.actor.userData.truck.rig?.RearOperator?rearPosition().toArray():null,
+      chassisLift:entry.actor.position.y-(entry.state.y||0),basket:entry.actor.userData.truck.rig?.Basket?.getWorldPosition(new THREE.Vector3()).toArray()}),
     cameraPose:()=>{
-      if(!active()||!mode||s.phase==='travel'||!entry.actor.userData.truck.rig?.NozzleOutlet)return null;
+      if(station!=='basket'||!onFoot())return null;
       const outlet=entry.actor.userData.truck.rig.NozzleOutlet;
-      if(nozzleView){const position=outlet.getWorldPosition(new THREE.Vector3());const aim=new THREE.Vector3(0,0,-1).transformDirection(outlet.matrixWorld);position.addScaledVector(aim,.4);return {position,target:position.clone().addScaledVector(aim,30)};}
-      const bounds=new THREE.Box3().setFromObject(entry.actor),target=bounds.getCenter(new THREE.Vector3()),size=bounds.getSize(new THREE.Vector3());
-      const distance=Math.max(18,size.length()*1.1),yaw=gameState.gameplayYaw;
-      return {position:target.clone().add(new THREE.Vector3(Math.sin(yaw)*distance,distance*.65,Math.cos(yaw)*distance)),target};
+      if(view==='nozzle'){
+        const position=outlet.getWorldPosition(new THREE.Vector3()),aim=new THREE.Vector3(0,0,-1).transformDirection(outlet.matrixWorld);
+        position.addScaledVector(aim,.4);return {position,target:position.clone().addScaledVector(aim,30),attached:true};
+      }
+      const yaw=gameState.gameplayYaw+entry.state.heading+s.yaw-boardingHeading;
+      const target=basketPosition();target.y+=1.05;
+      if(view==='overview'){
+        const height=Math.max(5,target.y-entry.actor.position.y),distance=8+height*.8;
+        target.y-=height*.34;
+        return {position:target.clone().add(new THREE.Vector3(Math.sin(yaw+.65)*distance,4+height*.42,Math.cos(yaw+.65)*distance)),target};
+      }
+      const position=basketPosition();position.y+=1.53;
+      position.x+=Math.sin(yaw)*.33;position.z+=Math.cos(yaw)*.33;
+      const pitch=gameState.gameplayPitch;
+      const aim=new THREE.Vector3(-Math.sin(yaw)*Math.cos(pitch),Math.sin(pitch),-Math.cos(yaw)*Math.cos(pitch));
+      return {position,target:position.clone().addScaledVector(aim,24),attached:true};
     },
-    handleKey(event){if(!active()||!mode||!keys[event.code])return false;event.preventDefault();held.set(event.code,keys[event.code]);rebuild();return true;},
+    handleKey(event){
+      if(!onFoot())return false;
+      let handled=false;
+      if(event.code==='KeyE'&&station!=='basket'&&!event.repeat)handled=action(station==='rear'?{leave:true}:{rear:true});
+      else if(event.code==='KeyX'&&station==='basket'&&!event.repeat)handled=action(aerialBoardingReady(s)?{exit:true}:{return:true});
+      else if(station==='basket'&&keys[event.code]){
+        if(!s.stopped&&s.phase==='operating'){held.set(event.code,keys[event.code]);rebuild();}
+        handled=true;
+      }
+      if(handled)event.preventDefault();
+      return handled;
+    },
     releaseKey(code){held.delete(code);rebuild();},
     nozzle:()=>entry.actor.userData.truck.rig?.NozzleOutlet,
   };

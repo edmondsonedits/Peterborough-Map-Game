@@ -1,7 +1,7 @@
 import {test} from 'node:test';
 import assert from 'node:assert/strict';
 import {createVehicleFleet,FLEET_DEFINITIONS} from '../city-explorer/vehicle-fleet.mjs';
-import {stepFireTruckKinematics} from '../city-explorer/gameplay-systems-1.6.69.js';
+import {stepFireTruckKinematics} from '../city-explorer/gameplay-systems.js';
 
 test('five independent vehicles retain exact poses across selections and fresh fleets reset',()=>{
   const spawns=Object.fromEntries(FLEET_DEFINITIONS.map((v,i)=>[v.id,{x:i*30,z:4,y:2,heading:.5}]));
@@ -18,10 +18,12 @@ test('medi tuning is faster and accelerates harder; pumper defaults unchanged',(
   assert.equal(by('pump-1').maximumForwardSpeed,27.5);
   assert.ok(by('medi').maximumForwardSpeed>by('pump-1').maximumForwardSpeed);
   assert.ok(by('medi').forwardAcceleration>by('pump-1').forwardAcceleration);
-  assert.ok(by('aerial').length>by('pump-1').length);
+  assert.ok(by('aerial').length>=12.8);
+  const radius=tuning=>tuning.wheelbase/Math.tan(tuning.steeringLowSpeed);
+  assert.ok(radius(by('aerial'))>1.4*radius(by('pump-1')));
 });
 test('the real driving integrator gives medi higher acceleration and road speed',()=>{
   const drive=id=>{const tuning=FLEET_DEFINITIONS.find(v=>v.id===id).tuning;let s={x:0,z:0,heading:0,speed:0};for(let i=0;i<1500;i++)s=stepFireTruckKinematics(s,{throttle:1,steering:0},.02,true,tuning);return s;};
   const pump=drive('pump-1'),medi=drive('medi'),aerial=drive('aerial');
-  assert.ok(medi.speed>pump.speed);assert.ok(Math.abs(medi.z)>Math.abs(pump.z));assert.ok(aerial.speed<pump.speed);
+  assert.equal(medi.speed*3.6,200);assert.ok(Math.abs(medi.z)>Math.abs(pump.z));assert.ok(aerial.speed<pump.speed);
 });

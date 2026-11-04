@@ -4,32 +4,67 @@
   "forward": "-Z",
   "up": "+Y",
   "dimensions": {
-    "length": 11.8,
+    "length": 12.97,
     "width": 2.55,
-    "height": 4.28
+    "height": 4.42
+  },
+  "cabClearance": {
+    "min": [
+      -1.18,
+      0.72,
+      -5.254
+    ],
+    "max": [
+      1.18,
+      3.05,
+      -1.145
+    ]
   },
   "pivotContract": {
     "TurntableYaw": {
       "position": [
         0,
         2.95,
-        4.4
+        4.796
       ]
     },
     "LadderPitch": {
       "rest": "0 rad, ladder axis -Z"
     },
-    "LadderSection_1..3": {
-      "restOffsetsZ": [
-        0,
-        -0.8,
-        -0.8
-      ],
-      "length": 5.6,
-      "maxStageShift": 4.8
-    },
+    "ladderSections": [
+      {
+        "node": "LadderSection_1",
+        "length": 5.6,
+        "travel": 0
+      },
+      {
+        "node": "LadderSection_2",
+        "length": 5.6,
+        "travel": 4.8
+      },
+      {
+        "node": "LadderSection_3",
+        "length": 5.6,
+        "travel": 4.8
+      },
+      {
+        "node": "LadderSection_4",
+        "length": 5.6,
+        "travel": 4.8
+      },
+      {
+        "node": "LadderSection_5",
+        "length": 5.6,
+        "travel": 4.8
+      },
+      {
+        "node": "LadderSection_6",
+        "length": 3.2,
+        "travel": 0
+      }
+    ],
     "KnuckleFold": {
-      "parent": "LadderSection_3",
+      "parent": "LadderSection_5",
       "position": [
         0,
         0.1,
@@ -40,12 +75,8 @@
       "stowedRad": 3.141592653589793,
       "sectionLength": 3.2
     },
-    "LadderSection_4": {
-      "parent": "KnuckleFold",
-      "length": 3.2
-    },
     "BasketLevel": {
-      "parent": "LadderSection_4",
+      "parent": "LadderSection_6",
       "position": [
         0,
         0,
@@ -59,6 +90,41 @@
     },
     "Basket": {
       "parent": "BasketFold"
+    },
+    "BasketStand": {
+      "parent": "Basket",
+      "position": [
+        0,
+        0.075,
+        -0.02
+      ],
+      "feetAtFloor": true
+    },
+    "BasketControls": {
+      "parent": "Basket",
+      "position": [
+        0.43,
+        0.4,
+        0.18
+      ]
+    },
+    "RearControls": {
+      "node": "RearControls",
+      "position": [
+        0,
+        1.66,
+        6.507
+      ],
+      "orientation": "outward-facing from rear deck"
+    },
+    "RearOperator": {
+      "node": "RearOperator",
+      "feet": [
+        0,
+        0,
+        7.85
+      ],
+      "facing": "-Z"
     },
     "MonitorYaw": {
       "position": [
@@ -93,16 +159,55 @@
       "jackNodes": "Jack_FL/FR/RL/RR",
       "jackRestHeight": 0.52,
       "footPlateLocalY": 0,
-      "jackStroke": 1,
+      "jackStroke": 1.0,
       "ramChildCenterY": 0.28,
-      "housingCenterY": -0.25,
-      "runtimeNote": "Telescoping piston follows beam-to-foot distance; 1 m maximum travel accommodates curb and road crossfall."
+      "housingCenterY": -0.25
     },
+    "stabilizerBeamTravel": 1.6,
+    "wheelRadius": 0.56,
+    "wheelbase": 7.14,
+    "jackFootSole": -0.06,
     "ElevationRam_L/R": {
       "baseNodes": "Cylinder_Base_L/R",
       "tipNodes": "Cylinder_Tip_L/R"
     }
   },
+  "ladderSections": [
+    {
+      "node": "LadderSection_1",
+      "length": 5.6,
+      "travel": 0
+    },
+    {
+      "node": "LadderSection_2",
+      "length": 5.6,
+      "travel": 4.8
+    },
+    {
+      "node": "LadderSection_3",
+      "length": 5.6,
+      "travel": 4.8
+    },
+    {
+      "node": "LadderSection_4",
+      "length": 5.6,
+      "travel": 4.8
+    },
+    {
+      "node": "LadderSection_5",
+      "length": 5.6,
+      "travel": 4.8
+    },
+    {
+      "node": "LadderSection_6",
+      "length": 3.2,
+      "travel": 0
+    }
+  ],
+  "stabilizerBeamTravel": 1.6,
+  "wheelRadius": 0.56,
+  "wheelbase": 7.14,
+  "jackFootSole": -0.06,
   "wheelNodes": [
     "Wheel_FL",
     "Wheel_FR",
@@ -117,10 +222,10 @@
     "Beacon_RearL",
     "Beacon_RearR"
   ],
-  "triangles": 48980,
-  "drawCalls": 164,
+  "triangles": 73810,
+  "drawCalls": 139,
   "source": "Original apparatus with selectively extracted generic pumper cab faces, wheels, and beacon meshes",
   "wheelSimplificationRatio": 0.3,
-  "commercialUse": "Project-created generic geometry and source project meshes; no external assets",
-  "glbBytes": 3161720
+  "commercialUse": "Project-created generic geometry and source project meshes",
+  "glbBytes": 4677288
 }

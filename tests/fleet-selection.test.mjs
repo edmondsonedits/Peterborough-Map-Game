@@ -5,10 +5,17 @@ registerHooks({resolve(s,c,next){return next(s==='three'?new URL('../city-explor
 const THREE=await import('three');
 const {createFleetRuntime}=await import('../city-explorer/fleet-runtime.js');
 const {FLEET_DEFINITIONS}=await import('../city-explorer/vehicle-fleet.mjs');
-function make(prepare){const group=new THREE.Group(),activated=[];const r=createFleetRuntime({THREE,group,spawns:Object.fromEntries(FLEET_DEFINITIONS.map((d,i)=>[d.id,{x:i*20,z:0,y:0,heading:0}])),initialId:'pump-1',prepare,activate:v=>activated.push(v.definition.id),createTruck:()=>{const g=new THREE.Group();g.userData.truck={ready:Promise.resolve(),assetStatus:'blender-ready'};return g;},installModel:()=>{}});return {r,group,activated};}
+function make(prepare,canSelect){const group=new THREE.Group(),activated=[];const r=createFleetRuntime({THREE,group,spawns:Object.fromEntries(FLEET_DEFINITIONS.map((d,i)=>[d.id,{x:i*20,z:0,y:0,heading:0}])),initialId:'pump-1',prepare,canSelect,activate:v=>activated.push(v.definition.id),createTruck:()=>{const g=new THREE.Group();g.userData.truck={ready:Promise.resolve(),assetStatus:'blender-ready'};return g;},installModel:()=>{}});return {r,group,activated};}
 test('failed destination keeps active identity and all parked world positions',async()=>{
  const {r,group}=make(async()=>{throw Error('Roads unavailable');});r.fleet.active.state.x=456;
  const result=await r.select('pump-2');assert.equal(result.ok,false);assert.equal(r.fleet.activeId,'pump-1');assert.equal(r.fleet.active.state.x,456);assert.equal(group.children.length,5);assert.equal(r.busy,false);
+});
+test('an occupied basket guard rejects switching before parking or preparation',async()=>{
+ const {r}=make(async()=>assert.fail('preparation must not start'),()=> 'Exit the basket first');
+ r.fleet.active.state.speed=2;
+ assert.deepEqual(await r.select('medi'),{ok:false,error:'Exit the basket first'});
+ assert.equal(r.fleet.active.state.speed,2);
+ assert.equal(r.fleet.activeId,'pump-1');
 });
 test('superseded readiness cannot steal selection from latest target',async()=>{
  const resolve={};const {r,activated}=make(v=>new Promise(done=>resolve[v.definition.id]=done));

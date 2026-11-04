@@ -1,4 +1,4 @@
-import { MAP_VIEW_LIMITS, lonLatToWebMercatorTile, webMercatorTileVertices } from './map-view.mjs?v=1.6.178';
+import { MAP_VIEW_LIMITS, lonLatToWebMercatorTile, webMercatorTileVertices } from './map-view.mjs?v=1.6.179';
 
 const EARTH_CIRCUMFERENCE = 40075016.68557849;
 const MAX_CONCURRENT_REQUESTS = 6;
