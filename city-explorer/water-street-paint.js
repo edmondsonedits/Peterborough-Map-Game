@@ -1,5 +1,5 @@
-import { roadMarkingIntervals } from './road-appearance-rules.js?v=1.6.180';
-import { buildRoadMarkingPaths, sourceIntervalsToPathIntervals, strokeMarkingPath } from './road-marking-paths.js?v=1.6.180';
+import { roadMarkingIntervals } from './road-appearance-rules.js?v=1.6.181';
+import { buildRoadMarkingPaths, sourceIntervalsToPathIntervals, strokeMarkingPath } from './road-marking-paths.js?v=1.6.181';
 
 const REVIEWED_WAY = '33966726';
 const REVIEWED_SURFACE = '11/5738';

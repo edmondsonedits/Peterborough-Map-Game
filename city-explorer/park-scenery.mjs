@@ -63,3 +63,50 @@ export function pathCoverageOverlaps(segment, other, x, z) {
   if (t < 0 || t > 1) return false;
   return (x - other.a.x - t * ox) ** 2 + (z - other.a.y - t * oz) ** 2 <= 4;
 }
+
+export function installParkGroundDetail(material) {
+  const previous = material.onBeforeCompile;
+  const cacheKey = material.customProgramCacheKey();
+  material.customProgramCacheKey = () => cacheKey + ':park-ground';
+  material.onBeforeCompile = function (shader, renderer) {
+    previous.call(this, shader, renderer);
+    shader.vertexShader = 'varying vec2 parkGroundXZ;\n' + shader.vertexShader.replace(
+      '#include <begin_vertex>',
+      '#include <begin_vertex>\nparkGroundXZ = (modelMatrix * vec4(position, 1.0)).xz;',
+    );
+    shader.fragmentShader = 'varying vec2 parkGroundXZ;\n' + shader.fragmentShader.replace(
+      '#include <map_fragment>',
+      `
+      #include <map_fragment>
+      float greenCover = smoothstep(0.008, 0.055, diffuseColor.g - max(diffuseColor.r, diffuseColor.b));
+      vec2 parkPosition = parkGroundXZ;
+      float coarseGround = sin(dot(parkPosition, vec2(0.19, 0.11))) * sin(dot(parkPosition, vec2(-0.12, 0.17)));
+      float nearGround = 1.0 - smoothstep(0.045, 0.24, fwidth(parkPosition.x) + fwidth(parkPosition.y));
+      float grassGrain = sin(dot(parkPosition, vec2(8.3, 6.6))) * sin(dot(parkPosition, vec2(-11.2, 7.7)));
+      diffuseColor.rgb *= 1.0 + greenCover * (0.11 * coarseGround + 0.028 * nearGround * grassGrain);
+      `,
+    );
+  };
+}
+
+export function pathGradeStops(leftStart, leftEnd, rightStart, rightEnd, length, grid) {
+  const count = Math.max(1, Math.ceil(length / 14));
+  const stops = new Set(Array.from({length: count + 1}, (_, index) => index / count));
+  if (!grid) return [...stops];
+  const spacing = grid.size / grid.segments;
+  function addCrossings(start, end, origin) {
+    const a = (start - origin) / spacing;
+    const b = (end - origin) / spacing;
+    for (let edge = Math.floor(Math.min(a,b)) + 1; edge < Math.max(a,b); edge += 1) {
+      const t = (edge - a) / (b - a);
+      if (t > 1e-7 && t < 1 - 1e-7) stops.add(Math.round(t * 1e7) / 1e7);
+    }
+  }
+  // Match PlaneGeometry's x/z grid lines and its x + z triangle diagonals.
+  for (const [start, end] of [[leftStart,leftEnd], [rightStart,rightEnd]]) {
+    addCrossings(start.x, end.x, grid.minX);
+    addCrossings(start.z, end.z, grid.minZ);
+    addCrossings(start.x + start.z, end.x + end.z, grid.minX + grid.minZ);
+  }
+  return [...stops].sort((a,b) => a - b).filter((stop, index, sorted) => !index || stop - sorted[index - 1] > 1e-7);
+}

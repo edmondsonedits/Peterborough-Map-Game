@@ -1,5 +1,5 @@
 import assert from 'node:assert/strict';
-import {pathSurface, buildPathCorners, pathCoverageOverlaps, recreationTreeClearance, treeForm} from '../city-explorer/park-scenery.mjs';
+import {pathSurface, buildPathCorners, pathCoverageOverlaps, pathGradeStops, recreationTreeClearance, treeForm} from '../city-explorer/park-scenery.mjs';
 
 assert.equal(pathSurface({surface:'compacted',highway:'cycleway'}), 'gravel');
 assert.equal(pathSurface({surface:'paving_stones'}), 'concrete');
@@ -18,4 +18,7 @@ assert.equal(treeForm({leaf_type:'broadleaved'},0).conifer,false);
 assert.equal(treeForm({height:'14 m'},0.5).height,14);
 assert.ok(recreationTreeClearance('Multi-Use Sports Field') > recreationTreeClearance('Tennis Court'));
 assert.equal(recreationTreeClearance('Viewpoint'), 0);
-console.log('Park scenery surface, join, and mapped tree cases passed.');
+const grid = {minX: 0, minZ: 0, size: 20, segments: 2};
+assert.deepEqual(pathGradeStops({x:2,z:2},{x:12,z:2},{x:2,z:3},{x:12,z:3},10,grid), [0,0.5,0.6,0.8,1]);
+assert.deepEqual(pathGradeStops({x:12,z:2},{x:2,z:2},{x:12,z:3},{x:2,z:3},10,grid), [0,0.2,0.4,0.5,1]);
+console.log('Park scenery surface, terrain grade, join, and mapped tree cases passed.');
