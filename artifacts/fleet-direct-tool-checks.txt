@@ -1,0 +1,175 @@
+tools/test_fallback_junction_geometry.mjs
+Fallback junction geometry: 10 intersection/bridge/driveway cases and surface-query priority passed.
+
+tools/test_rendered_pavement.mjs
+{"status":"pass","slopeAndBoundaryQueries":true,"negativeCoordinates":true,"degenerateRejected":true,"stackedDeckSelection":true,"parkingFilter":true,"seamCrossingSamples":201,"gameplayIntegration":true,"missingMeshFallback":true,"underpassDeckContinuity":true,"syntheticSlopeMetric":{"lengthMetres":20,"centrelineScalarMaxErrorMetres":1,"renderedTriangleMaxErrorMetres":0,"seamStepMetres":0.01}}
+
+tools/test_street_paint_runtime_edges.mjs
+✔ primary GeoJSON parser suffixes must resolve to the reviewed OSM way (0.8837ms)
+✔ legacy fallback junction contact follows its actual cap top, not the lower ribbon (3.9391ms)
+ℹ tests 2
+ℹ suites 0
+ℹ pass 2
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 9.7744
+
+tools/test_authored_scene_runtime.mjs
+Authored scene runtime validation tests passed.
+
+tools/test_street_marking_evidence.mjs
+✔ centre turning lane is part of the total when only directional counts exist (0.7785ms)
+✔ incomplete one-sided counts do not become the total for a two-way road (1.6551ms)
+✔ separate tracks, shoulders and shared bus lanes do not imply a painted cycle lane (0.723ms)
+✔ an overtaking permission is not evidence of a dashed painted centre line (0.6843ms)
+✔ explicit divider styling wins over inferred road-class styling (0.2757ms)
+✔ both borders of a mapped central bidirectional turn lane are yellow (0.231ms)
+✔ odd unallocated lane totals do not invent a direction split (0.144ms)
+✔ explicit no markings, service aprons and one-lane roads remain unpainted (0.1979ms)
+✔ reviewed Sherbrooke correction is scoped by source ID and never edits geometry (0.2355ms)
+✔ paint is subdivided and all four corners match the supporting road plane (0.4256ms)
+✔ paint stays absent over holes or missing ground, no speculative bridging (0.1761ms)
+✔ actual app renderer draws only one solid yellow centre on reviewed Sherbrooke (6.2164ms)
+✔ asymmetric backward lanes place the yellow boundary on the correct side (13.3786ms)
+✔ existing road editor bindings can hide and restore final draped paint (1.3537ms)
+✔ renderer opens center and mapped cycle markings at a same-name three-arm junction (3.2587ms)
+✔ legacy appearance keeps its old bounded endpoint trim while junction-aware mode opens farther (2.7016ms)
+✔ source road paint is built once after municipal surfaces rather than during OSM parsing (0.3114ms)
+ℹ tests 17
+ℹ suites 0
+ℹ pass 17
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 39.6255
+
+tools/test_city_detail_rules.mjs
+{"status":"pass","urbanCurbs":true,"cycleLaneSides":true,"ontarioLanePaint":true,"streetIntersections":1}
+
+tools/test_citywide_road_quality.mjs
+{
+  "status": "pass",
+  "syntheticMesh": {
+    "original": {
+      "triangles": 16,
+      "maxEdge": 28.284271247461902
+    },
+    "desktop": {
+      "triangles": 32,
+      "maxEdge": 20
+    },
+    "mobile": {
+      "triangles": 16,
+      "maxEdge": 28.284271247461902
+    },
+    "station": {
+      "triangles": 256,
+      "maxEdge": 7.0710678118654755
+    }
+  },
+  "note": "Actual production triangulation executed in a synthetic test; not an FPS or surveyed-accuracy claim."
+}
+
+tools/test_station_road_detail.mjs
+PASS: curb classification, unknown provenance, 150 mm cross-section, feathering, continuous two-metre segments.
+PASS: 256 local pavement triangles, <=8 m edges, broad 2% / 1% grades preserved.
+
+tools/test_gameplay_systems.mjs
+Gameplay systems: Station 1 georeference, character inputs, heavy-truck acceleration, braking, steering, and off-road limits passed.
+
+tools/test_official_road_surface_index.mjs
+{"status":"pass","authoritativePavementQueries":true,"proposedAndRemovedExcluded":true}
+
+tools/geospatial/test_road_network.mjs
+{
+  "status": "pass",
+  "drivableWays": 5962,
+  "generatedSegments": 77928,
+  "maxGap": 16,
+  "dividedHighwayWidth": 8.1,
+  "parkingAislesBlendWithParking": true,
+  "maximumSyntheticTerrainGradePct": 55,
+  "maximumSyntheticSmoothingLiftMetres": 2.5,
+  "boundedRoadCutAndFill": true,
+  "originalVerticesPreserved": true,
+  "pavementEnvelopeClearance": true,
+  "stackedSurfaceSelection": true,
+  "terrainTriangleSampling": true
+}
+
+tools/geospatial/test_road_terrain_clearance.mjs
+{
+  "status": "pass",
+  "checkedRoads": 5954,
+  "checkedSurfacePoints": 2965160,
+  "minimumClearanceMetres": 0.104,
+  "maximumLongitudinalGradePct": 22,
+  "maximumPublicStreetGradePct": 20,
+  "maximumGradeChangePct": 23.41,
+  "maximumEndpointDiscontinuityMetres": 0.001,
+  "maximumGradeSmoothingLiftMetres": 3,
+  "terrainSource": "Ontario Digital Terrain Model (Lidar-Derived)",
+  "terrainGridSpacingMetres": 33.983,
+  "worst": {
+    "clearance": 0.10429286465365672,
+    "lat": 44.284567896299215,
+    "lon": -78.2934324455151,
+    "name": "Ashburnham Drive",
+    "way": 33932519
+  },
+  "worstGrade": {
+    "grade": 0.22000000000000008,
+    "lat": 44.27039415,
+    "lon": -78.3706781,
+    "name": "",
+    "way": 430409369
+  },
+  "worstPublicStreetGrade": {
+    "grade": 0.20000000000000023,
+    "lat": 44.3647756,
+    "lon": -78.40410994999999,
+    "name": "Denne Lane",
+    "previousHeight": 63.20039025737873,
+    "previousGroundHeight": 61.328247813333924,
+    "height": 64.36410240660403,
+    "groundHeight": 62.57035436328852,
+    "previousSourceHeight": 61.04256485687662,
+    "sourceHeight": 62.20627908497286,
+    "run": 5.818560746126515,
+    "way": 33928987
+  },
+  "worstGradeChange": {
+    "change": -0.23411622122479958,
+    "lat": 44.270695950000004,
+    "lon": -78.37070375,
+    "name": "",
+    "way": 430409369
+  },
+  "worstGradeSmoothingLift": {
+    "lift": 3.0000000000000004,
+    "lat": 44.30343660526316,
+    "lon": -78.26669418421052,
+    "name": "Burnham Line",
+    "way": 985285104
+  },
+  "worstEndpoint": [
+    {
+      "height": 60.18387085297269,
+      "name": "Chemong Road",
+      "way": 33941310
+    },
+    {
+      "height": 60.18486808060789,
+      "name": "Fire Route 4a",
+      "way": 33953995
+    },
+    {
+      "height": 60.18486808060789,
+      "name": "Chemong Road",
+      "way": 33964402
+    }
+  ]
+}

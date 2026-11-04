@@ -58,7 +58,7 @@ assert.match(app, /municipalRoads/);
 assert.match(app, /citywide-municipal-mobile/);
 assert.match(app, /!state\.officialRoadSurfacesAvailable/);
 assert.match(app, /nearbyMunicipalRoadHeight\(state\.renderedPavementIndex/);
-assert.match(app, /sampleTruckWheelContacts\(truckState, TRUCK_TUNING, gameplaySurfaceAt\)/);
+assert.match(app, /sampleTruckWheelContacts\(truckState,\s*activeVehicleTuning\(\),\s*gameplaySurfaceAt\)/);
 assert.ok(!app.match(/function buildBufferedRoadBatches\([^]*?^\}/m)?.[0].includes("setAttribute('color'"),
   'Road pavement mesh must not allocate identical all-white colours');
 
