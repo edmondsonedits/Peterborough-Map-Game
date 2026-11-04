@@ -29,3 +29,36 @@
   #aerial-controls small,#aerial-rear-prompt kbd{display:none}
   #aerial-rear-prompt{bottom:max(126px,calc(env(safe-area-inset-bottom) + 110px))}
 }
+
+#aerial-controls,#aerial-controls *{
+  -webkit-user-select:none;
+  user-select:none;
+  -webkit-touch-callout:none;
+}
+.aerial-compartments{display:none}
+@media(max-width:650px),(pointer:coarse) and (max-height:600px){
+  #aerial-controls.is-basket{
+    width:min(320px,calc(100vw - 16px));
+    right:8px;
+    bottom:max(72px,calc(env(safe-area-inset-bottom) + 64px));
+    max-height:calc(100dvh - 95px);
+    padding:7px;
+  }
+  #aerial-controls.is-basket header{display:none}
+  #aerial-controls.is-basket output{margin:0;color:#eff6f7;font-size:12px}
+  #aerial-controls.is-basket .aerial-readouts{font-size:11px}
+  #aerial-controls.is-basket .aerial-actions{display:flex;gap:4px;margin-top:4px}
+  #aerial-controls.is-basket .aerial-actions button{flex:1}
+  #aerial-controls.is-basket .aerial-compartments{
+    display:grid;grid-template-columns:1fr 1fr;gap:4px;margin-top:4px;
+  }
+  #aerial-controls.is-basket button{min-height:44px;padding:4px}
+  #aerial-controls .aerial-compartments [aria-pressed="true"]{
+    color:#fff3ce;background:#644d27;border-color:#d4b06c;
+  }
+  #aerial-controls.is-basket .aerial-holds{
+    grid-template-columns:repeat(3,minmax(0,1fr));gap:4px;margin-top:4px;
+  }
+  #aerial-controls .aerial-holds[data-compartment="ladder"] [data-group="water"],
+  #aerial-controls .aerial-holds[data-compartment="water"] [data-group="ladder"]{display:none}
+}

@@ -95,10 +95,20 @@ export function createAerialRuntime({THREE,scene,fleet,gameState,canvas,surface,
       <button type="button" data-action="resume">Resume</button>
       <button type="button" data-action="stop">Stop</button>
     </div>
-    <div class="aerial-holds"></div><small>W/S raise · A/D rotate · Q/E telescope · arrows aim · Space water · X return or exit</small>`;
+    <div class="aerial-compartments" role="group" aria-label="Basket control group"><button type="button" data-compartment="ladder" aria-pressed="true">Ladder</button><button type="button" data-compartment="water" aria-pressed="false">Aim &amp; Water</button></div>
+    <div class="aerial-holds" data-compartment="ladder"></div><small>W/S raise · A/D rotate · Q/E telescope · arrows aim · Space water · X return or exit</small>`;
   const controls=panel.querySelector('.aerial-holds');
+  const compartments=panel.querySelector('.aerial-compartments');
+  for(const type of ['selectstart','contextmenu'])panel.addEventListener(type,event=>event.preventDefault());
+  compartments.addEventListener('click',event=>{
+    const button=event.target.closest('button[data-compartment]');
+    if(!button||controls.dataset.compartment===button.dataset.compartment)return;
+    clearInput();
+    controls.dataset.compartment=button.dataset.compartment;
+    for(const option of compartments.children)option.setAttribute('aria-pressed',String(option===button));
+  });
   for(const [label,axis,value] of [['Raise','raise',1],['Lower','raise',-1],['Rotate left','rotate',1],['Rotate right','rotate',-1],['Extend','extend',1],['Retract','extend',-1],['Aim left','nozzleYaw',1],['Aim right','nozzleYaw',-1],['Aim up','nozzlePitch',1],['Aim down','nozzlePitch',-1],['Water','flow',true]]){
-    const b=document.createElement('button');b.type='button';b.textContent=label;b.dataset.axis=axis;controls.append(b);
+    const b=document.createElement('button');b.type='button';b.textContent=label;b.dataset.axis=axis;b.dataset.group=axis.startsWith('nozzle')||axis==='flow'?'water':'ladder';controls.append(b);
     b.onpointerdown=e=>{if(b.disabled||station!=='basket')return;e.preventDefault();b.setPointerCapture(e.pointerId);held.set(b,[axis,value]);b.classList.add('is-held');rebuild();};
     b.onkeydown=e=>{if(e.code==='Enter'&&!b.disabled&&station==='basket'){e.preventDefault();held.set(b,[axis,value]);b.classList.add('is-held');rebuild();}};
     b.onkeyup=e=>{if(e.code==='Enter')release();};b.onblur=()=>release();
@@ -107,7 +117,7 @@ export function createAerialRuntime({THREE,scene,fleet,gameState,canvas,surface,
   const output=panel.querySelector('output'),title=panel.querySelector('h2'),readouts=panel.querySelector('.aerial-readouts');
   const buttons=Object.fromEntries([...panel.querySelectorAll('[data-action]')].map(b=>[b.dataset.action,b]));
   document.getElementById('app').append(prompt,panel);
-  const css=document.createElement('link');css.rel='stylesheet';css.href=new URL('./fleet.css?rev=2',import.meta.url).href;document.head.append(css);
+  const css=document.createElement('link');css.rel='stylesheet';css.href=new URL('./fleet.css?rev=3',import.meta.url).href;document.head.append(css);
   function rebuild(){for(const k of Object.keys(input))delete input[k];for(const [axis,v] of held.values())input[axis]=v;}
   function clearInput(){held.clear();rebuild();pending={};s.flow=false;group.visible=false;panel.querySelectorAll('.is-held').forEach(n=>n.classList.remove('is-held'));}
   function onFoot(){return gameState.mode==='onFoot';}
@@ -347,6 +357,7 @@ export function createAerialRuntime({THREE,scene,fleet,gameState,canvas,surface,
     if(buttons.view.textContent!==viewLabel)buttons.view.textContent=viewLabel;
     buttons.resume.hidden=!s.stopped||s.phase==='travel';
     buttons.stop.hidden=s.stopped||s.phase==='travel';
+    panel.classList.toggle('is-basket',bucket);
     controls.hidden=!bucket;
     panel.querySelector('small').hidden=!bucket;
     for(const button of controls.children)button.disabled=s.stopped||s.phase!=='operating';
