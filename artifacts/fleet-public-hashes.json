@@ -1,0 +1,455 @@
+{
+  "version": "1.6.178",
+  "commit": "8d8187f32be5fe097c421d4701e13dbce4968769",
+  "base": "https://edmondsonedits.github.io/Peterborough-Map-Game/",
+  "results": [
+    {
+      "path": "city-explorer/aerial-runtime.js",
+      "status": 200,
+      "bytes": 17101,
+      "match": true,
+      "expected": "1f29493b0e96b127dd29510ca7133d674dab7770bb000deb630587bc2790deb5",
+      "actual": "1f29493b0e96b127dd29510ca7133d674dab7770bb000deb630587bc2790deb5"
+    },
+    {
+      "path": "city-explorer/apparatus-collision.mjs",
+      "status": 200,
+      "bytes": 1413,
+      "match": true,
+      "expected": "73dec032431729c330fce614429c2ef36790e4dadb165f1a42cff9cd7a1f87da",
+      "actual": "73dec032431729c330fce614429c2ef36790e4dadb165f1a42cff9cd7a1f87da"
+    },
+    {
+      "path": "city-explorer/assets/vehicles/aerial-platform.json",
+      "status": 200,
+      "bytes": 2719,
+      "match": true,
+      "expected": "f802b9b2f0f8dd00e94eaa1410169fd003a3f33046d829cdb0cda66d858b9b56",
+      "actual": "f802b9b2f0f8dd00e94eaa1410169fd003a3f33046d829cdb0cda66d858b9b56"
+    },
+    {
+      "path": "city-explorer/aerial-controller.mjs",
+      "status": 200,
+      "bytes": 3813,
+      "match": true,
+      "expected": "8c7bca7ae7c8a5cfe396facef3497c0b0896febcbd0eac94e3b169dd16d3e883",
+      "actual": "8c7bca7ae7c8a5cfe396facef3497c0b0896febcbd0eac94e3b169dd16d3e883"
+    },
+    {
+      "path": "city-explorer/app.js",
+      "status": 200,
+      "bytes": 445795,
+      "match": true,
+      "expected": "2bf24bfa9c1debd14029c8cbc12af9619fc29f08badd51c0a6c3eac2d964c25a",
+      "actual": "2bf24bfa9c1debd14029c8cbc12af9619fc29f08badd51c0a6c3eac2d964c25a"
+    },
+    {
+      "path": "city-explorer/assets/vehicles/medi-pickup.json",
+      "status": 200,
+      "bytes": 954,
+      "match": true,
+      "expected": "8d34e58d8b8ffa778be583930100ed471c93ff7a9c2177fab8cd6cbcfbffadfe",
+      "actual": "8d34e58d8b8ffa778be583930100ed471c93ff7a9c2177fab8cd6cbcfbffadfe"
+    },
+    {
+      "path": "city-explorer/authored-scene-bootstrap.js",
+      "status": 200,
+      "bytes": 2117,
+      "match": true,
+      "expected": "1c909f13cde1cd2e158ec8d46bd24d7c4ff0b75313c8b789464d9f9ac30a9eba",
+      "actual": "1c909f13cde1cd2e158ec8d46bd24d7c4ff0b75313c8b789464d9f9ac30a9eba"
+    },
+    {
+      "path": "city-explorer/building-archetypes.js",
+      "status": 200,
+      "bytes": 6272,
+      "match": true,
+      "expected": "de0fde0b01400dc4cbafe72b16ed18038a2546f01cee0b4b166bf0efce14fcdd",
+      "actual": "de0fde0b01400dc4cbafe72b16ed18038a2546f01cee0b4b166bf0efce14fcdd"
+    },
+    {
+      "path": "city-explorer/building-reconstruction-catalog.js",
+      "status": 200,
+      "bytes": 858,
+      "match": true,
+      "expected": "c8c594ba7ad77268c625a4f60057805ff7ce8fbd3006b1bd0eaa7d8f988e32db",
+      "actual": "c8c594ba7ad77268c625a4f60057805ff7ce8fbd3006b1bd0eaa7d8f988e32db"
+    },
+    {
+      "path": "city-explorer/business-signs.js",
+      "status": 200,
+      "bytes": 9149,
+      "match": true,
+      "expected": "d0024f6211e892e38d1be8320980f1d5ae654fdbe820f3ab2f7216f3d8748065",
+      "actual": "d0024f6211e892e38d1be8320980f1d5ae654fdbe820f3ab2f7216f3d8748065"
+    },
+    {
+      "path": "city-explorer/emergency-facilities-catalog.js",
+      "status": 200,
+      "bytes": 2699,
+      "match": true,
+      "expected": "22af7dc58403bcb16ced5806e7951bc7461aa822339c36a3b24d313e31119e5a",
+      "actual": "22af7dc58403bcb16ced5806e7951bc7461aa822339c36a3b24d313e31119e5a"
+    },
+    {
+      "path": "city-explorer/editor/city-editor.js",
+      "status": 200,
+      "bytes": 39024,
+      "match": true,
+      "expected": "30f3c9d95c28cd17ad5ca84059c0b8113594375577c070a12029b652b6f579e6",
+      "actual": "30f3c9d95c28cd17ad5ca84059c0b8113594375577c070a12029b652b6f579e6"
+    },
+    {
+      "path": "city-explorer/assets/vehicles/medi-pickup.glb",
+      "status": 200,
+      "bytes": 766316,
+      "match": true,
+      "expected": "b6f1ca4b9e21896f54738094436ba0d11b65f34cdce88f21abad5643ed8be78c",
+      "actual": "b6f1ca4b9e21896f54738094436ba0d11b65f34cdce88f21abad5643ed8be78c"
+    },
+    {
+      "path": "city-explorer/fleet-assets.js",
+      "status": 200,
+      "bytes": 4311,
+      "match": true,
+      "expected": "09aa55c1c93820a7354d946f39e0b0fe0f978a20e8cce9bef23fef6a5416ffc6",
+      "actual": "09aa55c1c93820a7354d946f39e0b0fe0f978a20e8cce9bef23fef6a5416ffc6"
+    },
+    {
+      "path": "city-explorer/fleet-runtime.js",
+      "status": 200,
+      "bytes": 3910,
+      "match": true,
+      "expected": "67bb814cabd6d726b549c23c40c51deb752bfdec1210cd0c74dd6bf58643d2aa",
+      "actual": "67bb814cabd6d726b549c23c40c51deb752bfdec1210cd0c74dd6bf58643d2aa"
+    },
+    {
+      "path": "city-explorer/fleet.css",
+      "status": 200,
+      "bytes": 1592,
+      "match": true,
+      "expected": "cb25f5aaceca265a8a5407195a7f0f12f328d21c95795c214ec77fe8bd85fb93",
+      "actual": "cb25f5aaceca265a8a5407195a7f0f12f328d21c95795c214ec77fe8bd85fb93"
+    },
+    {
+      "path": "city-explorer/gameplay-systems-1.6.69.js",
+      "status": 200,
+      "bytes": 8438,
+      "match": true,
+      "expected": "2dbe131957e3797cb05b23eb1d8799702935541e7c52fd9c6b5824b0bdee2196",
+      "actual": "2dbe131957e3797cb05b23eb1d8799702935541e7c52fd9c6b5824b0bdee2196"
+    },
+    {
+      "path": "city-explorer/gameplay-systems.js",
+      "status": 200,
+      "bytes": 28123,
+      "match": true,
+      "expected": "342a1703a7507e2bd715f9f1a90cada2dc3ef887ec23b4d40590b466629563dc",
+      "actual": "342a1703a7507e2bd715f9f1a90cada2dc3ef887ec23b4d40590b466629563dc"
+    },
+    {
+      "path": "city-explorer/index.html",
+      "status": 200,
+      "bytes": 30540,
+      "match": true,
+      "expected": "d90192cdf11edbc2c9806acb756a1af555bb8a7cdcbfefb740539356d3a27229",
+      "actual": "d90192cdf11edbc2c9806acb756a1af555bb8a7cdcbfefb740539356d3a27229"
+    },
+    {
+      "path": "city-explorer/data/road-pack/manifest.json",
+      "status": 200,
+      "bytes": 253395,
+      "match": true,
+      "expected": "560ad4ad0758d25299bbca587109c98852e36ed889df06cf2cce393c258dbbe9",
+      "actual": "560ad4ad0758d25299bbca587109c98852e36ed889df06cf2cce393c258dbbe9"
+    },
+    {
+      "path": "city-explorer/intersection-holograms.js",
+      "status": 200,
+      "bytes": 7931,
+      "match": true,
+      "expected": "3ca04a51303c52fbd103051fbdeede4b572550406fcdf73ad9196803514f741a",
+      "actual": "3ca04a51303c52fbd103051fbdeede4b572550406fcdf73ad9196803514f741a"
+    },
+    {
+      "path": "city-explorer/material-preview.js",
+      "status": 200,
+      "bytes": 10868,
+      "match": true,
+      "expected": "186e99ee2d7c486527ec6b75f8e3ea40f95a6486d5ad6e6341c39888d9857a73",
+      "actual": "186e99ee2d7c486527ec6b75f8e3ea40f95a6486d5ad6e6341c39888d9857a73"
+    },
+    {
+      "path": "city-explorer/recording-appearance.js",
+      "status": 200,
+      "bytes": 1455,
+      "match": true,
+      "expected": "25156fa87e546732b265256dc9cd6a1c7d8954e664c97b0ddb62503e87028ce1",
+      "actual": "25156fa87e546732b265256dc9cd6a1c7d8954e664c97b0ddb62503e87028ce1"
+    },
+    {
+      "path": "city-explorer/map-basemap.mjs",
+      "status": 200,
+      "bytes": 15072,
+      "match": true,
+      "expected": "6c91260c0f432ce1c9e7b8f6b4a100ba83084381ecdfdc05f9756bb0a42c2ac8",
+      "actual": "6c91260c0f432ce1c9e7b8f6b4a100ba83084381ecdfdc05f9756bb0a42c2ac8"
+    },
+    {
+      "path": "city-explorer/release.js",
+      "status": 200,
+      "bytes": 3218,
+      "match": true,
+      "expected": "edddf521baf935133153db4841ea925952a18681f77c2f870ef5debe7f62211b",
+      "actual": "edddf521baf935133153db4841ea925952a18681f77c2f870ef5debe7f62211b"
+    },
+    {
+      "path": "city-explorer/road-marking-layout.js",
+      "status": 200,
+      "bytes": 9193,
+      "match": true,
+      "expected": "7a8c5c74591c3295d9bb93d2d941627c60b15b17287205ad080c609859e0626a",
+      "actual": "7a8c5c74591c3295d9bb93d2d941627c60b15b17287205ad080c609859e0626a"
+    },
+    {
+      "path": "city-explorer/road-pack-version.js",
+      "status": 200,
+      "bytes": 95,
+      "match": true,
+      "expected": "ab024fdad9e54be79d0ec1ddf3be7831930a862875d19722be5a041e76a111a2",
+      "actual": "ab024fdad9e54be79d0ec1ddf3be7831930a862875d19722be5a041e76a111a2"
+    },
+    {
+      "path": "city-explorer/road-orientation-fix.js",
+      "status": 200,
+      "bytes": 2568,
+      "match": true,
+      "expected": "e499f37fbd9f8564a51e6bcb2d55addcb66d61f8ebb83b949480be548f6bd94b",
+      "actual": "e499f37fbd9f8564a51e6bcb2d55addcb66d61f8ebb83b949480be548f6bd94b"
+    },
+    {
+      "path": "city-explorer/road-marking-pack-finish.js",
+      "status": 200,
+      "bytes": 7857,
+      "match": true,
+      "expected": "13c0521887ced673230650bfc51107032037dc893cdbfdeb667de863349b2dbc",
+      "actual": "13c0521887ced673230650bfc51107032037dc893cdbfdeb667de863349b2dbc"
+    },
+    {
+      "path": "city-explorer/road-paint-geometry.js",
+      "status": 200,
+      "bytes": 12479,
+      "match": true,
+      "expected": "1784b3ff25cb277843422b85398ed31423f907064000a16d3d37bd7c67876f59",
+      "actual": "1784b3ff25cb277843422b85398ed31423f907064000a16d3d37bd7c67876f59"
+    },
+    {
+      "path": "city-explorer/road-tile-layer.js",
+      "status": 200,
+      "bytes": 5762,
+      "match": true,
+      "expected": "029b84ef4d7dd3b24f8badbd996a39fd57f4d5f08986d7e7e026d6b296133d1b",
+      "actual": "029b84ef4d7dd3b24f8badbd996a39fd57f4d5f08986d7e7e026d6b296133d1b"
+    },
+    {
+      "path": "city-explorer/sherbrooke-details.js",
+      "status": 200,
+      "bytes": 11522,
+      "match": true,
+      "expected": "f76735269888fff96cef0fb1918e93974a4e6c5f306a0643666906e6478082bb",
+      "actual": "f76735269888fff96cef0fb1918e93974a4e6c5f306a0643666906e6478082bb"
+    },
+    {
+      "path": "city-explorer/sherbrooke-footage-profiles.js",
+      "status": 200,
+      "bytes": 36892,
+      "match": true,
+      "expected": "8e531eefabd41d30b732a85ea53a1f68e082615713d56c21fc5010ee15f75b0c",
+      "actual": "8e531eefabd41d30b732a85ea53a1f68e082615713d56c21fc5010ee15f75b0c"
+    },
+    {
+      "path": "city-explorer/sherbrooke-garden-clearance.js",
+      "status": 200,
+      "bytes": 1334,
+      "match": true,
+      "expected": "4af7f8385ad81c9c9b5d0bdb6ddb481dd5a7c299d0e64c8b1e1fea6888fc6bd0",
+      "actual": "4af7f8385ad81c9c9b5d0bdb6ddb481dd5a7c299d0e64c8b1e1fea6888fc6bd0"
+    },
+    {
+      "path": "city-explorer/sherbrooke-plan.js",
+      "status": 200,
+      "bytes": 4671,
+      "match": true,
+      "expected": "84cf25bf17a240c9ae36facca5f7ea2f20ee9831e3fc4edfea498c9b49b67b29",
+      "actual": "84cf25bf17a240c9ae36facca5f7ea2f20ee9831e3fc4edfea498c9b49b67b29"
+    },
+    {
+      "path": "city-explorer/station-one-runtime.js",
+      "status": 200,
+      "bytes": 9629,
+      "match": true,
+      "expected": "b50de1e829c23450799689269351a499e0794ff9ac92e5e17e7210b7d82f52fc",
+      "actual": "b50de1e829c23450799689269351a499e0794ff9ac92e5e17e7210b7d82f52fc"
+    },
+    {
+      "path": "city-explorer/station-two-runtime.js",
+      "status": 200,
+      "bytes": 12081,
+      "match": true,
+      "expected": "5c3d38858a5f7950b9acf0d61602843de6cbee15b8a869389a2d1f679d24edc7",
+      "actual": "5c3d38858a5f7950b9acf0d61602843de6cbee15b8a869389a2d1f679d24edc7"
+    },
+    {
+      "path": "city-explorer/street-paint.js",
+      "status": 200,
+      "bytes": 2675,
+      "match": true,
+      "expected": "ecb64cf2669771172d9e41ded2d7e2e3fd6869d1c446a277890869d8ab189c33",
+      "actual": "ecb64cf2669771172d9e41ded2d7e2e3fd6869d1c446a277890869d8ab189c33"
+    },
+    {
+      "path": "city-explorer/vehicle-fleet.mjs",
+      "status": 200,
+      "bytes": 1583,
+      "match": true,
+      "expected": "9df1ecb2258990e58ea977021c96afcf97a7c6afc6c5b931789d59a7cf9fbdc0",
+      "actual": "9df1ecb2258990e58ea977021c96afcf97a7c6afc6c5b931789d59a7cf9fbdc0"
+    },
+    {
+      "path": "city-explorer/sherbrooke-footage.js",
+      "status": 200,
+      "bytes": 37846,
+      "match": true,
+      "expected": "aef572e6572731f2c389dd47be139fe174670fd5a519196706d14c2487e8fc71",
+      "actual": "aef572e6572731f2c389dd47be139fe174670fd5a519196706d14c2487e8fc71"
+    },
+    {
+      "path": "city-explorer/station2-neighborhood-facades.mjs",
+      "status": 200,
+      "bytes": 11662,
+      "match": true,
+      "expected": "42f75a77d6a822882b98b19ec84881383e6a08b15cb6013612d5a43c4961a7a2",
+      "actual": "42f75a77d6a822882b98b19ec84881383e6a08b15cb6013612d5a43c4961a7a2"
+    },
+    {
+      "path": "city-explorer/water-street-paint.js",
+      "status": 200,
+      "bytes": 22434,
+      "match": true,
+      "expected": "86fb85230637bc0fbbd36b25da0a15d4ca80b490d01e15e7dbb868f0efd19362",
+      "actual": "86fb85230637bc0fbbd36b25da0a15d4ca80b490d01e15e7dbb868f0efd19362"
+    },
+    {
+      "path": "dispatch-editor/index.html",
+      "status": 200,
+      "bytes": 19589,
+      "match": true,
+      "expected": "bd8cb1a41d0fcdcc00fb4fb5b6a85a2f4ce9d010036c136626a9e9e517098e66",
+      "actual": "bd8cb1a41d0fcdcc00fb4fb5b6a85a2f4ce9d010036c136626a9e9e517098e66"
+    },
+    {
+      "path": "feedback/index.html",
+      "status": 200,
+      "bytes": 1066,
+      "match": true,
+      "expected": "8484d00644c52866bfaffc26ff80c5afa8754fb98c36781a4016da4dc2021a38",
+      "actual": "8484d00644c52866bfaffc26ff80c5afa8754fb98c36781a4016da4dc2021a38"
+    },
+    {
+      "path": "geo-guesser/desktop/index.html",
+      "status": 200,
+      "bytes": 1219,
+      "match": true,
+      "expected": "35bed2f0691151afb4c1782de95409b68cf906250d300ae018c4e98c0f9ab698",
+      "actual": "35bed2f0691151afb4c1782de95409b68cf906250d300ae018c4e98c0f9ab698"
+    },
+    {
+      "path": "geo-guesser/index.html",
+      "status": 200,
+      "bytes": 6388,
+      "match": true,
+      "expected": "b791520bac15344693175debb7f6d7bdbda39fb9ee35302f0ca179b251351ece",
+      "actual": "b791520bac15344693175debb7f6d7bdbda39fb9ee35302f0ca179b251351ece"
+    },
+    {
+      "path": "geo-guesser/mobile/index.html",
+      "status": 200,
+      "bytes": 2235,
+      "match": true,
+      "expected": "3b8c4fb74616235ae8451532ba6646d818ed2695be7b4670d877ee748ae4e88c",
+      "actual": "3b8c4fb74616235ae8451532ba6646d818ed2695be7b4670d877ee748ae4e88c"
+    },
+    {
+      "path": "geo-guesser/online/index.html",
+      "status": 200,
+      "bytes": 1580,
+      "match": true,
+      "expected": "aef1a2981c8cb3f08cbe04bc7eee575cf4dd52f81d5a0eac65a38665552d1966",
+      "actual": "aef1a2981c8cb3f08cbe04bc7eee575cf4dd52f81d5a0eac65a38665552d1966"
+    },
+    {
+      "path": "response-simulator/mobile/index.html",
+      "status": 200,
+      "bytes": 26920,
+      "match": true,
+      "expected": "124cbe5fbd2f741db9a6b6d06988150c356adc457fe384bbd2d4c3ad1f5f3faf",
+      "actual": "124cbe5fbd2f741db9a6b6d06988150c356adc457fe384bbd2d4c3ad1f5f3faf"
+    },
+    {
+      "path": "response-simulator/index.html",
+      "status": 200,
+      "bytes": 72099,
+      "match": true,
+      "expected": "d810e795c46df55620a2ddafb4b4d153c7e85550c52d1c1f1d5750788ca342fc",
+      "actual": "d810e795c46df55620a2ddafb4b4d153c7e85550c52d1c1f1d5750788ca342fc"
+    },
+    {
+      "path": "response-simulator/play/index.html",
+      "status": 200,
+      "bytes": 16517,
+      "match": true,
+      "expected": "050f8c8d99de64c2dd12c8e260f2b12f7a6ffd1dc818c9d8dce7aa8591493ec7",
+      "actual": "050f8c8d99de64c2dd12c8e260f2b12f7a6ffd1dc818c9d8dce7aa8591493ec7"
+    },
+    {
+      "path": "index.html",
+      "status": 200,
+      "bytes": 22909,
+      "match": true,
+      "expected": "5e1c874d62179520cf8dd22a57a618b7cbd4b3d4cc92d1c166880ce378d9ec2d",
+      "actual": "5e1c874d62179520cf8dd22a57a618b7cbd4b3d4cc92d1c166880ce378d9ec2d"
+    },
+    {
+      "path": "route-mapping/play.html",
+      "status": 200,
+      "bytes": 6451,
+      "match": true,
+      "expected": "86fca943fc13b63745a2c3369596e945b002586374a2091f9f0b185a5235202e",
+      "actual": "86fca943fc13b63745a2c3369596e945b002586374a2091f9f0b185a5235202e"
+    },
+    {
+      "path": "city-explorer/assets/vehicles/aerial-platform.glb",
+      "status": 200,
+      "bytes": 3161720,
+      "match": true,
+      "expected": "3ca3e4b66a8977f7d8ea5e8c8e34e5973cf3789248673bbf86c50ffd408f0e74",
+      "actual": "3ca3e4b66a8977f7d8ea5e8c8e34e5973cf3789248673bbf86c50ffd408f0e74"
+    },
+    {
+      "path": "route-mapping/index.html",
+      "status": 200,
+      "bytes": 2159,
+      "match": true,
+      "expected": "7c5687f37d15c8ed89bc60bc5c6d77405fe34bac0f6cb26eba03b8dc6337927b",
+      "actual": "7c5687f37d15c8ed89bc60bc5c6d77405fe34bac0f6cb26eba03b8dc6337927b"
+    },
+    {
+      "path": "shared/build-version.js",
+      "status": 200,
+      "bytes": 29458,
+      "match": true,
+      "expected": "47fcbfe4b3396897944ba22ffd53a4147b77b4d1c97c35cf1e5e3941d4351de8",
+      "actual": "47fcbfe4b3396897944ba22ffd53a4147b77b4d1c97c35cf1e5e3941d4351de8"
+    }
+  ]
+}

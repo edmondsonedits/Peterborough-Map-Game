@@ -50,6 +50,12 @@ const criticalConsolePattern = /\b(?:uncaught|typeerror|referenceerror|syntaxerr
     await page.locator('#play-mode').click();
     await page.locator('canvas').first().focus();
 
+    // Fresh loads now start driving; explicitly prepare the on-foot entry scenario.
+    if (await page.evaluate(() => globalThis.__PTBO_GAMEPLAY__.state().mode) !== 'driving') {
+      throw new Error('Fresh fleet load did not start in its truck');
+    }
+    await page.evaluate(() => globalThis.__PTBO_GAMEPLAY__.reset({ mode: 'onFoot' }));
+
     const spawn = await page.evaluate(() => ({
       build: {
         shared: window.PTBO_BUILD?.version || null,

@@ -140,6 +140,11 @@ const angleDelta = (a, b) => Math.abs(Math.atan2(
       addEventListener('keyup', record('up'), true);
     });
 
+    // Verify the new initial mode, then exercise the separate on-foot controls.
+    if (await page.evaluate(() => globalThis.__PTBO_GAMEPLAY__.state().mode) !== 'driving') {
+      throw new Error('Fresh fleet load did not start in its truck');
+    }
+    await page.evaluate(() => globalThis.__PTBO_GAMEPLAY__.reset({ mode: 'onFoot' }));
     const portraitInitial = await layoutSnapshot();
     const doorsClosedAtSpawn = await page.evaluate(() => globalThis.__PTBO_GAMEPLAY__.state().stationOne?.doors?.front?.every(door => door.fraction === 0 && door.target === 0) === true);
     if (shouldCaptureArtifacts) {

@@ -1,0 +1,683 @@
+{
+  "passed": true,
+  "version": "1.6.178",
+  "initial": {
+    "mode": "driving",
+    "activeVehicleId": "pump-1",
+    "vehicleName": "Pump 1",
+    "vehicles": [
+      {
+        "id": "pump-1",
+        "name": "Pump 1",
+        "station": 1,
+        "type": "pumper",
+        "y": -7.616525004433786,
+        "speed": 0,
+        "acceleration": 0,
+        "steering": 0,
+        "pitch": -0.0007801929926604663,
+        "roll": 0.0009401098232212969,
+        "wheelRotation": 0,
+        "x": -200.14263824993415,
+        "z": 898.0847650485292,
+        "heading": -3.092584483687663,
+        "lastRoadWheelCount": 0,
+        "assetStatus": "blender-ready"
+      },
+      {
+        "id": "pump-2",
+        "name": "Pump 2",
+        "station": 2,
+        "type": "pumper",
+        "y": 8.723439870413689,
+        "speed": 0,
+        "acceleration": 0,
+        "steering": 0,
+        "pitch": 0,
+        "roll": 0,
+        "wheelRotation": 0,
+        "x": 285.8216286361228,
+        "z": -2947.2343993888016,
+        "heading": 2.681471502886528,
+        "assetStatus": "blender-ready"
+      },
+      {
+        "id": "pump-3",
+        "name": "Pump 3",
+        "station": 3,
+        "type": "pumper",
+        "y": 8.263449482622928,
+        "speed": 0,
+        "acceleration": 0,
+        "steering": 0,
+        "pitch": 0,
+        "roll": 0,
+        "wheelRotation": 0,
+        "x": -2468.3573880128038,
+        "z": 2672.3251490003877,
+        "heading": 4.095066023954295,
+        "assetStatus": "blender-ready"
+      },
+      {
+        "id": "aerial",
+        "name": "Aerial",
+        "station": 1,
+        "type": "aerial",
+        "y": -7.616525004433786,
+        "speed": 0,
+        "acceleration": 0,
+        "steering": 0,
+        "pitch": 0,
+        "roll": 0,
+        "wheelRotation": 0,
+        "x": -204.77706718745276,
+        "z": 898.3120719403961,
+        "heading": -3.0925844836876633,
+        "assetStatus": "blender-ready",
+        "aerial": {
+          "phase": "travel",
+          "beams": 0,
+          "jacks": 0,
+          "fold": 1,
+          "basketFold": 1,
+          "pitch": 0,
+          "yaw": 0,
+          "extension": 0,
+          "nozzleYaw": 0,
+          "nozzlePitch": -0.25,
+          "flow": false,
+          "supply": 45,
+          "feet": [
+            0,
+            0,
+            0,
+            0
+          ],
+          "stopped": false,
+          "reason": ""
+        }
+      },
+      {
+        "id": "medi",
+        "name": "Medi",
+        "station": 1,
+        "type": "medi",
+        "y": -7.616525004433786,
+        "speed": 0,
+        "acceleration": 0,
+        "steering": 0,
+        "pitch": 0,
+        "roll": 0,
+        "wheelRotation": 0,
+        "x": -209.41149612497136,
+        "z": 898.539378832263,
+        "heading": -3.0925844836876633,
+        "assetStatus": "blender-ready"
+      }
+    ],
+    "fleetError": "",
+    "stationNumber": 1,
+    "camera": {
+      "view": "auto",
+      "bayBlend": 1,
+      "zoom": 1,
+      "scale": 0.82,
+      "driveHeight": 0.85
+    },
+    "stationThreeDoor": null,
+    "canSwitchStations": true,
+    "transition": {
+      "stationNumber": 1,
+      "pendingStationNumber": null,
+      "busy": false,
+      "error": null
+    },
+    "player": {
+      "x": -202.69599768266556,
+      "y": -7.626525004433786,
+      "z": 899.7118039562637
+    },
+    "truck": {
+      "y": -7.616525004433786,
+      "speed": 0,
+      "acceleration": 0,
+      "steering": 0,
+      "pitch": -0.0007801929926604663,
+      "roll": 0.0009401098232212969,
+      "wheelRotation": 0,
+      "x": -200.14263824993415,
+      "z": 898.0847650485292,
+      "heading": -3.092584483687663,
+      "lastRoadWheelCount": 0
+    },
+    "emergencyFacilities": {
+      "station2": {
+        "status": "ready",
+        "error": null,
+        "position": {
+          "x": 276.7179260601966,
+          "y": 8.688439870413688,
+          "z": -2941.701534000138
+        },
+        "replacementCount": 1,
+        "runtimeOwned": true,
+        "visible": false
+      },
+      "ems-armour": {
+        "status": "ready",
+        "error": null,
+        "position": {
+          "x": 1302.9632128754765,
+          "y": -7.281890529815057,
+          "z": 497.67318800050447
+        },
+        "replacementCount": 1,
+        "runtimeOwned": false,
+        "visible": true
+      },
+      "ems-clonsilla": {
+        "status": "ready",
+        "error": null,
+        "position": {
+          "x": -2075.280889318617,
+          "y": 8.091690017189663,
+          "z": 2149.1905310002217
+        },
+        "replacementCount": 1,
+        "runtimeOwned": false,
+        "visible": true
+      },
+      "reconstruction-way-165360842": {
+        "status": "ready",
+        "error": null,
+        "position": {
+          "x": -1634.442420031483,
+          "y": -12.363326647056844,
+          "z": 4093.683089999969
+        },
+        "replacementCount": 1,
+        "runtimeOwned": false,
+        "visible": true
+      },
+      "reconstruction-way-176908280": {
+        "status": "ready",
+        "error": null,
+        "position": {
+          "x": -1058.3357400681143,
+          "y": 41.921866456518565,
+          "z": -1703.6645880000108
+        },
+        "replacementCount": 1,
+        "runtimeOwned": false,
+        "visible": true
+      },
+      "reconstruction-way-254751834": {
+        "status": "ready",
+        "error": null,
+        "position": {
+          "x": -3288.3055984173775,
+          "y": 50.34046041804463,
+          "z": 1788.9019820001731
+        },
+        "replacementCount": 1,
+        "runtimeOwned": false,
+        "visible": true
+      },
+      "reconstruction-way-319167856": {
+        "status": "ready",
+        "error": null,
+        "position": {
+          "x": -460.02821780183405,
+          "y": -11.541891528383774,
+          "z": 2303.0787920003236
+        },
+        "replacementCount": 1,
+        "runtimeOwned": false,
+        "visible": true
+      },
+      "reconstruction-way-77772361": {
+        "status": "ready",
+        "error": null,
+        "position": {
+          "x": -947.6820262417455,
+          "y": -7.279904857662997,
+          "z": 2905.577061999762
+        },
+        "replacementCount": 2,
+        "runtimeOwned": false,
+        "visible": true
+      }
+    },
+    "stationOne": {
+      "status": "ready",
+      "error": null,
+      "datum": -7.651525004433786,
+      "groundRange": [
+        -8.118695457806345,
+        -7.751525004433786
+      ],
+      "bounds": {
+        "x": 54.914995193481445,
+        "y": 14.02000043866066,
+        "z": 42.13000011444092
+      },
+      "doors": {
+        "front": [
+          {
+            "fraction": 0,
+            "target": 0
+          },
+          {
+            "fraction": 0,
+            "target": 0
+          },
+          {
+            "fraction": 0,
+            "target": 0
+          },
+          {
+            "fraction": 0,
+            "target": 0
+          },
+          {
+            "fraction": 0,
+            "target": 0
+          }
+        ],
+        "rear": []
+      },
+      "loaded": true
+    },
+    "stationOneReplacement": {
+      "matched": 1,
+      "hidden": 1,
+      "sourceIds": [
+        "way/1009651229"
+      ]
+    },
+    "stationTwo": null,
+    "stationTwoReplacement": null,
+    "firefighterAppearance": {
+      "status": "blender-ready",
+      "visible": false,
+      "limbs": [
+        0,
+        0,
+        0,
+        0
+      ]
+    },
+    "truckAppearance": {
+      "status": "blender-ready",
+      "wheelCount": 4,
+      "wheelSpin": 0,
+      "frontSteering": [
+        0,
+        0
+      ],
+      "emergencyLights": false,
+      "beacons": [
+        {
+          "visible": true,
+          "intensity": 0.35
+        },
+        {
+          "visible": true,
+          "intensity": 0.35
+        },
+        {
+          "visible": true,
+          "intensity": 0.35
+        },
+        {
+          "visible": true,
+          "intensity": 0.35
+        }
+      ]
+    },
+    "onRoad": false
+  },
+  "final": {
+    "state": {
+      "mode": "driving",
+      "activeVehicleId": "aerial",
+      "vehicleName": "Aerial",
+      "vehicles": [
+        {
+          "id": "pump-1",
+          "name": "Pump 1",
+          "station": 1,
+          "type": "pumper",
+          "y": -7.616525004433786,
+          "speed": 0,
+          "acceleration": 0,
+          "steering": 0,
+          "pitch": -0.0004772981344002765,
+          "roll": 0.0005751303446404766,
+          "wheelRotation": 0,
+          "x": -200.14263824993415,
+          "z": 898.0847650485292,
+          "heading": -3.092584483687663,
+          "lastRoadWheelCount": 0,
+          "assetStatus": "blender-ready"
+        },
+        {
+          "id": "pump-2",
+          "name": "Pump 2",
+          "station": 2,
+          "type": "pumper",
+          "y": 8.723439870413689,
+          "speed": 0,
+          "acceleration": 0,
+          "steering": 0,
+          "pitch": 0,
+          "roll": 0,
+          "wheelRotation": 0,
+          "x": 285.8216286361228,
+          "z": -2947.2343993888016,
+          "heading": 2.681471502886528,
+          "assetStatus": "blender-ready"
+        },
+        {
+          "id": "pump-3",
+          "name": "Pump 3",
+          "station": 3,
+          "type": "pumper",
+          "y": 8.263449482622928,
+          "speed": 0,
+          "acceleration": 0,
+          "steering": 0,
+          "pitch": 0,
+          "roll": 0,
+          "wheelRotation": 0,
+          "x": -2468.3573880128038,
+          "z": 2672.3251490003877,
+          "heading": 4.095066023954295,
+          "assetStatus": "blender-ready"
+        },
+        {
+          "id": "aerial",
+          "name": "Aerial",
+          "station": 1,
+          "type": "aerial",
+          "y": -7.616525004433786,
+          "speed": 0,
+          "acceleration": 0,
+          "steering": 0,
+          "pitch": 0,
+          "roll": 0,
+          "wheelRotation": 0,
+          "x": -204.77706718745276,
+          "z": 898.3120719403961,
+          "heading": -3.092584483687663,
+          "lastRoadWheelCount": 0,
+          "assetStatus": "blender-ready",
+          "aerial": {
+            "phase": "travel",
+            "beams": 0,
+            "jacks": 0,
+            "fold": 1,
+            "basketFold": 1,
+            "pitch": 0,
+            "yaw": 0,
+            "extension": 0,
+            "nozzleYaw": 0,
+            "nozzlePitch": -0.25,
+            "flow": false,
+            "supply": 45,
+            "feet": [
+              0,
+              0,
+              0,
+              0
+            ],
+            "stopped": false,
+            "reason": ""
+          }
+        },
+        {
+          "id": "medi",
+          "name": "Medi",
+          "station": 1,
+          "type": "medi",
+          "y": -7.616525004433786,
+          "speed": 0,
+          "acceleration": 0,
+          "steering": 0,
+          "pitch": 0,
+          "roll": 0,
+          "wheelRotation": 0,
+          "x": -209.41149612497136,
+          "z": 898.539378832263,
+          "heading": -3.092584483687663,
+          "lastRoadWheelCount": 0,
+          "assetStatus": "blender-ready"
+        }
+      ],
+      "fleetError": "",
+      "stationNumber": 1,
+      "camera": {
+        "view": "auto",
+        "bayBlend": 1,
+        "zoom": 1,
+        "scale": 0.82,
+        "driveHeight": 0.85
+      },
+      "stationThreeDoor": null,
+      "canSwitchStations": true,
+      "transition": {
+        "stationNumber": 1,
+        "pendingStationNumber": null,
+        "busy": false,
+        "error": null
+      },
+      "player": {
+        "x": -202.69599768266556,
+        "y": -7.626525004433786,
+        "z": 899.7118039562637
+      },
+      "truck": {
+        "y": -7.616525004433786,
+        "speed": 0,
+        "acceleration": 0,
+        "steering": 0,
+        "pitch": 0,
+        "roll": 0,
+        "wheelRotation": 0,
+        "x": -204.77706718745276,
+        "z": 898.3120719403961,
+        "heading": -3.092584483687663,
+        "lastRoadWheelCount": 0
+      },
+      "emergencyFacilities": {
+        "station2": {
+          "status": "ready",
+          "error": null,
+          "position": {
+            "x": 276.7179260601966,
+            "y": 8.688439870413688,
+            "z": -2941.701534000138
+          },
+          "replacementCount": 1,
+          "runtimeOwned": true,
+          "visible": false
+        },
+        "ems-armour": {
+          "status": "ready",
+          "error": null,
+          "position": {
+            "x": 1302.9632128754765,
+            "y": -7.281890529815057,
+            "z": 497.67318800050447
+          },
+          "replacementCount": 1,
+          "runtimeOwned": false,
+          "visible": true
+        },
+        "ems-clonsilla": {
+          "status": "ready",
+          "error": null,
+          "position": {
+            "x": -2075.280889318617,
+            "y": 8.091690017189663,
+            "z": 2149.1905310002217
+          },
+          "replacementCount": 1,
+          "runtimeOwned": false,
+          "visible": true
+        },
+        "reconstruction-way-165360842": {
+          "status": "ready",
+          "error": null,
+          "position": {
+            "x": -1634.442420031483,
+            "y": -12.363326647056844,
+            "z": 4093.683089999969
+          },
+          "replacementCount": 1,
+          "runtimeOwned": false,
+          "visible": true
+        },
+        "reconstruction-way-176908280": {
+          "status": "ready",
+          "error": null,
+          "position": {
+            "x": -1058.3357400681143,
+            "y": 41.921866456518565,
+            "z": -1703.6645880000108
+          },
+          "replacementCount": 1,
+          "runtimeOwned": false,
+          "visible": true
+        },
+        "reconstruction-way-254751834": {
+          "status": "ready",
+          "error": null,
+          "position": {
+            "x": -3288.3055984173775,
+            "y": 50.34046041804463,
+            "z": 1788.9019820001731
+          },
+          "replacementCount": 1,
+          "runtimeOwned": false,
+          "visible": true
+        },
+        "reconstruction-way-319167856": {
+          "status": "ready",
+          "error": null,
+          "position": {
+            "x": -460.02821780183405,
+            "y": -11.541891528383774,
+            "z": 2303.0787920003236
+          },
+          "replacementCount": 1,
+          "runtimeOwned": false,
+          "visible": true
+        },
+        "reconstruction-way-77772361": {
+          "status": "ready",
+          "error": null,
+          "position": {
+            "x": -947.6820262417455,
+            "y": -7.279904857662997,
+            "z": 2905.577061999762
+          },
+          "replacementCount": 2,
+          "runtimeOwned": false,
+          "visible": true
+        }
+      },
+      "stationOne": {
+        "status": "ready",
+        "error": null,
+        "datum": -7.651525004433786,
+        "groundRange": [
+          -8.118695457806345,
+          -7.751525004433786
+        ],
+        "bounds": {
+          "x": 54.914995193481445,
+          "y": 14.02000043866066,
+          "z": 42.13000011444092
+        },
+        "doors": {
+          "front": [
+            {
+              "fraction": 0,
+              "target": 0
+            },
+            {
+              "fraction": 0,
+              "target": 0
+            },
+            {
+              "fraction": 0,
+              "target": 0
+            },
+            {
+              "fraction": 0,
+              "target": 0
+            },
+            {
+              "fraction": 0,
+              "target": 0
+            }
+          ],
+          "rear": []
+        },
+        "loaded": true
+      },
+      "stationOneReplacement": {
+        "matched": 1,
+        "hidden": 1,
+        "sourceIds": [
+          "way/1009651229"
+        ]
+      },
+      "stationTwo": null,
+      "stationTwoReplacement": null,
+      "firefighterAppearance": {
+        "status": "blender-ready",
+        "visible": false,
+        "limbs": [
+          0,
+          0,
+          0,
+          0
+        ]
+      },
+      "truckAppearance": {
+        "status": "blender-ready",
+        "wheelCount": 6,
+        "wheelSpin": 0,
+        "frontSteering": [
+          0,
+          0
+        ],
+        "emergencyLights": false,
+        "beacons": [
+          {
+            "visible": true,
+            "intensity": 0.35
+          },
+          {
+            "visible": true,
+            "intensity": 0.35
+          },
+          {
+            "visible": true,
+            "intensity": 0.35
+          },
+          {
+            "visible": true,
+            "intensity": 0.35
+          }
+        ]
+      },
+      "onRoad": false
+    },
+    "overflow": false
+  },
+  "errors": [],
+  "http": []
+}

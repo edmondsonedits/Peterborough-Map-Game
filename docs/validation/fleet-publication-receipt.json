@@ -1,0 +1,21 @@
+{
+  "verifiedAt": "2026-11-04T00:29:30.064Z",
+  "version": "1.6.178",
+  "deploymentCommit": "8d8187f32be5fe097c421d4701e13dbce4968769",
+  "deploymentRun": "https://github.com/edmondsonedits/Peterborough-Map-Game/actions/runs/41746880049",
+  "url": "https://edmondsonedits.github.io/Peterborough-Map-Game/city-explorer/?v=1.6.178",
+  "assetChecks": {
+    "checked": 56,
+    "matched": 56
+  },
+  "liveBrowser": {
+    "passed": true,
+    "pageErrors": [],
+    "firstPartyHttpErrors": []
+  },
+  "roadPack": {
+    "unchangedTiles": 669,
+    "beforeBuildId": "ef67fd2d4ecd871c24eb",
+    "releaseBuildId": "6037a4864359c497ca44"
+  }
+}
