@@ -3,8 +3,8 @@
   "builder": "tools/blender/build_station1_fleet.py",
   "source": {
     "path": "city-explorer/assets/vehicles/generic-pumper.glb",
-    "sha256": "ab616d03025278e057a835fc1d32088071419838115800fb132d568424e63fbb",
-    "basis": "Existing project-created generic pumper geometry; selected cab components, wheel and warning-lens meshes reused. Original pumper file unchanged."
+    "sha256": "d4ea16d006b5aa56ff4d06251c5d38fd16f777232768ced25a777254d749edf5",
+    "basis": "Project-created generic pumper; selected cab surfaces, wheel and warning-beacon mesh shapes are reused by the Station 1 aerial. Traffic lamp faces and reflective striping are authored independently per vehicle."
   },
   "externalAssets": [],
   "notes": [
@@ -16,35 +16,54 @@
   ],
   "outputs": [
     {
-      "path": "assets-source/vehicles/aerial-platform.blend",
-      "sha256": "6e3685c5bfaa6410f24c2d28aa8d3b8880796b230e319a39873189c530df647b",
-      "bytes": 1033201
+      "path": "assets-source/vehicles/generic-pumper.blend",
+      "sha256": "063bbfcc1ad7f21d5b8833ea0ec8bb8c2559643e43f561b6d4d13bbfe4a8d9e7",
+      "bytes": 610188
     },
     {
-      "path": "city-explorer/assets/vehicles/aerial-platform.glb",
-      "sha256": "4dc1b3d20bdb2e69bd3f3a820021b3c28c497623e3bd21e2646a2dbaae1610db",
-      "bytes": 5695240
+      "path": "city-explorer/assets/vehicles/generic-pumper.glb",
+      "sha256": "d4ea16d006b5aa56ff4d06251c5d38fd16f777232768ced25a777254d749edf5",
+      "bytes": 3069208
     },
     {
-      "path": "city-explorer/assets/vehicles/aerial-platform.json",
-      "sha256": "d6d55bab882537e183f97bf7f7e96734a75e502a1fb93d997ca4286a6ea23307",
-      "bytes": 4658
+      "path": "city-explorer/assets/vehicles/generic-pumper.json",
+      "sha256": "a57b938ac5853b07f41cdb03e01fbc48fcb9e90d99872c53c1e2ff0834abbfa4",
+      "bytes": 988
     },
     {
       "path": "assets-source/vehicles/medi-pickup.blend",
-      "sha256": "f9387e6f6e1ff73b055acd75a4ae1de83e9986ba0ce697ba7f2ea4ce1df9cd52",
-      "bytes": 791241
+      "sha256": "dce9f03bd992ccf8a41c6a588da1ddeec266429c547e467dce0f0248c43f2713",
+      "bytes": 799598
     },
     {
       "path": "city-explorer/assets/vehicles/medi-pickup.glb",
-      "sha256": "83d671fd1af8fb1d018398770efec7449e2f24865f0a678e32e7123a809bda7e",
-      "bytes": 1783564
+      "sha256": "2f66f143d4b7de243676bd60ee2fc2d64ad23c8a151823f54d36e2f83293a2f9",
+      "bytes": 1789796
     },
     {
       "path": "city-explorer/assets/vehicles/medi-pickup.json",
-      "sha256": "5ffaa1410bd9241be5e69d248e36f636956b62aa0e72945c6f08297b7c897ba8",
-      "bytes": 1022
+      "sha256": "a35b1a1f2d98e09a838721fe9c7923446c53d950b6c63f3c5fa5b9a1f79d2db0",
+      "bytes": 1198
+    },
+    {
+      "path": "assets-source/vehicles/aerial-platform.blend",
+      "sha256": "2f3d48f63dd0bc5d58a36e2439ed6f4e45c639be41e4027e2668b3867c6093ce",
+      "bytes": 1008914
+    },
+    {
+      "path": "city-explorer/assets/vehicles/aerial-platform.glb",
+      "sha256": "a432af14a7b7717b9b29dec9b251b2eba114c1a46056daf79f7bf4100cd3bab3",
+      "bytes": 5817764
+    },
+    {
+      "path": "city-explorer/assets/vehicles/aerial-platform.json",
+      "sha256": "9acfcd86fbb1cee496185d3c876c66edfdf8491779929a17a1d851c67a53b737",
+      "bytes": 5897
     }
   ],
-  "updated": "2026-11-05"
+  "updated": "2026-11-05",
+  "builders": [
+    "tools/blender/build_generic_pumper.py",
+    "tools/blender/build_station1_fleet.py"
+  ]
 }

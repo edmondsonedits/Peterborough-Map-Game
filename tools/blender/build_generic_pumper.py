@@ -2,7 +2,7 @@
 Game coordinates: metres, Y up, forward -Z. Source Blender: Z up, forward +Y.
 No reference pixels, manufacturer insignia, or department marks are embedded.
 """
-import bpy, math, json
+import bpy, math, json, hashlib
 from pathlib import Path
 from mathutils import Vector
 
@@ -19,17 +19,21 @@ def material(name, rgb, metal=0, rough=.4, emission=0):
     p.inputs['Metallic'].default_value=metal; p.inputs['Roughness'].default_value=rough
     p.inputs['Emission Color'].default_value=(*rgb,1); p.inputs['Emission Strength'].default_value=emission
     return m
-red=material('Rescue red',(.4,.008,.014),.25,.3)
+red=material('Rescue red',(.52,.012,.019),.2,.27)
 black=material('Cab black',(.009,.013,.017),.2,.28)
 glass=material('Blue black glazing',(.008,.023,.03),.38,.16)
 silver=material('Brushed aluminum',(.57,.63,.66),.72,.3)
-chrome=material('Polished metal',(.8,.85,.86),.88,.18)
+chrome=material('Polished metal',(.9,.93,.94),.92,.14)
 rubber=material('Tire rubber',(.018,.021,.025),0,.86)
 gold=material('Generic gold lettering',(.94,.65,.15),.35,.4)
 white=material('White lamps and gauge faces',(.85,.9,.85),.1,.3)
 lamp=material('Red warning lenses',(.85,.015,.018),.1,.23,.35)
 amber=material('Amber markers',(.95,.35,.02),.1,.3,.3)
 hose=material('Woven hose',(.47,.42,.3),0,.95)
+headlight=material('Headlamp optics',(.84,.91,.96),.12,.18,.12)
+brakelight=material('Brake lamp optics',(.83,.018,.024),.12,.2,.08)
+reverselight=material('Reverse lamp optics',(.82,.9,.88),.12,.2,.08)
+reflective=material('Retroreflective gold',(.98,.68,.16),.15,.3,.12)
 static=[]; animated=[]
 def xyz(p): return (p[0],-p[2],p[1])
 def finish(o,n,m,parts):
@@ -82,7 +86,9 @@ for side in [-1,1]:
     box('Split windshield',(side*.59,2.33,-4.63),(1.065,.95,.025),glass,.035)
     rod('Wiper',(side*.35,1.92,-4.66),(side*.72,2.48,-4.665),.017,black)
     box('Headlamp surround',(side*.94,1.12,-4.71),(.43,.49,.065),chrome)
-    for y in [.99,1.23]:box('Headlight',(side*.94,y,-4.758),(.32,.14,.025),white)
+    parts=[]
+    for y in [.99,1.23]:box('Headlight projector',(side*.94,y,-4.758),(.32,.14,.025),headlight,parts=parts)
+    animated.append(join(parts,'Headlamp_'+('L' if side<0 else 'R')))
     # Crew cab lower door panels and upper glazing.
     for z,w in [(-3.85,1.1),(-1.65,1.24)]:
         box('Red cab door',(side*1.215,1.45,z),(.045,.61,w),red)
@@ -133,6 +139,7 @@ for side in [-1,1]:
             box('Rollup seam',(side*1.281,bottom+.065+i*.09,z),(.008,.008,w-.12),chrome,0)
         box('Locker latch',(side*1.3,bottom+.16,z),(.04,.04,w*.65),chrome)
         box('Reflective dark stripe',(side*1.286,max(bottom+.27,1.01),z),(.012,.1,w-.11),black,0)
+        box('Retroreflective locker accent',(side*1.295,max(bottom+.27,1.01),z),(.012,.042,w-.15),reflective,0)
     box('Hose bed sidewall',(side*1.13,2.71,2.75),(.11,.39,4.45),red)
     for z in [.61,1.72,2.83,3.94,4.94]:box('Bed reinforcement',(side*1.195,2.73,z),(.025,.32,.065),red)
     rod('Suction hose',(side*.95,2.5,.7),(side*.95,2.5,4.8),.105,black,vertices=16)
@@ -155,7 +162,13 @@ box('Rear face',(0,1.55,5.085),(2.43,1.72,.07),silver)
 box('Rear step',(0,.66,5.05),(2.61,.18,.3),silver)
 for x in [-1.03,1.03]:
     rod('Rear grab',(x,1.15,5.15),(x,2.39,5.15),.025,chrome)
-    for y in [1.13,1.43]:box('Rear tail lamp',(x,y,5.14),(.13,.18,.035),lamp)
+    box('Rear lamp backing',(x,1.25,5.158),(.16,.48,.055),black,.012)
+    suffix='L' if x<0 else 'R'
+    parts=[];box('Brake lens',(x,1.42,5.193),(.12,.17,.025),brakelight,parts=parts)
+    animated.append(join(parts,'BrakeLamp_'+suffix))
+    parts=[];box('Reverse lens',(x,1.16,5.193),(.12,.14,.025),reverselight,parts=parts)
+    animated.append(join(parts,'ReverseLamp_'+suffix))
+    box('Rear marker lens',(x,.96,5.193),(.10,.08,.025),amber,.008)
 text('Rear generic title','FIRE RESCUE',(0,2.21,5.135),.17) # rotate rear inscription below
 reartext=static[-1];reartext.rotation_euler.z+=math.pi
 # Original rear visibility panel, access steps and upper warning lamps.
@@ -164,7 +177,7 @@ for side in [-1,1]:
     for i in range(5):
         # Narrow diagonal gold strips remain contained within the rear panel.
         a=(side*(.06+i*.15),1.04,5.153);b=(side*(.06+i*.15+.11),1.67,5.153)
-        rod('Rear visibility stripe',a,b,.034,gold,vertices=4)
+        rod('Rear visibility stripe',a,b,.034,reflective,vertices=4)
     for y in [.89,1.27,1.65]:box('Rear access step',(side*.91,y,5.17),(.23,.055,.13),chrome)
     parts=[];box('Rear warning',(side*1.03,2.28,5.145),(.16,.21,.055),lamp,.02,parts)
     animated.append(join(parts,'Beacon_Rear'+('L' if side<0 else 'R')))
@@ -187,12 +200,14 @@ for side in [-1,1]:
         rod('Hub',(side*1.315,.62,z),(side*1.38,.62,z),.16,chrome,parts,20)
         for i in range(10):
             a=i*math.tau/10
-            rod('Rim ventilation',(side*1.319,.62+.28*math.sin(a),z+.28*math.cos(a)),(side*1.323,.62+.28*math.sin(a),z+.28*math.cos(a)),.039,black,parts)
+            # Vent wells use the same near-black rubber batch, avoiding an
+            # extra wheel primitive while retaining their readable recesses.
+            rod('Rim ventilation',(side*1.319,.62+.28*math.sin(a),z+.28*math.cos(a)),(side*1.323,.62+.28*math.sin(a),z+.28*math.cos(a)),.039,rubber,parts)
             rod('Wheel nut',(side*1.33,.62+.195*math.sin(a),z+.195*math.cos(a)),(side*1.35,.62+.195*math.sin(a),z+.195*math.cos(a)),.022,chrome,parts,6)
         animated.append(join(parts,'Wheel_'+axle+('L' if side<0 else 'R'),(x,.62,z)))
 
 # Bake static parts into one object per material: detail without hundreds of draw calls.
-groups=[(m,[o for o in static if o.data.materials[0]==m]) for m in [red,black,glass,silver,chrome,rubber,gold,white,lamp,amber,hose]]
+groups=[(m,[o for o in static if o.data.materials[0]==m]) for m in [red,black,glass,silver,chrome,rubber,gold,white,lamp,amber,hose,reflective]]
 for m,parts in groups:
     if parts:join(parts,'Body_'+m.name.replace(' ','_'))
 meshes=[o for o in bpy.context.scene.objects if o.type=='MESH']
@@ -203,5 +218,20 @@ bpy.context.scene['asset_notes']='Original generic pumper; single-photo proporti
 bpy.ops.wm.save_as_mainfile(filepath=str(SOURCE/'generic-pumper.blend'))
 bpy.ops.export_scene.gltf(filepath=str(OUT/'generic-pumper.glb'),export_format='GLB',export_yup=True,export_extras=True)
 triangles=sum(sum(len(p.vertices)-2 for p in o.data.polygons) for o in meshes)
-(OUT/'generic-pumper.json').write_text(json.dumps({'name':'Generic rescue pumper','version':1,'source':'Original Blender geometry inspired by user-provided reference; no embedded photograph or department marks','units':'metres','forward':'-Z','up':'+Y','wheelRadius':.56,'wheelbase':5.65,'triangles':triangles,'meshObjects':len(meshes),'wheelNodes':['Wheel_FL','Wheel_FR','Wheel_RL','Wheel_RR'],'beaconNodes':['Beacon_L','Beacon_R','Beacon_RearL','Beacon_RearR'],'limitations':['Unseen rear and opposite side are plausible original designs','Dimensions estimated to retain existing simulator handling envelope'],'commercialUse':'Original project-created geometry and generic markings; no third-party model or texture dependencies'},indent=2))
+(OUT/'generic-pumper.json').write_text(json.dumps({'name':'Generic rescue pumper','version':1,'source':'Original Blender geometry inspired by user-provided reference; no embedded photograph or department marks','units':'metres','forward':'-Z','up':'+Y','wheelRadius':.56,'wheelCenterHeight':.62,'wheelbase':5.65,'triangles':triangles,'meshObjects':len(meshes),'wheelNodes':['Wheel_FL','Wheel_FR','Wheel_RL','Wheel_RR'],'beaconNodes':['Beacon_L','Beacon_R','Beacon_RearL','Beacon_RearR'],'lampNodes':['Headlamp_L','Headlamp_R','BrakeLamp_L','BrakeLamp_R','ReverseLamp_L','ReverseLamp_R'],'limitations':['Unseen rear and opposite side are plausible original designs','Dimensions estimated to retain existing simulator handling envelope'],'commercialUse':'Original project-created geometry and generic markings; no third-party model or texture dependencies'},indent=2))
+provenance_path=SOURCE/'fleet-provenance.json'
+if provenance_path.exists():
+    provenance=json.loads(provenance_path.read_text(encoding='utf8'))
+    pumper_glb=OUT/'generic-pumper.glb'
+    provenance['source']['sha256']=hashlib.sha256(pumper_glb.read_bytes()).hexdigest()
+    provenance['source']['basis']='Project-created generic pumper; selected cab surfaces, wheel and warning-beacon mesh shapes are reused by the Station 1 aerial. Traffic lamp faces and reflective striping are authored independently per vehicle.'
+    provenance['builders']=sorted(set(provenance.get('builders',[]))|{'tools/blender/build_generic_pumper.py','tools/blender/build_station1_fleet.py'})
+    generated=[('assets-source/vehicles/generic-pumper.blend',SOURCE/'generic-pumper.blend'),('city-explorer/assets/vehicles/generic-pumper.glb',pumper_glb),('city-explorer/assets/vehicles/generic-pumper.json',OUT/'generic-pumper.json')]
+    generated_paths={relative for relative,_ in generated}
+    provenance['outputs']=[item for item in provenance.get('outputs',[]) if item.get('path') not in generated_paths]
+    for relative,path in generated:
+        raw=path.read_bytes()
+        provenance['outputs'].append({'path':relative,'sha256':hashlib.sha256(raw).hexdigest(),'bytes':len(raw)})
+    provenance['outputs'].sort(key=lambda item:item['path'])
+    provenance_path.write_text(json.dumps(provenance,indent=2)+'\n',encoding='utf8')
 print('PUMPER EXPORTED',triangles,'triangles',len(meshes),'meshes')

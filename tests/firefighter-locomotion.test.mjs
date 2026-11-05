@@ -13,6 +13,23 @@ function fixture(){
 }
 function advance(controller,rate,seconds,speed){for(let i=0;i<Math.round(rate*seconds);i++)controller.update(1/rate,speed);}
 
+test('sprint takes over at top speed and blends back to run in phase',()=>{
+  const {scene,clips}=fixture();
+  const sprint=clips[2].clone();
+  sprint.name='Sprint';
+  clips.push(sprint);
+  const gait=createFirefighterLocomotion(scene,clips);
+  advance(gait,60,1,5.4);
+  assert.equal(gait.state().mode,'sprint');
+  assert.ok(gait.state().weights.Sprint>.98);
+  advance(gait,60,.2,4.5);
+  const {weights,actionTimes}=gait.state();
+  assert.ok(weights.Run>.1&&weights.Sprint>.1);
+  assert.ok(Math.abs(actionTimes.Run/clips[2].duration-actionTimes.Sprint/sprint.duration)<1e-5);
+  advance(gait,60,1,3.8);
+  assert.equal(gait.state().mode,'run');
+});
+
 test('locomotion selects and crossfades idle, walk, and run by measured speed',()=>{
   const {scene,clips}=fixture(),gait=createFirefighterLocomotion(scene,clips);
   assert.equal(gait.state().mode,'idle');assert.equal(gait.state().weights.Idle,1);

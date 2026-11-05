@@ -11,7 +11,7 @@ ROOT=Path(__file__).resolve().parents[2]
 OUT=ROOT/'city-explorer/assets/vehicles'; SRC=ROOT/'assets-source/vehicles'
 PUMPER=OUT/'generic-pumper.glb'
 OUT.mkdir(parents=True,exist_ok=True); SRC.mkdir(parents=True,exist_ok=True)
-RED=(.42,.012,.018,1); DARK=(.018,.025,.032,1); BLACK=(.008,.012,.016,1)
+RED=(.52,.012,.02,1); DARK=(.018,.025,.032,1); BLACK=(.008,.012,.016,1)
 GLASS=(.018,.07,.09,1); SIL=(.63,.69,.71,1); CHROME=(.84,.88,.88,1)
 RUB=(.019,.022,.026,1); WHITE=(.88,.9,.86,1); AMBER=(1,.31,.025,1)
 GOLD=(.94,.63,.13,1); BLUE=(.025,.25,.66,1); MEDWHITE=(.87,.89,.88,1)
@@ -22,11 +22,13 @@ def mat(name,c,metal=0,rough=.38,em=0):
  if em:p.inputs['Emission Color'].default_value=c;p.inputs['Emission Strength'].default_value=em
  return m
 M={k:mat(k,c,me,ro,em) for k,c,me,ro,em in [
- ('Rescue red',RED,.22,.32,0),('Graphite',DARK,.22,.3,0),('Deep black',BLACK,.18,.3,0),('Cap Charcoal',(.014,.018,.023,1),0,.78,0),
- ('Safety glass',GLASS,.42,.16,0),('Aluminum',SIL,.72,.3,0),('Chrome',CHROME,.85,.2,0),
+ ('Rescue red',RED,.18,.27,0),('Graphite',DARK,.22,.3,0),('Deep black',BLACK,.18,.3,0),('Cap Charcoal',(.014,.018,.023,1),0,.78,0),
+ ('Safety glass',GLASS,.42,.16,0),('Aluminum',SIL,.72,.3,0),('Chrome',(.92,.95,.96,1),.92,.14,0),
  ('Rubber',RUB,0,.86,0),('Ivory',WHITE,.1,.28,0),('Amber',AMBER,.1,.25,.25),
  ('Rescue gold',GOLD,.3,.4,0),('Medical blue',BLUE,.16,.34,0),('Medical white',MEDWHITE,.14,.32,0),
- ('Warning red',(.88,.012,.015,1),.1,.23,.32),('Hose',(.54,.46,.31,1),0,.9,0),('Deck Grip',(.038,.048,.052,1),.08,.84,0),('Reflective Gold',(.98,.64,.08,1),.12,.34,.04)]}
+ ('Warning red',(.88,.012,.015,1),.1,.23,.32),('Headlamp optics',(.84,.91,.96,1),.12,.18,.08),
+ ('Brake lamp optics',(.84,.018,.024,1),.12,.2,.06),('Reverse lamp optics',(.84,.91,.89,1),.12,.2,.06),
+ ('Hose',(.54,.46,.31,1),0,.9,0),('Deck Grip',(.038,.048,.052,1),.08,.84,0),('Reflective Gold',(.98,.64,.08,1),.12,.34,.04)]}
 SOURCE_WHEELS={};SOURCE_BEACONS={}
 def xyz(p): return (p[0],-p[2],p[1]) # runtime Y-up, forward -Z -> Blender Z-up
 def clean(): bpy.ops.object.select_all(action='SELECT');bpy.ops.object.delete(use_global=False)
@@ -180,11 +182,10 @@ def rear_markings():
     return obj
 
 def build_aerial(cab):
- parts=[]
+ parts=[];lamps=[]
  # Tandem rescue chassis / apparatus box, with two exposed axle openings.
  parts += [box('Tandem frame',(0,.75,.6),(2.16,.38,11.4),'Deep black'),
- box('Rescue body lower',(0,1.42,2.0),(2.46,1.45,7.6),'Rescue red'),
- box('Upper locker bridge',(0,2.18,2.0),(2.48,.76,7.45),'Rescue red'),
+ box('Rescue body lower sill',(0,.9975,2.0),(2.46,.605,7.6),'Rescue red'),
  box('Body rear cap',(0,1.82,5.8),(2.38,1.55,.16),'Rescue red'),
  box('Body front bulkhead',(0,1.82,-1.52),(2.38,1.55,.16),'Rescue red'),
  box('Cab rear closeout',(0,1.18,-1.63),(2.25,.88,.78),'Rescue red',.11),
@@ -195,6 +196,19 @@ def build_aerial(cab):
  box('Aerial bumper alloy face',(0,.65,-5.34),(1.82,.12,.11),'Aluminum',.035),
  box('Rear step bumper',(0,.55,6.25),(2.5,.32,.5),'Deep black',.08),
  box('Rear step alloy edge',(0,.72,6.27),(2.18,.08,.12),'Aluminum',.035)]
+ # A genuine open-top well replaces solid body boxes beneath the basket.
+ # Fore-aft body geometry is stretched later; these boundaries are authored in final metres.
+ pocket_z0=-1.12/1.09;pocket_z1=.85/1.09
+ for side in (-1,1):
+  parts.append(box('Stow well side locker',(side*1.025,1.95,2.0),(.43,1.30,7.6),'Rescue red'))
+  parts.append(box('Stow well inner lining',(side*.805,1.955,(pocket_z0+pocket_z1)/2),(.035,1.29,pocket_z1-pocket_z0),'Graphite',.015))
+  parts.append(box('Stow well alloy lip',(side*.83,2.615,(pocket_z0+pocket_z1)/2),(.10,.075,pocket_z1-pocket_z0+.12),'Aluminum',.018))
+ for za,zb in [(-1.8,pocket_z0),(pocket_z1,5.8)]:
+  parts.append(box('Stow well end locker',(0,1.95,(za+zb)/2),(1.62,1.30,zb-za),'Rescue red'))
+ for z in (pocket_z0,pocket_z1):
+  parts.append(box('Stow well end liner',(0,1.955,z),(1.60,1.29,.035),'Graphite',.015))
+  parts.append(box('Stow well end rim',(0,2.615,z),(1.75,.075,.10),'Aluminum',.018))
+ stow_floor=box('BasketStowFloor',(0,1.325,(pocket_z0+pocket_z1)/2),(1.58,.05,pocket_z1-pocket_z0-.04),'Deck Grip',.015)
  # Three axles receive molded half-round fender lips, leaving tire pivots clear.
  for side in (-1,1):
   for axle,z in enumerate((-3.1,2.8,4.1),1):
@@ -212,8 +226,10 @@ def build_aerial(cab):
    box('Side access tread pad',(side*1.34,.63,.72),(.34,.09,.68),'Deck Grip',.025),
    box('Side access tread pad',(side*1.34,.63,1.58),(.34,.09,.68),'Deck Grip',.025)]
  for side in (-1,1):
-  parts += [box('Aerial headlamp housing',(side*.83,1.2,-4.78),(.34,.32,.08),'Deep black',.045),
-   box('Aerial headlamp lens',(side*.83,1.21,-4.83),(.25,.22,.035),'Ivory',.035)]
+  parts.append(box('Aerial headlamp housing',(side*.83,1.2,-4.78),(.34,.32,.08),'Deep black',.045))
+  label='L' if side<0 else 'R'
+  lamps.append(box('Aerial headlamp lens',(side*.83,1.21,-4.83),(.25,.22,.035),'Headlamp optics',.035))
+  lamps[-1].name='Headlamp_'+label
   parts += [box('Crew window surround',(side*1.071,2.205,-2.11),(.051,.57,.86),'Graphite',.054),
    box('Tinted crew window',(side*1.103,2.205,-2.11),(.026,.485,.74),'Safety glass',.046),
    box('Crew door waist closeout',(side*1.066,1.63,-2.08),(.065,.60,.86),'Rescue red',.037),
@@ -245,9 +261,12 @@ def build_aerial(cab):
  for side in (-1,1):rod('Rear control handrail',(side*.76,.55,6.1),(side*.76,2.15,6.1),.045,'Chrome')
  for side in (-1,1):
   parts += [box('Rear tail lamp housing',(side*1.01,1.25,5.96),(.32,.78,.1),'Deep black',.045),
-   box('Rear tail lamp red',(side*1.01,1.43,6.03),(.22,.28,.07),'Warning red',.035),
-   box('Rear tail lamp amber',(side*1.01,1.12,6.03),(.22,.17,.07),'Amber',.03),
-   box('Rear tail lamp reverse',(side*1.01,.91,6.03),(.22,.13,.07),'Ivory',.025)]
+   box('Rear tail lamp amber',(side*1.01,1.12,6.03),(.22,.17,.07),'Amber',.03)]
+  label='L' if side<0 else 'R'
+  lamps.append(box('Rear tail brake lens',(side*1.01,1.43,6.03),(.22,.28,.07),'Brake lamp optics',.035))
+  lamps[-1].name='BrakeLamp_'+label
+  lamps.append(box('Rear reverse lens',(side*1.01,.91,6.03),(.22,.13,.07),'Reverse lamp optics',.025))
+  lamps[-1].name='ReverseLamp_'+label
  # Rear-facing work lamps mount high above the warning panel, with protective bezels.
  for side in (-1,1):
   parts += [box('Rear work lamp bezel',(side*.72,2.47,5.91),(.42,.28,.09),'Graphite',.035),
@@ -261,13 +280,13 @@ def build_aerial(cab):
   parts.append(raised_label('Crew agency label','FIRE RESCUE',(side*1.104,1.573,-2.12),(side,0,0),.074,'Rescue gold'))
   parts.append(box('Front warning light plinth',(side*.9,2.989,-4.0),(.38,.108,.192),'Deep black',.031))
   parts.append(box('Rear deck warning light plinth',(side*.95,2.62,4.45),(.36,.128,.192),'Deep black',.027))
- for x in [-.78,-.52,-.26,0,.26,.52,.78]:
+ for x in [-.78,.78]:
   parts.append(box('Ladder storage cradle',(x,2.92,1.88),(.07,.1,5.5),'Chrome'))
  # Four named warning beacons; originals are also present as source-mesh extracts in cab files (source metadata).
  beaconpos=[('Beacon_L',(-.9,3.08,-4.0)),('Beacon_R',(.9,3.08,-4.0)),('Beacon_RearL',(-.95,2.7,4.45)),('Beacon_RearR',(.95,2.7,4.45))]
  # Reusable original pumper cab face/body meshes, dimension-aligned to this chassis.
  parts+=add_cab(cab,.94,.1,.88,.94)
- parts=[o for o in bpy.context.scene.objects if o.parent is None]
+ parts=[o for o in bpy.context.scene.objects if o.parent is None and o not in lamps and o!=stow_floor]
  join_by_material(parts,'AerialBody')
  # separate wheel pivots (source tread mesh profile reused by shape, named wheel contract)
  for nm,x,z in [('FL',-1.13,-3.1),('FR',1.13,-3.1),('RL',-1.13,2.8),('RR',1.13,2.8),('RL2',-1.13,4.1),('RR2',1.13,4.1)]:
@@ -321,14 +340,23 @@ def build_aerial(cab):
     rod('Ladder side truss diagonal',(side*rail,-.035,z0),(side*rail,.15,z1),.025,'Chrome',node)
     rod('Ladder side truss diagonal',(side*rail,.15,z1),(side*rail,-.035,z1-.52),.025,'Chrome',node)
   join_by_material([o for o in bpy.context.scene.objects if o.parent==node],'LadderStage')
- # The central folding stow stays at the end of Stage 5; terminal fly keeps the established Section_4 name.
- fold=bpy.data.objects.new('KnuckleFold',None);bpy.context.collection.objects.link(fold);fold.parent=sec;fold.location=xyz((0,.1,-5.2))
+ # An underslung knuckle carries the folded fly below the nested main ladder.
+ # Rear basket yoke leaves the standing area open instead of crossing an occupant.
+ for side in (-1,1):
+  box('Knuckle drop bracket',(side*.43,-.235,-5.2),(.14,.65,.25),'Aluminum',.035,sec)
+  rod('Knuckle bracket brace',(side*.43,-.05,-4.55),(side*.43,-.49,-5.2),.07,'Chrome',sec)
+  cyl('Knuckle hinge pin',(side*.43,-.52,-5.2),.15,.21,'Chrome','X',sec)
+ fold=bpy.data.objects.new('KnuckleFold',None);bpy.context.collection.objects.link(fold);fold.parent=sec;fold.location=xyz((0,-.52,-5.2))
  section4=bpy.data.objects.new('LadderSection_6',None);bpy.context.collection.objects.link(section4);section4.parent=fold
- for x in [-.3,.3]:box('Fly section rail',(x,0,-1.6),(.08,.13,3.2),'Aluminum',.02,section4)
- for j in range(12):box('Fly ladder rung',(0,0,-.12-j*.26),(.55,.05,.06),'Chrome',.01,section4)
- level=bpy.data.objects.new('BasketLevel',None);bpy.context.collection.objects.link(level);level.parent=section4;level.location=xyz((0,0,-3.2))
+ for x in [-.3,.3]:box('Fly section rail',(x,0,-2.25),(.08,.13,4.5),'Aluminum',.02,section4)
+ for j in range(17):box('Fly ladder rung',(0,0,-.12-j*.26),(.55,.05,.06),'Chrome',.01,section4)
+ level=bpy.data.objects.new('BasketLevel',None);bpy.context.collection.objects.link(level);level.parent=section4;level.location=xyz((0,0,-4.5))
  transport=bpy.data.objects.new('BasketFold',None);bpy.context.collection.objects.link(transport);transport.parent=level
- basket=bpy.data.objects.new('Basket',None);bpy.context.collection.objects.link(basket);basket.parent=transport
+ basket=bpy.data.objects.new('Basket',None);bpy.context.collection.objects.link(basket);basket.parent=transport;basket.location=xyz((0,-.9,-.7))
+ for side in (-1,1):
+  rod('Basket rear yoke arm',(side*.36,0,0),(side*.65,-.83,-.21),.065,'Aluminum',level)
+  cyl('Basket leveling hub',(side*.36,0,0),.13,.12,'Chrome','X',level)
+ box('Basket rear yoke crossmember',(0,-.83,-.21),(1.30,.10,.10),'Aluminum',.025,level)
  box('Rescue basket floor',(0,0,0),(1.25,.12,1.1),'Deck Grip',.04,basket)
  for i in range(7):box('Basket floor grip bar',(0,.065,-.43+i*.14),(1.12,.018,.035),'Aluminum',.006,basket)
  box('Basket front top rail',(0,.69,-.48),(1.2,.07,.07),'Chrome',.025,basket)
@@ -371,7 +399,7 @@ def build_aerial(cab):
  nozzle=bpy.data.objects.new('NozzleOutlet',None);bpy.context.collection.objects.link(nozzle);nozzle.parent=mp;nozzle.location=xyz((0,0,-.53))
  cyl('Nozzle crown',(0,0,-.53),.071,.14,'Chrome','Z',mp)
  # Export the source model in safe transport pose; runtime applies absolute angles.
- fold.rotation_euler.x=math.pi;level.rotation_euler.x=-math.pi;transport.rotation_euler.x=math.pi/2
+ fold.rotation_euler.x=-math.pi;level.rotation_euler.x=math.pi;transport.rotation_euler.x=0
  # Hydraulic elevation linkage: fixed chassis pins and moving upper yoke pins.
  for short,sgn in [('L',-1),('R',1)]:
   basepos=(sgn*.48,2.78,4.65);tiploc=(sgn*.48,.05,-1.05)
@@ -421,9 +449,9 @@ def build_aerial(cab):
  full_target=(0,(basket_target[1]+2.0)/2,basket_target[2]/2)
  render_preview(preview/'aerial-platform-deployed.png',(full_target[0]+26,full_target[1]+15,full_target[2]-15),full_target,52)
  render_preview(preview/'aerial-basket-close.png',(basket_target[0]+5,basket_target[1]+4,basket_target[2]-7),basket_target,8)
- ladder_sections=[{'node':f'LadderSection_{i}','length':5.6,'travel':0 if i==1 else 4.8} for i in range(1,6)]+[{'node':'LadderSection_6','length':3.2,'travel':0}]
- contract={'TurntableYaw':{'position':[0,2.95,4.796]},'LadderPitch':{'rest':'0 rad, ladder axis -Z'},'ladderSections':ladder_sections,'KnuckleFold':{'parent':'LadderSection_5','position':[0,.1,-5.2],'axis':'local X','deployedRad':0,'stowedRad':math.pi,'sectionLength':3.2},'BasketLevel':{'parent':'LadderSection_6','position':[0,0,-3.2],'compensation':'-(LadderPitch.rotation.x+KnuckleFold.rotation.x)'},'BasketFold':{'deployedRad':0,'transportRad':math.pi/2},'Basket':{'parent':'BasketFold'},'BasketStand':{'parent':'Basket','position':[0,.075,-.02],'feetAtFloor':True},'BasketControls':{'parent':'Basket','position':[.43,.4,.18]},'RearControls':{'node':'RearControls','position':[0,1.66,6.507],'orientation':'outward-facing from rear deck'},'RearOperator':{'node':'RearOperator','feet':[0,0,7.85],'facing':'-Z'},'MonitorYaw':{'position':[0,-.24,0],'parent':'Basket'},'MonitorPitch':{'parent':'MonitorYaw','rangeRad':[-math.pi/2,math.pi/3]},'NozzleOutlet':{'parent':'MonitorPitch','position':[0,0,-.53],'axis':'-Z','underside':True},'Outrigger_FL/FR/RL/RR':{'restX':0,'jackRestX':'sign*1.15','travelX':'sign*1.6','deployedPadX':'sign*2.75','jackNodes':'Jack_FL/FR/RL/RR','jackRestHeight':.52,'footPlateLocalY':0,'jackStroke':1.0,'ramChildCenterY':.28,'housingCenterY':-.25},'stabilizerBeamTravel':1.6,'wheelRadius':.56,'wheelbase':7.14,'jackFootSole':-.06,'ElevationRam_L/R':{'baseNodes':'Cylinder_Base_L/R','tipNodes':'Cylinder_Tip_L/R'}}
- return {'name':'Station 1 aerial platform','units':'metres','forward':'-Z','up':'+Y','dimensions':{'length':12.97,'width':2.55,'height':4.42},'cabClearance':{'min':[-1.18,.72,-5.254],'max':[1.18,3.05,-1.145]},'pivotContract':contract,'ladderSections':ladder_sections,'stabilizerBeamTravel':1.6,'wheelRadius':.56,'wheelbase':7.14,'jackFootSole':-.06,'wheelNodes':['Wheel_FL','Wheel_FR','Wheel_RL','Wheel_RR','Wheel_RL2','Wheel_RR2'],'beaconNodes':['Beacon_L','Beacon_R','Beacon_RearL','Beacon_RearR'],'triangles':0,'drawCalls':0,'source':'Original apparatus with selectively extracted generic pumper cab faces, wheels, and beacon meshes','wheelSimplificationRatio':.3,'commercialUse':'Project-created generic geometry and source project meshes'}
+ ladder_sections=[{'node':f'LadderSection_{i}','length':5.6,'travel':0 if i==1 else 4.8} for i in range(1,6)]+[{'node':'LadderSection_6','length':4.5,'travel':0}]
+ contract={'TurntableYaw':{'position':[0,2.95,4.796]},'LadderPitch':{'rest':'0 rad, ladder axis -Z'},'ladderSections':ladder_sections,'KnuckleFold':{'parent':'LadderSection_5','position':[0,-.52,-5.2],'axis':'local X','deployedRad':0,'stowedRad':-math.pi,'sectionLength':4.5},'BasketLevel':{'parent':'LadderSection_6','position':[0,0,-4.5],'compensation':'-(LadderPitch.rotation.x+KnuckleFold.rotation.x)'},'BasketFold':{'deployedRad':0,'transportRad':0},'Basket':{'parent':'BasketFold','position':[0,-.9,-.7],'alwaysLevel':True},'BasketStand':{'parent':'Basket','position':[0,.075,-.02],'feetAtFloor':True},'BasketControls':{'parent':'Basket','position':[.43,.4,.18]},'RearControls':{'node':'RearControls','position':[0,1.66,6.507],'orientation':'outward-facing from rear deck'},'RearOperator':{'node':'RearOperator','feet':[0,0,7.85],'facing':'-Z'},'MonitorYaw':{'position':[0,-.24,0],'parent':'Basket'},'MonitorPitch':{'parent':'MonitorYaw','rangeRad':[-math.pi/2,math.pi/3]},'NozzleOutlet':{'parent':'MonitorPitch','position':[0,0,-.53],'axis':'-Z','underside':True},'Outrigger_FL/FR/RL/RR':{'restX':0,'jackRestX':'sign*1.15','travelX':'sign*1.6','deployedPadX':'sign*2.75','jackNodes':'Jack_FL/FR/RL/RR','jackRestHeight':.52,'footPlateLocalY':0,'jackStroke':1.0,'ramChildCenterY':.28,'housingCenterY':-.25},'stabilizerBeamTravel':1.6,'wheelRadius':.56,'wheelbase':7.14,'jackFootSole':-.06,'ElevationRam_L/R':{'baseNodes':'Cylinder_Base_L/R','tipNodes':'Cylinder_Tip_L/R'}}
+ return {'name':'Station 1 aerial platform','units':'metres','forward':'-Z','up':'+Y','dimensions':{'length':12.97,'width':2.55,'height':4.42},'stowPocket':{'min':[-.78,1.35,-1.10],'max':[.78,2.60,.83],'floorNode':'BasketStowFloor'},'bodyClearance':[{'min':[-1.23,.70,-1.96],'max':[1.23,1.30,6.32]},{'min':[-1.24,1.30,-1.96],'max':[-.81,2.60,6.32]},{'min':[.81,1.30,-1.96],'max':[1.24,2.60,6.32]},{'min':[-.81,1.30,-1.96],'max':[.81,2.60,-1.12]},{'min':[-.81,1.30,.85],'max':[.81,2.60,6.32]}],'cabClearance':{'min':[-1.18,.72,-5.254],'max':[1.18,3.05,-1.145]},'pivotContract':contract,'ladderSections':ladder_sections,'stabilizerBeamTravel':1.6,'wheelRadius':.56,'wheelCenterHeight':.62,'wheelbase':7.14,'jackFootSole':-.06,'wheelNodes':['Wheel_FL','Wheel_FR','Wheel_RL','Wheel_RR','Wheel_RL2','Wheel_RR2'],'beaconNodes':['Beacon_L','Beacon_R','Beacon_RearL','Beacon_RearR'],'lampNodes':['Headlamp_L','Headlamp_R','BrakeLamp_L','BrakeLamp_R','ReverseLamp_L','ReverseLamp_R'],'triangles':0,'drawCalls':0,'source':'Original apparatus with selectively extracted generic pumper cab faces, wheels, and beacon meshes','wheelSimplificationRatio':.3,'commercialUse':'Project-created generic geometry and source project meshes'}
 
 def build_medi():
     sys.path.insert(0,str(Path(__file__).resolve().parent))

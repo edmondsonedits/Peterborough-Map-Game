@@ -60,6 +60,9 @@ def create_medi_model(materials, mat, box, cyl, rod, join_by_material, xyz):
         'Pickup retroreflective': mat('Pickup retroreflective', (.91,.91,.79,1), .13, .33, .075),
         'Pickup reflective gold': mat('Pickup reflective gold', (.94,.50,.08,1), .15, .36, .045),
         'Pickup light optics': mat('Pickup light optics', (.69,.79,.85,1), .25, .22, .13),
+        'Pickup headlamp optics': mat('Pickup headlamp optics', (.84,.92,.98,1), .12, .18, .08),
+        'Pickup brake optics': mat('Pickup brake optics', (.86,.018,.025,1), .12, .2, .06),
+        'Pickup reverse optics': mat('Pickup reverse optics', (.85,.92,.90,1), .12, .2, .06),
     })
     paint = 'Pickup fire red'
     seam = 'Pickup shadow seam'
@@ -69,6 +72,7 @@ def create_medi_model(materials, mat, box, cyl, rod, join_by_material, xyz):
     stripe = 'Pickup retroreflective'
     gold = 'Pickup reflective gold'
     optic = 'Pickup light optics'
+    head_optic = 'Pickup headlamp optics'
     rubber = 'Rubber'
     black = 'Deep black'
 
@@ -96,6 +100,16 @@ def create_medi_model(materials, mat, box, cyl, rod, join_by_material, xyz):
 
     def patch(name, corners, project, material, normal, rounding=.12):
         return face(name, [project(*p) for p in soft_outline(corners, rounding)], material, normal)
+
+    def join_named(objects, name):
+        bpy.ops.object.select_all(action='DESELECT')
+        for obj in objects:
+            obj.select_set(True)
+        bpy.context.view_layer.objects.active = objects[0]
+        bpy.ops.object.join()
+        obj = bpy.context.view_layer.objects.active
+        obj.name = name
+        return obj
 
     def lettering(name, words, position, up, normal, size, material):
         from mathutils import Matrix
@@ -210,6 +224,7 @@ def create_medi_model(materials, mat, box, cyl, rod, join_by_material, xyz):
         return (side*(width-taper+offset),y,z)
 
     ys=[belt,1.62,1.71,1.83,1.95,2.08,2.19,2.24,header]
+    dynamic_lamps=[]
     for side in (-1,1):
         rows = [[side_cab(side, y, lerp(cab_end(y,False),cab_end(y,True),u))
                  for u in (0,.03,.10,.25,.50,.75,.9,.97,1)] for y in ys]
@@ -377,11 +392,14 @@ def create_medi_model(materials, mat, box, cyl, rod, join_by_material, xyz):
     for side in (-1,1):
         outer=[(.94,side*.65),(1.544,side*.658),(1.51,side*.994),(.96,side*.991)]
         patch('Headlamp chrome bezel',outer,lambda y,x:fascia(y,x,.047),bright,(0,0,-1),.13)
+        headlamp_parts=[]
         for y in (1.059,1.32):
             patch('Headlamp optic recess',[(y-.084,side*.681),(y+.093,side*.681),(y+.091,side*.906),(y-.083,side*.916)],
                   lambda yy,x:fascia(yy,x,.053),black,(0,0,-1))
-            patch('Headlamp projector lens',[(y-.067,side*.698),(y+.074,side*.698),(y+.071,side*.892),(y-.065,side*.897)],
-                  lambda yy,x:fascia(yy,x,.060),optic,(0,0,-1))
+            headlamp_parts.append(patch('Headlamp projector lens',[(y-.067,side*.698),(y+.074,side*.698),(y+.071,side*.892),(y-.065,side*.897)],
+                  lambda yy,x:fascia(yy,x,.060),head_optic,(0,0,-1)))
+        headlamp=join_named(headlamp_parts,'Headlamp_'+('L' if side<0 else 'R'))
+        dynamic_lamps.append(headlamp.name)
         patch('Amber wraparound indicator',[(1.01,side*.924),(1.438,side*.924),(1.434,side*.982),(1.012,side*.983)],
               lambda y,x:fascia(y,x,.061),'Amber',(0,0,-1))
         box('Bumper fog lamp',(side*.74,.665,fascia_z(.74)-.108),(.142,.072,.032),optic,.017)
@@ -394,8 +412,12 @@ def create_medi_model(materials, mat, box, cyl, rod, join_by_material, xyz):
     box('Tailgate plate pocket',(0,.811,3.216),(.277,.145,.034),black,.027)
     for side in (-1,1):
         box('Tall recessed tail lamp bezel',(side*.901,1.123,3.196),(.171,.60,.082),black,.052)
-        box('Tail and brake lens',(side*.901,1.231,3.24),(.133,.347,.048),'Warning red',.036)
-        box('Rear reverse lens',(side*.901,.946,3.236),(.118,.091,.038),optic,.021)
+        brake=box('Tail and brake lens',(side*.901,1.231,3.24),(.133,.347,.048),'Pickup brake optics',.036)
+        brake.name='BrakeLamp_'+('L' if side<0 else 'R')
+        dynamic_lamps.append(brake.name)
+        reverse=box('Rear reverse lens',(side*.901,.946,3.236),(.118,.091,.038),'Pickup reverse optics',.021)
+        reverse.name='ReverseLamp_'+('L' if side<0 else 'R')
+        dynamic_lamps.append(reverse.name)
         box('Rear lower reflector',(side*.823,.59,3.343),(.139,.055,.017),'Warning red',.012)
         for z in (FRONT_AXLE+.65,REAR_AXLE+.63):
             box('Moulded mud flap',(side*.888,.331,z),(.31,.389,.036),rubber,.025)
@@ -411,7 +433,7 @@ def create_medi_model(materials, mat, box, cyl, rod, join_by_material, xyz):
     box('Light bar roof plinth',(0,2.325,-.54),(1.11,.050,.18),'Graphite',.027)
     for x in (-.65,.65):
         box('Canopy corner light mount',(x,2.264,2.65),(.242,.046,.119),black,.023)
-    static=[o for o in bpy.context.scene.objects if o.type=='MESH' and o.parent is None]
+    static=[o for o in bpy.context.scene.objects if o.type=='MESH' and o.parent is None and o.name not in dynamic_lamps]
     join_by_material(static,'MediPickup')
 
     def wheel_lathe(parent, name, profile, material, segments=48):
@@ -488,8 +510,8 @@ def create_medi_model(materials, mat, box, cyl, rod, join_by_material, xyz):
         'name':'Station 1 medical response pickup','units':'metres','forward':'-Z','up':'+Y',
         'dimensions':{'length':length,'width':width,'height':height},
         'measuredBounds':{'length':length,'width':width,'height':height},
-        'wheelbase':round(REAR_AXLE-FRONT_AXLE,3),'wheelRadius':WHEEL_RADIUS,
-        'wheelNodes':wheel_nodes,'beaconNodes':beacon_nodes,
+        'wheelbase':round(REAR_AXLE-FRONT_AXLE,3),'wheelRadius':WHEEL_RADIUS,'wheelCenterHeight':WHEEL_RADIUS,
+        'wheelNodes':wheel_nodes,'beaconNodes':beacon_nodes,'lampNodes':dynamic_lamps,
         'fourDoorCab':True,'fullyEnclosedCanopy':True,'ambulance':False,
         'body':'Contoured red four-door fire rescue pickup with a colour-matched canopy, lower reflective stripe and alloy brightwork',
         'source':'Original Blender geometry informed by two user-provided fire rescue pickup reference photographs',

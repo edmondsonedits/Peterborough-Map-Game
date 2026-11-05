@@ -1,8 +1,8 @@
 const clamp=(v,a,b)=>Math.max(a,Math.min(b,Number(v)||0));
 const approach=(v,t,step)=>v<t?Math.min(v+step,t):Math.max(v-step,t);
-export const AERIAL_LIMITS=Object.freeze({pitch:75*Math.PI/180,extension:4.8,supply:45,jackStroke:1.08,lift:.14,maxLift:.36,boardingPitch:.4});
-export function createAerialState(){return {phase:'travel',beams:0,jacks:0,lift:0,liftHeight:AERIAL_LIMITS.lift,fold:1,basketFold:1,pitch:0,yaw:0,extension:0,nozzleYaw:0,nozzlePitch:-.25,flow:false,supply:45,feet:[0,0,0,0],stopped:false,reason:''};}
-export function aerialTravelReady(s){return s.phase==='travel'&&s.beams===0&&s.jacks===0&&s.lift===0&&s.fold===1&&s.basketFold===1&&s.extension===0&&Math.abs(s.pitch)<.001&&Math.abs(s.yaw)<.001;}
+export const AERIAL_LIMITS=Object.freeze({pitch:75*Math.PI/180,extension:4.8,supply:45,jackStroke:1.08,lift:.14,maxLift:.36,boardingPitch:.4,clearancePitch:.8});
+export function createAerialState(){return {phase:'travel',beams:0,jacks:0,lift:0,liftHeight:AERIAL_LIMITS.lift,fold:1,basketFold:0,pitch:0,yaw:0,extension:0,nozzleYaw:0,nozzlePitch:-.25,flow:false,supply:45,feet:[0,0,0,0],stopped:false,reason:''};}
+export function aerialTravelReady(s){return s.phase==='travel'&&s.beams===0&&s.jacks===0&&s.lift===0&&s.fold===1&&s.basketFold===0&&s.extension===0&&Math.abs(s.pitch)<.001&&Math.abs(s.yaw)<.001;}
 export function aerialPose(s){return {beams:s.beams,jacks:s.jacks,lift:s.lift,liftHeight:s.liftHeight,fold:s.fold,basketFold:s.basketFold,pitch:s.pitch,yaw:s.yaw,extension:s.extension,nozzleYaw:s.nozzleYaw,nozzlePitch:s.nozzlePitch};}
 export function aerialBoardingReady(s){
   return s.phase==='operating'&&s.lift===1&&s.pitch===AERIAL_LIMITS.boardingPitch&&s.extension===0&&s.yaw===0;
@@ -40,16 +40,16 @@ export function stepAerial(s,input={},delta=0,environment={}){
     if(s.beams<1)candidate.beams=approach(s.beams,1,dt/2.5);
     else if(s.jacks<1)candidate.jacks=approach(s.jacks,1,dt/2);
     else if(s.lift<1)candidate.lift=approach(s.lift,1,dt/.8);
-    else if(s.pitch<AERIAL_LIMITS.boardingPitch)candidate.pitch=approach(s.pitch,AERIAL_LIMITS.boardingPitch,dt*.3);
-    else if(s.fold>0)candidate.fold=approach(s.fold,0,dt/2.5);
-    else if(s.basketFold>0)candidate.basketFold=approach(s.basketFold,0,dt);
+    else if(s.fold>0){
+      if(s.pitch<AERIAL_LIMITS.clearancePitch)candidate.pitch=approach(s.pitch,AERIAL_LIMITS.clearancePitch,dt*.3);
+      else candidate.fold=approach(s.fold,0,dt/2.5);
+    }else if(s.pitch!==AERIAL_LIMITS.boardingPitch)candidate.pitch=approach(s.pitch,AERIAL_LIMITS.boardingPitch,dt*.3);
     else candidate.phase='operating';
   }else if(s.phase==='stowing'){
     if(s.extension>0)candidate.extension=approach(s.extension,0,dt*.9);
-    else if(s.yaw!==0&&s.pitch>=AERIAL_LIMITS.boardingPitch)candidate.yaw=approach(s.yaw,0,dt*.35);
-    else if((s.fold<1||s.basketFold<1||s.yaw!==0)&&s.pitch!==AERIAL_LIMITS.boardingPitch)
-      candidate.pitch=approach(s.pitch,AERIAL_LIMITS.boardingPitch,dt*.3);
-    else if(s.basketFold<1)candidate.basketFold=approach(s.basketFold,1,dt);
+    else if((s.fold<1||s.yaw!==0)&&s.pitch!==AERIAL_LIMITS.clearancePitch)
+      candidate.pitch=approach(s.pitch,AERIAL_LIMITS.clearancePitch,dt*.3);
+    else if(s.yaw!==0)candidate.yaw=approach(s.yaw,0,dt*.35);
     else if(s.fold<1)candidate.fold=approach(s.fold,1,dt/2.5);
     else { // Lower to travel only after the boom and basket are folded and aligned.
       candidate.pitch=approach(s.pitch,0,dt*.3);

@@ -11,7 +11,7 @@ const wrapAngle = (angle) => ((angle + Math.PI) % (2 * Math.PI) + 2 * Math.PI) %
 const clonePose = (pose) => ({ ...pose });
 const copyControls = (value = {}) => ({
   forward: clamp(Number(value.forward) || 0, -1, 1), strafe: clamp(Number(value.strafe) || 0, -1, 1),
-  sprint: value.sprint === true, throttle: clamp(Number(value.throttle) || 0, -1, 1),
+  run: value.run === true, sprint: value.sprint === true, throttle: clamp(Number(value.throttle) || 0, -1, 1),
   steering: clamp(Number(value.steering) || 0, -1, 1),
   viewYaw: clamp(Number.isFinite(value.viewYaw) ? value.viewYaw : 0, -Math.PI, Math.PI),
 });

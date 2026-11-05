@@ -16,11 +16,13 @@ export function sampleTruckWheelContacts(pose, dimensions, sampleSurface) {
     if (!hit || !Number.isFinite(hit.height)) throw new RangeError('Non-finite truck wheel ground contact');
     return hit;
   };
-  const front = wheelbase / 2, side = trackWidth / 2;
+  const front = Number.isFinite(dimensions.frontAxleZ)?-dimensions.frontAxleZ:wheelbase/2;
+  const rear = Number.isFinite(dimensions.rearAxleZ)?-dimensions.rearAxleZ:-wheelbase/2;
+  const side = trackWidth / 2;
   const frontLeft = sample(front, -side);
   const frontRight = sample(front, side);
-  const rearLeft = sample(-front, -side);
-  const rearRight = sample(-front, side);
+  const rearLeft = sample(rear, -side);
+  const rearRight = sample(rear, side);
   const frontHeight = (frontLeft.height + frontRight.height) / 2;
   const rearHeight = (rearLeft.height + rearRight.height) / 2;
   const leftHeight = (frontLeft.height + rearLeft.height) / 2;

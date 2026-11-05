@@ -33,12 +33,13 @@ export const PLAYER_TUNING = DEFAULT_PLAYER_TUNING;
 export const TRUCK_TUNING = DEFAULT_VEHICLE_TUNING;
 
 export function gameplayAxesFromKeys(keys) {
-  const pressed = (code) => keys?.has?.(code);
+  const pressed = (code) => Boolean(keys?.has?.(code));
   return {
     forward: Number(pressed('KeyW') || pressed('ArrowUp')) - Number(pressed('KeyS') || pressed('ArrowDown')),
     strafe: Number(pressed('KeyD') || pressed('ArrowRight')) - Number(pressed('KeyA') || pressed('ArrowLeft')),
     steering: Number(pressed('KeyA') || pressed('ArrowLeft')) - Number(pressed('KeyD') || pressed('ArrowRight')),
-    sprinting: Boolean(pressed('ShiftLeft') || pressed('ShiftRight')),
+    running: Boolean(pressed('ShiftLeft') || pressed('ShiftRight')),
+    sprinting: Boolean(pressed('KeyR')),
   };
 }
 
@@ -93,7 +94,7 @@ export function createFirefighter(THREE) {
   mesh(THREE, new THREE.BoxGeometry(0.76, 0.09, 0.05), gold, visual, 0, 1.22, -0.31);
   root.userData.animation = { visual, leftArm, rightArm, leftLeg, rightLeg, phase: 0 };
   root.userData.animation.assetStatus = 'loading';
-  root.userData.animation.ready = import('./firefighter-asset.js?v=5').then(({installFirefighter}) => installFirefighter(root)).catch(error => {
+  root.userData.animation.ready = import('./firefighter-asset.js?v=6').then(({installFirefighter}) => installFirefighter(root)).catch(error => {
     root.userData.animation.assetStatus = 'procedural-fallback';
     root.userData.animation.assetError = String(error.message || error);
     return 'procedural-fallback';

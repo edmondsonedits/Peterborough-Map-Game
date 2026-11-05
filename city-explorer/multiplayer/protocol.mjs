@@ -11,7 +11,7 @@ export function validateInput(input) {
   if (!object(input) || input.protocolVersion !== PROTOCOL_VERSION || !integer(input.epoch) || !integer(input.sequence)
       || !['onFoot','driving'].includes(input.mode) || !object(input.controls)) return false;
   const c=input.controls;
-  return bounded(c.forward) && bounded(c.strafe) && typeof c.sprint==='boolean' && bounded(c.throttle) && bounded(c.steering)
+  return bounded(c.forward) && bounded(c.strafe) && (c.run===undefined||typeof c.run==='boolean') && typeof c.sprint==='boolean' && bounded(c.throttle) && bounded(c.steering)
     && finite(c.viewYaw) && c.viewYaw >= -Math.PI && c.viewYaw <= Math.PI;
 }
 const ACTIONS = new Set(['enterVehicle','exitVehicle','switchVehicle','toggleLights']);
