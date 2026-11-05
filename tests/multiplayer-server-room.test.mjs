@@ -292,10 +292,13 @@ test('Colyseus SDK connects two clients and receives authoritative snapshots ove
     };
     const first = await join();
     const second = await join();
+    assert.equal(first.roomId, created.roomId);
+    assert.equal(second.roomId, created.roomId);
+    assert.equal(listing[0].id, first.roomId);
     const clientA = new Client(baseUrl);
     const clientB = new Client(baseUrl);
-    firstRoom = await clientA.joinById(created.roomId, { playerCredential: first.playerCredential });
-    secondRoom = await clientB.joinById(created.roomId, { playerCredential: second.playerCredential });
+    firstRoom = await clientA.joinById(first.roomId, { playerCredential: first.playerCredential });
+    secondRoom = await clientB.joinById(second.roomId, { playerCredential: second.playerCredential });
 
     const peerSnapshot = new Promise((resolve, reject) => {
       const timeout = setTimeout(() => reject(new Error('timed out waiting for authoritative peer snapshot')), 3_000);

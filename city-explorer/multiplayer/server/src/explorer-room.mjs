@@ -641,7 +641,7 @@ export function createExplorerSession({ world, vehicles = [], spawn, clock = Dat
   }
 
   return Object.freeze({
-    roomId,
+    get roomId() { return roomId; },
     get roomCode() { return roomCode; },
     get adminCredential() { return adminCredential; },
     join,
