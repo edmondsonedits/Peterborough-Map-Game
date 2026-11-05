@@ -1,8 +1,9 @@
+import {configureVehiclePresentation} from './vehicle-presentation.js';
 import {createVehicleFleet} from './vehicle-fleet.mjs';
 import {installFleetAsset} from './fleet-assets.js';
 import {vehicleFootprint,polygonsOverlap,sweepVehicle,segmentBoxHit} from './apparatus-collision.mjs';
 import {createAerialState} from './aerial-controller.mjs';
-export function createFleetRuntime({THREE,group,createTruck,spawns,initialId,prepare,activate,changed=()=>{},canSelect=()=>null,installModel=installFleetAsset}){
+export function createFleetRuntime({THREE,group,createTruck,spawns,initialId,prepare,activate,changed=()=>{},environment=null,canSelect=()=>null,installModel=installFleetAsset}){
   const fleet=createVehicleFleet(spawns);let request=0,busy=false,error='';
   for(const entry of fleet.vehicles){
     const root=createTruck(THREE);entry.actor=root;root.name=entry.definition.name;root.userData.vehicleId=entry.definition.id;
@@ -13,6 +14,7 @@ export function createFleetRuntime({THREE,group,createTruck,spawns,initialId,pre
         const dimensions=Object.fromEntries(['length','width','height'].filter(k=>Number.isFinite(metadata.dimensions[k])).map(k=>[k,metadata.dimensions[k]]));
         entry.definition={...entry.definition,tuning:{...entry.definition.tuning,...dimensions,wheelbase:metadata.wheelbase||entry.definition.tuning.wheelbase}};
       }
+      configureVehiclePresentation(THREE,entry,environment);
       return status;
     });
     root.position.set(entry.state.x,entry.state.y,entry.state.z);root.rotation.y=entry.state.heading;group.add(root);
@@ -44,5 +46,5 @@ export function createFleetRuntime({THREE,group,createTruck,spawns,initialId,pre
   function sweep(a,b,dimensions){return sweepVehicle(a,b,dimensions,p=>blocked({...p,y:b.y??a.y},dimensions));}
   function nearest(point,max=6.5){return fleet.vehicles.map(v=>({entry:v,distance:Math.hypot(point.x-v.state.x,point.z-v.state.z)})).filter(v=>v.distance<=max).sort((a,b)=>a.distance-b.distance)[0]?.entry;}
   function updateParked(){for(const entry of fleet.vehicles){if(entry===fleet.active)continue;entry.actor.position.set(entry.state.x,entry.state.y,entry.state.z);entry.actor.rotation.set(entry.state.pitch,entry.state.heading,entry.state.roll,'YXZ');}}
-  return {fleet,select,park,blocked,sweep,nearest,updateParked,get busy(){return busy;},get error(){return error;},snapshot:()=>fleet.vehicles.map(v=>({id:v.definition.id,name:v.definition.name,station:v.definition.station,type:v.definition.type,...v.state,assetStatus:v.actor.userData.truck.assetStatus,aerial:v.aerial?{...v.aerial}:undefined}))};
+  return {fleet,select,park,blocked,sweep,nearest,updateParked,get busy(){return busy;},get error(){return error;},snapshot:()=>fleet.vehicles.map(v=>({id:v.definition.id,name:v.definition.name,station:v.definition.station,type:v.definition.type,...v.state,assetStatus:v.actor.userData.truck.assetStatus,presentation:v.actor.userData.truck.presentation?.diagnostics,aerial:v.aerial?{...v.aerial}:undefined}))};
 }

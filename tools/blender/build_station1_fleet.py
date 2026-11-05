@@ -11,7 +11,7 @@ ROOT=Path(__file__).resolve().parents[2]
 OUT=ROOT/'city-explorer/assets/vehicles'; SRC=ROOT/'assets-source/vehicles'
 PUMPER=OUT/'generic-pumper.glb'
 OUT.mkdir(parents=True,exist_ok=True); SRC.mkdir(parents=True,exist_ok=True)
-RED=(.42,.012,.018,1); DARK=(.018,.025,.032,1); BLACK=(.008,.012,.016,1)
+RED=(.52,.012,.02,1); DARK=(.018,.025,.032,1); BLACK=(.008,.012,.016,1)
 GLASS=(.018,.07,.09,1); SIL=(.63,.69,.71,1); CHROME=(.84,.88,.88,1)
 RUB=(.019,.022,.026,1); WHITE=(.88,.9,.86,1); AMBER=(1,.31,.025,1)
 GOLD=(.94,.63,.13,1); BLUE=(.025,.25,.66,1); MEDWHITE=(.87,.89,.88,1)
@@ -22,11 +22,13 @@ def mat(name,c,metal=0,rough=.38,em=0):
  if em:p.inputs['Emission Color'].default_value=c;p.inputs['Emission Strength'].default_value=em
  return m
 M={k:mat(k,c,me,ro,em) for k,c,me,ro,em in [
- ('Rescue red',RED,.22,.32,0),('Graphite',DARK,.22,.3,0),('Deep black',BLACK,.18,.3,0),('Cap Charcoal',(.014,.018,.023,1),0,.78,0),
- ('Safety glass',GLASS,.42,.16,0),('Aluminum',SIL,.72,.3,0),('Chrome',CHROME,.85,.2,0),
+ ('Rescue red',RED,.18,.27,0),('Graphite',DARK,.22,.3,0),('Deep black',BLACK,.18,.3,0),('Cap Charcoal',(.014,.018,.023,1),0,.78,0),
+ ('Safety glass',GLASS,.42,.16,0),('Aluminum',SIL,.72,.3,0),('Chrome',(.92,.95,.96,1),.92,.14,0),
  ('Rubber',RUB,0,.86,0),('Ivory',WHITE,.1,.28,0),('Amber',AMBER,.1,.25,.25),
  ('Rescue gold',GOLD,.3,.4,0),('Medical blue',BLUE,.16,.34,0),('Medical white',MEDWHITE,.14,.32,0),
- ('Warning red',(.88,.012,.015,1),.1,.23,.32),('Hose',(.54,.46,.31,1),0,.9,0),('Deck Grip',(.038,.048,.052,1),.08,.84,0),('Reflective Gold',(.98,.64,.08,1),.12,.34,.04)]}
+ ('Warning red',(.88,.012,.015,1),.1,.23,.32),('Headlamp optics',(.84,.91,.96,1),.12,.18,.08),
+ ('Brake lamp optics',(.84,.018,.024,1),.12,.2,.06),('Reverse lamp optics',(.84,.91,.89,1),.12,.2,.06),
+ ('Hose',(.54,.46,.31,1),0,.9,0),('Deck Grip',(.038,.048,.052,1),.08,.84,0),('Reflective Gold',(.98,.64,.08,1),.12,.34,.04)]}
 SOURCE_WHEELS={};SOURCE_BEACONS={}
 def xyz(p): return (p[0],-p[2],p[1]) # runtime Y-up, forward -Z -> Blender Z-up
 def clean(): bpy.ops.object.select_all(action='SELECT');bpy.ops.object.delete(use_global=False)
@@ -180,7 +182,7 @@ def rear_markings():
     return obj
 
 def build_aerial(cab):
- parts=[]
+ parts=[];lamps=[]
  # Tandem rescue chassis / apparatus box, with two exposed axle openings.
  parts += [box('Tandem frame',(0,.75,.6),(2.16,.38,11.4),'Deep black'),
  box('Rescue body lower',(0,1.42,2.0),(2.46,1.45,7.6),'Rescue red'),
@@ -212,8 +214,10 @@ def build_aerial(cab):
    box('Side access tread pad',(side*1.34,.63,.72),(.34,.09,.68),'Deck Grip',.025),
    box('Side access tread pad',(side*1.34,.63,1.58),(.34,.09,.68),'Deck Grip',.025)]
  for side in (-1,1):
-  parts += [box('Aerial headlamp housing',(side*.83,1.2,-4.78),(.34,.32,.08),'Deep black',.045),
-   box('Aerial headlamp lens',(side*.83,1.21,-4.83),(.25,.22,.035),'Ivory',.035)]
+  parts.append(box('Aerial headlamp housing',(side*.83,1.2,-4.78),(.34,.32,.08),'Deep black',.045))
+  label='L' if side<0 else 'R'
+  lamps.append(box('Aerial headlamp lens',(side*.83,1.21,-4.83),(.25,.22,.035),'Headlamp optics',.035))
+  lamps[-1].name='Headlamp_'+label
   parts += [box('Crew window surround',(side*1.071,2.205,-2.11),(.051,.57,.86),'Graphite',.054),
    box('Tinted crew window',(side*1.103,2.205,-2.11),(.026,.485,.74),'Safety glass',.046),
    box('Crew door waist closeout',(side*1.066,1.63,-2.08),(.065,.60,.86),'Rescue red',.037),
@@ -245,9 +249,12 @@ def build_aerial(cab):
  for side in (-1,1):rod('Rear control handrail',(side*.76,.55,6.1),(side*.76,2.15,6.1),.045,'Chrome')
  for side in (-1,1):
   parts += [box('Rear tail lamp housing',(side*1.01,1.25,5.96),(.32,.78,.1),'Deep black',.045),
-   box('Rear tail lamp red',(side*1.01,1.43,6.03),(.22,.28,.07),'Warning red',.035),
-   box('Rear tail lamp amber',(side*1.01,1.12,6.03),(.22,.17,.07),'Amber',.03),
-   box('Rear tail lamp reverse',(side*1.01,.91,6.03),(.22,.13,.07),'Ivory',.025)]
+   box('Rear tail lamp amber',(side*1.01,1.12,6.03),(.22,.17,.07),'Amber',.03)]
+  label='L' if side<0 else 'R'
+  lamps.append(box('Rear tail brake lens',(side*1.01,1.43,6.03),(.22,.28,.07),'Brake lamp optics',.035))
+  lamps[-1].name='BrakeLamp_'+label
+  lamps.append(box('Rear reverse lens',(side*1.01,.91,6.03),(.22,.13,.07),'Reverse lamp optics',.025))
+  lamps[-1].name='ReverseLamp_'+label
  # Rear-facing work lamps mount high above the warning panel, with protective bezels.
  for side in (-1,1):
   parts += [box('Rear work lamp bezel',(side*.72,2.47,5.91),(.42,.28,.09),'Graphite',.035),
@@ -267,7 +274,7 @@ def build_aerial(cab):
  beaconpos=[('Beacon_L',(-.9,3.08,-4.0)),('Beacon_R',(.9,3.08,-4.0)),('Beacon_RearL',(-.95,2.7,4.45)),('Beacon_RearR',(.95,2.7,4.45))]
  # Reusable original pumper cab face/body meshes, dimension-aligned to this chassis.
  parts+=add_cab(cab,.94,.1,.88,.94)
- parts=[o for o in bpy.context.scene.objects if o.parent is None]
+ parts=[o for o in bpy.context.scene.objects if o.parent is None and o not in lamps]
  join_by_material(parts,'AerialBody')
  # separate wheel pivots (source tread mesh profile reused by shape, named wheel contract)
  for nm,x,z in [('FL',-1.13,-3.1),('FR',1.13,-3.1),('RL',-1.13,2.8),('RR',1.13,2.8),('RL2',-1.13,4.1),('RR2',1.13,4.1)]:
@@ -423,7 +430,7 @@ def build_aerial(cab):
  render_preview(preview/'aerial-basket-close.png',(basket_target[0]+5,basket_target[1]+4,basket_target[2]-7),basket_target,8)
  ladder_sections=[{'node':f'LadderSection_{i}','length':5.6,'travel':0 if i==1 else 4.8} for i in range(1,6)]+[{'node':'LadderSection_6','length':3.2,'travel':0}]
  contract={'TurntableYaw':{'position':[0,2.95,4.796]},'LadderPitch':{'rest':'0 rad, ladder axis -Z'},'ladderSections':ladder_sections,'KnuckleFold':{'parent':'LadderSection_5','position':[0,.1,-5.2],'axis':'local X','deployedRad':0,'stowedRad':math.pi,'sectionLength':3.2},'BasketLevel':{'parent':'LadderSection_6','position':[0,0,-3.2],'compensation':'-(LadderPitch.rotation.x+KnuckleFold.rotation.x)'},'BasketFold':{'deployedRad':0,'transportRad':math.pi/2},'Basket':{'parent':'BasketFold'},'BasketStand':{'parent':'Basket','position':[0,.075,-.02],'feetAtFloor':True},'BasketControls':{'parent':'Basket','position':[.43,.4,.18]},'RearControls':{'node':'RearControls','position':[0,1.66,6.507],'orientation':'outward-facing from rear deck'},'RearOperator':{'node':'RearOperator','feet':[0,0,7.85],'facing':'-Z'},'MonitorYaw':{'position':[0,-.24,0],'parent':'Basket'},'MonitorPitch':{'parent':'MonitorYaw','rangeRad':[-math.pi/2,math.pi/3]},'NozzleOutlet':{'parent':'MonitorPitch','position':[0,0,-.53],'axis':'-Z','underside':True},'Outrigger_FL/FR/RL/RR':{'restX':0,'jackRestX':'sign*1.15','travelX':'sign*1.6','deployedPadX':'sign*2.75','jackNodes':'Jack_FL/FR/RL/RR','jackRestHeight':.52,'footPlateLocalY':0,'jackStroke':1.0,'ramChildCenterY':.28,'housingCenterY':-.25},'stabilizerBeamTravel':1.6,'wheelRadius':.56,'wheelbase':7.14,'jackFootSole':-.06,'ElevationRam_L/R':{'baseNodes':'Cylinder_Base_L/R','tipNodes':'Cylinder_Tip_L/R'}}
- return {'name':'Station 1 aerial platform','units':'metres','forward':'-Z','up':'+Y','dimensions':{'length':12.97,'width':2.55,'height':4.42},'cabClearance':{'min':[-1.18,.72,-5.254],'max':[1.18,3.05,-1.145]},'pivotContract':contract,'ladderSections':ladder_sections,'stabilizerBeamTravel':1.6,'wheelRadius':.56,'wheelbase':7.14,'jackFootSole':-.06,'wheelNodes':['Wheel_FL','Wheel_FR','Wheel_RL','Wheel_RR','Wheel_RL2','Wheel_RR2'],'beaconNodes':['Beacon_L','Beacon_R','Beacon_RearL','Beacon_RearR'],'triangles':0,'drawCalls':0,'source':'Original apparatus with selectively extracted generic pumper cab faces, wheels, and beacon meshes','wheelSimplificationRatio':.3,'commercialUse':'Project-created generic geometry and source project meshes'}
+ return {'name':'Station 1 aerial platform','units':'metres','forward':'-Z','up':'+Y','dimensions':{'length':12.97,'width':2.55,'height':4.42},'cabClearance':{'min':[-1.18,.72,-5.254],'max':[1.18,3.05,-1.145]},'pivotContract':contract,'ladderSections':ladder_sections,'stabilizerBeamTravel':1.6,'wheelRadius':.56,'wheelCenterHeight':.62,'wheelbase':7.14,'jackFootSole':-.06,'wheelNodes':['Wheel_FL','Wheel_FR','Wheel_RL','Wheel_RR','Wheel_RL2','Wheel_RR2'],'beaconNodes':['Beacon_L','Beacon_R','Beacon_RearL','Beacon_RearR'],'lampNodes':['Headlamp_L','Headlamp_R','BrakeLamp_L','BrakeLamp_R','ReverseLamp_L','ReverseLamp_R'],'triangles':0,'drawCalls':0,'source':'Original apparatus with selectively extracted generic pumper cab faces, wheels, and beacon meshes','wheelSimplificationRatio':.3,'commercialUse':'Project-created generic geometry and source project meshes'}
 
 def build_medi():
     sys.path.insert(0,str(Path(__file__).resolve().parent))

@@ -206,6 +206,7 @@
   ],
   "stabilizerBeamTravel": 1.6,
   "wheelRadius": 0.56,
+  "wheelCenterHeight": 0.62,
   "wheelbase": 7.14,
   "jackFootSole": -0.06,
   "wheelNodes": [
@@ -222,10 +223,18 @@
     "Beacon_RearL",
     "Beacon_RearR"
   ],
-  "triangles": 90284,
-  "drawCalls": 173,
+  "lampNodes": [
+    "Headlamp_L",
+    "Headlamp_R",
+    "BrakeLamp_L",
+    "BrakeLamp_R",
+    "ReverseLamp_L",
+    "ReverseLamp_R"
+  ],
+  "triangles": 89852,
+  "drawCalls": 172,
   "source": "Original apparatus with selectively extracted generic pumper cab faces, wheels, and beacon meshes",
   "wheelSimplificationRatio": 0.3,
   "commercialUse": "Project-created generic geometry and source project meshes",
-  "glbBytes": 5695240
+  "glbBytes": 5669128
 }

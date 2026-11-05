@@ -1,7 +1,7 @@
 import * as THREE from 'three';
 import {GLTFLoader} from './vendor/three-r180/examples/jsm/loaders/GLTFLoader.js';
 const cache=new Map();
-const assetRevision='3';
+const assetRevision='4';
 export async function loadFleetAsset(type){
   const name=type==='aerial'?'aerial-platform':'medi-pickup';
   if(!cache.has(name))cache.set(name,Promise.all([

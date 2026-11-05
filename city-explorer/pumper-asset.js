@@ -3,7 +3,7 @@ import { GLTFLoader } from './vendor/three-r180/examples/jsm/loaders/GLTFLoader.
 import { createPromiseCache } from './asset-request-cache.js';
 
 const cacheAssetRequest = createPromiseCache();
-const PUMPER_URL = new URL('./assets/vehicles/generic-pumper.glb', import.meta.url);
+const PUMPER_URL = new URL('./assets/vehicles/generic-pumper.glb?rev=2', import.meta.url);
 
 export function preloadPumperAsset() {
   return cacheAssetRequest(PUMPER_URL.href, async () => {
@@ -36,11 +36,17 @@ export function preparePumper(scene) {
 export async function installPumper(root) {
   const truck=root.userData.truck;
   const gltf=await new GLTFLoader().parseAsync(await preloadPumperAsset(),new URL('.',PUMPER_URL).href);
+  const metadataUrl=new URL('./assets/vehicles/generic-pumper.json?rev=2',import.meta.url);
+  const metadata=await cacheAssetRequest(metadataUrl.href,async()=>{
+    const response=await fetch(metadataUrl,{signal:AbortSignal.timeout(15000)});
+    if(!response.ok)throw Error('Pumper metadata HTTP '+response.status);
+    return response.json();
+  });
   const model=preparePumper(gltf.scene);
   // Retain the procedural actor until the complete authored model has passed validation.
   const old=[...truck.visual.children];
   truck.visual.clear();truck.visual.add(model.scene);
-  Object.assign(truck,{wheels:model.wheels,frontWheels:model.frontWheels,beacons:model.beacons,assetStatus:'blender-ready'});
+  Object.assign(truck,{wheels:model.wheels,frontWheels:model.frontWheels,beacons:model.beacons,metadata,assetStatus:'blender-ready'});
   const geometries=new Set(),materials=new Set();
   old.forEach(child=>child.traverse(node=>{if(node.isMesh){geometries.add(node.geometry);for(const m of (Array.isArray(node.material)?node.material:[node.material]))materials.add(m);}}));
   geometries.forEach(g=>g.dispose());materials.forEach(m=>m.dispose());truck.labelTexture?.dispose();truck.labelTexture=null;

@@ -15,6 +15,7 @@
   },
   "wheelbase": 4.07,
   "wheelRadius": 0.539,
+  "wheelCenterHeight": 0.539,
   "wheelNodes": [
     "Wheel_FL",
     "Wheel_FR",
@@ -27,6 +28,14 @@
     "Beacon_R",
     "Beacon_RearR"
   ],
+  "lampNodes": [
+    "Headlamp_L",
+    "Headlamp_R",
+    "BrakeLamp_L",
+    "ReverseLamp_L",
+    "BrakeLamp_R",
+    "ReverseLamp_R"
+  ],
   "fourDoorCab": true,
   "fullyEnclosedCanopy": true,
   "ambulance": false,
@@ -34,6 +43,6 @@
   "source": "Original Blender geometry informed by two user-provided fire rescue pickup reference photographs",
   "commercialUse": "Original project geometry, fictional markings, no reference photo pixels used",
   "triangles": 42906,
-  "drawCalls": 37,
-  "glbBytes": 1783564
+  "drawCalls": 43,
+  "glbBytes": 1789796
 }

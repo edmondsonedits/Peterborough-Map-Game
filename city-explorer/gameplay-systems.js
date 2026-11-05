@@ -51,6 +51,10 @@ export const TRUCK_TUNING = Object.freeze({
   forwardAcceleration: 3.85,
   reverseAcceleration: 2.65,
   serviceBrake: 8.8,
+  throttleProgression: 1.2,
+  maximumLateralAcceleration: 4.2,
+  offRoadBrake: 4.8,
+  offRoadGripScale: 0.62,
   rollingDrag: 0.56,
   aerodynamicDrag: 0.008,
   offRoadSpeed: 11.5,
@@ -100,40 +104,98 @@ export function gameplayAxesFromKeys(keys) {
 
 /** Advance a heavy rear-steered fire apparatus with a stable bicycle model. */
 export function stepFireTruckKinematics(current, input, delta, onRoad = true, tuning = TRUCK_TUNING) {
+  const state = current || {};
   const dt = Math.min(0.05, Math.max(0, Number(delta) || 0));
+  if (dt === 0) {
+    return {
+      x: Number(state.x) || 0,
+      z: Number(state.z) || 0,
+      heading: Number(state.heading) || 0,
+      speed: Number(state.speed) || 0,
+      steering: Number(state.steering) || 0,
+      acceleration: Number(state.acceleration) || 0,
+    };
+  }
   const throttle = Math.max(-1, Math.min(1, Number(input?.throttle) || 0));
   const steeringInput = Math.max(-1, Math.min(1, Number(input?.steering) || 0));
-  let speed = Number(current.speed) || 0;
-  const absoluteSpeed = Math.abs(speed);
+  const tuningValue = (key, fallback) => Number.isFinite(Number(tuning?.[key])) ? Number(tuning[key]) : fallback;
+  const previousSpeed = Number(state.speed) || 0;
+  const throttlePower = Math.sign(throttle) * Math.pow(Math.abs(throttle), Math.max(1, tuningValue('throttleProgression', 1.2)));
+  const forwardAcceleration = tuningValue('forwardAcceleration', TRUCK_TUNING.forwardAcceleration);
+  const reverseAcceleration = tuningValue('reverseAcceleration', TRUCK_TUNING.reverseAcceleration);
+  const serviceBrake = tuningValue('serviceBrake', TRUCK_TUNING.serviceBrake);
+  const rollingDrag = tuningValue('rollingDrag', TRUCK_TUNING.rollingDrag);
+  const aerodynamicDrag = tuningValue('aerodynamicDrag', TRUCK_TUNING.aerodynamicDrag);
+  const offRoadAccelerationScale = tuningValue('offRoadAccelerationScale', TRUCK_TUNING.offRoadAccelerationScale);
+  const speedLimit = onRoad ? tuningValue('maximumForwardSpeed', TRUCK_TUNING.maximumForwardSpeed) : tuningValue('offRoadSpeed', TRUCK_TUNING.offRoadSpeed);
+  const reverseLimit = tuningValue('maximumReverseSpeed', TRUCK_TUNING.maximumReverseSpeed) * (onRoad ? 1 : 0.65);
+  let speed = previousSpeed;
   let acceleration = 0;
 
-  if (throttle > 0) {
-    acceleration = speed < -0.2 ? tuning.serviceBrake : tuning.forwardAcceleration;
-  } else if (throttle < 0) {
-    acceleration = speed > 0.2 ? -tuning.serviceBrake : -tuning.reverseAcceleration;
-  } else if (absoluteSpeed > 0.001) {
-    acceleration = -Math.sign(speed) * (tuning.rollingDrag + tuning.aerodynamicDrag * speed * speed);
+  if (Math.abs(throttlePower) > 0) {
+    const requestedDirection = Math.sign(throttlePower);
+    if (speed !== 0 && Math.sign(speed) !== requestedDirection) {
+      // Spend only the time needed to brake to zero, then use any remainder to reverse.
+      const brake = serviceBrake * Math.abs(throttlePower);
+      const timeToZero = Math.abs(speed) / brake;
+      if (timeToZero >= dt) {
+        acceleration = -Math.sign(speed) * brake;
+        speed += acceleration * dt;
+        if (Math.sign(speed) !== Math.sign(previousSpeed)) speed = 0;
+      } else {
+        const reverseAccelerationScale = !onRoad ? offRoadAccelerationScale : 1;
+        speed = requestedDirection * (dt - timeToZero) * (requestedDirection > 0 ? forwardAcceleration : reverseAcceleration) * Math.abs(throttlePower) * reverseAccelerationScale;
+        acceleration = (speed - previousSpeed) / dt;
+      }
+    } else {
+      acceleration = requestedDirection * (requestedDirection > 0 ? forwardAcceleration : reverseAcceleration) * Math.abs(throttlePower);
+      if (!onRoad) acceleration *= offRoadAccelerationScale;
+      speed += acceleration * dt;
+    }
+  } else if (Math.abs(speed) > 0) {
+    acceleration = -Math.sign(speed) * (rollingDrag + aerodynamicDrag * speed * speed);
+    speed += acceleration * dt;
+    if (Math.sign(speed) !== Math.sign(previousSpeed)) speed = 0;
   }
-  if (!onRoad && throttle !== 0 && Math.sign(acceleration) === Math.sign(throttle)) {
-    acceleration *= tuning.offRoadAccelerationScale;
-  }
-  speed += acceleration * dt;
-  if (throttle === 0 && Math.sign(speed) !== Math.sign(Number(current.speed) || 0)) speed = 0;
-  const forwardLimit = onRoad ? tuning.maximumForwardSpeed : tuning.offRoadSpeed;
-  speed = Math.max(-(onRoad ? tuning.maximumReverseSpeed : tuning.maximumReverseSpeed * 0.65), Math.min(forwardLimit, speed));
 
-  const speedRatio = Math.min(1, absoluteSpeed / tuning.maximumForwardSpeed);
-  const maximumSteer = tuning.steeringLowSpeed
-    + (tuning.steeringHighSpeed - tuning.steeringLowSpeed) * speedRatio;
-  const targetSteering = steeringInput * maximumSteer;
-  const steeringResponse = steeringInput ? tuning.steeringResponse : tuning.steeringReturnResponse;
-  const steering = exponentialStep(Number(current.steering) || 0, targetSteering, steeringResponse, dt);
-  const heading = wrapAngle((Number(current.heading) || 0) + speed / tuning.wheelbase * Math.tan(steering) * dt);
+  if (onRoad) {
+    speed = Math.max(-reverseLimit, Math.min(speedLimit, speed));
+  } else {
+    // Keep a truck that is already over a rough-ground limit easing back toward it.
+    // From below, limit the crossing step so power cannot push it past the cap.
+    const offRoadBrake = tuningValue('offRoadBrake', TRUCK_TUNING.offRoadBrake);
+    if (speed > speedLimit) {
+      speed = previousSpeed > speedLimit
+        ? Math.min(speed, Math.max(speedLimit, previousSpeed - offRoadBrake * dt))
+        : speedLimit;
+    } else if (speed < -reverseLimit) {
+      speed = previousSpeed < -reverseLimit
+        ? Math.max(speed, Math.min(-reverseLimit, previousSpeed + offRoadBrake * dt))
+        : -reverseLimit;
+    }
+  }
+  acceleration = (speed - previousSpeed) / dt;
+
+  const maximumForwardSpeed = tuningValue('maximumForwardSpeed', TRUCK_TUNING.maximumForwardSpeed);
+  const absoluteSpeed = Math.abs(speed);
+  const speedRatio = Math.min(1, absoluteSpeed / maximumForwardSpeed);
+  const steeringLowSpeed = tuningValue('steeringLowSpeed', TRUCK_TUNING.steeringLowSpeed);
+  const steeringHighSpeed = tuningValue('steeringHighSpeed', TRUCK_TUNING.steeringHighSpeed);
+  const maximumSteer = steeringLowSpeed + (steeringHighSpeed - steeringLowSpeed) * speedRatio;
+  const wheelbase = Math.max(0.1, tuningValue('wheelbase', TRUCK_TUNING.wheelbase));
+  const maxLateralAcceleration = tuningValue('maximumLateralAcceleration', TRUCK_TUNING.maximumLateralAcceleration) * (onRoad ? 1 : tuningValue('offRoadGripScale', TRUCK_TUNING.offRoadGripScale));
+  const curvatureSteerLimit = absoluteSpeed > 0.1 ? Math.atan(maxLateralAcceleration * wheelbase / (absoluteSpeed * absoluteSpeed)) : maximumSteer;
+  const safeSteerLimit = Math.min(maximumSteer, curvatureSteerLimit);
+  const targetSteering = steeringInput * safeSteerLimit;
+  const steeringResponse = steeringInput ? tuningValue('steeringResponse', TRUCK_TUNING.steeringResponse) : tuningValue('steeringReturnResponse', TRUCK_TUNING.steeringReturnResponse);
+  const priorSteering = Number(state.steering) || 0;
+  const steering = Math.max(-safeSteerLimit, Math.min(safeSteerLimit, exponentialStep(priorSteering, targetSteering, steeringResponse, dt)));
+  const heading = wrapAngle((Number(state.heading) || 0) + speed / wheelbase * Math.tan(steering) * dt);
   const direction = directionFromHeading(heading);
 
   return {
-    x: (Number(current.x) || 0) + direction.x * speed * dt,
-    z: (Number(current.z) || 0) + direction.z * speed * dt,
+    x: (Number(state.x) || 0) + direction.x * speed * dt,
+    z: (Number(state.z) || 0) + direction.z * speed * dt,
     heading,
     speed,
     steering,

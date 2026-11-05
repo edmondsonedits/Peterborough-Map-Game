@@ -6,9 +6,10 @@
   "forward": "-Z",
   "up": "+Y",
   "wheelRadius": 0.56,
+  "wheelCenterHeight": 0.62,
   "wheelbase": 5.65,
-  "triangles": 50704,
-  "meshObjects": 19,
+  "triangles": 51208,
+  "meshObjects": 25,
   "wheelNodes": [
     "Wheel_FL",
     "Wheel_FR",
@@ -20,6 +21,14 @@
     "Beacon_R",
     "Beacon_RearL",
     "Beacon_RearR"
+  ],
+  "lampNodes": [
+    "Headlamp_L",
+    "Headlamp_R",
+    "BrakeLamp_L",
+    "BrakeLamp_R",
+    "ReverseLamp_L",
+    "ReverseLamp_R"
   ],
   "limitations": [
     "Unseen rear and opposite side are plausible original designs",
