@@ -15,7 +15,7 @@ function validModel(){
   for(const name of ['Hips','Spine','Chest','Neck','Head','LeftArm','LeftForeArm','LeftHand','RightArm','RightForeArm','RightHand','LeftLeg','LeftShin','LeftFoot','LeftToe','RightLeg','RightShin','RightFoot','RightToe']){const bone=new THREE.Bone();bone.name=name;parent.add(bone);bones.push(bone);parent=bone;}
   bones[0].position.y=.05;bones[1].position.y=.45;bones[2].position.y=.3;bones[3].position.y=.2;bones[4].position.y=.2;
   const geometry=new THREE.BoxGeometry(.3,1.8,.2);geometry.translate(0,.9,0);geometry.setAttribute('skinIndex',new THREE.Uint16BufferAttribute(new Uint16Array(geometry.attributes.position.count*4),4));const skinWeights=new Float32Array(geometry.attributes.position.count*4);for(let i=0;i<geometry.attributes.position.count;i++)skinWeights[i*4]=1;geometry.setAttribute('skinWeight',new THREE.Float32BufferAttribute(skinWeights,4));const mesh=new THREE.SkinnedMesh(geometry,new THREE.MeshStandardMaterial());mesh.add(bones[0]);scene.add(mesh);mesh.bind(new THREE.Skeleton(bones));
-  const clips=['Idle','Walk','Run'].map((name,i)=>new THREE.AnimationClip(name,[1,.86,.64][i],['Hips','LeftArm','RightArm','LeftForeArm','RightForeArm','LeftLeg','RightLeg','LeftShin','RightShin'].map(bone=>new THREE.QuaternionKeyframeTrack(bone+'.quaternion',[0,[1,.86,.64][i]],[0,0,0,1,0,Math.sin(.5),0,Math.cos(.5)]))));
+  const clips=['Idle','Walk','Run','Sprint'].map((name,i)=>new THREE.AnimationClip(name,[1,.86,.64,.56][i],['Hips','LeftArm','RightArm','LeftForeArm','RightForeArm','LeftLeg','RightLeg','LeftShin','RightShin'].map(bone=>new THREE.QuaternionKeyframeTrack(bone+'.quaternion',[0,[1,.86,.64,.56][i]],[0,0,0,1,0,Math.sin(.5),0,Math.cos(.5)]))));
   return {scene,clips};
 }
 function weightedVertices(scene,meshes,boneName){
@@ -39,14 +39,14 @@ function maxSkinDisplacement(scene,vertices){
   return max;
 }
 
-test('firefighter GLB has a bounded skinned model and validated Idle, Walk, Run clips',async()=>{
+test('firefighter GLB has a bounded skinned model and validated Idle, Walk, Run, Sprint clips',async()=>{
   const gltf=await load(),model=prepareFirefighter(gltf.scene,gltf.animations),bounds=new THREE.Box3().setFromObject(gltf.scene);let triangles=0,draws=0;
   gltf.scene.traverse(n=>{if(n.isMesh){triangles+=(n.geometry.index?.count??n.geometry.attributes.position.count)/3;draws++;}});
   assert.ok(triangles<120000);assert.ok(draws<=45);assert.ok(bytes.length<9000000);assert.ok(bounds.min.y>=-.02&&bounds.max.y<=2.1);
-  assert.ok(model.meshes.length>0);assert.deepEqual(model.clips.map(c=>c.name),['Idle','Walk','Run']);
+  assert.ok(model.meshes.length>0);assert.deepEqual(model.clips.map(c=>c.name),['Idle','Walk','Run','Sprint']);
   const boneNames=new Set(model.meshes[0].skeleton.bones.map(b=>b.name));for(const name of ['LeftShin','RightShin','LeftForeArm','RightForeArm'])assert.ok(boneNames.has(name));
   const json=JSON.parse(bytes.subarray(20,20+bytes.readUInt32LE(12)).toString());
-  assert.ok(json.animations.length>=3);assert.ok(json.images.every(im=>Number.isInteger(im.bufferView)&&im.mimeType==='image/png'&&!im.uri));assert.ok(json.buffers.every(b=>!b.uri));
+  assert.ok(json.animations.length>=4);assert.ok(json.images.every(im=>Number.isInteger(im.bufferView)&&im.mimeType==='image/png'&&!im.uri));assert.ok(json.buffers.every(b=>!b.uri));
   for(const clip of model.clips)for(const track of clip.tracks){
     const stride=track.getValueSize(),last=(track.times.length-1)*stride;
     assert.ok(Math.abs(track.times.at(-1)-clip.duration)<1e-4,'track must end at the clip loop duration');
@@ -64,7 +64,7 @@ test('run animation deforms skinned knee and elbow vertices',async()=>{
 });
 
 test('sampled idle and gait cycles remain finite with per-foot ground support',async()=>{
-  for(const [clipName,speed,duration] of [['Idle',0,3],['Walk',1.51,.86],['Run',3.71,.64]]){
+  for(const [clipName,speed,duration] of [['Idle',0,3],['Walk',1.51,.86],['Run',3.71,.64],['Sprint',5.36,.56]]){
     const gltf=await load(),model=prepareFirefighter(gltf.scene,gltf.animations),gait=createFirefighterLocomotion(model.scene,model.clips);
     const toes=['LeftToe','RightToe'].map(name=>model.scene.getObjectByName(name)),minToes=[Infinity,Infinity];
     const frames=Math.ceil(duration*60);

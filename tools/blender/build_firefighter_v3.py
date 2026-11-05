@@ -105,9 +105,10 @@ for material in bpy.data.materials:
 for material in bpy.data.materials:
     if material.name in ['high-poly', 'short04', 'eyebrow001'] and material.use_nodes:
         for node in material.node_tree.nodes:
-            if node.type == 'TEX_IMAGE' and node.image and max(node.image.size) > 512:
+            limit = 480 if material.name == 'short04' else 512
+            if node.type == 'TEX_IMAGE' and node.image and max(node.image.size) > limit:
                 im = node.image
-                im.scale(512, 512)
+                im.scale(limit, limit)
                 im.pack()
 
 arm_data = bpy.data.armatures.new('FirefighterSkeleton')
@@ -199,30 +200,32 @@ def local_pose(name, rx=0, ry=0, rz=0):
     motion = Matrix.Translation(pivot) @ Euler((rx, ry, rz), 'XYZ').to_matrix().to_4x4() @ Matrix.Translation(-pivot)
     pose_matrix(name, parent_delta @ motion @ rest[name])
 
-def foot_path(phase, running):
-    stance = .32 if running else .60
-    travel = .76 if running else .78
+def foot_path(phase, running, sprinting):
+    stance = .29 if sprinting else .32 if running else .60
+    travel = .87 if sprinting else .76 if running else .78
+    toe_off = .45 if sprinting else .34 if running else .24
+    clearance = .36 if sprinting else .29 if running else .125
     if phase < stance:
         t = phase/stance
         forward = travel*(.5-t)
         height = 0
         # Heel contact, flat mid-stance, then toe-off.
-        pitch = .16*(1-smooth(0, .23, t)) - (.34 if running else .24)*smooth(.68, 1, t)
+        pitch = .16*(1-smooth(0, .23, t)) - toe_off*smooth(.68, 1, t)
     else:
         t = (phase-stance)/(1-stance)
         m = -travel*(1-stance)/stance
         forward = -travel/2 + travel*t*t*(3-2*t) + m*(2*t*t*t-3*t*t+t)
-        height = (.29 if running else .125)*math.sin(math.pi*t)**1.4
-        pitch = (-.34 if running else -.24)*(1-smooth(0, .3, t)) + .16*smooth(.63, 1, t)
+        height = clearance*math.sin(math.pi*t)**1.4
+        pitch = -toe_off*(1-smooth(0, .3, t)) + .16*smooth(.63, 1, t)
     # Ankle follows heel/toe support so the sole does not pass through the floor.
     lift = max(.08*math.sin(pitch), -.21*math.sin(pitch), 0)
     return forward, .13+height+lift, pitch
 
-def solve_leg(prefix, phase, running):
+def solve_leg(prefix, phase, running, sprinting):
     hip_local = definitions[prefix+'Leg'][0]
     parent_delta = rig.pose.bones['Hips'].matrix @ rest['Hips'].inverted()
     hip = parent_delta @ hip_local
-    forward, height, pitch = foot_path(phase, running)
+    forward, height, pitch = foot_path(phase, running, sprinting)
     foot = Vector((hip_local.x, forward, height))
     upper = (definitions[prefix+'Leg'][1]-hip_local).length
     lower = (definitions[prefix+'Shin'][1]-definitions[prefix+'Shin'][0]).length
@@ -247,11 +250,12 @@ def animate(name, duration):
     action.use_fake_user = True
     rig.animation_data.action = action
     count = round(duration*scene.render.fps)
+    sprinting = name == 'Sprint'
+    running = name in ('Run', 'Sprint')
     for frame in range(count+1):
         scene.frame_set(frame)
         p = frame/count
         wave = math.sin(p*math.tau)
-        running = name == 'Run'
         idle = name == 'Idle'
         for pb in rig.pose.bones:
             pb.matrix_basis = Matrix.Identity(4)
@@ -263,18 +267,20 @@ def animate(name, duration):
             # Lower the pelvis during loading so the stance leg can actually
             # reach the ground at heel contact, then rise through push-off.
             hips_z = (-.08-.04*math.cos((p-.10)*math.tau*2)) if running else (-.055-.03*math.cos(p*math.tau*2))
+            if sprinting:
+                hips_z = -.10-.055*math.cos((p-.08)*math.tau*2)
             sway = (.011 if running else .016)*wave
             twist = (.06 if running else .035)*wave
         root_motion = Matrix.Translation((sway, 0, hips_z)) @ Matrix.Translation(definitions['Hips'][0]) @ Euler((0, .018*wave if not idle else 0, twist), 'XYZ').to_matrix().to_4x4() @ Matrix.Translation(-definitions['Hips'][0])
         pose_matrix('Hips', root_motion @ rest['Hips'])
-        local_pose('Spine', -.085 if running else -.026 if not idle else -.008, 0, -twist*.6)
-        local_pose('Chest', -.055 if running else -.017 if not idle else .006*wave, 0, -twist*.75)
-        local_pose('Neck', .04 if running else .013, 0, twist*.35)
-        local_pose('Head', .045 if running else .018, 0, twist*.4)
+        local_pose('Spine', -.15 if sprinting else -.085 if running else -.026 if not idle else -.008, 0, -twist*.6)
+        local_pose('Chest', -.10 if sprinting else -.055 if running else -.017 if not idle else .006*wave, 0, -twist*.75)
+        local_pose('Neck', .065 if sprinting else .04 if running else .013, 0, twist*.35)
+        local_pose('Head', .075 if sprinting else .045 if running else .018, 0, twist*.4)
         for side, prefix, offset in [(-1, 'Left', 0), (1, 'Right', .5)]:
             phase = (p+offset)%1
             leg_wave = math.cos(phase*math.tau)
-            arm_swing = 0 if idle else -leg_wave*(.57 if running else .28)
+            arm_swing = 0 if idle else -leg_wave*(.74 if sprinting else .57 if running else .28)
             # Soft elbow flex at walk; tucked forearms at run, opposite the legs.
             local_pose(prefix+'Arm', arm_swing, -side*(.04 if running else .025), 0)
             local_pose(prefix+'ForeArm', (1.13+.15*math.sin(phase*math.tau)) if running else .22+.06*wave if not idle else .14, 0, 0)
@@ -285,14 +291,14 @@ def animate(name, duration):
                 local_pose(prefix+'Foot')
                 local_pose(prefix+'Toe')
             else:
-                solve_leg(prefix, phase, running)
+                solve_leg(prefix, phase, running, sprinting)
         for pb in rig.pose.bones:
             pb.keyframe_insert('location', frame=frame, group=pb.name)
             pb.keyframe_insert('rotation_quaternion', frame=frame, group=pb.name)
             pb.keyframe_insert('scale', frame=frame, group=pb.name)
     return action
 
-for name, duration in [('Idle', 3), ('Walk', .86), ('Run', .64)]:
+for name, duration in [('Idle', 3), ('Walk', .86), ('Run', .64), ('Sprint', .56)]:
     animate(name, duration)
 rig.animation_data.action = None
 for pb in rig.pose.bones:
@@ -308,7 +314,7 @@ metadata = {
     'name': 'Generic turnout firefighter', 'source': 'Original turnout gear and retained CC0 MakeHuman anatomical head, eyes, brows, hair and skin',
     'triangles': triangles, 'units': 'metres', 'up': '+Y', 'forward': '-Z',
     'rig': '19-joint weighted skeleton: pelvis, spine, chest, neck, head, shoulders, elbows, wrists, hips, knees, ankles and toes',
-    'animations': [{'name':'Idle','duration':3}, {'name':'Walk','duration':.86,'referenceSpeed':1.51}, {'name':'Run','duration':.64,'referenceSpeed':3.71}],
+    'animations': [{'name':'Idle','duration':3}, {'name':'Walk','duration':.86,'referenceSpeed':1.51}, {'name':'Run','duration':.64,'referenceSpeed':3.71}, {'name':'Sprint','duration':.56,'referenceSpeed':5.36}],
     'motionSource': 'Original authored cycles using analytical two-bone leg IK and heel/sole/toe contact targets, baked to glTF keyframes',
     'baseAssetSHA256': hashlib.sha256(SEED.read_bytes()).hexdigest(),
     'commercialUse': 'Original gear and animations; CC0 MakeHuman assets with retained licenses/provenance under licenses/',
