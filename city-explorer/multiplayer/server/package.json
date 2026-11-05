@@ -1,0 +1,17 @@
+{
+  "name": "peterborough-city-explorer-multiplayer-server",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "engines": { "node": ">=22" },
+  "scripts": {
+    "start": "node src/index.mjs",
+    "test": "node --test ../../../tests/multiplayer-server-room.test.mjs ../../../tests/multiplayer-vehicle-ownership.test.mjs"
+  },
+  "dependencies": {
+    "@colyseus/sdk": "0.18.9",
+    "@colyseus/ws-transport": "0.18.4",
+    "colyseus": "0.18.11",
+    "express": "5.3.0"
+  }
+}
