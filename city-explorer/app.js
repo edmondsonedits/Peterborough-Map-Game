@@ -128,7 +128,7 @@ import {
   gameplayAxesFromKeys,
   headingFromDirection,
   stepFireTruckKinematics,
-} from './gameplay-systems.js?v=firefighter5';
+} from './gameplay-systems.js?v=firefighter6';
 import {
   createFootprintCentroidIndex,
   deterministicNumber,
@@ -5663,7 +5663,7 @@ async function buildCity() {
   if (!ROAD_PACK_BUILD) {
     void Promise.all([
       import('./pumper-asset.js').then(({ preloadPumperAsset }) => preloadPumperAsset()).catch(() => null),
-      import('./firefighter-asset.js?v=5').then(({ preloadFirefighterAsset }) => preloadFirefighterAsset()).catch(() => null),
+      import('./firefighter-asset.js?v=6').then(({ preloadFirefighterAsset }) => preloadFirefighterAsset()).catch(() => null),
     ]);
     if (STATION_ONE_SELECTED) void preloadStationOneAsset().catch(() => null);
     if (STATION_TWO_SELECTED) void preloadStationTwoAsset().catch(() => null);
@@ -6264,7 +6264,7 @@ function updateGameplayHint() {
   const number = FIRE_STATION_ONE.number;
   const doorHint = [1,2,3].includes(number) ? ' · G opens/closes the front bay door aligned with the truck' : '';
   if (state.mode === 'onFoot') {
-    els.modeHint.innerHTML = `<strong>On foot at Fire Station ${number}.</strong> WASD or arrows move · Shift sprints · mouse looks · E enters the fire truck${doorHint} · F free camera.`;
+    els.modeHint.innerHTML = `<strong>On foot at Fire Station ${number}.</strong> WASD or arrows move · Shift runs · R sprints · mouse looks · E enters the fire truck${doorHint} · F free camera.`;
   } else if (state.mode === 'driving') {
     els.modeHint.innerHTML = `<strong>Driving ${fleetRuntime?.fleet.active.definition.name||`Pump ${number}`}.</strong> W/S throttle and brake · A/D steer · E exits when stopped · C camera · L emergency lights${doorHint}.`;
   }
@@ -7065,7 +7065,7 @@ function cycleGameplayCameraDistance() {
 
 function currentGameplayAxes(delta) {
   const modalOpen=Boolean(document.querySelector('dialog[open]'));
-  const keyboard = modalOpen ? {forward:0,strafe:0,steering:0,sprinting:false} : gameplayAxesFromKeys(state.keys);
+  const keyboard = gameplayAxesFromKeys(modalOpen ? null : state.keys);
   const pads = navigator.getGamepads?.() || [];
   const gamepad = Array.from(pads).find((candidate) => candidate?.connected && candidate.mapping === 'standard')
     || Array.from(pads).find((candidate) => candidate?.connected);
@@ -7112,6 +7112,7 @@ function currentGameplayAxes(delta) {
     forward: keyboard.forward || -leftY,
     strafe: keyboard.strafe || leftX,
     steering: keyboard.steering || -leftX,
+    running: keyboard.running || Math.hypot(leftX, leftY) >= .8,
     sprinting: keyboard.sprinting || Boolean(gamepad.buttons?.[10]?.pressed),
   };
 }
@@ -7127,7 +7128,8 @@ function updatePlayerActor(delta) {
     .addScaledVector(gameplayRight, axes.strafe);
   const moving = gameplayMove.lengthSq() > 0.001;
   if (moving) gameplayMove.normalize();
-  const targetSpeed = moving ? (axes.sprinting ? PLAYER_TUNING.sprintSpeed : PLAYER_TUNING.walkSpeed) : 0;
+  const gaitSpeed = axes.sprinting ? PLAYER_TUNING.sprintSpeed : axes.running ? PLAYER_TUNING.runSpeed : PLAYER_TUNING.walkSpeed;
+  const targetSpeed = moving ? gaitSpeed : 0;
   const targetX = gameplayMove.x * targetSpeed;
   const targetZ = gameplayMove.z * targetSpeed;
   const response = moving ? PLAYER_TUNING.accelerationResponse : PLAYER_TUNING.brakingResponse;
@@ -8540,7 +8542,7 @@ function wireEvents() {
       activateSemanticSurveyMode(!semanticSurveyActive);
       event.preventDefault();
     }
-    if (isFlyControlCode(event.code)) state.keys.add(event.code);
+    if (isFlyControlCode(event.code) || (state.mode === 'onFoot' && event.code === 'KeyR' && !event.ctrlKey && !event.altKey && !event.metaKey)) state.keys.add(event.code);
     if (isFlyControlCode(event.code) || ['Space', 'ArrowUp', 'ArrowDown', 'ArrowLeft', 'ArrowRight'].includes(event.code)) event.preventDefault();
   });
   window.addEventListener('keyup',(event)=>{aerialRuntime?.releaseKey(event.code);if(!cityEditor?.active)state.keys.delete(event.code);});

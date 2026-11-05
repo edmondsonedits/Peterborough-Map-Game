@@ -22,9 +22,9 @@
   document.documentElement.dataset.cityExplorerMobileControls = VERSION;
 
   const keyNames = Object.freeze({
-    KeyW: 'w', KeyA: 'a', KeyS: 's', KeyD: 'd', KeyE: 'e', KeyQ: 'q', ShiftLeft: 'Shift',
+    KeyW: 'w', KeyA: 'a', KeyS: 's', KeyD: 'd', KeyE: 'e', KeyQ: 'q', KeyR: 'r', ShiftLeft: 'Shift',
   });
-  const movementCodes = ['KeyW', 'KeyA', 'KeyS', 'KeyD', 'ShiftLeft'];
+  const movementCodes = ['KeyW', 'KeyA', 'KeyS', 'KeyD', 'ShiftLeft', 'KeyR'];
   const activeKeys = new Set();
   let pointerId = null;
   let menuOpen = false;
@@ -83,9 +83,11 @@
 
     const mode = document.documentElement.dataset.gameplayMode || 'onFoot';
     const running = mode === 'onFoot' && magnitude >= 0.84 && Boolean(direction);
+    const sprinting = running && magnitude >= 0.98;
     emitKey('ShiftLeft', running);
+    emitKey('KeyR', sprinting);
     joystick.classList.toggle('is-running', running);
-    if (joystickCaption) joystickCaption.textContent = running ? 'Run' : mode === 'driving' ? 'Drive' : 'Move';
+    if (joystickCaption) joystickCaption.textContent = sprinting ? 'Sprint' : running ? 'Run' : mode === 'driving' ? 'Drive' : 'Move';
   }
 
   function applyJoystick(clientX, clientY) {

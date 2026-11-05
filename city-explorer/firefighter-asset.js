@@ -1,12 +1,12 @@
 import * as THREE from 'three';
 import {GLTFLoader} from './vendor/three-r180/examples/jsm/loaders/GLTFLoader.js';
 import {createPromiseCache} from './asset-request-cache.js';
-import {createFirefighterLocomotion} from './firefighter-locomotion.js?v=5';
+import {createFirefighterLocomotion} from './firefighter-locomotion.js?v=6';
 
 const cacheAssetRequest=createPromiseCache();
-const FIREFIGHTER_URL=new URL('./assets/characters/firefighter.glb?v=5',import.meta.url);
+const FIREFIGHTER_URL=new URL('./assets/characters/firefighter.glb?v=6',import.meta.url);
 const REQUIRED_BONES=['Hips','Spine','Chest','Neck','Head','LeftArm','LeftForeArm','LeftHand','RightArm','RightForeArm','RightHand','LeftLeg','LeftShin','LeftFoot','LeftToe','RightLeg','RightShin','RightFoot','RightToe'];
-const REQUIRED_CLIPS=['Idle','Walk','Run'];
+const REQUIRED_CLIPS=['Idle','Walk','Run','Sprint'];
 
 export function preloadFirefighterAsset() {
   return cacheAssetRequest(FIREFIGHTER_URL.href,async()=>{

@@ -20,6 +20,11 @@
       "name": "Run",
       "duration": 0.64,
       "referenceSpeed": 3.71
+    },
+    {
+      "name": "Sprint",
+      "duration": 0.56,
+      "referenceSpeed": 5.36
     }
   ],
   "motionSource": "Original authored cycles using analytical two-bone leg IK and heel/sole/toe contact targets, baked to glTF keyframes",

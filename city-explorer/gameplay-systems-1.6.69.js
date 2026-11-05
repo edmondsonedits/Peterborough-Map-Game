@@ -3,7 +3,7 @@
    Peterborough Fire Stations 1, 2, and 3, and preserves the refined fire-truck
    kinematics with smoother analog throttle and progressive steering response. */
 
-export * from './gameplay-systems.js?base=firefighter5';
+export * from './gameplay-systems.js?base=firefighter6';
 
 import {
   FIRE_STATION_ONE as BASE_FIRE_STATION_ONE,
@@ -11,7 +11,7 @@ import {
   directionFromHeading,
   exponentialStep,
   wrapAngle,
-} from './gameplay-systems.js?base=firefighter5';
+} from './gameplay-systems.js?base=firefighter6';
 
 const clamp = (value, min, max) => Math.max(min, Math.min(max, Number(value) || 0));
 const degreesToRadians = degrees => Number(degrees) * Math.PI / 180;
