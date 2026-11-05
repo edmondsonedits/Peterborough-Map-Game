@@ -9,6 +9,12 @@ export function aerialBoardingReady(s){
 }
 
 const homeYaw=yaw=>Math.atan2(Math.sin(yaw),Math.cos(yaw));
+const motionAxes=['pitch','yaw','extension','beams','jacks','lift','fold','basketFold'];
+const automaticBlocked={
+  deploying:'Setup paused — clear the obstruction and resume',
+  returning:'Return blocked — take manual control or resume',
+  stowing:'Stow paused — clear the obstruction and resume',
+};
 
 /** Pure apparatus controller. Environment validates setup and the full swept pose. */
 export function stepAerial(s,input={},delta=0,environment={}){
@@ -67,11 +73,27 @@ export function stepAerial(s,input={},delta=0,environment={}){
     candidate.nozzleYaw=clamp(s.nozzleYaw+(input.nozzleYaw||0)*dt*.7,-Math.PI*.75,Math.PI*.75);
     candidate.nozzlePitch=clamp(s.nozzlePitch+(input.nozzlePitch||0)*dt*.55,-Math.PI/2,Math.PI/3);
   }
-  const changed=['beams','jacks','lift','fold','basketFold','pitch','yaw','extension'].some(k=>candidate[k]!==s[k]);
-  if(changed&&environment.motion&&!environment.motion(s,candidate)){s.reason='Movement blocked — reverse or reposition';return s;}
-  Object.assign(s,candidate);s.reason='';
-  s.flow=s.phase==='operating'&&s.supply>0&&Boolean(input.flow);
+  const changes=motionAxes.filter(key=>candidate[key]!==s[key]);
+  let reason='';
+  if(changes.length&&environment.motion&&!environment.motion(s,candidate)){
+    if(s.phase!=='operating'){
+      s.stopped=true;
+      s.reason=automaticBlocked[s.phase];
+      return s;
+    }
+    let accepted=s;
+    if(changes.length>1){
+      for(const axis of changes){
+        const single={...accepted,[axis]:candidate[axis]};
+        if(environment.motion(accepted,single))accepted=single;
+      }
+    }
+    for(const axis of changes)candidate[axis]=accepted[axis];
+    reason=accepted===s?'Movement blocked — try another direction':'Movement limited by clearance';
+  }
+  Object.assign(s,candidate);s.reason=reason;
+  s.flow=s.phase==='operating'&&s.supply>0&&environment.allowWater!==false&&Boolean(input.flow);
   if(s.flow)s.supply=Math.max(0,s.supply-dt);
-  if(s.supply===0&&input.flow&&s.phase==='operating'){s.flow=false;s.reason='Water empty';}
+  if(s.supply===0&&input.flow&&environment.allowWater!==false&&s.phase==='operating'){s.flow=false;s.reason='Water empty';}
   return s;
 }

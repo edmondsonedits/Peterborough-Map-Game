@@ -222,10 +222,10 @@
     "Beacon_RearL",
     "Beacon_RearR"
   ],
-  "triangles": 73810,
-  "drawCalls": 139,
+  "triangles": 90284,
+  "drawCalls": 173,
   "source": "Original apparatus with selectively extracted generic pumper cab faces, wheels, and beacon meshes",
   "wheelSimplificationRatio": 0.3,
   "commercialUse": "Project-created generic geometry and source project meshes",
-  "glbBytes": 4677288
+  "glbBytes": 5695240
 }

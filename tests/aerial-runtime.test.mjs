@@ -53,6 +53,27 @@ test('real controller and GLB can deploy on clear dry ground without throwing',a
    const top=piston.localToWorld(new THREE.Vector3(0,.5,0));
    assert.ok(bottom.distanceTo(jack.getWorldPosition(new THREE.Vector3()))<.01&&top.y>bottom.y+.6);
  }
+
+ assert.equal(runtime.action({ground:true}),true,'the rear operator can open the ladder controls once stabilized');
+ runtime.update(.04);
+ assert.equal(runtime.diagnostics().groundControl,true);
+ assert.ok(runtime.cameraPose()&&!runtime.cameraPose().attached,'ground mode has an overview camera');
+ const groundY=player.y;
+ const initialPitch=entry.aerial.pitch;
+ runtime.handleKey({code:'KeyW',preventDefault(){}});
+ runtime.handleKey({code:'Space',preventDefault(){}});
+ for(let i=0;i<25;i++)runtime.update(.04);
+ runtime.releaseKey('KeyW');runtime.releaseKey('Space');
+ assert.ok(entry.aerial.pitch>initialPitch);
+ assert.equal(player.y,groundY,'the ground operator stays at the rear panel');
+ assert.equal(entry.aerial.flow,false,'water remains a basket control');
+ assert.equal(runtime.action({board:true}),false);
+ assert.equal(runtime.action({return:true}),true);
+ for(let i=0;i<420;i++)runtime.update(.04);
+ assert.equal(runtime.action({ground:true}),true,'leave ground ladder mode');
+ runtime.update(.04);
+ assert.equal(runtime.diagnostics().groundControl,false);
+
  assert.equal(runtime.action({board:true}),true);
  const floor=entry.actor.userData.truck.rig.Basket.getWorldPosition(new THREE.Vector3());
  const eye=runtime.cameraPose();assert.ok(eye.position.y>floor.y+1.5&&eye.attached);

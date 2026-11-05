@@ -4,29 +4,17 @@
   "forward": "-Z",
   "up": "+Y",
   "dimensions": {
-    "length": 7.2,
-    "width": 2.58,
-    "height": 2.9
+    "length": 7.056,
+    "width": 2.632,
+    "height": 2.442
   },
   "measuredBounds": {
-    "length": 7.2,
-    "width": 2.58,
-    "height": 2.9
+    "length": 7.056,
+    "width": 2.632,
+    "height": 2.442
   },
   "wheelbase": 4.07,
-  "cabClearance": {
-    "min": [
-      -1.0,
-      0.58,
-      -3.62
-    ],
-    "max": [
-      1.0,
-      2.62,
-      0.02
-    ]
-  },
-  "wheelRadius": 0.53,
+  "wheelRadius": 0.539,
   "wheelNodes": [
     "Wheel_FL",
     "Wheel_FR",
@@ -35,18 +23,17 @@
   ],
   "beaconNodes": [
     "Beacon_L",
-    "Beacon_R",
     "Beacon_RearL",
+    "Beacon_R",
     "Beacon_RearR"
   ],
   "fourDoorCab": true,
   "fullyEnclosedCanopy": true,
-  "body": "Fire-red crew-cab pickup with integrated molded wheel arches, grille guard, fitted charcoal equipment canopy, light rescue stripe and panel seams",
   "ambulance": false,
-  "source": "Original shaped pickup cab/canopy and wheel hubs with selectively reused generic pumper wheel and beacon meshes",
-  "wheelSimplificationRatio": 0.3,
-  "commercialUse": "Project-created generic geometry and source project meshes",
-  "triangles": 21254,
-  "drawCalls": 35,
-  "glbBytes": 1314444
+  "body": "Contoured red four-door fire rescue pickup with a colour-matched canopy, lower reflective stripe and alloy brightwork",
+  "source": "Original Blender geometry informed by two user-provided fire rescue pickup reference photographs",
+  "commercialUse": "Original project geometry, fictional markings, no reference photo pixels used",
+  "triangles": 42906,
+  "drawCalls": 37,
+  "glbBytes": 1783564
 }

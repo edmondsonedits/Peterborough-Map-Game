@@ -12,38 +12,39 @@
     "Generic original markings; no manufacturer identity or claim of an exact Peterborough fleet replica.",
     "GLB geometry is authored in Blender; runtime articulation and piston tracking are controlled in Three.js.",
     "Aerial body is 12.97 m long by measured exported bounds; axle-center wheelbase is 7.14 m. Telescoping section lengths and outrigger travel remain independent of the chassis length adjustment.",
-    "Medi is an original crew-cab pickup with fitted charcoal canopy and generated shaped wheel arches."
+    "Medi is original Blender geometry based on user-provided crew-cab fire rescue pickup references. No reference photo pixels were used."
   ],
   "outputs": [
     {
       "path": "assets-source/vehicles/aerial-platform.blend",
-      "sha256": "a37990e1083806e839625ce94c08c678fa3843a61bd23fb25a554fc42ace7aa2",
-      "bytes": 986208
-    },
-    {
-      "path": "assets-source/vehicles/medi-pickup.blend",
-      "sha256": "edb756510279facf0ac2076fad50e6e33e0b16b45384e35785cb17a9d62bcee4",
-      "bytes": 603039
+      "sha256": "6e3685c5bfaa6410f24c2d28aa8d3b8880796b230e319a39873189c530df647b",
+      "bytes": 1033201
     },
     {
       "path": "city-explorer/assets/vehicles/aerial-platform.glb",
-      "sha256": "334178324cc96dceeaa602053771e8b0b15be584d8584104439ff943238206a8",
-      "bytes": 4677288
+      "sha256": "4dc1b3d20bdb2e69bd3f3a820021b3c28c497623e3bd21e2646a2dbaae1610db",
+      "bytes": 5695240
     },
     {
       "path": "city-explorer/assets/vehicles/aerial-platform.json",
-      "sha256": "2c93f59305c9720e764a1efebd9afd483738a8ca4948492b6f26eb30ed1db7ef",
+      "sha256": "d6d55bab882537e183f97bf7f7e96734a75e502a1fb93d997ca4286a6ea23307",
       "bytes": 4658
     },
     {
+      "path": "assets-source/vehicles/medi-pickup.blend",
+      "sha256": "f9387e6f6e1ff73b055acd75a4ae1de83e9986ba0ce697ba7f2ea4ce1df9cd52",
+      "bytes": 791241
+    },
+    {
       "path": "city-explorer/assets/vehicles/medi-pickup.glb",
-      "sha256": "ec20e7990272e40137d4c1e4b7a8b63cad67b70e3e6a815d100e3fcbbf27a0a8",
-      "bytes": 1314444
+      "sha256": "83d671fd1af8fb1d018398770efec7449e2f24865f0a678e32e7123a809bda7e",
+      "bytes": 1783564
     },
     {
       "path": "city-explorer/assets/vehicles/medi-pickup.json",
-      "sha256": "6436686fc2ac2a3643c779044d89686d6764fa476ec3498117d5508993ea8011",
-      "bytes": 1217
+      "sha256": "5ffaa1410bd9241be5e69d248e36f636956b62aa0e72945c6f08297b7c897ba8",
+      "bytes": 1022
     }
-  ]
+  ],
+  "updated": "2026-11-05"
 }

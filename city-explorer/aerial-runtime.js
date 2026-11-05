@@ -68,7 +68,7 @@ export function applyAerialPose(THREE,entry,s){
 
 export function createAerialRuntime({THREE,scene,fleet,gameState,canvas,surface,ready,inBay,isWater,obstacles,toast,playerPosition,placeOperator}){
   const entry=fleet.fleet.vehicles.find(v=>v.aerial),s=entry.aerial;
-  const input={},held=new Map();let station=null,pending={},boxes=[],boxTime=-Infinity,lastBlocked=null,view='basket',boardingHeading=0,travelPoseReady=false;
+  const input={},held=new Map();let station=null,pending={},boxes=[],boxTime=-Infinity,lastBlocked=null,view='basket',boardingHeading=0,travelPoseReady=false,groundControl=false;
   const point=new THREE.Vector3(),end=new THREE.Vector3(),direction=new THREE.Vector3();
   const group=new THREE.Group();group.name='Aerial_Water';scene.add(group);
   const points=new Float32Array(65*3),geometry=new THREE.BufferGeometry();geometry.setAttribute('position',new THREE.BufferAttribute(points,3));
@@ -86,6 +86,7 @@ export function createAerialRuntime({THREE,scene,fleet,gameState,canvas,surface,
     <div class="aerial-actions">
       <button type="button" data-action="deploy">Extend &amp; level</button>
       <button type="button" data-action="board">Climb into basket</button>
+      <button type="button" data-action="ground">Ground ladder</button>
       <button type="button" data-action="return">Return to boarding</button>
       <button type="button" data-action="takeControl">Manual control</button>
       <button type="button" data-action="exit">Exit basket</button>
@@ -100,27 +101,32 @@ export function createAerialRuntime({THREE,scene,fleet,gameState,canvas,surface,
   const controls=panel.querySelector('.aerial-holds');
   const compartments=panel.querySelector('.aerial-compartments');
   for(const type of ['selectstart','contextmenu'])panel.addEventListener(type,event=>event.preventDefault());
-  compartments.addEventListener('click',event=>{
-    const button=event.target.closest('button[data-compartment]');
-    if(!button||controls.dataset.compartment===button.dataset.compartment)return;
+  function selectCompartment(compartment){
     clearInput();
-    controls.dataset.compartment=button.dataset.compartment;
-    for(const option of compartments.children)option.setAttribute('aria-pressed',String(option===button));
+    controls.dataset.compartment=compartment;
+    for(const option of compartments.children)option.setAttribute('aria-pressed',String(option.dataset.compartment===compartment));
+  }
+  compartments.addEventListener('click',event=>{
+    const compartment=event.target.closest('button[data-compartment]')?.dataset.compartment;
+    if(compartment&&compartment!==controls.dataset.compartment)selectCompartment(compartment);
   });
   for(const [label,axis,value] of [['Raise','raise',1],['Lower','raise',-1],['Rotate left','rotate',1],['Rotate right','rotate',-1],['Extend','extend',1],['Retract','extend',-1],['Aim left','nozzleYaw',1],['Aim right','nozzleYaw',-1],['Aim up','nozzlePitch',1],['Aim down','nozzlePitch',-1],['Water','flow',true]]){
     const b=document.createElement('button');b.type='button';b.textContent=label;b.dataset.axis=axis;b.dataset.group=axis.startsWith('nozzle')||axis==='flow'?'water':'ladder';controls.append(b);
-    b.onpointerdown=e=>{if(b.disabled||station!=='basket')return;e.preventDefault();b.setPointerCapture(e.pointerId);held.set(b,[axis,value]);b.classList.add('is-held');rebuild();};
-    b.onkeydown=e=>{if(e.code==='Enter'&&!b.disabled&&station==='basket'){e.preventDefault();held.set(b,[axis,value]);b.classList.add('is-held');rebuild();}};
+    b.onpointerdown=e=>{if(b.disabled||!canHold(axis))return;e.preventDefault();b.setPointerCapture(e.pointerId);held.set(b,[axis,value]);b.classList.add('is-held');rebuild();};
+    b.onkeydown=e=>{if(e.code==='Enter'&&!b.disabled&&canHold(axis)){e.preventDefault();held.set(b,[axis,value]);b.classList.add('is-held');rebuild();}};
     b.onkeyup=e=>{if(e.code==='Enter')release();};b.onblur=()=>release();
     const release=()=>{held.delete(b);b.classList.remove('is-held');rebuild();};b.onpointerup=release;b.onpointercancel=release;b.onlostpointercapture=release;
   }
   const output=panel.querySelector('output'),title=panel.querySelector('h2'),readouts=panel.querySelector('.aerial-readouts');
   const buttons=Object.fromEntries([...panel.querySelectorAll('[data-action]')].map(b=>[b.dataset.action,b]));
   document.getElementById('app').append(prompt,panel);
-  const css=document.createElement('link');css.rel='stylesheet';css.href=new URL('./fleet.css?rev=3',import.meta.url).href;document.head.append(css);
+  const css=document.createElement('link');css.rel='stylesheet';css.href=new URL('./fleet.css?rev=4',import.meta.url).href;document.head.append(css);
   function rebuild(){for(const k of Object.keys(input))delete input[k];for(const [axis,v] of held.values())input[axis]=v;}
   function clearInput(){held.clear();rebuild();pending={};s.flow=false;group.visible=false;panel.querySelectorAll('.is-held').forEach(n=>n.classList.remove('is-held'));}
   function onFoot(){return gameState.mode==='onFoot';}
+  function canHold(axis){
+    return station==='basket'||(station==='rear'&&groundControl&&['raise','rotate','extend'].includes(axis));
+  }
   function rearPosition(){
     const rear=entry.actor.userData.truck.rig?.RearOperator;
     const ground=rear?rear.getWorldPosition(new THREE.Vector3()):entry.actor.localToWorld(new THREE.Vector3(0,0,entry.definition.tuning.length/2+1.15));
@@ -138,17 +144,20 @@ export function createAerialRuntime({THREE,scene,fleet,gameState,canvas,surface,
     return (rig.BasketStand??rig.Basket).getWorldPosition(new THREE.Vector3());
   }
   function dismiss(){
-    clearInput();station=null;view='basket';panel.hidden=true;prompt.hidden=true;
+    clearInput();station=null;groundControl=false;view='basket';panel.hidden=true;prompt.hidden=true;
     document.documentElement.classList.remove('aerial-operating','aerial-near-rear');
   }
   function action(value){
     if(!onFoot()||document.querySelector('dialog[open]'))return false;
     if(value.rear&&nearRear()){
-      station='rear';clearInput();placeOperator(rearPosition(),entry.state.heading);
+      station='rear';groundControl=false;clearInput();placeOperator(rearPosition(),entry.state.heading);
     }else if(value.leave&&station==='rear'){
       dismiss();
-    }else if(value.board&&station==='rear'&&aerialBoardingReady(s)&&!s.stopped){
-      clearInput();station='basket';view='basket';boardingHeading=entry.state.heading;
+    }else if(value.ground&&station==='rear'&&(groundControl||s.phase==='operating'||s.phase==='returning')){
+      groundControl=!groundControl;
+      selectCompartment('ladder');
+    }else if(value.board&&station==='rear'&&!groundControl&&aerialBoardingReady(s)&&!s.stopped){
+      selectCompartment('ladder');station='basket';view='basket';boardingHeading=entry.state.heading;
       gameState.gameplayYaw=boardingHeading;gameState.gameplayPitch=-.37;
       placeOperator(basketPosition(),boardingHeading);
     }else if(value.exit&&station==='basket'&&aerialBoardingReady(s)){
@@ -162,9 +171,9 @@ export function createAerialRuntime({THREE,scene,fleet,gameState,canvas,surface,
       view=view==='basket'?'overview':view==='overview'?'nozzle':'basket';
     }else if(station&&(value.stop||value.resume)){
       clearInput();pending=value.stop?{stop:true}:{resume:true};
-    }else if(station==='rear'&&(value.deploy||value.stow||value.refill)){
+    }else if(station==='rear'&&!groundControl&&(value.deploy||value.stow||value.refill)){
       clearInput();pending=value;
-    }else if(station==='basket'&&(value.return||value.takeControl)){
+    }else if((station==='basket'||(station==='rear'&&groundControl))&&(value.return||value.takeControl)){
       clearInput();pending=value;
     }else return false;
     canvas.focus({preventScroll:true});
@@ -316,6 +325,7 @@ export function createAerialRuntime({THREE,scene,fleet,gameState,canvas,surface,
     if(station&&!onFoot())dismiss();
     if(station==='rear'&&!nearRear())dismiss();
     const rig=entry.actor.userData.truck.rig,bucket=station==='basket',rear=station==='rear';
+    const ground=rear&&groundControl,ladderConsole=bucket||ground;
     panel.hidden=!station;prompt.hidden=Boolean(station)||!nearRear();
     document.documentElement.classList.toggle('aerial-operating',Boolean(station));
     document.documentElement.classList.toggle('aerial-near-rear',!prompt.hidden);
@@ -323,7 +333,7 @@ export function createAerialRuntime({THREE,scene,fleet,gameState,canvas,surface,
     if(document.querySelector('dialog[open]'))clearInput();
     const home=Math.hypot(entry.state.x-entry.spawn.x,entry.state.z-entry.spawn.z)<4;
     if(s.phase!=='travel'||station){
-      stepAerial(s,{...(bucket?input:{}),...pending},delta,{speed:entry.state.speed,atHome:home,occupied:bucket,setup,motion});
+      stepAerial(s,{...(ladderConsole?input:{}),...pending},delta,{speed:entry.state.speed,atHome:home,occupied:bucket,allowWater:bucket,setup,motion});
       pending={};
     }
     if(s.phase!=='travel'||!travelPoseReady)applyAerialPose(THREE,entry,s);
@@ -338,19 +348,24 @@ export function createAerialRuntime({THREE,scene,fleet,gameState,canvas,surface,
       operating:canBoard?(bucket?'At boarding position':'Ready to board'):'Platform clear',returning:'Returning to boarding position',stowing:'Stowing apparatus'}[s.phase];
     const message=s.reason||label;
     if(output.textContent!==message)output.textContent=message;
-    const heading=bucket?'Basket controls':'Rear controls';
+    const heading=bucket?'Basket controls':ground?'Ground ladder controls':'Rear controls';
     if(title.textContent!==heading)title.textContent=heading;
     const height=rig.Basket.getWorldPosition(point).y-(entry.state.y||0);
     const meters=Math.max(0,height);
-    const stats=bucket?`Height ${meters.toFixed(1)} m · Water ${Math.ceil(s.supply/AERIAL_LIMITS.supply*100)}%`:`Outriggers ${Math.round(s.beams*100)}% · ${s.lift===1?'Level':s.jacks===1?'Jacks grounded':s.jacks>0?'Lowering jacks':'Jacks up'}`;
+    const stats=bucket?`Height ${meters.toFixed(1)} m · Water ${Math.ceil(s.supply/AERIAL_LIMITS.supply*100)}%`:
+      ground?`Height ${meters.toFixed(1)} m · Outriggers level`:
+      `Outriggers ${Math.round(s.beams*100)}% · ${s.lift===1?'Level':s.jacks===1?'Jacks grounded':s.jacks>0?'Lowering jacks':'Jacks up'}`;
     if(readouts.textContent!==stats)readouts.textContent=stats;
     buttons.leave.hidden=!rear;
     buttons.deploy.hidden=!rear||s.phase!=='travel';
-    buttons.board.hidden=!rear||!canBoard||s.stopped;
-    buttons.stow.hidden=!rear||s.phase==='travel'||s.phase==='stowing';
+    buttons.board.hidden=!rear||ground||!canBoard||s.stopped;
+    buttons.ground.hidden=!rear||(!ground&&s.phase!=='operating'&&s.phase!=='returning');
+    const groundLabel=ground?'Done':'Ground ladder';
+    if(buttons.ground.textContent!==groundLabel)buttons.ground.textContent=groundLabel;
+    buttons.stow.hidden=!rear||ground||s.phase==='travel'||s.phase==='stowing';
     buttons.refill.hidden=!rear||!home||s.phase!=='travel'||s.supply===AERIAL_LIMITS.supply;
-    buttons.return.hidden=!bucket||canBoard||s.phase==='returning';
-    buttons.takeControl.hidden=!bucket||s.phase!=='returning';
+    buttons.return.hidden=!ladderConsole||canBoard||s.phase==='returning';
+    buttons.takeControl.hidden=!ladderConsole||s.phase!=='returning';
     buttons.exit.hidden=!bucket||!canBoard;
     buttons.view.hidden=!bucket;
     const viewLabel=view==='basket'?'Overview':view==='overview'?'Nozzle view':'Basket view';
@@ -358,17 +373,37 @@ export function createAerialRuntime({THREE,scene,fleet,gameState,canvas,surface,
     buttons.resume.hidden=!s.stopped||s.phase==='travel';
     buttons.stop.hidden=s.stopped||s.phase==='travel';
     panel.classList.toggle('is-basket',bucket);
-    controls.hidden=!bucket;
+    panel.classList.toggle('is-ground-ladder',ground);
+    compartments.hidden=!bucket;
+    controls.hidden=!ladderConsole;
     panel.querySelector('small').hidden=!bucket;
-    for(const button of controls.children)button.disabled=s.stopped||s.phase!=='operating';
+    for(const button of controls.children){
+      button.hidden=ground&&button.dataset.group==='water';
+      button.disabled=s.stopped||s.phase!=='operating';
+    }
   }
-  return {update,action,clearInput,dismiss,atControls:()=>Boolean(station),aboard:()=>station==='basket',
+  return {update,action,clearInput,dismiss,rearExitPoint:()=>{
+    const rear=rearPosition();refreshBoxes(true);
+    return rearPadClear(rear)?rear:null;
+  },atControls:()=>Boolean(station),aboard:()=>station==='basket',
     locksDriving:()=>fleet.fleet.active===entry&&!aerialTravelReady(s),
-    diagnostics:()=>({lastBlocked,station,view,staticObstacleCount:boxes.length,
+    diagnostics:()=>({lastBlocked,station,view,groundControl,staticObstacleCount:boxes.length,
       rear:entry.actor.userData.truck.rig?.RearOperator?rearPosition().toArray():null,
       chassisLift:entry.actor.position.y-(entry.state.y||0),basket:entry.actor.userData.truck.rig?.Basket?.getWorldPosition(new THREE.Vector3()).toArray()}),
     cameraPose:()=>{
-      if(station!=='basket'||!onFoot())return null;
+      if(!onFoot())return null;
+      if(station==='rear'&&groundControl){
+        const rig=entry.actor.userData.truck.rig;
+        const base=rig.TurntableYaw.getWorldPosition(new THREE.Vector3());
+        const basket=basketPosition();
+        const center=entry.actor.getWorldPosition(new THREE.Vector3()).lerp(basket,.40);
+        center.y+=.7;
+        const distance=Math.max(15,base.distanceTo(basket)*1.18);
+        const yaw=gameState.gameplayYaw+.84;
+        const position=center.clone().add(new THREE.Vector3(Math.sin(yaw)*distance,4+distance*.23,Math.cos(yaw)*distance));
+        return {position,target:center};
+      }
+      if(station!=='basket')return null;
       const outlet=entry.actor.userData.truck.rig.NozzleOutlet;
       if(view==='nozzle'){
         const position=outlet.getWorldPosition(new THREE.Vector3()),aim=new THREE.Vector3(0,0,-1).transformDirection(outlet.matrixWorld);
@@ -390,9 +425,11 @@ export function createAerialRuntime({THREE,scene,fleet,gameState,canvas,surface,
     handleKey(event){
       if(!onFoot())return false;
       let handled=false;
-      if(event.code==='KeyE'&&station!=='basket'&&!event.repeat)handled=action(station==='rear'?{leave:true}:{rear:true});
-      else if(event.code==='KeyX'&&station==='basket'&&!event.repeat)handled=action(aerialBoardingReady(s)?{exit:true}:{return:true});
-      else if(station==='basket'&&keys[event.code]){
+      if(event.code==='KeyE'&&station!=='basket'&&!groundControl&&!event.repeat)handled=action(station==='rear'?{leave:true}:{rear:true});
+      else if(event.code==='KeyX'&&!event.repeat){
+        if(station==='basket')handled=action(aerialBoardingReady(s)?{exit:true}:{return:true});
+        else if(groundControl)handled=action(aerialBoardingReady(s)?{ground:true}:{return:true});
+      }else if(keys[event.code]&&canHold(keys[event.code][0])){
         if(!s.stopped&&s.phase==='operating'){held.set(event.code,keys[event.code]);rebuild();}
         handled=true;
       }

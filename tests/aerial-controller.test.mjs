@@ -31,3 +31,40 @@ test('blocked swept movement retains pose, reverse remains usable, invalid delta
   const p=s.pitch;run(s,{raise:1},1,{...clear,motion:()=>false});assert.equal(s.pitch,p);assert.match(s.reason,/blocked/i);
   run(s,{raise:1},1);assert.ok(s.pitch>p);stepAerial(s,{raise:1},NaN,clear);assert.ok(Number.isFinite(s.pitch));
 });
+
+test('a blocked combined command still permits an individually clear motion axis',()=>{
+  const state=createAerialState();
+  stepAerial(state,{deploy:true},.02,clear);
+  run(state,{},12);
+  const pitch=state.pitch;
+  const yaw=state.yaw;
+  const overhead={...clear,motion:(from,to)=>to.pitch<=pitch};
+  stepAerial(state,{raise:1,rotate:1},.02,overhead);
+  assert.equal(state.pitch,pitch);
+  assert.ok(state.yaw>yaw);
+  assert.match(state.reason,/clearance/i);
+});
+
+test('an obstructed automatic return pauses until resumed or taken over',()=>{
+  const state=createAerialState();
+  stepAerial(state,{deploy:true},.02,clear);
+  run(state,{},12);
+  run(state,{rotate:1,extend:1},2);
+  const blocked={...clear,motion:()=>false};
+  stepAerial(state,{return:true},.02,blocked);
+  assert.equal(state.phase,'returning');
+  assert.equal(state.stopped,true);
+  assert.match(state.reason,/return blocked/i);
+  const extension=state.extension;
+  run(state,{},1,clear);
+  assert.equal(state.extension,extension);
+  stepAerial(state,{takeControl:true,extend:-1},.02,clear);
+  assert.equal(state.phase,'operating');
+  assert.equal(state.stopped,false);
+  assert.ok(state.extension<extension);
+  run(state,{return:true},.02,clear);
+  run(state,{},20,clear);
+  assert.equal(state.phase,'operating');
+  assert.equal(state.extension,0);
+  assert.equal(state.yaw,0);
+});
