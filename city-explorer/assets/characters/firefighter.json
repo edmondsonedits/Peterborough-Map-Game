@@ -1,15 +1,33 @@
 {
   "name": "Generic turnout firefighter",
-  "source": "Original turnout gear plus CC0 MakeHuman anatomical head, eyes, brows, hair and skin; user sheet is visual reference",
+  "source": "Original turnout gear and retained CC0 MakeHuman anatomical head, eyes, brows, hair and skin",
   "triangles": 106674,
   "units": "metres",
   "up": "+Y",
   "forward": "-Z",
-  "rig": "Rigid shoulder and hip groups; existing procedural gait",
-  "commercialUse": "Original gear; CC0 MakeHuman assets, license and provenance retained in assets-source/firefighter-v2/vendor",
+  "rig": "19-joint weighted skeleton: pelvis, spine, chest, neck, head, shoulders, elbows, wrists, hips, knees, ankles and toes",
+  "animations": [
+    {
+      "name": "Idle",
+      "duration": 3
+    },
+    {
+      "name": "Walk",
+      "duration": 0.86,
+      "referenceSpeed": 1.51
+    },
+    {
+      "name": "Run",
+      "duration": 0.64,
+      "referenceSpeed": 3.71
+    }
+  ],
+  "motionSource": "Original authored cycles using analytical two-bone leg IK and heel/sole/toe contact targets, baked to glTF keyframes",
+  "baseAssetSHA256": "540ed0291a8504baa3e312e7e2706cfba3e7be5044ef805c24966d78ff7c55de",
+  "commercialUse": "Original gear and animations; CC0 MakeHuman assets with retained licenses/provenance under licenses/",
   "limitations": [
-    "Stylized facial likeness, not a photorealistic scan",
-    "No facial, finger or elbow animation",
-    "Hands have no carried props"
+    "Not a photorealistic scan or motion capture",
+    "No facial or finger animation",
+    "In-place flat-ground cycles; no per-foot terrain IK"
   ]
 }

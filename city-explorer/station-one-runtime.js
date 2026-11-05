@@ -5,9 +5,9 @@ import {
   stationOnePanelPose, stationOneCollision, sweepStationOneTruck, stationOneDoorObstructed,
   sampleStationOneFloor, stepStationOneDoors, toggleStationOneDoor,
   stationOneRequested as stationOneRequestedForSearch,
-} from './station-one-core.mjs?v=1.6.182';
+} from './station-one-core.mjs?v=1.6.183';
 
-const STATION_MODEL = new URL('./assets/station1/station1.glb?v=1.6.182', import.meta.url);
+const STATION_MODEL = new URL('./assets/station1/station1.glb?v=1.6.183', import.meta.url);
 const cacheAssetRequest = createPromiseCache();
 export function preloadStationOneAsset() {
   return cacheAssetRequest(STATION_MODEL.href, async () => {

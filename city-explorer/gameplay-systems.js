@@ -28,8 +28,8 @@ export const FIRE_STATION_ONE = Object.freeze({
 });
 
 export const PLAYER_TUNING = Object.freeze({
-  walkSpeed: 4.6,
-  sprintSpeed: 7.2,
+  walkSpeed: 1.6,
+  sprintSpeed: 3.8,
   accelerationResponse: 13,
   brakingResponse: 18,
   rotationResponse: 15,
@@ -187,7 +187,7 @@ export function createFirefighter(THREE) {
   mesh(THREE, new THREE.BoxGeometry(0.76, 0.09, 0.05), gold, visual, 0, 1.22, -0.31);
   root.userData.animation = { visual, leftArm, rightArm, leftLeg, rightLeg, phase: 0 };
   root.userData.animation.assetStatus = 'loading';
-  root.userData.animation.ready = import('./firefighter-asset.js?v=4').then(({installFirefighter}) => installFirefighter(root)).catch(error => {
+  root.userData.animation.ready = import('./firefighter-asset.js?v=5').then(({installFirefighter}) => installFirefighter(root)).catch(error => {
     root.userData.animation.assetStatus = 'procedural-fallback';
     root.userData.animation.assetError = String(error.message || error);
     return 'procedural-fallback';
@@ -564,4 +564,3 @@ function createLegacyFireStationFacade(THREE) {
   root.userData.texture = texture;
   return root;
 }
-
