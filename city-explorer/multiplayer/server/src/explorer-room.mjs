@@ -187,20 +187,19 @@ export function createExplorerSession({ world, vehicles = [], spawn, clock = Dat
     };
   }
 
-  function currentVehicleSnapshots() {
+  function currentVehicleSnapshots(includeCatalog = true) {
     return vehicleRecords.map((vehicle) => ({
       id: vehicle.id,
-      ...(vehicle.templateId ? { templateId: vehicle.templateId } : {}),
+      ...(includeCatalog && vehicle.templateId ? { templateId: vehicle.templateId } : {}),
       entityGeneration: vehicle.entityGeneration,
       pose: { ...vehicle.pose },
-      tuning: { ...vehicle.tuning },
-      dimensions: { length: vehicle.dimensions.length, width: vehicle.dimensions.width, height: vehicle.dimensions.height },
+      ...(includeCatalog ? { tuning: { ...vehicle.tuning }, dimensions: { length: vehicle.dimensions.length, width: vehicle.dimensions.width, height: vehicle.dimensions.height } } : {}),
       lights: vehicle.lights,
       driverPlayerId: ownership.driverOf(vehicle.id),
     }));
   }
 
-  function snapshotFor(playerId) {
+  function snapshotFor(playerId, { includeVehicleCatalog = true } = {}) {
     const recipient = players.get(playerId);
     if (!recipient || !recipient.connected) throw new Error('unknown or disconnected player');
     const others = [...players.values()].filter((player) => player.connected && player !== recipient).map(publicActor);
@@ -213,7 +212,7 @@ export function createExplorerSession({ world, vehicles = [], spawn, clock = Dat
       ackInputSequence: recipient.ackInputSequence,
       player: publicActor(recipient),
       players: others,
-      vehicles: currentVehicleSnapshots(),
+      vehicles: currentVehicleSnapshots(includeVehicleCatalog),
     };
     if (!validateSnapshot(snapshot)) throw new Error('server constructed an invalid protocol snapshot');
     return Object.freeze(snapshot);
@@ -586,7 +585,7 @@ export function createExplorerSession({ world, vehicles = [], spawn, clock = Dat
     }
     if (steps === 7 && accumulator >= STEP_MS) accumulator %= STEP_MS;
     const snapshots = [];
-    for (const player of players.values()) if (player.connected) snapshots.push({ playerId: player.playerId, snapshot: snapshotFor(player.playerId) });
+    for (const player of players.values()) if (player.connected) snapshots.push({ playerId: player.playerId, snapshot: snapshotFor(player.playerId, { includeVehicleCatalog: false }) });
     return Object.freeze({ tick: tickNumber, disposed: false, snapshots: Object.freeze(snapshots) });
   }
 

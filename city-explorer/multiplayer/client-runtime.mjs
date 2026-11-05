@@ -5,6 +5,7 @@ const STEP_MS = 1000 / 30;
 const SUBSTEP_SECONDS = 1 / 60;
 const MAX_CATCHUP_TICKS = 5;
 const MAX_PENDING = 8;
+const MAX_VEHICLES = 12;
 const MAX_EXTRAPOLATION_MS = 100;
 const clamp = (n, lo, hi) => Math.max(lo, Math.min(hi, n));
 const wrapAngle = (angle) => ((angle + Math.PI) % (2 * Math.PI) + 2 * Math.PI) % (2 * Math.PI) - Math.PI;
@@ -17,6 +18,16 @@ const copyControls = (value = {}) => ({
 });
 const actorSignature = (actor) => `${actor.entityGeneration}:${actor.mode}:${actor.vehicleId ?? ''}`;
 const vehicleSignature = (vehicle) => `${vehicle.entityGeneration}:${vehicle.driverPlayerId ?? ''}`;
+const owns = (value, key) => Object.prototype.hasOwnProperty.call(value, key);
+const record = (value) => value !== null && typeof value === 'object' && !Array.isArray(value);
+
+function vehicleMetadata(vehicle) {
+  const hasTemplate = owns(vehicle, 'templateId'), hasTuning = owns(vehicle, 'tuning'), hasDimensions = owns(vehicle, 'dimensions');
+  if (hasTemplate && (typeof vehicle.templateId !== 'string' || vehicle.templateId.length > 80)) return false;
+  if (hasTuning && (!record(vehicle.tuning) || !Object.values(vehicle.tuning).length || !Object.values(vehicle.tuning).every(Number.isFinite))) return false;
+  if (hasDimensions && (!record(vehicle.dimensions) || !['length', 'width', 'height'].every((key) => Number.isFinite(vehicle.dimensions[key]) && vehicle.dimensions[key] > 0))) return false;
+  return { hasTemplate, hasTuning, hasDimensions, complete: hasTuning && hasDimensions };
+}
 
 function interpolatePose(a, b, t) {
   const pose = {};
@@ -62,6 +73,7 @@ export function createClientRuntime({
   if (!world || typeof world.sampleSurface !== 'function' || typeof world.blocks !== 'function' || typeof world.readyAt !== 'function') throw new TypeError('world must provide sampleSurface, blocks, and readyAt');
   const emit = (type, data = {}) => { try { onEvent({ type, ...data }); } catch {} };
   const listeners = new Set();
+  const vehicleCatalog = new Map();
   let disposed = false, compatible = true, pausedForWorld = false, epoch = null, tick = -1, sequence = 0, lastAckInputSequence = 0;
   let accumulator = 0, pending = [], authoritative = null, simulation = null, rendered = null, lastRenderAt = clock();
   let latestControls = copyControls(), renderCorrection = { x: 0, y: 0, z: 0, heading: 0 };
@@ -185,6 +197,32 @@ export function createClientRuntime({
     if (record.samples.length > 12) record.samples.splice(0, record.samples.length - 12);
     map.set(entity.id, record);
   }
+  function hydrateVehicleCatalog(snapshot) {
+    const metadata = snapshot.vehicles.map((vehicle) => ({ vehicle, fields: vehicleMetadata(vehicle) }));
+    if (metadata.some((entry) => entry.fields === false)) return null;
+    const currentIds = new Set(snapshot.vehicles.map((vehicle) => vehicle.id));
+    for (const id of vehicleCatalog.keys()) if (!currentIds.has(id)) vehicleCatalog.delete(id);
+    for (const { vehicle, fields } of metadata) {
+      if (!fields.hasTemplate && !fields.hasTuning && !fields.hasDimensions) continue;
+      const previous = vehicleCatalog.get(vehicle.id) ?? {};
+      const next = fields.complete ? {} : { ...previous };
+      if (fields.hasTemplate) next.templateId = vehicle.templateId;
+      else if (fields.complete) delete next.templateId;
+      if (fields.hasTuning) next.tuning = { ...vehicle.tuning };
+      if (fields.hasDimensions) next.dimensions = { ...vehicle.dimensions };
+      vehicleCatalog.delete(vehicle.id);
+      vehicleCatalog.set(vehicle.id, next);
+    }
+    while (vehicleCatalog.size > MAX_VEHICLES) vehicleCatalog.delete(vehicleCatalog.keys().next().value);
+    return { ...snapshot, vehicles: snapshot.vehicles.map((vehicle) => {
+      const hydrated = { ...vehicle }, cached = vehicleCatalog.get(vehicle.id);
+      if (!cached) return hydrated;
+      if (owns(cached, 'templateId')) hydrated.templateId = cached.templateId;
+      if (cached.tuning) hydrated.tuning = { ...cached.tuning };
+      if (cached.dimensions) hydrated.dimensions = { ...cached.dimensions };
+      return hydrated;
+    }) };
+  }
   function applySnapshot(snapshot) {
     if (disposed || !validateSnapshot(snapshot)) { emit('snapshot-rejected', { reason: 'invalid' }); return false; }
     if (snapshot.worldVersion !== worldVersion || (world.worldVersion && snapshot.worldVersion !== world.worldVersion)) {
@@ -193,6 +231,8 @@ export function createClientRuntime({
     if (epoch !== null && snapshot.epoch < epoch) { emit('snapshot-ignored', { reason: 'older-epoch', epoch: snapshot.epoch }); return false; }
     if (epoch === snapshot.epoch && snapshot.tick <= tick) { emit('snapshot-ignored', { reason: 'older-tick', tick: snapshot.tick }); return false; }
     if (epoch === snapshot.epoch && snapshot.ackInputSequence < lastAckInputSequence) { emit('snapshot-ignored', { reason: 'older-input-ack', ackInputSequence: snapshot.ackInputSequence }); return false; }
+    snapshot = hydrateVehicleCatalog(snapshot);
+    if (!snapshot) { emit('snapshot-rejected', { reason: 'invalid-vehicle-catalog' }); return false; }
     const receiveAt = clock();
     const priorRenderedPose = rendered ? clonePose(rendered.pose) : null;
     if (clockOffset === null) clockOffset = snapshot.serverTime - receiveAt;
@@ -294,7 +334,7 @@ export function createClientRuntime({
     return state();
   }
   function subscribe(fn) { if (typeof fn !== 'function') throw new TypeError('listener must be a function'); listeners.add(fn); return () => listeners.delete(fn); }
-  function dispose() { if (disposed) return; disposed = true; pending = []; clearBuffers(); listeners.clear(); try { transport.dispose?.(); } catch {} publish(); }
+  function dispose() { if (disposed) return; disposed = true; pending = []; clearBuffers(); vehicleCatalog.clear(); listeners.clear(); try { transport.dispose?.(); } catch {} publish(); }
   if (transport.onSnapshot) transport.onSnapshot(applySnapshot);
   if (transport.onQueueAck) transport.onQueueAck((ack) => emit('queue-acceptance', { ...ack, simulated: false }));
   if (transport.onActionResult) transport.onActionResult((result) => emit('action-result', result));
