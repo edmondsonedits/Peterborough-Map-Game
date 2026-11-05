@@ -1,6 +1,6 @@
 import {test} from 'node:test';
 import assert from 'node:assert/strict';
-import {createAerialState,stepAerial,aerialTravelReady} from '../city-explorer/aerial-controller.mjs';
+import {createAerialState,stepAerial,aerialTravelReady,AERIAL_LIMITS} from '../city-explorer/aerial-controller.mjs';
 const clear={speed:0,setup:()=>({ok:true,feet:[0,0,0,0]}),motion:()=>true};
 function run(s,input,seconds,env=clear){for(let t=0;t<seconds;t+=.02)stepAerial(s,input,.02,env);return s;}
 test('requires stopped supported setup, then beams before feet before unfolding basket',()=>{
@@ -20,10 +20,10 @@ test('water needs stable operating state, drains supply, stops on stop/stow, and
   assert.equal(aerialTravelReady(s),true);assert.equal(s.fold,1);assert.equal(s.jacks,0);assert.equal(s.lift,0);assert.equal(s.beams,0);
 });
 test('stowing from boarding reverses the validated unfold path',()=>{
-  const s=createAerialState();const limited={...clear,motion:(from,to)=>to.pitch<=.4};
-  stepAerial(s,{deploy:true},.02,limited);run(s,{},12,limited);
+  const s=createAerialState();const limited={...clear,motion:(from,to)=>to.pitch<=AERIAL_LIMITS.clearancePitch};
+  stepAerial(s,{deploy:true},.02,limited);run(s,{},16,limited);
   assert.equal(s.phase,'operating');
-  stepAerial(s,{stow:true},.02,limited);run(s,{},12,limited);
+  stepAerial(s,{stow:true},.02,limited);run(s,{},16,limited);
   assert.equal(aerialTravelReady(s),true);
 });
 test('blocked swept movement retains pose, reverse remains usable, invalid delta is harmless',()=>{

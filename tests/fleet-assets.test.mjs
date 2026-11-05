@@ -45,7 +45,7 @@ test('aerial platform exports its articulated stowed rig, pads, nozzle, and cab 
  close(a.names.get('Jack_FL').position.y,-.48);
  close(a.names.get('Outrigger_FL').position.x,0);
  const nozzle=a.names.get('NozzleOutlet').getWorldPosition(new THREE.Vector3());
- assert.ok(nozzle.y>2.5,'stowed basket and underside nozzle stay above the cab');
+ assert.ok(nozzle.y>a.metadata.stowPocket.min[1] && nozzle.y<a.metadata.stowPocket.max[1],'underside nozzle is protected inside the recessed stow pocket');
  assert.ok(a.metadata.stabilizerBeamTravel>=1.45&&a.metadata.stabilizerBeamTravel<=1.9);
  assert.ok(a.metadata.triangles>20000 && a.metadata.drawCalls<220);
  assert.ok(a.bytes.length<6_500_000);

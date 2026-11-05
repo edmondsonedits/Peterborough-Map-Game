@@ -32,8 +32,10 @@ export function applyAerialPose(THREE,entry,s){
     const node=rig[section.node];
     node.position.z=node.userData.fleetRest.position.z-section.travel*(s.extension/AERIAL_LIMITS.extension);
   }
-  rig.KnuckleFold.rotation.x=s.fold*Math.PI;
-  rig.BasketFold.rotation.x=s.basketFold*Math.PI/2;
+  // Negative half-turn sends the fly below the main ladder during deployment.
+  rig.KnuckleFold.rotation.x=-s.fold*Math.PI;
+  // BasketLevel compensates every boom angle, including the transport pose.
+  rig.BasketFold.rotation.x=0;
   rig.MonitorYaw.rotation.y=s.nozzleYaw;
   rig.MonitorPitch.rotation.x=s.nozzlePitch;
   rig.BasketLevel.parent.updateWorldMatrix(true,false);
@@ -64,6 +66,42 @@ export function applyAerialPose(THREE,entry,s){
     const a=ram.parent.worldToLocal(base.getWorldPosition(new THREE.Vector3())),b=ram.parent.worldToLocal(tip.getWorldPosition(new THREE.Vector3()));
     const d=b.clone().sub(a);ram.position.copy(a).add(b).multiplyScalar(.5);ram.scale.set(1,d.length(),1);ram.quaternion.setFromUnitVectors(new THREE.Vector3(0,1,0),d.normalize());ram.updateMatrixWorld(true);
   }
+}
+
+
+/** Geometry bounds in the chassis frame avoid heading-dependent world-AABB inflation. */
+export function aerialPartBounds(THREE,object,chassis){
+ const inverse=chassis.matrixWorld.clone().invert(),bounds=new THREE.Box3(),part=new THREE.Box3(),matrix=new THREE.Matrix4();
+ object.traverse(node=>{
+  if(!node.isMesh)return;
+  if(!node.geometry.boundingBox)node.geometry.computeBoundingBox();
+  matrix.multiplyMatrices(inverse,node.matrixWorld);
+  part.copy(node.geometry.boundingBox).applyMatrix4(matrix);bounds.union(part);
+ });
+ return bounds;
+}
+export function aerialSelfClearance(THREE,entry){
+ const model=entry.actor.userData.truck,rig=model.rig;
+ const inverse=entry.actor.matrixWorld.clone().invert(),matrix=new THREE.Matrix4(),basketParts=[];
+ rig.BasketLevel.traverse(node=>{
+  if(!node.isMesh)return;
+  if(!node.geometry.boundingBox)node.geometry.computeBoundingBox();
+  matrix.multiplyMatrices(inverse,node.matrixWorld);
+  basketParts.push(node.geometry.boundingBox.clone().applyMatrix4(matrix));
+ });
+ const fly=rig.LadderSection_6;
+ const a=entry.actor.worldToLocal(fly.getWorldPosition(new THREE.Vector3()));
+ const b=entry.actor.worldToLocal(rig.BasketLevel.getWorldPosition(new THREE.Vector3()));
+ for(const box of [model.cabClearance,...(model.bodyClearance??[])].filter(Boolean)){
+  const solid=new THREE.Box3(new THREE.Vector3(box.min.x,box.min.y,box.min.z),new THREE.Vector3(box.max.x,box.max.y,box.max.z));
+  if(basketParts.some(part=>part.intersectsBox(solid))||segmentBoxHit(a,b,box,.10)!==null)return false;
+ }
+ // The complete fly stays below the nested sections in the boom's own frame.
+ const frame=rig.KnuckleFold.parent;
+ const start=frame.worldToLocal(fly.getWorldPosition(new THREE.Vector3()));
+ const end=frame.worldToLocal(rig.BasketLevel.getWorldPosition(new THREE.Vector3()));
+ if(Math.max(start.y,end.y)+.10>-.25)return false;
+ return true;
 }
 
 export function createAerialRuntime({THREE,scene,fleet,gameState,canvas,surface,ready,inBay,isWater,obstacles,toast,playerPosition,placeOperator}){
@@ -211,6 +249,7 @@ export function createAerialRuntime({THREE,scene,fleet,gameState,canvas,surface,
   }
   function poseClear(pose,solids){
     applyAerialPose(THREE,entry,pose);
+    if(!aerialSelfClearance(THREE,entry)){lastBlocked={kind:'apparatus-self-clearance'};return false;}
     const segments=rigSegments();
     const cab=entry.actor.userData.truck.cabClearance??{min:{x:-1.35,z:-5.8},max:{x:1.35,y:3.2,z:-.95}};
     for(const [a,b,radius] of segments){
@@ -292,9 +331,9 @@ export function createAerialRuntime({THREE,scene,fleet,gameState,canvas,surface,
       if(!reachable){applyAerialPose(THREE,entry,s);return {ok:false,reason:'Ground exceeds stabilizer travel'};}
     }
     // Validate the boarding sequence before committing the stabilizers.
-    const stable={...s,feet,beams:1,jacks:1,lift:1,liftHeight:rise},raised={...stable,pitch:AERIAL_LIMITS.boardingPitch};
+    const stable={...s,feet,beams:1,jacks:1,lift:1,liftHeight:rise},raised={...stable,pitch:AERIAL_LIMITS.clearancePitch};
     const unfolded={...raised,fold:0};
-    const valid=motion({...stable,lift:0},stable)&&motion(stable,raised)&&motion(raised,unfolded)&&motion(unfolded,{...unfolded,basketFold:0});
+    const valid=motion({...stable,lift:0},stable)&&motion(stable,raised)&&motion(raised,unfolded)&&motion(unfolded,{...unfolded,pitch:AERIAL_LIMITS.boardingPitch});
     applyAerialPose(THREE,entry,s);
     return valid?{ok:true,feet,liftHeight:rise}:{ok:false,reason:'Overhead space is blocked'};
   }

@@ -1,7 +1,7 @@
 import * as THREE from 'three';
 import {GLTFLoader} from './vendor/three-r180/examples/jsm/loaders/GLTFLoader.js';
 const cache=new Map();
-const assetRevision='4';
+const assetRevision='5';
 export async function loadFleetAsset(type){
   const name=type==='aerial'?'aerial-platform':'medi-pickup';
   if(!cache.has(name))cache.set(name,Promise.all([
@@ -35,6 +35,7 @@ export function prepareFleetAsset(scene,metadata,type){
   const cabClearance=type==='aerial'&&metadata.cabClearance?{
     min:boxCorner(metadata.cabClearance.min),max:boxCorner(metadata.cabClearance.max),
   }:null;
+  const bodyClearance=(metadata.bodyClearance??[]).map(box=>({min:boxCorner(box.min),max:boxCorner(box.max)}));
   const ladderSections=type==='aerial'?(metadata.ladderSections??metadata.pivotContract?.ladderSections??[1,2,3,4].map(i=>({node:`LadderSection_${i}`,length:i===4?3.2:5.6,travel:i===2||i===3?4.8:0}))):[];
   if(type==='aerial')for(const name of ['TurntableYaw','LadderPitch',...ladderSections.map(section=>section.node),'KnuckleFold','BasketLevel','BasketFold','Basket','MonitorYaw','MonitorPitch','NozzleOutlet',...['FL','FR','RL','RR'].flatMap(n=>[`Outrigger_${n}`,`Jack_${n}`])]){
     const node=scene.getObjectByName(name);if(!node)throw Error(`Missing aerial node ${name}`);rig[name]=node;node.userData.fleetRest={position:node.position.clone(),rotation:node.rotation.clone()};
@@ -51,7 +52,7 @@ export function prepareFleetAsset(scene,metadata,type){
     for(const side of ['L','R'])if(rig[`Cylinder_Base_${side}`])rig.TurntableYaw.attach(rig[`Cylinder_Base_${side}`]);
   }
   scene.traverse(n=>{if(n.isMesh){n.castShadow=true;n.receiveShadow=true;}});
-  return {scene,metadata,wheels,frontWheels,beacons,rig,ladderSections,cabClearance};
+  return {scene,metadata,wheels,frontWheels,beacons,rig,ladderSections,cabClearance,bodyClearance};
 }
 export function installFleetAsset(root,createTruck,type){
   // The base constructor provides a complete driving fallback and its loading contract.
