@@ -48,11 +48,13 @@ test('scrim and menu toggle continue to open and close the menu',async t=>{
 test('window blur preserves a focused station menu and resets active joystick input',t=>{
  const h=fixture(t);open(h);h.select.focus();
  h.joystick.classList.add('is-active','is-running');h.joystick.dataset.direction='forward';h.joystick.dataset.strength='strong';
+ h.joystick.dataset.gait='sprint';
  h.knob.style.transform='translate3d(23px, 0, 0)';
  h.window.dispatchEvent(new h.window.Event('blur'));
  assert.equal(isOpen(h),true,'native picker focus blur must not dismiss the menu');
  assert.equal(h.joystick.classList.contains('is-active'),false);assert.equal(h.joystick.classList.contains('is-running'),false);
  assert.equal(h.joystick.hasAttribute('data-direction'),false);assert.equal(h.joystick.hasAttribute('data-strength'),false);
+ assert.equal(h.joystick.hasAttribute('data-gait'),false);
  assert.equal(h.knob.style.transform,'translate3d(0, 0, 0)');
 });
 

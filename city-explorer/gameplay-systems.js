@@ -30,7 +30,7 @@ export const FIRE_STATION_ONE = Object.freeze({
 export const PLAYER_TUNING = Object.freeze({
   walkSpeed: 1.6,
   runSpeed: 3.8,
-  sprintSpeed: 5.4,
+  sprintSpeed: 5.9,
   accelerationResponse: 13,
   brakingResponse: 18,
   rotationResponse: 15,
@@ -99,8 +99,6 @@ export function gameplayAxesFromKeys(keys) {
     forward: Number(pressed('KeyW') || pressed('ArrowUp')) - Number(pressed('KeyS') || pressed('ArrowDown')),
     strafe: Number(pressed('KeyD') || pressed('ArrowRight')) - Number(pressed('KeyA') || pressed('ArrowLeft')),
     steering: Number(pressed('KeyA') || pressed('ArrowLeft')) - Number(pressed('KeyD') || pressed('ArrowRight')),
-    running: Boolean(pressed('ShiftLeft') || pressed('ShiftRight')),
-    sprinting: Boolean(pressed('KeyR')),
   };
 }
 

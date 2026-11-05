@@ -22,9 +22,9 @@
   document.documentElement.dataset.cityExplorerMobileControls = VERSION;
 
   const keyNames = Object.freeze({
-    KeyW: 'w', KeyA: 'a', KeyS: 's', KeyD: 'd', KeyE: 'e', KeyQ: 'q', KeyR: 'r', ShiftLeft: 'Shift',
+    KeyW: 'w', KeyA: 'a', KeyS: 's', KeyD: 'd', KeyE: 'e', KeyQ: 'q',
   });
-  const movementCodes = ['KeyW', 'KeyA', 'KeyS', 'KeyD', 'ShiftLeft', 'KeyR'];
+  const movementCodes = ['KeyW', 'KeyA', 'KeyS', 'KeyD'];
   const activeKeys = new Set();
   let pointerId = null;
   let menuOpen = false;
@@ -45,6 +45,7 @@
 
   function releaseMovement() {
     movementCodes.forEach(code => emitKey(code, false));
+    delete joystick.dataset.gait;
   }
 
   function resetJoystick() {
@@ -82,12 +83,11 @@
     emitKey('KeyD', right);
 
     const mode = document.documentElement.dataset.gameplayMode || 'onFoot';
-    const running = mode === 'onFoot' && magnitude >= 0.84 && Boolean(direction);
-    const sprinting = running && magnitude >= 0.98;
-    emitKey('ShiftLeft', running);
-    emitKey('KeyR', sprinting);
-    joystick.classList.toggle('is-running', running);
-    if (joystickCaption) joystickCaption.textContent = sprinting ? 'Sprint' : running ? 'Run' : mode === 'driving' ? 'Drive' : 'Move';
+    const gait = magnitude >= 0.90 ? 'sprint' : magnitude >= 0.62 ? 'run' : 'walk';
+    if (mode === 'onFoot') joystick.dataset.gait = gait;
+    else delete joystick.dataset.gait;
+    joystick.classList.toggle('is-running', mode === 'onFoot' && gait !== 'walk');
+    if (joystickCaption) joystickCaption.textContent = mode === 'driving' ? 'Drive' : mode === 'onFoot' ? gait[0].toUpperCase() + gait.slice(1) : 'Move';
   }
 
   function applyJoystick(clientX, clientY) {
@@ -240,6 +240,7 @@
 
   function syncMode() {
     const mode = document.documentElement.dataset.gameplayMode || 'onFoot';
+    if (mode !== 'onFoot') delete joystick.dataset.gait;
     const ready = document.documentElement.dataset.gameplayReady === 'true';
     const mapMode = app?.classList.contains('is-map') || mode === 'map';
     const flyMode = app?.classList.contains('is-fly') || mode === 'fly';

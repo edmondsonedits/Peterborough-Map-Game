@@ -17,6 +17,7 @@ assert.ok(Math.abs(FIRE_STATION_ONE.lat - 44.301) < 0.001);
 assert.ok(Math.abs(FIRE_STATION_ONE.lon + 78.322) < 0.001);
 assert.ok(TRUCK_TUNING.length >= 10 && TRUCK_TUNING.wheelbase > 5);
 assert.ok(TRUCK_TUNING.maximumForwardSpeed * 3.6 < 105, 'City pumper top speed must remain believable');
+assert.equal(PLAYER_TUNING.sprintSpeed, 5.9);
 assert.ok(PLAYER_TUNING.sprintSpeed > PLAYER_TUNING.runSpeed && PLAYER_TUNING.runSpeed > PLAYER_TUNING.walkSpeed);
 
 assert.equal(exponentialStep(0, 10, 8, 0), 0);
@@ -28,9 +29,8 @@ const north = directionFromHeading(0);
 assert.ok(Math.abs(north.x) < 1e-9 && Math.abs(north.z + 1) < 1e-9);
 assert.ok(Math.abs(headingFromDirection(north.x, north.z)) < 1e-9);
 
-const keys = new Set(['KeyW', 'KeyA', 'ShiftLeft']);
-assert.deepEqual(gameplayAxesFromKeys(keys), { forward: 1, strafe: -1, steering: 1, running: true, sprinting: false });
-assert.equal(gameplayAxesFromKeys(new Set(['KeyW', 'KeyR'])).sprinting, true);
+const keys = new Set(['KeyW', 'KeyA', 'ShiftLeft', 'KeyR']);
+assert.deepEqual(gameplayAxesFromKeys(keys), { forward: 1, strafe: -1, steering: 1 });
 
 let truck = { x: 0, z: 0, heading: 0, speed: 0, steering: 0 };
 for (let frame = 0; frame < 200; frame += 1) {
