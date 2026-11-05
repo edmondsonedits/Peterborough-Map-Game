@@ -64,13 +64,16 @@ function stopped(pose) {
   return { ...pose, vx: 0, vz: 0, speed: 0, steering: 0 };
 }
 
-export function createExplorerSession({ world, vehicles = [], spawn, clock = Date.now, randomToken = secureRandomToken } = {}) {
+export function createExplorerSession({ world, vehicles = [], spawn, clock = Date.now, randomToken = secureRandomToken, pendingAttachmentMs = null } = {}) {
   if (!world || typeof world.sampleSurface !== 'function' || typeof world.blocks !== 'function' || typeof world.readyAt !== 'function') {
     throw new TypeError('world must provide sampleSurface(), blocks(), and fail-closed readyAt()');
   }
   if (typeof spawn !== 'function') throw new TypeError('spawn must be an injected function');
   if (typeof clock !== 'function') throw new TypeError('clock must be an injected clock function');
   if (typeof randomToken !== 'function') throw new TypeError('randomToken must be a function');
+  if (pendingAttachmentMs !== null && (typeof pendingAttachmentMs !== 'number' || !Number.isFinite(pendingAttachmentMs) || pendingAttachmentMs < 0)) {
+    throw new RangeError('pendingAttachmentMs must be null or a finite non-negative number');
+  }
   if (!Array.isArray(vehicles) || vehicles.length > MAX_VEHICLES) throw new RangeError('vehicles must contain at most 12 instances');
 
   const worldVersion = world.worldVersion ?? world.version;
@@ -297,6 +300,9 @@ export function createExplorerSession({ world, vehicles = [], spawn, clock = Dat
         seat: seat.seat,
         connected: true,
         connectionId: null,
+        pendingAttachKind: 'join',
+        pendingAttachUntil: pendingAttachmentMs === null ? null : now() + pendingAttachmentMs,
+        reconnectExpiresAt: null,
         epoch: 1,
         entityGeneration: 0,
         pose: clonePose(spawn({ seat: seat.seat, playerId })),
@@ -329,13 +335,19 @@ export function createExplorerSession({ world, vehicles = [], spawn, clock = Dat
 
   function canAttachConnection(playerId) {
     const player = players.get(playerId);
-    return !!player?.connected && player.connectionId === null;
+    return !!player?.connected
+      && player.connectionId === null
+      && (player.pendingAttachUntil === null || now() < player.pendingAttachUntil);
   }
 
   function attachConnection(playerId, connectionId) {
     const player = players.get(playerId);
-    if (!player?.connected || player.connectionId !== null || typeof connectionId !== 'string' || !connectionId) return false;
+    if (!player?.connected || player.connectionId !== null || typeof connectionId !== 'string' || !connectionId
+      || (player.pendingAttachUntil !== null && now() >= player.pendingAttachUntil)) return false;
     player.connectionId = connectionId;
+    player.pendingAttachKind = null;
+    player.pendingAttachUntil = null;
+    player.reconnectExpiresAt = null;
     return true;
   }
 
@@ -358,10 +370,13 @@ export function createExplorerSession({ world, vehicles = [], spawn, clock = Dat
   function disconnect(playerId) {
     const player = players.get(playerId);
     if (!player || !player.connected) return false;
-    seatRegistry.disconnect(playerId);
+    const reservation = seatRegistry.disconnect(playerId);
     player.connected = false;
     player.connectionId = null;
     player.playerCredentialHash = null;
+    player.pendingAttachKind = null;
+    player.pendingAttachUntil = null;
+    player.reconnectExpiresAt = reservation.expiresAt;
     player.inputQueue.length = 0;
     player.activeControls = null;
     const vehicleId = ownership.vehicleOf(playerId);
@@ -396,6 +411,8 @@ export function createExplorerSession({ world, vehicles = [], spawn, clock = Dat
     const time = now();
     player.connected = true;
     player.connectionId = null;
+    player.pendingAttachKind = 'reconnect';
+    player.pendingAttachUntil = pendingAttachmentMs === null ? null : Math.min(time + pendingAttachmentMs, player.reconnectExpiresAt ?? time + pendingAttachmentMs);
     player.epoch += 1;
     player.entityGeneration += 1;
     player.lastSequence = 0;
@@ -546,7 +563,29 @@ export function createExplorerSession({ world, vehicles = [], spawn, clock = Dat
     return tickNumber;
   }
 
+  function expirePendingAttachment(player, time) {
+    const kind = player.pendingAttachKind;
+    if (!kind || player.pendingAttachUntil === null || time < player.pendingAttachUntil) return false;
+    player.pendingAttachKind = null;
+    player.pendingAttachUntil = null;
+    player.connectionId = null;
+    player.playerCredentialHash = null;
+
+    if (kind === 'reconnect' && player.reconnectExpiresAt !== null && player.reconnectExpiresAt > time) {
+      seatRegistry.restoreDisconnected(player.playerId, player.reconnectExpiresAt);
+      player.connected = false;
+      player.inputQueue.length = 0;
+      player.activeControls = null;
+      if (adminPlayerId === player.playerId) grantAdminToEligiblePlayer();
+      return true;
+    }
+
+    leave(player.playerId);
+    return true;
+  }
+
   function expirePlayers(time) {
+    for (const player of [...players.values()]) expirePendingAttachment(player, time);
     const expired = seatRegistry.expire();
     for (const playerId of expired) {
       const player = players.get(playerId);

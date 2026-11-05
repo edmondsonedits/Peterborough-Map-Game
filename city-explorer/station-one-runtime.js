@@ -172,6 +172,12 @@ export function createStationOneRuntime({ THREE, scene, layout, project, baseSur
     }
   }
   function resetDoors() { state.doors = stationOneDoorState(layout); }
+  function captureDoors() { return structuredClone(state.doors); }
+  function restoreDoors(saved) { state.doors = structuredClone(saved); update(0, null, null); }
+  function openAllDoors() {
+    for (const side of ['front', 'rear']) for (const door of state.doors[side] || []) { door.fraction = 1; door.target = 1; }
+    update(0, null, null);
+  }
   function containsBay(point) {
     if (!loaded) return false;
     const local = localPoint(point);
@@ -192,7 +198,7 @@ export function createStationOneRuntime({ THREE, scene, layout, project, baseSur
   }
   return {
     root, spawn, playerSpawn, yaw, datum, load, surfaceAt, collides, sweep, update,
-    nearestDoor, frontDoorForTruck, toggleFrontDoorForTruck, getStatus, resetDoors,
+    nearestDoor, frontDoorForTruck, toggleFrontDoorForTruck, getStatus, resetDoors, captureDoors, restoreDoors, openAllDoors,
     isReady: () => loaded, containsBay, localPoint, worldPoint,
   };
 }

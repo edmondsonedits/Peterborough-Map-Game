@@ -83,6 +83,22 @@ test('repeated disconnect does not extend the reservation deadline', () => {
   assert.equal(second.expiresAt, 6_000);
 });
 
+test('restores a pending reconnect to its original absolute expiry', () => {
+  const time = clock();
+  const registry = createSeatRegistry({ now: time.now, reconnectMs: 5_000 });
+  registry.reserve('alpha');
+  const original = registry.disconnect('alpha');
+  time.set(2_000);
+  registry.reconnect('alpha');
+  const restored = registry.restoreDisconnected('alpha', original.expiresAt);
+  assert.equal(restored.connected, false);
+  assert.equal(restored.expiresAt, 6_000);
+  time.set(5_999);
+  assert.deepEqual(registry.expire(), []);
+  time.set(6_000);
+  assert.deepEqual(registry.expire(), ['alpha']);
+});
+
 test('expiry frees only disconnected seats and the lowest freed slot is reused', () => {
   const time = clock();
   const registry = createSeatRegistry({ now: time.now, reconnectMs: 100 });

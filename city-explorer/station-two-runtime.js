@@ -228,10 +228,16 @@ export function createStationTwoRuntime({ THREE, scene, layout, project, baseSur
   function worldPoint(local) { const point = stationLocalToWorld(local, spawn.anchor, yaw); return { x: point.x, z: point.z }; }
 
   function resetDoors() { state.doors = createDoorState(layout.frontDoorCenters.length, layout.rearDoorCenters.length); }
+  function captureDoors() { return structuredClone(state.doors); }
+  function restoreDoors(saved) { state.doors = structuredClone(saved); update(0, null, null); }
+  function openAllDoors() {
+    for (const side of ['front', 'rear']) for (const door of state.doors[side] || []) { door.fraction = 1; door.target = 1; }
+    update(0, null, null);
+  }
 
   function getStatus() {
     return { status: state.status, error: state.error, datum, groundRange: [groundMin, Math.max(...groundSamples)], bounds: state.bounds, doors: structuredClone(state.doors), loaded };
   }
 
-  return { root, spawn, playerSpawn, yaw, load, surfaceAt, collides, sweep, update, nearestDoor, frontDoorForTruck, toggleFrontDoorForTruck, getStatus, resetDoors, isReady: () => loaded, containsBay, localPoint, worldPoint, datum };
+  return { root, spawn, playerSpawn, yaw, load, surfaceAt, collides, sweep, update, nearestDoor, frontDoorForTruck, toggleFrontDoorForTruck, getStatus, resetDoors, captureDoors, restoreDoors, openAllDoors, isReady: () => loaded, containsBay, localPoint, worldPoint, datum };
 }

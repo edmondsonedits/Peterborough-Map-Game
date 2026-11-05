@@ -104,7 +104,7 @@ export function aerialSelfClearance(THREE,entry){
  return true;
 }
 
-export function createAerialRuntime({THREE,scene,fleet,gameState,canvas,surface,ready,inBay,isWater,obstacles,toast,playerPosition,placeOperator}){
+export function createAerialRuntime({THREE,scene,fleet,gameState,canvas,surface,ready,inBay,isWater,obstacles,toast,playerPosition,placeOperator,canMutate=()=>true}){
   const entry=fleet.fleet.vehicles.find(v=>v.aerial),s=entry.aerial;
   const input={},held=new Map();let station=null,pending={},boxes=[],boxTime=-Infinity,lastBlocked=null,view='basket',boardingHeading=0,travelPoseReady=false,groundControl=false;
   const point=new THREE.Vector3(),end=new THREE.Vector3(),direction=new THREE.Vector3();
@@ -145,13 +145,14 @@ export function createAerialRuntime({THREE,scene,fleet,gameState,canvas,surface,
     for(const option of compartments.children)option.setAttribute('aria-pressed',String(option.dataset.compartment===compartment));
   }
   compartments.addEventListener('click',event=>{
+    if(!canMutate())return;
     const compartment=event.target.closest('button[data-compartment]')?.dataset.compartment;
     if(compartment&&compartment!==controls.dataset.compartment)selectCompartment(compartment);
   });
   for(const [label,axis,value] of [['Raise','raise',1],['Lower','raise',-1],['Rotate left','rotate',1],['Rotate right','rotate',-1],['Extend','extend',1],['Retract','extend',-1],['Aim left','nozzleYaw',1],['Aim right','nozzleYaw',-1],['Aim up','nozzlePitch',1],['Aim down','nozzlePitch',-1],['Water','flow',true]]){
     const b=document.createElement('button');b.type='button';b.textContent=label;b.dataset.axis=axis;b.dataset.group=axis.startsWith('nozzle')||axis==='flow'?'water':'ladder';controls.append(b);
-    b.onpointerdown=e=>{if(b.disabled||!canHold(axis))return;e.preventDefault();b.setPointerCapture(e.pointerId);held.set(b,[axis,value]);b.classList.add('is-held');rebuild();};
-    b.onkeydown=e=>{if(e.code==='Enter'&&!b.disabled&&canHold(axis)){e.preventDefault();held.set(b,[axis,value]);b.classList.add('is-held');rebuild();}};
+    b.onpointerdown=e=>{if(!canMutate()||b.disabled||!canHold(axis))return;e.preventDefault();b.setPointerCapture(e.pointerId);held.set(b,[axis,value]);b.classList.add('is-held');rebuild();};
+    b.onkeydown=e=>{if(e.code==='Enter'&&canMutate()&&!b.disabled&&canHold(axis)){e.preventDefault();held.set(b,[axis,value]);b.classList.add('is-held');rebuild();}};
     b.onkeyup=e=>{if(e.code==='Enter')release();};b.onblur=()=>release();
     const release=()=>{held.delete(b);b.classList.remove('is-held');rebuild();};b.onpointerup=release;b.onpointercancel=release;b.onlostpointercapture=release;
   }
@@ -161,9 +162,9 @@ export function createAerialRuntime({THREE,scene,fleet,gameState,canvas,surface,
   const css=document.createElement('link');css.rel='stylesheet';css.href=new URL('./fleet.css?rev=4',import.meta.url).href;document.head.append(css);
   function rebuild(){for(const k of Object.keys(input))delete input[k];for(const [axis,v] of held.values())input[axis]=v;}
   function clearInput(){held.clear();rebuild();pending={};s.flow=false;group.visible=false;panel.querySelectorAll('.is-held').forEach(n=>n.classList.remove('is-held'));}
-  function onFoot(){return gameState.mode==='onFoot';}
+  function onFoot(){return canMutate()&&gameState.mode==='onFoot';}
   function canHold(axis){
-    return station==='basket'||(station==='rear'&&groundControl&&['raise','rotate','extend'].includes(axis));
+    return canMutate()&&(station==='basket'||(station==='rear'&&groundControl&&['raise','rotate','extend'].includes(axis)));
   }
   function rearPosition(){
     const rear=entry.actor.userData.truck.rig?.RearOperator;

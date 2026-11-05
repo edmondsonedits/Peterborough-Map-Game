@@ -97,6 +97,19 @@ export function createSeatRegistry({ capacity = ROOM_CAPACITY, reconnectMs = 30_
     return snapshot(record);
   }
 
+  function restoreDisconnected(identity, expiresAt) {
+    validateIdentity(identity);
+    if (typeof expiresAt !== 'number' || !Number.isFinite(expiresAt)) {
+      throw new RangeError('reservation expiration time must be finite');
+    }
+    const record = byIdentity.get(identity);
+    if (!record) throw new Error('unknown identity');
+    if (!record.connected) throw new Error('identity is already disconnected');
+    record.connected = false;
+    record.expiresAt = expiresAt;
+    return snapshot(record);
+  }
+
   function remove(identity) {
     validateIdentity(identity);
     const record = byIdentity.get(identity);
@@ -111,7 +124,7 @@ export function createSeatRegistry({ capacity = ROOM_CAPACITY, reconnectMs = 30_
       .map(snapshot));
   }
 
-  return Object.freeze({ reserve, disconnect, reconnect, expire, remove, list });
+  return Object.freeze({ reserve, disconnect, reconnect, restoreDisconnected, expire, remove, list });
 }
 
 

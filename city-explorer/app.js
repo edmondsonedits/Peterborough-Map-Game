@@ -6,6 +6,8 @@ import {createFleetRuntime} from './fleet-runtime.js';
 import {aerialTravelReady} from './aerial-controller.mjs';
 import {updateVehiclePresentation} from './vehicle-presentation.js?v=1.6.183';
 import {FLEET_DEFINITIONS} from './vehicle-fleet.mjs';
+import {createMultiplayerIntegration} from './multiplayer/integration.mjs';
+import {createRemoteActors} from './multiplayer/remote-actors.mjs';
 import {createAerialRuntime} from './aerial-runtime.js';
 import {createAerialState} from './aerial-controller.mjs';
 import { CAMERA_VIEWS, cameraBayInfluence, cameraFraming, clampBayCamera, installCameraViewControl } from './gameplay-camera.mjs?v=1.6.186';
@@ -626,6 +628,9 @@ const gameplayRight = new THREE.Vector3();
 const gameplayMove = new THREE.Vector3();
 let fleetRuntime=null;
 let aerialRuntime=null;
+let multiplayer=null;
+let multiplayerActors=null;
+let singleplayerSnapshot=null;
 let fleetHydroIndex=null;
 let truckState = { x: 0, z: 0, y: 0, heading: Math.PI, speed: 0, steering: 0, pitch: 0, roll: 0, wheelRotation: 0 };
 let gameplayReady = false;
@@ -6062,7 +6067,7 @@ function initializeCityEditor(publishedDocument = createEmptySceneDocument()) {
   cityEditor.initialize();
   // Explicit command API; entry uses the same authorization as the Editor button.
   window.PTBO_CITY_EDITOR = Object.freeze({ apiVersion: 1,
-    enter: () => cityEditor.enter(), exit: () => cityEditor.exit(),
+    enter: () => multiplayer?.active ? (showToast('Editor is unavailable during multiplayer.'), false) : cityEditor.enter(), exit: () => cityEditor.exit(),
     run: (command) => cityEditor.runCommand(command) });
   if (els.editorMode) els.editorMode.disabled = false;
   if (new URLSearchParams(location.search).get('editor') === '1') void cityEditor.enter();
@@ -6281,6 +6286,7 @@ function syncGameplayRootClasses() {
 }
 
 function updateGameplayHint() {
+  if(multiplayer?.active){els.modeHint.innerHTML='<strong>Multiplayer.</strong> WASD or arrows move · Shift runs · R sprints · E enters or exits a nearby vehicle · L toggles lights while driving.';return;}
   const number = FIRE_STATION_ONE.number;
   const doorHint = [1,2,3].includes(number) ? ' · G opens/closes the front bay door aligned with the truck' : '';
   if (state.mode === 'onFoot') {
@@ -6290,6 +6296,7 @@ function updateGameplayHint() {
   }
 }
 function startDrivingFromBay() {
+  if(multiplayer?.active){enterOrExitVehicle();return false;}
   if (!gameplayReady || stationSwitchBusy()) return false;
   playerActor.visible = false;
   playerVelocity.set(0, 0, 0);
@@ -6472,6 +6479,7 @@ function initializeVehicleFleet(){
     },changed:()=>window.dispatchEvent(new Event('ptbo:fleet-state')),
   });
   aerialRuntime=createAerialRuntime({THREE,scene:gameplayGroup,fleet:fleetRuntime,gameState:state,canvas:els.canvas,
+    canMutate:()=>!multiplayer?.active,
     surface:gameplaySurfaceAt,ready:(x,z)=>citySceneryReadyAt(x,z,false)&&(!roadTileLayer||roadTileLayer.readyAt(x,z,3)),
     inBay:point=>[stationOneRuntime,stationTwoRuntime].some(r=>r?.containsBay(point)),
     isWater:(x,z)=>{const y=fleetHydroIndex?.heightAt(x,z);return Number.isFinite(y)&&gameplaySurfaceAt(x,z).height<y+.08;},
@@ -6850,10 +6858,11 @@ function initializeGameplay() {
     setDoorForParity(number,fraction){const amount=Number(fraction)>=.98?1:0;if(number===1||number===2){const runtime=number===1?stationOneRuntime:stationTwoRuntime;if(!runtime?.isReady())return false;runtime.resetDoors();if(amount){runtime.toggleFrontDoorForTruck(runtime.spawn);for(let i=0;i<24;i++)runtime.update(.1,null,null);}return true;}if(number===3&&stationThreeDoorController){stationThreeDoorController.reset();if(amount){const now=performance.now();stationThreeDoorController.open(now);stationThreeDoorController.update(now+5000);}return true;}return false;},
   });  globalThis.__PTBO_GAMEPLAY__ = Object.freeze({
     get station() { return { ...FIRE_STATION_ONE }; },
-    selectVehicle:id=>fleetRuntime.select(id),
+    selectVehicle:id=>multiplayer?.active?Promise.resolve({ok:false,error:'Use the multiplayer vehicle panel and move close to a vehicle.'}):fleetRuntime.select(id),
     vehicles:()=>fleetRuntime.snapshot(),
-    aerial:{action:input=>aerialRuntime?.action(input),state:()=>fleetRuntime.fleet.vehicles.find(v=>v.aerial)?.aerial,diagnostics:()=>aerialRuntime?.diagnostics()},
+    aerial:{action:input=>multiplayer?.active?false:aerialRuntime?.action(input),state:()=>fleetRuntime.fleet.vehicles.find(v=>v.aerial)?.aerial,diagnostics:()=>aerialRuntime?.diagnostics()},
     switchStation(number) {
+      if(multiplayer?.active)return Promise.resolve({ok:false,error:'Station travel is disabled during multiplayer. Drive there with your room.'});
       if(fleetRuntime)return fleetRuntime.select('pump-'+number);
       if (!stationSwitchReady || cityEditor?.active) return Promise.resolve({ok:false,stationNumber:FIRE_STATION_ONE.number,error:cityEditor?.active?'Close the editor before switching stations.':'The station is still loading.'});
       return stationTransitionController.switchTo(number);
@@ -6904,13 +6913,89 @@ function initializeGameplay() {
         onRoad: gameplaySurfaceAt(truckState.x, truckState.z, truckState.y).onRoad,
       };
     },
-    reset: resetGameplay,
+    reset: options=>multiplayer?.active?false:resetGameplay(options),
+  });
+  multiplayer=createMultiplayerIntegration({parent:document.body,pageUrl:location.href,configuredUrl:globalThis.PTBO_MULTIPLAYER_SERVER_URL||null,
+    roadPackId:()=>roadTileManifest?.buildId&&roadTileLayer?roadTileManifest.buildId:null,
+    onEnter:enterMultiplayerVisuals,onLeave:leaveMultiplayerVisuals,onMessage:showToast});
+  globalThis.__PTBO_MULTIPLAYER__=Object.freeze({
+    get active(){return multiplayer?.active??false;},get session(){return multiplayer?.session??null;},get state(){return multiplayer?.runtime?.getState()??null;},
+    get actors(){return {...(multiplayerActors?.snapshot()??{vehicleIds:[],visibleVehicleIds:[],playerIds:[]}),singleplayerFleetVisible:fleetRuntime?.fleet.vehicles.filter(entry=>entry.actor.visible).map(entry=>entry.definition.id)??[]};},
+    open:()=>multiplayer?.ui.open(),leave:()=>multiplayer?.leaveRoom(),
   });
   // Distant station models/aprons load only after ordinary road streaming covers their region.
   syncStationControls();
 }
 
+async function enterMultiplayerVisuals({isCurrent=()=>true}={}){
+  if(singleplayerSnapshot)return;
+  if(cityEditor?.active)cityEditor.exit();
+  const first=ensureStationRuntime(1,true);
+  await loadStationRuntimeWithRoads(first,'Multiplayer Station 1');
+  if(!isCurrent())return;
+  // Station 3 is normally deferred when Station 1 starts; multiplayer can reach it by road.
+  await loadStationThreeModel();
+  if(!isCurrent())return;
+  placeStationThreeModel();
+  const disabledControls=[els.flyMode,els.mapMode,els.editorMode,els.stationOneDoor,els.stationOneMobileDoor,els.stationTwoDoor,els.stationTwoMobileDoor,els.stationThreeDoor,els.stationThreeMobileDoor,els.stationOneStartTruck,els.stationOneMobileStart,els.stationTwoStartTruck,els.stationTwoMobileStart,els.stationThreeStartTruck,els.stationThreeMobileStart].filter(Boolean);
+  singleplayerSnapshot={mode:state.mode,player:playerActor.position.clone(),playerHeading,truckState,fireTruckActor,
+    visibility:fleetRuntime.fleet.vehicles.map(entry=>[entry.actor,entry.actor.visible]),
+    controls:disabledControls.map(control=>[control,control.disabled,control.title,control.hidden]),
+    doors:[stationOneRuntime,stationTwoRuntime].map(runtime=>runtime?.isReady()?runtime.captureDoors():null),
+    stationThreeDoor:stationThreeDoorController?{target:stationThreeDoorController.target,fraction:stationThreeDoorController.fraction}:null};
+  for(const [actor] of singleplayerSnapshot.visibility)actor.visible=false;
+  for(const control of disabledControls){control.disabled=true;control.hidden=true;control.title='Unavailable during multiplayer';}
+  aerialRuntime?.dismiss();state.keys.clear();setMode('onFoot',true);
+  for(const runtime of [stationOneRuntime,stationTwoRuntime])if(runtime?.isReady())runtime.openAllDoors();
+  if(stationThreeDoorController){const now=performance.now();stationThreeDoorController.open(now);stationThreeDoorController.update(now+5000);}
+  multiplayerActors=createRemoteActors({THREE,group:gameplayGroup,createTruck:createFireTruck,createFirefighter,environment:cityGlassEnvironment?.texture});
+  document.documentElement.dataset.multiplayer='active';
+  showToast('Multiplayer connected. Walk to a vehicle and press E.');
+}
+
+function leaveMultiplayerVisuals(){
+  if(!singleplayerSnapshot)return;
+  multiplayerActors?.dispose();multiplayerActors=null;
+  for(const [actor,visible] of singleplayerSnapshot.visibility)actor.visible=visible;
+  for(const [control,disabled,title,hidden] of singleplayerSnapshot.controls){control.disabled=disabled;control.title=title;control.hidden=hidden;}
+  [stationOneRuntime,stationTwoRuntime].forEach((runtime,index)=>{if(!runtime?.isReady())return;if(singleplayerSnapshot.doors[index])runtime.restoreDoors(singleplayerSnapshot.doors[index]);else runtime.resetDoors();});
+  if(stationThreeDoorController){const now=performance.now();stationThreeDoorController.reset();if(singleplayerSnapshot.stationThreeDoor?.target>.5){stationThreeDoorController.open(now);stationThreeDoorController.update(now+5000);}}
+  playerActor.position.copy(singleplayerSnapshot.player);playerHeading=singleplayerSnapshot.playerHeading;playerActor.rotation.y=playerHeading;
+  truckState=singleplayerSnapshot.truckState;fireTruckActor=singleplayerSnapshot.fireTruckActor;
+  const mode=singleplayerSnapshot.mode;singleplayerSnapshot=null;delete document.documentElement.dataset.multiplayer;delete document.documentElement.dataset.multiplayerHint;
+  state.keys.clear();setMode(mode==='driving'?'driving':'onFoot',true);snapGameplayCamera();
+}
+
+function updateMultiplayerFrame(delta){
+  const runtime=multiplayer?.runtime;if(!runtime)return;
+  const axes=currentGameplayAxes(delta),driving=runtime.getState().mode==='driving';
+  const current=runtime.advanceFrame(delta*1000,{forward:axes.forward,strafe:axes.strafe,run:axes.running,sprint:axes.sprinting,
+    throttle:axes.forward,steering:axes.steering,viewYaw:state.gameplayYaw});
+  const snapshot=current.snapshot,pose=current.renderedPose;if(!snapshot||!pose)return;
+  const desiredMode=driving?'driving':'onFoot';if(state.mode!==desiredMode)setMode(desiredMode,true);
+  if(document.documentElement.dataset.multiplayerHint!==desiredMode){document.documentElement.dataset.multiplayerHint=desiredMode;updateGameplayHint();}
+  multiplayerActors?.update(snapshot,runtime.sampleRemote(),snapshot.player.id,pose,current.vehicleId,delta);
+  if(driving){
+    fireTruckActor=multiplayerActors?.vehicle(current.vehicleId)||fireTruckActor;
+    truckState={...pose,emergencyLights:snapshot.vehicles.find(vehicle=>vehicle.id===current.vehicleId)?.lights??false};
+    playerActor.visible=false;
+    if(Math.abs(pose.speed)>1.5&&performance.now()-state.gameplayLastLookTime>2200)state.gameplayYaw=dampAngle(state.gameplayYaw,pose.heading,1.65,delta);
+  }else{
+    playerActor.position.set(pose.x,pose.y+.025,pose.z);playerHeading=pose.heading;playerActor.rotation.y=pose.heading;playerActor.visible=true;
+    truckState={...truckState,speed:0};
+    playerSpeed=Math.abs(pose.speed);playerActor.userData.animation?.locomotion?.update(delta,playerSpeed);
+  }
+  const parked=snapshot.vehicles.map(vehicle=>({...vehicle.pose,dimensions:vehicle.tuning}));
+  for(const station of [stationOneRuntime,stationTwoRuntime])if(station?.isReady()){
+    if(station.getStatus().doors.front.some(door=>door.fraction<1))station.openAllDoors();
+    station.update(0,parked,driving?null:playerActor.position);
+  }
+  if(stationThreeDoorController&&stationThreeDoorController.fraction<1){const now=performance.now();stationThreeDoorController.open(now);stationThreeDoorController.update(now+5000);}
+  updateGameplayCamera(delta);updateGameplayHud();
+}
+
 function resetGameplay({mode='onFoot',stationSwitch=false} = {}) {
+  if(multiplayer?.active)return false;
   if (!gameplayReady || (stationSwitchBusy() && !stationSwitch)) return false;
   const entry=fleetRuntime?.fleet.active;
   aerialRuntime?.dismiss();
@@ -6946,6 +7031,7 @@ function resetGameplay({mode='onFoot',stationSwitch=false} = {}) {
   return true;
 }
 function setMode(mode, force = false) {
+  if(multiplayer?.active&&['map','fly'].includes(mode)){showToast('Map and fly modes are unavailable during multiplayer.');return;}
   if (cityEditor?.active || (stationSwitchBusy() && !force)) return;
   if (!force&&aerialRuntime?.aboard()&&(mode==='fly'||mode==='map')) { showToast('Return to the boarding position and exit the basket first');return; }
   if (mode === 'fly' && deferCityNavigation(() => setMode(mode, force))) return;
@@ -7234,7 +7320,10 @@ function updatePlayerActor(delta) {
   }
 }
 
-function activeVehicleTuning(){return fleetRuntime?.fleet.active.definition.tuning||TRUCK_TUNING;}
+function activeVehicleTuning(){
+  if(multiplayer?.active){const state=multiplayer.runtime?.getState(),vehicle=state?.snapshot?.vehicles.find(entry=>entry.id===state.vehicleId);if(vehicle)return vehicle.tuning;}
+  return fleetRuntime?.fleet.active.definition.tuning||TRUCK_TUNING;
+}
 
 function updateFireTruck(delta) {
   if (!gameplayReady || stationSwitchBusy()) return;
@@ -7313,7 +7402,7 @@ function updateGameplayCamera(delta, snap = false) {
     active.z + activeDirection.z * lookAhead,
   );
   if (!driving) {
-    const truckDistance = Math.hypot(active.x - truckState.x, active.z - truckState.z);
+    const truckDistance = multiplayer?.active?Infinity:Math.hypot(active.x - truckState.x, active.z - truckState.z);
     if (truckDistance < 12) {
       gameplayDesiredTarget.x = THREE.MathUtils.lerp(gameplayDesiredTarget.x, truckState.x, 0.25);
       gameplayDesiredTarget.z = THREE.MathUtils.lerp(gameplayDesiredTarget.z, truckState.z, 0.25);
@@ -7390,30 +7479,37 @@ function updateGameplayHud() {
     const runtime = selectedStationDoorRuntime();
     const doorIndex = runtime?.frontDoorForTruck(truckState) ?? -1;
     const door = doorIndex >= 0 ? runtime.getStatus().doors.front[doorIndex] : null;
-    const enabled = Boolean(!stationSwitchBusy() && runtime?.isReady() && door);
-    const text = door?.target > 0.5 ? 'Close bay door' : 'Open bay door';
+    const enabled = Boolean(!multiplayer?.active && !stationSwitchBusy() && runtime?.isReady() && door);
+    const text = multiplayer?.active ? 'Bay doors open' : door?.target > 0.5 ? 'Close bay door' : 'Open bay door';
     const buttons = STATION_ONE_SELECTED ? [els.stationOneDoor, els.stationOneMobileDoor] : STATION_TWO_SELECTED ? [els.stationTwoDoor, els.stationTwoMobileDoor] : [els.stationThreeDoor, els.stationThreeMobileDoor];
     buttons.forEach(button => {
       if (!button) return;
       const disabled = !enabled;
-      const label = enabled ? text : 'Front bay door';
+      const label = multiplayer?.active ? text : enabled ? text : 'Front bay door';
       if (button.disabled !== disabled) button.disabled = disabled;
       if (button.textContent !== label) button.textContent = label;
     });
   }
-  const labels = { engine: fleetRuntime?.fleet.active.definition.name||'Pump '+FIRE_STATION_ONE.number };
+  const mpVehicle=multiplayer?.active?multiplayer.runtime?.getState().vehicleId:null;
+  const labels = { engine: mpVehicle?mpVehicle.replace(/-/g,' ').replace(/\b\w/g,c=>c.toUpperCase()):fleetRuntime?.fleet.active.definition.name||'Pump '+FIRE_STATION_ONE.number };
   const role = driving ? labels.engine : 'Firefighter · On foot';
   const speedKmh=String(Math.round(Math.abs(truckState.speed)*3.6));
   const speedText=speedKmh.padStart(3,'0');
   const gear=Math.abs(truckState.speed)<0.18?'N':truckState.speed<0?'R':'D';
+  els.gameplaySpeed.closest('.vehicle-instruments').hidden=Boolean(multiplayer?.active&&!driving);
   if(els.gameplayRole.textContent!==role)els.gameplayRole.textContent=role;
   if(els.gameplaySpeed.textContent!==speedText)els.gameplaySpeed.textContent=speedText;
   if(els.gameplayGear.textContent!==gear)els.gameplayGear.textContent=gear;
   let prompt = '';
   if(state.mode==='onFoot'){
-    const nearest=fleetRuntime?.nearest(playerActor.position);
-    const distance=Math.hypot(playerActor.position.x-truckState.x,playerActor.position.z-truckState.z);
-    if (nearest || distance <= PLAYER_TUNING.enterDistance) prompt = `<kbd>E</kbd> Enter ${nearest?.definition.name||labels.engine}`;
+    if(multiplayer?.active){
+      const nearest=multiplayer.runtime?.latestSnapshot?.vehicles.map(vehicle=>({vehicle,distance:Math.hypot(playerActor.position.x-vehicle.pose.x,playerActor.position.z-vehicle.pose.z)})).sort((a,b)=>a.distance-b.distance)[0];
+      if(nearest?.distance<=PLAYER_TUNING.enterDistance)prompt=`<kbd>E</kbd> Enter ${nearest.vehicle.id.replace(/-/g,' ')}`;
+    }else{
+      const nearest=fleetRuntime?.nearest(playerActor.position);
+      const distance=Math.hypot(playerActor.position.x-truckState.x,playerActor.position.z-truckState.z);
+      if (nearest || distance <= PLAYER_TUNING.enterDistance) prompt = `<kbd>E</kbd> Enter ${nearest?.definition.name||labels.engine}`;
+    }
   } else if (driving && Math.abs(truckState.speed) <= TRUCK_TUNING.exitSpeed) {
     prompt = '<kbd>E</kbd> Exit fire truck';
   }
@@ -7433,6 +7529,14 @@ function updateGameplayHud() {
 }
 
 function enterOrExitVehicle() {
+  if(multiplayer?.active){
+    const own=multiplayer.runtime?.getState();if(!own?.snapshot)return;
+    if(own.mode==='driving'){multiplayer.sendAction({type:'exitVehicle',vehicleId:own.vehicleId});return;}
+    const pose=own.renderedPose||own.authoritativePose;
+    const nearest=own.snapshot.vehicles.map(vehicle=>({vehicle,distance:Math.hypot(pose.x-vehicle.pose.x,pose.z-vehicle.pose.z)})).sort((a,b)=>a.distance-b.distance)[0];
+    if(!nearest||nearest.distance>6.5){showToast('Walk closer to a vehicle to enter.');return;}
+    multiplayer.sendAction({type:'enterVehicle',vehicleId:nearest.vehicle.id});return;
+  }
   if (!gameplayReady || stationSwitchBusy() || aerialRuntime?.aboard()) return;
   if(state.mode==='onFoot'&&(aerialRuntime?.action(aerialRuntime.atControls()?{leave:true}:{rear:true})))return;
   const labels = {engine:fleetRuntime?.fleet.active.definition.name||stationGameplayLabels(FIRE_STATION_ONE).engine};
@@ -7933,6 +8037,7 @@ function animate() {
   stationThreeDoorController?.update(performance.now(),{obstructed:stationThreeDoorOccupied()});
   if (!captureFrame) {
     if(document.querySelector('dialog[open]')){state.keys.clear();currentGameplayAxes(0);}
+    else if(multiplayer?.active) updateMultiplayerFrame(delta);
     else if (cityEditor?.active) cityEditor.update(delta);
     else if (stationSwitchBusy()) updateGameplayCamera(delta);
     else if (state.mode === 'fly') updateFlyControls(delta);
@@ -7999,6 +8104,7 @@ function animate() {
 }
 
 function jumpTo(lat, lon, altitude = 105, name = 'Selected location') {
+  if(multiplayer?.active){showToast('Leave multiplayer before jumping to a location.');return;}
   if (deferCityNavigation(() => jumpTo(lat, lon, altitude, name))) return;
   const p = project(lat, lon);
   const groundY = terrainHeightAtWorld(p.x, p.y);
@@ -8458,6 +8564,7 @@ function onWheel(event) {
 
 function wireEvents() {
   const toggleSelectedFrontDoor = () => {
+    if(multiplayer?.active){showToast('Bay doors stay open during multiplayer.');return;}
     if (stationSwitchBusy()) return;
     const runtime = selectedStationDoorRuntime();
     if (!runtime?.isReady()) return;
@@ -8488,7 +8595,7 @@ function wireEvents() {
   els.mapLayerSatellite?.addEventListener('click',()=>setMapLayer('satellite'));
   els.mapZoomIn?.addEventListener('click',()=>state.mode==='map'&&setMapAltitudeAGL(mapAltitudeByFactor(mapAltitudeAGL(),0.78)));
   els.mapZoomOut?.addEventListener('click',()=>state.mode==='map'&&setMapAltitudeAGL(mapAltitudeByFactor(mapAltitudeAGL(),1.28)));
-  els.editorMode?.addEventListener('click', () => { if(!stationSwitchBusy())cityEditor?.enter(); });
+  els.editorMode?.addEventListener('click', () => { if(multiplayer?.active){showToast('Editor is unavailable during multiplayer.');return;}if(!stationSwitchBusy())cityEditor?.enter(); });
   els.searchButton.addEventListener('click', () => { stopFlyMotion(); document.exitPointerLock?.(); els.searchDialog.showModal(); setTimeout(() => els.searchInput.focus(), 50); });
   els.landmarksButton.addEventListener('click', () => { stopFlyMotion(); document.exitPointerLock?.(); els.landmarksDialog.showModal(); });
   els.timeButton.addEventListener('click', cycleTheme);
@@ -8554,7 +8661,7 @@ function wireEvents() {
   window.addEventListener('keydown', (event) => {
     if (cityEditor?.active) { cityEditor.handleShortcut(event); return; }
     if (keyboardInputIsBlocked(event)) return;
-    if (aerialRuntime?.handleKey(event)) return;
+    if (!multiplayer?.active&&aerialRuntime?.handleKey(event)) return;
     if (!event.repeat && event.code === 'KeyM') {
       setMode(state.mode === 'map' ? state.lastNonMapMode : 'map');
       els.canvas.focus({ preventScroll: true });
@@ -8575,6 +8682,7 @@ function wireEvents() {
       event.preventDefault();
     }
     if (!event.repeat && event.code === 'KeyL' && state.mode === 'driving') {
+      if(multiplayer?.active){multiplayer.sendAction({type:'toggleLights',vehicleId:multiplayer.runtime?.getState().vehicleId});event.preventDefault();return;}
       state.emergencyLights = !state.emergencyLights;
       truckState.emergencyLights=state.emergencyLights;
       showToast(state.emergencyLights ? 'Emergency lights on' : 'Emergency lights off');
@@ -8596,9 +8704,9 @@ function wireEvents() {
     if (isFlyControlCode(event.code) || (state.mode === 'onFoot' && event.code === 'KeyR' && !event.ctrlKey && !event.altKey && !event.metaKey)) state.keys.add(event.code);
     if (isFlyControlCode(event.code) || ['Space', 'ArrowUp', 'ArrowDown', 'ArrowLeft', 'ArrowRight'].includes(event.code)) event.preventDefault();
   });
-  window.addEventListener('keyup',(event)=>{aerialRuntime?.releaseKey(event.code);if(!cityEditor?.active)state.keys.delete(event.code);});
+  window.addEventListener('keyup',(event)=>{if(!multiplayer?.active)aerialRuntime?.releaseKey(event.code);if(!cityEditor?.active)state.keys.delete(event.code);});
   window.addEventListener('blur', () => { stopFlyMotion(); endCanvasLook(); });
-  window.addEventListener('pagehide', () => { citySplatLayer?.dispose(); cityEditor?.dispose();void roadTileLayer?.dispose(); }, { once: true });
+  window.addEventListener('pagehide', () => { multiplayer?.dispose();citySplatLayer?.dispose(); cityEditor?.dispose();void roadTileLayer?.dispose(); }, { once: true });
   document.addEventListener('visibilitychange', () => {
     if (document.hidden) {
       stopFlyMotion();

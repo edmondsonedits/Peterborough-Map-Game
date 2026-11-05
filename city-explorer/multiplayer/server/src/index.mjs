@@ -81,6 +81,7 @@ export function createExplorerServer({
   spawn,
   clock = Date.now,
   randomToken,
+  pendingAttachmentMs = 10_000,
   allowedOrigins = (process.env.EXPLORER_ALLOWED_ORIGINS ?? '').split(',').map((value) => value.trim()).filter(Boolean),
   nodeEnv = process.env.NODE_ENV ?? 'development',
 } = {}) {
@@ -270,7 +271,7 @@ export function createExplorerServer({
           ensureCreateRate(requestIp(req));
           if (sessions.size >= MAX_ACTIVE_ROOMS) return res.status(503).json({ error: 'room capacity reached' });
           if (!worldReadyAtSpawn()) return res.status(503).json({ error: 'world is not ready' });
-          const session = createExplorerSession({ world, vehicles, spawn, clock, randomToken });
+          const session = createExplorerSession({ world, vehicles, spawn, clock, randomToken, pendingAttachmentMs });
           const collision = [...sessions].some((entry) => entry.roomCode === session.roomCode || entry.roomId === session.roomId);
           if (collision) return res.status(503).json({ error: 'room creation unavailable' });
           const sessionKey = randomUUID();
@@ -295,6 +296,7 @@ export function createExplorerServer({
           ensureJoinRate(requestIp(req));
           const session = [...sessions].find((entry) => entry.roomCode === req.body?.code && !entry.closed);
           if (!session) return res.status(404).json({ error: 'room not found' });
+          if (req.body?.roomId !== undefined && req.body.roomId !== session.roomId) return res.status(404).json({ error: 'room not found' });
           const player = session.join({ code: req.body?.code, ip: requestIp(req), adminCredential: req.body?.adminCredential });
           res.status(201).json({ ...player, roomId: session.roomId });
         } catch (error) { res.status(/rate limit/i.test(error?.message ?? '') ? 429 : 400).json({ error: safeError(error) }); }

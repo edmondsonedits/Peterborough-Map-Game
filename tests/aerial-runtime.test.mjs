@@ -30,9 +30,15 @@ test('real controller and GLB can deploy on clear dry ground without throwing',a
  const gameState={mode:'driving',gameplayYaw:0,gameplayPitch:0};
  const rear=entry.actor.userData.truck.rig.RearOperator?.getWorldPosition(new THREE.Vector3())??new THREE.Vector3(0,0,7.05);
  const player=rear.clone();player.y=.025;
- const runtime=createAerialRuntime({THREE,scene,fleet:{fleet:{vehicles:[entry],active:entry}},gameState,canvas:document.querySelector('canvas'),surface:x=>({height:ground+x*crossSlope}),ready:()=>true,inBay:()=>inBay,isWater:()=>false,obstacles:()=>[],toast:()=>{},playerPosition:()=>player,placeOperator:p=>player.copy(p)});
+ let canMutate=true;
+ const runtime=createAerialRuntime({THREE,scene,fleet:{fleet:{vehicles:[entry],active:entry}},gameState,canvas:document.querySelector('canvas'),surface:x=>({height:ground+x*crossSlope}),ready:()=>true,inBay:()=>inBay,isWater:()=>false,obstacles:()=>[],toast:()=>{},playerPosition:()=>player,placeOperator:p=>player.copy(p),canMutate:()=>canMutate});
  assert.equal(runtime.action({deploy:true}),false,'the driver cannot extend the jacks from the cab');
  gameState.mode='onFoot';player.x+=10;assert.equal(runtime.action({rear:true}),false);player.x-=10;
+ canMutate=false;
+ assert.equal(runtime.action({rear:true}),false,'multiplayer disables aerial rear access at the action handler');
+ assert.equal(runtime.handleKey({code:'KeyE',preventDefault(){}}),false,'multiplayer disables aerial keyboard access');
+ assert.equal(runtime.diagnostics().station,null);
+ canMutate=true;
  assert.equal(runtime.action({rear:true}),true);
  assert.equal(runtime.action({board:true}),false);
  runtime.action({deploy:true});for(let i=0;i<5;i++)runtime.update(.04);

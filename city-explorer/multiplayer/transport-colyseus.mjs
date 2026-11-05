@@ -3,19 +3,19 @@ const MAX_SOCKET_BUFFERED_BYTES = 256 * 1024;
 const MAX_ACK_TRACKING = 80;
 const sleep = (ms) => new Promise((resolve) => setTimeout(resolve, ms));
 
-async function loadSdk(injected) {
-  if (injected) return injected;
-  if (!globalThis.ColyseusSDK && !globalThis.Colyseus?.Client && globalThis.document?.createElement) {
-    await new Promise((resolve, reject) => {
-      const script = document.createElement('script');
-      script.src = SDK_URL.href; script.async = true;
-      script.onload = resolve; script.onerror = () => reject(new Error('Local Colyseus SDK 0.18.9 failed to load'));
-      (document.head ?? document.documentElement).appendChild(script);
-    });
-  } else if (!globalThis.ColyseusSDK && !globalThis.Colyseus?.Client) await import(SDK_URL.href);
-  const sdk = globalThis.ColyseusSDK ?? globalThis.Colyseus?.ColyseusSDK ?? globalThis.Colyseus;
+export function resolveColyseusSdk(globals = globalThis) {
+  const sdk = globals.ColyseusSDK?.Client ? globals.ColyseusSDK
+    : globals.Colyseus?.Client ? globals.Colyseus
+    : typeof globals.Colyseus?.ColyseusSDK === 'function' ? { Client: globals.Colyseus.ColyseusSDK }
+    : null;
   if (!sdk?.Client) throw new Error('Local Colyseus SDK 0.18.9 failed to initialize');
   return sdk;
+}
+
+async function loadSdk(injected) {
+  if (injected) return injected;
+  if (!globalThis.ColyseusSDK?.Client && !globalThis.Colyseus?.Client) await import(SDK_URL.href);
+  return resolveColyseusSdk();
 }
 
 /** HTTP lifecycle and reliable WebSocket transport. Credentials stay in this instance's memory and POST bodies. */
@@ -66,18 +66,20 @@ export function createColyseusTransport({
       Object.assign(session, joined, { roomId: created.roomId });
       await connect();
       return safeSession();
-    } catch (error) { session = null; throw error; }
+    } catch (error) { if (session?.playerCredential) await leave().catch(() => {}); session = null; throw error; }
   }
-  async function joinRoom(code) {
+  async function joinRoom(code, roomId = null) {
     if (session) throw new Error('Leave the current room before joining another');
     if (typeof code !== 'string' || !code.trim()) throw new TypeError('room code is required');
-    const joined = await request('/api/join', 'POST', { code: code.trim().toUpperCase() });
+    const joined = await request('/api/join', 'POST', { code: code.trim().toUpperCase(), ...(roomId ? { roomId } : {}) });
     session = { ...joined, isAdmin: false };
     try { await connect(); return safeSession(); }
-    catch (error) { session = null; throw error; }
+    catch (error) { if (session?.playerCredential) await leave().catch(() => {}); session = null; throw error; }
   }
   async function joinSocket(playerCredential, expectedGeneration = generation, ownerSession = session, timeoutMs = joinTimeoutMs) {
+    status('loading-sdk', { session: safeSession() });
     const api = await loadSdk(sdk);
+    status('joining-socket', { session: safeSession() });
     const nextClient = new api.Client(base.origin);
     let cancelled = false, cancel;
     let timer;
@@ -127,6 +129,12 @@ export function createColyseusTransport({
     status('connected', { session: safeSession() });
   }
   async function handleUnexpectedLeave(code, expectedGeneration) {
+    if (!disposed && !intentionalClose && expectedGeneration === generation && (code === 4001 || code === 4002)) {
+      reconnecting = false;
+      status('disconnected', { code, reason: code === 4001 ? 'removed-from-room' : 'room-closed' });
+      emitDisconnect({ code, reconnecting: false, reason: code === 4001 ? 'removed-from-room' : 'room-closed' });
+      return;
+    }
     if (disposed || intentionalClose || !reconnect || !session || expectedGeneration !== generation) {
       if (!intentionalClose) emitDisconnect({ code });
       return;
@@ -186,7 +194,15 @@ export function createColyseusTransport({
   }
   async function admin(command) {
     if (!session?.adminCredential) throw new Error('This player does not hold the admin credential');
-    return request(`/api/rooms/${encodeURIComponent(session.roomId)}/admin`, 'POST', { credential: session.adminCredential, command });
+    const owner = session;
+    const ownerGeneration = generation;
+    const result = await request(`/api/rooms/${encodeURIComponent(session.roomId)}/admin`, 'POST', { credential: session.adminCredential, command });
+    if (command?.type === 'transfer' && session === owner && generation === ownerGeneration) {
+      session.adminCredential = null;
+      session.isAdmin = false;
+      status('connected', { session: safeSession() });
+    }
+    return result;
   }
   async function leave() {
     if (!session) return false;
