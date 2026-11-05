@@ -70,7 +70,7 @@ function validateModel(root, THREE, layout) {
   return { front, rear, bounds: { x: size.x, y: size.y, z: size.z } };
 }
 
-export function createStationTwoRuntime({ THREE, scene, layout, project, baseSurface, onReady = () => {} }) {
+export function createStationTwoRuntime({ THREE, scene, layout, project, baseSurface, stationHeight = null, onReady = () => {} }) {
   const root = new THREE.Group();
   root.name = 'Station2_Runtime';
   const yaw = layout.site.rotationYDegrees * Math.PI / 180;
@@ -85,7 +85,9 @@ export function createStationTwoRuntime({ THREE, scene, layout, project, baseSur
     }
   }
   // A level floor must clear the terrain at every bay corner in both terrain LODs.
-  const datum = Math.max(baseSurface(spawn.anchor.x, spawn.anchor.z)?.height ?? 0, ...groundSamples) + 0.1;
+  const sampledDatum = Math.max(baseSurface(spawn.anchor.x, spawn.anchor.z)?.height ?? 0, ...groundSamples) + 0.1;
+  const datum = Number.isFinite(stationHeight?.datum) ? stationHeight.datum : sampledDatum;
+  const groundMin = Number.isFinite(stationHeight?.groundMin) ? stationHeight.groundMin : Math.min(...groundSamples);
   const state = {
     status: 'loading', error: null, doors: createDoorState(layout.frontDoorCenters.length, layout.rearDoorCenters.length),
     frontNodes: new Map(), rearNodes: new Map(), frontBaseRotations: new Map(), frontBasePositions: new Map(), rearBases: new Map(), bounds: null,
@@ -109,7 +111,7 @@ export function createStationTwoRuntime({ THREE, scene, layout, project, baseSur
         root.rotation.y = yaw;
         root.add(gltf.scene);
         const foundationMaterial = new THREE.MeshStandardMaterial({ color: 0x6d7068, roughness: 1 });
-        const foundationDepth = Math.max(0.5, datum - Math.min(...groundSamples) + 0.35);
+        const foundationDepth = Math.max(0.5, datum - groundMin + 0.35);
         for (const volume of [layout.bay, layout.wing, layout.tower, layout.sideAnnex].filter(Boolean)) {
           const base = new THREE.Mesh(new THREE.BoxGeometry(volume.maxX - volume.minX, foundationDepth, volume.rearZ - volume.frontZ), foundationMaterial);
           base.position.set((volume.minX + volume.maxX) / 2, -foundationDepth / 2 - 0.01, (volume.frontZ + volume.rearZ) / 2);
@@ -125,6 +127,8 @@ export function createStationTwoRuntime({ THREE, scene, layout, project, baseSur
           light.name = `Station2_bay_light_${z}`;
           root.add(light);
         }
+        // This runtime may be loaded after the static scene transform freeze.
+        root.updateMatrixWorld(true);
         onReady({ sourceId: layout.site.candidateReplacementOsmId, root });
         return true;
       } catch (error) {
@@ -226,7 +230,7 @@ export function createStationTwoRuntime({ THREE, scene, layout, project, baseSur
   function resetDoors() { state.doors = createDoorState(layout.frontDoorCenters.length, layout.rearDoorCenters.length); }
 
   function getStatus() {
-    return { status: state.status, error: state.error, datum, groundRange: [Math.min(...groundSamples), Math.max(...groundSamples)], bounds: state.bounds, doors: structuredClone(state.doors), loaded };
+    return { status: state.status, error: state.error, datum, groundRange: [groundMin, Math.max(...groundSamples)], bounds: state.bounds, doors: structuredClone(state.doors), loaded };
   }
 
   return { root, spawn, playerSpawn, yaw, load, surfaceAt, collides, sweep, update, nearestDoor, frontDoorForTruck, toggleFrontDoorForTruck, getStatus, resetDoors, isReady: () => loaded, containsBay, localPoint, worldPoint, datum };

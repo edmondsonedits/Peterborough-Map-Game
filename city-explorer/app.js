@@ -46,6 +46,7 @@ import { createEmergencyFacilityLayer, suppressFacilitySource } from './emergenc
 import { emergencyFacilityEntries } from './emergency-facilities-catalog.js?v=1.6.183';
 import { createStationOneRuntime, preloadStationOneAsset, stationOneRequested } from './station-one-runtime.js?v=1.6.183';
 import { createStationTwoRuntime, preloadStationTwoAsset, stationTwoRequested } from './station-two-runtime.js?v=1.6.183';
+import { validateStationHeightRecord } from './multiplayer/station-height-record.mjs';
 import { attachStationThreeModel, createStationThreeDoorController, hideStationThreeReplacementRecords, inspectStationThreeModel, loadStationThreeAsset, selectStationThreeSpawn, stationGameplayLabels, stationThreeLocalPosition } from './station-three-runtime.js?v=1.6.183';
 import { reconcileStationPavement } from './station-pavement-layer.js?v=1.6.57';
 import { CURB_REVEAL, curbIsRaised, stationRoadWeight, splitRoadDetailSegment, pavementSupportBottom } from './station-road-detail.js?v=1.6.58';
@@ -165,6 +166,8 @@ const roadParams = new URLSearchParams(location.search);
 const ROAD_PACK_BUILD = roadParams.get('roadPack') === 'build';
 const CONNECTED_ROADS_ENABLED = roadParams.get('roadSurface') !== 'legacy';
 let roadTileLayer = null;
+let pinnedStationHeights = null;
+const stationRuntimeLoadPromises = new WeakMap();
 let roadTileManifest = null;
 let roadTileNextUpdate = 0;
 let roadBuildPaused=ROAD_PACK_BUILD;
@@ -4477,11 +4480,23 @@ function prepareRoadNodeIdentities(data){
     for(let i=1;i<way.geometry.length;i++){const a=project(way.geometry[i-1].lat,way.geometry[i-1].lon),b=project(way.geometry[i].lat,way.geometry[i].lon);explicitStopBars.push({id:`way/${way.id}`,a:{x:a.x,z:a.y},b:{x:b.x,z:b.y},width:0.32});}
   }
 }
+async function loadPinnedStationHeights(roadPackManifest){
+  pinnedStationHeights=null;
+  const worldUrl=new URL('multiplayer/world-data/v1/world-manifest.json',import.meta.url);
+  const worldResponse=await fetch(worldUrl,{cache:'no-store'});if(!worldResponse.ok)throw new Error(`Station height world manifest returned ${worldResponse.status}`);
+  const worldManifest=await worldResponse.json();if(worldManifest.roadPack?.buildId!==roadPackManifest.buildId)throw new Error('Station height world/road pack identity mismatch');
+  const heightUrl=new URL('multiplayer/world-data/v1/station-heights.json',import.meta.url);
+  const heightResponse=await fetch(heightUrl,{cache:'no-store'});if(!heightResponse.ok)throw new Error(`Station height sidecar returned ${heightResponse.status}`);
+  const record=validateStationHeightRecord(await heightResponse.json(),{worldVersion:worldManifest.worldVersion,roadPackBuildId:roadPackManifest.buildId});
+  pinnedStationHeights=record.stations;document.documentElement.dataset.stationHeightRecord='ready';return record;
+}
+
 async function tryLoadRoadTilePack(){
   if(!CONNECTED_ROADS_ENABLED||ROAD_PACK_BUILD||roadParams.get('roadPack')==='0'||terrain.source!=='ontario-lidar-2025')return null;
   configureTerrainMeshResolution();
   const url=new URL('data/road-pack/manifest.json',import.meta.url);
   const manifest=await loadRoadTileManifest({url:url.href,sourceGeneratedAt:state.manifest?.generated_at,terrain:{source:terrain.source,segments:CITY.terrainSegments,size:CITY.terrainSize}});
+  await loadPinnedStationHeights(manifest);
   const layer=createRoadTileLayer({THREE,parent:roadGroup,materials,manifest,baseUrl:new URL('./',url),
     radius:graphicsQuality.roadRadius,retainRadius:graphicsQuality.roadRetainRadius,
     materialFactory:material=>cityVisuals.mode==='legacy'?material.clone():cloneCityMaterial(material),
@@ -6411,11 +6426,11 @@ function initializeVehicleFleet(){
       const old=fireTruckActor.position;
       stationTransitionTarget={number:entry.definition.station,x:entry.state.x,z:entry.state.z,protection:{protectX:old.x,protectZ:old.z,protectRadius:graphicsQuality.roadRadius+150}};
       try{
-        const runtime=entry.definition.station<3?ensureStationRuntime(entry.definition.station,true):null;
-        if(runtime){if(!await waitForStationTask(runtime.load(),entry.definition.name))throw Error('Station model unavailable');runtime.root.visible=true;runtime.root.userData.stationRuntimeOwner=true;}
-        else{await waitForStationTask(loadStationThreeModel(),'Station 3');placeStationThreeModel();}
         if(!isCurrent())return;
-        if(roadTileLayer)await waitForStationTask(roadTileLayer.update(entry.state.x,entry.state.z,stationTransitionTarget.protection),'Destination roads');
+        if(roadTileLayer){await waitForStationTask(roadTileLayer.update(entry.state.x,entry.state.z,stationTransitionTarget.protection),'Destination roads');if(!roadTileLayer.readyAt(entry.state.x,entry.state.z,110))throw Error('Destination roads are not ready. Please try again.');}
+        const runtime=entry.definition.station<3?ensureStationRuntime(entry.definition.station,true):null;
+        if(runtime){if(!await loadStationRuntimeWithRoads(runtime,entry.definition.name))throw Error('Station model unavailable');runtime.root.visible=true;runtime.root.userData.stationRuntimeOwner=true;}
+        else{await waitForStationTask(loadStationThreeModel(),'Station 3');placeStationThreeModel();}
         const start=performance.now();
         while(isCurrent()&&(!citySceneryReadyAt(entry.state.x,entry.state.z,false)||(roadTileLayer&&!roadTileLayer.readyAt(entry.state.x,entry.state.z,15)))){
           if(performance.now()-start>30000)throw Error('Destination is still loading. Please try again.');
@@ -6561,6 +6576,18 @@ function moveStationOneToFallbackSpawn() {
   state.gameplayPitch = -0.19;
   snapGameplayCamera();
 }
+async function loadStationRuntimeWithRoads(runtime,label='station model'){
+  if(!runtime)return false;if(runtime.isReady())return true;
+  let pending=stationRuntimeLoadPromises.get(runtime);if(pending)return pending;
+  pending=(async()=>{if(roadTileLayer){const point=runtime.spawn.anchor;if(!roadTileLayer.readyAt(point.x,point.z,160)){await waitForStationTask(roadTileLayer.update(point.x,point.z),label+' roads');if(!roadTileLayer.readyAt(point.x,point.z,160))throw new Error(label+' roads are not ready');}}return waitForStationTask(runtime.load(),label);})();
+  stationRuntimeLoadPromises.set(runtime,pending);try{const loaded=await pending;if(!loaded)throw new Error(label+' could not load');return true;}catch(error){stationRuntimeLoadPromises.delete(runtime);throw error;}
+}
+function maybeLoadNearbyStationRuntime(){
+  if(!roadTileLayer||!gameplayReady)return;
+  for(const runtime of [stationOneRuntime,stationTwoRuntime]){if(!runtime||runtime.isReady()||stationRuntimeLoadPromises.has(runtime))continue;const point=runtime.spawn.anchor;if(Math.hypot(truckState.x-point.x,truckState.z-point.z)>graphicsQuality.roadRadius+160||!roadTileLayer.readyAt(point.x,point.z,160))continue;
+    void loadStationRuntimeWithRoads(runtime,'nearby Station '+(runtime===stationOneRuntime?1:2)).then(()=>{runtime.root.visible=true;runtime.root.userData.stationRuntimeOwner=true;emergencyFacilityLayer?.setRuntimeOwner('station'+(runtime===stationOneRuntime?1:2),true);hideSelectedStationReplacement();}).catch(error=>console.warn('Nearby station model deferred until its roads are ready.',error));
+  }
+}
 function stationSwitchBusy() { return Boolean(fleetRuntime?.busy||stationTransitionController?.getStatus().busy); }
 
 function ensureStationRuntime(number, initial = false) {
@@ -6572,7 +6599,9 @@ function ensureStationRuntime(number, initial = false) {
   }
   if (runtime) return runtime;
   const create = number === 1 ? createStationOneRuntime : createStationTwoRuntime;
-  runtime = create({THREE,scene:gameplayGroup,layout:number===1?stationOneLayout:stationTwoLayout,project,
+  const stationHeight=pinnedStationHeights?.[number]||null;
+  if(roadTileLayer&&!stationHeight)throw new Error(`Station ${number} height record is unavailable for the active road pack`);
+  runtime = create({THREE,scene:gameplayGroup,layout:number===1?stationOneLayout:stationTwoLayout,project,stationHeight,
     baseSurface:(x,z)=>gameplaySurfaceBaseAt(x,z),
     onReady:()=>{
       if (number===1) stationOneReplacementReady=true; else stationTwoReplacementReady=true;
@@ -6641,7 +6670,7 @@ async function prepareStationSwitch(number, context) {
     if(!stationThreeAssetReady||!stationThreeModel)throw new Error('Station 3 model could not load.');
   }else{
     runtime=ensureStationRuntime(number);
-    const loaded=await waitForStationTask(runtime.load(),'Station '+number); check();
+    const loaded=await loadStationRuntimeWithRoads(runtime,'Station '+number); check();
     if(!loaded)throw new Error('Station '+number+' could not load. Please try again.');
   }
   const spawn=runtime?{playerPoint:{x:runtime.playerSpawn.x,y:runtime.playerSpawn.z},truckPoint:{x:runtime.spawn.x,y:runtime.spawn.z}}:stationThreeSpawnPoints(station);
@@ -6744,7 +6773,7 @@ function initializeGameplay() {
     els.stationOneControls.hidden = false;
     els.stationOneMobileStart.hidden = false;
     els.stationOneMobileDoor.hidden = false;
-    stationOneReadyPromise = stationOneRuntime.load().then(loaded => {
+    stationOneReadyPromise = loadStationRuntimeWithRoads(stationOneRuntime,'Station 1').then(loaded => {
       document.documentElement.dataset.stationOneModel = loaded ? 'ready' : `error:${stationOneRuntime.getStatus().error}`;
       els.stationOneModelStatus.textContent = loaded ? '' : 'Station 1 model unavailable; using the existing apron start';
       if (!loaded) {
@@ -6761,7 +6790,7 @@ function initializeGameplay() {
     els.stationTwoControls.hidden = false;
     els.stationTwoMobileStart.hidden = false;
     els.stationTwoMobileDoor.hidden = false;
-    stationTwoReadyPromise = stationTwoRuntime.load().then(loaded => {
+    stationTwoReadyPromise = loadStationRuntimeWithRoads(stationTwoRuntime,'Station 2').then(loaded => {
       document.documentElement.dataset.stationTwoModel = loaded ? 'ready' : `error:${stationTwoRuntime.getStatus().error}`;
       els.stationTwoModelStatus.textContent = loaded ? '' : 'Station model unavailable; starting at the approach';
       if (!loaded) {
@@ -6788,7 +6817,17 @@ function initializeGameplay() {
     project: (lat,lon) => {const point=project(lat,lon);return {x:point.x,z:point.y};},
     unproject: (x,z) => unproject(x,z),
   });
-  globalThis.__PTBO_GAMEPLAY__ = Object.freeze({
+  if(new URLSearchParams(location.search).has('qaMultiplayerWorld'))globalThis.__PTBO_MULTIPLAYER_WORLD_SOURCE__=Object.freeze({
+    async prefetch(x,z){if(roadTileLayer){const stats=await roadTileLayer.update(x,z);return {...stats,ready:roadTileLayer.readyAt(x,z,80)};}return {ready:true,legacy:true};},
+    stationReady(number){return number===1?Boolean(stationOneRuntime?.isReady()):number===2?Boolean(stationTwoRuntime?.isReady()):number===3?Boolean(stationThreeDoorRuntime?.isReady()):false;},
+    stationDatum(number){return number===1?stationOneRuntime?.datum:number===2?stationTwoRuntime?.datum:null;},
+    stationRootPosition(number){const runtime=number===1?stationOneRuntime:number===2?stationTwoRuntime:null;if(!runtime?.isReady())return null;const position=runtime.root.getWorldPosition(new THREE.Vector3());return{x:position.x,y:position.y,z:position.z};},
+    terrainGrid(){return terrain.renderGrid?{segments:terrain.renderGrid.segments,size:terrain.renderGrid.size,minX:terrain.renderGrid.minX,minZ:terrain.renderGrid.minZ}:null;},
+    surface(x,z,referenceY=null){const hit=gameplaySurfaceAt(x,z,referenceY);const stationFloor=String(hit.heightSource||'').startsWith('station');const identity=stationFloor?hit.heightSource:hit.official?.sourceId||(hit.official?.layer?`layer:${hit.official.layer}`:null)||hit.road?.lineId||(hit.heightSource==='terrain'?'terrain':`layer:${hit.heightSource||hit.name}`);const layer=stationFloor?hit.heightSource:hit.official?.layer||hit.road?.layer||(hit.heightSource==='terrain'?'terrain':null);return {height:hit.height,onRoad:Boolean(hit.onRoad),surfaceId:identity,layer,surfaceLayer:layer,heightSource:hit.heightSource||null,ready:!roadTileLayer||roadTileLayer.readyAt(x,z,8)};},
+    blocks(previous,next,options={}){const player=options.kind==='onFoot';for(const runtime of [stationOneRuntime,stationTwoRuntime]){if(!runtime?.isReady())continue;if(player?runtime.collides(next,{player:true}):runtime.sweep(previous,next,options.dimensions))return true;}return stationThreeBlocksMove(previous,next,{player});},
+    stationDoors(number){return number===1?stationOneRuntime?.getStatus()?.doors:number===2?stationTwoRuntime?.getStatus()?.doors:stationThreeDoorRuntime.getStatus().doors;},
+    setDoorForParity(number,fraction){const amount=Number(fraction)>=.98?1:0;if(number===1||number===2){const runtime=number===1?stationOneRuntime:stationTwoRuntime;if(!runtime?.isReady())return false;runtime.resetDoors();if(amount){runtime.toggleFrontDoorForTruck(runtime.spawn);for(let i=0;i<24;i++)runtime.update(.1,null,null);}return true;}if(number===3&&stationThreeDoorController){stationThreeDoorController.reset();if(amount){const now=performance.now();stationThreeDoorController.open(now);stationThreeDoorController.update(now+5000);}return true;}return false;},
+  });  globalThis.__PTBO_GAMEPLAY__ = Object.freeze({
     get station() { return { ...FIRE_STATION_ONE }; },
     selectVehicle:id=>fleetRuntime.select(id),
     vehicles:()=>fleetRuntime.snapshot(),
@@ -6845,13 +6884,7 @@ function initializeGameplay() {
     },
     reset: resetGameplay,
   });
-  for(const runtime of [stationOneRuntime,stationTwoRuntime])void runtime.load().then(ok=>{
-    if(!ok)return;
-    runtime.root.visible=true;runtime.root.userData.stationRuntimeOwner=true;
-    emergencyFacilityLayer?.setRuntimeOwner(runtime===stationOneRuntime?'station1':'station2',true);
-    for(const v of fleetRuntime.fleet.vehicles)if(Math.hypot(v.state.x-v.spawn.x,v.state.z-v.spawn.z)<.01){const surface=runtime.surfaceAt(v.state.x,v.state.z);if(surface){v.state.y=surface.height+.035;v.actor.position.y=v.state.y;}}
-    hideSelectedStationReplacement();
-  });
+  // Distant station models/aprons load only after ordinary road streaming covers their region.
   syncStationControls();
 }
 
@@ -7945,7 +7978,7 @@ function animate() {
     roadTileNextUpdate=performance.now()+250;
     const x=stationTransitionTarget?.x??viewCamera.position.x,z=stationTransitionTarget?.z??viewCamera.position.z;
     const protection=stationTransitionTarget?stationTransitionTarget.protection:{protectX:truckState.x,protectZ:truckState.z,protectRadius:100};
-    void roadTileLayer.update(x,z,protection).then(stats=>{document.documentElement.dataset.roadTiles=JSON.stringify(stats);}).catch(error=>console.warn('Road tile update retained existing geometry.',error));
+    void roadTileLayer.update(x,z,protection).then(stats=>{document.documentElement.dataset.roadTiles=JSON.stringify(stats);maybeLoadNearbyStationRuntime();}).catch(error=>console.warn('Road tile update retained existing geometry.',error));
   }
   waterTime.value = ((captureFrame ? 0 : performance.now()) / 1000) % (200 * Math.PI);
   renderer.render(scene, viewCamera);

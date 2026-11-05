@@ -8,6 +8,8 @@ import { addStationArchitecturalDetails } from './station-architecture.js';
 */
 
 import { installWorldSurfaceDetail } from './vertical-slice-quality.js?v=1.5.6-material2';
+import { stepVehicleKinematics, DEFAULT_PLAYER_TUNING, DEFAULT_VEHICLE_TUNING } from './multiplayer/movement-core.mjs';
+export { exponentialStep, wrapAngle, dampAngle, headingFromDirection, directionFromHeading } from './multiplayer/movement-core.mjs';
 
 export const FIRE_STATION_ONE = Object.freeze({
   id: 'peterborough-fire-station-1',
@@ -27,66 +29,8 @@ export const FIRE_STATION_ONE = Object.freeze({
   truckHeading: Math.PI,
 });
 
-export const PLAYER_TUNING = Object.freeze({
-  walkSpeed: 1.6,
-  sprintSpeed: 3.8,
-  accelerationResponse: 13,
-  brakingResponse: 18,
-  rotationResponse: 15,
-  enterDistance: 6.5,
-  cameraDistance: 8.6,
-  cameraHeight: 1.55,
-  cameraPositionResponse: 11,
-  cameraTargetResponse: 16,
-});
-
-export const TRUCK_TUNING = Object.freeze({
-  length: 10.4,
-  width: 2.55,
-  height: 3.25,
-  wheelbase: 5.65,
-  trackWidth: 2.12,
-  maximumForwardSpeed: 27.5,
-  maximumReverseSpeed: 7.2,
-  forwardAcceleration: 3.85,
-  reverseAcceleration: 2.65,
-  serviceBrake: 8.8,
-  rollingDrag: 0.56,
-  aerodynamicDrag: 0.008,
-  offRoadSpeed: 11.5,
-  offRoadAccelerationScale: 0.48,
-  steeringLowSpeed: 0.54,
-  steeringHighSpeed: 0.15,
-  steeringResponse: 7.5,
-  steeringReturnResponse: 10,
-  exitSpeed: 0.75,
-  chaseDistance: 10.2,
-  chaseHeight: 3.4,
-  cameraPositionResponse: 7.8,
-  cameraTargetResponse: 12,
-});
-
-export function exponentialStep(current, target, response, delta) {
-  const safeDelta = Math.max(0, Number(delta) || 0);
-  return current + (target - current) * (1 - Math.exp(-Math.max(0, response) * safeDelta));
-}
-
-export function wrapAngle(angle) {
-  const twoPi = Math.PI * 2;
-  return ((angle + Math.PI) % twoPi + twoPi) % twoPi - Math.PI;
-}
-
-export function dampAngle(current, target, response, delta) {
-  return wrapAngle(current + wrapAngle(target - current) * (1 - Math.exp(-response * Math.max(0, delta))));
-}
-
-export function headingFromDirection(x, z) {
-  return Math.atan2(-x, -z);
-}
-
-export function directionFromHeading(heading) {
-  return { x: -Math.sin(heading), z: -Math.cos(heading) };
-}
+export const PLAYER_TUNING = DEFAULT_PLAYER_TUNING;
+export const TRUCK_TUNING = DEFAULT_VEHICLE_TUNING;
 
 export function gameplayAxesFromKeys(keys) {
   const pressed = (code) => keys?.has?.(code);
@@ -98,47 +42,9 @@ export function gameplayAxesFromKeys(keys) {
   };
 }
 
-/** Advance a heavy rear-steered fire apparatus with a stable bicycle model. */
+/** Preserve the legacy API while sharing its numerical integrator with multiplayer. */
 export function stepFireTruckKinematics(current, input, delta, onRoad = true, tuning = TRUCK_TUNING) {
-  const dt = Math.min(0.05, Math.max(0, Number(delta) || 0));
-  const throttle = Math.max(-1, Math.min(1, Number(input?.throttle) || 0));
-  const steeringInput = Math.max(-1, Math.min(1, Number(input?.steering) || 0));
-  let speed = Number(current.speed) || 0;
-  const absoluteSpeed = Math.abs(speed);
-  let acceleration = 0;
-
-  if (throttle > 0) {
-    acceleration = speed < -0.2 ? tuning.serviceBrake : tuning.forwardAcceleration;
-  } else if (throttle < 0) {
-    acceleration = speed > 0.2 ? -tuning.serviceBrake : -tuning.reverseAcceleration;
-  } else if (absoluteSpeed > 0.001) {
-    acceleration = -Math.sign(speed) * (tuning.rollingDrag + tuning.aerodynamicDrag * speed * speed);
-  }
-  if (!onRoad && throttle !== 0 && Math.sign(acceleration) === Math.sign(throttle)) {
-    acceleration *= tuning.offRoadAccelerationScale;
-  }
-  speed += acceleration * dt;
-  if (throttle === 0 && Math.sign(speed) !== Math.sign(Number(current.speed) || 0)) speed = 0;
-  const forwardLimit = onRoad ? tuning.maximumForwardSpeed : tuning.offRoadSpeed;
-  speed = Math.max(-(onRoad ? tuning.maximumReverseSpeed : tuning.maximumReverseSpeed * 0.65), Math.min(forwardLimit, speed));
-
-  const speedRatio = Math.min(1, absoluteSpeed / tuning.maximumForwardSpeed);
-  const maximumSteer = tuning.steeringLowSpeed
-    + (tuning.steeringHighSpeed - tuning.steeringLowSpeed) * speedRatio;
-  const targetSteering = steeringInput * maximumSteer;
-  const steeringResponse = steeringInput ? tuning.steeringResponse : tuning.steeringReturnResponse;
-  const steering = exponentialStep(Number(current.steering) || 0, targetSteering, steeringResponse, dt);
-  const heading = wrapAngle((Number(current.heading) || 0) + speed / tuning.wheelbase * Math.tan(steering) * dt);
-  const direction = directionFromHeading(heading);
-
-  return {
-    x: (Number(current.x) || 0) + direction.x * speed * dt,
-    z: (Number(current.z) || 0) + direction.z * speed * dt,
-    heading,
-    speed,
-    steering,
-    acceleration,
-  };
+  return stepVehicleKinematics(current, input, delta, onRoad, tuning);
 }
 
 function mesh(THREE, geometry, material, parent, x = 0, y = 0, z = 0) {

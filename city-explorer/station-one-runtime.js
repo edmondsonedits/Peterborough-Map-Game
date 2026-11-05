@@ -59,7 +59,7 @@ function validateModel(model, THREE, layout) {
   return { panels, bounds: { x: size.x, y: size.y, z: size.z } };
 }
 
-export function createStationOneRuntime({ THREE, scene, layout, project, baseSurface, onReady = () => {} }) {
+export function createStationOneRuntime({ THREE, scene, layout, project, baseSurface, stationHeight = null, onReady = () => {} }) {
   const root = new THREE.Group();
   root.name = 'Station1_Runtime';
   const spawn = stationOneTruckSpawn(layout, project);
@@ -74,7 +74,8 @@ export function createStationOneRuntime({ THREE, scene, layout, project, baseSur
     }
   }
   const anchorHeight = baseSurface(spawn.anchor.x, spawn.anchor.z)?.height;
-  const datum = Math.max(Number.isFinite(anchorHeight) ? anchorHeight : 0, ...groundSamples) + 0.1;
+  const sampledDatum = Math.max(Number.isFinite(anchorHeight) ? anchorHeight : 0, ...groundSamples) + 0.1;
+  const datum = Number.isFinite(stationHeight?.datum) ? stationHeight.datum : sampledDatum;
   const state = {
     status: 'loading', error: null, doors: stationOneDoorState(layout),
     panels: new Map(), panelBases: new Map(), bounds: null,
@@ -109,6 +110,9 @@ export function createStationOneRuntime({ THREE, scene, layout, project, baseSur
           const terrain = baseSurface(world.x, world.z)?.height;
           if (Number.isFinite(terrain)) tower.position.y += terrain - datum;
         }
+        // Deferred station loads happen after the static scene transform freeze.
+        // Recompute the station hierarchy after assigning its pinned world pose.
+        root.updateMatrixWorld(true);
         scene.add(root);
         loaded = true;
         state.status = 'ready';
