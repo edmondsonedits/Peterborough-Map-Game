@@ -1,11 +1,12 @@
-import { FLEET_DEFINITIONS } from '../vehicle-fleet.mjs';
+import { FLEET_DEFINITIONS, RESCUE_ONE_BAY } from '../vehicle-fleet.mjs?v=1.6.194';
 
 export const MULTIPLAYER_VEHICLE_SLOTS = Object.freeze([
   { id: 'pump-1', templateId: 'pump-1', name: 'Pump 1', x: -9.28, z: 9 },
   { id: 'pump-2', templateId: 'pump-2', name: 'Pump 2', x: -4.64, z: 9 },
   { id: 'aerial', templateId: 'aerial', name: 'Aerial', x: 0, z: 9 },
   { id: 'medi', templateId: 'medi', name: 'Medi', x: 4.64, z: 9 },
-  { id: 'pump-3', templateId: 'pump-3', name: 'Pump 3', x: 9.28, z: 9 },
+  { id: 'rescue-1', templateId: 'rescue-1', name: 'Rescue 1', ...RESCUE_ONE_BAY },
+  { id: 'pump-3', templateId: 'pump-3', name: 'Pump 3', x: 4.64, z: -5.6 },
   { id: 'pump-4', templateId: 'pump-1', name: 'Pump 4', x: -9.28, z: -5.6 },
   { id: 'pump-5', templateId: 'pump-1', name: 'Pump 5', x: 0, z: -5.6 },
   { id: 'pump-6', templateId: 'pump-1', name: 'Pump 6', x: 9.28, z: -5.6 },

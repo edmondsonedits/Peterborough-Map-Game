@@ -104,14 +104,14 @@ test('Pump 1, 2 and 3 have a tighter low-speed turning circle in both modes with
  assert.equal(byId('medi').steeringLowSpeed,.62);
 });
 
-test('multiplayer Pump 1–6 inherits the same pumper steering profile as single-player', () => {
+test('multiplayer pumpers inherit the same pumper steering profile as single-player', () => {
  const world={
   stations:[{number:1,anchor:{x:0,z:0},yaw:0}],
   readyAt:()=>true, sampleSurface:()=>({height:0}), blocks:()=>false,
  };
  const slots=createMultiplayerVehicleInstances(world);
- assert.equal(slots.length,8);
- for(const truck of slots.filter(v=>v.id.startsWith('pump-'))){
+ assert.equal(slots.length,9);
+ for(const truck of slots.filter(v=>v.id.startsWith('pump-') || v.id === 'rescue-1')){
   assert.equal(truck.tuning.steeringLowSpeed,byId('pump-1').steeringLowSpeed);
   assert.equal(truck.tuning.steeringResponse,byId('pump-1').steeringResponse);
  }

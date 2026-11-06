@@ -1,4 +1,4 @@
-import { buildIntersectionHolograms, chooseIntersectionStreet } from './intersection-hologram-rules.js?v=1.6.193';
+import { buildIntersectionHolograms, chooseIntersectionStreet } from './intersection-hologram-rules.js?v=1.6.194';
 
 // Citywide coverage, but a fixed pool of reusable billboards/textures on screen.
 export const INTERSECTION_HOLOGRAM_STYLE = Object.freeze({

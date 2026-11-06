@@ -1,6 +1,6 @@
-import {applyRecordingReferenceAppearance} from './recording-reference-appearances.js?v=1.6.193';
-import {RECORDING_PHOTO_PROFILES} from './recording-photo-profiles.js?v=1.6.193';
-import {applyCorridorRecordingAppearance} from './corridor-recording-appearances.js?v=1.6.193';
+import {applyRecordingReferenceAppearance} from './recording-reference-appearances.js?v=1.6.194';
+import {RECORDING_PHOTO_PROFILES} from './recording-photo-profiles.js?v=1.6.194';
+import {applyCorridorRecordingAppearance} from './corridor-recording-appearances.js?v=1.6.194';
 
 /** Display-only opt-out, independent of road, identity and simulation settings. */
 export function recordingReferencesEnabled(search = '') {
