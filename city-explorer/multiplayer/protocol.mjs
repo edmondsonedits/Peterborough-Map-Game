@@ -14,10 +14,10 @@ export function validateInput(input) {
   return bounded(c.forward) && bounded(c.strafe) && (c.run===undefined||typeof c.run==='boolean') && typeof c.sprint==='boolean' && bounded(c.throttle) && bounded(c.steering)
     && finite(c.viewYaw) && c.viewYaw >= -Math.PI && c.viewYaw <= Math.PI;
 }
-const ACTIONS = new Set(['enterVehicle','exitVehicle','switchVehicle','selectVehicle','toggleLights']);
+const ACTIONS = new Set(['enterVehicle','exitVehicle','switchVehicle','selectVehicle','toggleLights','deployAerial','stowAerial']);
 export function validateAction(action) {
   if(!object(action)||action.protocolVersion!==PROTOCOL_VERSION||!integer(action.epoch)||!integer(action.sequence)||!ACTIONS.has(action.type))return false;
-  if(['enterVehicle','exitVehicle','switchVehicle','selectVehicle'].includes(action.type))return safeId(action.vehicleId);
+  if(['enterVehicle','exitVehicle','switchVehicle','selectVehicle','deployAerial','stowAerial'].includes(action.type))return safeId(action.vehicleId);
   return action.vehicleId===undefined||safeId(action.vehicleId);
 }
 function validActor(actor) {

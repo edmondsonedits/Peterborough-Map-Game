@@ -1,3 +1,4 @@
+import { createAerialState, stepAerial, aerialTravelReady } from '../../../aerial-controller.mjs';
 import { createHash, randomBytes, timingSafeEqual } from 'node:crypto';
 import { createSeatRegistry } from './room-seats.mjs';
 import { createVehicleOwnership } from './vehicle-ownership.mjs';
@@ -120,10 +121,11 @@ export function createExplorerSession({ world, vehicles = [], spawn, clock = Dat
       tuning: Object.freeze({ ...DEFAULT_VEHICLE_TUNING, ...(vehicle.tuning ?? {}) }),
       dimensions: Object.freeze({ ...DEFAULT_VEHICLE_TUNING, ...(vehicle.dimensions ?? {}) }),
       lights: false,
+      aerial: vehicle.templateId === 'aerial' ? createAerialState() : null,
     };
   });
   const vehiclesById = new Map(vehicleRecords.map((vehicle) => [vehicle.id, vehicle]));
-  const ownership = createVehicleOwnership(vehicleRecords);
+  const ownership = createVehicleOwnership(vehicleRecords, 4);
 
   function tokenEquals(secretHash, candidate) {
     return !!secretHash && timingSafeEqual(secretHash, digest(candidate));
@@ -198,6 +200,8 @@ export function createExplorerSession({ world, vehicles = [], spawn, clock = Dat
       pose: { ...vehicle.pose },
       ...(includeCatalog ? { tuning: { ...vehicle.tuning }, dimensions: { length: vehicle.dimensions.length, width: vehicle.dimensions.width, height: vehicle.dimensions.height } } : {}),
       lights: vehicle.lights,
+      occupantCount: ownership.countOf(vehicle.id),
+      ...(vehicle.aerial ? { aerial: { ...vehicle.aerial, feet: [...vehicle.aerial.feet] } } : {}),
       driverPlayerId: ownership.driverOf(vehicle.id),
     }));
   }
@@ -380,7 +384,7 @@ export function createExplorerSession({ world, vehicles = [], spawn, clock = Dat
     player.inputQueue.length = 0;
     player.activeControls = null;
     const vehicleId = ownership.vehicleOf(playerId);
-    if (vehicleId) stopVehicle(vehiclesById.get(vehicleId));
+    if (vehicleId && ownership.driverOf(vehicleId) === playerId) stopVehicle(vehiclesById.get(vehicleId));
     return true;
   }
 
@@ -391,10 +395,7 @@ export function createExplorerSession({ world, vehicles = [], spawn, clock = Dat
     player.reconnectCredentialHash = null;
     const vehicleId = ownership.vehicleOf(playerId);
     if (vehicleId) {
-      ownership.release(playerId, vehicleId);
-      const vehicle = vehiclesById.get(vehicleId);
-      stopVehicle(vehicle);
-      vehicle.entityGeneration += 1;
+      leaveCrew(playerId, vehicleId);
     }
     seatRegistry.remove(playerId);
     players.delete(playerId);
@@ -462,35 +463,67 @@ export function createExplorerSession({ world, vehicles = [], spawn, clock = Dat
     return result;
   }
 
+  function driverChanged(vehicleId, previousDriver) {
+    const nextDriver = ownership.driverOf(vehicleId);
+    if (previousDriver === nextDriver) return;
+    const vehicle = vehiclesById.get(vehicleId);
+    stopVehicle(vehicle);
+    vehicle.entityGeneration += 1;
+    const promoted = players.get(nextDriver);
+    if (previousDriver && promoted) resetPrediction(promoted);
+  }
+
+  function leaveCrew(playerId, vehicleId) {
+    const previousDriver = ownership.driverOf(vehicleId);
+    ownership.release(playerId, vehicleId);
+    driverChanged(vehicleId, previousDriver);
+  }
+
+  function aerialSetup(vehicle) {
+    const pose = vehicle.pose;
+    const dimensions = { length: vehicle.dimensions.length + 2, width: 6, height: 10 };
+    if (!isWorldReady(pose, dimensions.length / 2) || world.blocks(pose, pose, { kind: 'vehicle', dimensions })) {
+      return { ok: false, reason: 'aerial-clearance-required' };
+    }
+    const ground = world.sampleSurface(pose.x, pose.z, pose.y);
+    if (/^station[12]-slab$/.test(ground.surfaceId ?? '')) {
+      return { ok: false, reason: 'drive-clear-of-the-bay' };
+    }
+    const feet = [];
+    for (const z of [2.5, -2.5]) for (const x of [-2.7, 2.7]) {
+      const wx = pose.x + x * Math.cos(pose.heading) + z * Math.sin(pose.heading);
+      const wz = pose.z - x * Math.sin(pose.heading) + z * Math.cos(pose.heading);
+      const sample = world.sampleSurface(wx, wz, pose.y);
+      if (!sample || sample.ready === false || sample.water || sample.isWater || !Number.isFinite(sample.height) || Math.abs(sample.height - pose.y) > .25) {
+        return { ok: false, reason: 'aerial-level-ground-required' };
+      }
+      feet.push(sample.height - pose.y);
+    }
+    return { ok: true, feet };
+  }
+
   function runAction(player, action) {
     const currentVehicleId = ownership.vehicleOf(player.playerId);
     const target = vehiclesById.get(action.vehicleId);
-    // Explicit vehicle-list selection is not the proximity-based E-key interaction.
-    // The server alone owns teleports and transfers; a claimed target never changes hands.
-    if (action.type === 'selectVehicle') {
+    if (['selectVehicle', 'enterVehicle', 'switchVehicle'].includes(action.type)) {
       if (!target) return freezeResult(false, 'unknown-vehicle');
+      if (action.type === 'enterVehicle' && currentVehicleId) return freezeResult(false, 'already-driving');
+      if (action.type === 'switchVehicle' && !currentVehicleId) return freezeResult(false, 'invalid-switch-target');
       if (currentVehicleId === target.id) return freezeResult(true, null, { vehicleId: target.id });
+      const current = vehiclesById.get(currentVehicleId);
+      const origin = current?.pose ?? player.pose;
       if (!isWorldReady(target.pose, Math.max(2, target.dimensions.length / 2))) return freezeResult(false, 'target-world-unready');
+      if (action.type !== 'selectVehicle' && (!isWorldReady(origin) || distance(origin, target.pose) > 6.5 || (ownership.driverOf(target.id) && Math.abs(target.pose.speed) > .75) || (current && Math.abs(origin.speed) > .75))) {
+        return freezeResult(false, 'vehicle-out-of-range-or-moving');
+      }
+      const previousDriver = ownership.driverOf(currentVehicleId);
+      const targetDriver = ownership.driverOf(target.id);
       const change = currentVehicleId
         ? ownership.switch(player.playerId, currentVehicleId, target.id)
         : ownership.claim(player.playerId, target.id);
       if (!change.ok) return freezeResult(false, change.reason);
-      if (currentVehicleId) {
-        const previous = vehiclesById.get(currentVehicleId);
-        stopVehicle(previous);
-        previous.entityGeneration += 1;
-      }
-      stopVehicle(target);
-      target.entityGeneration += 1;
-      return freezeResult(true, null, { vehicleId: target.id, ...resetPrediction(player) });
-    }
-    if (action.type === 'enterVehicle') {
-      if (currentVehicleId) return freezeResult(false, 'already-driving');
-      if (!target) return freezeResult(false, 'unknown-vehicle');
-      if (!isWorldReady(player.pose) || !isWorldReady(target.pose) || distance(player.pose, target.pose) > 6.5) return freezeResult(false, 'vehicle-out-of-range-or-world-unready');
-      const claim = ownership.claim(player.playerId, target.id);
-      if (!claim.ok) return freezeResult(false, claim.reason);
-      target.entityGeneration += 1;
+      if (currentVehicleId) driverChanged(currentVehicleId, previousDriver);
+      driverChanged(target.id, targetDriver);
       return freezeResult(true, null, { vehicleId: target.id, ...resetPrediction(player) });
     }
     if (action.type === 'exitVehicle') {
@@ -499,24 +532,26 @@ export function createExplorerSession({ world, vehicles = [], spawn, clock = Dat
       if (Math.abs(vehicle.pose.speed) > 0.75) return freezeResult(false, 'vehicle-moving-too-fast');
       const exitPose = chooseExitPose(player, vehicle);
       if (!exitPose) return freezeResult(false, 'no-safe-exit');
-      ownership.release(player.playerId, currentVehicleId);
-      vehicle.entityGeneration += 1;
+      leaveCrew(player.playerId, currentVehicleId);
       player.pose = exitPose;
       return freezeResult(true, null, { vehicleId: currentVehicleId, ...resetPrediction(player) });
     }
-    if (action.type === 'switchVehicle') {
-      if (!currentVehicleId || !target || currentVehicleId === target.id) return freezeResult(false, 'invalid-switch-target');
-      const current = vehiclesById.get(currentVehicleId);
-      if (Math.abs(current.pose.speed) > 0.75 || !isWorldReady(current.pose) || !isWorldReady(target.pose)
-          || distance(current.pose, target.pose) > 6.5) return freezeResult(false, 'switch-target-out-of-range');
-      const switched = ownership.switch(player.playerId, currentVehicleId, target.id);
-      if (!switched.ok) return freezeResult(false, switched.reason);
-      current.entityGeneration += 1;
-      target.entityGeneration += 1;
-      return freezeResult(true, null, { vehicleId: target.id, ...resetPrediction(player) });
+    if (action.type === 'deployAerial' || action.type === 'stowAerial') {
+      if (!target?.aerial || currentVehicleId !== target.id || ownership.driverOf(target.id) !== player.playerId) {
+        return freezeResult(false, 'aerial-driver-required');
+      }
+      const deploy = action.type === 'deployAerial';
+      if (deploy && !aerialTravelReady(target.aerial)) return freezeResult(false, 'aerial-already-deployed');
+      stepAerial(target.aerial, deploy ? { deploy: true } : { stow: true }, 0, {
+        speed: target.pose.speed, setup: () => aerialSetup(target),
+      });
+      if (deploy && target.aerial.phase !== 'deploying') return freezeResult(false, target.aerial.reason);
+      stopVehicle(target);
+      resetPrediction(player);
+      return freezeResult(true);
     }
     if (action.type === 'toggleLights') {
-      if (!currentVehicleId || (action.vehicleId && action.vehicleId !== currentVehicleId)) return freezeResult(false, 'not-current-driver');
+      if (!currentVehicleId || ownership.driverOf(currentVehicleId) !== player.playerId || (action.vehicleId && action.vehicleId !== currentVehicleId)) return freezeResult(false, 'not-current-driver');
       const vehicle = vehiclesById.get(currentVehicleId);
       vehicle.lights = !vehicle.lights;
       return freezeResult(true, null, { lights: vehicle.lights });
@@ -539,10 +574,16 @@ export function createExplorerSession({ world, vehicles = [], spawn, clock = Dat
   function simulateFixedTick(time) {
     tickNumber += 1;
     const activeVehicles = new Set();
+    for (const vehicle of vehicleRecords) if (vehicle.aerial) stepAerial(vehicle.aerial, {}, SUBSTEP_SECONDS * 2);
     for (const player of players.values()) {
       if (!player.connected) continue;
       const vehicleId = ownership.vehicleOf(player.playerId);
       const vehicle = vehicleId ? vehiclesById.get(vehicleId) : null;
+      if (vehicle && ownership.driverOf(vehicle.id) !== player.playerId) {
+        player.inputQueue.length = 0;
+        player.activeControls = null;
+        continue;
+      }
       const state = vehicle ?? player;
       if (!isWorldReady(state.pose)) {
         if (vehicle) stopVehicle(vehicle);
@@ -561,6 +602,7 @@ export function createExplorerSession({ world, vehicles = [], spawn, clock = Dat
       const stale = time - player.lastInputAt > STALE_INPUT_MS;
       for (let substep = 0; substep < 2; substep += 1) {
         if (vehicle) {
+          if (vehicle.aerial && !aerialTravelReady(vehicle.aerial)) continue;
           const current = vehicle.pose;
           const requested = stale ? { throttle: Math.abs(current.speed) < 0.05 ? 0 : -Math.sign(current.speed), steering: 0 }
             : player.activeControls ?? { throttle: 0, steering: 0 };
@@ -613,10 +655,7 @@ export function createExplorerSession({ world, vehicles = [], spawn, clock = Dat
       player.reconnectCredentialHash = null;
       const vehicleId = ownership.vehicleOf(playerId);
       if (vehicleId) {
-        ownership.release(playerId, vehicleId);
-        const vehicle = vehiclesById.get(vehicleId);
-        stopVehicle(vehicle);
-        vehicle.entityGeneration += 1;
+        leaveCrew(playerId, vehicleId);
       }
       players.delete(playerId);
       if (adminPlayerId === playerId) grantAdminToEligiblePlayer();
@@ -663,10 +702,7 @@ export function createExplorerSession({ world, vehicles = [], spawn, clock = Dat
       player.reconnectCredentialHash = null;
       const vehicleId = ownership.vehicleOf(player.playerId);
       if (vehicleId) {
-        ownership.release(player.playerId, vehicleId);
-        const vehicle = vehiclesById.get(vehicleId);
-        stopVehicle(vehicle);
-        vehicle.entityGeneration += 1;
+        leaveCrew(player.playerId, vehicleId);
       }
       seatRegistry.remove(player.playerId);
       players.delete(player.playerId);
