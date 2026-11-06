@@ -114,3 +114,18 @@
 - [ ] Run both transports under network-level impairment: 40/100/200 ms RTT, 0/20/50 ms jitter, 0/1/3% loss, bandwidth caps, loss burst, and one-second outage. Include current Edge/browser compatibility and explicit WebSocket serialization fallback; reject relying on unreliable schema fields that do not update on WebSocket.
 - [ ] Record snapshot age, stale backlog, input-to-visible response, correction distance/frequency, interpolation underruns, server tick, queue size, bandwidth, and reconnect/resync behavior. Preserve repeatable commands and raw metric summaries in the artifact.
 - [ ] Select WebSocket baseline or datagram candidate from evidence; if datagram lacks browser compatibility/fallback or neither meets measured acceptance criteria, stop and report. No deploy-readiness or phone-smoothness claim until transport and actual Android/iPhone validation pass.
+
+## Implementation checkpoint — 2026-11-05
+
+Tasks 1–4 are implemented and reviewed in the isolated multiplayer branch. Release candidate 1.6.187 uses road build 91059420e560ccd031e4 and world d8a4a797c9e71fc0b65fe805. Historical checklist entries above retain their original acceptance scope; this checkpoint records the evidence actually obtained.
+
+Validation completed:
+- Final multiplayer and gzip regression suite: 124 passed, zero failures. Earlier broader related regression suite: 200 passed; release-specific checks: 49 passed.
+- Actual Edge world parity: 17 sampled surface/route points and 8 collision cases, 1 cm tolerance, no page errors.
+- Actual isolated Edge lifecycle run: 2, 4 and 8 players, matching room rosters/rendered actors, invalid-code and locked-room rejection, Player 2 host transfer, host leave, Player 4 kick cleanup, survivor convergence, mobile-emulated touch walking and vehicle driving. No page errors or failed requests. Final occupancy 6 after leave/kick.
+- Kicked client clears session/state/remote actors and restores the single-player fleet. Additive disconnect listeners unsubscribe on disposal; late callbacks are inert.
+- Normalization, canonical gzip packaging and world export reproduce the same world version. Generated diagnostic artifacts and screenshots are excluded from the release.
+
+Task 5 tooling is tools/check-multiplayer-lifecycle.mjs and tools/diagnose-multiplayer-kick.mjs. Local SDK snapshot benchmarking is tools/benchmark-multiplayer-snapshots.mjs: simulation approximately 30 Hz at 2/4/8 clients; local Windows snapshot publication approximately 21 Hz, p95 intervals approximately 49–50 ms. These are local measurements, not Internet or physical-phone performance evidence.
+
+Outstanding release gates: Task 6 impaired-network/datagram comparison and physical Android/iPhone validation are not complete. Public Node/WebSocket hosting is not configured; GitHub Pages cannot run the authoritative server. Await hosting target/account selection before coordinated backend/frontend publication. No paid service has been activated and this candidate has not been published. Backend and Pages must share the final committed world version; one server process is supported initially.

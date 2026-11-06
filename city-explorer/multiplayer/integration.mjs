@@ -1,7 +1,7 @@
-import { createRoomUi } from './room-ui.mjs';
-import { createClientRuntime } from './client-runtime.mjs';
-import { createColyseusTransport } from './transport-colyseus.mjs';
-import { loadWorldCollision } from './world-collision.mjs';
+import { createRoomUi } from './room-ui.mjs?v=1.6.187';
+import { createClientRuntime } from './client-runtime.mjs?v=1.6.187';
+import { createColyseusTransport } from './transport-colyseus.mjs?v=1.6.187';
+import { loadWorldCollision } from './world-collision.mjs?v=1.6.187';
 
 const loopback = host => ['localhost', '127.0.0.1', '[::1]', '::1'].includes(host);
 export function resolveMultiplayerServerUrl(pageUrl, configuredUrl, queryValue) {
@@ -58,7 +58,7 @@ export function createMultiplayerIntegration({ parent, pageUrl = location.href, 
     if (transport) return transport;
     const loaded = await ensureWorld();
     const activeTransport = (factories.createTransport ?? createColyseusTransport)({ serverUrl,
-      onStatus: detail => { if (transport !== activeTransport) return; connectionStatus = detail.status; session = transport.getSession() ?? session; update({ connectionStatus, session: session ? { ...session, connectionStatus } : null }); },
+      onStatus: detail => { if (transport !== activeTransport) return; connectionStatus = detail.status; session = transport.getSession() ?? session; update({ connectionStatus, session: session ? { ...session, connectionStatus } : null, ...(typeof detail.locked === 'boolean' ? { locked: detail.locked } : {}) }); },
       onDisconnect: detail => { if (detail.reconnecting || transport !== activeTransport) return; releaseLocal('Connection ended. Join a room to continue.'); onMessage('Multiplayer connection ended.'); },
     });
     transport = activeTransport;

@@ -1,7 +1,7 @@
-import { stationOneCollision, sweepStationOneTruck, stationOneWorldToLocal, sampleStationOneFloor } from '../station-one-core.mjs';
-import { stationCollision, sweepStationTruck, stationWorldToLocal, sampleStationFloor } from '../station-two-core.mjs';
-import { stationThreeDoorSweep } from '../station-three-bay.mjs';
-import { PackedRoadSurfaceIndex } from '../road-tile-pack.js';
+import { stationOneCollision, sweepStationOneTruck, stationOneWorldToLocal, sampleStationOneFloor } from '../station-one-core.mjs?v=1.6.187';
+import { stationCollision, sweepStationTruck, stationWorldToLocal, sampleStationFloor } from '../station-two-core.mjs?v=1.6.187';
+import { stationThreeDoorSweep } from '../station-three-bay.mjs?v=1.6.187';
+import { PackedRoadSurfaceIndex } from '../road-tile-pack.js?v=1.6.187';
 const HEADER=16,MAX_BYTES=128*1024*1024,MAX_META=4*1024*1024,align4=n=>(n+3)&~3;
 const finite=Number.isFinite, key=(x,z)=>`${Math.floor(x/60)}:${Math.floor(z/60)}`;
 async function sha256(bytes){if(globalThis.process?.versions?.node){const{createHash}=await import('node:crypto');return createHash('sha256').update(bytes).digest('hex');}const digest=await crypto.subtle.digest('SHA-256',bytes);return [...new Uint8Array(digest)].map(v=>v.toString(16).padStart(2,'0')).join('');}

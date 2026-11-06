@@ -2,6 +2,7 @@ import test from 'node:test';
 import assert from 'node:assert/strict';
 import { createMultiplayerIntegration, resolveMultiplayerServerUrl } from '../city-explorer/multiplayer/integration.mjs';
 import { createColyseusTransport, resolveColyseusSdk } from '../city-explorer/multiplayer/transport-colyseus.mjs';
+import { createClientRuntime } from '../city-explorer/multiplayer/client-runtime.mjs';
 import { createExplorerServer } from '../city-explorer/multiplayer/server/src/index.mjs';
 import { readFile } from 'node:fs/promises';
 import { runInNewContext } from 'node:vm';
@@ -219,6 +220,41 @@ for (const [code, reason] of [[4001, 'removed-from-room'], [4002, 'room-closed']
     transport.dispose();
   });
 }
+
+test('real SDK kick and room close notify integration even after client runtime subscribes', async () => {
+  const { Client } = await import('../city-explorer/multiplayer/server/node_modules/@colyseus/sdk/build/index.mjs');
+  const world = { worldVersion: 'fixture-world', readyAt: () => true, sampleSurface: () => ({ height: 0, ready: true, onRoad: true }), blocks: () => false };
+  const app = createExplorerServer({ world, vehicles: [], spawn: () => ({ x: 0, y: 0, z: 0, heading: 0, vx: 0, vz: 0, speed: 0, steering: 0 }), nodeEnv: 'development' });
+  const transports = [], runtimes = [];
+  const deadline = (promise) => Promise.race([promise, new Promise((_, reject) => setTimeout(() => reject(new Error('terminal SDK disconnect was not delivered')), 3_000))]);
+  try {
+    const address = await app.listen(0, '127.0.0.1');
+    const serverUrl = `http://127.0.0.1:${address.port}`;
+    for (const type of ['kick', 'close']) {
+      let onTerminal;
+      const terminal = new Promise(resolve => { onTerminal = resolve; });
+      let affectedRuntime;
+      const host = createColyseusTransport({ serverUrl, sdk: { Client }, onDisconnect: detail => { if (type === 'close') { affectedRuntime?.dispose(); onTerminal(detail); } } });
+      transports.push(host);
+      const room = await host.createRoom();
+      const guest = createColyseusTransport({ serverUrl, sdk: { Client }, onDisconnect: detail => { if (type === 'kick') { affectedRuntime?.dispose(); onTerminal(detail); } } });
+      transports.push(guest);
+      const joined = await guest.joinRoom(room.roomCode, room.roomId);
+      const affected = type === 'kick' ? guest : host;
+      affectedRuntime = createClientRuntime({ transport: affected, world, worldVersion: world.worldVersion });
+      runtimes.push(affectedRuntime);
+      await host.admin(type === 'kick' ? { type, playerId: joined.playerId } : { type });
+      const detail = await deadline(terminal);
+      assert.equal(detail.code, type === 'kick' ? 4001 : 4002);
+      assert.equal(detail.reconnecting, false);
+      assert.equal(affectedRuntime.getState().disposed, true);
+    }
+  } finally {
+    for (const runtime of runtimes) runtime.dispose();
+    for (const transport of transports) transport.dispose();
+    await app.close();
+  }
+});
 
 test('server rejects a room ID and code mismatch before allocating any seat', async () => {
   const world = { worldVersion: 'fixture', readyAt: () => true, sampleSurface: () => ({ height: 0, ready: true, onRoad: true }), blocks: () => false };

@@ -83,6 +83,57 @@ test('admin callback uses transport command types and late async results are ign
   assert.equal(env.parent.querySelector('.ce-roomui'), null);
 });
 
+test('host transfer selects an eligible player and keeps its native selector stable across roster updates', (t) => {
+  const commands = [];
+  const env = setup({ admin: (args) => commands.push(args) }); t.after(env.cleanup);
+  const session = { roomCode: 'HOSTCODE', roomId: 'room', playerId: 'host', seat: 1, isAdmin: true };
+  env.ui.update({ session, players: [
+    { playerId: 'host', seat: 1, connected: true },
+    { playerId: 'player-2', seat: 2, connected: true },
+    { playerId: 'player-3', seat: 3, connected: true },
+  ] });
+  env.ui.open();
+  const target = env.parent.querySelector('select[name="new-host"]');
+  const transfer = env.parent.querySelector('[data-action="admin-transfer"]');
+  assert.ok(target, 'host transfer has an accessible native recipient selector');
+  assert.equal(target.getAttribute('aria-label'), 'New host');
+  assert.deepEqual([...target.options].map((option) => [option.value, option.textContent]), [['player-2', 'Player 2'], ['player-3', 'Player 3']]);
+  assert.equal(target.value, 'player-2', 'the first eligible player is the default target');
+  assert.equal(target.disabled, false);
+  assert.equal(transfer.disabled, false);
+
+  target.focus(); target.value = 'player-3';
+  env.ui.update({ players: [
+    { playerId: 'host', seat: 1, connected: true },
+    { playerId: 'player-2', seat: 2, connected: true },
+    { playerId: 'player-3', seat: 3, connected: true },
+  ] });
+  assert.equal(env.parent.querySelector('select[name="new-host"]'), target);
+  assert.equal(env.dom.window.document.activeElement, target);
+  assert.equal(target.value, 'player-3');
+  transfer.click();
+  assert.deepEqual(commands.at(-1), { type: 'transfer', playerId: 'player-3' });
+
+  env.ui.update({ players: [
+    { playerId: 'host', seat: 1, connected: true },
+    { playerId: 'player-2', seat: 2, connected: true },
+  ] });
+  assert.equal(target.value, 'player-2', 'a removed selection falls back to a current eligible player');
+  assert.equal(transfer.disabled, false);
+  env.ui.update({ players: [{ playerId: 'host', seat: 1, connected: true }, { playerId: 'player-2', seat: 2, connected: false }] });
+  assert.equal(target.disabled, true);
+  assert.equal(transfer.disabled, true);
+  transfer.click();
+  assert.equal(commands.length, 1, 'no stale or empty target is sent');
+  env.ui.update({ session: { ...session, isAdmin: false }, players: [
+    { playerId: 'host', seat: 1, connected: true }, { playerId: 'player-2', seat: 2, connected: true },
+  ] });
+  assert.equal(env.parent.querySelector('[data-admin-section]').hidden, true, 'host controls disappear when this player loses the role');
+  assert.equal(transfer.disabled, true, 'losing admin cannot leave a usable transfer action');
+  transfer.click();
+  assert.equal(commands.length, 1, 'role loss cannot send an already selected target');
+});
+
 test('unavailable endpoint gets a plain status instead of a fake hosted URL', (t) => {
   const env = setup(); t.after(env.cleanup);
   env.ui.update({ available: false }); env.ui.open();

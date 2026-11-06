@@ -1,4 +1,4 @@
-import { MULTIPLAYER_VEHICLE_SLOTS } from './vehicle-instances.mjs';
+import { MULTIPLAYER_VEHICLE_SLOTS } from './vehicle-instances.mjs?v=1.6.187';
 import { installFleetAsset } from '../fleet-assets.js';
 import { configureVehiclePresentation, updateVehiclePresentation } from '../vehicle-presentation.js';
 

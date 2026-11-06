@@ -52,6 +52,7 @@ export function createRoomUi({ parent = document.body, callbacks = {}, onOpenCha
     .ce-roomui-invite { display:grid; grid-template-columns:minmax(0,1fr) auto; gap:8px; }
     .ce-roomui-admin { display:grid; grid-template-columns:1fr 1fr; gap:7px; }
     .ce-roomui-admin .ce-roomui-btn { padding:0 7px; }
+    .ce-roomui-transfer-target { grid-column:1 / -1; display:grid; gap:6px; }
     .ce-roomui-busy { opacity:.8; }
     @media (max-width:540px) { .ce-roomui { width:min(310px,calc(100vw - 20px)); left:max(10px,env(safe-area-inset-left)); top:max(10px,env(safe-area-inset-top)); } .ce-roomui-panel { max-height:min(var(--rui-available-height,65vh),520px); padding:12px; } }
     @media (max-height:440px) and (orientation:landscape) { .ce-roomui { top:max(6px,env(safe-area-inset-top)); } .ce-roomui-toggle { min-height:44px; } .ce-roomui-panel { margin-top:5px; max-height:var(--rui-available-height,calc(100dvh - 58px)); padding:10px; } .ce-roomui-head { margin-bottom:7px; } .ce-roomui-section { margin-top:8px; padding-top:8px; } }
@@ -224,9 +225,21 @@ export function createRoomUi({ parent = document.body, callbacks = {}, onOpenCha
     const grid = el('div', 'ce-roomui-admin');
     const lock = button('Lock room', 'admin-lock', 'ce-roomui-btn', () => run('admin', { type: lock.dataset.lockType }));
     const rotate = button('Rotate code', 'admin-rotate', 'ce-roomui-btn', () => run('admin', { type: 'rotate' }));
-    const transfer = button('Hand over host', 'admin-transfer', 'ce-roomui-btn', () => run('admin', { type: 'transfer' }));
+    const transferTargetWrap = el('div', 'ce-roomui-transfer-target');
+    const transferTargetLabel = el('label', 'ce-roomui-label', 'New host');
+    transferTargetLabel.htmlFor = 'ce-roomui-new-host';
+    const transferTarget = el('select', 'ce-roomui-select', undefined, { name: 'new-host' });
+    transferTarget.id = 'ce-roomui-new-host'; transferTarget.setAttribute('aria-label', 'New host');
+    transferTargetWrap.append(transferTargetLabel, transferTarget);
+    const transfer = button('Hand over host', 'admin-transfer', 'ce-roomui-btn', () => {
+      const playerId = transferTarget.value;
+      const currentSession = state.session;
+      const eligible = eligibleTransferTargets(state.players, currentSession?.playerId);
+      if (currentSession?.isAdmin !== true || !eligible.some((player) => player.playerId === playerId)) return;
+      run('admin', { type: 'transfer', playerId });
+    });
     const closeRoom = button('Close room', 'admin-close', 'ce-roomui-btn ce-roomui-btn--danger', () => run('admin', { type: 'close' }));
-    grid.append(lock, rotate, transfer, closeRoom);
+    grid.append(transferTargetWrap, lock, rotate, transfer, closeRoom);
     const kicks = [];
     for (let seat = 1; seat <= 8; seat += 1) {
       const kick = button(`Remove Player ${seat}`, 'admin-kick', 'ce-roomui-btn', () => run('admin', { type: 'kick', playerId: kick.dataset.playerId }));
@@ -245,7 +258,7 @@ export function createRoomUi({ parent = document.body, callbacks = {}, onOpenCha
       }
     }); leaveButton.dataset.request = 'true'; leave.append(leaveButton); fragment.append(leave);
     content.replaceChildren(fragment); view = 'session';
-    sessionView = { key: sessionKey(session), yourLine, playerList: list, invite, inviteInput, vehicleSection, vehicleSelect, admin, lock, kicks };
+    sessionView = { key: sessionKey(session), yourLine, playerList: list, invite, inviteInput, vehicleSection, vehicleSelect, admin, lock, transferTarget, transfer, kicks };
   }
   function patchSession(session) {
     if (!sessionView || sessionView.key !== sessionKey(session)) buildSession(session);
@@ -285,12 +298,29 @@ export function createRoomUi({ parent = document.body, callbacks = {}, onOpenCha
     const locked = Boolean(state.locked);
     view.lock.textContent = locked ? 'Unlock room' : 'Lock room';
     view.lock.dataset.lockType = locked ? 'unlock' : 'lock';
+    const eligibleTargets = eligibleTransferTargets(players, session.playerId);
+    const previousTarget = view.transferTarget.value;
+    view.transferTarget.replaceChildren(...eligibleTargets.map((player) => el('option', '', `Player ${player.seat}`, { value: player.playerId })));
+    const selectedTarget = eligibleTargets.find((player) => player.playerId === previousTarget) ?? eligibleTargets[0];
+    view.transferTarget.value = selectedTarget?.playerId ?? '';
+    view.transferTarget.disabled = !selectedTarget;
+    view.transfer.disabled = !selectedTarget || session.isAdmin !== true;
     for (const kick of view.kicks) {
       const player = players.find((entry) => Number(entry?.seat) === Number(kick.dataset.seat));
       const canKick = Boolean(player?.playerId && player.playerId !== session.playerId && session.isAdmin === true);
       kick.hidden = !canKick;
       kick.dataset.playerId = canKick ? String(player.playerId) : '';
     }
+  }
+  function eligibleTransferTargets(players, ownerPlayerId) {
+    const byId = new Map();
+    for (const player of Array.isArray(players) ? players : []) {
+      const playerId = String(player?.playerId ?? '');
+      const seat = Number(player?.seat);
+      if (!playerId || playerId === String(ownerPlayerId ?? '') || player.connected === false || !Number.isInteger(seat) || seat < 1 || seat > 8) continue;
+      if (!byId.has(playerId)) byId.set(playerId, { playerId, seat });
+    }
+    return [...byId.values()].sort((a, b) => a.seat - b.seat);
   }
   function render() {
     if (disposed) return;

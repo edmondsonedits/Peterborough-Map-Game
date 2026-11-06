@@ -1,5 +1,5 @@
-import { PROTOCOL_VERSION, validateSnapshot } from './protocol.mjs';
-import { DEFAULT_PLAYER_TUNING, DEFAULT_VEHICLE_TUNING, stepVehicle, stepWalking } from './movement-core.mjs';
+import { PROTOCOL_VERSION, validateSnapshot } from './protocol.mjs?v=1.6.187';
+import { DEFAULT_PLAYER_TUNING, DEFAULT_VEHICLE_TUNING, stepVehicle, stepWalking } from './movement-core.mjs?v=1.6.187';
 
 const STEP_MS = 1000 / 30;
 const SUBSTEP_SECONDS = 1 / 60;
@@ -334,16 +334,20 @@ export function createClientRuntime({
     return state();
   }
   function subscribe(fn) { if (typeof fn !== 'function') throw new TypeError('listener must be a function'); listeners.add(fn); return () => listeners.delete(fn); }
-  function dispose() { if (disposed) return; disposed = true; pending = []; clearBuffers(); vehicleCatalog.clear(); listeners.clear(); try { transport.dispose?.(); } catch {} publish(); }
+  let removeDisconnectListener = () => {};
+  function dispose() { if (disposed) return; disposed = true; removeDisconnectListener(); pending = []; clearBuffers(); vehicleCatalog.clear(); listeners.clear(); try { transport.dispose?.(); } catch {} publish(); }
   if (transport.onSnapshot) transport.onSnapshot(applySnapshot);
   if (transport.onQueueAck) transport.onQueueAck((ack) => emit('queue-acceptance', { ...ack, simulated: false }));
   if (transport.onActionResult) transport.onActionResult((result) => emit('action-result', result));
   if (transport.onAdminCredential) transport.onAdminCredential((credential) => emit('admin-credential', { credential }));
-  if (transport.onDisconnect) transport.onDisconnect((info) => {
+  const handleDisconnect = (info) => {
+    if (disposed) return;
     pending = [];
     if (authoritative) simulation = { ...authoritative, pose: clonePose(authoritative.pose) };
     emit('disconnected', info ?? {}); publish();
-  });
+  };
+  if (transport.addDisconnectListener) removeDisconnectListener = transport.addDisconnectListener(handleDisconnect);
+  else if (transport.onDisconnect) transport.onDisconnect(handleDisconnect);
   return Object.freeze({ sendInput, sendAction, applySnapshot, sampleRemote, sampleRemoteActor, resetBaseline, advanceFrame, subscribe, dispose, getState: state,
     get authoritativePose() { return authoritative ? clonePose(authoritative.pose) : null; },
     get simulationPose() { return simulation ? clonePose(simulation.pose) : null; },

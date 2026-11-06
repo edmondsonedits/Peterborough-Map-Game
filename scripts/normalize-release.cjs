@@ -149,4 +149,18 @@ for (const file of ['city-explorer/app.js','city-explorer/station-one-runtime.js
   const assetImport = /(\.\/assets\/(?:station1|station2|station3|stations|ems-armour|ems-clonsilla|building-reconstruction)\/[^'"?]+\.(?:glb|json))(?:\?v=[^"']*)?(?=["'])/g;
   write(file, read(file).replace(assetImport, `$1?v=${VERSION}`));
 }
+// Multiplayer browser modules share one release identity, including the movement
+// core imported by single-player. Server modules and pinned vendor files are excluded.
+const multiplayerDir = 'city-explorer/multiplayer';
+const multiplayerModules = fs.readdirSync(path.join(root, multiplayerDir))
+  .filter(name => name.endsWith('.mjs')).map(name => multiplayerDir + '/' + name);
+const multiplayerSharedModules = ['road-wheel-contact.js', 'apparatus-collision.mjs', 'station-one-core.mjs', 'station-two-core.mjs', 'station-three-bay.mjs', 'road-tile-pack.js'].map(name => 'city-explorer/' + name);
+const multiplayerTargets = new Set([...multiplayerModules, ...multiplayerSharedModules].map(file => path.resolve(root, file)));
+for (const file of ['city-explorer/app.js', 'city-explorer/gameplay-systems.js', ...multiplayerModules, ...multiplayerSharedModules]) {
+  const source = read(file).replace(/(['"])(\.{1,2}\/[^'"?]+\.(?:mjs|js))(?:\?v=[^'"]*)?\1/g, (match, quote, target) => {
+    if (!multiplayerTargets.has(path.resolve(root, path.dirname(file), target))) return match;
+    return quote + target + '?v=' + VERSION + quote;
+  });
+  write(file, source);
+}
 console.log(`Normalized GitHub Pages artifact to v${VERSION}.`);

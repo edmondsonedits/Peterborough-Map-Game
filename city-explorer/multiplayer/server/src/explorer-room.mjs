@@ -160,7 +160,7 @@ export function createExplorerSession({ world, vehicles = [], spawn, clock = Dat
     adminCredential = next;
     adminCredentialHash = digest(next);
     adminPlayerId = targetPlayerId;
-    if (targetPlayerId) privateEvents.push({ type: 'admin-credential', playerId: targetPlayerId, credential: next });
+    if (targetPlayerId) privateEvents.push({ type: 'admin-credential', playerId: targetPlayerId, credential: next, roomCode, locked });
     return next;
   }
 

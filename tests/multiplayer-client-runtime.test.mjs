@@ -23,6 +23,25 @@ function harness(options = {}) {
     interpolationDelayMs: options.interpolationDelayMs ?? 0, onEvent: (event) => events.push(event) });
   return { runtime, transport, sent, events, setTime: (value) => { time = value; }, tickTime: (delta = 33.333) => { time += delta; return time; } };
 }
+
+test('disposing runtime removes its disconnect listener and ignores a late callback', () => {
+  const disconnectListeners = new Set(), events = [];
+  let published = 0, savedListener;
+  const transport = {
+    sendInput: () => true, sendAction: () => true,
+    addDisconnectListener(listener) { savedListener = listener; disconnectListeners.add(listener); return () => disconnectListeners.delete(listener); },
+    dispose() {},
+  };
+  const runtime = createClientRuntime({ transport, world, onState: () => { published++; }, onEvent: event => events.push(event) });
+  assert.equal(disconnectListeners.size, 1);
+  runtime.dispose();
+  assert.equal(disconnectListeners.size, 0);
+  const afterDispose = published;
+  savedListener({ code: 4001, reconnecting: false });
+  for (const listener of disconnectListeners) listener({ code: 4001, reconnecting: false });
+  assert.equal(published, afterDispose);
+  assert.equal(events.some(event => event.type === 'disconnected'), false);
+});
 function move(state, controls, onFoot = true) {
   let value = { ...state };
   for (let n = 0; n < 2; n += 1) value = onFoot ? stepWalking(value, controls, 1 / 60, world) : stepVehicle(value, controls, 1 / 60, world, DEFAULT_VEHICLE_TUNING);

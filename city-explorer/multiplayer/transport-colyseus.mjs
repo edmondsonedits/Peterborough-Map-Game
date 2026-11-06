@@ -28,6 +28,7 @@ export function createColyseusTransport({
   if (typeof fetchImpl !== 'function') throw new TypeError('fetch is unavailable');
   const base = new URL(serverUrl, globalThis.location?.href ?? 'http://localhost/');
   const callbacks = { onStatus, onSnapshot, onQueueAck, onActionResult, onAdminCredential, onDisconnect };
+  const disconnectListeners = new Set();
   let currentRoom = null, client = null, session = null, reconnecting = false, disposed = false, intentionalClose = false, generation = 0;
   let queuedAcks = [], sentMessageTimes = [];
   const pendingJoinCancels = new Set();
@@ -35,7 +36,7 @@ export function createColyseusTransport({
   function advanceGeneration() { generation += 1; cancelPendingJoins(); return generation; }
 
   const status = (value, detail = {}) => { try { callbacks.onStatus({ status: value, ...detail }); } catch {} };
-  const emitDisconnect = (detail = {}) => { try { callbacks.onDisconnect(detail); } catch {} };
+  const emitDisconnect = (detail = {}) => { try { callbacks.onDisconnect(detail); } catch {} for (const listener of disconnectListeners) try { listener(detail); } catch {} };
   async function request(path, method = 'GET', body, timeoutMs = 8_000) {
     const controller = new AbortController();
     let timer;
@@ -111,10 +112,11 @@ export function createColyseusTransport({
       } catch {}
     });
     room.onMessage('admin-credential', (value) => {
-      if (typeof value?.credential !== 'string') return;
+      if (typeof value?.credential !== 'string' || disposed || currentRoom !== room || session !== ownerSession || expectedGeneration !== generation) return;
       session.adminCredential = value.credential; session.isAdmin = true;
-      try { callbacks.onAdminCredential(value.credential); } catch {}
-      status('connected', { session: safeSession() });
+      if (typeof value.roomCode === 'string') session.roomCode = value.roomCode;
+      try { callbacks.onAdminCredential(value.credential, value); } catch {}
+      status('connected', { session: safeSession(), ...(typeof value.locked === 'boolean' ? { locked: value.locked } : {}) });
     });
     room.onLeave((code) => { if (currentRoom !== room) return; currentRoom = null; client = null; queuedAcks = []; sentMessageTimes = []; handleUnexpectedLeave(code, expectedGeneration); });
     room.onError?.((code, message) => status('error', { code, message: String(message ?? 'WebSocket error').slice(0, 200) }));
@@ -197,10 +199,13 @@ export function createColyseusTransport({
     const owner = session;
     const ownerGeneration = generation;
     const result = await request(`/api/rooms/${encodeURIComponent(session.roomId)}/admin`, 'POST', { credential: session.adminCredential, command });
-    if (command?.type === 'transfer' && session === owner && generation === ownerGeneration) {
-      session.adminCredential = null;
-      session.isAdmin = false;
-      status('connected', { session: safeSession() });
+    if (session === owner && generation === ownerGeneration) {
+      if (typeof result.roomCode === 'string') session.roomCode = result.roomCode;
+      if (command?.type === 'transfer') {
+        session.adminCredential = null;
+        session.isAdmin = false;
+      }
+      status('connected', { session: safeSession(), ...(typeof result.locked === 'boolean' ? { locked: result.locked } : {}) });
     }
     return result;
   }
@@ -219,6 +224,7 @@ export function createColyseusTransport({
   }
   function dispose() {
     disposed = true; intentionalClose = true; advanceGeneration(); reconnecting = false;
+    disconnectListeners.clear();
     const room = currentRoom; currentRoom = null; client = null;
     queuedAcks = []; sentMessageTimes = [];
     try { room?.leave(); } catch {}
@@ -227,6 +233,7 @@ export function createColyseusTransport({
   return Object.freeze({ directory, createRoom, joinRoom, admin, leave, dispose, sendInput, sendAction,
     onSnapshot(fn) { callbacks.onSnapshot = fn; }, onQueueAck(fn) { callbacks.onQueueAck = fn; }, onActionResult(fn) { callbacks.onActionResult = fn; },
     onAdminCredential(fn) { callbacks.onAdminCredential = fn; }, onDisconnect(fn) { callbacks.onDisconnect = fn; },
+    addDisconnectListener(fn) { if (typeof fn !== 'function') throw new TypeError('disconnect listener must be a function'); disconnectListeners.add(fn); return () => disconnectListeners.delete(fn); },
     onStatus(fn) { callbacks.onStatus = fn; }, getSession: safeSession,
     canSendInput, get connected() { return Boolean(currentRoom); },
   });

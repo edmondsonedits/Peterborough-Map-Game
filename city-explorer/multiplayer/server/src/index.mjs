@@ -59,7 +59,7 @@ function sendAdminEvents(session, room, playerIds) {
     const client = room?.clients.find((entry) => entry.userData?.playerId === playerId);
     if (!client || !room.subscribed?.has(playerId)) continue;
     const events = session.takePrivateEvents(playerId);
-    for (const event of events) client.send('admin-credential', { credential: event.credential });
+    for (const event of events) client.send('admin-credential', { credential: event.credential, roomCode: event.roomCode, locked: event.locked });
   }
 }
 

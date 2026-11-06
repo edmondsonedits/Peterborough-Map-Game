@@ -37,12 +37,20 @@ jobs:
           node-version: 22
 
       - name: Normalize production release
-        run: node scripts/normalize-release.cjs
+        run: |
+          node scripts/normalize-release.cjs
+          node tools/export-multiplayer-world.mjs
+          git diff --exit-code -- city-explorer/multiplayer/world-data
 
       - name: Check structured location report state and UI
         run: |
           npm ci --prefix tools/location-report-tests --ignore-scripts --no-audit
           node --test tests/feedback-model.test.mjs tests/feedback-demo-requests.test.mjs tests/feedback-workflow.test.mjs tests/feedback-agent-tools.test.mjs tests/feedback-transfer.test.mjs tests/location-report-model.test.mjs tests/location-circle.test.mjs tests/geo-location-report.test.cjs tests/location-report-ui.test.mjs tests/location-report-flow.test.mjs
+
+      - name: Check multiplayer authority and client regressions
+        run: |
+          npm ci --prefix city-explorer/multiplayer/server --ignore-scripts --no-audit
+          node --test tests/multiplayer-*.test.mjs tests/road-gzip-normalization.test.mjs
 
       - name: Check gameplay regressions
         run: |
@@ -107,7 +115,10 @@ jobs:
             --exclude 'tools/' \
             --exclude 'scripts/' \
             --exclude 'test-artifacts/' \
-            --exclude 'artifacts/'
+            --exclude 'artifacts/' \
+            --exclude 'node_modules/' \
+            --exclude '.superpowers/' \
+            --exclude '/city-explorer/multiplayer/server/'
           test -f _site/index.html
           test -f _site/city-explorer/index.html
           test -f _site/response-simulator/index.html
@@ -122,6 +133,8 @@ jobs:
           test ! -e _site/scripts
           test ! -e _site/test-artifacts
           test ! -e _site/artifacts
+          test ! -e _site/.superpowers
+          test ! -e _site/city-explorer/multiplayer/server
           node -e "const fs=require('node:fs'); for(const city of fs.readdirSync('cities')) { const file='cities/'+city+'/training-data.json'; if(!fs.existsSync(file)) continue; const data=JSON.parse(fs.readFileSync(file)); for(const asset of [file,data.roadsUrl,'shared/ems-priority.js']) if(!fs.existsSync('_site/'+asset)) throw Error('Missing published training asset: '+asset); }"
 
       - name: Configure Pages
