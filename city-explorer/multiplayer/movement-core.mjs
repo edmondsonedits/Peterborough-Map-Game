@@ -10,7 +10,7 @@ export function directionFromHeading(heading){return{x:-Math.sin(heading),z:-Mat
 export const DEFAULT_PLAYER_TUNING=Object.freeze({
   walkSpeed: 1.6,
   runSpeed: 3.8,
-  sprintSpeed: 5.4,
+  sprintSpeed: 5.9,
   accelerationResponse: 13,
   brakingResponse: 18,
   rotationResponse: 15,

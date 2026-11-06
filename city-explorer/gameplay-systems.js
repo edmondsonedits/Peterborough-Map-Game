@@ -32,14 +32,13 @@ export const FIRE_STATION_ONE = Object.freeze({
 export const PLAYER_TUNING = DEFAULT_PLAYER_TUNING;
 export const TRUCK_TUNING = DEFAULT_VEHICLE_TUNING;
 
+
 export function gameplayAxesFromKeys(keys) {
   const pressed = (code) => Boolean(keys?.has?.(code));
   return {
     forward: Number(pressed('KeyW') || pressed('ArrowUp')) - Number(pressed('KeyS') || pressed('ArrowDown')),
     strafe: Number(pressed('KeyD') || pressed('ArrowRight')) - Number(pressed('KeyA') || pressed('ArrowLeft')),
     steering: Number(pressed('KeyA') || pressed('ArrowLeft')) - Number(pressed('KeyD') || pressed('ArrowRight')),
-    running: Boolean(pressed('ShiftLeft') || pressed('ShiftRight')),
-    sprinting: Boolean(pressed('KeyR')),
   };
 }
 

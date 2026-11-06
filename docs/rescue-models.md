@@ -1,6 +1,6 @@
 # Reference-inspired rescue actors
 
-The city explorer loads Blender-authored assets for the playable firefighter and pumper. Both retain procedural fallbacks when loading or validation fails. City readiness awaits both attempts. The firefighter walks at 1.6 m/s, runs at 3.8 m/s with Shift, and sprints at 5.4 m/s while holding R and moving. On touch, push the joystick to its outer edge to sprint.
+The city explorer loads Blender-authored assets for the playable firefighter and pumper. Both retain procedural fallbacks when loading or validation fails. City readiness awaits both attempts. On PC, tap Shift while moving to cycle through walking at 1.6 m/s, running at 3.8 m/s, and sprinting at 5.9 m/s. Releasing movement resets to a walk. On touch, pull the joystick farther to progress from walk to run to sprint.
 
 The firefighter retains the CC0 MakeHuman anatomical head, textured skin, eyes, brows and hair. The original turnout uniform has corrected charcoal fabric albedo so its folds, seams and pockets remain visible, refined reflective/leather materials and overlapping glove cuffs. A 19-bone weighted skeleton bends the elbows, knees, wrists and ankles, with pelvis/spine counter-motion and an articulated head. Four original clips cover idle, walk, run, and sprint. Sprint uses a longer stride, faster cadence, stronger arm swing, and more forward lean. Three.js blends the clips at a shared stride phase using actual movement after collision checks, so pushing into an obstacle settles to idle.
 

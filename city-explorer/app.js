@@ -219,6 +219,7 @@ const CITY = {
 };
 
 const els = {
+  movementJoystick: document.getElementById('movement-joystick'),
   app: document.querySelector('#app'),
   stationThreeDoor: document.querySelector('#station3-door-control'),
   stationThreeMobileDoor: document.querySelector('#station3-mobile-door'),
@@ -618,6 +619,8 @@ const surveyPointer = new THREE.Vector2();
 let cityEditor = null;
 let playerHeading = Math.PI;
 let playerSpeed = 0;
+const playerGaits = ['walk', 'run', 'sprint'];
+let keyboardGaitIndex = 0;
 const playerVelocity = new THREE.Vector3();
 const gameplayCameraTarget = new THREE.Vector3();
 const gameplayDesiredCamera = new THREE.Vector3();
@@ -6200,7 +6203,10 @@ function endMapPointer(event) {
 
 function stopFlyMotion(clearKeys = true) {
   velocity.set(0, 0, 0);
-  if (clearKeys) state.keys.clear();
+  if (clearKeys) {
+    state.keys.clear();
+    keyboardGaitIndex = 0;
+  }
 }
 
 function updateFlyHint() {
@@ -6286,11 +6292,11 @@ function syncGameplayRootClasses() {
 }
 
 function updateGameplayHint() {
-  if(multiplayer?.active){els.modeHint.innerHTML='<strong>Multiplayer.</strong> WASD or arrows move · Shift runs · R sprints · E enters or exits a nearby vehicle · L toggles lights while driving.';return;}
+  if(multiplayer?.active){els.modeHint.innerHTML='<strong>Multiplayer.</strong> WASD or arrows move · tap Shift while moving to cycle walk, run, sprint · E enters or exits a nearby vehicle · L toggles lights while driving.';return;}
   const number = FIRE_STATION_ONE.number;
   const doorHint = [1,2,3].includes(number) ? ' · G opens/closes the front bay door aligned with the truck' : '';
   if (state.mode === 'onFoot') {
-    els.modeHint.innerHTML = `<strong>On foot at Fire Station ${number}.</strong> WASD or arrows move · Shift runs · R sprints · mouse looks · E enters the fire truck${doorHint} · F free camera.`;
+    els.modeHint.innerHTML = `<strong>On foot at Fire Station ${number}.</strong> WASD or arrows move · tap Shift to cycle walk, run, sprint · mouse looks · E enters the fire truck${doorHint} · F free camera.`;
   } else if (state.mode === 'driving') {
     els.modeHint.innerHTML = `<strong>Driving ${fleetRuntime?.fleet.active.definition.name||`Pump ${number}`}.</strong> W/S throttle and brake · A/D steer · E exits when stopped · C camera · L emergency lights${doorHint}.`;
   }
@@ -7203,6 +7209,13 @@ function cycleGameplayCameraDistance() {
 function currentGameplayAxes(delta) {
   const modalOpen=Boolean(document.querySelector('dialog[open]'));
   const keyboard = gameplayAxesFromKeys(modalOpen ? null : state.keys);
+  if (!keyboard.forward && !keyboard.strafe) keyboardGaitIndex = 0;
+  const touchGait = els.movementJoystick?.dataset.gait;
+  const onFootGait = state.mode === 'onFoot' && !modalOpen
+    ? touchGait || playerGaits[keyboardGaitIndex]
+    : 'walk';
+  keyboard.running = onFootGait === 'run';
+  keyboard.sprinting = onFootGait === 'sprint';
   const pads = navigator.getGamepads?.() || [];
   const gamepad = Array.from(pads).find((candidate) => candidate?.connected && candidate.mapping === 'standard')
     || Array.from(pads).find((candidate) => candidate?.connected);
@@ -8701,10 +8714,21 @@ function wireEvents() {
       activateSemanticSurveyMode(!semanticSurveyActive);
       event.preventDefault();
     }
-    if (isFlyControlCode(event.code) || (state.mode === 'onFoot' && event.code === 'KeyR' && !event.ctrlKey && !event.altKey && !event.metaKey)) state.keys.add(event.code);
+    if (state.mode === 'onFoot' && !event.repeat && !event.ctrlKey && !event.altKey && !event.metaKey &&
+        (event.code === 'ShiftLeft' || event.code === 'ShiftRight')) {
+      const { forward, strafe } = gameplayAxesFromKeys(state.keys);
+      if (forward || strafe) keyboardGaitIndex = (keyboardGaitIndex + 1) % playerGaits.length;
+    }
+    if (isFlyControlCode(event.code)) state.keys.add(event.code);
     if (isFlyControlCode(event.code) || ['Space', 'ArrowUp', 'ArrowDown', 'ArrowLeft', 'ArrowRight'].includes(event.code)) event.preventDefault();
   });
-  window.addEventListener('keyup',(event)=>{if(!multiplayer?.active)aerialRuntime?.releaseKey(event.code);if(!cityEditor?.active)state.keys.delete(event.code);});
+  window.addEventListener('keyup', (event) => {
+    if (!multiplayer?.active) aerialRuntime?.releaseKey(event.code);
+    if (cityEditor?.active) return;
+    state.keys.delete(event.code);
+    const { forward, strafe } = gameplayAxesFromKeys(state.keys);
+    if (!forward && !strafe) keyboardGaitIndex = 0;
+  });
   window.addEventListener('blur', () => { stopFlyMotion(); endCanvasLook(); });
   window.addEventListener('pagehide', () => { multiplayer?.dispose();citySplatLayer?.dispose(); cityEditor?.dispose();void roadTileLayer?.dispose(); }, { once: true });
   document.addEventListener('visibilitychange', () => {
