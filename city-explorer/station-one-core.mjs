@@ -1,7 +1,7 @@
 import {
   stationTruckSpawn, stationLocalToWorld, stationWorldToLocal,
   createDoorState, toggleDoor, stepDoorState,
-} from './station-two-core.mjs?v=1.6.191';
+} from './station-two-core.mjs?v=1.6.192';
 
 const clamp = (value, min, max) => Math.max(min, Math.min(max, value));
 const smoothstep = (a, b, value) => {

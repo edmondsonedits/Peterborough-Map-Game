@@ -1,5 +1,5 @@
-import { PROTOCOL_VERSION, validateSnapshot } from './protocol.mjs?v=1.6.191';
-import { DEFAULT_PLAYER_TUNING, DEFAULT_VEHICLE_TUNING, stepVehicle, stepWalking } from './movement-core.mjs?v=1.6.191';
+import { PROTOCOL_VERSION, validateSnapshot } from './protocol.mjs?v=1.6.192';
+import { DEFAULT_PLAYER_TUNING, DEFAULT_VEHICLE_TUNING, stepVehicle, stepWalking } from './movement-core.mjs?v=1.6.192';
 
 const STEP_MS = 1000 / 30;
 const SUBSTEP_SECONDS = 1 / 60;

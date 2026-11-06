@@ -1,7 +1,7 @@
-import { createRoomUi } from './room-ui.mjs?v=1.6.191';
-import { createClientRuntime } from './client-runtime.mjs?v=1.6.191';
-import { createColyseusTransport } from './transport-colyseus.mjs?v=1.6.191';
-import { loadWorldCollision } from './world-collision.mjs?v=1.6.191';
+import { createRoomUi } from './room-ui.mjs?v=1.6.192';
+import { createClientRuntime } from './client-runtime.mjs?v=1.6.192';
+import { createColyseusTransport } from './transport-colyseus.mjs?v=1.6.192';
+import { loadWorldCollision } from './world-collision.mjs?v=1.6.192';
 
 const loopback = host => ['localhost', '127.0.0.1', '[::1]', '::1'].includes(host);
 export function resolveMultiplayerServerUrl(pageUrl, configuredUrl, queryValue) {
@@ -90,7 +90,14 @@ export function createMultiplayerIntegration({ parent, pageUrl = location.href, 
         if (transport !== activeTransport) return;
         if (event.type === 'world-version-mismatch') onMessage('Multiplayer world version differs from this map. Reload the page.');
         if (event.type === 'action-result' && event.ok === false) {
-          const message = `Action unavailable: ${event.reason || 'server rejected it'}`;
+          const reason = event.error || event.reason;
+          const explanations = {
+            'target-world-unready': 'The road near that vehicle is loading. Try again in a moment.',
+            'vehicle-occupied': 'All four seats in that vehicle are occupied.',
+            'stale-epoch-or-sequence': 'Your vehicle state changed. Try again.',
+            'vehicle-out-of-range-or-moving': 'Move closer and wait for the vehicle to stop.',
+          };
+          const message = explanations[reason] ?? `Action unavailable: ${reason || 'server rejected it'}`;
           onMessage(message); update({ message });
         }
       },
