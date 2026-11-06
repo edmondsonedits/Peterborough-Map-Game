@@ -465,6 +465,25 @@ export function createExplorerSession({ world, vehicles = [], spawn, clock = Dat
   function runAction(player, action) {
     const currentVehicleId = ownership.vehicleOf(player.playerId);
     const target = vehiclesById.get(action.vehicleId);
+    // Explicit vehicle-list selection is not the proximity-based E-key interaction.
+    // The server alone owns teleports and transfers; a claimed target never changes hands.
+    if (action.type === 'selectVehicle') {
+      if (!target) return freezeResult(false, 'unknown-vehicle');
+      if (currentVehicleId === target.id) return freezeResult(true, null, { vehicleId: target.id });
+      if (!isWorldReady(target.pose, Math.max(2, target.dimensions.length / 2))) return freezeResult(false, 'target-world-unready');
+      const change = currentVehicleId
+        ? ownership.switch(player.playerId, currentVehicleId, target.id)
+        : ownership.claim(player.playerId, target.id);
+      if (!change.ok) return freezeResult(false, change.reason);
+      if (currentVehicleId) {
+        const previous = vehiclesById.get(currentVehicleId);
+        stopVehicle(previous);
+        previous.entityGeneration += 1;
+      }
+      stopVehicle(target);
+      target.entityGeneration += 1;
+      return freezeResult(true, null, { vehicleId: target.id, ...resetPrediction(player) });
+    }
     if (action.type === 'enterVehicle') {
       if (currentVehicleId) return freezeResult(false, 'already-driving');
       if (!target) return freezeResult(false, 'unknown-vehicle');

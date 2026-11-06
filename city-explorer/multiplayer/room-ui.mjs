@@ -225,8 +225,11 @@ export function createRoomUi({ parent = document.body, callbacks = {}, onOpenCha
     const vehicleSection = section('Vehicle'); vehicleSection.dataset.vehicleSection = 'true';
     const vehicleSelect = el('select', 'ce-roomui-select', undefined, { name: 'vehicle' });
     vehicleSelect.setAttribute('aria-label', 'Choose a vehicle');
-    vehicleSelect.addEventListener('change', () => run('selectVehicle', { vehicleId: vehicleSelect.value }, 'Vehicle selected.'));
-    vehicleSection.append(vehicleSelect); fragment.append(vehicleSection);
+    vehicleSelect.addEventListener('change', () => {
+      if (vehicleSelect.value) void run('selectVehicle', { vehicleId: vehicleSelect.value }, 'Vehicle request sent…');
+    });
+    vehicleSection.append(el('p', 'ce-roomui-copy', 'Choose an available vehicle to enter it anywhere on the map.'), vehicleSelect);
+    fragment.append(vehicleSection);
 
     const admin = section('Host controls'); admin.dataset.adminSection = 'true';
     const grid = el('div', 'ce-roomui-admin');
@@ -292,14 +295,16 @@ export function createRoomUi({ parent = document.body, callbacks = {}, onOpenCha
     view.vehicleSection.hidden = vehicles.length === 0;
     const oldSelection = view.vehicleSelect.value;
     const preserveUserSelection = doc.activeElement === view.vehicleSelect;
-    const desired = preserveUserSelection ? oldSelection : (state.selectedVehicleId ?? session.vehicleId ?? oldSelection);
-    view.vehicleSelect.replaceChildren(...vehicles.map((vehicle) => {
-      const option = el('option', '', vehicle.label || vehicle.name || vehicle.id, { value: String(vehicle.id) });
+    const desired = preserveUserSelection ? oldSelection : (state.selectedVehicleId ?? session.vehicleId ?? '');
+    const placeholder = el('option', '', 'Select a vehicle…', { value: '' });
+    placeholder.disabled = true;
+    view.vehicleSelect.replaceChildren(placeholder, ...vehicles.map((vehicle) => {
+      const name = vehicle.label || vehicle.name || vehicle.id;
+      const option = el('option', '', vehicle.occupiedByOther ? `${name} · In use` : name, { value: String(vehicle.id) });
       option.disabled = vehicle.available === false;
       return option;
     }));
-    if (vehicles.some((vehicle) => String(vehicle.id) === String(desired) && vehicle.available !== false)) view.vehicleSelect.value = String(desired);
-    else if (vehicles.length) view.vehicleSelect.value = String(vehicles.find((vehicle) => vehicle.available !== false)?.id ?? vehicles[0].id);
+    view.vehicleSelect.value = vehicles.some((vehicle) => String(vehicle.id) === String(desired) && vehicle.available !== false) ? String(desired) : '';
 
     view.admin.hidden = session.isAdmin !== true;
     const locked = Boolean(state.locked);

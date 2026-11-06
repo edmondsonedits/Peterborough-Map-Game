@@ -1,7 +1,7 @@
-import { createRoomUi } from './room-ui.mjs?v=1.6.188';
-import { createClientRuntime } from './client-runtime.mjs?v=1.6.188';
-import { createColyseusTransport } from './transport-colyseus.mjs?v=1.6.188';
-import { loadWorldCollision } from './world-collision.mjs?v=1.6.188';
+import { createRoomUi } from './room-ui.mjs?v=1.6.189';
+import { createClientRuntime } from './client-runtime.mjs?v=1.6.189';
+import { createColyseusTransport } from './transport-colyseus.mjs?v=1.6.189';
+import { loadWorldCollision } from './world-collision.mjs?v=1.6.189';
 
 const loopback = host => ['localhost', '127.0.0.1', '[::1]', '::1'].includes(host);
 export function resolveMultiplayerServerUrl(pageUrl, configuredUrl, queryValue) {
@@ -73,11 +73,23 @@ export function createMultiplayerIntegration({ parent, pageUrl = location.href, 
         const players = [state.snapshot.player, ...state.snapshot.players].map(player => ({ ...player, playerId: player.id,
           seat: Number(player.name?.match(/^Player ([1-8])$/)?.[1]) || null,
           isAdmin: player.id === session?.playerId && Boolean(session?.isAdmin) }));
-        const vehicles = state.snapshot.vehicles.map(vehicle => ({ id: vehicle.id, label: vehicle.id.replace(/-/g, ' ').replace(/\b\w/g, c => c.toUpperCase()), available: !vehicle.driverPlayerId }));
+        const vehicles = state.snapshot.vehicles.map(vehicle => ({
+          id: vehicle.id,
+          label: vehicle.id.replace(/-/g, ' ').replace(/\b\w/g, c => c.toUpperCase()),
+          available: !vehicle.driverPlayerId || vehicle.driverPlayerId === state.snapshot.player.id,
+          occupiedByOther: Boolean(vehicle.driverPlayerId && vehicle.driverPlayerId !== state.snapshot.player.id),
+        }));
         const signature = JSON.stringify([players.map(player => [player.id, player.entityGeneration]), vehicles.map(vehicle => [vehicle.id, vehicle.available]), session?.isAdmin, state.mode, state.vehicleId]);
         if (signature !== lastViewSignature) { lastViewSignature = signature; update({ players, vehicles, session: session ? { ...session, vehicleId: state.vehicleId, connectionStatus } : null, selectedVehicleId: state.vehicleId }); }
       },
-      onEvent: event => { if (transport !== activeTransport) return; if (event.type === 'world-version-mismatch') onMessage('Multiplayer world version differs from this map. Reload the page.'); if (event.type === 'action-result' && event.ok === false) onMessage(`Action unavailable: ${event.reason || 'server rejected it'}`); },
+      onEvent: event => {
+        if (transport !== activeTransport) return;
+        if (event.type === 'world-version-mismatch') onMessage('Multiplayer world version differs from this map. Reload the page.');
+        if (event.type === 'action-result' && event.ok === false) {
+          const message = `Action unavailable: ${event.reason || 'server rejected it'}`;
+          onMessage(message); update({ message });
+        }
+      },
     });
     return transport;
   }
@@ -126,7 +138,15 @@ export function createMultiplayerIntegration({ parent, pageUrl = location.href, 
     finally { if (oldRuntime) oldRuntime.dispose(); else leaving?.dispose(); }
   }
   async function admin(command) { if (!transport || !session) throw new Error('Join a room first'); const active = transport, roomId = session.roomId; const result = await active.admin(command); if (transport !== active || session?.roomId !== roomId) return result; session = active.getSession(); update({ session: { ...session, ...(result.roomCode ? { roomCode: result.roomCode } : {}), connectionStatus }, ...(typeof result.locked === 'boolean' ? { locked: result.locked } : {}) }); return result; }
-  function selectVehicle({ vehicleId }) { return sendAction({ type: runtime?.getState().vehicleId ? 'switchVehicle' : 'enterVehicle', vehicleId }); }
+  function selectVehicle({ vehicleId }) {
+    const snapshot = runtime?.latestSnapshot;
+    if (!session || !snapshot) return { error: true, message: 'Join a room before selecting a vehicle.' };
+    const target = snapshot.vehicles.find(vehicle => vehicle.id === vehicleId);
+    if (!target) return { error: true, message: 'That vehicle is no longer available.' };
+    if (target.driverPlayerId && target.driverPlayerId !== snapshot.player.id) return { error: true, message: 'That vehicle already has a driver.' };
+    if (runtime.getState().vehicleId === vehicleId) return { error: true, message: 'You are already driving that vehicle.' };
+    return sendAction({ type: 'selectVehicle', vehicleId }) || { error: true, message: 'Vehicle request could not be sent.' };
+  }
   function sendAction(action) { if (!runtime || !session) return false; return runtime.sendAction(action); }
   function frame(deltaMs, controls) { if (!entered || !runtime) return null; return runtime.advanceFrame(deltaMs, controls); }
   function dispose() { if (disposed) return; disposed = true; releaseLocal(); ui.dispose(); placement.remove(); }

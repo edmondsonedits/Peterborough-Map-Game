@@ -462,3 +462,40 @@ test('reconnecting creator rotates and privately reissues admin credential only 
   room.command(grant.credential, { type: 'lock' });
   assert.equal(reconnected.playerId, creator.playerId);
 });
+
+test('vehicle-list selection boards a distant parked vehicle while E-key entry remains proximity bound', () => {
+  const { room } = harness();
+  const player = room.join({ code: room.roomCode, ip: '127.0.0.1' });
+  assert.equal(room.receive(player.playerId, action(player, 1, 'enterVehicle', 'truck_2', 'remote-e')).ok, false);
+  const result = room.receive(player.playerId, action(player, 2, 'selectVehicle', 'truck_2', 'remote-list'));
+  assert.equal(result.ok, true);
+  const snapshot = room.snapshotFor(player.playerId);
+  assert.equal(snapshot.player.vehicleId, 'truck_2');
+  assert.equal(snapshot.player.mode, 'driving');
+  assert.equal(snapshot.player.pose.x, 30);
+  assert.equal(snapshot.player.pose.z, 30);
+  assert.equal(snapshot.epoch, player.epoch + 1);
+  assert.equal(snapshot.ackInputSequence, 0);
+  assert.equal(snapshot.vehicles.find(v => v.id === 'truck_2').driverPlayerId, player.playerId);
+  assert.equal(room.receive(player.playerId, action(player, 3, 'selectVehicle', 'truck_1', 'stale-list')).ok, false);
+});
+
+test('vehicle-list transfer is atomic at any distance and stops the abandoned vehicle', () => {
+  const { room } = harness({ vehicleSpeed: 4 });
+  const first = room.join({ code: room.roomCode, ip: '127.0.0.1' });
+  const second = room.join({ code: room.roomCode, ip: '127.0.0.1' });
+  assert.equal(room.receive(first.playerId, action(first, 1, 'enterVehicle', 'truck_1', 'board')).ok, true);
+  const epoch = room.snapshotFor(first.playerId).epoch;
+  assert.equal(room.receive(first.playerId, action({ ...first, epoch }, 1, 'selectVehicle', 'truck_2', 'remote-transfer')).ok, true);
+  const snapshot = room.snapshotFor(first.playerId);
+  assert.equal(snapshot.player.vehicleId, 'truck_2');
+  const old = snapshot.vehicles.find(v => v.id === 'truck_1');
+  assert.equal(old.driverPlayerId, null);
+  assert.equal(old.pose.speed, 0);
+  assert.equal(old.pose.vx, 0);
+  assert.equal(old.pose.vz, 0);
+  assert.equal(snapshot.vehicles.find(v => v.id === 'truck_2').driverPlayerId, first.playerId);
+  assert.equal(room.receive(second.playerId, action(second, 1, 'selectVehicle', 'truck_2', 'occupied')).ok, false);
+  assert.equal(room.snapshotFor(second.playerId).player.vehicleId, null);
+  assert.equal(room.receive(second.playerId, action(second, 2, 'enterVehicle', 'truck_1', 'nearby-e')).ok, true);
+});
