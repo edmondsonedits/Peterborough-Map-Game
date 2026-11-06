@@ -2,10 +2,10 @@ import test from 'node:test';
 import assert from 'node:assert/strict';
 import { createExplorerWorld } from '../city-explorer/multiplayer/server/src/world-config.mjs';
 
-test('real server config has nine unique collision-free instances and eight finite player spawns', async () => {
+test('real server config has ten unique collision-free instances and eight finite player spawns', async () => {
   const { world, vehicles, spawn } = await createExplorerWorld();
-  assert.equal(vehicles.length, 9);
-  assert.equal(new Set(vehicles.map(vehicle => vehicle.id)).size, 9);
+  assert.equal(vehicles.length, 10);
+  assert.equal(new Set(vehicles.map(vehicle => vehicle.id)).size, 10);
   assert.equal(vehicles.filter(vehicle => vehicle.templateId === 'pump-1').length, 4);
   const station = world.stations.find(value => value.number === 1);
   const rescue = vehicles.find(vehicle => vehicle.id === 'rescue-1');
@@ -13,6 +13,12 @@ test('real server config has nine unique collision-free instances and eight fini
   const lateral = dx * Math.cos(station.yaw) - dz * Math.sin(station.yaw);
   assert.ok(Math.abs(lateral - Math.max(...station.layout.frontDoorCenters)) < 0.001);
   assert.equal(rescue.pose.heading, station.yaw);
+  const car = vehicles.find(vehicle => vehicle.id === 'car-1');
+  const carLateral = (car.pose.x - station.anchor.x) * Math.cos(station.yaw)
+    - (car.pose.z - station.anchor.z) * Math.sin(station.yaw);
+  assert.ok(Math.abs(carLateral - Math.min(...station.layout.frontDoorCenters)) < 0.001);
+  assert.equal(car.pose.heading, station.yaw);
+  assert.deepEqual(car.tuning, vehicles.find(vehicle => vehicle.id === 'medi').tuning);
   for (const vehicle of vehicles) {
     assert.ok(world.readyAt(vehicle.pose.x, vehicle.pose.z, vehicle.tuning.length / 2));
     assert.equal(world.blocks(vehicle.pose, vehicle.pose, { kind: 'vehicle', dimensions: vehicle.dimensions }), false);

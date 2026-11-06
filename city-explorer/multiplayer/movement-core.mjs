@@ -1,4 +1,4 @@
-import { sampleTruckWheelContacts, truckIsOnRoad } from '../road-wheel-contact.js?v=1.6.194';
+import { sampleTruckWheelContacts, truckIsOnRoad } from '../road-wheel-contact.js?v=1.6.195';
 const clamp=(value,min,max)=>Math.max(min,Math.min(max,value));
 const finite=(value,fallback=0)=>Number.isFinite(Number(value))?Number(value):fallback;
 const normalizeAngle=value=>((value+Math.PI)%(2*Math.PI)+2*Math.PI)%(2*Math.PI)-Math.PI;

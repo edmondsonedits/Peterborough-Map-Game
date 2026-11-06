@@ -3,18 +3,19 @@ import assert from 'node:assert/strict';
 import {createVehicleFleet,FLEET_DEFINITIONS} from '../city-explorer/vehicle-fleet.mjs';
 import {stepFireTruckKinematics} from '../city-explorer/gameplay-systems.js';
 
-test('six independent vehicles retain exact poses across selections and fresh fleets reset',()=>{
+test('seven independent vehicles retain exact poses across selections and fresh fleets reset',()=>{
   const spawns=Object.fromEntries(FLEET_DEFINITIONS.map((v,i)=>[v.id,{x:i*30,z:4,y:2,heading:.5}]));
   const fleet=createVehicleFleet(spawns);
   fleet.select('pump-1');Object.assign(fleet.active.state,{x:180,z:-240,heading:1.3});
-  for(const id of ['pump-2','pump-3','aerial','medi','rescue-1','pump-1'])fleet.select(id);
+  for(const id of ['pump-2','pump-3','aerial','medi','car-1','rescue-1','pump-1'])fleet.select(id);
   assert.equal(fleet.active.state.x,180);assert.equal(fleet.active.state.z,-240);
-  assert.equal(fleet.active.state.heading,1.3);assert.equal(fleet.vehicles.length,6);
+  assert.equal(fleet.active.state.heading,1.3);assert.equal(fleet.vehicles.length,7);
   assert.equal(createVehicleFleet(spawns).active.state.x,0);
   assert.throws(()=>fleet.select('bogus'),/Unknown vehicle/);
 });
 test('medi tuning is faster and accelerates harder; pumper defaults unchanged',()=>{
   const by=id=>FLEET_DEFINITIONS.find(v=>v.id===id).tuning;
+  assert.deepEqual(by('car-1'), by('medi'));
   assert.equal(by('pump-1').maximumForwardSpeed,27.5);
   assert.ok(by('medi').maximumForwardSpeed>by('pump-1').maximumForwardSpeed);
   assert.ok(by('medi').forwardAcceleration>by('pump-1').forwardAcceleration);

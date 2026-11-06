@@ -8,8 +8,8 @@ import { addStationArchitecturalDetails } from './station-architecture.js';
 */
 
 import { installWorldSurfaceDetail } from './vertical-slice-quality.js?v=1.5.6-material2';
-import { stepVehicleKinematics, DEFAULT_PLAYER_TUNING, DEFAULT_VEHICLE_TUNING } from './multiplayer/movement-core.mjs?v=1.6.194';
-export { exponentialStep, wrapAngle, dampAngle, headingFromDirection, directionFromHeading } from './multiplayer/movement-core.mjs?v=1.6.194';
+import { stepVehicleKinematics, DEFAULT_PLAYER_TUNING, DEFAULT_VEHICLE_TUNING } from './multiplayer/movement-core.mjs?v=1.6.195';
+export { exponentialStep, wrapAngle, dampAngle, headingFromDirection, directionFromHeading } from './multiplayer/movement-core.mjs?v=1.6.195';
 
 export const FIRE_STATION_ONE = Object.freeze({
   id: 'peterborough-fire-station-1',

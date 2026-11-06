@@ -110,7 +110,7 @@ test('multiplayer pumpers inherit the same pumper steering profile as single-pla
   readyAt:()=>true, sampleSurface:()=>({height:0}), blocks:()=>false,
  };
  const slots=createMultiplayerVehicleInstances(world);
- assert.equal(slots.length,9);
+ assert.equal(slots.length,10);
  for(const truck of slots.filter(v=>v.id.startsWith('pump-') || v.id === 'rescue-1')){
   assert.equal(truck.tuning.steeringLowSpeed,byId('pump-1').steeringLowSpeed);
   assert.equal(truck.tuning.steeringResponse,byId('pump-1').steeringResponse);
