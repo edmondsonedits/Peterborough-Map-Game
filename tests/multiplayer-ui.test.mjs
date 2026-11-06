@@ -220,3 +220,21 @@ test('roster and status updates keep the focused vehicle selector and current se
   assert.match(seatTwo.textContent, /Not connected/);
   assert.equal(seatTwo.getAttribute('aria-label'), 'Player 2, Not connected');
 });
+
+test('vehicle list starts with a placeholder and choosing the first option sends selection from on foot', async (t) => {
+  const selections = [];
+  const env = setup({ selectVehicle: (details) => { selections.push(details); return { requestId: 'selection-sent' }; } });
+  t.after(env.cleanup);
+  const session = { roomCode: 'CODE', roomId: 'r1', playerId: 'p1', seat: 1, epoch: 2, isAdmin: false, vehicleId: null };
+  env.ui.update({ session, players: [{ playerId: 'p1', seat: 1 }], vehicles: [
+    { id: 'pump-1', label: 'Pump 1', available: true }, { id: 'pump-2', label: 'Pump 2', available: false, occupiedByOther: true },
+  ] });
+  env.ui.open();
+  const select = env.parent.querySelector('select[name="vehicle"]');
+  assert.equal(select.value, '', 'on-foot player must not be preassigned to first vehicle');
+  assert.equal(select.querySelector('option[value="pump-2"]').disabled, true);
+  select.value = 'pump-1';
+  select.dispatchEvent(new env.dom.window.Event('change', { bubbles: true }));
+  await Promise.resolve();
+  assert.deepEqual(selections, [{ vehicleId: 'pump-1' }]);
+});
