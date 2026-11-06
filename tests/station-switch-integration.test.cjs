@@ -1,25 +1,27 @@
 'use strict';
 const test=require('node:test'),assert=require('node:assert/strict'),fs=require('node:fs'),path=require('node:path'),vm=require('node:vm');
 const source=fs.readFileSync(path.join(__dirname,'..','city-explorer','app.js'),'utf8');
+const helperStart=source.indexOf('async function loadStationRuntimeWithRoads('),helperEnd=source.indexOf('\nfunction maybeLoadNearbyStationRuntime()',helperStart);
 const start=source.indexOf('async function prepareStationSwitch('),end=source.indexOf('\nfunction syncStationControls()',start);
-assert.ok(start>=0&&end>start,'prepareStationSwitch source range must be found');
+assert.ok(helperStart>=0&&helperEnd>helperStart&&start>helperEnd&&end>start,'station loading and switch source ranges must be found');
 
-function harness({number=2,roadTileLayer=null,runtimeLoad=async()=>true,ready=()=>true,spawnPoints}={}){
+function harness({number=2,roadTileLayer=null,runtimeLoad=async()=>true,runtimeReady=true,ready=()=>true,spawnPoints}={}){
  const station={number,lat:44,lon:-78};
- const runtime={playerSpawn:{x:21,z:22},spawn:{x:31,z:32},load:runtimeLoad};
+ const runtime={isReady:()=>runtimeReady,playerSpawn:{x:21,z:22},spawn:{x:31,z:32,anchor:{x:31,z:32}},load:runtimeLoad};
  const scenery=[],stationThreeCalls=[];
  const c=vm.createContext({
   FIRE_STATIONS:[{number:1,lat:1,lon:1},{number:2,lat:2,lon:2}].filter(value=>value.number!==number).concat(station),
   stationTransitionTarget:{x:90,z:91,protection:{protectX:1,protectZ:2,protectRadius:3}},
   cityEditor:{active:false},roadTileLayer,
   waitForStationTask:async task=>await task,
+  stationRuntimeLoadPromises:new Map(),
   ensureStationRuntime:()=>runtime,
   stationThreeSpawnPoints:value=>{stationThreeCalls.push(value);return spawnPoints;},
   loadStationThreeModel:async()=>{},placeStationThreeModel(){},stationThreeAssetReady:true,stationThreeModel:{},
   citySceneryReadyAt:(x,z)=>{scenery.push([x,z]);return ready(x,z);},progressiveCityStatus:{phase:'ready'},
   performance:{now:()=>0},setTimeout,clearTimeout,console,
  });
- vm.runInContext(source.slice(start,end)+'\nthis.prepareStationSwitch=prepareStationSwitch;',c);
+ vm.runInContext(source.slice(helperStart,helperEnd)+'\n'+source.slice(start,end)+'\nthis.prepareStationSwitch=prepareStationSwitch;',c);
  return{prepare:c.prepareStationSwitch,station,runtime,scenery,stationThreeCalls,c};
 }
 
@@ -45,7 +47,7 @@ test('Station 3 checks road and scenery coverage at exact interior spawn coordin
 test('a target model finishing after supersession rejects before the commit stage',async()=>{
  let resolveLoad,current=true,commits=0;
  const load=new Promise(resolve=>{resolveLoad=resolve;});
- const h=harness({runtimeLoad:()=>load});
+ const h=harness({runtimeReady:false,runtimeLoad:()=>load});
  const attempt=h.prepare(2,{isCurrent:()=>current}).then(prepared=>{commits++;return prepared;});
  await Promise.resolve();current=false;resolveLoad(true);
  await assert.rejects(attempt,/superseded/i);
