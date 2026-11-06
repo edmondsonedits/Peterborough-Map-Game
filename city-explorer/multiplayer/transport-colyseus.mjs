@@ -21,19 +21,24 @@ async function loadSdk(injected) {
 /** HTTP lifecycle and reliable WebSocket transport. Credentials stay in this instance's memory and POST bodies. */
 export function createColyseusTransport({
   serverUrl, fetchImpl = globalThis.fetch?.bind(globalThis), sdk = null, reconnect = true,
-  now = () => Date.now(), maxReconnectMs = 24_000, joinTimeoutMs = 5_000, onStatus = () => {}, onSnapshot = () => {},
+  now = () => Date.now(), maxReconnectMs = 24_000, joinTimeoutMs = 5_000,
+  warmupTimeoutMs = null, warmupProbeTimeoutMs = 3_000, warmupRetryMs = 250,
+  onStatus = () => {}, onSnapshot = () => {},
   onQueueAck = () => {}, onActionResult = () => {}, onAdminCredential = () => {}, onDisconnect = () => {},
 } = {}) {
   if (!serverUrl) throw new TypeError('serverUrl is required');
   if (typeof fetchImpl !== 'function') throw new TypeError('fetch is unavailable');
   const base = new URL(serverUrl, globalThis.location?.href ?? 'http://localhost/');
+  const readinessBudgetMs = warmupTimeoutMs ?? (/\.onrender\.com$/i.test(base.hostname) ? 75_000 : 0);
+  const warmupNow = () => globalThis.performance?.now?.() ?? Date.now();
   const callbacks = { onStatus, onSnapshot, onQueueAck, onActionResult, onAdminCredential, onDisconnect };
   const disconnectListeners = new Set();
-  let currentRoom = null, client = null, session = null, reconnecting = false, disposed = false, intentionalClose = false, generation = 0;
+  let currentRoom = null, client = null, session = null, reconnecting = false, disposed = false, intentionalClose = false, generation = 0, warmupController = null, warmupPromise = null;
+  const pendingRoomOperations = new Set();
   let queuedAcks = [], sentMessageTimes = [];
   const pendingJoinCancels = new Set();
   function cancelPendingJoins() { for (const cancel of [...pendingJoinCancels]) cancel(); pendingJoinCancels.clear(); }
-  function advanceGeneration() { generation += 1; cancelPendingJoins(); return generation; }
+  function advanceGeneration() { generation += 1; warmupPromise = null; warmupController?.abort(); cancelPendingJoins(); return generation; }
 
   const status = (value, detail = {}) => { try { callbacks.onStatus({ status: value, ...detail }); } catch {} };
   const emitDisconnect = (detail = {}) => { try { callbacks.onDisconnect(detail); } catch {} for (const listener of disconnectListeners) try { listener(detail); } catch {} };
@@ -52,30 +57,127 @@ export function createColyseusTransport({
       return payload;
     } finally { clearTimeout(timer); }
   }
+  async function ensureServerReady() {
+    if (!readinessBudgetMs || currentRoom) return;
+    if (warmupPromise) return warmupPromise;
+    const expectedGeneration = generation;
+    const pending = (async () => {
+      const deadline = warmupNow() + Math.max(1, readinessBudgetMs);
+      let delayMs = Math.max(1, warmupRetryMs);
+      let lastError = null;
+      status('waking', { retryInMs: delayMs });
+      while (!disposed && expectedGeneration === generation && warmupNow() < deadline) {
+        const controller = new AbortController();
+        warmupController = controller;
+        let timer;
+        const aborted = new Promise((_, reject) => controller.signal.addEventListener('abort', () => reject(new Error('connection superseded')), { once: true }));
+        try {
+          const remaining = Math.max(1, deadline - warmupNow());
+          const probe = (async () => {
+            const response = await fetchImpl(new URL('/healthz', base), { method: 'GET', headers: { accept: 'application/json' }, cache: 'no-store', signal: controller.signal });
+            let payload = null;
+            try { payload = await response.json(); } catch {}
+            return response.ok && payload?.status === 'ready' && typeof payload.worldVersion === 'string';
+          })();
+          const ready = await Promise.race([probe, aborted, new Promise((_, reject) => {
+            timer = setTimeout(() => { controller.abort(); reject(new Error('readiness probe timed out')); }, Math.max(1, Math.min(warmupProbeTimeoutMs, remaining)));
+          })]);
+          if (disposed || expectedGeneration !== generation) throw new Error('connection superseded');
+          if (ready) { status('server-ready'); return; }
+          lastError = new Error('health check did not confirm a ready world');
+        } catch (error) {
+          if (disposed || expectedGeneration !== generation) throw new Error('connection superseded');
+          lastError = error;
+        } finally {
+          clearTimeout(timer);
+          if (warmupController === controller) warmupController = null;
+        }
+        const remaining = deadline - warmupNow();
+        if (remaining <= 0) break;
+        const retryInMs = Math.min(delayMs, remaining);
+        status('waking', { retryInMs, error: String(lastError?.message ?? 'server is starting').slice(0, 160) });
+        await sleep(retryInMs);
+        if (disposed || expectedGeneration !== generation) throw new Error('connection superseded');
+        delayMs = Math.min(2_000, Math.round(delayMs * 1.7));
+      }
+      throw new Error('Multiplayer server is still waking up. Try again shortly.');
+    })();
+    warmupPromise = pending;
+    try { await pending; }
+    finally { if (warmupPromise === pending) warmupPromise = null; }
+  }
   function safeSession() {
     if (!session) return null;
     const { roomCode, roomId, playerId, seat, name, epoch, isAdmin } = session;
     return { roomCode: roomCode ?? null, roomId, playerId, seat, name, epoch, isAdmin: Boolean(isAdmin) };
   }
-  async function directory() { return request('/api/directory'); }
+  async function directory() {
+    const expectedGeneration = generation;
+    await ensureServerReady();
+    if (disposed || expectedGeneration !== generation) throw new Error('connection superseded');
+    return request('/api/directory');
+  }
+  function cancelWarmup() {
+    if (!warmupPromise && !pendingRoomOperations.size) return false;
+    for (const operation of pendingRoomOperations) operation.cancelled = true;
+    advanceGeneration(); status('cancelled'); return true;
+  }
+  async function closeCancelledRoom(created) {
+    if (created?.roomId && created?.adminCredential) {
+      await request(`/api/rooms/${encodeURIComponent(created.roomId)}/admin`, 'POST', { credential: created.adminCredential, command: { type: 'close' } }).catch(() => {});
+    }
+  }
   async function createRoom() {
     if (session) throw new Error('Leave the current room before creating another');
-    const created = await request('/api/rooms', 'POST', {});
-    session = { roomCode: created.roomCode, roomId: created.roomId, adminCredential: created.adminCredential, isAdmin: true };
+    const expectedGeneration = generation;
+    const operation = { cancelled: false };
+    pendingRoomOperations.add(operation);
+    let created;
     try {
-      const joined = await request('/api/join', 'POST', { code: created.roomCode, adminCredential: created.adminCredential });
-      Object.assign(session, joined, { roomId: created.roomId });
-      await connect();
-      return safeSession();
-    } catch (error) { if (session?.playerCredential) await leave().catch(() => {}); session = null; throw error; }
+      await ensureServerReady();
+      if (operation.cancelled || disposed || expectedGeneration !== generation) throw new Error('connection superseded');
+      created = await request('/api/rooms', 'POST', {});
+      if (operation.cancelled || disposed || expectedGeneration !== generation) {
+        await closeCancelledRoom(created);
+        throw new Error('connection superseded');
+      }
+      session = { roomCode: created.roomCode, roomId: created.roomId, adminCredential: created.adminCredential, isAdmin: true };
+      try {
+        const joined = await request('/api/join', 'POST', { code: created.roomCode, adminCredential: created.adminCredential });
+        if (operation.cancelled || disposed) {
+          if (joined?.playerCredential) await request(`/api/rooms/${encodeURIComponent(created.roomId)}/leave`, 'POST', { playerCredential: joined.playerCredential }).catch(() => {});
+          session = null; await closeCancelledRoom(created);
+          throw new Error('connection superseded');
+        }
+        Object.assign(session, joined, { roomId: created.roomId });
+        await connect();
+        return safeSession();
+      } catch (error) {
+        if (session?.playerCredential) await leave().catch(() => {});
+        session = null;
+        if (operation.cancelled || disposed) await closeCancelledRoom(created);
+        throw error;
+      }
+    } finally { pendingRoomOperations.delete(operation); }
   }
   async function joinRoom(code, roomId = null) {
     if (session) throw new Error('Leave the current room before joining another');
     if (typeof code !== 'string' || !code.trim()) throw new TypeError('room code is required');
-    const joined = await request('/api/join', 'POST', { code: code.trim().toUpperCase(), ...(roomId ? { roomId } : {}) });
-    session = { ...joined, isAdmin: false };
-    try { await connect(); return safeSession(); }
-    catch (error) { if (session?.playerCredential) await leave().catch(() => {}); session = null; throw error; }
+    const expectedGeneration = generation;
+    const operation = { cancelled: false };
+    pendingRoomOperations.add(operation);
+    try {
+      await ensureServerReady();
+      if (operation.cancelled || disposed || expectedGeneration !== generation) throw new Error('connection superseded');
+      const joined = await request('/api/join', 'POST', { code: code.trim().toUpperCase(), ...(roomId ? { roomId } : {}) });
+      if (operation.cancelled || disposed || expectedGeneration !== generation) {
+        if (joined?.playerCredential && joined?.roomId) await request(`/api/rooms/${encodeURIComponent(joined.roomId)}/leave`, 'POST', { playerCredential: joined.playerCredential }).catch(() => {});
+        throw new Error('connection superseded');
+      }
+      session = { ...joined, isAdmin: false };
+      try { await connect(); return safeSession(); }
+      catch (error) { if (session?.playerCredential) await leave().catch(() => {}); session = null; throw error; }
+    } finally { pendingRoomOperations.delete(operation); }
   }
   async function joinSocket(playerCredential, expectedGeneration = generation, ownerSession = session, timeoutMs = joinTimeoutMs) {
     status('loading-sdk', { session: safeSession() });
@@ -230,7 +332,7 @@ export function createColyseusTransport({
     try { room?.leave(); } catch {}
     session = null; status('disposed');
   }
-  return Object.freeze({ directory, createRoom, joinRoom, admin, leave, dispose, sendInput, sendAction,
+  return Object.freeze({ directory, createRoom, joinRoom, admin, leave, dispose, cancelWarmup, sendInput, sendAction,
     onSnapshot(fn) { callbacks.onSnapshot = fn; }, onQueueAck(fn) { callbacks.onQueueAck = fn; }, onActionResult(fn) { callbacks.onActionResult = fn; },
     onAdminCredential(fn) { callbacks.onAdminCredential = fn; }, onDisconnect(fn) { callbacks.onDisconnect = fn; },
     addDisconnectListener(fn) { if (typeof fn !== 'function') throw new TypeError('disconnect listener must be a function'); disconnectListeners.add(fn); return () => disconnectListeners.delete(fn); },

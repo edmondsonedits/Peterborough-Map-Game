@@ -100,6 +100,12 @@ export function createRoomUi({ parent = document.body, callbacks = {}, onOpenCha
   function updateStatus(message = '', isError = false) { status.textContent = message; status.dataset.error = isError ? 'true' : 'false'; }
   function setBusy(flag) { root.classList.toggle('ce-roomui-busy', Boolean(flag)); root.querySelectorAll('[data-request]').forEach((item) => { item.disabled = Boolean(flag); }); }
   function current(request) { return !disposed && request === requestId; }
+  function updatePendingStatus() {
+    if (!activeRequest) return false;
+    if (typeof state.message === 'string' && state.message.startsWith('Starting multiplayer server')) updateStatus(state.message);
+    else if (status.textContent.startsWith('Starting multiplayer server')) updateStatus('Connecting…');
+    return true;
+  }
   async function run(name, args, successMessage = '') {
     const id = ++requestId;
     activeRequest = name;
@@ -142,6 +148,7 @@ export function createRoomUi({ parent = document.body, callbacks = {}, onOpenCha
   function close() {
     if (disposed || !isOpen) return;
     isOpen = false; panel.hidden = true; toggle.setAttribute('aria-expanded', 'false');
+    ++requestId; activeRequest = ''; setBusy(false); updateStatus('');
     onOpenChangeCall();
     const target = focusBeforeOpen && focusBeforeOpen !== doc.body && focusBeforeOpen !== doc.documentElement && focusBeforeOpen.isConnected ? focusBeforeOpen : toggle;
     target.focus?.({ preventScroll: true });
@@ -328,17 +335,17 @@ export function createRoomUi({ parent = document.body, callbacks = {}, onOpenCha
     count.textContent = session ? ` · ${state.players?.length || 1}/8` : '';
     if (state.available === false) {
       if (view !== 'unavailable') { content.replaceChildren(el('p', 'ce-roomui-copy', 'Multiplayer is not available yet.')); view = 'unavailable'; sessionView = null; }
-      if (!activeRequest) updateStatus(state.message || ''); return;
+      if (!updatePendingStatus()) updateStatus(state.message || ''); return;
     }
     if (session) {
       if (view !== 'session' || !sessionView || sessionView.key !== sessionKey(session)) buildSession(session);
       patchSession(session);
-      if (!activeRequest) updateStatus(state.message || state.connectionStatus || ''); return;
+      if (!updatePendingStatus()) updateStatus(state.message || state.connectionStatus || ''); return;
     }
     sessionView = null;
     if (view !== 'lobby') buildLobby();
     updateLobbyDirectory(state.rooms || []);
-    if (!activeRequest) updateStatus(state.message || '');
+    if (!updatePendingStatus()) updateStatus(state.message || '');
   }  function onRootClick(event) { event.stopPropagation(); }
   function onViewportEvent() { applyViewport(); }
   toggle.addEventListener('click', () => isOpen ? close() : open());

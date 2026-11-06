@@ -8,23 +8,26 @@ import assert from 'node:assert/strict';
 const count = Number(process.argv.find(value => value.startsWith('--players='))?.split('=')[1] ?? 8);
 assert.ok([2, 4, 8].includes(count), 'Use --players=2, 4, or 8');
 const output = process.argv.find(value => value.startsWith('--out='))?.slice(6);
-const config = await createExplorerWorld();
-const app = createExplorerServer({ ...config, nodeEnv: 'development' });
+const remote = process.argv.find(value => value.startsWith('--server='))?.slice(9);
+const origin = process.argv.find(value => value.startsWith('--origin='))?.slice(9);
+if (remote) { assert.equal(new URL(remote).protocol, 'https:'); assert.ok(origin, 'Remote checks require --origin=approved-frontend-origin'); }
+const config = remote ? { world: await (await fetch(remote + '/healthz')).json() } : await createExplorerWorld();
+const app = remote ? null : createExplorerServer({ ...config, nodeEnv: 'development' });
 const clients = [];
 let timer;
 const percentile = (values, fraction) => [...values].sort((a,b) => a-b)[Math.min(values.length-1, Math.floor(values.length*fraction))] ?? 0;
 try {
-  const address = await app.listen(0, '127.0.0.1');
-  const base = `http://127.0.0.1:${address.port}`;
+  const address = app ? await app.listen(0, '127.0.0.1') : null;
+  const base = remote || `http://127.0.0.1:${address.port}`;
   const post = async (route, body) => {
-    const response = await fetch(base+route, { method: 'POST', headers: { 'content-type': 'application/json' }, body: JSON.stringify(body) });
+    const response = await fetch(base+route, { method: 'POST', headers: { 'content-type': 'application/json', ...(origin ? { Origin: origin } : {}) }, body: JSON.stringify(body) });
     assert.ok(response.ok, `HTTP ${response.status} at ${route}`);
     return response.json();
   };
   const created = await post('/api/rooms', {});
   for (let i=0; i<count; i++) {
     const auth = await post('/api/join', { code: created.roomCode, ...(i===0 ? { adminCredential: created.adminCredential } : {}) });
-    const room = await new Client(base).joinById(auth.roomId, { playerCredential: auth.playerCredential });
+    const room = await new Client(base, origin ? { headers: { Origin: origin } } : undefined).joinById(auth.roomId, { playerCredential: auth.playerCredential });
     room.reconnection.enabled = false;
     const sample = { bytes: 0, snapshots: 0, gaps: [], lastAt: null, fullBaseline: false, compactSeen: false, lastAck: 0, firstTick: null, lastTick: null, firstTickAt: null, lastTickAt: null, errors: [] };
     const item = { room, auth, sample, sequence: 0 };
@@ -63,7 +66,7 @@ try {
   for (const { sample } of clients) { assert.ok(sample.fullBaseline && sample.compactSeen); assert.ok(sample.lastAck>0); assert.deepEqual(sample.errors, []); }
   const result={ players: count, worldVersion: config.world.worldVersion ?? config.world.version, seconds,
     clients: clients.map(({sample}) => ({ bytesPerSecond: Math.round(sample.bytes/seconds), snapshotsPerSecond: +(sample.snapshots/seconds).toFixed(1), gapP95Ms: +percentile(sample.gaps,.95).toFixed(1), maxGapMs: +Math.max(...sample.gaps).toFixed(1), simulationTicksPerSecond: +((sample.lastTick-sample.firstTick)/((sample.lastTickAt-sample.firstTickAt)/1000)).toFixed(1), simulatedInputAck: sample.lastAck })),
-    limitations: 'Local real-city Node/SDK test; no rendering, TLS overhead, network impairment, WAN or physical phones.' };
+    limitations: remote ? 'Remote Node/SDK check from one Internet connection; payload bytes exclude TLS overhead; no browser rendering, controlled impairment or physical phones.' : 'Local real-city Node/SDK test; no rendering, TLS overhead, network impairment, WAN or physical phones.' };
   for (const { auth } of clients) await post('/api/rooms/'+auth.roomId+'/leave', { playerCredential: auth.playerCredential });
   result.explicitHttpLeaves = clients.length;
   if(output) await writeFile(output,JSON.stringify(result,null,2)+'\n');
@@ -71,5 +74,5 @@ try {
 } finally {
   if(timer) clearInterval(timer);
   await Promise.allSettled(clients.map(({room})=>room.leave()));
-  await app.close();
+  await app?.close();
 }

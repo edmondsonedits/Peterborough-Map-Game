@@ -141,6 +141,34 @@ test('unavailable endpoint gets a plain status instead of a fake hosted URL', (t
   assert.doesNotMatch(env.parent.textContent, /https?:\/\//);
 });
 
+test('Render cold-start message is visible in the room drawer and clears when ready', (t) => {
+  const env = setup(); t.after(env.cleanup);
+  env.ui.open();
+  env.ui.update({ message: 'Starting multiplayer server… This can take about a minute.' });
+  assert.equal(env.parent.querySelector('.ce-roomui-status').textContent, 'Starting multiplayer server… This can take about a minute.');
+  env.ui.update({ message: '' });
+  assert.equal(env.parent.querySelector('.ce-roomui-status').textContent, '');
+});
+
+test('Render wake status temporarily replaces Connecting for in-flight create and join actions', async (t) => {
+  let finishCreate, finishJoin;
+  const env = setup({ createRoom: () => new Promise(resolve => { finishCreate = resolve; }), joinRoom: () => new Promise(resolve => { finishJoin = resolve; }) }); t.after(env.cleanup);
+  env.ui.open();
+  env.parent.querySelector('[data-action="create"]').click();
+  env.ui.update({ message: 'Starting multiplayer server… This can take about a minute.' });
+  assert.equal(env.parent.querySelector('.ce-roomui-status').textContent, 'Starting multiplayer server… This can take about a minute.');
+  env.ui.update({ message: '' });
+  assert.equal(env.parent.querySelector('.ce-roomui-status').textContent, 'Connecting…');
+  finishCreate({ message: 'Room created.' }); await Promise.resolve(); await Promise.resolve();
+  env.parent.querySelector('#ce-roomui-join-code').value = 'ROOM-2';
+  env.parent.querySelector('[data-action="join"]').click();
+  env.ui.update({ message: 'Starting multiplayer server… This can take about a minute.' });
+  assert.equal(env.parent.querySelector('.ce-roomui-status').textContent, 'Starting multiplayer server… This can take about a minute.');
+  env.ui.update({ message: '' });
+  assert.equal(env.parent.querySelector('.ce-roomui-status').textContent, 'Connecting…');
+  finishJoin({ message: 'Joined.' }); await Promise.resolve(); await Promise.resolve();
+});
+
 test('pending create and join actions stay busy across unrelated room state updates', async (t) => {
   let finishCreate, finishJoin;
   let creates = 0, joins = 0;

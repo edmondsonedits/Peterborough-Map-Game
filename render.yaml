@@ -1,0 +1,22 @@
+services:
+  - type: web
+    name: city-explorer-multiplayer
+    runtime: node
+    plan: free
+    region: ohio
+    rootDir: .
+    buildCommand: npm ci --prefix city-explorer/multiplayer/server --ignore-scripts --no-audit
+    startCommand: cd city-explorer/multiplayer/server && npm start
+    autoDeployTrigger: off
+    healthCheckPath: /healthz
+    envVars:
+      - key: NODE_ENV
+        value: production
+      - key: NODE_VERSION
+        value: 22.22.0
+      - key: HOST
+        value: 0.0.0.0
+      - key: EXPLORER_WORLD_CONFIG
+        value: ./src/world-config.mjs
+      - key: EXPLORER_ALLOWED_ORIGINS
+        value: https://edmondsonedits.github.io

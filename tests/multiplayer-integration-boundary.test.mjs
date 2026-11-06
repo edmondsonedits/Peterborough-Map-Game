@@ -8,22 +8,22 @@ import { readFile } from 'node:fs/promises';
 import { runInNewContext } from 'node:vm';
 
 function integrationHarness(onEnter = () => {}, transportLeave = async () => true) {
-  let callbacks, disconnect, disposed = 0, leaves = 0;
+  let callbacks, disconnect, transportStatus, panelChange, disposed = 0, leaves = 0, warmupCancels = 0;
   const uiState = {};
   const stateHandlers = [];
   const parent = { ownerDocument: { createElement: () => ({ textContent: '', remove() {} }) }, append() {} };
   const integration = createMultiplayerIntegration({ parent, pageUrl: 'http://127.0.0.1:4188/?multiplayerServer=http://127.0.0.1:2567',
     roadPackId: () => 'road-build', onEnter, onLeave: () => { leaves++; },
     factories: {
-      createRoomUi: ({ callbacks: handlers }) => { callbacks = handlers; return { update(next) { Object.assign(uiState, next); }, dispose() {} }; },
+      createRoomUi: ({ callbacks: handlers, onOpenChange }) => { callbacks = handlers; panelChange = onOpenChange; return { update(next) { Object.assign(uiState, next); }, dispose() {} }; },
       loadWorldCollision: async () => ({ manifest: { roadPack: { buildId: 'road-build' } }, worldVersion: 'world', stations: [{ anchor: { x: 0, z: 0 } }], prefetch: async () => {} }),
-      createTransport: ({ onDisconnect }) => { disconnect = onDisconnect; const room = { playerId: 'player', roomId: 'room' }; return {
-        createRoom: async () => room, getSession: () => room, admin: async command => { if (command.type === 'close') disconnect({ reconnecting: false, code: 4002 }); return { ok: true, locked: command.type === 'lock' }; }, leave: transportLeave, dispose() { disposed++; },
+      createTransport: ({ onDisconnect, onStatus }) => { disconnect = onDisconnect; transportStatus = onStatus; const room = { playerId: 'player', roomId: 'room' }; return {
+        directory: async () => [], createRoom: async () => room, getSession: () => room, admin: async command => { if (command.type === 'close') disconnect({ reconnecting: false, code: 4002 }); return { ok: true, locked: command.type === 'lock' }; }, leave: transportLeave, cancelWarmup() { warmupCancels++; transportStatus?.({ status: 'cancelled' }); }, dispose() { disposed++; },
       }; },
       createRuntime: ({ transport, onState }) => { stateHandlers.push(onState); return { latestSnapshot: { tick: 1 }, dispose() { transport.dispose(); } }; },
     },
   });
-  return { integration, uiState, emitState: (index, state) => stateHandlers[index](state), get callbacks() { return callbacks; }, disconnect: detail => disconnect(detail), get disposed() { return disposed; }, get leaves() { return leaves; } };
+  return { integration, uiState, emitState: (index, state) => stateHandlers[index](state), get callbacks() { return callbacks; }, disconnect: detail => disconnect(detail), status: detail => transportStatus(detail), get hasStatus() { return typeof transportStatus === 'function'; }, open: () => panelChange(true), close: () => panelChange(false), get warmupCancels() { return warmupCancels; }, get disposed() { return disposed; }, get leaves() { return leaves; } };
 }
 
 test('host lock and unlock results update the room control state', async () => {
@@ -89,6 +89,20 @@ test('terminal disconnect clears multiplayer while recoverable disconnect preser
   assert.equal(h.leaves, 1);
 });
 
+test('Render wake status is visible in lobby and closing it cancels warmup cleanly', async () => {
+  const h = integrationHarness();
+  h.open();
+  while (!h.hasStatus) await new Promise(resolve => setImmediate(resolve));
+  h.status({ status: 'waking' });
+  assert.equal(h.uiState.message, 'Starting multiplayer server… This can take about a minute.');
+  h.close();
+  assert.equal(h.warmupCancels, 1);
+  assert.equal(h.uiState.message, '');
+  h.status({ status: 'server-ready' });
+  assert.equal(h.uiState.message, '');
+  h.integration.dispose();
+});
+
 test('leaving during asynchronous activation invalidates its visual commit', async () => {
   let finish, visualCommitted = false;
   const gate = new Promise(resolve => { finish = resolve; });
@@ -139,6 +153,112 @@ test('selected room ID is carried with code and mismatched seat is never client-
   assert.deepEqual(bodies[0].body, { code: 'ABCDEFGH', roomId: 'wrong-room' });
   assert.equal(transport.getSession(), null);
   transport.dispose();
+});
+
+test('Render readiness is probed with bounded retries before a single room join POST', async () => {
+  const paths = [], statuses = [];
+  let probes = 0;
+  const ok = payload => ({ ok: true, status: 200, json: async () => payload });
+  const fetchImpl = async url => {
+    const path = new URL(url).pathname; paths.push(path);
+    if (path === '/healthz') {
+      probes++;
+      if (probes === 1) return { ok: false, status: 503, json: async () => ({ status: 'not-ready' }) };
+      if (probes === 2) return { ok: true, status: 200, json: async () => { throw new SyntaxError('HTML loading page'); } };
+      if (probes === 3) return { ok: true, status: 200, json: async () => new Promise(() => {}) };
+      return ok({ status: 'ready', worldVersion: 'world-v1' });
+    }
+    if (path === '/api/join') return ok({ roomId: 'room-a', playerId: 'a', seat: 1, name: 'Player 1', epoch: 1, playerCredential: 'a-token', reconnectCredential: 'a-reconnect' });
+    throw new Error(`unexpected path ${path}`);
+  };
+  class Client { async joinById() { return { connection: {}, onMessage() {}, onLeave() {}, send() {}, async leave() {} }; } }
+  const transport = createColyseusTransport({ serverUrl: 'https://city-explorer.onrender.com', fetchImpl, sdk: { Client }, warmupTimeoutMs: 1_000, warmupProbeTimeoutMs: 10, warmupRetryMs: 1, onStatus: detail => statuses.push(detail) });
+  await transport.joinRoom('ABCDEFGH');
+  assert.deepEqual(paths, ['/healthz', '/healthz', '/healthz', '/healthz', '/api/join']);
+  assert.ok(statuses.some(detail => detail.status === 'waking'));
+  assert.ok(statuses.some(detail => detail.status === 'server-ready'));
+  transport.dispose();
+});
+
+test('cancelling Render warmup aborts the probe and prevents the pending room POST', async () => {
+  let joinPosts = 0, probes = 0;
+  const fetchImpl = async url => {
+    const path = new URL(url).pathname;
+    if (path === '/healthz') { probes++; return new Promise(() => {}); }
+    if (path === '/api/join') { joinPosts++; return { ok: true, status: 201, json: async () => ({}) }; }
+    throw new Error(`unexpected path ${path}`);
+  };
+  const transport = createColyseusTransport({ serverUrl: 'https://city-explorer.onrender.com', fetchImpl, sdk: { Client: class {} }, warmupTimeoutMs: 2_000 });
+  const joining = transport.joinRoom('ABCDEFGH');
+  while (!probes) await new Promise(resolve => setImmediate(resolve));
+  transport.cancelWarmup();
+  await assert.rejects(joining, /superseded|cancel/i);
+  assert.equal(joinPosts, 0);
+  transport.dispose();
+});
+
+test('closing after a delayed join POST cleans its seat without cancelling the reopened directory', async () => {
+  let finishJoin, joinPosts = 0, leavePosts = 0, directoryGets = 0;
+  const ok = payload => ({ ok: true, status: 200, json: async () => payload });
+  const fetchImpl = async url => {
+    const path = new URL(url).pathname;
+    if (path === '/api/join') { joinPosts++; return new Promise(resolve => { finishJoin = () => resolve(ok({ roomId: 'room-a', playerId: 'a', seat: 1, name: 'Player 1', epoch: 1, playerCredential: 'a-token', reconnectCredential: 'a-reconnect' })); }); }
+    if (path === '/api/rooms/room-a/leave') { leavePosts++; return ok({ ok: true }); }
+    if (path === '/api/directory') { directoryGets++; return ok([]); }
+    throw new Error(`unexpected path ${path}`);
+  };
+  const transport = createColyseusTransport({ serverUrl: 'https://city-explorer.onrender.com', fetchImpl, sdk: { Client: class {} }, warmupTimeoutMs: 0 });
+  const joining = transport.joinRoom('ABCDEFGH');
+  while (!finishJoin) await new Promise(resolve => setImmediate(resolve));
+  assert.equal(transport.cancelWarmup(), true);
+  assert.deepEqual(await transport.directory(), []);
+  finishJoin();
+  await assert.rejects(joining, /superseded|cancel/i);
+  assert.equal(joinPosts, 1);
+  assert.equal(leavePosts, 1);
+  assert.equal(directoryGets, 1);
+  assert.equal(transport.getSession(), null);
+  transport.dispose();
+});
+
+test('closing after delayed room creation closes the orphan room without binding a creator seat', async () => {
+  let finishCreate, createPosts = 0, joinPosts = 0, closePosts = 0;
+  const ok = payload => ({ ok: true, status: 200, json: async () => payload });
+  const fetchImpl = async (url) => {
+    const path = new URL(url).pathname;
+    if (path === '/api/rooms') { createPosts++; return new Promise(resolve => { finishCreate = () => resolve(ok({ roomCode: 'ABCDEFGH', roomId: 'room-a', adminCredential: 'admin-a' })); }); }
+    if (path === '/api/join') { joinPosts++; return ok({}); }
+    if (path === '/api/rooms/room-a/admin') { closePosts++; return ok({ ok: true }); }
+    throw new Error(`unexpected path ${path}`);
+  };
+  const transport = createColyseusTransport({ serverUrl: 'https://city-explorer.onrender.com', fetchImpl, sdk: { Client: class {} }, warmupTimeoutMs: 0 });
+  const creating = transport.createRoom();
+  while (!finishCreate) await new Promise(resolve => setImmediate(resolve));
+  transport.cancelWarmup();
+  finishCreate();
+  await assert.rejects(creating, /superseded|cancel/i);
+  assert.equal(createPosts, 1);
+  assert.equal(joinPosts, 0);
+  assert.equal(closePosts, 1);
+  assert.equal(transport.getSession(), null);
+  transport.dispose();
+});
+
+test('disposing during Render readiness prevents the pending room POST', async () => {
+  let completeProbe, joinPosts = 0;
+  const fetchImpl = async (url) => {
+    const path = new URL(url).pathname;
+    if (path === '/healthz') return new Promise(resolve => { completeProbe = resolve; });
+    if (path === '/api/join') { joinPosts++; return { ok: true, status: 201, json: async () => ({}) }; }
+    throw new Error(`unexpected path ${path}`);
+  };
+  const transport = createColyseusTransport({ serverUrl: 'https://city-explorer.onrender.com', fetchImpl, sdk: { Client: class {} }, warmupTimeoutMs: 2_000 });
+  const joining = transport.joinRoom('ABCDEFGH');
+  while (!completeProbe) await new Promise(resolve => setImmediate(resolve));
+  transport.dispose();
+  completeProbe({ ok: true, status: 200, json: async () => ({ status: 'ready' }) });
+  await assert.rejects(joining, /superseded|disposed/i);
+  assert.equal(joinPosts, 0);
 });
 
 test('late transfer result cannot clear a different room admin role', async () => {

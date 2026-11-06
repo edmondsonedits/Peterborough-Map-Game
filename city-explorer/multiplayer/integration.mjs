@@ -1,7 +1,7 @@
-import { createRoomUi } from './room-ui.mjs?v=1.6.187';
-import { createClientRuntime } from './client-runtime.mjs?v=1.6.187';
-import { createColyseusTransport } from './transport-colyseus.mjs?v=1.6.187';
-import { loadWorldCollision } from './world-collision.mjs?v=1.6.187';
+import { createRoomUi } from './room-ui.mjs?v=1.6.188';
+import { createClientRuntime } from './client-runtime.mjs?v=1.6.188';
+import { createColyseusTransport } from './transport-colyseus.mjs?v=1.6.188';
+import { loadWorldCollision } from './world-collision.mjs?v=1.6.188';
 
 const loopback = host => ['localhost', '127.0.0.1', '[::1]', '::1'].includes(host);
 export function resolveMultiplayerServerUrl(pageUrl, configuredUrl, queryValue) {
@@ -19,9 +19,13 @@ export function createMultiplayerIntegration({ parent, pageUrl = location.href, 
   const query = new URL(pageUrl).searchParams.get('multiplayerServer');
   let serverUrl = null, endpointError = null;
   try { serverUrl = resolveMultiplayerServerUrl(pageUrl, configuredUrl, query); } catch (error) { endpointError = error.message; }
-  let world = null, transport = null, runtime = null, session = null, entered = false, entering = null, disposed = false, generation = 0, connectionStatus = 'offline', lastViewSignature = '';
+  let world = null, transport = null, runtime = null, session = null, entered = false, entering = null, disposed = false, generation = 0, roomPanelGeneration = 0, connectionStatus = 'offline', lastViewSignature = '';
   const view = { available: Boolean(serverUrl), message: endpointError ?? (serverUrl ? '' : 'Multiplayer server is not configured yet.'), rooms: [], session: null, players: [], vehicles: [], connectionStatus };
-  const ui = (factories.createRoomUi ?? createRoomUi)({ parent, callbacks: { listRooms, createRoom, joinRoom, leaveRoom, admin, selectVehicle }, onOpenChange: open => { if (open && serverUrl && !session) void listRooms().then(rooms => update({ rooms })).catch(error => update({ message: error.message })); } });
+  const ui = (factories.createRoomUi ?? createRoomUi)({ parent, callbacks: { listRooms, createRoom, joinRoom, leaveRoom, admin, selectVehicle }, onOpenChange: open => {
+    if (!open) { roomPanelGeneration++; transport?.cancelWarmup?.(); update({ message: '' }); return; }
+    const openGeneration = roomPanelGeneration;
+    if (serverUrl && !session) void listRooms().then(rooms => { if (!disposed && openGeneration === roomPanelGeneration) update({ rooms }); }).catch(error => { if (!disposed && openGeneration === roomPanelGeneration) update({ message: error.message }); });
+  } });
   const placement = parent.ownerDocument.createElement('style');
   placement.textContent = '@media (min-width:541px){.ce-roomui{left:160px;top:80px}}@media (max-width:540px){.ce-roomui{left:max(10px,env(safe-area-inset-left));top:max(100px,env(safe-area-inset-top))}}';
   parent.append(placement);
@@ -58,7 +62,7 @@ export function createMultiplayerIntegration({ parent, pageUrl = location.href, 
     if (transport) return transport;
     const loaded = await ensureWorld();
     const activeTransport = (factories.createTransport ?? createColyseusTransport)({ serverUrl,
-      onStatus: detail => { if (transport !== activeTransport) return; connectionStatus = detail.status; session = transport.getSession() ?? session; update({ connectionStatus, session: session ? { ...session, connectionStatus } : null, ...(typeof detail.locked === 'boolean' ? { locked: detail.locked } : {}) }); },
+      onStatus: detail => { if (transport !== activeTransport) return; connectionStatus = detail.status; session = transport.getSession() ?? session; const message = detail.status === 'waking' ? 'Starting multiplayer server… This can take about a minute.' : ['server-ready', 'cancelled'].includes(detail.status) ? '' : undefined; update({ connectionStatus, session: session ? { ...session, connectionStatus } : null, ...(typeof detail.locked === 'boolean' ? { locked: detail.locked } : {}), ...(message === undefined ? {} : { message }) }); },
       onDisconnect: detail => { if (detail.reconnecting || transport !== activeTransport) return; releaseLocal('Connection ended. Join a room to continue.'); onMessage('Multiplayer connection ended.'); },
     });
     transport = activeTransport;
@@ -77,12 +81,35 @@ export function createMultiplayerIntegration({ parent, pageUrl = location.href, 
     });
     return transport;
   }
-  async function listRooms() { if (!serverUrl) return []; const active = await ensureTransport(); const response = await active.directory(); const rooms = Array.isArray(response) ? response : response.rooms ?? []; const current = rooms.find(room => room.id === session?.roomId); update({ rooms, ...(current ? { locked: Boolean(current.locked) } : {}) }); return rooms; }
-  async function join(create, args) {
+  async function listRooms() {
+    if (!serverUrl) return [];
+    const openGeneration = roomPanelGeneration;
     const active = await ensureTransport();
+    if (disposed || openGeneration !== roomPanelGeneration) return [];
+    const response = await active.directory();
+    if (disposed || openGeneration !== roomPanelGeneration) return [];
+    const rooms = Array.isArray(response) ? response : response.rooms ?? [];
+    const current = rooms.find(room => room.id === session?.roomId);
+    update({ rooms, ...(current ? { locked: Boolean(current.locked) } : {}) });
+    return rooms;
+  }
+  async function join(create, args) {
+    const requestGeneration = roomPanelGeneration;
+    const active = await ensureTransport();
+    if (disposed || requestGeneration !== roomPanelGeneration) return { cancelled: true, message: 'Room request cancelled.' };
     await world.prefetch(world.stations[0].anchor.x, world.stations[0].anchor.z, 160);
-    try { session = create ? await active.createRoom() : await active.joinRoom(args.code, args.roomId); }
-    catch(error){session=null;update({session:null,connectionStatus:'error',message:error.message});throw error;}
+    if (disposed || requestGeneration !== roomPanelGeneration) return { cancelled: true, message: 'Room request cancelled.' };
+    try {
+      const joined = create ? await active.createRoom() : await active.joinRoom(args.code, args.roomId);
+      if (disposed || requestGeneration !== roomPanelGeneration) {
+        if (active.getSession()?.playerId === joined?.playerId) await active.leave().catch(() => {});
+        return { cancelled: true, message: 'Room request cancelled.' };
+      }
+      session = joined;
+    } catch(error) {
+      if (disposed || requestGeneration !== roomPanelGeneration) return { cancelled: true, message: 'Room request cancelled.' };
+      session=null;update({session:null,connectionStatus:'error',message:error.message});throw error;
+    }
     update({ session: { ...session, connectionStatus }, locked: false, message: '' });
     if (runtime.latestSnapshot && !entered) await activate();
     return session;

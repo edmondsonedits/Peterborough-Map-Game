@@ -42,6 +42,10 @@ jobs:
           node tools/export-multiplayer-world.mjs
           git diff --exit-code -- city-explorer/multiplayer/world-data
 
+      - name: Verify multiplayer backend matches this world
+        env:
+          MULTIPLAYER_SERVER_URL: ${{ vars.MULTIPLAYER_SERVER_URL }}
+        run: node tools/check-multiplayer-deployment.mjs
       - name: Check structured location report state and UI
         run: |
           npm ci --prefix tools/location-report-tests --ignore-scripts --no-audit

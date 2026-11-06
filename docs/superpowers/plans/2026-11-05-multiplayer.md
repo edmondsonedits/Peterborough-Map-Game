@@ -129,3 +129,11 @@ Validation completed:
 Task 5 tooling is tools/check-multiplayer-lifecycle.mjs and tools/diagnose-multiplayer-kick.mjs. Local SDK snapshot benchmarking is tools/benchmark-multiplayer-snapshots.mjs: simulation approximately 30 Hz at 2/4/8 clients; local Windows snapshot publication approximately 21 Hz, p95 intervals approximately 49–50 ms. These are local measurements, not Internet or physical-phone performance evidence.
 
 Outstanding release gates: Task 6 impaired-network/datagram comparison and physical Android/iPhone validation are not complete. Public Node/WebSocket hosting is not configured; GitHub Pages cannot run the authoritative server. Await hosting target/account selection before coordinated backend/frontend publication. No paid service has been activated and this candidate has not been published. Backend and Pages must share the final committed world version; one server process is supported initially.
+
+## Free-hosting release preparation — 2026-11-05
+
+User selected free hosting and authorized publication. Render Free (Ohio, one Node process) is configured in render.yaml; the signed-in dashboard service form is prepared, but deployment remains pending as of this checkpoint. Do not add payment details or select paid compute. The hosted CPU is 0.1 and RAM 512 MB; the local eight-client run used approximately 170 MiB RSS but is not a hosted load test.
+
+Merged upstream gait release in 650f35c0. Candidate 1.6.188 rebuild: road a054f752f2b8f4a09914, world b8a4b66d364a519c978649b8. The final targeted suite passed 154 tests. Free-host cold start checks require ready JSON, cap response/body waits, show waking text, and cancel delayed joins/creates when the panel closes. Independent review approved those fixes. The deployment workflow now requires MULTIPLAYER_SERVER_URL and verifies the live backend world before publishing Pages, protecting against mismatched geospatial bot updates. Browser endpoint wiring is a separate required step once Render assigns its actual URL.
+
+The local benchmark tool now accepts --server=https://... --origin=https://edmondsonedits.github.io for controlled remote SDK checks. These do not replace real phone or impaired-network validation. No production smoothness guarantee is made.
