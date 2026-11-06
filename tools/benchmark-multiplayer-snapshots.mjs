@@ -7,6 +7,8 @@ import assert from 'node:assert/strict';
 
 const count = Number(process.argv.find(value => value.startsWith('--players='))?.split('=')[1] ?? 8);
 assert.ok([2, 4, 8].includes(count), 'Use --players=2, 4, or 8');
+const secondsToMeasure = Number(process.argv.find(value => value.startsWith('--seconds='))?.split('=')[1] ?? 5);
+assert.ok(Number.isFinite(secondsToMeasure) && secondsToMeasure >= 5 && secondsToMeasure <= 60, 'Use --seconds=5..60');
 const output = process.argv.find(value => value.startsWith('--out='))?.slice(6);
 const remote = process.argv.find(value => value.startsWith('--server='))?.slice(9);
 const origin = process.argv.find(value => value.startsWith('--origin='))?.slice(9);
@@ -60,7 +62,7 @@ try {
   timer=setInterval(() => {
     for (const item of clients) item.room.send('input', { input: { protocolVersion: 1, epoch: item.auth.epoch, sequence: ++item.sequence, mode: 'onFoot', controls: { forward: .25, strafe: 0, run: false, sprint: false, throttle: 0, steering: 0, viewYaw: 0 } } });
   }, 1000/30);
-  await new Promise(resolve => setTimeout(resolve, 5000));
+  await new Promise(resolve => setTimeout(resolve, secondsToMeasure * 1000));
   clearInterval(timer); timer=null;
   const seconds=(performance.now()-start)/1000;
   for (const { sample } of clients) { assert.ok(sample.fullBaseline && sample.compactSeen); assert.ok(sample.lastAck>0); assert.deepEqual(sample.errors, []); }

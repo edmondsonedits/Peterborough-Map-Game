@@ -21,6 +21,9 @@ export async function verifyDeployedWorld({ serverUrl, expectedWorldVersion, fet
 if (process.argv[1] && import.meta.url === pathToFileURL(process.argv[1]).href) {
   const serverUrl = process.env.MULTIPLAYER_SERVER_URL;
   if (!serverUrl) throw new Error('MULTIPLAYER_SERVER_URL is required before publishing multiplayer');
+  const html = await readFile(new URL('../city-explorer/index.html', import.meta.url), 'utf8');
+  const configured = html.match(/globalThis\.PTBO_MULTIPLAYER_SERVER_URL\s*=\s*("[^"\r\n]+")\s*;/);
+  if (!configured || JSON.parse(configured[1]) !== serverUrl) throw new Error('Published browser endpoint does not match MULTIPLAYER_SERVER_URL');
   const manifest = JSON.parse(await readFile(new URL('../city-explorer/multiplayer/world-data/v1/world-manifest.json', import.meta.url), 'utf8'));
   console.log(JSON.stringify(await verifyDeployedWorld({ serverUrl, expectedWorldVersion: manifest.worldVersion })));
 }
