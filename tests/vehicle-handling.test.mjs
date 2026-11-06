@@ -89,3 +89,16 @@ test('steady road acceleration and cornering remain stable at 30, 60, and 120 Hz
  assert.ok(Math.max(...results.map(s=>s.heading))-Math.min(...results.map(s=>s.heading))<.03);
  assert.ok(results.every(s=>Number.isFinite(s.x)&&Number.isFinite(s.z)));
 });
+
+test('Pump 1, 2 and 3 have a tighter low-speed turning circle in both modes without raising high-speed grip', () => {
+ const pumpers=['pump-1','pump-2','pump-3'].map(byId);
+ const radius=t=>t.wheelbase/Math.tan(t.steeringLowSpeed);
+ for (const pumper of pumpers) {
+  assert.equal(pumper.steeringLowSpeed,.66);
+  assert.ok(radius(pumper)<radius({...pumper,steeringLowSpeed:.54})*.8,'pumper turning radius should improve by at least 20%');
+  assert.equal(pumper.maximumLateralAcceleration,4.2);
+  assert.equal(pumper.steeringHighSpeed,.15);
+ }
+ assert.equal(byId('aerial').steeringLowSpeed,.41);
+ assert.equal(byId('medi').steeringLowSpeed,.62);
+});
