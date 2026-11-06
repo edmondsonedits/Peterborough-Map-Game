@@ -1,7 +1,7 @@
-import { createRoomUi } from './room-ui.mjs?v=1.6.195';
-import { createClientRuntime } from './client-runtime.mjs?v=1.6.195';
-import { createColyseusTransport } from './transport-colyseus.mjs?v=1.6.195';
-import { loadWorldCollision } from './world-collision.mjs?v=1.6.195';
+import { createRoomUi } from './room-ui.mjs?v=1.6.196';
+import { createClientRuntime } from './client-runtime.mjs?v=1.6.196';
+import { createColyseusTransport } from './transport-colyseus.mjs?v=1.6.196';
+import { loadWorldCollision } from './world-collision.mjs?v=1.6.196';
 
 const loopback = host => ['localhost', '127.0.0.1', '[::1]', '::1'].includes(host);
 export function resolveMultiplayerServerUrl(pageUrl, configuredUrl, queryValue) {
