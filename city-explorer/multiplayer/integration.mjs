@@ -1,7 +1,7 @@
-import { createRoomUi } from './room-ui.mjs?v=1.6.192';
-import { createClientRuntime } from './client-runtime.mjs?v=1.6.192';
-import { createColyseusTransport } from './transport-colyseus.mjs?v=1.6.192';
-import { loadWorldCollision } from './world-collision.mjs?v=1.6.192';
+import { createRoomUi } from './room-ui.mjs?v=1.6.193';
+import { createClientRuntime } from './client-runtime.mjs?v=1.6.193';
+import { createColyseusTransport } from './transport-colyseus.mjs?v=1.6.193';
+import { loadWorldCollision } from './world-collision.mjs?v=1.6.193';
 
 const loopback = host => ['localhost', '127.0.0.1', '[::1]', '::1'].includes(host);
 export function resolveMultiplayerServerUrl(pageUrl, configuredUrl, queryValue) {
@@ -26,9 +26,6 @@ export function createMultiplayerIntegration({ parent, pageUrl = location.href, 
     const openGeneration = roomPanelGeneration;
     if (serverUrl && !session) void listRooms().then(rooms => { if (!disposed && openGeneration === roomPanelGeneration) update({ rooms }); }).catch(error => { if (!disposed && openGeneration === roomPanelGeneration) update({ message: error.message }); });
   } });
-  const placement = parent.ownerDocument.createElement('style');
-  placement.textContent = '@media (min-width:541px){.ce-roomui{left:160px;top:80px}}@media (max-width:540px){.ce-roomui{left:max(10px,env(safe-area-inset-left));top:max(100px,env(safe-area-inset-top))}}';
-  parent.append(placement);
   function update(next) { Object.assign(view, next); ui.update(next); }
   function releaseLocal(message = '', { deferDisposal = false } = {}) {
     generation++;
@@ -166,7 +163,7 @@ export function createMultiplayerIntegration({ parent, pageUrl = location.href, 
   }
   function sendAction(action) { if (!runtime || !session) return false; return runtime.sendAction(action); }
   function frame(deltaMs, controls) { if (!entered || !runtime) return null; return runtime.advanceFrame(deltaMs, controls); }
-  function dispose() { if (disposed) return; disposed = true; releaseLocal(); ui.dispose(); placement.remove(); }
+  function dispose() { if (disposed) return; disposed = true; releaseLocal(); ui.dispose(); }
   update(view);
   return { ui, frame, sendAction, leaveRoom, dispose, get active() { return entered && Boolean(runtime?.latestSnapshot); }, get runtime() { return runtime; }, get world() { return world; }, get session() { return session; }, get serverUrl() { return serverUrl; } };
 }
