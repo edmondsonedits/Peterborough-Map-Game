@@ -15,6 +15,7 @@ on:
       - 'tools/check-multitouch-controls.cjs'
       - 'tools/check-authored-scene.cjs'
       - 'tools/test_authored_scene_runtime.mjs'
+      - 'scripts/normalize-release.cjs'
       - 'tools/test_street_*.mjs'
       - 'city-explorer/app.js'
       - 'city-explorer/street-paint.js'
@@ -68,6 +69,11 @@ jobs:
         uses: actions/setup-node@v4
         with:
           node-version: 22
+
+      - name: Prepare and verify production module identities
+        run: |
+          node scripts/normalize-release.cjs
+          node tools/test_city_editor_release.mjs
 
       - name: Run authored scene runtime unit tests
         run: node tools/test_authored_scene_runtime.mjs
