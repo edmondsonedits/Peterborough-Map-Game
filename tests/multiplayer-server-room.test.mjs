@@ -2,7 +2,7 @@ import test from 'node:test';
 import assert from 'node:assert/strict';
 import { createExplorerSession } from '../city-explorer/multiplayer/server/src/explorer-room.mjs';
 
-function harness({ ready = true, vehicleSpeed = 0, spawnSpeed = 0 } = {}) {
+function harness({ ready = true, vehicleSpeed = 0, spawnSpeed = 0, aerial = false } = {}) {
   let now = 1_000;
   let tokenCall = 0;
   const world = {
@@ -13,7 +13,7 @@ function harness({ ready = true, vehicleSpeed = 0, spawnSpeed = 0 } = {}) {
   };
   const vehicles = [
     { id: 'truck_1', entityGeneration: 0, pose: { x: 2, y: 0, z: 2, heading: 0, vx: 0, vz: vehicleSpeed, speed: vehicleSpeed, steering: 0 } },
-    { id: 'truck_2', entityGeneration: 0, pose: { x: 30, y: 0, z: 30, heading: 0, vx: 0, vz: 0, speed: 0, steering: 0 } },
+    { id: 'truck_2', templateId: aerial ? 'aerial' : undefined, entityGeneration: 0, pose: { x: 30, y: 0, z: 30, heading: 0, vx: 0, vz: 0, speed: 0, steering: 0 } },
   ];
   const room = createExplorerSession({
     world,
@@ -495,7 +495,43 @@ test('vehicle-list transfer is atomic at any distance and stops the abandoned ve
   assert.equal(old.pose.vx, 0);
   assert.equal(old.pose.vz, 0);
   assert.equal(snapshot.vehicles.find(v => v.id === 'truck_2').driverPlayerId, first.playerId);
-  assert.equal(room.receive(second.playerId, action(second, 1, 'selectVehicle', 'truck_2', 'occupied')).ok, false);
-  assert.equal(room.snapshotFor(second.playerId).player.vehicleId, null);
-  assert.equal(room.receive(second.playerId, action(second, 2, 'enterVehicle', 'truck_1', 'nearby-e')).ok, true);
+  assert.equal(room.receive(second.playerId, action(second, 1, 'selectVehicle', 'truck_2', 'occupied')).ok, true);
+  assert.equal(room.snapshotFor(second.playerId).player.vehicleId, 'truck_2');
+  assert.equal(room.receive(second.playerId, action({...second, epoch: room.snapshotFor(second.playerId).epoch}, 1, 'selectVehicle', 'truck_1', 'leave-crew')).ok, true);
+});
+
+test('four players share one aerial and only the driver can deploy, stow or move it', () => {
+  const { room, setTime } = harness({ aerial: true });
+  const players = Array.from({ length: 5 }, () => room.join({ code: room.roomCode, ip: '127.0.0.1' }));
+  const [driver, passenger] = players;
+  const vehicle = () => room.snapshotFor(passenger.playerId).vehicles.find(item => item.id === 'truck_2');
+  const send = (player, sequence, type) => room.receive(player.playerId,
+    action({ ...player, epoch: room.snapshotFor(player.playerId).epoch }, sequence, type, 'truck_2', type));
+  players.forEach((player, index) => assert.equal(send(player, 1, 'selectVehicle').ok, index < 4));
+  assert.equal(vehicle().occupantCount, 4);
+  assert.equal(vehicle().driverPlayerId, driver.playerId);
+  assert.equal(send(passenger, 1, 'deployAerial').ok, false);
+  assert.equal(send(driver, 1, 'deployAerial').ok, true);
+  for (let i = 1; i <= 500; i++) {
+    setTime(1000 + i * 50);
+    room.tick();
+  }
+  assert.equal(vehicle().aerial.phase, 'operating');
+  assert.equal(vehicle().aerial.beams, 1);
+  const pose = vehicle().pose;
+  room.receive(driver.playerId, input(room.snapshotFor(driver.playerId).epoch, 1, { throttle: 1 }));
+  room.receive(passenger.playerId, input(room.snapshotFor(passenger.playerId).epoch, 2, { throttle: 1 }));
+  setTime(26050);
+  room.tick();
+  assert.deepEqual(vehicle().pose, pose);
+  assert.deepEqual(room.snapshotFor(passenger.playerId).player.pose, pose);
+  assert.equal(send(driver, 2, 'stowAerial').ok, true);
+  for (let i = 502; i <= 1000; i++) {
+    setTime(1000 + i * 50);
+    room.tick();
+  }
+  assert.equal(vehicle().aerial.phase, 'travel');
+  room.leave(driver.playerId);
+  assert.equal(vehicle().driverPlayerId, passenger.playerId);
+  assert.equal(vehicle().occupantCount, 3);
 });

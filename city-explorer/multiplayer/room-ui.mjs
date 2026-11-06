@@ -228,7 +228,8 @@ export function createRoomUi({ parent = document.body, callbacks = {}, onOpenCha
     vehicleSelect.addEventListener('change', () => {
       if (vehicleSelect.value) void run('selectVehicle', { vehicleId: vehicleSelect.value }, 'Vehicle request sent…');
     });
-    vehicleSection.append(el('p', 'ce-roomui-copy', 'Choose an available vehicle to enter it anywhere on the map.'), vehicleSelect);
+    const aerial = button('Deploy aerial', 'toggle-aerial', 'ce-roomui-btn', () => run('toggleAerial', {}, 'Aerial request sent…'));
+    vehicleSection.append(el('p', 'ce-roomui-copy', 'Choose a vehicle to drive or ride along. Each vehicle holds four players.'), vehicleSelect, aerial);
     fragment.append(vehicleSection);
 
     const admin = section('Host controls'); admin.dataset.adminSection = 'true';
@@ -268,7 +269,7 @@ export function createRoomUi({ parent = document.body, callbacks = {}, onOpenCha
       }
     }); leaveButton.dataset.request = 'true'; leave.append(leaveButton); fragment.append(leave);
     content.replaceChildren(fragment); view = 'session';
-    sessionView = { key: sessionKey(session), yourLine, playerList: list, invite, inviteInput, vehicleSection, vehicleSelect, admin, lock, transferTarget, transfer, kicks };
+    sessionView = { key: sessionKey(session), yourLine, playerList: list, invite, inviteInput, vehicleSection, vehicleSelect, aerial, admin, lock, transferTarget, transfer, kicks };
   }
   function patchSession(session) {
     if (!sessionView || sessionView.key !== sessionKey(session)) buildSession(session);
@@ -293,6 +294,9 @@ export function createRoomUi({ parent = document.body, callbacks = {}, onOpenCha
 
     const vehicles = Array.isArray(state.vehicles) ? state.vehicles : [];
     view.vehicleSection.hidden = vehicles.length === 0;
+    const aerialPhase = vehicles.find(vehicle => vehicle.id === session.vehicleId)?.aerialPhase;
+    view.aerial.hidden = !aerialPhase;
+    view.aerial.textContent = aerialPhase === 'travel' ? 'Deploy aerial' : 'Stow aerial';
     const oldSelection = view.vehicleSelect.value;
     const preserveUserSelection = doc.activeElement === view.vehicleSelect;
     const desired = preserveUserSelection ? oldSelection : (state.selectedVehicleId ?? session.vehicleId ?? '');
@@ -300,7 +304,7 @@ export function createRoomUi({ parent = document.body, callbacks = {}, onOpenCha
     placeholder.disabled = true;
     view.vehicleSelect.replaceChildren(placeholder, ...vehicles.map((vehicle) => {
       const name = vehicle.label || vehicle.name || vehicle.id;
-      const option = el('option', '', vehicle.occupiedByOther ? `${name} · In use` : name, { value: String(vehicle.id) });
+      const option = el('option', '', vehicle.occupantCount !== undefined ? `${name} · ${vehicle.occupantCount}/4` : vehicle.occupiedByOther ? `${name} · In use` : name, { value: String(vehicle.id) });
       option.disabled = vehicle.available === false;
       return option;
     }));

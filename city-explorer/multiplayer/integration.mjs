@@ -1,7 +1,7 @@
-import { createRoomUi } from './room-ui.mjs?v=1.6.189';
-import { createClientRuntime } from './client-runtime.mjs?v=1.6.189';
-import { createColyseusTransport } from './transport-colyseus.mjs?v=1.6.189';
-import { loadWorldCollision } from './world-collision.mjs?v=1.6.189';
+import { createRoomUi } from './room-ui.mjs?v=1.6.191';
+import { createClientRuntime } from './client-runtime.mjs?v=1.6.191';
+import { createColyseusTransport } from './transport-colyseus.mjs?v=1.6.191';
+import { loadWorldCollision } from './world-collision.mjs?v=1.6.191';
 
 const loopback = host => ['localhost', '127.0.0.1', '[::1]', '::1'].includes(host);
 export function resolveMultiplayerServerUrl(pageUrl, configuredUrl, queryValue) {
@@ -21,7 +21,7 @@ export function createMultiplayerIntegration({ parent, pageUrl = location.href, 
   try { serverUrl = resolveMultiplayerServerUrl(pageUrl, configuredUrl, query); } catch (error) { endpointError = error.message; }
   let world = null, transport = null, runtime = null, session = null, entered = false, entering = null, disposed = false, generation = 0, roomPanelGeneration = 0, connectionStatus = 'offline', lastViewSignature = '';
   const view = { available: Boolean(serverUrl), message: endpointError ?? (serverUrl ? '' : 'Multiplayer server is not configured yet.'), rooms: [], session: null, players: [], vehicles: [], connectionStatus };
-  const ui = (factories.createRoomUi ?? createRoomUi)({ parent, callbacks: { listRooms, createRoom, joinRoom, leaveRoom, admin, selectVehicle }, onOpenChange: open => {
+  const ui = (factories.createRoomUi ?? createRoomUi)({ parent, callbacks: { listRooms, createRoom, joinRoom, leaveRoom, admin, selectVehicle, toggleAerial }, onOpenChange: open => {
     if (!open) { roomPanelGeneration++; transport?.cancelWarmup?.(); update({ message: '' }); return; }
     const openGeneration = roomPanelGeneration;
     if (serverUrl && !session) void listRooms().then(rooms => { if (!disposed && openGeneration === roomPanelGeneration) update({ rooms }); }).catch(error => { if (!disposed && openGeneration === roomPanelGeneration) update({ message: error.message }); });
@@ -76,10 +76,14 @@ export function createMultiplayerIntegration({ parent, pageUrl = location.href, 
         const vehicles = state.snapshot.vehicles.map(vehicle => ({
           id: vehicle.id,
           label: vehicle.id.replace(/-/g, ' ').replace(/\b\w/g, c => c.toUpperCase()),
-          available: !vehicle.driverPlayerId || vehicle.driverPlayerId === state.snapshot.player.id,
+          available: vehicle.occupantCount === undefined
+            ? !vehicle.driverPlayerId || vehicle.driverPlayerId === state.snapshot.player.id
+            : vehicle.occupantCount < 4 || vehicle.id === state.vehicleId,
+          occupantCount: vehicle.occupantCount,
+          aerialPhase: vehicle.driverPlayerId === state.snapshot.player.id ? vehicle.aerial?.phase : undefined,
           occupiedByOther: Boolean(vehicle.driverPlayerId && vehicle.driverPlayerId !== state.snapshot.player.id),
         }));
-        const signature = JSON.stringify([players.map(player => [player.id, player.entityGeneration]), vehicles.map(vehicle => [vehicle.id, vehicle.available]), session?.isAdmin, state.mode, state.vehicleId]);
+        const signature = JSON.stringify([players.map(player => [player.id, player.entityGeneration]), vehicles, session?.isAdmin, state.mode, state.vehicleId]);
         if (signature !== lastViewSignature) { lastViewSignature = signature; update({ players, vehicles, session: session ? { ...session, vehicleId: state.vehicleId, connectionStatus } : null, selectedVehicleId: state.vehicleId }); }
       },
       onEvent: event => {
@@ -143,9 +147,15 @@ export function createMultiplayerIntegration({ parent, pageUrl = location.href, 
     if (!session || !snapshot) return { error: true, message: 'Join a room before selecting a vehicle.' };
     const target = snapshot.vehicles.find(vehicle => vehicle.id === vehicleId);
     if (!target) return { error: true, message: 'That vehicle is no longer available.' };
-    if (target.driverPlayerId && target.driverPlayerId !== snapshot.player.id) return { error: true, message: 'That vehicle already has a driver.' };
-    if (runtime.getState().vehicleId === vehicleId) return { error: true, message: 'You are already driving that vehicle.' };
+    if (target.occupantCount >= 4) return { error: true, message: 'All four seats are occupied.' };
+    if (runtime.getState().vehicleId === vehicleId) return { error: true, message: 'You are already in that vehicle.' };
     return sendAction({ type: 'selectVehicle', vehicleId }) || { error: true, message: 'Vehicle request could not be sent.' };
+  }
+  function toggleAerial() {
+    const snapshot = runtime?.latestSnapshot;
+    const vehicle = snapshot?.vehicles.find(item => item.id === snapshot.player.vehicleId);
+    if (!vehicle?.aerial || vehicle.driverPlayerId !== snapshot.player.id) return { error: true, message: 'Take the aerial driver seat first.' };
+    return sendAction({ type: vehicle.aerial.phase === 'travel' ? 'deployAerial' : 'stowAerial', vehicleId: vehicle.id });
   }
   function sendAction(action) { if (!runtime || !session) return false; return runtime.sendAction(action); }
   function frame(deltaMs, controls) { if (!entered || !runtime) return null; return runtime.advanceFrame(deltaMs, controls); }

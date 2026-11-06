@@ -7,7 +7,7 @@ import {
   stationCollision, stationDoorObstructed, sweepStationTruck,
 } from './station-two-core.mjs';
 
-const STATION_MODEL = new URL('./assets/station2/station2.glb?v=1.6.188', import.meta.url);
+const STATION_MODEL = new URL('./assets/station2/station2.glb?v=1.6.191', import.meta.url);
 const cacheAssetRequest = createPromiseCache();
 export function preloadStationTwoAsset() {
   return cacheAssetRequest(STATION_MODEL.href, async () => {
