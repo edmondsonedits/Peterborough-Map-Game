@@ -64,6 +64,8 @@
       lat:Number(raw?.lat ?? raw?.latitude),
       lng:Number(raw?.lng ?? raw?.longitude),
       radius:Math.max(10,Math.min(500,Number(raw?.radius ?? raw?.targetRadiusMeters) || 50)),
+      arrivalRadiusMeters:Number.isFinite(Number(raw?.arrivalRadiusMeters)) && Number(raw.arrivalRadiusMeters)>0
+        ? Math.max(10,Math.min(500,Number(raw.arrivalRadiusMeters))) : undefined,
       district:Number.isInteger(districtValue) && districtValue > 0 ? districtValue : undefined,
       cityTen:Boolean(raw?.cityTen),
       confirmed:Boolean(raw?.confirmed),
@@ -220,7 +222,7 @@
       const original=seedById.get(item.id);
       if(!original)return item;
       const metadata={};
-      for(const key of ['locationKind','difficultyReason','routeAccess','geographicVerificationRef','cityId']) {
+      for(const key of ['locationKind','difficultyReason','routeAccess','arrivalRadiusMeters','geographicVerificationRef','cityId']) {
         if(item[key] == null && original[key] != null)metadata[key]=original[key];
       }
       if(original.facilityType)Object.assign(metadata,{facilityType:original.facilityType,providerId:original.providerId,community:original.community,
@@ -334,18 +336,52 @@
     for (const parsed of candidates) {
       const compatibleVersion = parsed.version === STORE_VERSION || (CITY_ID === 'peterborough' && parsed.version === 2);
       if (!compatibleVersion || !Array.isArray(parsed.items) || (parsed.cityId != null && parsed.cityId !== CITY_ID)) continue;
+      savedTrainingCareHomeIds=Array.isArray(parsed.trainingCareHomeIds)?parsed.trainingCareHomeIds.map(normalizeText):null;
+      savedTrainingSharedLocationIds=Array.isArray(parsed.trainingSharedLocationIds)?parsed.trainingSharedLocationIds.map(normalizeText):null;
       const oldPreview = ['oshawa','pickering','markham','toronto'].includes(CITY_ID) && dataVersion === 'ontario-geo-1' && parsed.dataVersion === '1.6.8';
       if (parsed.dataVersion === dataVersion || oldPreview) {
         legacyPreviewMigration=oldPreview;
-        savedTrainingCareHomeIds=Array.isArray(parsed.trainingCareHomeIds)?parsed.trainingCareHomeIds.map(normalizeText):null;
-        savedTrainingSharedLocationIds=Array.isArray(parsed.trainingSharedLocationIds)?parsed.trainingSharedLocationIds.map(normalizeText):null;
         return normalizeList(parsed.items,'saved');
       }
+      const previous=window.PTBO_DISPATCH_PREVIOUS_DATA;
+      const baseline=Array.isArray(parsed.seed) ? parsed.seed
+        : CITY_ID==='peterborough' && previous?.version===parsed.dataVersion && Array.isArray(previous.locations) ? previous.locations : null;
+      if(baseline)return migratePublished(parsed,baseline);
       if (CITY_ID === 'peterborough' && parsed.dataVersion === '1.4.20' && window.PTBO_DISPATCH_LEGACY_LOCATIONS) {
         return migrateLegacy(parsed);
       }
     }
     return null;
+  }
+
+  function migratePublished(saved,baseline) {
+    const originals=new Map(normalizeList(baseline,'source').map(item=>[item.id,item]));
+    const previous=normalizeList(saved.items,'saved'),byId=new Map(previous.map(item=>[item.id,item]));
+    const next=clone(seed),destinations=new Map(next.map(item=>[item.id,item])),deleted=new Set();
+    for(const original of originals.values()){
+      const edited=byId.get(original.id),destination=destinations.get(original.id);
+      if(!edited){if(destination)deleted.add(original.id);continue;}
+      const changes=Object.fromEntries(Object.keys(edited)
+        .filter(key=>!['id','sourceCallIds','sources'].includes(key)&&JSON.stringify(edited[key])!==JSON.stringify(original[key]))
+        .map(key=>[key,edited[key]]));
+      if(!Object.keys(changes).length)continue;
+      if(destination){
+        Object.assign(destination,changes);
+        if(changes.main||changes.sub){
+          const service=destination.main==='Medical'?'ems':'fire';
+          destination.incidentProfiles={...destination.incidentProfiles,[service]:{sub:destination.sub}};
+        }
+      }else next.push({...edited,custom:true});
+    }
+    for(const edited of previous){
+      if(originals.has(edited.id))continue;
+      const destination=destinations.get(edited.id);
+      if(destination)Object.assign(destination,edited);
+      else next.push(edited);
+    }
+    // Keep a recoverable pre-upgrade snapshot before the next deliberate edit saves.
+    try{localStorage.setItem(`${STORAGE_KEY}:before-${dataVersion}`,JSON.stringify(saved));}catch(_){/* Original key remains untouched. */}
+    return normalizeList(next.filter(item=>!deleted.has(item.id)),'saved');
   }
 
   function migrateLegacy(saved) {
@@ -377,7 +413,7 @@
 
   function persist(nextItems = items) {
     try {
-      localStorage.setItem(STORAGE_KEY,JSON.stringify({version:STORE_VERSION,cityId:CITY_ID,dataVersion,trainingCareHomeIds,trainingSharedLocationIds:[...new Set([...(savedTrainingSharedLocationIds||[]),...trainingSharedLocationIds])],savedAt:new Date().toISOString(),items:nextItems}));
+      localStorage.setItem(STORAGE_KEY,JSON.stringify({version:STORE_VERSION,cityId:CITY_ID,dataVersion,trainingCareHomeIds,trainingSharedLocationIds:[...new Set([...(savedTrainingSharedLocationIds||[]),...trainingSharedLocationIds])],savedAt:new Date().toISOString(),seed,items:nextItems}));
     } catch (error) {
       throw new Error('Changes could not be saved on this device. Free browser storage and try again, or export your edits.',{cause:error});
     }

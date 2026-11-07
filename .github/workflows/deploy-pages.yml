@@ -58,6 +58,7 @@ jobs:
 
       - name: Check gameplay regressions
         run: |
+          node --test tests/feedback-location-corrections.test.cjs tests/dispatch-catalog-migration.test.cjs tests/dispatch-arrival-access.test.cjs tests/route-practice.test.cjs
           node --test tests/steering-pointer-owner.test.cjs tests/optional-preference-storage.test.cjs tests/city-selector-recovery.test.cjs tests/frame-input-recovery.test.cjs
           node --check shared/legacy-release-forwarder.js
           for file in shared/release-bootstrap-*.js; do node --check "$file"; done

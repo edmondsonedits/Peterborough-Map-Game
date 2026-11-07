@@ -6,8 +6,8 @@
   <meta name="theme-color" content="#07111f">
   <meta name="description" content="Rapid Peterborough route-learning practice. Trace a route on real streets, backtrack to erase, pause and resume, then compare your response route.">
   <title>Route Mapping · Peterborough Emergency Games</title>
-  <link rel="stylesheet" href="../response-simulator/vendor/leaflet-1.9.4/leaflet.css?v=1.6.197">
-  <link rel="stylesheet" href="./styles.css?v=1.6.197">
+  <link rel="stylesheet" href="../response-simulator/vendor/leaflet-1.9.4/leaflet.css?v=1.6.198">
+  <link rel="stylesheet" href="./styles.css?v=1.6.198">
 </head>
 <body>
   <main id="route-app" aria-busy="true">
@@ -28,6 +28,7 @@
     <section id="controls" class="controls glass" aria-label="Route controls">
       <button id="clear-button" class="secondary" type="button">Clear</button>
       <button id="undo-button" class="secondary" type="button" disabled>Undo</button>
+      <button id="show-route-button" class="secondary" type="button" disabled>Show route <small>(practice)</small></button>
       <button id="submit-button" class="primary" type="button" disabled>Submit Route</button>
     </section>
 
@@ -37,14 +38,15 @@
     </nav>
 
     <section id="results" class="results glass" hidden aria-live="polite">
-      <div class="result-heading"><span>ROUTE REVIEW</span><strong id="efficiency-value">—</strong></div>
-      <div class="result-grid">
+      <div class="result-heading"><span id="result-heading">ROUTE REVIEW</span><strong id="efficiency-value">—</strong></div>
+      <div id="result-grid" class="result-grid">
         <div><span>Your route</span><strong id="player-distance">—</strong></div>
         <div><span>Shortest mapped route</span><strong id="shortest-distance">—</strong></div>
         <div><span>Extra</span><strong id="extra-distance">—</strong></div>
       </div>
       <p id="result-note">Blue is your route. Green is a shortest mapped route.</p>
-      <button id="next-button" class="primary next" type="button">Next Call</button>
+      <ol id="reference-streets" class="reference-streets" aria-label="Reference route streets in order" hidden></ol>
+      <div class="review-actions"><button id="try-again-button" class="secondary" type="button" hidden>Try again</button><button id="next-button" class="primary next" type="button">Next Call</button></div>
     </section>
 
     <dialog id="settings-sheet" class="sheet-backdrop" aria-labelledby="settings-title">
@@ -82,14 +84,14 @@
     </div>
   </main>
 
-  <script src="../shared/build-version.js?v=1.6.197"></script>
-  <script src="../response-simulator/vendor/leaflet-1.9.4/leaflet.js?v=1.6.197"></script>
-  <script src="../cities/city-registry.js?v=1.6.197"></script>
-  <script src="../shared/location-changes.js?v=1.6.197"></script>
-  <script src="../shared/city-location-runtime.js?v=1.6.197"></script>
-  <script src="./trace-core.js?v=1.6.197&amp;edit=live-trace-2"></script>
-  <script src="./learning-core.js?v=1.6.197"></script>
-  <script src="./station-core.js?v=1.6.197"></script>
-  <script src="./app.js?v=1.6.197&amp;edit=short-segments-1"></script>
+  <script src="../shared/build-version.js?v=1.6.198"></script>
+  <script src="../response-simulator/vendor/leaflet-1.9.4/leaflet.js?v=1.6.198"></script>
+  <script src="../cities/city-registry.js?v=1.6.198"></script>
+  <script src="../shared/location-changes.js?v=1.6.198"></script>
+  <script src="../shared/city-location-runtime.js?v=1.6.198"></script>
+  <script src="./trace-core.js?v=1.6.198&amp;edit=live-trace-2"></script>
+  <script src="./learning-core.js?v=1.6.198"></script>
+  <script src="./station-core.js?v=1.6.198"></script>
+  <script src="./app.js?v=1.6.198&amp;edit=short-segments-1"></script>
 </body>
 </html>
