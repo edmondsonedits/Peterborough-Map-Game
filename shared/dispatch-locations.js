@@ -50,6 +50,16 @@
       Math.abs(Number(point.lat)) <= 90 && Math.abs(Number(point.lng)) <= 180;
   }
 
+  function samePoint(a,b) { return Boolean(a && b && Number(a.lat)===Number(b.lat) && Number(a.lng)===Number(b.lng)); }
+  function modeledAccess(access) { return access?.method==='modeled-public-road-approach'; }
+
+  function clearMovedAccess(location,previous) {
+    if(modeledAccess(previous?.routeAccess) && modeledAccess(location.routeAccess) && !samePoint(location,previous) && samePoint(location.routeAccess,previous.routeAccess)) {
+      const moved={...location};delete moved.routeAccess;return moved;
+    }
+    return location;
+  }
+
   function normalizeLocation(raw, source) {
     if (raw?.routeAccess !== undefined && !validPoint(raw.routeAccess)) return null;
     const latValue=raw?.lat ?? raw?.latitude, lngValue=raw?.lng ?? raw?.longitude;
@@ -222,9 +232,10 @@
       const original=seedById.get(item.id);
       if(!original)return item;
       const metadata={};
-      for(const key of ['locationKind','difficultyReason','routeAccess','arrivalRadiusMeters','geographicVerificationRef','cityId']) {
+      for(const key of ['locationKind','difficultyReason','arrivalRadiusMeters','geographicVerificationRef','cityId']) {
         if(item[key] == null && original[key] != null)metadata[key]=original[key];
       }
+      if(item.routeAccess == null && original.routeAccess != null && (!modeledAccess(original.routeAccess) || samePoint(item,original)))metadata.routeAccess=original.routeAccess;
       if(original.facilityType)Object.assign(metadata,{facilityType:original.facilityType,providerId:original.providerId,community:original.community,
         ...(original.trainingServices?{trainingServices:original.trainingServices}:{}),
         sources:[...new Set([...(item.sources||[]),...(original.sources||[])])]});
@@ -364,9 +375,13 @@
       const changes=Object.fromEntries(Object.keys(edited)
         .filter(key=>!['id','sourceCallIds','sources'].includes(key)&&JSON.stringify(edited[key])!==JSON.stringify(original[key]))
         .map(key=>[key,edited[key]]));
+      const moved=!samePoint(edited,original);
+      if(moved){changes.lat=edited.lat;changes.lng=edited.lng;}
       if(!Object.keys(changes).length)continue;
       if(destination){
+        const publishedPoint={lat:destination.lat,lng:destination.lng};
         Object.assign(destination,changes);
+        if(moved && !edited.routeAccess && modeledAccess(destination.routeAccess) && !samePoint(destination,publishedPoint))delete destination.routeAccess;
         if(changes.main||changes.sub){
           const service=destination.main==='Medical'?'ems':'fire';
           destination.incidentProfiles={...destination.incidentProfiles,[service]:{sub:destination.sub}};
@@ -395,9 +410,13 @@
       const edited=byId.get(original.id), destination=byAlias.get(original.id);
       if(!edited){if(destination&&destination.sourceCallIds.every(alias=>!byId.has(alias)))deleted.add(destination.id);continue;}
       const changes=Object.fromEntries(Object.keys(edited).filter(key=>!['id','sourceCallIds','sources'].includes(key)&&JSON.stringify(edited[key])!==JSON.stringify(original[key])).map(key=>[key,edited[key]]));
+      const moved=!samePoint(edited,original);
+      if(moved){changes.lat=edited.lat;changes.lng=edited.lng;}
       if(!Object.keys(changes).length)continue;
       if(destination){
+        const publishedPoint={lat:destination.lat,lng:destination.lng};
         Object.assign(destination,changes);
+        if(moved && !edited.routeAccess && modeledAccess(destination.routeAccess) && !samePoint(destination,publishedPoint))delete destination.routeAccess;
         if(changes.main||changes.sub){
           const service=destination.main==='Medical'?'ems':'fire';
           destination.incidentProfiles={...destination.incidentProfiles,[service]:{sub:destination.sub}};
@@ -434,8 +453,16 @@
 
   function ready() { if (!readyPromise) readyPromise = initialize().catch(error=>{readyPromise=null;throw error;}); return readyPromise; }
   function getAll() { return clone(items); }
-  function replaceAll(nextItems) { const next=normalizeList(nextItems,'editor');persist(next);items=next;announce();return getAll(); }
-  function upsert(raw) { const location=normalizeLocation(raw,'editor');if(!location)throw new Error('A dispatch location needs valid latitude and longitude values.');const index=items.findIndex(item=>item.id===location.id),next=clone(items);if(index>=0)next[index]=location;else next.push(location);persist(next);items=next;announce();return clone([location])[0]; }
+  function replaceAll(nextItems) {
+    const previous=new Map(items.map(item=>[item.id,item]));
+    const next=normalizeList(nextItems,'editor').map(item=>clearMovedAccess(item,previous.get(item.id)));
+    persist(next);items=next;announce();return getAll();
+  }
+  function upsert(raw) {
+    let location=normalizeLocation(raw,'editor');if(!location)throw new Error('A dispatch location needs valid latitude and longitude values.');
+    const index=items.findIndex(item=>item.id===location.id),next=clone(items);location=clearMovedAccess(location,items[index]);
+    if(index>=0)next[index]=location;else next.push(location);persist(next);items=next;announce();return clone([location])[0];
+  }
   function remove(id) { const next=items.filter(item=>item.id!==id);persist(next);items=next;announce();return getAll(); }
   function createId(raw) { const normalized=normalizeLocation({...raw,id:''},'editor');const base=normalized?makeId(normalized):`call-custom-${Date.now().toString(36)}`;let candidate=base,suffix=2;while(items.some(item=>item.id===candidate))candidate=`${base}-${suffix++}`;return candidate; }
   function reset() { const next=clone(seed);persist(next);items=next;announce();return getAll(); }

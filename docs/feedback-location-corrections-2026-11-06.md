@@ -90,4 +90,6 @@ All 18 approaches were audited with the actual `response-simulator/road-collisio
 
 ## Validation boundary
 
+Saved player relocations retain their edited coordinate pair during the catalogue upgrade. A newly modeled approach is not inherited when it belongs to a different destination. Moving a call in the editor also clears a copied modeled approach so existing route snapping follows the edited location; save/reload preserves that behavior. Name-only and radius-only edits continue to receive the published approach, and explicitly supplied or independently authored access remains intact.
+
 The focused data checks cover exact approved circles, correct replacement civic coordinates, unique addresses and counts, labels, real Geo practice radius boundaries, and road approach points lying within one metre of their named source geometry. A further regression runs the actual collision core on the shipped public driving extract and checks all 18 approaches through the real incident-arrival resolver, including the existing 20 m access-validation limit. Generated payload propagation, existing-cache migration, all-mode runtime behavior, release version and public deployment are validated separately at release integration.
