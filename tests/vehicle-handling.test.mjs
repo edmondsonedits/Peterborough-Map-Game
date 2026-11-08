@@ -108,20 +108,21 @@ test('Pump 1, 2 and 3 have a tighter low-speed turning circle in both modes with
 const soloFleet = createVehicleFleet(Object.fromEntries(FLEET_DEFINITIONS.map(({id})=>[id,{x:0,z:0,heading:0}])));
 const soloTuning = id => soloFleet.vehicles.find(vehicle=>vehicle.definition.id===id).definition.tuning;
 
-test('solo pumpers and aerial can make either right-angle turn at their road speed cap',()=>{
+test('solo pumpers and aerial make controlled right-angle turns at their road speed cap',()=>{
  for(const id of ['pump-1','pump-2','pump-3','aerial']){
   const tuning=soloTuning(id);
+  const [minimumDistance,maximumDistance]=id==='aerial'?[33,40]:[28,34];
   for(const steering of [-1,1]){
    let state={x:0,z:0,heading:0,speed:tuning.maximumForwardSpeed,steering:0};
    let distance=0;
-   for(let frame=0;frame<60&&state.heading*steering<Math.PI/2;frame++){
+   for(let frame=0;frame<120&&state.heading*steering<Math.PI/2;frame++){
     const prior=state;
     state=stepSoloTruck(state,{throttle:1,steering},1/60,true,tuning);
     distance+=Math.hypot(state.x-prior.x,state.z-prior.z);
    }
    assert.equal(state.speed,tuning.maximumForwardSpeed);
-   assert.ok(state.heading*steering>=Math.PI/2,`${id} should complete the turn within one second`);
-   assert.ok(distance<23,`${id} should complete the turn within an intersection-sized distance`);
+   assert.ok(state.heading*steering>=Math.PI/2,`${id} should complete the turn within two seconds`);
+   assert.ok(distance>=minimumDistance&&distance<=maximumDistance,`${id} turned in ${distance.toFixed(1)} m`);
   }
  }
 });

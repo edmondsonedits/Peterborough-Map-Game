@@ -16,10 +16,10 @@ export const FLEET_DEFINITIONS=Object.freeze([
   definition('car-1','Car 1',1,'medi',MEDI_HANDLING),
 ]);
 const soloFullLockTurnRadii = new Map([
-  ['pump-1', 10],
-  ['pump-2', 10],
-  ['pump-3', 10],
-  ['aerial', 12],
+  ['pump-1', 17],
+  ['pump-2', 17],
+  ['pump-3', 17],
+  ['aerial', 21],
 ]);
 
 export function createVehicleFleet(spawns){
