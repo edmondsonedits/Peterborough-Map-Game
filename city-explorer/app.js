@@ -2,10 +2,10 @@ import {clipTerrainToShorelines, reviewedWaterHoles} from './water-shorelines.js
 import {installWaterAppearance} from './water-appearance.js';
 import {installParkGroundDetail, buildPathCorners, pathCoverageOverlaps, pathGradeStops, pathSurface, recreationTreeClearance, treeForm} from './park-scenery.mjs';
 import { resolveVehicleContact, vehicleExitCandidates } from './apparatus-collision.mjs?v=1.6.199';
-import {createFleetRuntime} from './fleet-runtime.js?v=1.6.195';
+import {createFleetRuntime} from './fleet-runtime.js?v=1.6.199';
 import {aerialTravelReady} from './aerial-controller.mjs';
 import {updateVehiclePresentation} from './vehicle-presentation.js?v=1.6.183';
-import { FLEET_DEFINITIONS, CAR_ONE_BAY, RESCUE_ONE_BAY } from './vehicle-fleet.mjs?v=1.6.195';
+import { FLEET_DEFINITIONS, CAR_ONE_BAY, RESCUE_ONE_BAY } from './vehicle-fleet.mjs?v=1.6.199';
 import {createMultiplayerIntegration} from './multiplayer/integration.mjs?v=1.6.199';
 import {createRemoteActors} from './multiplayer/remote-actors.mjs?v=1.6.199';
 import {createAerialRuntime} from './aerial-runtime.js';
@@ -7349,7 +7349,7 @@ function updateFireTruck(delta) {
     let next = stepFireTruckKinematics(truckState, {
       throttle,
       steering: locked?0:axes.steering,
-    }, delta, truckIsOnRoad(currentSurface.onRoad, truckState.lastRoadWheelCount),activeVehicleTuning(),fleetRuntime?.fleet.activeId);
+    }, delta, truckIsOnRoad(currentSurface.onRoad, truckState.lastRoadWheelCount),activeVehicleTuning());
     next.x = THREE.MathUtils.clamp(next.x, CITY.worldBounds.minX, CITY.worldBounds.maxX);
     next.z = THREE.MathUtils.clamp(next.z, CITY.worldBounds.minZ, CITY.worldBounds.maxZ);
     const dimensions=activeVehicleTuning();

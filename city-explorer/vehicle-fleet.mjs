@@ -15,11 +15,22 @@ export const FLEET_DEFINITIONS=Object.freeze([
   definition('medi','Medi',1,'medi',MEDI_HANDLING),
   definition('car-1','Car 1',1,'medi',MEDI_HANDLING),
 ]);
+const soloFullLockTurnRadii = new Map([
+  ['pump-1', 10],
+  ['pump-2', 10],
+  ['pump-3', 10],
+  ['aerial', 12],
+]);
+
 export function createVehicleFleet(spawns){
   const vehicles=FLEET_DEFINITIONS.map(definition=>{
     const spawn={...spawns[definition.id]};
     if(![spawn.x,spawn.z,spawn.heading].every(Number.isFinite))throw Error(`Invalid spawn for ${definition.id}`);
-    return {definition,spawn,state:{y:0,speed:0,acceleration:0,steering:0,pitch:0,roll:0,wheelRotation:0,...spawn},actor:null};
+    const soloFullLockTurnRadius = soloFullLockTurnRadii.get(definition.id);
+    const soloDefinition = soloFullLockTurnRadius
+      ? {...definition,tuning:{...definition.tuning,soloFullLockTurnRadius}}
+      : definition;
+    return {definition:soloDefinition,spawn,state:{y:0,speed:0,acceleration:0,steering:0,pitch:0,roll:0,wheelRotation:0,...spawn},actor:null};
   });
   let activeId='pump-1';
   return {vehicles,get activeId(){return activeId;},get active(){return vehicles.find(v=>v.definition.id===activeId);},
