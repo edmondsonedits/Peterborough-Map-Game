@@ -1,6 +1,7 @@
 import {test} from 'node:test';
 import assert from 'node:assert/strict';
 import {stepFireTruckKinematics} from '../city-explorer/gameplay-systems.js';
+import {stepFireTruckKinematics as stepSoloTruck} from '../city-explorer/gameplay-systems-1.6.69.js';
 import {FLEET_DEFINITIONS} from '../city-explorer/vehicle-fleet.mjs';
 import {createMultiplayerVehicleInstances} from '../city-explorer/multiplayer/vehicle-instances.mjs';
 
@@ -102,6 +103,44 @@ test('Pump 1, 2 and 3 have a tighter low-speed turning circle in both modes with
  }
  assert.equal(byId('aerial').steeringLowSpeed,.41);
  assert.equal(byId('medi').steeringLowSpeed,.62);
+});
+
+test('solo pumpers and aerial can make either right-angle turn at their road speed cap',()=>{
+ for(const id of ['pump-1','pump-2','pump-3','aerial']){
+  const tuning=byId(id);
+  for(const steering of [-1,1]){
+   let state={x:0,z:0,heading:0,speed:tuning.maximumForwardSpeed,steering:0};
+   let distance=0;
+   for(let frame=0;frame<60&&state.heading*steering<Math.PI/2;frame++){
+    const prior=state;
+    state=stepSoloTruck(state,{throttle:1,steering},1/60,true,tuning,id);
+    distance+=Math.hypot(state.x-prior.x,state.z-prior.z);
+   }
+   assert.equal(state.speed,tuning.maximumForwardSpeed);
+   assert.ok(state.heading*steering>=Math.PI/2,`${id} should complete the turn within one second`);
+   assert.ok(distance<23,`${id} should complete the turn within an intersection-sized distance`);
+  }
+ }
+});
+
+test('solo full lock preserves fine steering, off-road and reverse handling, and other vehicles',()=>{
+ const tuning=byId('pump-1');
+ const forward={x:0,z:0,heading:0,speed:tuning.maximumForwardSpeed,steering:0};
+ const lock={throttle:1,steering:1};
+ const fine={throttle:1,steering:.1};
+ const fineSolo=stepSoloTruck(forward,fine,1/60,true,tuning,'pump-1');
+ const fineOriginal=stepSoloTruck(forward,fine,1/60,true,tuning);
+ assert.ok(Math.abs(fineSolo.steering-fineOriginal.steering)<.0001);
+ assert.deepEqual(stepSoloTruck(forward,lock,1/60,false,tuning,'pump-1'),
+  stepSoloTruck(forward,lock,1/60,false,tuning));
+ const reverse={...forward,speed:-tuning.maximumReverseSpeed};
+ const backing={throttle:-1,steering:1};
+ assert.deepEqual(stepSoloTruck(reverse,backing,1/60,true,tuning,'pump-1'),
+  stepSoloTruck(reverse,backing,1/60,true,tuning));
+ for(const id of ['rescue-1','medi','car-1']){
+  assert.deepEqual(stepSoloTruck(forward,lock,1/60,true,byId(id),id),
+   stepSoloTruck(forward,lock,1/60,true,byId(id)));
+ }
 });
 
 test('multiplayer pumpers inherit the same pumper steering profile as single-player', () => {

@@ -110,12 +110,19 @@ export const ACTIVE_FIRE_STATION = FIRE_STATIONS.find(station => station.number 
 // allowing ?station=1|2|3 to choose the starting fire hall.
 export const FIRE_STATION_ONE = ACTIVE_FIRE_STATION;
 
+const fullLockTurnRadii = new Map([
+  ['pump-1', 10],
+  ['pump-2', 10],
+  ['pump-3', 10],
+  ['aerial', 12],
+]);
+
 /**
  * Advance the fire apparatus with progressive analog throttle and steering.
  * Small joystick movement produces a small steering angle instead of full lock,
  * while acceleration and braking ramp rather than stepping instantly.
  */
-export function stepFireTruckKinematics(current, input, delta, onRoad = true, tuning = TRUCK_TUNING) {
+export function stepFireTruckKinematics(current, input, delta, onRoad = true, tuning = TRUCK_TUNING, soloVehicleId) {
   const dt = Math.min(0.04, Math.max(0, Number(delta) || 0));
   const throttle = clamp(input?.throttle, -1, 1);
   const steeringInput = clamp(input?.steering, -1, 1);
@@ -173,7 +180,14 @@ export function stepFireTruckKinematics(current, input, delta, onRoad = true, tu
     + (tuning.steeringHighSpeed - tuning.steeringLowSpeed) * speedRatio;
   const steeringMagnitude = Math.pow(Math.abs(steeringInput), 1.08);
   const shapedSteeringInput = Math.sign(steeringInput) * steeringMagnitude;
-  const targetSteering = shapedSteeringInput * maximumSteer;
+  const fullLockRadius = fullLockTurnRadii.get(soloVehicleId);
+  let targetSteering = shapedSteeringInput * maximumSteer;
+  if (onRoad && speed > 0 && fullLockRadius) {
+    // Add most of the extra lock near the edge of the stick so small inputs
+    // still make fine corrections. Fade it in as the truck starts rolling.
+    const extraLock = Math.max(0, Math.atan(tuning.wheelbase / fullLockRadius) - maximumSteer);
+    targetSteering += shapedSteeringInput * extraLock * Math.min(1, speed / 4) * steeringMagnitude ** 3;
+  }
 
   // Small corrections come in softly, while stronger turns remain responsive.
   const steeringResponse = steeringMagnitude > 0.0005
