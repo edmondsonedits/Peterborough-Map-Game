@@ -2,11 +2,32 @@ import test from 'node:test';
 import assert from 'node:assert/strict';
 import { createExplorerWorld } from '../city-explorer/multiplayer/server/src/world-config.mjs';
 
-test('real server config has eight unique collision-free instances and eight finite player spawns', async () => {
+test('real server config has seven unique collision-free instances and eight finite player spawns', async () => {
   const { world, vehicles, spawn } = await createExplorerWorld();
-  assert.equal(vehicles.length, 8);
-  assert.equal(new Set(vehicles.map(vehicle => vehicle.id)).size, 8);
-  assert.equal(vehicles.filter(vehicle => vehicle.templateId === 'pump-1').length, 4);
+  assert.equal(vehicles.length, 7);
+  assert.equal(new Set(vehicles.map(vehicle => vehicle.id)).size, 7);
+  assert.equal(vehicles.filter(vehicle => vehicle.templateId === 'pump-1').length, 1);
+  const station = world.stations.find(value => value.number === 1);
+  const leftToRight = ['car-1', 'pump-1', 'aerial', 'medi', 'rescue-1'];
+  assert.deepEqual(vehicles.filter(vehicle => Math.hypot(vehicle.pose.x - station.anchor.x, vehicle.pose.z - station.anchor.z) < 20)
+    .sort((a,b) => (a.pose.x - b.pose.x) * Math.cos(station.yaw) - (a.pose.z - b.pose.z) * Math.sin(station.yaw))
+    .map(vehicle => vehicle.id), leftToRight);
+  for (const number of [2, 3]) {
+    const hall = world.stations.find(value => value.number === number);
+    const pump = vehicles.find(vehicle => vehicle.id === `pump-${number}`);
+    assert.ok(Math.hypot(pump.pose.x - hall.anchor.x, pump.pose.z - hall.anchor.z) < 20);
+  }
+  const rescue = vehicles.find(vehicle => vehicle.id === 'rescue-1');
+  const dx = rescue.pose.x - station.anchor.x, dz = rescue.pose.z - station.anchor.z;
+  const lateral = dx * Math.cos(station.yaw) - dz * Math.sin(station.yaw);
+  assert.ok(Math.abs(lateral - Math.max(...station.layout.frontDoorCenters)) < 0.001);
+  assert.equal(rescue.pose.heading, station.yaw);
+  const car = vehicles.find(vehicle => vehicle.id === 'car-1');
+  const carLateral = (car.pose.x - station.anchor.x) * Math.cos(station.yaw)
+    - (car.pose.z - station.anchor.z) * Math.sin(station.yaw);
+  assert.ok(Math.abs(carLateral - Math.min(...station.layout.frontDoorCenters)) < 0.001);
+  assert.equal(car.pose.heading, station.yaw);
+  assert.deepEqual(car.tuning, vehicles.find(vehicle => vehicle.id === 'medi').tuning);
   for (const vehicle of vehicles) {
     assert.ok(world.readyAt(vehicle.pose.x, vehicle.pose.z, vehicle.tuning.length / 2));
     assert.equal(world.blocks(vehicle.pose, vehicle.pose, { kind: 'vehicle', dimensions: vehicle.dimensions }), false);

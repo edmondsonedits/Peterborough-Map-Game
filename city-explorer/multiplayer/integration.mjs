@@ -1,7 +1,7 @@
-import { createRoomUi } from './room-ui.mjs?v=1.6.188';
-import { createClientRuntime } from './client-runtime.mjs?v=1.6.188';
-import { createColyseusTransport } from './transport-colyseus.mjs?v=1.6.188';
-import { loadWorldCollision } from './world-collision.mjs?v=1.6.188';
+import { createRoomUi } from './room-ui.mjs?v=1.6.201';
+import { createClientRuntime } from './client-runtime.mjs?v=1.6.201';
+import { createColyseusTransport } from './transport-colyseus.mjs?v=1.6.201';
+import { loadWorldCollision } from './world-collision.mjs?v=1.6.201';
 
 const loopback = host => ['localhost', '127.0.0.1', '[::1]', '::1'].includes(host);
 export function resolveMultiplayerServerUrl(pageUrl, configuredUrl, queryValue) {
@@ -21,14 +21,11 @@ export function createMultiplayerIntegration({ parent, pageUrl = location.href, 
   try { serverUrl = resolveMultiplayerServerUrl(pageUrl, configuredUrl, query); } catch (error) { endpointError = error.message; }
   let world = null, transport = null, runtime = null, session = null, entered = false, entering = null, disposed = false, generation = 0, roomPanelGeneration = 0, connectionStatus = 'offline', lastViewSignature = '';
   const view = { available: Boolean(serverUrl), message: endpointError ?? (serverUrl ? '' : 'Multiplayer server is not configured yet.'), rooms: [], session: null, players: [], vehicles: [], connectionStatus };
-  const ui = (factories.createRoomUi ?? createRoomUi)({ parent, callbacks: { listRooms, createRoom, joinRoom, leaveRoom, admin, selectVehicle }, onOpenChange: open => {
+  const ui = (factories.createRoomUi ?? createRoomUi)({ parent, callbacks: { listRooms, createRoom, joinRoom, leaveRoom, admin, selectVehicle, toggleAerial }, onOpenChange: open => {
     if (!open) { roomPanelGeneration++; transport?.cancelWarmup?.(); update({ message: '' }); return; }
     const openGeneration = roomPanelGeneration;
     if (serverUrl && !session) void listRooms().then(rooms => { if (!disposed && openGeneration === roomPanelGeneration) update({ rooms }); }).catch(error => { if (!disposed && openGeneration === roomPanelGeneration) update({ message: error.message }); });
   } });
-  const placement = parent.ownerDocument.createElement('style');
-  placement.textContent = '@media (min-width:541px){.ce-roomui{left:160px;top:80px}}@media (max-width:540px){.ce-roomui{left:max(10px,env(safe-area-inset-left));top:max(100px,env(safe-area-inset-top))}}';
-  parent.append(placement);
   function update(next) { Object.assign(view, next); ui.update(next); }
   function releaseLocal(message = '', { deferDisposal = false } = {}) {
     generation++;
@@ -73,11 +70,35 @@ export function createMultiplayerIntegration({ parent, pageUrl = location.href, 
         const players = [state.snapshot.player, ...state.snapshot.players].map(player => ({ ...player, playerId: player.id,
           seat: Number(player.name?.match(/^Player ([1-8])$/)?.[1]) || null,
           isAdmin: player.id === session?.playerId && Boolean(session?.isAdmin) }));
-        const vehicles = state.snapshot.vehicles.map(vehicle => ({ id: vehicle.id, label: vehicle.id.replace(/-/g, ' ').replace(/\b\w/g, c => c.toUpperCase()), available: !vehicle.driverPlayerId }));
-        const signature = JSON.stringify([players.map(player => [player.id, player.entityGeneration]), vehicles.map(vehicle => [vehicle.id, vehicle.available]), session?.isAdmin, state.mode, state.vehicleId]);
+        const vehicles = state.snapshot.vehicles.map(vehicle => ({
+          id: vehicle.id,
+          label: vehicle.id.replace(/-/g, ' ').replace(/\b\w/g, c => c.toUpperCase()),
+          available: vehicle.occupantCount === undefined
+            ? !vehicle.driverPlayerId || vehicle.driverPlayerId === state.snapshot.player.id
+            : vehicle.occupantCount < 4 || vehicle.id === state.vehicleId,
+          occupantCount: vehicle.occupantCount,
+          aerialPhase: vehicle.driverPlayerId === state.snapshot.player.id ? vehicle.aerial?.phase : undefined,
+          occupiedByOther: Boolean(vehicle.driverPlayerId && vehicle.driverPlayerId !== state.snapshot.player.id),
+        }));
+        const signature = JSON.stringify([players.map(player => [player.id, player.entityGeneration]), vehicles, session?.isAdmin, state.mode, state.vehicleId]);
         if (signature !== lastViewSignature) { lastViewSignature = signature; update({ players, vehicles, session: session ? { ...session, vehicleId: state.vehicleId, connectionStatus } : null, selectedVehicleId: state.vehicleId }); }
       },
-      onEvent: event => { if (transport !== activeTransport) return; if (event.type === 'world-version-mismatch') onMessage('Multiplayer world version differs from this map. Reload the page.'); if (event.type === 'protocol-version-mismatch') onMessage('Multiplayer protocol differs from this client. Reload the page.'); if (event.type === 'action-result' && event.ok === false) onMessage(`Action unavailable: ${event.reason || 'server rejected it'}`); },
+      onEvent: event => {
+        if (transport !== activeTransport) return;
+        if (event.type === 'world-version-mismatch') onMessage('Multiplayer world version differs from this map. Reload the page.');
+        if (event.type === 'protocol-version-mismatch') onMessage('Multiplayer protocol differs from this client. Reload the page.');
+        if (event.type === 'action-result' && event.ok === false) {
+          const reason = event.error || event.reason;
+          const explanations = {
+            'target-world-unready': 'The road near that vehicle is loading. Try again in a moment.',
+            'vehicle-occupied': 'All four seats in that vehicle are occupied.',
+            'stale-epoch-or-sequence': 'Your vehicle state changed. Try again.',
+            'vehicle-out-of-range-or-moving': 'Move closer and wait for the vehicle to stop.',
+          };
+          const message = explanations[reason] ?? `Action unavailable: ${reason || 'server rejected it'}`;
+          onMessage(message); update({ message });
+        }
+      },
     });
     return transport;
   }
@@ -126,10 +147,24 @@ export function createMultiplayerIntegration({ parent, pageUrl = location.href, 
     finally { if (oldRuntime) oldRuntime.dispose(); else leaving?.dispose(); }
   }
   async function admin(command) { if (!transport || !session) throw new Error('Join a room first'); const active = transport, roomId = session.roomId; const result = await active.admin(command); if (transport !== active || session?.roomId !== roomId) return result; session = active.getSession(); update({ session: { ...session, ...(result.roomCode ? { roomCode: result.roomCode } : {}), connectionStatus }, ...(typeof result.locked === 'boolean' ? { locked: result.locked } : {}) }); return result; }
-  function selectVehicle({ vehicleId }) { return sendAction({ type: runtime?.getState().vehicleId ? 'switchVehicle' : 'enterVehicle', vehicleId }); }
+  function selectVehicle({ vehicleId }) {
+    const snapshot = runtime?.latestSnapshot;
+    if (!session || !snapshot) return { error: true, message: 'Join a room before selecting a vehicle.' };
+    const target = snapshot.vehicles.find(vehicle => vehicle.id === vehicleId);
+    if (!target) return { error: true, message: 'That vehicle is no longer available.' };
+    if (target.occupantCount >= 4) return { error: true, message: 'All four seats are occupied.' };
+    if (runtime.getState().vehicleId === vehicleId) return { error: true, message: 'You are already in that vehicle.' };
+    return sendAction({ type: 'selectVehicle', vehicleId }) || { error: true, message: 'Vehicle request could not be sent.' };
+  }
+  function toggleAerial() {
+    const snapshot = runtime?.latestSnapshot;
+    const vehicle = snapshot?.vehicles.find(item => item.id === snapshot.player.vehicleId);
+    if (!vehicle?.aerial || vehicle.driverPlayerId !== snapshot.player.id) return { error: true, message: 'Take the aerial driver seat first.' };
+    return sendAction({ type: vehicle.aerial.phase === 'travel' ? 'deployAerial' : 'stowAerial', vehicleId: vehicle.id });
+  }
   function sendAction(action) { if (!runtime || !session) return false; return runtime.sendAction(action); }
   function frame(deltaMs, controls) { if (!entered || !runtime) return null; return runtime.advanceFrame(deltaMs, controls); }
-  function dispose() { if (disposed) return; disposed = true; releaseLocal(); ui.dispose(); placement.remove(); }
+  function dispose() { if (disposed) return; disposed = true; releaseLocal(); ui.dispose(); }
   update(view);
   return { ui, frame, sendAction, leaveRoom, dispose, get active() { return entered && Boolean(runtime?.latestSnapshot); }, get runtime() { return runtime; }, get world() { return world; }, get session() { return session; }, get serverUrl() { return serverUrl; } };
 }

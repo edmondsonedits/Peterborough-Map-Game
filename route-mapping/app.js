@@ -59,6 +59,7 @@
     undo:document.getElementById('undo-button'), submit:document.getElementById('submit-button'), results:document.getElementById('results'),
     efficiency:document.getElementById('efficiency-value'), playerDistance:document.getElementById('player-distance'), shortestDistance:document.getElementById('shortest-distance'),
     extraDistance:document.getElementById('extra-distance'), resultNote:document.getElementById('result-note'), next:document.getElementById('next-button'),
+    showRoute:document.getElementById('show-route-button'), tryAgain:document.getElementById('try-again-button'), referenceStreets:document.getElementById('reference-streets'), resultHeading:document.getElementById('result-heading'), resultGrid:document.getElementById('result-grid'),
     settingsButton:document.getElementById('settings-button'), settingsSheet:document.getElementById('settings-sheet'), settingsForm:document.getElementById('settings-form'),
     settingsClose:document.getElementById('settings-close'), serviceSelect:document.getElementById('service-select'), baseSelect:document.getElementById('base-select'),
     streetForgiveness:document.getElementById('street-forgiveness'), streetForgivenessValue:document.getElementById('street-forgiveness-value'),
@@ -72,7 +73,8 @@
     map:null, graph:null, traceCore:null, endpointMarker:null, calls:[], originalCalls:[], advancedCalls:[], routeResponses:null, difficultyIndex:null, service:'fire', base:null, call:null, callCount:0, recentCallIds:[], mode:'loading', mapZooming:false,
     skillProfiles:null, skillProfile:null, adaptiveTarget:null, progression:null, phase:null, selectedBaseId:null, selectedStartCompleted:0, lastDecisionAnalysis:null, tuning:null,
     stroke:null, drawingPointer:null, originAnchor:null, destinationAnchor:null, history:[], playerRoute:null,
-    shortestRoute:null, playerLayers:[], referenceLayers:[], startMarker:null, callMarker:null, mapGestureSnapshot:null
+    shortestRoute:null, playerLayers:[], referenceLayers:[], startMarker:null, callMarker:null, mapGestureSnapshot:null,
+    assisted:false, revealedExercises:new Set()
   };
 
   function toXY(lat,lng){ return {x:(lng-cityData.centerLng)*METERS_PER_LNG,y:(lat-cityData.centerLat)*METERS_PER_LAT}; }
@@ -394,6 +396,7 @@
     const last=source.lastCall&&Number.isFinite(Number(source.lastCall.lat))&&Number.isFinite(Number(source.lastCall.lng))
       ? {id:String(source.lastCall.id||''),name:String(source.lastCall.name||source.lastCall.addr||'Previous Call'),addr:String(source.lastCall.addr||source.lastCall.name||'Previous Call'),lat:Number(source.lastCall.lat),lng:Number(source.lastCall.lng),...(source.lastCall.responseBaseId?{responseBaseId:String(source.lastCall.responseBaseId)}:{})}
       : null;
+    const access=routeAccessPoint(source.lastCall);if(last&&access)last.routeAccess=access;
     return {completed:Math.max(0,Math.floor(Number(source.completed)||0)),lastCall:last,updatedAt:Number(source.updatedAt)||0};
   }
 
@@ -491,6 +494,7 @@
     };
     const responseBaseId=state.call.routeBaseId||state.base?.responseBaseId;
     if(responseBaseId)state.progression.lastCall.responseBaseId=responseBaseId;
+    const access=routeAccessPoint(state.call);if(access)state.progression.lastCall.routeAccess=access;
     state.progression.updatedAt=Date.now();
     saveProgression();
   }
@@ -643,6 +647,40 @@
   function clearReference(){clearLayers(state.referenceLayers);}
   function renderReference(){clearReference();if(state.shortestRoute)state.referenceLayers.push(...drawCasedRoute(state.shortestRoute,'#22c55e',{weight:5,weightCasing:9,opacity:.88,casingOpacity:.55,dashArray:'10 9'}));}
 
+  // Keep the assistance flag across retries, tuning and station/service navigation
+  // in this tab. Changing drawing settings does not create a new exercise.
+  const PRACTICE_SESSION_KEY='ptboRouteMappingRevealedV1';
+  function exerciseKey(){
+    const base=state.base,call=state.call;if(!base||!call)return '';
+    return [cityData.id,Number(base.spawnLat??base.lat).toFixed(6),Number(base.spawnLng??base.lng).toFixed(6),String(call.id||''),Number(call.lat).toFixed(6),Number(call.lng).toFixed(6)].join(':');
+  }
+  function restoreAssistance(){
+    try{const saved=JSON.parse(sessionStorage.getItem(PRACTICE_SESSION_KEY)||'[]');if(Array.isArray(saved))for(const key of saved)if(typeof key==='string')state.revealedExercises.add(key);}catch(_){}
+    state.assisted=state.revealedExercises.has(exerciseKey());
+  }
+  function markAssisted(){
+    state.assisted=true;state.revealedExercises.add(exerciseKey());
+    try{sessionStorage.setItem(PRACTICE_SESSION_KEY,JSON.stringify([...state.revealedExercises]));}catch(_){}
+  }
+  function renderReferenceStreets(){
+    if(!ui.referenceStreets?.replaceChildren)return;
+    ui.referenceStreets.replaceChildren();
+    let previous='';
+    for(const edge of state.shortestRoute?.edges||[]){
+      const name=String(edge.name||'Unnamed road').trim()||'Unnamed road';
+      if(name===previous)continue;
+      const item=document.createElement('li');item.textContent=name;ui.referenceStreets.appendChild(item);previous=name;
+    }
+    ui.referenceStreets.hidden=!state.shortestRoute;
+  }
+  function revealRoute(){
+    if(!['drawing','editing'].includes(state.mode)||!state.call)return;
+    cancelDrawing();markAssisted();precomputeReferences();renderReference();renderReferenceStreets();
+    ui.efficiency.textContent='Unscored';
+    ui.resultNote.textContent=state.shortestRoute?'Green shows a shortest mapped route. This call and its retries are practice only and unscored. Try again to draw from memory.':'No reference route is available in the training road network for this call. This attempt is unscored. Try again or choose Next Call.';
+    setMode('practice');setHint('');fitExercise();
+  }
+
   function icon(className,label){return L.divIcon({className:'',html:'<div class="'+className+'">'+label+'</div>',iconSize:[34,34],iconAnchor:[17,17]});}
 
   let baseAccessCache=null;
@@ -726,7 +764,11 @@
     // road access, bounded to 260 m and able to depart toward a service call.
     return baseAnchor(base)||{lat:Number(base.spawnLat??base.lat),lng:Number(base.spawnLng??base.lng)};
   }
-  function callPoint(call){return {lat:Number(call.lat),lng:Number(call.lng)};}
+  function routeAccessPoint(call){
+    const access=call?.routeAccess,lat=Number(access?.lat),lng=Number(access?.lng);
+    return access&&access.lat!=null&&access.lng!=null&&Number.isFinite(lat)&&Number.isFinite(lng)&&Math.abs(lat)<=90&&Math.abs(lng)<=180?{lat,lng}:null;
+  }
+  function callPoint(call){return routeAccessPoint(call)||{lat:Number(call.lat),lng:Number(call.lng)};}
   function callAccessPoint(call){const point=callPoint(call),access=state.traceCore?.snap(point,CONFIG.destinationSearchRadius);return access?{lat:access.lat,lng:access.lng}:point;}
 
   function updateMarkers(){
@@ -748,7 +790,7 @@
       };
       const header=box(ui.dispatchCard);
       if(header)topInset=Math.max(topInset,header.bottom-mapBox.top+markerClearance);
-      const lower=[box(ui.hint),box(ui.controls),box(ui.mapNav)].filter(Boolean);
+      const lower=[box(ui.hint),box(ui.controls),box(ui.mapNav),box(ui.results)].filter(Boolean);
       if(lower.length)bottomInset=Math.max(bottomInset,mapBox.bottom-Math.min(...lower.map(rect=>rect.top))+markerClearance);
       const nav=box(ui.mapNav);
       if(nav)rightInset=Math.max(rightInset,mapBox.right-nav.left+markerClearance);
@@ -756,7 +798,14 @@
     state.map.fitBounds([[s.lat,s.lng],[e.lat,e.lng]],{paddingTopLeft:[45,topInset],paddingBottomRight:[rightInset,bottomInset],maxZoom:15,animate:!window.matchMedia?.('(prefers-reduced-motion: reduce)').matches});
   }
   function setHint(text){ui.hint.textContent=text;}
-  function setMode(mode){state.mode=mode;updateDrawTarget();ui.submit.disabled=!(mode==='editing'&&state.playerRoute?.complete);ui.undo.disabled=!(state.history.length&&(mode==='drawing'||mode==='editing'));ui.clear.disabled=mode==='loading'||mode==='results';ui.results.hidden=mode!=='results';}
+  function setMode(mode){
+    state.mode=mode;updateDrawTarget();ui.submit.disabled=!(mode==='editing'&&state.playerRoute?.complete);ui.undo.disabled=!(state.history.length&&(mode==='drawing'||mode==='editing'));ui.clear.disabled=!['drawing','editing'].includes(mode);ui.results.hidden=!['results','practice'].includes(mode);
+    if(ui.showRoute)ui.showRoute.disabled=!['drawing','editing'].includes(mode);
+    if(ui.tryAgain)ui.tryAgain.hidden=!state.assisted;
+    if(ui.resultHeading)ui.resultHeading.textContent=state.assisted?'PRACTICE · UNSCORED':'ROUTE REVIEW';
+    if(ui.resultGrid)ui.resultGrid.hidden=mode==='practice';
+    if(state.callCount)ui.callNumber.textContent='CALL '+state.callCount+(state.assisted?' · PRACTICE':'');
+  }
 
   function clearRaw(){
     const pointer=state.drawingPointer,stroke=state.stroke;
@@ -768,8 +817,8 @@
 
   function resetDrawing(){
     clearRaw();clearReference();clearLayers(state.playerLayers);clearLayer(state.endpointMarker);state.endpointMarker=null;
-    state.history=[];state.playerRoute=null;state.shortestRoute=null;
-    setMode('drawing');setHint('Drag from START. Backtrack to erase. Release to pause.');fitExercise();
+    state.history=[];state.playerRoute=null;state.shortestRoute=null;state.originAnchor=null;state.destinationAnchor=null;
+    setMode('drawing');setHint(state.assisted?'Practice retry · unscored. Drag from START to draw from memory.':'Drag from START. Backtrack to erase. Release to pause.');fitExercise();
   }
 
   function pointerPoint(event){const rect=ui.map.getBoundingClientRect(),point=L.point(event.clientX-rect.left,event.clientY-rect.top),ll=state.map.containerPointToLatLng(point);return {lat:ll.lat,lng:ll.lng};}
@@ -847,7 +896,9 @@
   }
 
   function precomputeReferences(){
-    state.shortestRoute=state.traceCore.between(state.originAnchor,state.destinationAnchor);
+    state.originAnchor=state.originAnchor||baseAnchor(state.base);
+    state.destinationAnchor=state.destinationAnchor||state.traceCore.snap(callPoint(state.call),CONFIG.destinationSearchRadius);
+    state.shortestRoute=state.originAnchor&&state.destinationAnchor?state.traceCore.between(state.originAnchor,state.destinationAnchor):null;
   }
   function undo(){
     if(!state.history.length||!['drawing','editing'].includes(state.mode))return;
@@ -863,15 +914,16 @@
     const playerRoads=state.playerRoute.mainRoads||[],recommendedRoads=state.shortestRoute&&state.shortestRoute.mainRoads||[],different=recommendedRoads.find(name=>name&&!playerRoads.includes(name));
     if(Number.isFinite(eff)&&eff>=97)ui.resultNote.textContent='Efficient route. Green shows a shortest mapped route; close alternatives are valid.';else if(different)ui.resultNote.textContent='Compare where the green route uses '+different+' instead. Green shows the shortest mapped road route.';else ui.resultNote.textContent='Blue is your route. Green is a shortest mapped route.';
     let decisionLearning=null;
-    if(Number.isFinite(eff)){
+    if(!state.assisted&&Number.isFinite(eff)){
       updateHiddenSkill(eff);
       decisionLearning=updateDecisionLearning();
     }
     if(decisionLearning&&Number.isFinite(extra)){
       ui.resultNote.textContent='Use '+decisionLearning.correctRoad+' instead of '+decisionLearning.chosenRoad+'. That section added '+formatDistance(decisionLearning.extraDistance)+'.';
     }
-    recordProgressionCompletion();
-    renderReference();setMode('results');setHint('');
+    if(state.assisted)ui.resultNote.textContent='Practice complete · unscored. Blue is your route; green is a shortest mapped route. This call and its retries do not affect skill or progression.';
+    else recordProgressionCompletion();
+    renderReference();renderReferenceStreets();setMode('results');setHint('');
   }
 
   function decisionKey(edge){return window.PTBO_ROUTE_LEARNING.decisionKey(edge);}
@@ -1065,6 +1117,7 @@
     const previousPhase=state.phase?.index;
     let phase;
     try{phase=applyProgressionStart();state.call=chooseCall();}catch(error){showFailure(error);return;}
+    restoreAssistance();state.originAnchor=null;state.destinationAnchor=null;
     state.callCount+=1;state.playerRoute=null;state.shortestRoute=null;state.history=[];ui.callNumber.textContent='CALL '+state.callCount;ui.baseLabel.textContent=state.base.shortName||state.base.name;ui.callType.textContent=responseCallLabel(state.call);ui.callAddress.textContent=state.call.addr||state.call.name;
     const difficulty=clamp(Math.round(Number(state.call.sessionDifficulty??state.call.difficulty)||0),0,100);
     ui.difficultyLabel.textContent=state.call.decisionAnalysis?.traps?.length?'DECISION CHALLENGE':'ROUTE REFRESHER';
@@ -1364,7 +1417,7 @@
     ui.drawSurface.addEventListener('pointerdown',onDrawStart);ui.drawSurface.addEventListener('pointermove',onDrawMove);ui.drawSurface.addEventListener('pointerup',onDrawEnd);ui.drawSurface.addEventListener('pointercancel',cancelDrawing);ui.drawSurface.addEventListener('lostpointercapture',cancelDrawing);
     window.addEventListener('blur',()=>{cancelDrawing();});document.addEventListener('visibilitychange',()=>{if(document.hidden){cancelDrawing();}});
     ui.zoomIn.addEventListener('click',()=>state.map.zoomIn());ui.zoomOut.addEventListener('click',()=>state.map.zoomOut());
-    ui.clear.addEventListener('click',resetDrawing);ui.undo.addEventListener('click',undo);ui.submit.addEventListener('click',submitRoute);ui.next.addEventListener('click',newCall);ui.settingsButton.addEventListener('click',openSettings);ui.settingsClose.addEventListener('click',closeSettings);ui.retry.addEventListener('click',()=>location.reload());
+    ui.clear.addEventListener('click',resetDrawing);ui.undo.addEventListener('click',undo);ui.submit.addEventListener('click',submitRoute);ui.next.addEventListener('click',newCall);ui.showRoute?.addEventListener('click',revealRoute);ui.tryAgain?.addEventListener('click',resetDrawing);ui.settingsButton.addEventListener('click',openSettings);ui.settingsClose.addEventListener('click',closeSettings);ui.retry.addEventListener('click',()=>location.reload());
     ui.serviceSelect.addEventListener('change',()=>{fillBases(ui.serviceSelect.value,null);ui.phaseNote.textContent=phaseNoteText(ui.serviceSelect.value);});
     for(const input of [ui.streetForgiveness,ui.straightPreference,ui.arrivalDistance,ui.challengeFrequency])input?.addEventListener('input',()=>displayTuning(draftTuning()));
     ui.settingsReset?.addEventListener('click',()=>displayTuning(DEFAULT_TUNING));

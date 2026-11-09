@@ -27,7 +27,9 @@
     "cityAddressPoints": "https://citymaps.peterborough.ca/arcgis/rest/services/Aerial_Context_Labels/MapServer/0",
     "cityPointsOfInterest": "https://citymaps.peterborough.ca/arcgis/rest/services/eMaps2_0_Operational/MapServer/29",
     "cityParks": "https://citymaps.peterborough.ca/arcgis/rest/services/eMaps2_0_Operational/MapServer/32",
-    "roadConnections": "https://github.com/edmondsonedits/Peterborough-Map-Game/blob/a2be43b7753e80a953bfad3b435cfab4da5b7805/city-explorer/data/osm-roads.geojson"
+    "roadConnections": "https://github.com/edmondsonedits/Peterborough-Map-Game/blob/a2be43b7753e80a953bfad3b435cfab4da5b7805/city-explorer/data/osm-roads.geojson",
+    "feedbackGeographicReview": "docs/feedback-location-corrections-2026-11-06.md",
+    "publicDrivingRoads": "https://github.com/edmondsonedits/Peterborough-Map-Game/blob/f2b0c0deaacde6acb6b2f0f9f1be4161d49db1cb/city-explorer/data/osm-public-roads.geojson"
   },
   "locations": [
     {
@@ -144,9 +146,9 @@
       "name": "Del Crary Park",
       "address": "100 George St N",
       "street": "George St N",
-      "lat": 44.2968833,
-      "lng": -78.3190866,
-      "radiusMeters": 60,
+      "lat": 44.29533459772756,
+      "lng": -78.31773521913112,
+      "radiusMeters": 106,
       "difficulty": "easy",
       "crossStreets": [
         "Townsend Street",
@@ -165,7 +167,7 @@
       "crossStreetSource": "https://github.com/edmondsonedits/Peterborough-Map-Game/blob/a2be43b7753e80a953bfad3b435cfab4da5b7805/city-explorer/data/osm-roads.geojson",
       "difficultyReason": "Del Crary Park is one of the explicitly requested familiar landmarks.",
       "origin": "Existing address",
-      "addressVerification": "City GIS civic address and coordinates",
+      "addressVerification": "City GIS civic address; recognition centre adjusted to the approved landmark area",
       "addressSource": "https://citymaps.peterborough.ca/arcgis/rest/services/Aerial_Context_Labels/MapServer/0",
       "cityAddressObjectIds": [
         11673
@@ -174,7 +176,23 @@
       "sourceCallIds": [
         "call-del-crary-park-marina-3ovqwx"
       ],
-      "notes": []
+      "notes": [],
+      "recognitionAreaReview": {
+        "reviewedAt": "2026-11-06",
+        "basis": "Approved landmark recognition area correction",
+        "source": "docs/feedback-location-corrections-2026-11-06.md"
+      },
+      "routeAccess": {
+        "lat": 44.29527371,
+        "lng": -78.3192777,
+        "road": "George Street North",
+        "sourceWayId": "way/759024592",
+        "method": "modeled-public-road-approach",
+        "publicRoad": true,
+        "verifiedEntrance": false,
+        "source": "https://github.com/edmondsonedits/Peterborough-Map-Game/blob/a2be43b7753e80a953bfad3b435cfab4da5b7805/city-explorer/data/osm-roads.geojson"
+      },
+      "arrivalRadiusMeters": 60
     },
     {
       "id": "ptbo-location-cad2430e06a4a8",
@@ -220,7 +238,7 @@
       "street": "Armour Rd",
       "lat": 44.3309442,
       "lng": -78.3099086,
-      "radiusMeters": 60,
+      "radiusMeters": 96,
       "difficulty": "easy",
       "crossStreets": [
         "Paddock Wood",
@@ -248,16 +266,32 @@
       "sourceCallIds": [
         "call-tass-1vs40se"
       ],
-      "notes": []
+      "notes": [],
+      "recognitionAreaReview": {
+        "reviewedAt": "2026-11-06",
+        "basis": "Approved landmark recognition area correction",
+        "source": "docs/feedback-location-corrections-2026-11-06.md"
+      },
+      "routeAccess": {
+        "lat": 44.33055271,
+        "lng": -78.30861369,
+        "road": "Armour Road",
+        "sourceWayId": "way/33964111",
+        "method": "modeled-public-road-approach",
+        "publicRoad": true,
+        "verifiedEntrance": false,
+        "source": "https://github.com/edmondsonedits/Peterborough-Map-Game/blob/a2be43b7753e80a953bfad3b435cfab4da5b7805/city-explorer/data/osm-roads.geojson"
+      },
+      "arrivalRadiusMeters": 60
     },
     {
       "id": "ptbo-location-4ab2e83a0adbe9",
       "city": "peterborough",
-      "name": null,
-      "address": "1030 Water St",
+      "name": "Peterborough Retirement Residence",
+      "address": "1039 Water St",
       "street": "Water St",
-      "lat": 44.328583,
-      "lng": -78.3146458,
+      "lat": 44.32918481812732,
+      "lng": -78.31616960122571,
       "radiusMeters": 60,
       "difficulty": "easy",
       "crossStreets": [
@@ -275,18 +309,31 @@
         ]
       ],
       "crossStreetSource": "https://github.com/edmondsonedits/Peterborough-Map-Game/blob/a2be43b7753e80a953bfad3b435cfab4da5b7805/city-explorer/data/osm-roads.geojson",
-      "difficultyReason": "The supplied address is on Water Street, an explicitly requested main road.",
+      "difficultyReason": "Named retirement residence on Water Street, an explicitly requested main road.",
       "origin": "Existing address",
-      "addressVerification": "City GIS civic address and coordinates",
+      "addressVerification": "City GIS active civic address and coordinates",
       "addressSource": "https://citymaps.peterborough.ca/arcgis/rest/services/Aerial_Context_Labels/MapServer/0",
       "cityAddressObjectIds": [
-        28543
+        17579
       ],
-      "placeNameSource": null,
+      "placeNameSource": "https://peterboroughretirement.ca/contact/",
       "sourceCallIds": [
         "call-peterborough-golf-country-club-x7gtoh"
       ],
-      "notes": []
+      "notes": [
+        "Replaced the former 1030 Water exercise with the active residence address on the opposite side of Water Street."
+      ],
+      "routeAccess": {
+        "lat": 44.32924671,
+        "lng": -78.31573855,
+        "road": "Water Street",
+        "sourceWayId": "way/33963141",
+        "method": "modeled-public-road-approach",
+        "publicRoad": true,
+        "verifiedEntrance": false,
+        "source": "https://github.com/edmondsonedits/Peterborough-Map-Game/blob/a2be43b7753e80a953bfad3b435cfab4da5b7805/city-explorer/data/osm-roads.geojson"
+      },
+      "arrivalRadiusMeters": 60
     },
     {
       "id": "ptbo-location-bed309e1730248",
@@ -327,7 +374,7 @@
     {
       "id": "ptbo-location-0a91934bcce034",
       "city": "peterborough",
-      "name": "Canadian Tire - Lansdowne",
+      "name": "Canadian Tire Gas Station - Lansdowne",
       "address": "1050 Lansdowne St W",
       "street": "Lansdowne St W",
       "lat": 44.2821096,
@@ -358,7 +405,18 @@
       ],
       "placeNameSource": "https://www.canadiantire.ca/en/store-details/on/peterborough-on-1741.html",
       "sourceCallIds": [],
-      "notes": []
+      "notes": [],
+      "routeAccess": {
+        "lat": 44.28171658,
+        "lng": -78.34603974,
+        "road": "Lansdowne Street West",
+        "sourceWayId": "way/58425635",
+        "method": "modeled-public-road-approach",
+        "publicRoad": true,
+        "verifiedEntrance": false,
+        "source": "https://github.com/edmondsonedits/Peterborough-Map-Game/blob/a2be43b7753e80a953bfad3b435cfab4da5b7805/city-explorer/data/osm-roads.geojson"
+      },
+      "arrivalRadiusMeters": 60
     },
     {
       "id": "ptbo-location-43baa97ede192d",
@@ -366,9 +424,9 @@
       "name": "General Electric",
       "address": "107 Park St N",
       "street": "Park St N",
-      "lat": 44.2952758,
-      "lng": -78.3295488,
-      "radiusMeters": 60,
+      "lat": 44.29516564984372,
+      "lng": -78.3300518366313,
+      "radiusMeters": 206,
       "difficulty": "easy",
       "crossStreets": [
         "Rink Street",
@@ -387,7 +445,7 @@
       "crossStreetSource": "https://github.com/edmondsonedits/Peterborough-Map-Game/blob/a2be43b7753e80a953bfad3b435cfab4da5b7805/city-explorer/data/osm-roads.geojson",
       "difficultyReason": "The former GE complex is a prominent industrial landmark on the Park Street corridor.",
       "origin": "Existing address",
-      "addressVerification": "City GIS civic address and coordinates",
+      "addressVerification": "City GIS civic address; recognition centre adjusted to the approved landmark area",
       "addressSource": "https://citymaps.peterborough.ca/arcgis/rest/services/Aerial_Context_Labels/MapServer/0",
       "cityAddressObjectIds": [
         18812,
@@ -419,17 +477,84 @@
       "sourceCallIds": [
         "call-general-electric-building-1yk1t22"
       ],
-      "notes": []
+      "notes": [],
+      "recognitionAreaReview": {
+        "reviewedAt": "2026-11-06",
+        "basis": "Approved landmark recognition area correction",
+        "source": "docs/feedback-location-corrections-2026-11-06.md"
+      },
+      "routeAccess": {
+        "lat": 44.29609843,
+        "lng": -78.32659025,
+        "road": "Park Street North",
+        "sourceWayId": "way/56938891",
+        "method": "modeled-public-road-approach",
+        "publicRoad": true,
+        "verifiedEntrance": false,
+        "source": "https://github.com/edmondsonedits/Peterborough-Map-Game/blob/a2be43b7753e80a953bfad3b435cfab4da5b7805/city-explorer/data/osm-roads.geojson"
+      },
+      "arrivalRadiusMeters": 60
     },
     {
       "id": "ptbo-location-2d19279bc7af07",
       "city": "peterborough",
+      "name": "Art Gallery of Peterborough",
+      "address": "250 Crescent St",
+      "street": "Crescent St",
+      "lat": 44.29463433497778,
+      "lng": -78.31778322195797,
+      "radiusMeters": 60,
+      "difficulty": "easy",
+      "crossStreets": [
+        "Lake Street",
+        "Perry Street"
+      ],
+      "crossStreetCoordinates": [
+        [
+          44.2943099,
+          -78.3180729
+        ],
+        [
+          44.2946952,
+          -78.3181107
+        ]
+      ],
+      "crossStreetSource": "https://github.com/edmondsonedits/Peterborough-Map-Game/blob/a2be43b7753e80a953bfad3b435cfab4da5b7805/city-explorer/data/osm-roads.geojson",
+      "difficultyReason": "Recognizable named cultural destination with its civic address confirmed by the City GIS layer.",
+      "origin": "Existing address",
+      "addressVerification": "City GIS active civic address and coordinates",
+      "addressSource": "https://citymaps.peterborough.ca/arcgis/rest/services/Aerial_Context_Labels/MapServer/0",
+      "cityAddressObjectIds": [
+        25258
+      ],
+      "placeNameSource": "https://agp.on.ca/",
+      "sourceCallIds": [
+        "call-quality-inn-1w7pq14"
+      ],
+      "notes": [
+        "Reconciles the duplicate Quality Inn slot. Canadian Tire at 1200 Lansdowne was not added because the existing Summit Plaza exercise already uses that address."
+      ],
+      "routeAccess": {
+        "lat": 44.29461826,
+        "lng": -78.31810315,
+        "road": "Crescent Street",
+        "sourceWayId": "way/489241808",
+        "method": "modeled-public-road-approach",
+        "publicRoad": true,
+        "verifiedEntrance": false,
+        "source": "https://github.com/edmondsonedits/Peterborough-Map-Game/blob/a2be43b7753e80a953bfad3b435cfab4da5b7805/city-explorer/data/osm-roads.geojson"
+      },
+      "arrivalRadiusMeters": 60
+    },
+    {
+      "id": "ptbo-location-e9b5c1759b3e50",
+      "city": "peterborough",
       "name": "Quality Inn Peterborough",
       "address": "1074 Lansdowne St W",
       "street": "Lansdowne St W",
-      "lat": 44.282225,
-      "lng": -78.3467129,
-      "radiusMeters": 60,
+      "lat": 44.2824014528922,
+      "lng": -78.34677814238762,
+      "radiusMeters": 65,
       "difficulty": "easy",
       "crossStreets": [
         "Webber Avenue",
@@ -448,16 +573,18 @@
       "crossStreetSource": "https://github.com/edmondsonedits/Peterborough-Map-Game/blob/a2be43b7753e80a953bfad3b435cfab4da5b7805/city-explorer/data/osm-roads.geojson",
       "difficultyReason": "Named hotel directly on Lansdowne Street, an explicitly requested main road.",
       "origin": "Existing address",
-      "addressVerification": "City GIS civic address and coordinates",
+      "addressVerification": "City GIS civic address; recognition centre adjusted to the approved hotel area",
       "addressSource": "https://citymaps.peterborough.ca/arcgis/rest/services/Aerial_Context_Labels/MapServer/0",
       "cityAddressObjectIds": [
         8211
       ],
       "placeNameSource": "https://www.choicehotels.com/en-ca/ontario/peterborough/quality-inn-hotels/cn290",
       "sourceCallIds": [
-        "call-quality-inn-1w7pq14"
+        "call-tim-hortons-mv4a01"
       ],
-      "notes": [],
+      "notes": [
+        "Replaced the 1140 Lansdowne exercise with the verified hotel; one Quality Inn remains in the shared catalogue."
+      ],
       "placeNameReview": {
         "reviewedAt": "2026-10-29",
         "status": "corroborated",
@@ -473,62 +600,23 @@
         "civicAddressSource": "https://citymaps.peterborough.ca/arcgis/rest/services/Aerial_Context_Labels/MapServer/0",
         "coordinatesVerified": false,
         "coordinateReviewNote": "Existing civic point retained. This label review does not verify a vehicle entrance, footprint, room, dock, parking area or live dispatch availability."
-      }
-    },
-    {
-      "id": "ptbo-location-e9b5c1759b3e50",
-      "city": "peterborough",
-      "name": "1140 Lansdowne St W",
-      "address": "1140 Lansdowne St W",
-      "street": "Lansdowne St W",
-      "lat": 44.2811655,
-      "lng": -78.3503302,
-      "radiusMeters": 60,
-      "difficulty": "easy",
-      "crossStreets": [
-        "Webber Avenue",
-        "Rye Street"
-      ],
-      "crossStreetCoordinates": [
-        [
-          44.2813952,
-          -78.3472292
-        ],
-        [
-          44.2818194,
-          -78.3456352
-        ]
-      ],
-      "crossStreetSource": "https://github.com/edmondsonedits/Peterborough-Map-Game/blob/a2be43b7753e80a953bfad3b435cfab4da5b7805/city-explorer/data/osm-roads.geojson",
-      "difficultyReason": "Tim Hortons is an explicitly requested familiar chain on Lansdowne Street.",
-      "origin": "Existing address",
-      "addressVerification": "City GIS civic address and coordinates",
-      "addressSource": "https://citymaps.peterborough.ca/arcgis/rest/services/Aerial_Context_Labels/MapServer/0",
-      "cityAddressObjectIds": [
-        22310
-      ],
-      "placeNameSource": "City GIS civic address only; no current venue name asserted.",
-      "sourceCallIds": [
-        "call-tim-hortons-mv4a01"
-      ],
-      "notes": [],
-      "placeNameReview": {
-        "reviewedAt": "2026-10-29",
-        "status": "unsupported-name-address",
-        "originalName": "Tim Hortons",
-        "aliases": [
-          "Tim Hortons"
-        ],
-        "nameBasis": "civic-address-only",
-        "reason": "Current Tim Hortons Peterborough roster lists 1200 Lansdowne and other locations but not 1140. This is not proof of closure or a move; retain civic point and use civic label.",
-        "sourceUrls": [
-          "https://locations.timhortons.ca/en/locations-list/on/peterborough/",
-          "https://citymaps.peterborough.ca/arcgis/rest/services/Aerial_Context_Labels/MapServer/0"
-        ],
-        "civicAddressSource": "https://citymaps.peterborough.ca/arcgis/rest/services/Aerial_Context_Labels/MapServer/0",
-        "coordinatesVerified": false,
-        "coordinateReviewNote": "Existing civic point retained. This label review does not verify a vehicle entrance, footprint, room, dock, parking area or live dispatch availability."
-      }
+      },
+      "recognitionAreaReview": {
+        "reviewedAt": "2026-11-06",
+        "basis": "Approved landmark recognition area correction",
+        "source": "docs/feedback-location-corrections-2026-11-06.md"
+      },
+      "routeAccess": {
+        "lat": 44.2816181,
+        "lng": -78.34656472,
+        "road": "Lansdowne Street West",
+        "sourceWayId": "way/1340162026",
+        "method": "modeled-public-road-approach",
+        "publicRoad": true,
+        "verifiedEntrance": false,
+        "source": "https://github.com/edmondsonedits/Peterborough-Map-Game/blob/a2be43b7753e80a953bfad3b435cfab4da5b7805/city-explorer/data/osm-roads.geojson"
+      },
+      "arrivalRadiusMeters": 60
     },
     {
       "id": "ptbo-location-949889a0ff4a03",
@@ -572,9 +660,9 @@
       "name": "Portage Place",
       "address": "1154 Chemong Rd",
       "street": "Chemong Rd",
-      "lat": 44.3290951,
-      "lng": -78.3386261,
-      "radiusMeters": 60,
+      "lat": 44.32954295935968,
+      "lng": -78.33893534644824,
+      "radiusMeters": 143,
       "difficulty": "easy",
       "crossStreets": [
         "Towerhill Road",
@@ -593,14 +681,30 @@
       "crossStreetSource": "https://github.com/edmondsonedits/Peterborough-Map-Game/blob/a2be43b7753e80a953bfad3b435cfab4da5b7805/city-explorer/data/osm-roads.geojson",
       "difficultyReason": "Recognizable major destination or main-road location, consistent with the Easy tier.",
       "origin": "Added named place",
-      "addressVerification": "City GIS civic address and coordinates",
+      "addressVerification": "City GIS civic address; recognition centre adjusted to the approved landmark area",
       "addressSource": "https://citymaps.peterborough.ca/arcgis/rest/services/Aerial_Context_Labels/MapServer/0",
       "cityAddressObjectIds": [
         11707
       ],
       "placeNameSource": "https://citymaps.peterborough.ca/arcgis/rest/services/eMaps2_0_Operational/MapServer/29",
       "sourceCallIds": [],
-      "notes": []
+      "notes": [],
+      "recognitionAreaReview": {
+        "reviewedAt": "2026-11-06",
+        "basis": "Approved landmark recognition area correction",
+        "source": "docs/feedback-location-corrections-2026-11-06.md"
+      },
+      "routeAccess": {
+        "lat": 44.32860679,
+        "lng": -78.34076751,
+        "road": "Chemong Road",
+        "sourceWayId": "way/460007925",
+        "method": "modeled-public-road-approach",
+        "publicRoad": true,
+        "verifiedEntrance": false,
+        "source": "https://github.com/edmondsonedits/Peterborough-Map-Game/blob/a2be43b7753e80a953bfad3b435cfab4da5b7805/city-explorer/data/osm-roads.geojson"
+      },
+      "arrivalRadiusMeters": 60
     },
     {
       "id": "ptbo-location-2d74a802cfc837",
@@ -716,9 +820,9 @@
       "name": "James Strath Public",
       "address": "1175 Brealey Dr",
       "street": "Brealey Dr",
-      "lat": 44.2865615,
-      "lng": -78.3796371,
-      "radiusMeters": 60,
+      "lat": 44.28656434204066,
+      "lng": -78.37785999035896,
+      "radiusMeters": 80,
       "difficulty": "easy",
       "crossStreets": [
         "Hewitt Drive",
@@ -737,7 +841,7 @@
       "crossStreetSource": "https://github.com/edmondsonedits/Peterborough-Map-Game/blob/a2be43b7753e80a953bfad3b435cfab4da5b7805/city-explorer/data/osm-roads.geojson",
       "difficultyReason": "Recognizable major destination or main-road location, consistent with the Easy tier.",
       "origin": "Added named place",
-      "addressVerification": "City GIS civic address and coordinates",
+      "addressVerification": "City GIS civic address; recognition centre adjusted to the approved landmark area",
       "addressSource": "https://citymaps.peterborough.ca/arcgis/rest/services/Aerial_Context_Labels/MapServer/0",
       "cityAddressObjectIds": [
         18877,
@@ -745,7 +849,23 @@
       ],
       "placeNameSource": "https://citymaps.peterborough.ca/arcgis/rest/services/eMaps2_0_Operational/MapServer/29",
       "sourceCallIds": [],
-      "notes": []
+      "notes": [],
+      "recognitionAreaReview": {
+        "reviewedAt": "2026-11-06",
+        "basis": "Approved landmark recognition area correction",
+        "source": "docs/feedback-location-corrections-2026-11-06.md"
+      },
+      "routeAccess": {
+        "lat": 44.28683041160024,
+        "lng": -78.37669312196262,
+        "road": "Brealey Drive",
+        "sourceWayId": "way/460581475",
+        "method": "modeled-public-road-approach",
+        "publicRoad": true,
+        "verifiedEntrance": false,
+        "source": "https://github.com/edmondsonedits/Peterborough-Map-Game/blob/f2b0c0deaacde6acb6b2f0f9f1be4161d49db1cb/city-explorer/data/osm-public-roads.geojson"
+      },
+      "arrivalRadiusMeters": 60
     },
     {
       "id": "ptbo-location-34b710c05644d9",
@@ -1932,9 +2052,9 @@
       "name": "Quaker Foods City Square Park",
       "address": "215 Charlotte St",
       "street": "Charlotte St",
-      "lat": 44.3031592,
-      "lng": -78.3224336,
-      "radiusMeters": 60,
+      "lat": 44.30283664719648,
+      "lng": -78.32237005233765,
+      "radiusMeters": 52,
       "difficulty": "easy",
       "crossStreets": [
         "Aylmer Street North",
@@ -1953,14 +2073,30 @@
       "crossStreetSource": "https://github.com/edmondsonedits/Peterborough-Map-Game/blob/a2be43b7753e80a953bfad3b435cfab4da5b7805/city-explorer/data/osm-roads.geojson",
       "difficultyReason": "Recognizable major destination or main-road location, consistent with the Easy tier.",
       "origin": "Added named place",
-      "addressVerification": "City GIS civic address and coordinates",
+      "addressVerification": "City GIS civic address; recognition centre adjusted to the approved landmark area",
       "addressSource": "https://citymaps.peterborough.ca/arcgis/rest/services/Aerial_Context_Labels/MapServer/0",
       "cityAddressObjectIds": [
         24442
       ],
       "placeNameSource": "https://citymaps.peterborough.ca/arcgis/rest/services/eMaps2_0_Operational/MapServer/32",
       "sourceCallIds": [],
-      "notes": []
+      "notes": [],
+      "recognitionAreaReview": {
+        "reviewedAt": "2026-11-06",
+        "basis": "Approved landmark recognition area correction",
+        "source": "docs/feedback-location-corrections-2026-11-06.md"
+      },
+      "routeAccess": {
+        "lat": 44.30333349,
+        "lng": -78.32241082,
+        "road": "Charlotte Street",
+        "sourceWayId": "way/454960675",
+        "method": "modeled-public-road-approach",
+        "publicRoad": true,
+        "verifiedEntrance": false,
+        "source": "https://github.com/edmondsonedits/Peterborough-Map-Game/blob/a2be43b7753e80a953bfad3b435cfab4da5b7805/city-explorer/data/osm-roads.geojson"
+      },
+      "arrivalRadiusMeters": 60
     },
     {
       "id": "ptbo-location-2cc95ed0c08c13",
@@ -2489,9 +2625,9 @@
       "name": "Market Hall Performing Arts Centre",
       "address": "336 George St N",
       "street": "George St N",
-      "lat": 44.303635,
-      "lng": -78.3196808,
-      "radiusMeters": 60,
+      "lat": 44.303677409425326,
+      "lng": -78.31966638684924,
+      "radiusMeters": 35,
       "difficulty": "easy",
       "crossStreets": [
         "Charlotte Street",
@@ -2510,14 +2646,30 @@
       "crossStreetSource": "https://github.com/edmondsonedits/Peterborough-Map-Game/blob/a2be43b7753e80a953bfad3b435cfab4da5b7805/city-explorer/data/osm-roads.geojson",
       "difficultyReason": "Recognizable major destination or main-road location, consistent with the Easy tier.",
       "origin": "Added named place",
-      "addressVerification": "City GIS civic address and coordinates",
+      "addressVerification": "City GIS civic address; recognition centre adjusted to the approved landmark area",
       "addressSource": "https://citymaps.peterborough.ca/arcgis/rest/services/Aerial_Context_Labels/MapServer/0",
       "cityAddressObjectIds": [
         25536
       ],
       "placeNameSource": "https://citymaps.peterborough.ca/arcgis/rest/services/eMaps2_0_Operational/MapServer/29",
       "sourceCallIds": [],
-      "notes": []
+      "notes": [],
+      "recognitionAreaReview": {
+        "reviewedAt": "2026-11-06",
+        "basis": "Approved landmark recognition area correction",
+        "source": "docs/feedback-location-corrections-2026-11-06.md"
+      },
+      "routeAccess": {
+        "lat": 44.30366789,
+        "lng": -78.3198981,
+        "road": "George Street North",
+        "sourceWayId": "way/40793460",
+        "method": "modeled-public-road-approach",
+        "publicRoad": true,
+        "verifiedEntrance": false,
+        "source": "https://github.com/edmondsonedits/Peterborough-Map-Game/blob/a2be43b7753e80a953bfad3b435cfab4da5b7805/city-explorer/data/osm-roads.geojson"
+      },
+      "arrivalRadiusMeters": 60
     },
     {
       "id": "ptbo-location-89f15cccf1a029",
@@ -2941,9 +3093,9 @@
       "name": "Costco Wholesale Peterborough Warehouse",
       "address": "485 The Parkway",
       "street": "The Parkway",
-      "lat": 44.2724858,
-      "lng": -78.341027,
-      "radiusMeters": 60,
+      "lat": 44.27180093429314,
+      "lng": -78.33986878155372,
+      "radiusMeters": 98,
       "difficulty": "easy",
       "crossStreets": [
         "The Queensway",
@@ -2962,7 +3114,7 @@
       "crossStreetSource": "https://github.com/edmondsonedits/Peterborough-Map-Game/blob/a2be43b7753e80a953bfad3b435cfab4da5b7805/city-explorer/data/osm-roads.geojson",
       "difficultyReason": "Costco is a major big-box destination on The Parkway.",
       "origin": "Existing address",
-      "addressVerification": "City GIS civic address and coordinates",
+      "addressVerification": "City GIS civic address; recognition centre adjusted to the approved landmark area",
       "addressSource": "https://citymaps.peterborough.ca/arcgis/rest/services/Aerial_Context_Labels/MapServer/0",
       "cityAddressObjectIds": [
         27926
@@ -2987,7 +3139,23 @@
         "civicAddressSource": "https://citymaps.peterborough.ca/arcgis/rest/services/Aerial_Context_Labels/MapServer/0",
         "coordinatesVerified": false,
         "coordinateReviewNote": "Existing civic point retained. This label review does not verify a vehicle entrance, footprint, room, dock, parking area or live dispatch availability."
-      }
+      },
+      "recognitionAreaReview": {
+        "reviewedAt": "2026-11-06",
+        "basis": "Approved landmark recognition area correction",
+        "source": "docs/feedback-location-corrections-2026-11-06.md"
+      },
+      "routeAccess": {
+        "lat": 44.2727912,
+        "lng": -78.3416633,
+        "road": "The Parkway",
+        "sourceWayId": "way/364843838",
+        "method": "modeled-public-road-approach",
+        "publicRoad": true,
+        "verifiedEntrance": false,
+        "source": "https://github.com/edmondsonedits/Peterborough-Map-Game/blob/a2be43b7753e80a953bfad3b435cfab4da5b7805/city-explorer/data/osm-roads.geojson"
+      },
+      "arrivalRadiusMeters": 60
     },
     {
       "id": "ptbo-location-32d381c0f8b65b",
@@ -3390,12 +3558,12 @@
     {
       "id": "ptbo-location-fcb0f7dc19933c",
       "city": "peterborough",
-      "name": "Lansdowne Place",
+      "name": "Lansdowne Place Mall",
       "address": "645 Lansdowne St W",
       "street": "Lansdowne St W",
-      "lat": 44.2834593,
-      "lng": -78.3313037,
-      "radiusMeters": 60,
+      "lat": 44.28290843889817,
+      "lng": -78.33136085530941,
+      "radiusMeters": 245,
       "difficulty": "easy",
       "crossStreets": [
         "High Street",
@@ -3414,7 +3582,7 @@
       "crossStreetSource": "https://github.com/edmondsonedits/Peterborough-Map-Game/blob/a2be43b7753e80a953bfad3b435cfab4da5b7805/city-explorer/data/osm-roads.geojson",
       "difficultyReason": "Lansdowne Place is a major shopping mall on a requested main road.",
       "origin": "Existing address",
-      "addressVerification": "City GIS civic address and coordinates",
+      "addressVerification": "City GIS civic address; recognition centre adjusted to the approved landmark area",
       "addressSource": "https://citymaps.peterborough.ca/arcgis/rest/services/Aerial_Context_Labels/MapServer/0",
       "cityAddressObjectIds": [
         25564
@@ -3423,7 +3591,23 @@
       "sourceCallIds": [
         "call-lansdowne-place-mall-4ao3em"
       ],
-      "notes": []
+      "notes": [],
+      "recognitionAreaReview": {
+        "reviewedAt": "2026-11-06",
+        "basis": "Approved landmark recognition area correction",
+        "source": "docs/feedback-location-corrections-2026-11-06.md"
+      },
+      "routeAccess": {
+        "lat": 44.28510181,
+        "lng": -78.33250119,
+        "road": "Lansdowne Street West",
+        "sourceWayId": "way/550182200",
+        "method": "modeled-public-road-approach",
+        "publicRoad": true,
+        "verifiedEntrance": false,
+        "source": "https://github.com/edmondsonedits/Peterborough-Map-Game/blob/a2be43b7753e80a953bfad3b435cfab4da5b7805/city-explorer/data/osm-roads.geojson"
+      },
+      "arrivalRadiusMeters": 60
     },
     {
       "id": "ptbo-location-f05d9bff8c501f",
@@ -3613,9 +3797,9 @@
       "name": "Wellness Centre",
       "address": "775 Brealey Dr",
       "street": "Brealey Dr",
-      "lat": 44.2738187,
-      "lng": -78.373261,
-      "radiusMeters": 60,
+      "lat": 44.27359855790262,
+      "lng": -78.37366459596444,
+      "radiusMeters": 70,
       "difficulty": "easy",
       "crossStreets": [
         "Lansdowne Street West",
@@ -3634,7 +3818,7 @@
       "crossStreetSource": "https://github.com/edmondsonedits/Peterborough-Map-Game/blob/a2be43b7753e80a953bfad3b435cfab4da5b7805/city-explorer/data/osm-roads.geojson",
       "difficultyReason": "Major named municipal recreation centre with Brealey Drive as the main-road reference.",
       "origin": "Existing address",
-      "addressVerification": "City GIS civic address and coordinates",
+      "addressVerification": "City GIS civic address; recognition centre adjusted to the approved landmark area",
       "addressSource": "https://citymaps.peterborough.ca/arcgis/rest/services/Aerial_Context_Labels/MapServer/0",
       "cityAddressObjectIds": [
         25077
@@ -3643,7 +3827,23 @@
       "sourceCallIds": [
         "call-peterborough-sport-wellness-centre-t5p0c8"
       ],
-      "notes": []
+      "notes": [],
+      "recognitionAreaReview": {
+        "reviewedAt": "2026-11-06",
+        "basis": "Approved landmark recognition area correction",
+        "source": "docs/feedback-location-corrections-2026-11-06.md"
+      },
+      "routeAccess": {
+        "lat": 44.27417431,
+        "lng": -78.37125557,
+        "road": "Brealey Drive",
+        "sourceWayId": "way/758783583",
+        "method": "modeled-public-road-approach",
+        "publicRoad": true,
+        "verifiedEntrance": false,
+        "source": "https://github.com/edmondsonedits/Peterborough-Map-Game/blob/a2be43b7753e80a953bfad3b435cfab4da5b7805/city-explorer/data/osm-roads.geojson"
+      },
+      "arrivalRadiusMeters": 60
     },
     {
       "id": "ptbo-location-078a813cd2c082",
@@ -3725,9 +3925,9 @@
       "name": "Tim Hortons",
       "address": "898 Monaghan Rd",
       "street": "Monaghan Rd",
-      "lat": 44.287846,
-      "lng": -78.3278939,
-      "radiusMeters": 60,
+      "lat": 44.28682164170232,
+      "lng": -78.3295583485264,
+      "radiusMeters": 24,
       "difficulty": "easy",
       "crossStreets": [
         "Lansdowne Street West",
@@ -3746,7 +3946,7 @@
       "crossStreetSource": "https://github.com/edmondsonedits/Peterborough-Map-Game/blob/a2be43b7753e80a953bfad3b435cfab4da5b7805/city-explorer/data/osm-roads.geojson",
       "difficultyReason": "Tim Hortons is an explicitly requested familiar chain, also on Monaghan Road.",
       "origin": "Existing address",
-      "addressVerification": "City GIS civic address and coordinates",
+      "addressVerification": "City GIS civic address; recognition centre adjusted to the approved landmark area",
       "addressSource": "https://citymaps.peterborough.ca/arcgis/rest/services/Aerial_Context_Labels/MapServer/0",
       "cityAddressObjectIds": [
         11869
@@ -3772,7 +3972,23 @@
         "civicAddressSource": "https://citymaps.peterborough.ca/arcgis/rest/services/Aerial_Context_Labels/MapServer/0",
         "coordinatesVerified": false,
         "coordinateReviewNote": "Existing civic point retained. This label review does not verify a vehicle entrance, footprint, room, dock, parking area or live dispatch availability."
-      }
+      },
+      "recognitionAreaReview": {
+        "reviewedAt": "2026-11-06",
+        "basis": "Approved landmark recognition area correction",
+        "source": "docs/feedback-location-corrections-2026-11-06.md"
+      },
+      "routeAccess": {
+        "lat": 44.28670632,
+        "lng": -78.33007701,
+        "road": "Monaghan Road",
+        "sourceWayId": "way/531130756",
+        "method": "modeled-public-road-approach",
+        "publicRoad": true,
+        "verifiedEntrance": false,
+        "source": "https://github.com/edmondsonedits/Peterborough-Map-Game/blob/a2be43b7753e80a953bfad3b435cfab4da5b7805/city-explorer/data/osm-roads.geojson"
+      },
+      "arrivalRadiusMeters": 60
     },
     {
       "id": "ptbo-location-4fe4e471909dab",
@@ -3854,9 +4070,9 @@
       "name": "Little Lake Cemetery",
       "address": "915 Haggart St",
       "street": "Haggart St",
-      "lat": 44.2929352,
-      "lng": -78.3108522,
-      "radiusMeters": 60,
+      "lat": 44.29396759342578,
+      "lng": -78.30848699600733,
+      "radiusMeters": 210,
       "difficulty": "easy",
       "crossStreets": [
         "Ware Street",
@@ -3875,7 +4091,7 @@
       "crossStreetSource": "https://github.com/edmondsonedits/Peterborough-Map-Game/blob/a2be43b7753e80a953bfad3b435cfab4da5b7805/city-explorer/data/osm-roads.geojson",
       "difficultyReason": "Large named cemetery provides a recognizable destination beyond its local address street.",
       "origin": "Existing address",
-      "addressVerification": "City GIS civic address and coordinates",
+      "addressVerification": "City GIS civic address; recognition centre adjusted to the approved landmark area",
       "addressSource": "https://citymaps.peterborough.ca/arcgis/rest/services/Aerial_Context_Labels/MapServer/0",
       "cityAddressObjectIds": [
         22170
@@ -3900,7 +4116,23 @@
         "civicAddressSource": "https://citymaps.peterborough.ca/arcgis/rest/services/Aerial_Context_Labels/MapServer/0",
         "coordinatesVerified": false,
         "coordinateReviewNote": "Existing civic point retained. This label review does not verify a vehicle entrance, footprint, room, dock, parking area or live dispatch availability."
-      }
+      },
+      "recognitionAreaReview": {
+        "reviewedAt": "2026-11-06",
+        "basis": "Approved landmark recognition area correction",
+        "source": "docs/feedback-location-corrections-2026-11-06.md"
+      },
+      "routeAccess": {
+        "lat": 44.29342818,
+        "lng": -78.31080939,
+        "road": "Haggart Street",
+        "sourceWayId": "way/489240865",
+        "method": "modeled-public-road-approach",
+        "publicRoad": true,
+        "verifiedEntrance": false,
+        "source": "https://github.com/edmondsonedits/Peterborough-Map-Game/blob/a2be43b7753e80a953bfad3b435cfab4da5b7805/city-explorer/data/osm-roads.geojson"
+      },
+      "arrivalRadiusMeters": 60
     },
     {
       "id": "ptbo-location-6727facfb31979",
@@ -3908,9 +4140,9 @@
       "name": "Walmart Supercentre - Lansdowne St W",
       "address": "950 Lansdowne St W",
       "street": "Lansdowne St W",
-      "lat": 44.2850895,
-      "lng": -78.3440319,
-      "radiusMeters": 60,
+      "lat": 44.28396833482003,
+      "lng": -78.34344149115287,
+      "radiusMeters": 89,
       "difficulty": "easy",
       "crossStreets": [
         "The Parkway",
@@ -3929,7 +4161,7 @@
       "crossStreetSource": "https://github.com/edmondsonedits/Peterborough-Map-Game/blob/a2be43b7753e80a953bfad3b435cfab4da5b7805/city-explorer/data/osm-roads.geojson",
       "difficultyReason": "Recognizable major destination or main-road location, consistent with the Easy tier.",
       "origin": "Added named place",
-      "addressVerification": "City GIS civic address and coordinates",
+      "addressVerification": "City GIS civic address; recognition centre adjusted to the approved landmark area",
       "addressSource": "https://citymaps.peterborough.ca/arcgis/rest/services/Aerial_Context_Labels/MapServer/0",
       "cityAddressObjectIds": [
         21821,
@@ -3945,7 +4177,23 @@
       ],
       "placeNameSource": "https://citymaps.peterborough.ca/arcgis/rest/services/eMaps2_0_Operational/MapServer/29",
       "sourceCallIds": [],
-      "notes": []
+      "notes": [],
+      "recognitionAreaReview": {
+        "reviewedAt": "2026-11-06",
+        "basis": "Approved landmark recognition area correction",
+        "source": "docs/feedback-location-corrections-2026-11-06.md"
+      },
+      "routeAccess": {
+        "lat": 44.28258154,
+        "lng": -78.34271847,
+        "road": "Lansdowne Street West",
+        "sourceWayId": "way/460579796",
+        "method": "modeled-public-road-approach",
+        "publicRoad": true,
+        "verifiedEntrance": false,
+        "source": "https://github.com/edmondsonedits/Peterborough-Map-Game/blob/a2be43b7753e80a953bfad3b435cfab4da5b7805/city-explorer/data/osm-roads.geojson"
+      },
+      "arrivalRadiusMeters": 60
     },
     {
       "id": "ptbo-location-ce728eac153584",
@@ -4732,10 +4980,10 @@
       "id": "ptbo-location-cb32b00a0b6464",
       "city": "peterborough",
       "name": null,
-      "address": "1757 Ravenwood Dr",
+      "address": "1735 Ravenwood Dr",
       "street": "Ravenwood Dr",
-      "lat": 44.3050051,
-      "lng": -78.3653441,
+      "lat": 44.3042528468656,
+      "lng": -78.36497815958737,
       "radiusMeters": 60,
       "difficulty": "medium",
       "crossStreets": [
@@ -4758,13 +5006,26 @@
       "addressVerification": "City GIS civic address and coordinates",
       "addressSource": "https://citymaps.peterborough.ca/arcgis/rest/services/Aerial_Context_Labels/MapServer/0",
       "cityAddressObjectIds": [
-        26613
+        25669
       ],
       "placeNameSource": null,
       "sourceCallIds": [
         "call-residence-home-1ew3lln"
       ],
-      "notes": []
+      "notes": [
+        "Selected a real civic address nearer the middle of Ravenwood Drive between Fair Avenue and Parkhill Road West. The original 1757 civic coordinates were not moved or relabeled as 1735."
+      ],
+      "routeAccess": {
+        "lat": 44.30432711,
+        "lng": -78.36466365,
+        "road": "Ravenwood Drive",
+        "sourceWayId": "way/177042769",
+        "method": "modeled-public-road-approach",
+        "publicRoad": true,
+        "verifiedEntrance": false,
+        "source": "https://github.com/edmondsonedits/Peterborough-Map-Game/blob/a2be43b7753e80a953bfad3b435cfab4da5b7805/city-explorer/data/osm-roads.geojson"
+      },
+      "arrivalRadiusMeters": 60
     },
     {
       "id": "ptbo-location-06aa60b60d432d",
@@ -8042,5 +8303,6 @@
       ],
       "notes": []
     }
-  ]
+  ],
+  "datasetRevision": "1.6.198"
 }

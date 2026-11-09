@@ -12,10 +12,10 @@ export function createRoomUi({ parent = document.body, callbacks = {}, onOpenCha
   const style = doc.createElement('style');
   style.dataset.roomUiStyle = 'true';
   style.textContent = `
-    .ce-roomui { --rui-ink:#edf3ee; --rui-muted:#aab6af; --rui-gold:#edd48d; --rui-line:rgba(200,172,102,.42); --rui-surface:rgba(5,17,24,.96); --rui-shadow:0 14px 42px rgba(0,0,0,.42); color:var(--rui-ink); font:500 14px/1.4 Inter,ui-sans-serif,system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif; position:fixed; z-index:30; left:max(12px,env(safe-area-inset-left)); top:max(12px,env(safe-area-inset-top)); width:min(310px,calc(100vw - 24px)); pointer-events:none; }
+    .ce-roomui { --rui-ink:#edf3ee; --rui-muted:#aab6af; --rui-gold:#edd48d; --rui-line:rgba(200,172,102,.42); --rui-surface:rgba(5,17,24,.96); --rui-shadow:0 14px 42px rgba(0,0,0,.42); color:var(--rui-ink); font:500 14px/1.4 Inter,ui-sans-serif,system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif; position:fixed; z-index:30; right:max(10px,env(safe-area-inset-right)); top:calc(env(safe-area-inset-top,0px) + 54px); width:min(310px,calc(100vw - 24px)); pointer-events:none; }
     .ce-roomui * { box-sizing:border-box; }
     .ce-roomui button,.ce-roomui input,.ce-roomui select { font:inherit; }
-    .ce-roomui-toggle { pointer-events:auto; display:flex; align-items:center; gap:9px; min-height:46px; padding:0 14px; color:var(--rui-ink); background:rgba(5,17,24,.9); border:1px solid var(--rui-line); border-radius:6px; box-shadow:var(--rui-shadow); font-weight:750; letter-spacing:.04em; cursor:pointer; backdrop-filter:blur(8px); }
+    .ce-roomui-toggle { pointer-events:auto; display:flex; align-items:center; justify-content:center; gap:4px; min-width:44px; min-height:44px; margin-left:auto; padding:0 7px; font-size:11px; color:var(--rui-ink); background:rgba(5,17,24,.9); border:1px solid var(--rui-line); border-radius:6px; box-shadow:var(--rui-shadow); font-weight:750; letter-spacing:.04em; cursor:pointer; backdrop-filter:blur(8px); }
     .ce-roomui-toggle:hover,.ce-roomui-toggle:focus-visible { border-color:var(--rui-gold); outline:2px solid transparent; color:var(--rui-gold); }
     .ce-roomui-panel { pointer-events:auto; margin-top:9px; max-height:min(68vh,580px); max-height:min(var(--rui-available-height,68vh),580px); overflow:auto; overscroll-behavior:contain; padding:14px; border:1px solid var(--rui-line); border-radius:8px; background:var(--rui-surface); box-shadow:var(--rui-shadow); backdrop-filter:blur(12px); }
     .ce-roomui-panel[hidden] { display:none; }
@@ -54,14 +54,14 @@ export function createRoomUi({ parent = document.body, callbacks = {}, onOpenCha
     .ce-roomui-admin .ce-roomui-btn { padding:0 7px; }
     .ce-roomui-transfer-target { grid-column:1 / -1; display:grid; gap:6px; }
     .ce-roomui-busy { opacity:.8; }
-    @media (max-width:540px) { .ce-roomui { width:min(310px,calc(100vw - 20px)); left:max(10px,env(safe-area-inset-left)); top:max(10px,env(safe-area-inset-top)); } .ce-roomui-panel { max-height:min(var(--rui-available-height,65vh),520px); padding:12px; } }
-    @media (max-height:440px) and (orientation:landscape) { .ce-roomui { top:max(6px,env(safe-area-inset-top)); } .ce-roomui-toggle { min-height:44px; } .ce-roomui-panel { margin-top:5px; max-height:var(--rui-available-height,calc(100dvh - 58px)); padding:10px; } .ce-roomui-head { margin-bottom:7px; } .ce-roomui-section { margin-top:8px; padding-top:8px; } }
+    @media (max-width:540px) { .ce-roomui { width:min(310px,calc(100vw - 20px)); } .ce-roomui-panel { max-height:min(var(--rui-available-height,65vh),520px); padding:12px; } }
+    @media (max-height:440px) and (orientation:landscape) { .ce-roomui-panel { margin-top:5px; max-height:var(--rui-available-height,calc(100dvh - 58px)); padding:10px; } .ce-roomui-head { margin-bottom:7px; } .ce-roomui-section { margin-top:8px; padding-top:8px; } }
     @media (prefers-reduced-motion:reduce) { .ce-roomui *, .ce-roomui *::before, .ce-roomui *::after { scroll-behavior:auto!important; transition:none!important; animation:none!important; } }
   `;
   const root = doc.createElement('div');
   root.className = 'ce-roomui';
   root.innerHTML = `
-    <button class="ce-roomui-toggle" type="button" aria-expanded="false" aria-controls="ce-roomui-panel"><span aria-hidden="true">◉</span><span>Multiplayer</span><span class="ce-roomui-toggle-count"></span></button>
+    <button class="ce-roomui-toggle" type="button" aria-expanded="false" aria-controls="ce-roomui-panel" aria-label="Multiplayer" title="Multiplayer"><svg aria-hidden="true" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="9" cy="7" r="3"/><path d="M3 20v-2a6 6 0 0 1 12 0v2m1-16a3 3 0 0 1 0 6m2 4a5 5 0 0 1 3 4v2"/></svg><span class="ce-roomui-toggle-count"></span></button>
     <section class="ce-roomui-panel" id="ce-roomui-panel" aria-label="Multiplayer rooms" hidden>
       <header class="ce-roomui-head"><div><p class="ce-roomui-eyebrow">City Explorer</p><h2 class="ce-roomui-title">Multiplayer</h2></div><button type="button" class="ce-roomui-close" aria-label="Close multiplayer panel">×</button></header>
       <p class="ce-roomui-status" role="status" aria-live="polite"></p>
@@ -225,8 +225,12 @@ export function createRoomUi({ parent = document.body, callbacks = {}, onOpenCha
     const vehicleSection = section('Vehicle'); vehicleSection.dataset.vehicleSection = 'true';
     const vehicleSelect = el('select', 'ce-roomui-select', undefined, { name: 'vehicle' });
     vehicleSelect.setAttribute('aria-label', 'Choose a vehicle');
-    vehicleSelect.addEventListener('change', () => run('selectVehicle', { vehicleId: vehicleSelect.value }, 'Vehicle selected.'));
-    vehicleSection.append(vehicleSelect); fragment.append(vehicleSection);
+    vehicleSelect.addEventListener('change', () => {
+      if (vehicleSelect.value) void run('selectVehicle', { vehicleId: vehicleSelect.value }, 'Vehicle request sent…');
+    });
+    const aerial = button('Deploy aerial', 'toggle-aerial', 'ce-roomui-btn', () => run('toggleAerial', {}, 'Aerial request sent…'));
+    vehicleSection.append(el('p', 'ce-roomui-copy', 'Choose a vehicle to drive or ride along. Each vehicle holds four players.'), vehicleSelect, aerial);
+    fragment.append(vehicleSection);
 
     const admin = section('Host controls'); admin.dataset.adminSection = 'true';
     const grid = el('div', 'ce-roomui-admin');
@@ -265,7 +269,7 @@ export function createRoomUi({ parent = document.body, callbacks = {}, onOpenCha
       }
     }); leaveButton.dataset.request = 'true'; leave.append(leaveButton); fragment.append(leave);
     content.replaceChildren(fragment); view = 'session';
-    sessionView = { key: sessionKey(session), yourLine, playerList: list, invite, inviteInput, vehicleSection, vehicleSelect, admin, lock, transferTarget, transfer, kicks };
+    sessionView = { key: sessionKey(session), yourLine, playerList: list, invite, inviteInput, vehicleSection, vehicleSelect, aerial, admin, lock, transferTarget, transfer, kicks };
   }
   function patchSession(session) {
     if (!sessionView || sessionView.key !== sessionKey(session)) buildSession(session);
@@ -290,16 +294,21 @@ export function createRoomUi({ parent = document.body, callbacks = {}, onOpenCha
 
     const vehicles = Array.isArray(state.vehicles) ? state.vehicles : [];
     view.vehicleSection.hidden = vehicles.length === 0;
+    const aerialPhase = vehicles.find(vehicle => vehicle.id === session.vehicleId)?.aerialPhase;
+    view.aerial.hidden = !aerialPhase;
+    view.aerial.textContent = aerialPhase === 'travel' ? 'Deploy aerial' : 'Stow aerial';
     const oldSelection = view.vehicleSelect.value;
     const preserveUserSelection = doc.activeElement === view.vehicleSelect;
-    const desired = preserveUserSelection ? oldSelection : (state.selectedVehicleId ?? session.vehicleId ?? oldSelection);
-    view.vehicleSelect.replaceChildren(...vehicles.map((vehicle) => {
-      const option = el('option', '', vehicle.label || vehicle.name || vehicle.id, { value: String(vehicle.id) });
+    const desired = preserveUserSelection ? oldSelection : (state.selectedVehicleId ?? session.vehicleId ?? '');
+    const placeholder = el('option', '', 'Select a vehicle…', { value: '' });
+    placeholder.disabled = true;
+    view.vehicleSelect.replaceChildren(placeholder, ...vehicles.map((vehicle) => {
+      const name = vehicle.label || vehicle.name || vehicle.id;
+      const option = el('option', '', vehicle.occupantCount !== undefined ? `${name} · ${vehicle.occupantCount}/4` : vehicle.occupiedByOther ? `${name} · In use` : name, { value: String(vehicle.id) });
       option.disabled = vehicle.available === false;
       return option;
     }));
-    if (vehicles.some((vehicle) => String(vehicle.id) === String(desired) && vehicle.available !== false)) view.vehicleSelect.value = String(desired);
-    else if (vehicles.length) view.vehicleSelect.value = String(vehicles.find((vehicle) => vehicle.available !== false)?.id ?? vehicles[0].id);
+    view.vehicleSelect.value = vehicles.some((vehicle) => String(vehicle.id) === String(desired) && vehicle.available !== false) ? String(desired) : '';
 
     view.admin.hidden = session.isAdmin !== true;
     const locked = Boolean(state.locked);
@@ -332,7 +341,9 @@ export function createRoomUi({ parent = document.body, callbacks = {}, onOpenCha
   function render() {
     if (disposed) return;
     const session = state.session || null;
-    count.textContent = session ? ` · ${state.players?.length || 1}/8` : '';
+    count.textContent = session ? `${state.players?.length || 1}/8` : '';
+    count.hidden = !session;
+    toggle.setAttribute('aria-label', session ? `Multiplayer, ${state.players?.length || 1} of 8 players` : 'Multiplayer');
     if (state.available === false) {
       if (view !== 'unavailable') { content.replaceChildren(el('p', 'ce-roomui-copy', 'Multiplayer is not available yet.')); view = 'unavailable'; sessionView = null; }
       if (!updatePendingStatus()) updateStatus(state.message || ''); return;

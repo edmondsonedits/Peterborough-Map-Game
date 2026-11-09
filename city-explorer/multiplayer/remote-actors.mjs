@@ -1,4 +1,5 @@
-import { MULTIPLAYER_VEHICLE_SLOTS } from './vehicle-instances.mjs?v=1.6.188';
+import { MULTIPLAYER_VEHICLE_SLOTS } from './vehicle-instances.mjs?v=1.6.201';
+import { applyAerialPose } from '../aerial-runtime.js?v=1.6.195';
 import { installFleetAsset } from '../fleet-assets.js';
 import { configureVehiclePresentation, updateVehiclePresentation } from '../vehicle-presentation.js';
 
@@ -51,8 +52,7 @@ export function createRemoteActors({ THREE, group, createTruck, createFirefighte
   }
   function update(snapshot, remote, ownId, ownPose, ownVehicleId, delta) {
     if (!snapshot) return;
-    const driverByVehicle = new Map(snapshot.players.filter(player => player.vehicleId).map(player => [player.vehicleId, player]));
-    if (snapshot.player.vehicleId) driverByVehicle.set(snapshot.player.vehicleId, snapshot.player);
+    const playersById = new Map([snapshot.player, ...snapshot.players].map(player => [player.id, player]));
     const visibleVehicles = new Set();
     for (const vehicle of snapshot.vehicles) {
       const entry = vehicles.get(vehicle.id); if (!entry) continue;
@@ -65,9 +65,11 @@ export function createRemoteActors({ THREE, group, createTruck, createFirefighte
         emergencyLights:vehicle.lights,braking:pose.speed*prior.speed<0,acceleration:(pose.speed-prior.speed)/Math.max(delta,.001)};
       entry.definition.tuning=vehicle.tuning;
       entry.root.position.set(pose.x, pose.y, pose.z); entry.root.rotation.set(0, pose.heading, 0, 'YXZ');
-      updateVehiclePresentation(entry,{delta,time:performance.now(),surface:null,driving:Boolean(driverByVehicle.get(vehicle.id)),locked:false});
+      const driver = playersById.get(vehicle.driverPlayerId);
+      updateVehiclePresentation(entry,{delta,time:performance.now(),surface:null,driving:Boolean(driver),locked:Boolean(vehicle.aerial && vehicle.aerial.phase !== 'travel')});
+      if (vehicle.aerial) applyAerialPose(THREE, entry, vehicle.aerial);
       const label = entry.root.children.find(child => child.isSprite);
-      if(label){const driver=driverByVehicle.get(vehicle.id);label.visible=Boolean(driver);if(driver)label.userData.setLabel(`${entry.slot.name} · ${driver.name}`);}
+      if(label){label.visible=Boolean(driver);if(driver)label.userData.setLabel(`${entry.slot.name} · ${driver.name}`);}
     }
     for (const [id, entry] of vehicles) if (!visibleVehicles.has(id)) entry.root.visible = false;
     const present = new Set();

@@ -1,3 +1,4 @@
+import { PROTOCOL_VERSION } from '../city-explorer/multiplayer/protocol.mjs';
 import { readFile } from 'node:fs/promises';
 import { pathToFileURL } from 'node:url';
 
@@ -11,7 +12,8 @@ export async function verifyDeployedWorld({ serverUrl, expectedWorldVersion, fet
       const body = await response.json();
       if (!response.ok || body.status !== 'ready') throw new Error('Multiplayer backend is not ready');
       if (body.worldVersion !== expectedWorldVersion) throw new Error(`Backend world ${body.worldVersion} does not match frontend ${expectedWorldVersion}`);
-      return { worldVersion: body.worldVersion, status: 'matched' };
+      if (body.protocolVersion !== PROTOCOL_VERSION) throw new Error(`Backend protocol ${body.protocolVersion ?? 'unknown'} does not match frontend ${PROTOCOL_VERSION}`);
+      return { worldVersion: body.worldVersion, protocolVersion: body.protocolVersion, status: 'matched' };
     } catch (error) { lastError = error; }
     if (attempt + 1 < attempts) await wait(retryMs);
   }

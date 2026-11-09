@@ -121,6 +121,25 @@ test('driving prediction uses snapshot tuning and matches server vehicle movemen
   client.dispose(); room.leave(player.playerId);
 });
 
+test('passengers render the shared vehicle transform without submitting driver controls', () => {
+  const h = harness({ interpolationDelayMs: 0 });
+  const occupied = (tick, serverTime, x) => snapshot({
+    tick, serverTime,
+    player: actor({ mode: 'driving', vehicleId: 'truck_1', pose: pose({ x }) }),
+    players: [{ id: 'peer', name: 'Player 2', entityGeneration: 0, mode: 'driving', vehicleId: 'truck_1', pose: pose({ x }) }],
+    vehicles: [{ id: 'truck_1', entityGeneration: 0, driverPlayerId: 'peer', pose: pose({ x }), tuning: DEFAULT_VEHICLE_TUNING }],
+  });
+  h.runtime.applySnapshot(occupied(1, 1_000, 0));
+  h.setTime(1_016);
+  h.runtime.applySnapshot(occupied(2, 1_033, 10));
+  const sharedVehiclePose = h.runtime.sampleRemoteActor('truck_1').pose;
+  h.runtime.advanceFrame(40, { throttle: 1, steering: 0.5 });
+  assert.equal(h.sent.length, 0);
+  assert.equal(h.runtime.getState().pendingInputs, 0);
+  assert.ok(sharedVehiclePose.x > 0 && sharedVehiclePose.x < 10);
+  assert.equal(h.runtime.renderedPose.x, sharedVehiclePose.x);
+});
+
 test('duplicate and older ticks are ignored; a new epoch resets sequence and baseline', () => {
   const h = harness(); h.runtime.applySnapshot(snapshot()); h.runtime.sendInput({ forward: 1 });
   assert.equal(h.runtime.applySnapshot(snapshot({ tick: 1 })), false);

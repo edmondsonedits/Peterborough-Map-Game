@@ -1,5 +1,5 @@
-import { PROTOCOL_VERSION, validateSnapshot } from './protocol.mjs?v=1.6.188';
-import { DEFAULT_PLAYER_TUNING, DEFAULT_VEHICLE_TUNING, stepVehicle, stepWalking } from './movement-core.mjs?v=1.6.188';
+import { PROTOCOL_VERSION, validateSnapshot } from './protocol.mjs?v=1.6.201';
+import { DEFAULT_PLAYER_TUNING, DEFAULT_VEHICLE_TUNING, stepVehicle, stepWalking } from './movement-core.mjs?v=1.6.201';
 
 const STEP_MS = 1000 / 30;
 const SUBSTEP_SECONDS = 1 / 60;
@@ -104,6 +104,11 @@ export function createClientRuntime({
     return vehicle ? { pose: clonePose(source.pose), tuning: { ...DEFAULT_VEHICLE_TUNING, ...(vehicle.tuning ?? {}) } } : { pose: clonePose(source.pose), tuning: playerTuning };
   }
   function simulateOne(source, controls, dt = SUBSTEP_SECONDS) {
+    const vehicle = latestSnapshot?.vehicles.find(item => item.id === source.vehicleId);
+    if (vehicle && (vehicle.driverPlayerId !== source.id || (vehicle.aerial && vehicle.aerial.phase !== 'travel'))) {
+      pausedForWorld = false;
+      return clonePose(vehicle.pose);
+    }
     const result = modeState(source), radius = entityRadius(source);
     if (!ready(result.pose, radius)) { pausedForWorld = true; warm(result.pose, radius); return null; }
     pausedForWorld = false;
@@ -135,6 +140,8 @@ export function createClientRuntime({
   }
   function advancePrediction(controls) {
     if (!compatible || !authoritative || !simulation) return false;
+    const vehicle = latestSnapshot?.vehicles.find(item => item.id === authoritative.vehicleId);
+    if (vehicle && (vehicle.driverPlayerId !== authoritative.id || (vehicle.aerial && vehicle.aerial.phase !== 'travel'))) return false;
     if (!ready(simulation.pose, entityRadius(authoritative))) { pausedForWorld = true; warm(simulation.pose, entityRadius(authoritative)); return false; }
     if (pending.length >= Math.min(MAX_PENDING, maxPendingInputs)) { emit('input-backpressure', { pending: pending.length }); return false; }
     if (transport.canSendInput?.() === false) { emit('transport-backpressure', {}); return false; }
@@ -341,8 +348,11 @@ export function createClientRuntime({
     if (authoritative && simulation) {
       const time = clock(), delta = clamp((time - lastRenderAt) / 1000, 0, 0.1); lastRenderAt = time;
       const alpha = clamp(accumulator / STEP_MS, 0, 1);
+      const vehicle = latestSnapshot?.vehicles.find(item => item.id === authoritative.vehicleId);
+      const riding = vehicle && vehicle.driverPlayerId !== authoritative.id;
       // Preview fresh controls every render frame without increasing the network tick rate.
-      const preview = previewPose(simulation, alpha, controls&&compatible?copyControls(controls):latestControls);
+      const preview = riding ? sampleRemoteActor(vehicle.id)?.pose ?? vehicle.pose : previewPose(simulation, alpha, controls && compatible ? copyControls(controls) : latestControls);
+      if (riding) renderCorrection = { x: 0, y: 0, z: 0, heading: 0 };
       const response = authoritative.mode === 'driving' ? 10 : 12;
       const decay = Math.exp(-response * delta);
       renderCorrection = { x: renderCorrection.x * decay, y: renderCorrection.y * decay, z: renderCorrection.z * decay, heading: wrapAngle(renderCorrection.heading * decay) };

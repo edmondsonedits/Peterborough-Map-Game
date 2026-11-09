@@ -24,3 +24,9 @@ test('map entities use predicted local truck position and retain remote players 
   assert.equal(markers.find(m=>m.id==='player:other').label,'Sam');
   assert.equal(markers.filter(m=>m.local).length,1);
 });
+
+test('map truck labels retain the driver and passenger identities',()=>{
+ const snapshot={player:{id:'me',name:'Player 2',mode:'driving',vehicleRole:'passenger',vehicleId:'pump-1',pose:{x:0,z:0}},players:[{id:'driver',name:'Player 1',mode:'driving',vehicleRole:'driver',vehicleId:'pump-1',pose:{x:0,z:0}},{id:'crew',name:'Player 3',mode:'driving',vehicleRole:'passenger',vehicleId:'pump-1',pose:{x:0,z:0}}],vehicles:[{id:'pump-1',pose:{x:2,z:3}}]};
+ const [marker]=collectMapEntities({snapshot,vehicleId:'pump-1',localPose:{x:2,z:3}});
+ for(const name of ['You','Player 1','Player 3'])assert.ok(marker.label.includes(name));
+});

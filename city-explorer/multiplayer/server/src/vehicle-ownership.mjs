@@ -1,4 +1,4 @@
-export function createVehicleOwnership(vehicles = []) {
+export function createVehicleOwnership(vehicles = [], capacity = 1) {
   if (!Array.isArray(vehicles) || vehicles.length > 12) {
     throw new RangeError('vehicles must be an array of at most 12 instances');
   }
@@ -11,49 +11,43 @@ export function createVehicleOwnership(vehicles = []) {
     vehicleIds.add(vehicle.id);
   }
 
-  const driversByVehicle = new Map();
-  const vehicleByDriver = new Map();
+  const crews = new Map([...vehicleIds].map(id => [id, []]));
+  const vehicleByPlayer = new Map();
+  const result = (ok, details) => Object.freeze({ ok, ...details });
 
   function claim(playerId, vehicleId) {
-    if (typeof playerId !== 'string' || !playerId || !vehicleIds.has(vehicleId)) {
-      return Object.freeze({ ok: false, reason: 'unknown-player-or-vehicle' });
-    }
-    const currentVehicle = vehicleByDriver.get(playerId);
-    if (currentVehicle) return Object.freeze({ ok: false, reason: 'already-driving' });
-    if (driversByVehicle.has(vehicleId)) return Object.freeze({ ok: false, reason: 'vehicle-occupied' });
-    driversByVehicle.set(vehicleId, playerId);
-    vehicleByDriver.set(playerId, vehicleId);
-    return Object.freeze({ ok: true, vehicleId });
+    const crew = crews.get(vehicleId);
+    if (typeof playerId !== 'string' || !playerId || !crew) return result(false, { reason: 'unknown-player-or-vehicle' });
+    if (vehicleByPlayer.has(playerId)) return result(false, { reason: 'already-driving' });
+    if (crew.length >= capacity) return result(false, { reason: 'vehicle-occupied' });
+    crew.push(playerId);
+    vehicleByPlayer.set(playerId, vehicleId);
+    return result(true, { vehicleId });
   }
 
-  function release(playerId, vehicleId = vehicleByDriver.get(playerId)) {
-    if (!vehicleId || driversByVehicle.get(vehicleId) !== playerId) return false;
-    driversByVehicle.delete(vehicleId);
-    vehicleByDriver.delete(playerId);
+  function release(playerId, vehicleId = vehicleByPlayer.get(playerId)) {
+    if (!vehicleId || vehicleByPlayer.get(playerId) !== vehicleId) return false;
+    const crew = crews.get(vehicleId);
+    crew.splice(crew.indexOf(playerId), 1);
+    vehicleByPlayer.delete(playerId);
     return true;
   }
 
   function switchVehicle(playerId, fromVehicleId, toVehicleId) {
-    if (vehicleByDriver.get(playerId) !== fromVehicleId) {
-      return Object.freeze({ ok: false, reason: 'not-current-driver' });
-    }
-    if (!vehicleIds.has(toVehicleId)) return Object.freeze({ ok: false, reason: 'unknown-vehicle' });
-    if (toVehicleId === fromVehicleId) return Object.freeze({ ok: false, reason: 'same-vehicle' });
-    if (driversByVehicle.has(toVehicleId)) return Object.freeze({ ok: false, reason: 'vehicle-occupied' });
-    // Validate every precondition before mutating either index.
-    driversByVehicle.delete(fromVehicleId);
-    vehicleByDriver.set(playerId, toVehicleId);
-    driversByVehicle.set(toVehicleId, playerId);
-    return Object.freeze({ ok: true, vehicleId: toVehicleId });
+    if (!fromVehicleId || vehicleByPlayer.get(playerId) !== fromVehicleId) return result(false, { reason: 'not-current-driver' });
+    if (!crews.has(toVehicleId)) return result(false, { reason: 'unknown-vehicle' });
+    if (toVehicleId === fromVehicleId) return result(false, { reason: 'same-vehicle' });
+    if (crews.get(toVehicleId).length >= capacity) return result(false, { reason: 'vehicle-occupied' });
+    release(playerId, fromVehicleId);
+    return claim(playerId, toVehicleId);
   }
 
   return Object.freeze({
-    claim,
-    release,
-    switch: switchVehicle,
-    driverOf: (vehicleId) => driversByVehicle.get(vehicleId) ?? null,
-    vehicleOf: (playerId) => vehicleByDriver.get(playerId) ?? null,
-    isVehicle: (vehicleId) => vehicleIds.has(vehicleId),
+    claim, release, switch: switchVehicle,
+    driverOf: vehicleId => crews.get(vehicleId)?.[0] ?? null,
+    countOf: vehicleId => crews.get(vehicleId)?.length ?? 0,
+    vehicleOf: playerId => vehicleByPlayer.get(playerId) ?? null,
+    isVehicle: vehicleId => vehicleIds.has(vehicleId),
     vehicleIds: () => Object.freeze([...vehicleIds]),
   });
 }

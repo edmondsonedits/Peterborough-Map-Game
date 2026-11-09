@@ -1,7 +1,9 @@
 import {test} from 'node:test';
 import assert from 'node:assert/strict';
 import {stepFireTruckKinematics} from '../city-explorer/gameplay-systems.js';
-import {FLEET_DEFINITIONS} from '../city-explorer/vehicle-fleet.mjs';
+import {stepFireTruckKinematics as stepSoloTruck} from '../city-explorer/gameplay-systems-1.6.69.js';
+import {createVehicleFleet,FLEET_DEFINITIONS} from '../city-explorer/vehicle-fleet.mjs';
+import {createMultiplayerVehicleInstances} from '../city-explorer/multiplayer/vehicle-instances.mjs';
 
 const byId=id=>FLEET_DEFINITIONS.find(vehicle=>vehicle.id===id).tuning;
 
@@ -110,4 +112,72 @@ test('Medi has more road speed, quicker pickup, and a tighter turn than the pump
  assert.ok(turningRadius(medi)<turningRadius(pumper));
  assert.ok(medi.steeringResponse>pumper.steeringResponse);
  assert.ok(medi.serviceBrake>pumper.serviceBrake);
+});
+
+test('Pump 1, 2 and 3 have a tighter low-speed turning circle in both modes without raising high-speed grip', () => {
+ const pumpers=['pump-1','pump-2','pump-3'].map(byId);
+ const radius=t=>t.wheelbase/Math.tan(t.steeringLowSpeed);
+ for (const pumper of pumpers) {
+  assert.equal(pumper.steeringLowSpeed,.66);
+  assert.ok(radius(pumper)<radius({...pumper,steeringLowSpeed:.54})*.8,'pumper turning radius should improve by at least 20%');
+  assert.equal(pumper.maximumLateralAcceleration,4.2);
+  assert.equal(pumper.steeringHighSpeed,.15);
+ }
+ assert.equal(byId('aerial').steeringLowSpeed,.41);
+ assert.equal(byId('medi').steeringLowSpeed,.62);
+});
+
+const soloFleet = createVehicleFleet(Object.fromEntries(FLEET_DEFINITIONS.map(({id})=>[id,{x:0,z:0,heading:0}])));
+const soloTuning = id => soloFleet.vehicles.find(vehicle=>vehicle.definition.id===id).definition.tuning;
+
+test('solo pumpers and aerial make controlled right-angle turns at their road speed cap',()=>{
+ for(const id of ['pump-1','pump-2','pump-3','aerial']){
+  const tuning=soloTuning(id);
+  const [minimumDistance,maximumDistance]=id==='aerial'?[33,40]:[28,34];
+  for(const steering of [-1,1]){
+   let state={x:0,z:0,heading:0,speed:tuning.maximumForwardSpeed,steering:0};
+   let distance=0;
+   for(let frame=0;frame<120&&state.heading*steering<Math.PI/2;frame++){
+    const prior=state;
+    state=stepSoloTruck(state,{throttle:1,steering},1/60,true,tuning);
+    distance+=Math.hypot(state.x-prior.x,state.z-prior.z);
+   }
+   assert.equal(state.speed,tuning.maximumForwardSpeed);
+   assert.ok(state.heading*steering>=Math.PI/2,`${id} should complete the turn within two seconds`);
+   assert.ok(distance>=minimumDistance&&distance<=maximumDistance,`${id} turned in ${distance.toFixed(1)} m`);
+  }
+ }
+});
+
+test('solo full lock preserves fine steering, off-road and reverse handling, and other vehicles',()=>{
+ const tuning=byId('pump-1');
+ const forward={x:0,z:0,heading:0,speed:tuning.maximumForwardSpeed,steering:0};
+ const lock={throttle:1,steering:1};
+ const fine={throttle:1,steering:.1};
+ const fineSolo=stepSoloTruck(forward,fine,1/60,true,soloTuning('pump-1'));
+ const fineOriginal=stepSoloTruck(forward,fine,1/60,true,tuning);
+ assert.ok(Math.abs(fineSolo.steering-fineOriginal.steering)<.0001);
+ assert.deepEqual(stepSoloTruck(forward,lock,1/60,false,soloTuning('pump-1')),
+  stepSoloTruck(forward,lock,1/60,false,tuning));
+ const reverse={...forward,speed:-tuning.maximumReverseSpeed};
+ const backing={throttle:-1,steering:1};
+ assert.deepEqual(stepSoloTruck(reverse,backing,1/60,true,soloTuning('pump-1')),
+  stepSoloTruck(reverse,backing,1/60,true,tuning));
+ for(const id of ['rescue-1','medi','car-1']){
+  assert.deepEqual(stepSoloTruck(forward,lock,1/60,true,soloTuning(id)),
+   stepSoloTruck(forward,lock,1/60,true,byId(id)));
+ }
+});
+
+test('multiplayer pumpers inherit the same pumper steering profile as single-player', () => {
+ const world={
+  stations:[1,2,3].map(number=>({number,anchor:{x:0,z:0},yaw:0,layout:{truckSpawn:{x:0,z:0}}})),
+  readyAt:()=>true, sampleSurface:()=>({height:0}), blocks:()=>false,
+ };
+ const slots=createMultiplayerVehicleInstances(world);
+ assert.equal(slots.length,7);
+ for(const truck of slots.filter(v=>v.id.startsWith('pump-') || v.id === 'rescue-1')){
+  assert.equal(truck.tuning.steeringLowSpeed,byId('pump-1').steeringLowSpeed);
+  assert.equal(truck.tuning.steeringResponse,byId('pump-1').steeringResponse);
+ }
 });

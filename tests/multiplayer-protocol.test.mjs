@@ -14,3 +14,10 @@ test('validates per-action vehicle ids and bounded authoritative snapshot entiti
  const snapshot={protocolVersion:PROTOCOL_VERSION,worldVersion:'world-v1',tick:3,serverTime:4,epoch:2,ackInputSequence:9,player,players:[],vehicles:[{id:'pump-1',pose,driverPlayerId:null,entityGeneration:1}]};
  assert.equal(validateSnapshot(snapshot),true);assert.equal(validateSnapshot({...snapshot,players:[{...player,name:'A'}]}),false);assert.equal(validateSnapshot({...snapshot,players:Array(9).fill(player)}),false);assert.equal(validateSnapshot({...snapshot,vehicles:Array(13).fill(snapshot.vehicles[0])}),false);assert.equal(validateSnapshot({...snapshot,player:{...player,entityGeneration:undefined}}),false);assert.equal(validateSnapshot({...snapshot,protocolVersion:99}),false);
 });
+
+test('remote vehicle list selection is explicit and requires a safe vehicle id',()=>{
+ const action={protocolVersion:PROTOCOL_VERSION,epoch:0,sequence:1,type:'selectVehicle',vehicleId:'pump-2'};
+ assert.equal(validateAction(action),true);
+ assert.equal(validateAction({...action,vehicleId:undefined}),false);
+ assert.equal(validateAction({...action,vehicleId:'../../other'}),false);
+});

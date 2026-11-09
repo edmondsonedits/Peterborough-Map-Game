@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Peterborough Fire & Emergency Dispatch Simulator</title>
     
-    <link rel="stylesheet" href="vendor/leaflet-1.9.4/leaflet.css?v=1.6.188" />
+    <link rel="stylesheet" href="vendor/leaflet-1.9.4/leaflet.css?v=1.6.201" />
     
     <style>
         html, body, #map {
@@ -201,17 +201,17 @@
 
     <div id="map"></div>
 
-    <script src="../shared/build-version.js?v=1.6.188"></script>
-    <script src="vendor/leaflet-1.9.4/leaflet.js?v=1.6.188"></script>
-    <script src="vendor/leaflet-1.9.4/leaflet.edgebuffer.js?v=1.6.188"></script>
-    <script src="vendor/leaflet-1.9.4/leaflet.rotatedMarker.js?v=1.6.188"></script>
+    <script src="../shared/build-version.js?v=1.6.201"></script>
+    <script src="vendor/leaflet-1.9.4/leaflet.js?v=1.6.201"></script>
+    <script src="vendor/leaflet-1.9.4/leaflet.edgebuffer.js?v=1.6.201"></script>
+    <script src="vendor/leaflet-1.9.4/leaflet.rotatedMarker.js?v=1.6.201"></script>
     
-    <script src="service-config.js?v=1.6.188"></script>
-    <script src="../shared/location-changes.js?v=1.6.188"></script>
-    <script src="../shared/base-locations.js?v=1.6.188"></script>
-    <script src="service-selection.js?v=1.6.188"></script>
-    <script src="gearbox-core.js?v=1.6.188"></script>
-    <script src="local-pool.js?v=1.6.188"></script>
+    <script src="service-config.js?v=1.6.201"></script>
+    <script src="../shared/location-changes.js?v=1.6.201"></script>
+    <script src="../shared/base-locations.js?v=1.6.201"></script>
+    <script src="service-selection.js?v=1.6.201"></script>
+    <script src="gearbox-core.js?v=1.6.201"></script>
+    <script src="local-pool.js?v=1.6.201"></script>
     <script>
         const dispatchDatabase = [
             { main:"Fire", sub:"Water & Ice Rescue", name:"Beavermead Park Beach", addr:"2015 Ashburnham Dr", lat:44.295749, lng:-78.303611 },
@@ -842,7 +842,8 @@
         }
 
         function resolveIncidentArrival(incident) {
-            const radius = Math.max(10, Math.min(500, Number(incident.radius) || 40));
+            const arrivalRadius = Number(incident.arrivalRadiusMeters);
+            const radius = Math.max(10, Math.min(500, Number.isFinite(arrivalRadius) && arrivalRadius > 0 ? arrivalRadius : Number(incident.radius) || 40));
             const roads = window.PTBO_ROAD_COLLISION;
             if (window.PTBO_CITY_PACKAGE?.features?.sceneResponseDrills) {
                 if (roads?.state?.status !== 'ready') return null;
@@ -859,6 +860,14 @@
                 const nearest=roads.nearestRoad(access.lat,access.lng,20);
                 if (!nearest || nearest.distance > 20) return null;
                 return {radius,lat:access.lat,lng:access.lng,accessPoint:true};
+            }
+            if (incident.routeAccess) {
+                const access=incident.routeAccess;
+                if (!Number.isFinite(access.lat) || !Number.isFinite(access.lng) || Math.abs(access.lat)>90 || Math.abs(access.lng)>180) return null;
+                if (!roads) return {radius,lat:access.lat,lng:access.lng,accessPoint:true};
+                if (roads.state.status !== 'ready') return null;
+                const nearest=roads.nearestRoad(access.lat,access.lng,20);
+                return nearest && nearest.distance <= 20 ? {radius,lat:access.lat,lng:access.lng,accessPoint:true} : null;
             }
             if (!roads) return { radius, lat: incident.lat, lng: incident.lng, accessPoint: false };
             if (roads.state.status !== 'ready') return null;
@@ -1072,7 +1081,7 @@
 
         window.onload = initializeSimulator;
     </script>
-    <script src="service-mode.js?v=1.6.188"></script>
-    <script src="scene-response-filters.js?v=1.6.188"></script>
+    <script src="service-mode.js?v=1.6.201"></script>
+    <script src="scene-response-filters.js?v=1.6.201"></script>
 </body>
 </html>

@@ -50,6 +50,16 @@
       Math.abs(Number(point.lat)) <= 90 && Math.abs(Number(point.lng)) <= 180;
   }
 
+  function samePoint(a,b) { return Boolean(a && b && Number(a.lat)===Number(b.lat) && Number(a.lng)===Number(b.lng)); }
+  function modeledAccess(access) { return access?.method==='modeled-public-road-approach'; }
+
+  function clearMovedAccess(location,previous) {
+    if(modeledAccess(previous?.routeAccess) && modeledAccess(location.routeAccess) && !samePoint(location,previous) && samePoint(location.routeAccess,previous.routeAccess)) {
+      const moved={...location};delete moved.routeAccess;return moved;
+    }
+    return location;
+  }
+
   function normalizeLocation(raw, source) {
     if (raw?.routeAccess !== undefined && !validPoint(raw.routeAccess)) return null;
     const latValue=raw?.lat ?? raw?.latitude, lngValue=raw?.lng ?? raw?.longitude;
@@ -64,6 +74,8 @@
       lat:Number(raw?.lat ?? raw?.latitude),
       lng:Number(raw?.lng ?? raw?.longitude),
       radius:Math.max(10,Math.min(500,Number(raw?.radius ?? raw?.targetRadiusMeters) || 50)),
+      arrivalRadiusMeters:Number.isFinite(Number(raw?.arrivalRadiusMeters)) && Number(raw.arrivalRadiusMeters)>0
+        ? Math.max(10,Math.min(500,Number(raw.arrivalRadiusMeters))) : undefined,
       district:Number.isInteger(districtValue) && districtValue > 0 ? districtValue : undefined,
       cityTen:Boolean(raw?.cityTen),
       confirmed:Boolean(raw?.confirmed),
@@ -220,9 +232,10 @@
       const original=seedById.get(item.id);
       if(!original)return item;
       const metadata={};
-      for(const key of ['locationKind','difficultyReason','routeAccess','geographicVerificationRef','cityId']) {
+      for(const key of ['locationKind','difficultyReason','arrivalRadiusMeters','geographicVerificationRef','cityId']) {
         if(item[key] == null && original[key] != null)metadata[key]=original[key];
       }
+      if(item.routeAccess == null && original.routeAccess != null && (!modeledAccess(original.routeAccess) || samePoint(item,original)))metadata.routeAccess=original.routeAccess;
       if(original.facilityType)Object.assign(metadata,{facilityType:original.facilityType,providerId:original.providerId,community:original.community,
         ...(original.trainingServices?{trainingServices:original.trainingServices}:{}),
         sources:[...new Set([...(item.sources||[]),...(original.sources||[])])]});
@@ -334,18 +347,56 @@
     for (const parsed of candidates) {
       const compatibleVersion = parsed.version === STORE_VERSION || (CITY_ID === 'peterborough' && parsed.version === 2);
       if (!compatibleVersion || !Array.isArray(parsed.items) || (parsed.cityId != null && parsed.cityId !== CITY_ID)) continue;
+      savedTrainingCareHomeIds=Array.isArray(parsed.trainingCareHomeIds)?parsed.trainingCareHomeIds.map(normalizeText):null;
+      savedTrainingSharedLocationIds=Array.isArray(parsed.trainingSharedLocationIds)?parsed.trainingSharedLocationIds.map(normalizeText):null;
       const oldPreview = ['oshawa','pickering','markham','toronto'].includes(CITY_ID) && dataVersion === 'ontario-geo-1' && parsed.dataVersion === '1.6.8';
       if (parsed.dataVersion === dataVersion || oldPreview) {
         legacyPreviewMigration=oldPreview;
-        savedTrainingCareHomeIds=Array.isArray(parsed.trainingCareHomeIds)?parsed.trainingCareHomeIds.map(normalizeText):null;
-        savedTrainingSharedLocationIds=Array.isArray(parsed.trainingSharedLocationIds)?parsed.trainingSharedLocationIds.map(normalizeText):null;
         return normalizeList(parsed.items,'saved');
       }
+      const previous=window.PTBO_DISPATCH_PREVIOUS_DATA;
+      const baseline=Array.isArray(parsed.seed) ? parsed.seed
+        : CITY_ID==='peterborough' && previous?.version===parsed.dataVersion && Array.isArray(previous.locations) ? previous.locations : null;
+      if(baseline)return migratePublished(parsed,baseline);
       if (CITY_ID === 'peterborough' && parsed.dataVersion === '1.4.20' && window.PTBO_DISPATCH_LEGACY_LOCATIONS) {
         return migrateLegacy(parsed);
       }
     }
     return null;
+  }
+
+  function migratePublished(saved,baseline) {
+    const originals=new Map(normalizeList(baseline,'source').map(item=>[item.id,item]));
+    const previous=normalizeList(saved.items,'saved'),byId=new Map(previous.map(item=>[item.id,item]));
+    const next=clone(seed),destinations=new Map(next.map(item=>[item.id,item])),deleted=new Set();
+    for(const original of originals.values()){
+      const edited=byId.get(original.id),destination=destinations.get(original.id);
+      if(!edited){if(destination)deleted.add(original.id);continue;}
+      const changes=Object.fromEntries(Object.keys(edited)
+        .filter(key=>!['id','sourceCallIds','sources'].includes(key)&&JSON.stringify(edited[key])!==JSON.stringify(original[key]))
+        .map(key=>[key,edited[key]]));
+      const moved=!samePoint(edited,original);
+      if(moved){changes.lat=edited.lat;changes.lng=edited.lng;}
+      if(!Object.keys(changes).length)continue;
+      if(destination){
+        const publishedPoint={lat:destination.lat,lng:destination.lng};
+        Object.assign(destination,changes);
+        if(moved && !edited.routeAccess && modeledAccess(destination.routeAccess) && !samePoint(destination,publishedPoint))delete destination.routeAccess;
+        if(changes.main||changes.sub){
+          const service=destination.main==='Medical'?'ems':'fire';
+          destination.incidentProfiles={...destination.incidentProfiles,[service]:{sub:destination.sub}};
+        }
+      }else next.push({...edited,custom:true});
+    }
+    for(const edited of previous){
+      if(originals.has(edited.id))continue;
+      const destination=destinations.get(edited.id);
+      if(destination)Object.assign(destination,edited);
+      else next.push(edited);
+    }
+    // Keep a recoverable pre-upgrade snapshot before the next deliberate edit saves.
+    try{localStorage.setItem(`${STORAGE_KEY}:before-${dataVersion}`,JSON.stringify(saved));}catch(_){/* Original key remains untouched. */}
+    return normalizeList(next.filter(item=>!deleted.has(item.id)),'saved');
   }
 
   function migrateLegacy(saved) {
@@ -359,9 +410,13 @@
       const edited=byId.get(original.id), destination=byAlias.get(original.id);
       if(!edited){if(destination&&destination.sourceCallIds.every(alias=>!byId.has(alias)))deleted.add(destination.id);continue;}
       const changes=Object.fromEntries(Object.keys(edited).filter(key=>!['id','sourceCallIds','sources'].includes(key)&&JSON.stringify(edited[key])!==JSON.stringify(original[key])).map(key=>[key,edited[key]]));
+      const moved=!samePoint(edited,original);
+      if(moved){changes.lat=edited.lat;changes.lng=edited.lng;}
       if(!Object.keys(changes).length)continue;
       if(destination){
+        const publishedPoint={lat:destination.lat,lng:destination.lng};
         Object.assign(destination,changes);
+        if(moved && !edited.routeAccess && modeledAccess(destination.routeAccess) && !samePoint(destination,publishedPoint))delete destination.routeAccess;
         if(changes.main||changes.sub){
           const service=destination.main==='Medical'?'ems':'fire';
           destination.incidentProfiles={...destination.incidentProfiles,[service]:{sub:destination.sub}};
@@ -377,7 +432,7 @@
 
   function persist(nextItems = items) {
     try {
-      localStorage.setItem(STORAGE_KEY,JSON.stringify({version:STORE_VERSION,cityId:CITY_ID,dataVersion,trainingCareHomeIds,trainingSharedLocationIds:[...new Set([...(savedTrainingSharedLocationIds||[]),...trainingSharedLocationIds])],savedAt:new Date().toISOString(),items:nextItems}));
+      localStorage.setItem(STORAGE_KEY,JSON.stringify({version:STORE_VERSION,cityId:CITY_ID,dataVersion,trainingCareHomeIds,trainingSharedLocationIds:[...new Set([...(savedTrainingSharedLocationIds||[]),...trainingSharedLocationIds])],savedAt:new Date().toISOString(),seed,items:nextItems}));
     } catch (error) {
       throw new Error('Changes could not be saved on this device. Free browser storage and try again, or export your edits.',{cause:error});
     }
@@ -398,8 +453,16 @@
 
   function ready() { if (!readyPromise) readyPromise = initialize().catch(error=>{readyPromise=null;throw error;}); return readyPromise; }
   function getAll() { return clone(items); }
-  function replaceAll(nextItems) { const next=normalizeList(nextItems,'editor');persist(next);items=next;announce();return getAll(); }
-  function upsert(raw) { const location=normalizeLocation(raw,'editor');if(!location)throw new Error('A dispatch location needs valid latitude and longitude values.');const index=items.findIndex(item=>item.id===location.id),next=clone(items);if(index>=0)next[index]=location;else next.push(location);persist(next);items=next;announce();return clone([location])[0]; }
+  function replaceAll(nextItems) {
+    const previous=new Map(items.map(item=>[item.id,item]));
+    const next=normalizeList(nextItems,'editor').map(item=>clearMovedAccess(item,previous.get(item.id)));
+    persist(next);items=next;announce();return getAll();
+  }
+  function upsert(raw) {
+    let location=normalizeLocation(raw,'editor');if(!location)throw new Error('A dispatch location needs valid latitude and longitude values.');
+    const index=items.findIndex(item=>item.id===location.id),next=clone(items);location=clearMovedAccess(location,items[index]);
+    if(index>=0)next[index]=location;else next.push(location);persist(next);items=next;announce();return clone([location])[0];
+  }
   function remove(id) { const next=items.filter(item=>item.id!==id);persist(next);items=next;announce();return getAll(); }
   function createId(raw) { const normalized=normalizeLocation({...raw,id:''},'editor');const base=normalized?makeId(normalized):`call-custom-${Date.now().toString(36)}`;let candidate=base,suffix=2;while(items.some(item=>item.id===candidate))candidate=`${base}-${suffix++}`;return candidate; }
   function reset() { const next=clone(seed);persist(next);items=next;announce();return getAll(); }

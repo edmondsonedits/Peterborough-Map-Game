@@ -156,7 +156,15 @@ const multiplayerModules = fs.readdirSync(path.join(root, multiplayerDir))
   .filter(name => name.endsWith('.mjs')).map(name => multiplayerDir + '/' + name);
 const multiplayerSharedModules = ['road-wheel-contact.js', 'apparatus-collision.mjs', 'station-one-core.mjs', 'station-two-core.mjs', 'station-three-bay.mjs', 'road-tile-pack.js'].map(name => 'city-explorer/' + name);
 const multiplayerTargets = new Set([...multiplayerModules, ...multiplayerSharedModules].map(file => path.resolve(root, file)));
+// The world exporter hashes these sources, including their import URLs. Keep
+// their internal pins stable so a Pages-only release can use the deployed world.
+const worldSourcePins = new Set([
+  'city-explorer/station-one-core.mjs',
+  multiplayerDir + '/movement-core.mjs',
+  multiplayerDir + '/world-collision.mjs',
+]);
 for (const file of ['city-explorer/app.js', 'city-explorer/gameplay-systems.js', ...multiplayerModules, ...multiplayerSharedModules]) {
+  if (worldSourcePins.has(file)) continue;
   const source = read(file).replace(/(['"])(\.{1,2}\/[^'"?]+\.(?:mjs|js))(?:\?v=[^'"]*)?\1/g, (match, quote, target) => {
     if (!multiplayerTargets.has(path.resolve(root, path.dirname(file), target))) return match;
     return quote + target + '?v=' + VERSION + quote;

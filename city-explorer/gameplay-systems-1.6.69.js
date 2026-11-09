@@ -173,7 +173,14 @@ export function stepFireTruckKinematics(current, input, delta, onRoad = true, tu
     + (tuning.steeringHighSpeed - tuning.steeringLowSpeed) * speedRatio;
   const steeringMagnitude = Math.pow(Math.abs(steeringInput), 1.08);
   const shapedSteeringInput = Math.sign(steeringInput) * steeringMagnitude;
-  const targetSteering = shapedSteeringInput * maximumSteer;
+  const fullLockRadius = tuning.soloFullLockTurnRadius;
+  let targetSteering = shapedSteeringInput * maximumSteer;
+  if (onRoad && speed > 0 && fullLockRadius) {
+    // Add most of the extra lock near the edge of the stick so small inputs
+    // still make fine corrections. Fade it in as the truck starts rolling.
+    const extraLock = Math.max(0, Math.atan(tuning.wheelbase / fullLockRadius) - maximumSteer);
+    targetSteering += shapedSteeringInput * extraLock * Math.min(1, speed / 4) * steeringMagnitude ** 3;
+  }
 
   // Small corrections come in softly, while stronger turns remain responsive.
   const steeringResponse = steeringMagnitude > 0.0005

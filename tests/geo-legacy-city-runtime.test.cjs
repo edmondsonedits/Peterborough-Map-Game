@@ -47,7 +47,7 @@ test('Geo packs without an explicit data version retain the established Geo snap
 for(const [city,fireCount,emsCount,center] of [
  ['belleville',5,2,[44.1628,-77.3832]],
  ['scarborough',17,12,[43.7764,-79.2318]],
-])test(`${city} preview uses the complete Geo roster with identical saved-data identities and source coordinates`,async()=>{
+])test(`${city} preview uses the complete Geo roster with identical saved-data identities and reviewed driving coordinates`,async()=>{
  const pack=JSON.parse(read(`cities/${city}/geo-data.json`));
  const c=vm.createContext({URL,console,CustomEvent:class{},location:{href:`https://example.test/?city=${city}`},
   fetch:async url=>{if(String(url)===`https://example.test/cities/${city}/geo-data.json`)return {ok:true,json:async()=>pack};throw Error('Packaged bases must not need live lookup');},
@@ -66,7 +66,13 @@ for(const [city,fireCount,emsCount,center] of [
  assert.equal(seed.filter(b=>b.service==='ems').length,emsCount);
  const fields=b=>({id:b.id,number:b.number,service:b.service,lat:b.lat,lng:b.lng,address:b.address});
  const sort=rows=>rows.map(fields).sort((a,b)=>a.id.localeCompare(b.id));
- assert.deepEqual(JSON.parse(JSON.stringify(sort(seed))),sort(pack.bases.filter(b=>b.status==='active'&&b.selectionEligible)));
+ // Geo keeps canonical site points; the driving preview uses the reviewed
+ // rectangle center when supplied without changing the saved-data identity.
+ const expected=pack.bases.filter(b=>b.status==='active'&&b.selectionEligible).map(base=>({...base,
+  lat:Number.isFinite(base.drivingArea?.lat)?base.drivingArea.lat:base.lat,
+  lng:Number.isFinite(base.drivingArea?.lng)?base.drivingArea.lng:base.lng,
+ }));
+ assert.deepEqual(JSON.parse(JSON.stringify(sort(seed))),sort(expected));
  assert.deepEqual(Array.from(c.PTBO_CITY_PACKAGE.map.defaultCenter),center);
  assert.equal(c.PTBO_CITY_PACKAGE.dispatch.available,true);
  assert.equal(c.PTBO_CITY_PACKAGE.map.bounds[1][0],city==='belleville'?44.35:43.86);

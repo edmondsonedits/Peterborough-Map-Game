@@ -18,9 +18,13 @@ export function createDispatchTraining(destination) {
 export function collectMapEntities({snapshot=null,localPose=null,vehicleId=null,fleet=[],player=null,driving=false}={}){
   if(snapshot){
     const players=[snapshot.player,...(snapshot.players||[])].filter(Boolean);
-    const drivers=new Map(players.filter(p=>p.mode==='driving'&&p.vehicleId).map(p=>[p.vehicleId,p.id===snapshot.player?.id?'You':p.name||'Firefighter']));
+    const crews=new Map();
+    for(const p of players.filter(p=>p.mode==='driving'&&p.vehicleId)){
+      if(!crews.has(p.vehicleId))crews.set(p.vehicleId,new Map());
+      crews.get(p.vehicleId).set(p.id,p.id===snapshot.player?.id?'You':p.name||'Firefighter');
+    }
     return [
-      ...(snapshot.vehicles||[]).map(v=>({id:`vehicle:${v.id}`,label:v.id.replaceAll('-',' ')+(drivers.has(v.id)?` · ${drivers.get(v.id)}`:''),kind:'truck',local:v.id===vehicleId,pose:v.id===vehicleId&&localPose?localPose:v.pose})),
+      ...(snapshot.vehicles||[]).map(v=>({id:`vehicle:${v.id}`,label:v.id.replaceAll('-',' ')+(crews.has(v.id)?` · ${[...crews.get(v.id).values()].join(', ')}`:''),kind:'truck',local:v.id===vehicleId,pose:v.id===vehicleId&&localPose?localPose:v.pose})),
       ...players.filter(p=>p.mode!=='driving').map(p=>({id:`player:${p.id}`,label:p.id===snapshot.player?.id?'You':p.name||'Firefighter',kind:'player',local:p.id===snapshot.player?.id,pose:p.id===snapshot.player?.id&&localPose?localPose:p.pose})),
     ];
   }
@@ -46,6 +50,7 @@ export function createMapMarkerOverlay({document,container,projectPoint}){
       element.firstChild.textContent=marker.kind==='call'?'!':marker.kind==='truck'?'▲':'●';
       element.firstChild.style.transform=marker.kind==='truck'?`rotate(${-(marker.pose.heading||0)}rad)`:'';
       if(element.lastChild.textContent!==marker.label)element.lastChild.textContent=marker.label;
+      element.title=marker.label;
       // Keep every position icon, but suppress labels which would cover the local truck.
       element.lastChild.hidden=labels.some(p=>Math.abs(p.x-point.x)<.14&&Math.abs(p.y-point.y)<.035);
       if(!element.lastChild.hidden)labels.push(point);

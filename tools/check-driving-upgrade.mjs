@@ -6,6 +6,8 @@ const require=createRequire(import.meta.url);
 let chromium;try{({chromium}=require('playwright'));}catch{({chromium}=createRequire("C:/Users/Danny's Ultimate PC/.cache/codex-runtimes/codex-primary-runtime/dependencies/node/node_modules/package.json")('playwright'));}
 const dir=path.resolve('artifacts/driving-upgrade');await mkdir(dir,{recursive:true});
 const browser=await chromium.launch({channel:'msedge',headless:true,args:['--use-angle=d3d11']});
+const base=(process.env.MAP_QA_URL||'http://127.0.0.1:4199').replace(/\/$/,'');
+const backend=process.env.MULTIPLAYER_QA_SERVER||'http://127.0.0.1:2569';
 const errors=[],report={};
 try{
  for(const mobile of [false,true]){
@@ -13,7 +15,7 @@ try{
   const context=await browser.newContext({viewport:mobile?{width:390,height:844}:{width:1280,height:800},hasTouch:mobile,isMobile:mobile,deviceScaleFactor:1});
   const page=await context.newPage();page.on('pageerror',e=>errors.push({name,error:e.message}));
   const started=Date.now();
-  await page.goto(`http://127.0.0.1:4199/city-explorer/${mobile?'lite/':''}?station=1&quality=${mobile?'lite':'balanced'}&multiplayerServer=http%3A%2F%2F127.0.0.1%3A2569`,{waitUntil:'domcontentloaded',timeout:90000});
+  await page.goto(`${base}/city-explorer/${mobile?'lite/':''}?station=1&quality=${mobile?'lite':'balanced'}&multiplayerServer=${encodeURIComponent(backend)}`,{waitUntil:'domcontentloaded',timeout:90000});
   await page.waitForFunction(()=>globalThis.__PTBO_GAMEPLAY__?.state().canSwitchStations,null,{timeout:180000});
   report[name]={startupMs:Date.now()-started};console.log(name,'ready',report[name].startupMs);
   // Select through the same fleet runtime as the in-game fleet panel.

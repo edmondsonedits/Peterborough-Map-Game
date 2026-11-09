@@ -62,3 +62,9 @@ Lite reduced draw calls by 25%, triangles by 31%, and rendered pixels by 58% in 
 The local preview runs at `http://127.0.0.1:4199/city-explorer/?multiplayerServer=http%3A%2F%2F127.0.0.1%3A2569`. For Lite, use the same query at `/city-explorer/lite/`. The local multiplayer backend listens on port 2569. The explicit server query matters because the existing public backend uses the prior protocol.
 
 This is a focused driving/multiplayer implementation and related regression pass, not a line-by-line audit of every repository. It remains a local branch, with no public release or upload. A public release needs coordinated protocol-2 client/server deployment and fresh live verification.
+
+## Publication preparation: v1.6.201
+
+The release branch now incorporates main through `0dd33ca3` (v1.6.200), preserving four-seat crews, aerial actions, vehicle selection, Rescue 1, Car 1, the latest solo full-lock steering, and newer call/location changes. Crew identities are included in truck map labels. The server health response and Pages gate now require protocol 2 as well as matching world data.
+
+The merged full suite passed 1,555 of 1,556 tests; the remaining failure is the unchanged Toronto supplemental-call provenance hash check. The additional crew-map regression passed. The latest live pair observed before this release was frontend v1.6.200 and shared world `42e7a6191e02736c34910091` on both Pages and Render. Publication remains pending until the final assets, backend deployment and Pages checks complete.

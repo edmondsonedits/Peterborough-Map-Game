@@ -40,6 +40,23 @@ concurrency:
   cancel-in-progress: true
 
 jobs:
+  vehicle-multiplayer-regressions:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 15
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@v4
+      - name: Set up Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 22
+      - name: Install multiplayer and UI regression dependencies
+        run: |
+          npm ci --prefix tools/location-report-tests --ignore-scripts --no-audit
+          npm ci --prefix city-explorer/multiplayer/server --ignore-scripts --no-audit
+      - name: Run vehicle handling and multiplayer regression suite
+        run: node --test tests/vehicle-handling.test.mjs tests/vehicle-fleet.test.mjs tests/multiplayer-*.test.mjs
+
   station-1-driving:
     runs-on: ubuntu-24.04
     timeout-minutes: 35

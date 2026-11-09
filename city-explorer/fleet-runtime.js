@@ -1,5 +1,5 @@
 import {configureVehiclePresentation} from './vehicle-presentation.js';
-import {createVehicleFleet} from './vehicle-fleet.mjs';
+import {createVehicleFleet} from './vehicle-fleet.mjs?v=1.6.200';
 import {installFleetAsset} from './fleet-assets.js';
 import {vehicleFootprint,polygonsOverlap,sweepVehicle,segmentBoxHit} from './apparatus-collision.mjs';
 import {createAerialState} from './aerial-controller.mjs';

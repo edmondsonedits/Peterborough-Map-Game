@@ -11,8 +11,7 @@ const metadata = async name => JSON.parse(await readFile(asset(name), 'utf8'));
 export async function createExplorerWorld({ maxCachedTiles = 192 } = {}) {
   const source = await loadWorldCollision({ manifestUrl: worldManifest, maxCachedTiles });
   const metadataByType = { pumper: await metadata('generic-pumper'), aerial: await metadata('aerial-platform'), medi: await metadata('medi-pickup') };
-  const station = source.stations.find(value => value.number === 1);
-  await source.prefetch(station.anchor.x, station.anchor.z, 180);
+  for (const station of source.stations) await source.prefetch(station.anchor.x, station.anchor.z, 180);
   const vehicles = createMultiplayerVehicleInstances(source, metadataByType);
   const spawns = Array.from({ length: 8 }, (_, i) => createMultiplayerPlayerSpawn(source, i + 1));
   const loading = new Map(), lastScheduled = new Map();
