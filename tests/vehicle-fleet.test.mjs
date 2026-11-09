@@ -16,6 +16,7 @@ test('five independent vehicles retain exact poses across selections and fresh f
 test('medi tuning is faster and accelerates harder; pumper defaults unchanged',()=>{
   const by=id=>FLEET_DEFINITIONS.find(v=>v.id===id).tuning;
   assert.equal(by('pump-1').maximumForwardSpeed,27.5);
+  assert.equal(by('medi').maximumForwardSpeed,120/3.6);
   assert.ok(by('medi').maximumForwardSpeed>by('pump-1').maximumForwardSpeed);
   assert.ok(by('medi').forwardAcceleration>by('pump-1').forwardAcceleration);
   assert.ok(by('aerial').length>=12.8);
@@ -25,5 +26,5 @@ test('medi tuning is faster and accelerates harder; pumper defaults unchanged',(
 test('the real driving integrator gives medi higher acceleration and road speed',()=>{
   const drive=id=>{const tuning=FLEET_DEFINITIONS.find(v=>v.id===id).tuning;let s={x:0,z:0,heading:0,speed:0};for(let i=0;i<1500;i++)s=stepFireTruckKinematics(s,{throttle:1,steering:0},.02,true,tuning);return s;};
   const pump=drive('pump-1'),medi=drive('medi'),aerial=drive('aerial');
-  assert.equal(medi.speed*3.6,200);assert.ok(Math.abs(medi.z)>Math.abs(pump.z));assert.ok(aerial.speed<pump.speed);
+  assert.equal(Math.round(medi.speed*3.6),120);assert.ok(Math.abs(medi.z)>Math.abs(pump.z));assert.ok(aerial.speed<pump.speed);
 });

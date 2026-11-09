@@ -48,11 +48,11 @@ room.onMessage('admin-credential', ({ credential, roomCode, locked }) => saveAdm
 room.send('subscribe', {});
 ```
 
-Install message listeners before sending `subscribe`; the server starts snapshots for that client after subscription. Each `snapshot` has `{ protocolVersion, worldVersion, tick, serverTime, epoch, ackInputSequence, player, players, vehicles }`. Every vehicle frame includes `id`, `entityGeneration`, `pose`, `driverPlayerId`, and current `lights`. The initial subscription and explicit/reconnect baseline also include the immutable `templateId`, `tuning`, and `dimensions` catalog. Periodic ticks omit that catalog. The client runtime hydrates compact frames from its bounded catalog before prediction/rendering; consumers use `runtime.latestSnapshot`, not raw wire frames. Each `ack` is immediate `{ ok, error? }` queue acceptance; only the snapshot `ackInputSequence` confirms that an input was simulated. Inputs use the shared `protocolVersion: 1`, current `epoch`, increasing `sequence`, mode, and controls schema:
+Install message listeners before sending `subscribe`; the server starts snapshots for that client after subscription. Each `snapshot` has `{ protocolVersion, worldVersion, tick, serverTime, epoch, ackInputSequence, player, players, vehicles }`. Every vehicle frame includes `id`, `entityGeneration`, `pose`, `driverPlayerId`, and current `lights`. The initial subscription and explicit/reconnect baseline also include the immutable `templateId`, `tuning`, and `dimensions` catalog. Periodic ticks omit that catalog. The client runtime hydrates compact frames from its bounded catalog before prediction/rendering; consumers use `runtime.latestSnapshot`, not raw wire frames. Each `ack` is immediate `{ ok, error? }` queue acceptance; only the snapshot `ackInputSequence` confirms that an input was simulated. Inputs use the shared `protocolVersion: 2`, current `epoch`, increasing `sequence`, mode, and controls schema:
 
 ```js
 room.send('input', { input: {
-  protocolVersion: 1, epoch, sequence, mode: 'onFoot',
+  protocolVersion: 2, epoch, sequence, mode: 'onFoot',
   controls: { forward, strafe, sprint, throttle, steering, viewYaw }
 } });
 ```

@@ -1,6 +1,7 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
-import { stepWalking, stepVehicle } from '../city-explorer/multiplayer/movement-core.mjs';
+import { stepWalking, stepVehicle, stepVehicleKinematics, DEFAULT_VEHICLE_TUNING } from '../city-explorer/multiplayer/movement-core.mjs';
+import { FLEET_DEFINITIONS } from '../city-explorer/vehicle-fleet.mjs';
 
 test('walking matches the legacy camera-relative integrator for its fixture sequence',()=>{
  const state={x:0,y:2,z:0,heading:0,vx:0,vz:0,speed:0};
@@ -38,3 +39,21 @@ test('walk and vehicle steps stop at exported blockers',()=>{
 });
 
 test('center pavement hole remains driveable when two fresh wheel contacts reach road',()=>{const state={x:0,y:0,z:0,heading:0,vx:0,vz:0,speed:0,steering:0};let initialSamples=0;const mixed={sampleSurface:(x)=>{initialSamples++;return{height:0,onRoad:x<0};},blocks:()=>false},offroad={sampleSurface:()=>({height:0,onRoad:false}),blocks:()=>false};const on=stepVehicle(state,{throttle:1},.1,mixed),off=stepVehicle(state,{throttle:1},.1,offroad);assert.equal(initialSamples,6,'centre, four wheel contacts, and destination must be sampled');assert.ok(on.speed>off.speed,'two road-side wheels restore the on-road tuning');});
+
+test('vehicle tuning gives distinct predictable pumper, aerial, and medic handling',()=>{
+ const byId=Object.fromEntries(FLEET_DEFINITIONS.map(v=>[v.id,v.tuning]));
+ assert.ok(byId.aerial.forwardAcceleration<byId['pump-1'].forwardAcceleration);
+ assert.ok(byId.medi.forwardAcceleration>byId['pump-1'].forwardAcceleration);
+ assert.ok(byId.aerial.serviceBrake<byId['pump-1'].serviceBrake);
+ assert.ok(byId.medi.maximumForwardSpeed>byId['pump-1'].maximumForwardSpeed);
+ assert.ok(byId.medi.steeringLowSpeed>byId.aerial.steeringLowSpeed);
+ assert.ok(byId.aerial.length>byId['pump-1'].length);
+});
+
+test('vehicle kinematics stay close across 30 and 60 Hz control frames',()=>{
+ const run=hz=>{let state={x:0,z:0,heading:0,speed:0,steering:0};for(let i=0;i<hz*4;i++)state=stepVehicleKinematics(state,{throttle:.72,steering:.36},1/hz,true,DEFAULT_VEHICLE_TUNING);return state;};
+ const at30=run(30),at60=run(60);
+ assert.ok(Math.hypot(at30.x-at60.x,at30.z-at60.z)<.18,`position drift ${Math.hypot(at30.x-at60.x,at30.z-at60.z)}`);
+ assert.ok(Math.abs(at30.heading-at60.heading)<.035,`heading drift ${at30.heading-at60.heading}`);
+ assert.ok(Math.abs(at30.speed-at60.speed)<.02);
+});

@@ -7,6 +7,7 @@ const MAX_CATCHUP_TICKS = 5;
 const MAX_PENDING = 8;
 const MAX_VEHICLES = 12;
 const MAX_EXTRAPOLATION_MS = 100;
+const MAX_ADAPTIVE_BUFFER_MS = 100;
 const clamp = (n, lo, hi) => Math.max(lo, Math.min(hi, n));
 const wrapAngle = (angle) => ((angle + Math.PI) % (2 * Math.PI) + 2 * Math.PI) % (2 * Math.PI) - Math.PI;
 const clonePose = (pose) => ({ ...pose });
@@ -78,6 +79,7 @@ export function createClientRuntime({
   let accumulator = 0, pending = [], authoritative = null, simulation = null, rendered = null, lastRenderAt = clock();
   let latestControls = copyControls(), renderCorrection = { x: 0, y: 0, z: 0, heading: 0 };
   let lastServerTime = -Infinity, clockOffset = null, nextWarmupAt = 0;
+  let previousReceiveAt = null, previousSnapshotServerTime = null, adaptiveBufferMs = 0;
   const buffers = { players: new Map(), vehicles: new Map() };
   let latestSnapshot = null;
   const state = () => ({
@@ -120,12 +122,12 @@ export function createClientRuntime({
     }
     return pose;
   }
-  function previewPose(source, alpha) {
+  function previewPose(source, alpha, controls=latestControls) {
     let pose = clonePose(source.pose);
     if (alpha <= 0) return pose;
     const substep = SUBSTEP_SECONDS * clamp(alpha, 0, 1);
     for (let i = 0; i < 2; i += 1) {
-      const next = simulateOne({ ...source, pose }, latestControls, substep);
+      const next = simulateOne({ ...source, pose }, controls, substep);
       if (!next) break;
       pose = next;
     }
@@ -183,6 +185,7 @@ export function createClientRuntime({
     latestControls = copyControls();
     pending = [];
     accumulator = 0; pausedForWorld = false; lastRenderAt = clock();
+    previousReceiveAt = null; previousSnapshotServerTime = null; adaptiveBufferMs = 0;
     if (!ready(authoritative.pose, entityRadius(authoritative))) { pausedForWorld = true; warm(authoritative.pose, entityRadius(authoritative)); }
     emit('prediction-reset', { reason, epoch, tick });
     publish();
@@ -191,11 +194,16 @@ export function createClientRuntime({
   function clearBuffers() { buffers.players.clear(); buffers.vehicles.clear(); }
   function appendEntity(map, entity, time, signature) {
     let record = map.get(entity.id);
-    if (!record || record.signature !== signature) record = { signature, samples: [] };
+    if (!record || record.signature !== signature) record = { signature, samples: [], renderTime: -Infinity };
     if (record.samples.length && time <= record.samples.at(-1).time) time = record.samples.at(-1).time + 0.01;
     record.samples.push({ time, entity: { ...entity, pose: clonePose(entity.pose) } });
     if (record.samples.length > 12) record.samples.splice(0, record.samples.length - 12);
     map.set(entity.id, record);
+  }
+  function sampleRecord(record, targetTime) {
+    if (!record?.samples.length) return null;
+    record.renderTime = Math.max(record.renderTime, targetTime);
+    return sampleBuffer(record.samples, record.renderTime, interpolationDelayMs);
   }
   function hydrateVehicleCatalog(snapshot) {
     const metadata = snapshot.vehicles.map((vehicle) => ({ vehicle, fields: vehicleMetadata(vehicle) }));
@@ -224,7 +232,12 @@ export function createClientRuntime({
     }) };
   }
   function applySnapshot(snapshot) {
-    if (disposed || !validateSnapshot(snapshot)) { emit('snapshot-rejected', { reason: 'invalid' }); return false; }
+    if (disposed) return false;
+    if (Number.isInteger(snapshot?.protocolVersion) && snapshot.protocolVersion !== PROTOCOL_VERSION) {
+      compatible = false; pending = [];
+      emit('protocol-version-mismatch', { expected: PROTOCOL_VERSION, received: snapshot.protocolVersion }); publish(); return false;
+    }
+    if (!validateSnapshot(snapshot)) { emit('snapshot-rejected', { reason: 'invalid' }); return false; }
     if (snapshot.worldVersion !== worldVersion || (world.worldVersion && snapshot.worldVersion !== world.worldVersion)) {
       compatible = false; pending = []; emit('world-version-mismatch', { expected: worldVersion ?? world.worldVersion, received: snapshot.worldVersion }); publish(); return false;
     }
@@ -234,6 +247,15 @@ export function createClientRuntime({
     snapshot = hydrateVehicleCatalog(snapshot);
     if (!snapshot) { emit('snapshot-rejected', { reason: 'invalid-vehicle-catalog' }); return false; }
     const receiveAt = clock();
+    if (previousReceiveAt !== null && previousSnapshotServerTime !== null) {
+      const serverInterval = Math.max(0, snapshot.serverTime - previousSnapshotServerTime);
+      const arrivalInterval = Math.max(0, receiveAt - previousReceiveAt);
+      const excessDelay = clamp(arrivalInterval - serverInterval, 0, MAX_ADAPTIVE_BUFFER_MS);
+      if (excessDelay > adaptiveBufferMs) adaptiveBufferMs += (excessDelay - adaptiveBufferMs) * 0.75;
+      else adaptiveBufferMs *= 0.9;
+    }
+    previousReceiveAt = receiveAt;
+    previousSnapshotServerTime = snapshot.serverTime;
     const priorRenderedPose = rendered ? clonePose(rendered.pose) : null;
     if (clockOffset === null) clockOffset = snapshot.serverTime - receiveAt;
     else {
@@ -289,16 +311,16 @@ export function createClientRuntime({
     return true;
   }
   function sampleRemote(renderTime = clock()) {
-    const target = renderTime - Math.max(0, interpolationDelayMs);
+    const target = renderTime - Math.max(0, interpolationDelayMs) - adaptiveBufferMs;
     const output = { players: [], vehicles: [] };
-    for (const [id, record] of buffers.players) { const sample = sampleBuffer(record.samples, target, interpolationDelayMs); if (sample) output.players.push({ ...sample, id }); }
-    for (const [id, record] of buffers.vehicles) { const sample = sampleBuffer(record.samples, target, interpolationDelayMs); if (sample) output.vehicles.push({ ...sample, id }); }
+    for (const [id, record] of buffers.players) { const sample = sampleRecord(record, target); if (sample) output.players.push({ ...sample, id }); }
+    for (const [id, record] of buffers.vehicles) { const sample = sampleRecord(record, target); if (sample) output.vehicles.push({ ...sample, id }); }
     return output;
   }
   function sampleRemoteActor(id, renderTime = clock()) {
-    const target = renderTime - Math.max(0, interpolationDelayMs);
-    const player = buffers.players.get(id); if (player) return sampleBuffer(player.samples, target, interpolationDelayMs);
-    const vehicle = buffers.vehicles.get(id); if (vehicle) return sampleBuffer(vehicle.samples, target, interpolationDelayMs);
+    const target = renderTime - Math.max(0, interpolationDelayMs) - adaptiveBufferMs;
+    const player = buffers.players.get(id); if (player) return sampleRecord(player, target);
+    const vehicle = buffers.vehicles.get(id); if (vehicle) return sampleRecord(vehicle, target);
     return null;
   }
   function advanceFrame(deltaMs, controls = null) {
@@ -319,7 +341,8 @@ export function createClientRuntime({
     if (authoritative && simulation) {
       const time = clock(), delta = clamp((time - lastRenderAt) / 1000, 0, 0.1); lastRenderAt = time;
       const alpha = clamp(accumulator / STEP_MS, 0, 1);
-      const preview = previewPose(simulation, alpha);
+      // Preview fresh controls every render frame without increasing the network tick rate.
+      const preview = previewPose(simulation, alpha, controls&&compatible?copyControls(controls):latestControls);
       const response = authoritative.mode === 'driving' ? 10 : 12;
       const decay = Math.exp(-response * delta);
       renderCorrection = { x: renderCorrection.x * decay, y: renderCorrection.y * decay, z: renderCorrection.z * decay, heading: wrapAngle(renderCorrection.heading * decay) };

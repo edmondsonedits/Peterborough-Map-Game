@@ -131,7 +131,7 @@
   }
 
   joystick.addEventListener('pointerdown', event => {
-    if (app?.classList.contains('is-map') || pointerId !== null) return;
+    if ((app?.classList.contains('is-map') && document.documentElement.dataset.mapDriving !== 'true') || pointerId !== null) return;
     event.preventDefault();
     closeMenu();
     pointerId = event.pointerId;
@@ -242,7 +242,7 @@
     const mode = document.documentElement.dataset.gameplayMode || 'onFoot';
     if (mode !== 'onFoot') delete joystick.dataset.gait;
     const ready = document.documentElement.dataset.gameplayReady === 'true';
-    const mapMode = app?.classList.contains('is-map') || mode === 'map';
+    const mapMode = (app?.classList.contains('is-map') || mode === 'map') && document.documentElement.dataset.mapDriving !== 'true';
     const flyMode = app?.classList.contains('is-fly') || mode === 'fly';
 
     root.classList.toggle('is-map-mode', mapMode);
@@ -253,8 +253,9 @@
     if (mapMode) resetJoystick();
   }
 
+  window.addEventListener('ptbo:map-driving-change',resetJoystick);
   const observer = new MutationObserver(syncMode);
-  observer.observe(document.documentElement, { attributes: true, attributeFilter: ['data-gameplay-mode', 'data-gameplay-ready'] });
+  observer.observe(document.documentElement, { attributes: true, attributeFilter: ['data-gameplay-mode', 'data-gameplay-ready', 'data-map-driving'] });
   if (app) observer.observe(app, { attributes: true, attributeFilter: ['class'] });
   if (interactionPrompt) observer.observe(interactionPrompt, { attributes: true, childList: true, subtree: true, characterData: true });
   syncMode();

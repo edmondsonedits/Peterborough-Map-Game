@@ -17,7 +17,7 @@ test('fleet handling shares pumper dynamics and separates apparatus classes whil
  assert.notEqual(aerial.offRoadSpeed,medi.offRoadSpeed);
  assert.notEqual(pump1.maximumLateralAcceleration,aerial.maximumLateralAcceleration);
  assert.notEqual(aerial.maximumLateralAcceleration,medi.maximumLateralAcceleration);
- assert.deepEqual([pump1,aerial,medi].map(v=>v.maximumForwardSpeed),[27.5,85/3.6,200/3.6]);
+ assert.deepEqual([pump1,aerial,medi].map(v=>v.maximumForwardSpeed),[27.5,21.5,120/3.6]);
 });
 
 test('analog throttle produces proportional power and opposite input brakes through zero into reverse',()=>{
@@ -63,7 +63,7 @@ test('off-road reverse overspeed decays gradually and acceleration cannot push t
  assert.ok(Math.abs(roadCap.acceleration-(roadCap.speed-(tuning.maximumForwardSpeed-.01))/.05)<1e-9);
 });
 
-test('full steering at 200 km/h stays inside the Medi pickup lateral acceleration limit',()=>{
+test('full steering at 120 km/h stays inside the Medi pickup lateral acceleration limit',()=>{
  const tuning=byId('medi');
  let state={x:0,z:0,heading:0,speed:tuning.maximumForwardSpeed,steering:0};
  let worst=0;
@@ -88,4 +88,26 @@ test('steady road acceleration and cornering remain stable at 30, 60, and 120 Hz
  assert.ok(Math.max(...results.map(s=>s.speed))-Math.min(...results.map(s=>s.speed))<.03);
  assert.ok(Math.max(...results.map(s=>s.heading))-Math.min(...results.map(s=>s.heading))<.03);
  assert.ok(results.every(s=>Number.isFinite(s.x)&&Number.isFinite(s.z)));
+});
+
+const fleet=Object.fromEntries(FLEET_DEFINITIONS.map(({id,tuning})=>[id,tuning]));
+const turningRadius=tuning=>tuning.wheelbase/Math.tan(tuning.steeringLowSpeed);
+
+test('aerial feels heavier with slower acceleration and a wider low-speed turn',()=>{
+ const pumper=fleet['pump-1'],aerial=fleet.aerial;
+ assert.ok(aerial.forwardAcceleration<pumper.forwardAcceleration);
+ assert.ok(aerial.wheelbase>pumper.wheelbase);
+ assert.ok(turningRadius(aerial)>turningRadius(pumper));
+ assert.ok(aerial.steeringResponse<pumper.steeringResponse);
+ assert.ok(aerial.serviceBrake<=pumper.serviceBrake,'longer heavier apparatus does not stop more sharply than a pumper');
+});
+
+test('Medi has more road speed, quicker pickup, and a tighter turn than the pumper',()=>{
+ const pumper=fleet['pump-1'],medi=fleet.medi;
+ assert.ok(medi.maximumForwardSpeed>pumper.maximumForwardSpeed);
+ assert.ok(medi.forwardAcceleration>pumper.forwardAcceleration);
+ assert.ok(medi.wheelbase<pumper.wheelbase);
+ assert.ok(turningRadius(medi)<turningRadius(pumper));
+ assert.ok(medi.steeringResponse>pumper.steeringResponse);
+ assert.ok(medi.serviceBrake>pumper.serviceBrake);
 });

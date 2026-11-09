@@ -84,7 +84,7 @@ test('municipal BR60 snapshot rejects coordinate drift beyond floating-point tol
 import { runInNewContext } from 'node:vm';
 const appSource=readFileSync(new URL('../city-explorer/app.js',import.meta.url),'utf8');
 const runtimeStart=appSource.indexOf('function gameplaySurfaceBaseAt(');
-const runtimeEnd=appSource.indexOf('function syncGameplayRootClasses()',runtimeStart);
+const runtimeEnd=appSource.indexOf('function gameplayControlMode()',runtimeStart);
 const runtime=appSource.slice(runtimeStart,runtimeEnd);
 test('actual gameplay query chooses the Hunter ribbon beneath tires and preserves unrelated underpasses',()=>{
  const hit={height:5,onRoad:true,name:'Hunter Street East',bridge:true};

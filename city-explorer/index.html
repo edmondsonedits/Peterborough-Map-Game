@@ -98,6 +98,8 @@
       <nav class="control-panel" aria-label="Simulator controls">
         <a class="hud-button menu-link" href="../" aria-label="Return to all games">Main menu</a>
         <button class="hud-button" id="graphics-quality-open" type="button">Settings</button>
+        <button class="hud-button" id="dispatch-training-start" type="button">Training call</button>
+        <button class="hud-button" id="driving-camera-cycle" type="button" aria-label="Change driving view">View</button>
         <button id="play-mode" class="hud-button is-active" type="button">Play</button>
         <button id="fly-mode" class="hud-button" type="button">Fly mode</button>
         <button id="map-mode" class="hud-button" type="button">Map</button>
@@ -130,9 +132,11 @@
       </aside>
 
       <section id="map-view-controls" aria-label="Map view controls">
+        <button id="map-drive-toggle" type="button" aria-pressed="false">Drive on map</button>
+        <button id="map-follow-player" type="button">Find me</button>
         <div class="map-layer-buttons" role="group" aria-label="Map style">
-          <button id="map-layer-3d" type="button" aria-pressed="true">3D</button>
-          <button id="map-layer-osm" type="button" aria-pressed="false">OSM street map</button>
+          <button id="map-layer-3d" type="button" aria-pressed="false">3D</button>
+          <button id="map-layer-osm" type="button" aria-pressed="true">Street map</button>
           <button id="map-layer-satellite" type="button" aria-pressed="false">Satellite</button>
         </div>
         <div class="map-zoom-buttons" role="group" aria-label="Map zoom">
@@ -143,6 +147,9 @@
         <span id="map-layer-status" role="status" aria-live="polite">Drag to pan · scroll or pinch to zoom</span>
       </section>
 
+      <div id="tactical-map-markers" hidden aria-label="Players, trucks and training call"></div>
+      <div id="cab-view-frame" hidden aria-hidden="true"><div class="cab-roof"></div><div class="cab-pillar left"></div><div class="cab-pillar right"></div><div class="cab-dashboard"><span>FIRE · DRIVER VIEW</span></div></div>
+      <div id="dispatch-status" hidden><span id="dispatch-bearing" aria-hidden="true">↑</span><span id="dispatch-status-text"></span><button id="dispatch-show-map" type="button">Map</button><button id="dispatch-cancel" type="button" aria-label="Clear training call">×</button></div>
       <section class="help-panel hud-panel">
         <p id="mode-hint"><strong>Loading selected fire station.</strong> WASD or arrows move · tap Shift to cycle walk, run, sprint · E enters the truck · mouse controls the camera.</p>
       </section>
@@ -217,12 +224,15 @@
             <option value="close">Close</option>
             <option value="standard">Standard</option>
             <option value="wide">Wide</option>
+            <option value="cab">Cab — first person</option>
+            <option value="bonnet">Bonnet — front view</option>
           </select>
           <p>Camera changes apply immediately and are saved. Automatic returns to the standard view as you leave the bay. Indoor views adjust to clear walls and ceilings.</p>
           <h3>Graphics quality</h3>
           <p>Choose the detail level that runs smoothly on your device. Roads and driving stay the same.</p>
           <label for="graphics-quality-select">Quality</label>
           <select id="graphics-quality-select" style="width:100%;min-height:44px;padding:10px;margin:10px 0 18px;color:inherit;background:#14252c;border:1px solid #647580;border-radius:8px">
+            <option value="lite">Lite — older phones</option>
             <option value="low">Low � lighter on battery and memory</option>
             <option value="balanced" selected>Balanced — recommended</option>
             <option value="high">High � more detail and shadows</option>

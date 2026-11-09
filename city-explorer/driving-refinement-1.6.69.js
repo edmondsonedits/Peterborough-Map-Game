@@ -98,6 +98,7 @@
     document.documentElement.dataset.mobileAnalogDriving = bridgeInstalled ? VERSION : 'fallback';
   }
   installGamepadBridge();
+  window.addEventListener('ptbo:map-driving-change',clearAnalog);
 
   // The v1.6.68 mobile controller still emits digital W/A/S/D events. In
   // driving mode those would override analog steering, so suppress only those

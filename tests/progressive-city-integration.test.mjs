@@ -15,7 +15,7 @@ test('quick travel waits for full readiness and never queues a failed background
  const c=guards();let invoked=0;const action=()=>invoked++;assert.equal(c.deferCityNavigation(action),true);assert.equal(invoked,0);assert.equal(c.pendingCityNavigation,action);c.pendingCityNavigation=null;c.progressiveCityStatus.phase='failed';assert.equal(c.deferCityNavigation(action),true);assert.equal(c.pendingCityNavigation,null);c.fullCityReady=true;assert.equal(c.deferCityNavigation(action),false);
 });
 test('background failure keeps pending scenery guarded and returns without claiming full readiness',async()=>{
- const c=guards({nextFrame:async()=>{},runProgressiveCityBuild:async()=>{throw Error('injected');},els:{worldStatus:{textContent:''}},console:{warn(){}},commitBackgroundBuildingBatch(){}});
+ const c=guards({graphicsQuality:{name:'balanced'},nextFrame:async()=>{},runProgressiveCityBuild:async()=>{throw Error('injected');},els:{worldStatus:{textContent:''}},console:{warn(){}},commitBackgroundBuildingBatch(){}});
  vm.runInContext(section('async function finishProgressiveBuildings(','async function parseOsmWithGeoJson('),c);assert.equal(await c.finishProgressiveBuildings(),false);assert.equal(c.progressiveCityStatus.phase,'failed');assert.equal(c.progressiveCityStatus.error,'injected');assert.equal(c.fullCityReady,false);assert.equal(c.pendingCityBuildingGroups.length,1);assert.match(c.els.worldStatus.textContent,/Station ready/);
 });
 test('background mesh visibility is released only after every commit step completes',async()=>{

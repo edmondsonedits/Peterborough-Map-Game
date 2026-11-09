@@ -1,11 +1,12 @@
 const PROFILES=Object.freeze({
+ lite:Object.freeze({name:'lite',pixelRatio:0.65,antialias:false,shadows:false,roadRadius:380,roadRetainRadius:620,buildingRadius:1050,streetDetailRadius:420,fogDensity:0.0021,roadSurface:'canonical',optionalScenery:false}),
  low:Object.freeze({name:'low',pixelRatio:0.85,antialias:false,shadows:false,roadRadius:650,roadRetainRadius:1000,buildingRadius:1700,streetDetailRadius:700,fogDensity:0.00145,roadSurface:'canonical'}),
  balanced:Object.freeze({name:'balanced',pixelRatio:1.35,antialias:true,shadows:false,roadRadius:900,roadRetainRadius:1350,buildingRadius:2400,streetDetailRadius:1050,fogDensity:0.001,roadSurface:'canonical'}),
  high:Object.freeze({name:'high',pixelRatio:1.65,antialias:true,shadows:true,roadRadius:1450,roadRetainRadius:1950,buildingRadius:4200,streetDetailRadius:1800,fogDensity:0.00065,roadSurface:'canonical'}),
 });
 export function resolveGraphicsQuality({search='',saved=null}={}){
  const params=new URLSearchParams(search);const requested=params.get('quality');
- const name=PROFILES[requested]?requested:params.get('lite')==='1'?'low':PROFILES[saved]?saved:'balanced';
+ const name=PROFILES[requested]?requested:params.get('lite')==='1'?'lite':PROFILES[saved]?saved:'balanced';
  return PROFILES[name];
 }
 export function readGraphicsPreference(storage){try{return storage?.getItem('ptbo.graphicsQuality')||null;}catch{return null;}}

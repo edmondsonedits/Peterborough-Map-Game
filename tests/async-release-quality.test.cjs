@@ -45,7 +45,7 @@ test('3D HUD leaves unchanged nodes intact across repeated gameplay frames',()=>
  const els=Object.fromEntries(['gameplayRoad','gameplayRole','gameplaySpeed','gameplayGear','interactionPrompt'].map(k=>[k,node()]));
  const dataset=new Proxy({}, {set(o,k,v){writes++;o[k]=v;return true;}});
  const c=vm.createContext({multiplayer:null,fleetRuntime:null,gameplayReady:true,stationSwitchBusy:()=>false,selectedStationDoorRuntime:()=>null,STATION_ONE_SELECTED:false,STATION_TWO_SELECTED:false,state:{mode:'driving'},fireTruckActor:{position:{x:0,y:0,z:0}},playerActor:{position:{x:0,y:0,z:0}},truckState:{x:0,z:0,y:0,speed:0},fireStationWorld:{x:0,z:0},FIRE_STATION_ONE:{number:2},lastRoadLabel:'',els,document:{documentElement:{dataset}},pavementQA:false,PLAYER_TUNING:{enterDistance:4},TRUCK_TUNING:{exitSpeed:1},gameplaySurfaceAt:()=>({onRoad:false,name:'',height:0})});
- vm.runInContext(source.slice(a,b),c);c.updateGameplayHud();const initial=writes;
+ vm.runInContext('function gameplayControlMode(){return state.mode==="map"?state.lastNonMapMode:state.mode;}'+source.slice(a,b),c);c.updateGameplayHud();const initial=writes;
  for(let i=0;i<100;i++)c.updateGameplayHud();assert.equal(writes,initial);assert.match(els.gameplayRoad.textContent,/Station 2/);
  c.truckState.speed=3;c.updateGameplayHud();assert.equal(els.gameplaySpeed.textContent,'011');assert.equal(els.gameplayGear.textContent,'D');
 });
@@ -58,7 +58,7 @@ test('Station 2 HUD leaves unchanged front-door controls intact across gameplay 
  const dataset=new Proxy({}, {set(o,k,v){writes++;o[k]=v;return true;}}),doors={front:[{target:0}]};
  const stationTwoRuntime={isReady:()=>true,frontDoorForTruck:()=>0,getStatus:()=>({doors})};
  const c=vm.createContext({multiplayer:null,fleetRuntime:null,gameplayReady:true,stationSwitchBusy:()=>false,STATION_ONE_SELECTED:false,STATION_TWO_SELECTED:true,stationTwoRuntime,selectedStationDoorRuntime:()=>stationTwoRuntime,state:{mode:'driving'},fireTruckActor:{position:{x:0,y:0,z:0}},playerActor:{position:{x:0,y:0,z:0}},truckState:{x:0,z:0,y:0,speed:0},fireStationWorld:{x:0,z:0},FIRE_STATION_ONE:{number:2},lastRoadLabel:'',els,document:{documentElement:{dataset}},pavementQA:false,PLAYER_TUNING:{enterDistance:4},TRUCK_TUNING:{exitSpeed:1},gameplaySurfaceAt:()=>({onRoad:false,name:'',height:0})});
- vm.runInContext(source.slice(a,b),c);c.updateGameplayHud();
+ vm.runInContext('function gameplayControlMode(){return state.mode==="map"?state.lastNonMapMode:state.mode;}'+source.slice(a,b),c);c.updateGameplayHud();
  assert.equal(els.stationTwoDoor.textContent,'Open bay door');assert.equal(els.stationTwoDoor.disabled,false);
  assert.equal(els.stationTwoMobileDoor.textContent,'Open bay door');assert.equal(els.stationTwoMobileDoor.disabled,false);
  const initial=writes;for(let i=0;i<100;i++)c.updateGameplayHud();assert.equal(writes,initial);
@@ -74,7 +74,7 @@ test('Station 1 HUD updates only its selected sectional-door controls',()=>{
  const dataset=new Proxy({}, {set(o,k,v){writes++;o[k]=v;return true;}}),doors={front:[{target:0}]};
  const stationOneRuntime={isReady:()=>true,frontDoorForTruck:()=>0,getStatus:()=>({doors})};
  const c=vm.createContext({multiplayer:null,fleetRuntime:null,gameplayReady:true,stationSwitchBusy:()=>false,STATION_ONE_SELECTED:true,STATION_TWO_SELECTED:false,stationOneRuntime,selectedStationDoorRuntime:()=>stationOneRuntime,state:{mode:'driving'},fireTruckActor:{position:{x:0,y:0,z:0}},playerActor:{position:{x:0,y:0,z:0}},truckState:{x:0,z:0,y:0,speed:0},fireStationWorld:{x:0,z:0},FIRE_STATION_ONE:{number:1},lastRoadLabel:'',els,document:{documentElement:{dataset}},pavementQA:false,PLAYER_TUNING:{enterDistance:4},TRUCK_TUNING:{exitSpeed:1},gameplaySurfaceAt:()=>({onRoad:false,name:'',height:0})});
- vm.runInContext(source.slice(a,b),c);c.updateGameplayHud();
+ vm.runInContext('function gameplayControlMode(){return state.mode==="map"?state.lastNonMapMode:state.mode;}'+source.slice(a,b),c);c.updateGameplayHud();
  assert.equal(els.stationOneDoor.textContent,'Open bay door');assert.equal(els.stationOneDoor.disabled,false);
  assert.equal(els.stationOneMobileDoor.textContent,'Open bay door');assert.equal(els.stationOneMobileDoor.disabled,false);
  const initial=writes;for(let i=0;i<100;i++)c.updateGameplayHud();assert.equal(writes,initial);
@@ -100,7 +100,7 @@ test('Station 3 HUD updates only its manual Door 01 controls without redundant w
   playerActor:{position:{x:0,y:0,z:0}},truckState:{x:0,z:0,y:0,speed:0},fireStationWorld:{x:0,z:0},FIRE_STATION_ONE:{number:3},lastRoadLabel:'',els,
   document:{documentElement:{dataset:{}}},pavementQA:false,PLAYER_TUNING:{enterDistance:4},TRUCK_TUNING:{exitSpeed:1},
   gameplaySurfaceAt:()=>({onRoad:false,name:'',height:0})});
- vm.runInContext(source.slice(a,b),c);c.updateGameplayHud();
+ vm.runInContext('function gameplayControlMode(){return state.mode==="map"?state.lastNonMapMode:state.mode;}'+source.slice(a,b),c);c.updateGameplayHud();
  assert.equal(els.stationThreeDoor.textContent,'Open bay door');assert.equal(els.stationThreeDoor.disabled,false);
  assert.equal(els.stationThreeMobileDoor.textContent,'Open bay door');assert.equal(els.stationThreeMobileDoor.disabled,false);
  for(const id of ['stationOneDoor','stationOneMobileDoor','stationTwoDoor','stationTwoMobileDoor'])assert.equal(els[id].writes,0,`${id} must stay untouched`);

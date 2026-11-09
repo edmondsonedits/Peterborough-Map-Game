@@ -1,5 +1,20 @@
-export const CAMERA_VIEWS = Object.freeze(['auto','close','standard','wide']);
+export const CAMERA_VIEWS = Object.freeze(['auto','close','standard','wide','cab','bonnet']);
 const clamp=(value,min,max)=>Math.max(min,Math.min(max,value));
+const finite=(value,fallback=0)=>Number.isFinite(Number(value))?Number(value):fallback;
+const wrapAngle=value=>((value+Math.PI)%(Math.PI*2)+Math.PI*2)%(Math.PI*2)-Math.PI;
+
+/** Pure cab/bonnet camera pose in world coordinates (+Y up, vehicle origin at its center). */
+export function vehicleCameraPose(state={},tuning={},view='cab',{yawOffset=0,pitch=0}={}) {
+ const heading=finite(state.heading),length=Math.max(2,finite(tuning.length,10.4)),height=Math.max(1.8,finite(tuning.height,3.25));
+ const mode=view==='bonnet'?'bonnet':'cab';
+ const forward=mode==='bonnet'?Math.max(.8,length/2-.6):Math.min(length*.27,Math.max(.65,length/2-.55));
+ const eyeHeight=mode==='bonnet'?Math.min(1.55,height*.57):Math.min(2.5,Math.max(1.75,height*.68));
+ const position={x:finite(state.x)-Math.sin(heading)*forward,y:finite(state.y)+eyeHeight,z:finite(state.z)-Math.cos(heading)*forward};
+ const yaw=wrapAngle(heading+clamp(finite(yawOffset),-Math.PI*.42,Math.PI*.42));
+ const lookPitch=clamp(finite(pitch),-.55,.55),lookDistance=42;
+ const horizontal=Math.cos(lookPitch)*lookDistance;
+ return {position,target:{x:position.x-Math.sin(yaw)*horizontal,y:position.y+Math.sin(lookPitch)*lookDistance,z:position.z-Math.cos(yaw)*horizontal},heading:yaw};
+}
 
 // Keep the closer view until the rear of the vehicle clears, then blend over 8 m.
 export function cameraBayInfluence(point,bounds,clearance=0) {

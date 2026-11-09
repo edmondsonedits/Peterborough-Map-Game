@@ -135,7 +135,7 @@ for (const file of ['city-explorer/app.js', ...visualModules.map(name => `city-e
 // Shared neighborhood textures and geometry follow the current app cache token.
 for (const file of ['city-explorer/app.js', 'city-explorer/map-basemap.mjs']) {
   write(file, read(file).replace(
-    /(\.\/(?:station2-neighborhood-(?:facades|openings|roofs)|citywide-building-facades|progressive-city-build|station-transition|gameplay-camera|station-three-bay|map-view|map-basemap)\.mjs)(?:\?v=[^"']*)?(?=["'])/g,
+    /(\.\/(?:station2-neighborhood-(?:facades|openings|roofs)|citywide-building-facades|progressive-city-build|station-transition|gameplay-camera|dispatch-training|station-three-bay|map-view|map-basemap)\.mjs)(?:\?v=[^"']*)?(?=["'])/g,
     `$1?v=${VERSION}`,
   ));
 }

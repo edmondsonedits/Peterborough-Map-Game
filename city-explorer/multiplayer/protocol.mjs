@@ -1,4 +1,4 @@
-export const PROTOCOL_VERSION = 1;
+export const PROTOCOL_VERSION = 2;
 const object = (value) => value !== null && typeof value === 'object' && !Array.isArray(value);
 const finite = (value) => typeof value === 'number' && Number.isFinite(value);
 const integer = (value) => Number.isSafeInteger(value) && value >= 0;

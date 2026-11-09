@@ -77,7 +77,7 @@ export function createMultiplayerIntegration({ parent, pageUrl = location.href, 
         const signature = JSON.stringify([players.map(player => [player.id, player.entityGeneration]), vehicles.map(vehicle => [vehicle.id, vehicle.available]), session?.isAdmin, state.mode, state.vehicleId]);
         if (signature !== lastViewSignature) { lastViewSignature = signature; update({ players, vehicles, session: session ? { ...session, vehicleId: state.vehicleId, connectionStatus } : null, selectedVehicleId: state.vehicleId }); }
       },
-      onEvent: event => { if (transport !== activeTransport) return; if (event.type === 'world-version-mismatch') onMessage('Multiplayer world version differs from this map. Reload the page.'); if (event.type === 'action-result' && event.ok === false) onMessage(`Action unavailable: ${event.reason || 'server rejected it'}`); },
+      onEvent: event => { if (transport !== activeTransport) return; if (event.type === 'world-version-mismatch') onMessage('Multiplayer world version differs from this map. Reload the page.'); if (event.type === 'protocol-version-mismatch') onMessage('Multiplayer protocol differs from this client. Reload the page.'); if (event.type === 'action-result' && event.ok === false) onMessage(`Action unavailable: ${event.reason || 'server rejected it'}`); },
     });
     return transport;
   }
