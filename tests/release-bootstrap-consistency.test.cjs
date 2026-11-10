@@ -66,6 +66,13 @@ test('shared build version is the single production release authority', () => {
   assert.doesNotMatch(normalizer, /const VERSION = '\d+\.\d+\.\d+'/);
 });
 
+test('feedback service follows the UI release so cached auth code cannot lag behind', () => {
+  const ui = read('feedback/ui.mjs');
+  const service = ui.match(/from ["']\.\/service\.mjs\?v=([^"']+)["']/);
+  assert.ok(service, 'feedback UI must version its service import');
+  assert.equal(service[1], releaseVersion);
+});
+
 test('live release entry points use stable filenames and the canonical cache version', () => {
   const rootHtml = read('index.html');
   const desktopHtml = read('response-simulator/play/index.html');

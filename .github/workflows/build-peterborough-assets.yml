@@ -266,6 +266,8 @@ jobs:
         shell: bash
         run: |
           set -euo pipefail
+          node --test tests/asset-manifest-identity.test.mjs
+          node tools/preserve-asset-manifest-identity.mjs
           npm install --prefix "$RUNNER_TEMP/road-pack-node" --no-save --no-package-lock --ignore-scripts --no-audit playwright@1.62.1
           npx --yes playwright@1.62.1 install --with-deps chromium
           python -m http.server 4174 --bind 127.0.0.1 --directory . > "$RUNNER_TEMP/road-pack-http.log" 2>&1 &

@@ -1,7 +1,7 @@
 import { createDemoRequests } from './demo-requests.mjs?v=full-version-20261030';
 import { editorUrlForReport, exportFeedback } from "./agent-tools.mjs?v=feedback-workflow-20261028";
 import { feedbackConfig } from "./config.mjs?v=feedback-workflow-20261028";
-import { createFeedbackService } from "./service.mjs?v=demo-feedback-20261028";
+import { createFeedbackService } from "./service.mjs?v=1.6.205";
 import { normalizeLocationReport, locationReportIdentity, locationReportGroupKey } from './location-report.mjs';
 import { mountLocationReportComposer, mountLocationReportDetails } from './location-report-ui.mjs?v=compact-feedback-20261028';
 import {
@@ -701,7 +701,7 @@ export function mountFeedback({
         reply.value = "";
         detail.querySelector(".fb-error").textContent = "";
       } catch (error) {
-        if (current?.uid === uid)
+        if (current?.uid === uid && token === generation && selected?.id === thread.id)
           fail(error, detail.querySelector(".fb-error"));
       } finally {
         if (send.isConnected) send.disabled = false;
@@ -768,7 +768,7 @@ export function mountFeedback({
           page.rows.forEach((row) => messages.set(row.id, row));
           renderMessages();
         } catch (error) {
-          fail(error);
+          if (token === generation && selected?.id === id && current?.uid === uid) fail(error);
         } finally {
           older.disabled = false;
         }
@@ -852,8 +852,9 @@ export function mountFeedback({
         try {
           await service.updateThread(thread.id, { [key]: select.value });
         } catch (error) {
+          if (token !== generation || selected?.id !== thread.id) return;
           fail(error);
-          select.value = thread[key];
+          select.value = selected[key];
         } finally {
           select.disabled = false;
         }
@@ -867,20 +868,23 @@ export function mountFeedback({
     notes.innerHTML =
       '<details><summary>Private developer notes</summary><div class="fb-note-list"></div><label>Note<textarea id="feedback-note" maxlength="4000" rows="2"></textarea></label><button id="feedback-add-note" type="button">Add private note</button></details>';
     let noteId = service.id();
-    notes.querySelector("textarea").oninput = () => {
+    const noteInput = notes.querySelector("textarea");
+    noteInput.oninput = () => {
       noteId = service.id();
     };
     notes.querySelector("button").onclick = async (event) => {
       const button = event.currentTarget;
+      const submittedId = noteId, submittedBody = noteInput.value;
       button.disabled = true;
       try {
-        await service.addNote(thread.id, $("#feedback-note").value, noteId);
-        if (button.isConnected) {
-          $("#feedback-note").value = "";
+        await service.addNote(thread.id, submittedBody, submittedId);
+        // Completing an older submission does not own text entered afterwards.
+        if (token === generation && button.isConnected && noteId === submittedId && noteInput.value === submittedBody) {
+          noteInput.value = "";
           noteId = service.id();
         }
       } catch (error) {
-        fail(error);
+        if (token === generation && selected?.id === thread.id) fail(error);
       } finally {
         button.disabled = false;
       }

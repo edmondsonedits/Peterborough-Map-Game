@@ -40,6 +40,11 @@ const versionMatch = build.match(/const VERSION = '(\d+\.\d+\.\d+)'/);
 if (!versionMatch) throw new Error('shared/build-version.js: missing canonical VERSION');
 const VERSION = versionMatch[1];
 
+// Feedback UI is imported with the build version, so its changed service must
+// follow the same cache identity instead of retaining an old dated module pin.
+write('feedback/ui.mjs', replaceRequired('feedback/ui.mjs', read('feedback/ui.mjs'),
+  /(\.\/service\.mjs\?v=)[^"']+/g, `$1${VERSION}`, 'feedback service import'));
+
 for (const file of canonicalSurfaces) {
   let html = read(file);
   html = replaceRequired(
