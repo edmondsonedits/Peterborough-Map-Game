@@ -14,17 +14,28 @@ const errors=[],consoleErrors=[],report={};
 const criticalConsolePattern=/\b(?:uncaught|typeerror|referenceerror|syntaxerror|rangeerror|webgl|shader|context\s*lost|failed to load module)\b/i;
 let activePage,activeName;
 try{
- for(const mobile of [false,true]){
-  const name=mobile?'mobile-lite':'desktop';
+ // Balanced checks rendering and the complete local driving/map interaction.
+ // Cross-city functional checks use Lite, so SwiftShader's <1 FPS building work
+ // does not turn a destination-readiness timeout into a vehicle-control failure.
+ for(const {name,mobile,quality,allStations} of [
+  {name:'desktop-balanced',mobile:false,quality:'balanced',allStations:false},
+  {name:'desktop-lite',mobile:false,quality:'lite',allStations:true},
+  {name:'mobile-lite',mobile:true,quality:'lite',allStations:true},
+ ]){
+  report[name]={quality};
+  const phase=value=>{report[name].phase=value;console.log(name,value);};
   // Keep the balanced scene and CSS viewport; reduce only CI's software raster workload.
   const context=await browser.newContext({viewport:mobile?{width:390,height:844}:{width:1280,height:800},hasTouch:mobile,isMobile:mobile,deviceScaleFactor:process.platform==='win32'?1:.5});
   const page=await context.newPage();activePage=page;activeName=name;
   page.on('pageerror',e=>errors.push({name,error:e.message}));
   page.on('console',message=>{if(message.type()==='error'&&criticalConsolePattern.test(message.text()))consoleErrors.push({name,error:message.text()});});
   const started=Date.now();
-  await page.goto(`${base}/city-explorer/${mobile?'lite/':''}?station=1&qa=1&quality=${mobile?'lite':'balanced'}&multiplayerServer=${encodeURIComponent(backend)}`,{waitUntil:'domcontentloaded',timeout:90000});
-  await page.waitForFunction(()=>globalThis.__PTBO_GAMEPLAY__?.state().canSwitchStations,null,{timeout:180000});
-  report[name]={startupMs:Date.now()-started};console.log(name,'ready',report[name].startupMs);
+  phase('startup');
+  await page.goto(`${base}/city-explorer/${mobile?'lite/':''}?station=1&qa=1&quality=${quality}&multiplayerServer=${encodeURIComponent(backend)}`,{waitUntil:'domcontentloaded',timeout:90000});
+  await page.waitForFunction(()=>globalThis.__PTBO_GAMEPLAY__?.state().canSwitchStations,null,{timeout:quality==='balanced'?300000:180000});
+  report[name].startupMs=Date.now()-started;console.log(name,'ready',report[name].startupMs);
+  assert.equal(await page.evaluate(()=>__PTBO_GAMEPLAY__.state().graphicsQuality),quality);
+  phase('camera views');
   // Select through the same fleet runtime as the in-game fleet panel.
   await page.evaluate(()=>__PTBO_GAMEPLAY__.selectVehicle('pump-1'));
   await page.waitForFunction(()=>__PTBO_GAMEPLAY__.state().mode==='driving');
@@ -39,6 +50,7 @@ try{
   await page.evaluate(()=>document.getElementById('graphics-quality-open').click());
   await page.locator('#camera-view-select').selectOption('cab');
   await page.locator('#graphics-quality-dialog button[value="cancel"]').click();
+  phase('bay door and forward driving');
   await page.locator('#city-canvas').focus();await page.keyboard.press('g');
   // Simulation time is capped per frame: wall-clock sleeps can end before a slow
   // software renderer has opened the door or processed a driving input.
@@ -49,6 +61,7 @@ try{
   finally{await page.keyboard.up('w');}
   assert.equal(await page.locator('#cab-view-frame').isVisible(),true);
   await page.screenshot({path:path.join(dir,`${name}-cab.png`)});
+  phase('training call and map layers');
   await page.evaluate(()=>document.getElementById('dispatch-training-start').click());
   assert.equal(await page.evaluate(()=>__PTBO_GAMEPLAY__.state().dispatch.status),'responding');
   await page.evaluate(()=>document.getElementById('map-mode').click());
@@ -60,6 +73,7 @@ try{
   assert.equal(await page.locator('#cab-view-frame').isVisible(),false);
   await page.locator('#map-drive-toggle').click();
   assert.equal(await page.evaluate(()=>__PTBO_GAMEPLAY__.state().mapDriving),true);
+  phase('map driving');
   const before=await page.evaluate(()=>__PTBO_GAMEPLAY__.state().truck);
   report[name].mapBefore=before;report[name].mapInput=mobile?'touch reverse':'KeyS';
   const waitForMapMovement=()=>page.waitForFunction(({x,z})=>{const state=__PTBO_GAMEPLAY__.state();return state.mapDriving&&state.truck.speed<-.1&&Math.hypot(state.truck.x-x,state.truck.z-z)>.1;},before,{timeout:60000});
@@ -79,12 +93,14 @@ try{
   await page.locator('#map-drive-toggle').click();assert.equal(await page.evaluate(()=>__PTBO_GAMEPLAY__.state().mapDriving),false);
   await page.keyboard.press('m');await page.waitForFunction(()=>__PTBO_GAMEPLAY__.state().mode==='driving');
   await page.evaluate(()=>document.getElementById('dispatch-cancel').click());
-  for(const hall of [2,3]){
-    const result=await page.evaluate(n=>__PTBO_GAMEPLAY__.switchStation(n),hall);assert.equal(result.ok,true);
+  for(const hall of allStations?[2,3]:[]){
+    phase(`station ${hall} training call`);
+    const result=await page.evaluate(n=>__PTBO_GAMEPLAY__.switchStation(n),hall);assert.equal(result.ok,true,JSON.stringify(result));
     await page.evaluate(()=>document.getElementById('dispatch-training-start').click());
     assert.equal(await page.evaluate(()=>__PTBO_GAMEPLAY__.state().dispatch.station),hall);
   }
   report[name].final=await page.evaluate(()=>({quality:__PTBO_GAMEPLAY__.state().graphicsQuality,hall:__PTBO_GAMEPLAY__.state().stationNumber,call:__PTBO_GAMEPLAY__.state().dispatch.destination.name}));
+  report[name].stationsChecked=allStations?[1,2,3]:[1];phase('passed');
   console.log(name,JSON.stringify(report[name]));await context.close();
  }
  assert.deepEqual(errors,[]);
