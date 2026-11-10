@@ -154,7 +154,7 @@ for (const file of ['city-explorer/app.js','city-explorer/station-one-runtime.js
 const multiplayerDir = 'city-explorer/multiplayer';
 const multiplayerModules = fs.readdirSync(path.join(root, multiplayerDir))
   .filter(name => name.endsWith('.mjs')).map(name => multiplayerDir + '/' + name);
-const multiplayerSharedModules = ['road-wheel-contact.js', 'apparatus-collision.mjs', 'station-one-core.mjs', 'station-two-core.mjs', 'station-three-bay.mjs', 'road-tile-pack.js'].map(name => 'city-explorer/' + name);
+const multiplayerSharedModules = ['road-wheel-contact.js', 'apparatus-collision.mjs', 'station-one-core.mjs', 'station-two-core.mjs', 'station-three-bay.mjs', 'road-tile-pack.js', 'fleet-runtime.js', 'vehicle-fleet.mjs'].map(name => 'city-explorer/' + name);
 const multiplayerTargets = new Set([...multiplayerModules, ...multiplayerSharedModules].map(file => path.resolve(root, file)));
 // The world exporter hashes these sources, including their import URLs. Keep
 // their internal pins stable so a Pages-only release can use the deployed world.

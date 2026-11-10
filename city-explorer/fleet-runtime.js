@@ -1,7 +1,7 @@
 import {configureVehiclePresentation} from './vehicle-presentation.js';
-import {createVehicleFleet} from './vehicle-fleet.mjs?v=1.6.200';
+import {createVehicleFleet} from './vehicle-fleet.mjs?v=1.6.201';
 import {installFleetAsset} from './fleet-assets.js';
-import {vehicleFootprint,polygonsOverlap,sweepVehicle,segmentBoxHit} from './apparatus-collision.mjs';
+import {vehicleFootprint,polygonsOverlap,sweepVehicle,segmentBoxHit} from './apparatus-collision.mjs?v=1.6.201';
 import {createAerialState} from './aerial-controller.mjs';
 export function createFleetRuntime({THREE,group,createTruck,spawns,initialId,prepare,activate,changed=()=>{},environment=null,canSelect=()=>null,installModel=installFleetAsset}){
   const fleet=createVehicleFleet(spawns);let request=0,busy=false,error='';
