@@ -1,6 +1,7 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
 import { createExplorerSession } from '../city-explorer/multiplayer/server/src/explorer-room.mjs';
+import { PROTOCOL_VERSION } from '../city-explorer/multiplayer/protocol.mjs';
 
 function harness({ ready = true, vehicleSpeed = 0, spawnSpeed = 0, aerial = false } = {}) {
   let now = 1_000;
@@ -32,14 +33,14 @@ function input(epoch, sequence, overrides = {}) {
   return {
     type: 'input',
     input: {
-      protocolVersion: 1, epoch, sequence, mode: 'onFoot',
+      protocolVersion: PROTOCOL_VERSION, epoch, sequence, mode: 'onFoot',
       controls: { forward: 0, strafe: 0, sprint: false, throttle: 0, steering: 0, viewYaw: 0, ...overrides },
     },
   };
 }
 
 function action(player, sequence, type, vehicleId, requestId) {
-  return { type: 'action', action: { protocolVersion: 1, epoch: player.epoch, sequence, type, vehicleId, requestId } };
+  return { type: 'action', action: { protocolVersion: PROTOCOL_VERSION, epoch: player.epoch, sequence, type, vehicleId, requestId } };
 }
 
 test('creates scoped credentials and public metadata without exposing the join code or secrets', () => {
@@ -119,7 +120,7 @@ test('30 Hz ticks consume queued inputs in order and acknowledge only simulated 
   const snapshot = room.snapshotFor(player.playerId);
   assert.equal(snapshot.ackInputSequence, 3);
   assert.ok(snapshot.player.pose.z < movedZ);
-  assert.equal(snapshot.protocolVersion, 1);
+  assert.equal(snapshot.protocolVersion, PROTOCOL_VERSION);
   assert.equal(snapshot.worldVersion, 'fixture-world-v1');
   assert.equal(snapshot.tick, 3);
 });
@@ -311,11 +312,11 @@ test('Colyseus SDK connects two clients and receives authoritative snapshots ove
     secondRoom.send('subscribe', {});
     });
     firstRoom.send('input', { input: {
-      protocolVersion: 1, epoch: first.epoch, sequence: 1, mode: 'onFoot',
+      protocolVersion: PROTOCOL_VERSION, epoch: first.epoch, sequence: 1, mode: 'onFoot',
       controls: { forward: 1, strafe: 0, sprint: false, throttle: 0, steering: 0, viewYaw: 0 },
     } });
     const snapshot = await peerSnapshot;
-    assert.equal(snapshot.protocolVersion, 1);
+    assert.equal(snapshot.protocolVersion, PROTOCOL_VERSION);
     assert.equal(snapshot.player.id, second.playerId);
     assert.equal(snapshot.players.length, 1);
     assert.equal(snapshot.vehicles[0].id, 'fixture_truck');

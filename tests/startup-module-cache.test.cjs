@@ -15,3 +15,15 @@ test('startup modules bypass older cache entries while actor preload and install
  assert.match(fs.readFileSync('city-explorer/gameplay-systems.js','utf8'),/firefighter-asset\.js\?v=6/);
  assert.match(fs.readFileSync('city-explorer/firefighter-asset.js','utf8'),/firefighter-locomotion\.js\?v=6/);
 });
+
+test('solo and multiplayer fleet imports use the current release cache token',()=>{
+ const version=fs.readFileSync('shared/build-version.js','utf8').match(/const VERSION = '([^']+)'/)[1];
+ for(const [file,targets] of [
+  ['city-explorer/app.js',['./fleet-runtime.js','./vehicle-fleet.mjs']],
+  ['city-explorer/fleet-runtime.js',['./vehicle-fleet.mjs']],
+  ['city-explorer/multiplayer/vehicle-instances.mjs',['../vehicle-fleet.mjs']],
+ ]){
+  const source=fs.readFileSync(file,'utf8');
+  for(const target of targets)assert.ok(source.includes("from '"+target+'?v='+version+"'"),file+' loads current '+target);
+ }
+});

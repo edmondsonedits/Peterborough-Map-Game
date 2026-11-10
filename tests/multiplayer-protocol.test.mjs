@@ -4,8 +4,9 @@ import { PROTOCOL_VERSION, validateInput, validateAction, validateSnapshot } fro
 const pose={x:1,y:2,z:3,heading:.4,vx:0,vz:0,speed:0,steering:0};
 const player={id:'p1',name:'Player 1',entityGeneration:1,mode:'onFoot',pose,vehicleId:null};
 test('validates bounded input and rejects invalid yaw, controls, mode, or version',()=>{
+ assert.equal(PROTOCOL_VERSION,2);
  const input={protocolVersion:PROTOCOL_VERSION,epoch:2,sequence:9,mode:'driving',controls:{forward:0,strafe:0,sprint:false,throttle:1,steering:-.5,viewYaw:0}};
- assert.equal(validateInput(input),true);assert.equal(validateInput({...input,sequence:-1}),false);assert.equal(validateInput({...input,protocolVersion:99}),false);assert.equal(validateInput({...input,controls:{...input.controls,viewYaw:NaN}}),false);assert.equal(validateInput({...input,controls:{...input.controls,throttle:8}}),false);assert.equal(validateInput({...input,mode:'fly'}),false);
+ assert.equal(validateInput(input),true);assert.equal(validateInput({...input,sequence:-1}),false);assert.equal(validateInput({...input,protocolVersion:1}),false);assert.equal(validateInput({...input,protocolVersion:99}),false);assert.equal(validateInput({...input,controls:{...input.controls,viewYaw:NaN}}),false);assert.equal(validateInput({...input,controls:{...input.controls,throttle:8}}),false);assert.equal(validateInput({...input,mode:'fly'}),false);
 });
 test('validates per-action vehicle ids and bounded authoritative snapshot entities',()=>{
  const action={protocolVersion:PROTOCOL_VERSION,epoch:2,sequence:10,type:'enterVehicle',vehicleId:'pump-1'};

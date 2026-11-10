@@ -1,7 +1,7 @@
-import { createRoomUi } from './room-ui.mjs?v=1.6.200';
-import { createClientRuntime } from './client-runtime.mjs?v=1.6.200';
-import { createColyseusTransport } from './transport-colyseus.mjs?v=1.6.200';
-import { loadWorldCollision } from './world-collision.mjs?v=1.6.200';
+import { createRoomUi } from './room-ui.mjs?v=1.6.201';
+import { createClientRuntime } from './client-runtime.mjs?v=1.6.201';
+import { createColyseusTransport } from './transport-colyseus.mjs?v=1.6.201';
+import { loadWorldCollision } from './world-collision.mjs?v=1.6.201';
 
 const loopback = host => ['localhost', '127.0.0.1', '[::1]', '::1'].includes(host);
 export function resolveMultiplayerServerUrl(pageUrl, configuredUrl, queryValue) {
@@ -86,6 +86,7 @@ export function createMultiplayerIntegration({ parent, pageUrl = location.href, 
       onEvent: event => {
         if (transport !== activeTransport) return;
         if (event.type === 'world-version-mismatch') onMessage('Multiplayer world version differs from this map. Reload the page.');
+        if (event.type === 'protocol-version-mismatch') onMessage('Multiplayer protocol differs from this client. Reload the page.');
         if (event.type === 'action-result' && event.ok === false) {
           const reason = event.error || event.reason;
           const explanations = {

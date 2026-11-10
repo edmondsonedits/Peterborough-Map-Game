@@ -121,6 +121,25 @@ test('driving prediction uses snapshot tuning and matches server vehicle movemen
   client.dispose(); room.leave(player.playerId);
 });
 
+test('passengers render the shared vehicle transform without submitting driver controls', () => {
+  const h = harness({ interpolationDelayMs: 0 });
+  const occupied = (tick, serverTime, x) => snapshot({
+    tick, serverTime,
+    player: actor({ mode: 'driving', vehicleId: 'truck_1', pose: pose({ x }) }),
+    players: [{ id: 'peer', name: 'Player 2', entityGeneration: 0, mode: 'driving', vehicleId: 'truck_1', pose: pose({ x }) }],
+    vehicles: [{ id: 'truck_1', entityGeneration: 0, driverPlayerId: 'peer', pose: pose({ x }), tuning: DEFAULT_VEHICLE_TUNING }],
+  });
+  h.runtime.applySnapshot(occupied(1, 1_000, 0));
+  h.setTime(1_016);
+  h.runtime.applySnapshot(occupied(2, 1_033, 10));
+  const sharedVehiclePose = h.runtime.sampleRemoteActor('truck_1').pose;
+  h.runtime.advanceFrame(40, { throttle: 1, steering: 0.5 });
+  assert.equal(h.sent.length, 0);
+  assert.equal(h.runtime.getState().pendingInputs, 0);
+  assert.ok(sharedVehiclePose.x > 0 && sharedVehiclePose.x < 10);
+  assert.equal(h.runtime.renderedPose.x, sharedVehiclePose.x);
+});
+
 test('duplicate and older ticks are ignored; a new epoch resets sequence and baseline', () => {
   const h = harness(); h.runtime.applySnapshot(snapshot()); h.runtime.sendInput({ forward: 1 });
   assert.equal(h.runtime.applySnapshot(snapshot({ tick: 1 })), false);
@@ -137,6 +156,28 @@ test('world version mismatch closes prediction and emits a mismatch event', () =
   assert.equal(h.runtime.getState().compatible, false);
   assert.equal(h.runtime.sendInput({ forward: 1 }), false);
   assert.ok(h.events.some((event) => event.type === 'world-version-mismatch'));
+});
+
+test('older protocol snapshots disable prediction and report the expected protocol version', () => {
+  const h = harness();
+  assert.equal(h.runtime.applySnapshot(snapshot({ protocolVersion: 1 })), false);
+  assert.equal(h.runtime.getState().compatible, false);
+  assert.equal(h.runtime.sendInput({ forward: 1 }), false);
+  assert.ok(h.events.some((event) => event.type === 'protocol-version-mismatch' && event.expected === 2 && event.received === 1));
+});
+
+test('new controls render before the next network tick without advancing shared simulation', () => {
+  for(const mode of ['onFoot','driving']){
+    const h=harness(),driving=mode==='driving';
+    const player=actor({mode,vehicleId:driving?'truck_1':null});
+    h.runtime.applySnapshot(snapshot({player,vehicles:driving?[{id:'truck_1',entityGeneration:0,driverPlayerId:'self',pose:pose(),tuning:DEFAULT_VEHICLE_TUNING}]:[]}));
+    h.setTime(1016);h.runtime.advanceFrame(16,{forward:1,throttle:1,viewYaw:0});
+    assert.ok(h.runtime.renderedPose.z<0,`${mode} responds without waiting for the 30 Hz send`);
+    assert.deepEqual(h.runtime.simulationPose,pose());
+    assert.deepEqual(h.runtime.authoritativePose,pose());
+    assert.equal(h.sent.length,0,'sub-tick preview sends no extra network input');
+    assert.equal(h.runtime.getState().pendingInputs,0);
+  }
 });
 
 test('render preview never mutates authoritative or simulation pose', () => {
@@ -177,12 +218,38 @@ test('remote buffers remain bounded and extrapolate for at most 100 ms before fr
   assert.equal(frozen.pose.x, extrapolated.pose.x);
 });
 
+test('remote interpolation expands through a snapshot arrival burst and recovers after cadence stabilizes', () => {
+  const h = harness({ interpolationDelayMs: 80 });
+  const remote = (x) => ({ id: 'peer', name: 'Player 2', entityGeneration: 0, mode: 'onFoot', vehicleId: null, pose: pose({ x }) });
+  const apply = (tick, serverTime, receivedAt, x) => {
+    h.setTime(receivedAt);
+    return h.runtime.applySnapshot(snapshot({ tick, serverTime, players: [remote(x)] }));
+  };
+  apply(1, 1_000, 1_000, 0);
+  apply(2, 1_033, 1_033, 10);
+  const beforeBurst = h.runtime.sampleRemoteActor('peer', 1_100);
+  apply(3, 1_066, 1_166, 20); // 100 ms of excess arrival delay.
+  const buffered = h.runtime.sampleRemoteActor('peer', 1_166);
+  assert.ok(buffered.pose.x >= beforeBurst.pose.x, `render cursor rewound from ${beforeBurst.pose.x} to ${buffered.pose.x}`);
+  assert.ok(buffered.pose.x < 10, `expected interpolation behind the burst, got x=${buffered.pose.x}`);
+
+  for (let i = 4; i <= 24; i += 1) {
+    const serverTime = 1_066 + (i - 3) * 33;
+    apply(i, serverTime, 1_166 + (i - 3) * 33, i * 10);
+  }
+  const recovered = h.runtime.sampleRemoteActor('peer', 1_166 + 21 * 33);
+  assert.ok(recovered.pose.x > 220, `expected the buffer to recover toward latest state, got x=${recovered.pose.x}`);
+});
+
 test('frame catch-up is capped and requests resync instead of replaying indefinitely', () => {
   const h = harness(); h.runtime.applySnapshot(snapshot());
   h.runtime.advanceFrame(500, { forward: 1 });
   assert.equal(h.sent.length, 5);
   assert.equal(h.runtime.getState().pendingInputs, 0);
   assert.ok(h.events.some((event) => event.type === 'prediction-resync-required'));
+  h.runtime.advanceFrame(34, { forward: 1 });
+  assert.equal(h.sent.length, 6);
+  assert.equal(h.runtime.getState().pendingInputs, 1);
 });
 
 test('on-foot world streaming pauses motion and requests prefetch outside the simulation tick', async () => {

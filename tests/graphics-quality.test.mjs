@@ -1,7 +1,14 @@
 import test from 'node:test';import assert from 'node:assert/strict';
 import {resolveGraphicsQuality} from '../city-explorer/graphics-quality.js';
 test('balanced is the default on an average phone and leaves a bounded road budget',()=>{const p=resolveGraphicsQuality({search:'',saved:null});assert.equal(p.name,'balanced');assert.ok(p.roadRadius<=1000);assert.ok(p.pixelRatio<=1.5);assert.equal(p.shadows,false);});
-test('explicit low and high override saved quality while all retain canonical roads',()=>{for(const name of ['low','balanced','high']){const p=resolveGraphicsQuality({search:'?quality='+name,saved:'low'});assert.equal(p.name,name);assert.equal(p.roadSurface,'canonical');}assert.equal(resolveGraphicsQuality({search:'?lite=1',saved:'high'}).name,'low');assert.equal(resolveGraphicsQuality({search:'',saved:'high'}).name,'high');});
+test('explicit quality modes override saved quality and retain canonical roads',()=>{for(const name of ['lite','low','balanced','high']){const p=resolveGraphicsQuality({search:'?quality='+name,saved:'low'});assert.equal(p.name,name);assert.equal(p.roadSurface,'canonical');}assert.equal(resolveGraphicsQuality({search:'?lite=1',saved:'high'}).name,'lite');assert.equal(resolveGraphicsQuality({search:'',saved:'high'}).name,'high');});
+
+test('lite lowers renderer and scenery budgets below low without changing existing profiles',()=>{
+ const lite=resolveGraphicsQuality({search:'?quality=lite'}),low=resolveGraphicsQuality({search:'?quality=low'});
+ assert.equal(lite.antialias,false);assert.equal(lite.shadows,false);assert.equal(lite.optionalScenery,false);
+ assert.ok(lite.pixelRatio<low.pixelRatio);assert.ok(lite.roadRadius<low.roadRadius);assert.ok(lite.buildingRadius<low.buildingRadius);assert.ok(lite.streetDetailRadius<low.streetDetailRadius);
+ assert.equal(resolveGraphicsQuality({search:'?quality=low'}).roadRadius,650);
+});
 
 
 test('canonical road profiles share the same physical terrain mesh',async()=>{

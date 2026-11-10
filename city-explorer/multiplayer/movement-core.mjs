@@ -136,12 +136,15 @@ export function stepVehicleKinematics(current, input, delta, onRoad = true, tuni
   const steeringResponse = steeringInput ? tuningValue('steeringResponse', DEFAULT_VEHICLE_TUNING.steeringResponse) : tuningValue('steeringReturnResponse', DEFAULT_VEHICLE_TUNING.steeringReturnResponse);
   const priorSteering = Number(state.steering) || 0;
   const steering = Math.max(-safeSteerLimit, Math.min(safeSteerLimit, exponentialStep(priorSteering, targetSteering, steeringResponse, dt)));
-  const heading = wrapAngle((Number(state.heading) || 0) + speed / wheelbase * Math.tan(steering) * dt);
+  const priorHeading = Number(state.heading) || 0;
+  const meanSpeed = (previousSpeed + speed) * 0.5;
+  const meanSteering = (priorSteering + steering) * 0.5;
+  const heading = wrapAngle(priorHeading + meanSpeed / wheelbase * Math.tan(meanSteering) * dt);
   const direction = directionFromHeading(heading);
 
   return {
-    x: (Number(state.x) || 0) + direction.x * speed * dt,
-    z: (Number(state.z) || 0) + direction.z * speed * dt,
+    x: (Number(state.x) || 0) + direction.x * meanSpeed * dt,
+    z: (Number(state.z) || 0) + direction.z * meanSpeed * dt,
     heading,
     speed,
     steering,

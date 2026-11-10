@@ -1,3 +1,4 @@
+import { PROTOCOL_VERSION } from '../../protocol.mjs';
 import { randomUUID } from 'node:crypto';
 import { pathToFileURL } from 'node:url';
 import { resolve } from 'node:path';
@@ -260,7 +261,7 @@ export function createExplorerServer({
 
       app.get('/healthz', (_req, res) => {
         const ready = worldReadyAtSpawn();
-        res.status(ready ? 200 : 503).json({ status: ready ? 'ready' : 'not-ready', worldVersion: world.worldVersion ?? world.version });
+        res.status(ready ? 200 : 503).json({ status: ready ? 'ready' : 'not-ready', protocolVersion: PROTOCOL_VERSION, worldVersion: world.worldVersion ?? world.version });
       });
       app.get('/api/directory', (_req, res) => {
         res.json([...sessions].filter((session) => !session.closed).map((session) => session.getDirectory()));

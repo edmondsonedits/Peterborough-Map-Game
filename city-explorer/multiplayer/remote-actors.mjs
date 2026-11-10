@@ -1,4 +1,4 @@
-import { MULTIPLAYER_VEHICLE_SLOTS } from './vehicle-instances.mjs?v=1.6.200';
+import { MULTIPLAYER_VEHICLE_SLOTS } from './vehicle-instances.mjs?v=1.6.201';
 import { applyAerialPose } from '../aerial-runtime.js?v=1.6.195';
 import { installFleetAsset } from '../fleet-assets.js';
 import { configureVehiclePresentation, updateVehiclePresentation } from '../vehicle-presentation.js';
