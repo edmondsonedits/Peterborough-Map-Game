@@ -15,16 +15,20 @@ await mkdir(output, { recursive: true });
 const reportPath = path.join(output, 'report.json');
 const base = process.env.MAP_QA_URL || 'http://127.0.0.1:4199';
 const backend = process.env.MULTIPLAYER_QA_SERVER || 'http://127.0.0.1:2569';
-const url = `${base}/city-explorer/?station=1&quality=balanced&qa=1&qaMultiplayerWorld=1&multiplayerServer=${encodeURIComponent(backend)}`;
+// Lite retains the authoritative world, vehicle simulation and network protocol.
+// Balanced rendering has its own single-client coverage in check-driving-upgrade.
+const url = `${base}/city-explorer/?station=1&quality=lite&qa=1&qaMultiplayerWorld=1&multiplayerServer=${encodeURIComponent(backend)}`;
 const browser = await chromium.launch({ headless: true, ...(process.platform === 'win32'
   ? { channel: 'msedge', args: ['--use-angle=d3d11'] }
   : { args: ['--use-gl=angle', '--use-angle=swiftshader', '--enable-webgl', '--enable-unsafe-swiftshader'] }) });
 const errors = [], consoleErrors = [], failedRequests = [];
 const motion = {};
+let phase = 'startup';
+const progress = value => { phase = value; console.log('multiplayer', value); };
 const criticalConsolePattern = /\b(?:uncaught|typeerror|referenceerror|syntaxerror|rangeerror|webgl|shader|context\s*lost|failed to load module)\b/i;
 const safeUrl = value => { try { const parsed = new URL(value); parsed.search = ''; return parsed.href; } catch { return '[invalid-url]'; } };
 async function pageFor(viewport, mobile = false) {
-  // Retain balanced scene coverage and CSS layout while reducing software raster cost.
+  // Retain the full CSS layout while reducing software raster cost.
   const context = await browser.newContext({ viewport, isMobile: mobile, hasTouch: mobile, deviceScaleFactor: process.platform === 'win32' ? 1 : .5 });
   const page = await context.newPage();
   const entry = { context, page };
@@ -33,8 +37,10 @@ async function pageFor(viewport, mobile = false) {
   page.on('pageerror', error => errors.push(error.message));
   page.on('console', message => { if (message.type() === 'error' && criticalConsolePattern.test(message.text())) consoleErrors.push(message.text()); });
   page.on('requestfailed', request => failedRequests.push({ url: safeUrl(request.url()), error: request.failure()?.errorText }));
+  progress(`${mobile ? 'phone' : 'desktop'} startup`);
   await page.goto(url, { waitUntil: 'domcontentloaded', timeout: 90000 });
   await page.waitForFunction(() => globalThis.__PTBO_GAMEPLAY__?.state().canSwitchStations && globalThis.__PTBO_MULTIPLAYER__, null, { timeout: 180000 });
+  assert.equal(await page.evaluate(() => __PTBO_GAMEPLAY__.state().graphicsQuality), 'lite');
   return entry;
 }
 const runtimeState = page => page.evaluate(() => __PTBO_MULTIPLAYER__.state);
@@ -61,6 +67,7 @@ try {
   desktop = await pageFor({ width: 1280, height: 800 });
   const host = desktop.page;
   const preJoinMode = await host.evaluate(() => __PTBO_GAMEPLAY__.state().mode);
+  progress('create room');
   await host.locator('.ce-roomui-toggle').click();
   await host.getByRole('button', { name: 'Create room' }).click();
   await host.waitForFunction(() => __PTBO_MULTIPLAYER__?.active && __PTBO_MULTIPLAYER__.session?.roomCode, null, { timeout: 30000 });
@@ -68,6 +75,7 @@ try {
 
   phone = await pageFor({ width: 390, height: 844 }, true);
   const mobile = phone.page;
+  progress('join second client');
   await mobile.locator('.ce-roomui-toggle').tap();
   await mobile.locator('#ce-roomui-join-code').fill(hostSession.roomCode);
   await mobile.getByRole('button', { name: 'Join', exact: true }).tap();
@@ -77,6 +85,7 @@ try {
   await mobile.locator('.ce-roomui-close').tap();
 
   // Enter the desktop truck, then verify the map shows the phone player and vehicles.
+  progress('desktop walk and vehicle entry');
   await host.locator('#city-canvas').click({ position: { x: 640, y: 400 } });
   const beforeWalk = await runtimeState(host);
   motion.desktopWalk = { input: 'KeyW', before: beforeWalk.renderedPose };
@@ -97,6 +106,7 @@ try {
   await openMap(host);
 
   // Use the phone joystick to reach and enter its truck.
+  progress('phone walk and vehicle entry');
   const cdp = await phone.context.newCDPSession(mobile);
   const touch = (type, point) => cdp.send('Input.dispatchTouchEvent', { type, touchPoints: point ? [{ x: point.x, y: point.y, id: 1 }] : [] });
   let box = await mobile.locator('#movement-joystick').boundingBox();
@@ -125,6 +135,7 @@ try {
   const mapState = await host.evaluate(() => ({ gameplay: __PTBO_GAMEPLAY__.state(), map: __PTBO_MAP_VIEW__.state() }));
   assert.equal(mapState.gameplay.mode, 'map');
   assert.equal(mapState.gameplay.mapDriving, false);
+  progress('desktop map driving and peer observation');
   await host.locator('#map-drive-toggle').click();
   await host.waitForFunction(() => document.documentElement.dataset.mapDriving === 'true');
   const beforeDrive = await runtimeState(host);
@@ -154,6 +165,7 @@ try {
   await mobile.screenshot({ path: path.join(output, 'phone-observing-drive.png') });
 
   // Exercise touch input on the phone in map mode; mode stays on the map.
+  progress('phone touch map driving');
   await mobile.locator('#map-drive-toggle').tap();
   await mobile.waitForFunction(() => document.documentElement.dataset.mapDriving === 'true');
   box = await mobile.locator('#movement-joystick').boundingBox();
@@ -173,12 +185,14 @@ try {
   motion.phoneDrive.after = mobileDriveState.renderedPose;
   assert.ok(Math.hypot(mobileDriveState.renderedPose.x - beforeTouchDrive.renderedPose.x, mobileDriveState.renderedPose.z - beforeTouchDrive.renderedPose.z) > 0.25, 'phone joystick moved the vehicle in map mode');
 
+  progress('leave room and restore solo');
   await host.evaluate(() => __PTBO_MULTIPLAYER__.leave());
   await host.waitForFunction(() => !__PTBO_MULTIPLAYER__.active, null, { timeout: 15000 });
   const restoredMode = await host.evaluate(() => __PTBO_GAMEPLAY__.state().mode);
   assert.equal(restoredMode, preJoinMode, 'leaving multiplayer restores pre-join mode');
   assert.deepEqual(errors, []);
   assert.deepEqual(consoleErrors, []);
+  progress('passed');
   report = { result: 'pass', protocolVersion: drivingState.snapshot.protocolVersion, preJoinMode, restoredMode, seats: [hostSession.seat, (await mobile.evaluate(() => __PTBO_MULTIPLAYER__.session)).seat], vehicleId, markerCounts, desktopMapDriveMetres: Math.hypot(afterDrive.renderedPose.x - beforeDrive.renderedPose.x, afterDrive.renderedPose.z - beforeDrive.renderedPose.z), phoneObservedHostSpeed: phoneObserved.pose.speed, mobileMapMode: await mobile.evaluate(() => __PTBO_GAMEPLAY__.state().mode), mobileMapDriving: await mobile.evaluate(() => document.documentElement.dataset.mapDriving), errors, consoleErrors, failedRequests, screenshots: [path.join(output, 'desktop-map-driving.png'), path.join(output, 'phone-observing-drive.png')] };
 } catch (error) {
   const failureStates = {};
@@ -198,6 +212,8 @@ try {
 } finally {
   await desktop?.context.close(); await phone?.context.close(); await browser.close();
   report.browsersClosed = true;
+  report.profile = 'lite';
+  report.phase = phase;
   report.motion = motion;
   await writeFile(reportPath, JSON.stringify(report, null, 2));
   console.log(JSON.stringify(report));
