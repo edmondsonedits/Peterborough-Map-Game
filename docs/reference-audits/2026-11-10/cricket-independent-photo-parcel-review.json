@@ -1,0 +1,424 @@
+{
+  "reviewedOn": "2026-11-10",
+  "reviewId": "cricket-independent-photo-parcel-review",
+  "status": "independently corroborated photo correspondence; rendered game QA pending",
+  "contactSheetCoverage": [
+    "R275-R284",
+    "R285-R300"
+  ],
+  "northSideOrderWestToEast": [
+    {
+      "address": 14,
+      "sourceId": "way/1015118647",
+      "observed": "Broad pale front gable, three attic panes; first full house after the driveway beside blank corner wall"
+    },
+    {
+      "address": 16,
+      "sourceId": "way/1015118648",
+      "observed": "Red brick with shallow hip roof"
+    },
+    {
+      "address": 22,
+      "sourceId": "way/1015118649",
+      "observed": "Narrow pale gable, paired attic panes, green broad canopy, east lower entry, west ground hidden by tree"
+    },
+    {
+      "address": 24,
+      "sourceId": "way/1015118651",
+      "observed": "Broad dark cross-gable, broad canopy with small central pediment, orange toy on lawn"
+    },
+    {
+      "address": 28,
+      "sourceId": "way/1015118652",
+      "observed": "Narrower pale-porch house east of broad 24"
+    }
+  ],
+  "photoSequence": {
+    "R275": "Driveway and blank Driscoll corner wall establish western anchor, then pale-gable 14",
+    "R278": "14 and 16 left, narrow 22 middle, broad 24 right in one north-facing image",
+    "R281": "Narrow 22 isolated to the east/right of 14/16, broad 24 mostly out of frame to east",
+    "R283-R285": "Broad 24 foreground with orange toy, narrower 28 to right/east",
+    "R294": "Green-gable 21 on south side, not north-side 16",
+    "R295": "Return view shows hip-roof 16 left and narrow 22 right with east door under amber porch light"
+  },
+  "historicalConflict": {
+    "oldRecord": "User identified orange-toy porch house as 22 in the 2026-10-25 review",
+    "preservedIn": [
+      "city-explorer/data/outer-recording-review.json",
+      "docs/cricket-visual-verification-2026-10-25.md"
+    ],
+    "resolution": "Retain 22/8649 and 24/8651 address mapping, correct photographed-house association. Current photo/parcel evidence places toy house at 24. No photographed civic number is claimed readable."
+  },
+  "independentReviewCorroborated": "east-city-cricket-reference",
+  "officialSources": [
+    {
+      "url": "https://citymaps.peterborough.ca/arcgis/rest/services/Basedata/MapServer/4/query?where=OBJECTID+IN+%284380%2C4381%2C4384%2C4385%2C4387%29&outFields=OBJECTID%2CADDRESS&returnGeometry=true&outSR=4326&f=geojson",
+      "sha256": "fa3befc17e79e8eca054a93f5c0d7d3ec6bf65f9d10ecedf39569f9767b10fb2",
+      "retrieved": "2026-11-10"
+    },
+    {
+      "url": "https://citymaps.peterborough.ca/arcgis/rest/services/Basedata/MapServer/6/query?where=OBJECTID+IN+%288829%2C6424%2C10576%2C16714%2C9362%29&outFields=OBJECTID%2CLOCATION%2CSTATUS&returnGeometry=true&outSR=4326&f=geojson",
+      "sha256": "b11f04bda071e2883c1f7073f97cf901a63e922cc051368eacf57d901cbb1225",
+      "retrieved": "2026-11-10"
+    }
+  ],
+  "associations": [
+    {
+      "osmId": "way/1015118647",
+      "geometricCentroidLonLat": [
+        -78.3115946195612,
+        44.30729294201737
+      ],
+      "parcels": [
+        {
+          "id": 4380,
+          "address": "14 CRICKET PL",
+          "verticesInside": 4,
+          "totalVertices": 4
+        }
+      ],
+      "municipalBuildingAtCentroid": [
+        8829
+      ],
+      "ringLatLon": [
+        [
+          44.3073359,
+          -78.3116687
+        ],
+        [
+          44.307359,
+          -78.3115707
+        ],
+        [
+          44.30725,
+          -78.3115205
+        ],
+        [
+          44.3072269,
+          -78.3116186
+        ],
+        [
+          44.3073359,
+          -78.3116687
+        ]
+      ]
+    },
+    {
+      "osmId": "way/1015118648",
+      "geometricCentroidLonLat": [
+        -78.31151245,
+        44.30735845
+      ],
+      "parcels": [
+        {
+          "id": 4381,
+          "address": "16 CRICKET PL",
+          "verticesInside": 2,
+          "totalVertices": 4
+        }
+      ],
+      "municipalBuildingAtCentroid": [
+        6424
+      ],
+      "ringLatLon": [
+        [
+          44.3074458,
+          -78.3115017
+        ],
+        [
+          44.3072928,
+          -78.3114313
+        ],
+        [
+          44.3072711,
+          -78.3115232
+        ],
+        [
+          44.3074241,
+          -78.3115936
+        ],
+        [
+          44.3074458,
+          -78.3115017
+        ]
+      ]
+    },
+    {
+      "osmId": "way/1015118649",
+      "geometricCentroidLonLat": [
+        -78.31134234197962,
+        44.30735335674346
+      ],
+      "parcels": [
+        {
+          "id": 4384,
+          "address": "22 CRICKET PL",
+          "verticesInside": 7,
+          "totalVertices": 8
+        }
+      ],
+      "municipalBuildingAtCentroid": [
+        10576
+      ],
+      "ringLatLon": [
+        [
+          44.3073111,
+          -78.3113609
+        ],
+        [
+          44.3073085,
+          -78.3113717
+        ],
+        [
+          44.3073964,
+          -78.3114121
+        ],
+        [
+          44.3074175,
+          -78.3113227
+        ],
+        [
+          44.3073296,
+          -78.3112823
+        ],
+        [
+          44.3073281,
+          -78.3112888
+        ],
+        [
+          44.3073049,
+          -78.3112781
+        ],
+        [
+          44.3072879,
+          -78.3113502
+        ],
+        [
+          44.3073111,
+          -78.3113609
+        ]
+      ]
+    },
+    {
+      "osmId": "way/1015118651",
+      "geometricCentroidLonLat": [
+        -78.31120920931698,
+        44.30741810925653
+      ],
+      "parcels": [
+        {
+          "id": 4385,
+          "address": "24 CRICKET PL",
+          "verticesInside": 6,
+          "totalVertices": 8
+        }
+      ],
+      "municipalBuildingAtCentroid": [
+        16714
+      ],
+      "ringLatLon": [
+        [
+          44.3074559,
+          -78.3111899
+        ],
+        [
+          44.3074626,
+          -78.3111618
+        ],
+        [
+          44.3073465,
+          -78.3111084
+        ],
+        [
+          44.3073191,
+          -78.3112248
+        ],
+        [
+          44.3074352,
+          -78.3112782
+        ],
+        [
+          44.307437,
+          -78.3112704
+        ],
+        [
+          44.3075084,
+          -78.3113033
+        ],
+        [
+          44.3075274,
+          -78.3112228
+        ],
+        [
+          44.3074559,
+          -78.3111899
+        ]
+      ]
+    },
+    {
+      "osmId": "way/1015118652",
+      "geometricCentroidLonLat": [
+        -78.31105811260134,
+        44.30743637314441
+      ],
+      "parcels": [
+        {
+          "id": 4387,
+          "address": "28 CRICKET PL",
+          "verticesInside": 7,
+          "totalVertices": 8
+        }
+      ],
+      "municipalBuildingAtCentroid": [
+        9362
+      ],
+      "ringLatLon": [
+        [
+          44.3074731,
+          -78.3110797
+        ],
+        [
+          44.3075144,
+          -78.3110987
+        ],
+        [
+          44.3075265,
+          -78.3110475
+        ],
+        [
+          44.3074746,
+          -78.3110236
+        ],
+        [
+          44.3074717,
+          -78.3110356
+        ],
+        [
+          44.3073772,
+          -78.3109921
+        ],
+        [
+          44.3073579,
+          -78.3110738
+        ],
+        [
+          44.3074631,
+          -78.3111222
+        ],
+        [
+          44.3074731,
+          -78.3110797
+        ]
+      ]
+    }
+  ],
+  "driverCameras": {
+    "22": {
+      "lat": 44.30715767,
+      "lon": -78.31125256,
+      "bearingDegrees": 342.362,
+      "roadId": "way/33960427",
+      "distanceToFacadeMetres": 16.21,
+      "frontLatLon": [
+        {
+          "lat": 44.3072879,
+          "lon": -78.3113502
+        },
+        {
+          "lat": 44.3073049,
+          "lon": -78.3112781
+        }
+      ]
+    },
+    "24": {
+      "lat": 44.30719152,
+      "lon": -78.31110388,
+      "bearingDegrees": 342.362,
+      "roadId": "way/33960427",
+      "distanceToFacadeMetres": 16.5,
+      "frontLatLon": [
+        {
+          "lat": 44.3073191,
+          "lon": -78.3112248
+        },
+        {
+          "lat": 44.3073465,
+          "lon": -78.3111084
+        }
+      ]
+    },
+    "28": {
+      "lat": 44.30722235,
+      "lon": -78.31096848,
+      "bearingDegrees": 342.362,
+      "roadId": "way/33960427",
+      "distanceToFacadeMetres": 16.96,
+      "frontLatLon": [
+        {
+          "lat": 44.3073579,
+          "lon": -78.3110738
+        },
+        {
+          "lat": 44.3073772,
+          "lon": -78.3109921
+        }
+      ]
+    }
+  },
+  "bounds": {
+    "way/1015118649": {
+      "wallHeightMetres": 6.09791,
+      "retainedRoof": "hipped"
+    },
+    "way/1015118651": {
+      "wallHeightMetres": 5.70568,
+      "retainedRoof": "gabled"
+    }
+  },
+  "estimates": [
+    "Colors",
+    "Canopy width/depth/height",
+    "Entry fraction and dimensions",
+    "Opening spacing/dimensions",
+    "Review camera poses are map-derived, not recovered recording poses"
+  ],
+  "unresolved": [
+    "22 upper wall setback versus outer porch edge",
+    "22 photographed pale gable versus retained hipped roof",
+    "24 pediment and cross-gable/side projection detail",
+    "Ground openings hidden by foliage",
+    "Cab-view quality and runtime collision/occlusion",
+    "Aerial acquisition year"
+  ],
+  "implementationFiles": [
+    "city-explorer/cricket-recording-appearances.js",
+    "tests/cricket-recording-appearances.test.mjs",
+    "docs/visual-refresh-cricket-2026-11-10.md"
+  ],
+  "validation": {
+    "targetedTests": {
+      "command": "node --test tests/cricket-recording-appearances.test.mjs tests/cricket-runtime-integration.test.mjs tests/sherbrooke-frontage-lite.test.mjs",
+      "passed": 23,
+      "failed": 0
+    },
+    "repositoryTests": {
+      "command": "node --test tests/*.test.mjs tests/*.test.cjs",
+      "passed": 1667,
+      "failed": 0,
+      "durationSeconds": 18.18,
+      "baseCheckpoint": "f7d9610",
+      "afterReviewedWallMaterialFlag": true
+    },
+    "renderedGameQA": "pending"
+  },
+  "individuallyInspectedReferenceImages": [
+    "R275",
+    "R276",
+    "R278",
+    "R281",
+    "R283",
+    "R285",
+    "R294",
+    "R295"
+  ]
+}

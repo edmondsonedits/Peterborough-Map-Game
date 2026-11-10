@@ -1,0 +1,3543 @@
+{
+  "prepared": "2026-11-10",
+  "scope": "Read-only reference audit R261-R300, with R253-R260 continuity; no game changes or rendered QA.",
+  "sources": {
+    "photos": "handoff/extracted/R261.jpg-R300.jpg",
+    "index": "handoff/extracted/photo-index.csv",
+    "registerStatus": "candidate correspondence only, corrected by actual pixels/order",
+    "currentGeometry": "city-explorer/data/peterborough-osm.json",
+    "officialBuildings": "https://citymaps.peterborough.ca/arcgis/rest/services/Basedata/MapServer/6",
+    "officialParcels": "https://citymaps.peterborough.ca/arcgis/rest/services/Basedata/MapServer/4",
+    "officialSidewalks": "https://citymaps.peterborough.ca/arcgis/rest/services/Basedata/MapServer/9",
+    "ortho": "https://ws.lioservices.lrc.gov.on.ca/arcgis2/rest/services/LIO_Imagery/Ontario_Imagery_Web_Map_Service/MapServer",
+    "orthoAcquisitionDate": "Not established; do not claim current or2023",
+    "businessIdentity": "https://www.kawarthacu.com/contact-us verifies14 Hunter Street East; current name differs from old caption. No invented photo sign."
+  },
+  "directions": [
+    {
+      "photos": "R261-R264",
+      "travel": "east/ENE on Hunter Street East",
+      "lens0": "south side",
+      "lens1": "north side"
+    },
+    {
+      "photos": "R265-R271",
+      "travel": "north/NNW on Driscoll Terrace",
+      "lens0": "east side",
+      "lens1": "west side"
+    },
+    {
+      "photos": "R272-R281",
+      "travel": "turn east/ENE onto Cricket, then eastbound",
+      "lens0": "south side",
+      "lens1": "north side"
+    },
+    {
+      "photos": "R282-R292",
+      "travel": "orientation reverses between R281 and R282, followed by a pause",
+      "lens0": "north side",
+      "lens1": "south side",
+      "uncertainty": "Exact vehicle maneuver and pose not recovered; fixed lens-to-compass mapping must not be carried through the turn."
+    },
+    {
+      "photos": "R293-R300",
+      "travel": "west/WSW back toward Driscoll",
+      "lens0": "north side",
+      "lens1": "south side"
+    }
+  ],
+  "candidates": [
+    {
+      "priority": 1,
+      "id": "way/1015118634",
+      "name": "Kawartha building, Hunter south face",
+      "street": "Hunter Street East",
+      "photos": [
+        {
+          "photoId": "R262",
+          "timestamp": "13:36.816",
+          "lens": 1,
+          "pitch": "+0",
+          "sourcePath": "dense/flat-768/frame_0408_lens1_pitch+0.jpg",
+          "photoSha256": "0ca617b116ed27250690f773337f61bdec717c8535a33becc3fc36290c519a42",
+          "originalSourceSha256": "6928a25e9f62825c818db59caeb9b4487aeb62d5fc001090e133673f39925189"
+        },
+        {
+          "photoId": "R271",
+          "timestamp": "14:00.840",
+          "lens": 1,
+          "pitch": "+0",
+          "sourcePath": "dense/flat-768/frame_0420_lens1_pitch+0.jpg",
+          "photoSha256": "733af4df4849d2927394f2b7c7df411345df4b720059686860ee528d946cd98d",
+          "originalSourceSha256": "3149fba0ce6ca46c2379b8be9f18073e3a1793ed485239af4dd61adeac7ffad3"
+        }
+      ],
+      "matchStatus": "Definite ordered-photo/current-footprint correspondence corroborated by official building footprint and civic parcel association; no photographic GPS",
+      "observed": [
+        "Six narrow dark vertical glazing strips between broad pale masonry piers on the Hunter face.",
+        "Broad dark-framed glazed zone at the east end and projecting entry beyond it.",
+        "Low flat roof silhouette; a higher red-toned mass is visible behind. R271 shows the long east return, not a second building."
+      ],
+      "estimatedOrDeferred": [
+        "Full-height bounded panels can depict the six slot rhythm without generic rows of square windows.",
+        "Keep the eastern glazed corner/entry distinct from the six narrow strips. Exact doorway position on the return is not fully established.",
+        "The photo does not establish every rear elevation or an exact two-storey dimension."
+      ],
+      "minimumRendererDependencies": "Low: existing wall colors, blankFacade, facadePanels and bounded glazing. No new business text required.",
+      "currentProfileStatus": "No same-ID record found in current profile/appearance modules at review; retain any concurrent additions",
+      "sourceAssociations": {
+        "id": "way/1015118634",
+        "centroidLonLat": [
+          -78.31254514293653,
+          44.30632798448316
+        ],
+        "parcels": [
+          {
+            "objectId": 8791,
+            "address": "14 HUNTER ST E"
+          }
+        ],
+        "municipalFootprints": [
+          {
+            "objectId": 23437,
+            "location": "CITY"
+          }
+        ]
+      },
+      "frontages": [
+        {
+          "role": "primary-implementation-face",
+          "vertexIndices": [
+            1,
+            2
+          ],
+          "coordinatesLonLat": [
+            [
+              -78.312611,
+              44.3059973
+            ],
+            [
+              -78.3122433,
+              44.3060814
+            ]
+          ],
+          "adjacentCurrentRingVertices": true,
+          "sourceEdgeLengthMetres": 30.751,
+          "sourceEdgeLengthStatus": "Source-model length only; not a surveyed or photographically measured facade dimension",
+          "qa": {
+            "cameraLonLat": [
+              -78.31231559726204,
+              44.305813456667735
+            ],
+            "targetLonLat": [
+              -78.31242715,
+              44.30603935
+            ],
+            "headingCompassDegrees": 340.537,
+            "headingConvention": "0 north,90 east,180 south,270 west",
+            "mappedRoadId": "way/33953339",
+            "distanceToFaceMetres": 26.67,
+            "eyeAboveSampledRoadMetres": 2.1,
+            "targetAboveSampledBuildingBaseMetres": 2.5,
+            "poseStatus": "Estimated review camera on current mapped road centerline, not recovered recording pose; sample ground at runtime"
+          }
+        }
+      ],
+      "sourceTags": {
+        "building": "yes"
+      },
+      "footprintLonLat": [
+        [
+          -78.3128549,
+          44.3065434
+        ],
+        [
+          -78.312611,
+          44.3059973
+        ],
+        [
+          -78.3122433,
+          44.3060814
+        ],
+        [
+          -78.3122632,
+          44.306126
+        ],
+        [
+          -78.3121859,
+          44.3061436
+        ],
+        [
+          -78.3122142,
+          44.3062069
+        ],
+        [
+          -78.3122902,
+          44.3061895
+        ],
+        [
+          -78.3125146,
+          44.306692
+        ],
+        [
+          -78.312654,
+          44.3066601
+        ],
+        [
+          -78.3126399,
+          44.3066284
+        ],
+        [
+          -78.3127587,
+          44.3066013
+        ],
+        [
+          -78.3127442,
+          44.3065687
+        ],
+        [
+          -78.3128549,
+          44.3065434
+        ]
+      ]
+    },
+    {
+      "priority": 2,
+      "id": "way/755554027",
+      "name": "Tan Driscoll building, lower wing and taller north block",
+      "street": "Driscoll Terrace",
+      "photos": [
+        {
+          "photoId": "R265",
+          "timestamp": "13:48.000",
+          "lens": 0,
+          "pitch": "+0",
+          "sourcePath": "sherbrooke-water-hunter/perspective-2048/0828s_lens0_pitch+0.jpg",
+          "photoSha256": "6d6cb82022fd27e97e187ce52175d1efd80411a34c040563fd030fdca15fec9c",
+          "originalSourceSha256": "4d96743834c5db9c7d1d98c147a9413c4ed385eb20784d4869c5578b93687802"
+        },
+        {
+          "photoId": "R267",
+          "timestamp": "13:48.828",
+          "lens": 0,
+          "pitch": "+0",
+          "sourcePath": "dense/flat-768/frame_0414_lens0_pitch+0.jpg",
+          "photoSha256": "3a33186eb05455cee86a388589484f21cb418167d66a1686f8ad4fa5f288cc12",
+          "originalSourceSha256": "924ea356ff10d77d7eb5c5b9e4761dd5154d835d577be20eba60e2849f95eb37"
+        },
+        {
+          "photoId": "R269",
+          "timestamp": "13:54.834",
+          "lens": 0,
+          "pitch": "+0",
+          "sourcePath": "dense/flat-768/frame_0417_lens0_pitch+0.jpg",
+          "photoSha256": "ee3172636166a82907a4a5dbc8cddbe96d6e61d78db691a834e99fd13addb11f",
+          "originalSourceSha256": "8d79eabd67ef75cc26e3bd4674e707c694852159910af3155c50be706736d7d5"
+        }
+      ],
+      "matchStatus": "Definite ordered-photo/current-footprint correspondence corroborated by official building footprint and civic parcel association; no photographic GPS",
+      "observed": [
+        "Long lower west wing has tan walls, pale blue-gray metal eave and green-gray subdivided ribbon glazing.",
+        "The south part of the lower wing has solid tan wall with sparse small openings; it is not glazed uniformly end to end.",
+        "A taller projecting north block has one broad high horizontal window and a navy door under a dark canopy, toward the north portion of its west face."
+      ],
+      "estimatedOrDeferred": [
+        "Use separate current edges for the low wing and the taller north block.",
+        "Do not stretch the ribbon glazing across the tall block or put the navy door on the long south wing.",
+        "Front-height, frame subdivisions and door fraction remain estimates; retain the footprint step."
+      ],
+      "minimumRendererDependencies": "Low to moderate: additionalFrontages, bounded panels/windows and entryCanopy; preserve different mass heights.",
+      "currentProfileStatus": "No same-ID record found in current profile/appearance modules at review; retain any concurrent additions",
+      "sourceAssociations": {
+        "id": "way/755554027",
+        "centroidLonLat": [
+          -78.31133731911282,
+          44.30640800767007
+        ],
+        "parcels": [
+          {
+            "objectId": 8793,
+            "address": "52 HUNTER ST E"
+          }
+        ],
+        "municipalFootprints": [
+          {
+            "objectId": 23103,
+            "location": "CITY"
+          }
+        ]
+      },
+      "frontages": [
+        {
+          "role": "primary-implementation-face",
+          "vertexIndices": [
+            2,
+            3
+          ],
+          "coordinatesLonLat": [
+            [
+              -78.3113152,
+              44.3061924
+            ],
+            [
+              -78.311452,
+              44.3064962
+            ]
+          ],
+          "adjacentCurrentRingVertices": true,
+          "sourceEdgeLengthMetres": 35.531,
+          "sourceEdgeLengthStatus": "Source-model length only; not a surveyed or photographically measured facade dimension",
+          "qa": {
+            "cameraLonLat": [
+              -78.31169717116182,
+              44.30627139964086
+            ],
+            "targetLonLat": [
+              -78.3113836,
+              44.3063443
+            ],
+            "headingCompassDegrees": 72.002,
+            "headingConvention": "0 north,90 east,180 south,270 west",
+            "mappedRoadId": "way/33965578",
+            "distanceToFaceMetres": 26.26,
+            "eyeAboveSampledRoadMetres": 2.1,
+            "targetAboveSampledBuildingBaseMetres": 2.5,
+            "poseStatus": "Estimated review camera on current mapped road centerline, not recovered recording pose; sample ground at runtime"
+          }
+        },
+        {
+          "role": "separate-taller-north-block",
+          "vertexIndices": [
+            4,
+            5
+          ],
+          "coordinatesLonLat": [
+            [
+              -78.3115063,
+              44.3064837
+            ],
+            [
+              -78.3115464,
+              44.3065729
+            ]
+          ],
+          "adjacentCurrentRingVertices": true,
+          "sourceEdgeLengthMetres": 10.431,
+          "sourceEdgeLengthStatus": "Source-model length only; not a surveyed or photographically measured facade dimension",
+          "qa": {
+            "cameraLonLat": [
+              -78.31178633039072,
+              44.306467757408086
+            ],
+            "targetLonLat": [
+              -78.31152635000001,
+              44.3065283
+            ],
+            "headingCompassDegrees": 71.974,
+            "headingConvention": "0 north,90 east,180 south,270 west",
+            "mappedRoadId": "way/33965578",
+            "distanceToFaceMetres": 21.78,
+            "eyeAboveSampledRoadMetres": 2.1,
+            "targetAboveSampledBuildingBaseMetres": 2.5,
+            "poseStatus": "Estimated review camera on current mapped road centerline, not recovered recording pose; sample ground at runtime"
+          },
+          "visibleCue": "High horizontal window and navy north-side door under dark canopy; height/opening fractions estimated"
+        }
+      ],
+      "sourceTags": {
+        "building": "yes"
+      },
+      "footprintLonLat": [
+        [
+          -78.3113302,
+          44.3066001
+        ],
+        [
+          -78.3111625,
+          44.3062276
+        ],
+        [
+          -78.3113152,
+          44.3061924
+        ],
+        [
+          -78.311452,
+          44.3064962
+        ],
+        [
+          -78.3115063,
+          44.3064837
+        ],
+        [
+          -78.3115464,
+          44.3065729
+        ],
+        [
+          -78.3114759,
+          44.3065892
+        ],
+        [
+          -78.3114666,
+          44.3065686
+        ],
+        [
+          -78.3113302,
+          44.3066001
+        ]
+      ]
+    },
+    {
+      "priority": 3,
+      "id": "way/755554019",
+      "name": "Circle K storefront north of its long building",
+      "street": "Hunter Street East",
+      "photos": [
+        {
+          "photoId": "R264",
+          "timestamp": "13:42.822",
+          "lens": 0,
+          "pitch": "+0",
+          "sourcePath": "dense/flat-768/frame_0411_lens0_pitch+0.jpg",
+          "photoSha256": "1916a82f707a2f263535e12e0057f9958f8521f0d39c36cf38230b24cc32fb74",
+          "originalSourceSha256": "342659750f65d47e945de967c0569339b62cd7da0e13a3d44607e797080869ee"
+        },
+        {
+          "photoId": "R263",
+          "timestamp": "13:40.820",
+          "lens": 0,
+          "pitch": "+0",
+          "sourcePath": "dense/flat-768/frame_0410_lens0_pitch+0.jpg",
+          "photoSha256": "e49fa53ae62c55a64a25f116139d97a8d87d4b1f5e97b96eddceb232c1cc1795",
+          "originalSourceSha256": "1c520c833f10bc50d09c1a610cce59f474226808fa1dbbf1e22ab53cfb249e3d"
+        }
+      ],
+      "matchStatus": "Definite ordered-photo/current-footprint correspondence corroborated by official building footprint and civic parcel association; no photographic GPS",
+      "observed": [
+        "Red-brown brick/glazed storefront under broad pale blue-gray metal fascia.",
+        "A raised pale entry portal is toward the west half of the short Hunter-facing wall.",
+        "Circle K name/logo is directly legible in R264; Shell canopy is a separate mapped object west of the store."
+      ],
+      "estimatedOrDeferred": [
+        "Use this short north face; do not paint the long east/west side as the storefront.",
+        "A restrained Circle K sign is supported; avoid copying unreadable small window advertising.",
+        "Set signBusinessName consistently so the existing business-directory sign is deduplicated."
+      ],
+      "minimumRendererDependencies": "Low: existing retail facade, entryDoor, facadePanels and sign fields.",
+      "currentProfileStatus": "No same-ID record found in current profile/appearance modules at review; retain any concurrent additions",
+      "sourceAssociations": {
+        "id": "way/755554019",
+        "centroidLonLat": [
+          -78.31135898506734,
+          44.30578352834046
+        ],
+        "parcels": [
+          {
+            "objectId": 22697,
+            "address": "33 HUNTER ST E"
+          }
+        ],
+        "municipalFootprints": [
+          {
+            "objectId": 32543,
+            "location": "CITY"
+          }
+        ]
+      },
+      "frontages": [
+        {
+          "role": "primary-implementation-face",
+          "vertexIndices": [
+            0,
+            3
+          ],
+          "coordinatesLonLat": [
+            [
+              -78.3113204,
+              44.3058945
+            ],
+            [
+              -78.3114784,
+              44.3058593
+            ]
+          ],
+          "adjacentCurrentRingVertices": true,
+          "sourceEdgeLengthMetres": 13.182,
+          "sourceEdgeLengthStatus": "Source-model length only; not a surveyed or photographically measured facade dimension",
+          "qa": {
+            "cameraLonLat": [
+              -78.31145848474303,
+              44.306006216094104
+            ],
+            "targetLonLat": [
+              -78.3113994,
+              44.3058769
+            ],
+            "headingCompassDegrees": 161.894,
+            "headingConvention": "0 north,90 east,180 south,270 west",
+            "mappedRoadId": "way/33939069",
+            "distanceToFaceMetres": 15.15,
+            "eyeAboveSampledRoadMetres": 2.1,
+            "targetAboveSampledBuildingBaseMetres": 2.5,
+            "poseStatus": "Estimated review camera on current mapped road centerline, not recovered recording pose; sample ground at runtime"
+          }
+        }
+      ],
+      "sourceTags": {
+        "brand": "Circle K",
+        "brand:wikidata": "Q3268010",
+        "brand:wikipedia": "en:Circle K",
+        "building": "yes",
+        "building:levels": "1",
+        "name": "Circle K",
+        "shop": "convenience",
+        "website": "https://www.circlek.com/store-locator/CA/peterborough/33-hunter-street-east/0801739"
+      },
+      "footprintLonLat": [
+        [
+          -78.3113204,
+          44.3058945
+        ],
+        [
+          -78.3112396,
+          44.3057078
+        ],
+        [
+          -78.3113975,
+          44.3056725
+        ],
+        [
+          -78.3114784,
+          44.3058593
+        ],
+        [
+          -78.3113204,
+          44.3058945
+        ]
+      ]
+    },
+    {
+      "priority": 4,
+      "id": "way/1015118609",
+      "name": "Pale broad corner house, Cricket SE / parcel 5",
+      "street": "Cricket Place",
+      "photos": [
+        {
+          "photoId": "R270",
+          "timestamp": "14:00.840",
+          "lens": 0,
+          "pitch": "+0",
+          "sourcePath": "dense/flat-768/frame_0420_lens0_pitch+0.jpg",
+          "photoSha256": "c343e8c8805bb0d21332ea3f73f299b065cacd38f461513135c9104c9f1f5be5",
+          "originalSourceSha256": "334df026dd4780841915794751666adc04ddfbace083806ca900b88b2316393f"
+        },
+        {
+          "photoId": "R272",
+          "timestamp": "14:04.844",
+          "lens": 0,
+          "pitch": "+0",
+          "sourcePath": "dense/flat-768/frame_0422_lens0_pitch+0.jpg",
+          "photoSha256": "fa201186a32485f40e38bf276837a0300b107b384c0a6a4b5e190db1d9993507",
+          "originalSourceSha256": "7d923f07aaae7a65cd1d41ecf81ff8d905a07f9769738e71af95b1e7951f5e43"
+        },
+        {
+          "photoId": "R298",
+          "timestamp": "15:36.936",
+          "lens": 1,
+          "pitch": "+0",
+          "sourcePath": "dense/flat-768/frame_0468_lens1_pitch+0.jpg",
+          "photoSha256": "a6cf26ceb973b0424628073111c76899c6c852cc07ba9ff6c68492e327680e01",
+          "originalSourceSha256": "6f4f455246c668def0c94bc054dfe18dcc3edafc568712e699e44adc2b2611ce"
+        }
+      ],
+      "matchStatus": "Definite ordered-photo/current-footprint correspondence corroborated by official building footprint and civic parcel association; no photographic GPS",
+      "observed": [
+        "Broad pale/taupe two-storey north face under a shallow dark hip roof, with four upper pale-framed sashes (outer ones partly screened).",
+        "Deep dark continuous porch canopy, partly obscured lower frontage, low lawn and tall columnar evergreens at the corners.",
+        "West return in R270 has one vertically aligned pair of windows toward its south portion; no broad front porch pattern belongs on that wall."
+      ],
+      "estimatedOrDeferred": [
+        "Treat north and west faces separately. Old two-column north-front prescription misses visible openings.",
+        "Trees and shrubs obscure ground entries; do not invent a regular full lower grid.",
+        "Low rear wings in the complex ring must not be raised to the full front height."
+      ],
+      "minimumRendererDependencies": "Low for bounded north/west facade cues; separate lower returns and tree placement require care.",
+      "currentProfileStatus": "No same-ID record found in current profile/appearance modules at review; retain any concurrent additions",
+      "sourceAssociations": {
+        "id": "way/1015118609",
+        "centroidLonLat": [
+          -78.31176732447956,
+          44.30684204821104
+        ],
+        "parcels": [
+          {
+            "objectId": 21330,
+            "address": "5 CRICKET PL"
+          }
+        ],
+        "municipalFootprints": [
+          {
+            "objectId": 20211,
+            "location": "CITY"
+          }
+        ]
+      },
+      "frontages": [
+        {
+          "role": "primary-implementation-face",
+          "vertexIndices": [
+            7,
+            8
+          ],
+          "coordinatesLonLat": [
+            [
+              -78.3118751,
+              44.3068842
+            ],
+            [
+              -78.3117156,
+              44.3069218
+            ]
+          ],
+          "adjacentCurrentRingVertices": true,
+          "sourceEdgeLengthMetres": 13.378,
+          "sourceEdgeLengthStatus": "Source-model length only; not a surveyed or photographically measured facade dimension",
+          "qa": {
+            "cameraLonLat": [
+              -78.3118482722131,
+              44.30702202826866
+            ],
+            "targetLonLat": [
+              -78.31179535,
+              44.306903
+            ],
+            "headingCompassDegrees": 162.35,
+            "headingConvention": "0 north,90 east,180 south,270 west",
+            "mappedRoadId": "way/33960427",
+            "distanceToFaceMetres": 13.9,
+            "eyeAboveSampledRoadMetres": 2.1,
+            "targetAboveSampledBuildingBaseMetres": 2.5,
+            "poseStatus": "Estimated review camera on current mapped road centerline, not recovered recording pose; sample ground at runtime"
+          }
+        },
+        {
+          "role": "west-return-only",
+          "vertexIndices": [
+            6,
+            7
+          ],
+          "coordinatesLonLat": [
+            [
+              -78.3118363,
+              44.3067999
+            ],
+            [
+              -78.3118751,
+              44.3068842
+            ]
+          ],
+          "adjacentCurrentRingVertices": true,
+          "sourceEdgeLengthMetres": 9.88,
+          "sourceEdgeLengthStatus": "Source-model length only; not a surveyed or photographically measured facade dimension",
+          "qa": {
+            "cameraLonLat": [
+              -78.31194823962772,
+              44.30682198768867
+            ],
+            "targetLonLat": [
+              -78.3118557,
+              44.30684205
+            ],
+            "headingCompassDegrees": 73.146,
+            "headingConvention": "0 north,90 east,180 south,270 west",
+            "mappedRoadId": "way/33965578",
+            "distanceToFaceMetres": 7.7,
+            "eyeAboveSampledRoadMetres": 2.1,
+            "targetAboveSampledBuildingBaseMetres": 2.5,
+            "poseStatus": "Estimated review camera on current mapped road centerline, not recovered recording pose; sample ground at runtime"
+          },
+          "visibleCue": "One vertical window pair toward the south; no broad porch or invented entry"
+        }
+      ],
+      "sourceTags": {
+        "building": "yes"
+      },
+      "footprintLonLat": [
+        [
+          -78.311717,
+          44.3067726
+        ],
+        [
+          -78.31174,
+          44.3068226
+        ],
+        [
+          -78.3117615,
+          44.3068175
+        ],
+        [
+          -78.3117386,
+          44.3067679
+        ],
+        [
+          -78.3117961,
+          44.3067543
+        ],
+        [
+          -78.311819,
+          44.306804
+        ],
+        [
+          -78.3118363,
+          44.3067999
+        ],
+        [
+          -78.3118751,
+          44.3068842
+        ],
+        [
+          -78.3117156,
+          44.3069218
+        ],
+        [
+          -78.3116769,
+          44.3068375
+        ],
+        [
+          -78.3116924,
+          44.3068338
+        ],
+        [
+          -78.3116694,
+          44.3067838
+        ],
+        [
+          -78.311717,
+          44.3067726
+        ]
+      ]
+    },
+    {
+      "priority": 5,
+      "id": "way/1015118646",
+      "name": "Exposed red brick Cricket corner side wall / 436 Driscoll",
+      "street": "Cricket Place",
+      "photos": [
+        {
+          "photoId": "R273",
+          "timestamp": "14:08.848",
+          "lens": 1,
+          "pitch": "+0",
+          "sourcePath": "dense/flat-768/frame_0424_lens1_pitch+0.jpg",
+          "photoSha256": "9a6a306662229e72c37a58ca9f1ac57932c8437bbc5fa8848708f7bf1f67c1ae",
+          "originalSourceSha256": "5908672922177e19a2c5abb4a64f1a1522a55786e7fab4c11d036958f94946f0"
+        },
+        {
+          "photoId": "R297",
+          "timestamp": "15:36.936",
+          "lens": 0,
+          "pitch": "+0",
+          "sourcePath": "dense/flat-768/frame_0468_lens0_pitch+0.jpg",
+          "photoSha256": "7700127b6c9e2a2860e6a7c3750d8da328a77c9d09abb7036fc03b0f4c8bb5f7",
+          "originalSourceSha256": "b9fb8b1f809bf4a0f79e2040dd02611462778ed3ac631596f8135770df05ada7"
+        },
+        {
+          "photoId": "R299",
+          "timestamp": "15:44.010",
+          "lens": 0,
+          "pitch": "+0",
+          "sourcePath": "dense/flat-768/frame_0472_lens0_pitch+0.jpg",
+          "photoSha256": "61fed427d5ad049b5700691fb2382c48231642aad58cb3298fedb26c85d452ae",
+          "originalSourceSha256": "515c62f9f71dbf7834959b00cc6edfe370ca12b21ac2eb33abc90ac1000bba22"
+        }
+      ],
+      "matchStatus": "Definite ordered-photo/current-footprint correspondence corroborated by official building footprint and civic parcel association; no photographic GPS",
+      "observed": [
+        "Broad mostly blank red-brick south side wall with a shallow dark eave.",
+        "One dark-trimmed upper sash and a vertically aligned lower opening are near the east end.",
+        "No entrance or porch is visible on this exposed Cricket wall; the home faces Driscoll on its west side."
+      ],
+      "estimatedOrDeferred": [
+        "Use blankFacade with only the observed eastern opening column.",
+        "Suppress generic centered entry and porch on the Cricket side.",
+        "Do not copy the Cricket-side sparse pattern onto the unseen main Driscoll front."
+      ],
+      "minimumRendererDependencies": "Low: brick color, blankFacade, bounded windows; no sign.",
+      "currentProfileStatus": "No same-ID record found in current profile/appearance modules at review; retain any concurrent additions",
+      "sourceAssociations": {
+        "id": "way/1015118646",
+        "centroidLonLat": [
+          -78.31194798033734,
+          44.30717610758168
+        ],
+        "parcels": [
+          {
+            "objectId": 6502,
+            "address": "436 DRISCOLL TERR"
+          }
+        ],
+        "municipalFootprints": [
+          {
+            "objectId": 30063,
+            "location": "CITY"
+          }
+        ]
+      },
+      "frontages": [
+        {
+          "role": "primary-implementation-face",
+          "vertexIndices": [
+            2,
+            1
+          ],
+          "coordinatesLonLat": [
+            [
+              -78.3119798,
+              44.3070955
+            ],
+            [
+              -78.3118555,
+              44.3071248
+            ]
+          ],
+          "adjacentCurrentRingVertices": true,
+          "sourceEdgeLengthMetres": 10.425,
+          "sourceEdgeLengthStatus": "Source-model length only; not a surveyed or photographically measured facade dimension",
+          "qa": {
+            "cameraLonLat": [
+              -78.31187569341715,
+              44.30701578472078
+            ],
+            "targetLonLat": [
+              -78.31191765,
+              44.30711015
+            ],
+            "headingCompassDegrees": 342.35,
+            "headingConvention": "0 north,90 east,180 south,270 west",
+            "mappedRoadId": "way/33960427",
+            "distanceToFaceMetres": 11.02,
+            "eyeAboveSampledRoadMetres": 2.1,
+            "targetAboveSampledBuildingBaseMetres": 2.5,
+            "poseStatus": "Estimated review camera on current mapped road centerline, not recovered recording pose; sample ground at runtime"
+          }
+        }
+      ],
+      "sourceTags": {
+        "building": "yes"
+      },
+      "footprintLonLat": [
+        [
+          -78.3119161,
+          44.3072567
+        ],
+        [
+          -78.3118555,
+          44.3071248
+        ],
+        [
+          -78.3119798,
+          44.3070955
+        ],
+        [
+          -78.3120405,
+          44.3072274
+        ],
+        [
+          -78.3119161,
+          44.3072567
+        ]
+      ]
+    },
+    {
+      "priority": 6,
+      "id": "way/1015118647",
+      "name": "Broad white-gable house, north side / parcel 14",
+      "street": "Cricket Place",
+      "photos": [
+        {
+          "photoId": "R275",
+          "timestamp": "14:12.852",
+          "lens": 1,
+          "pitch": "+0",
+          "sourcePath": "dense/flat-768/frame_0426_lens1_pitch+0.jpg",
+          "photoSha256": "a034bdbcc136d273abe9da984486f8318bfb1954bf26ac1e44fff5bb7dfee1c3",
+          "originalSourceSha256": "7962f040f297a9106bef0acf0f69fc2b09d4e7ed390971cdb366d0ea3ea33943"
+        },
+        {
+          "photoId": "R276",
+          "timestamp": "14:18.858",
+          "lens": 1,
+          "pitch": "+0",
+          "sourcePath": "dense/flat-768/frame_0429_lens1_pitch+0.jpg",
+          "photoSha256": "8478e1cf36e69942b17295b2305d5072ff43f6b12d09f345eb09075deba1a964",
+          "originalSourceSha256": "605f452b645b62ab8693e85ee859a5501a9451b3b4112d9cff1a14ab02f7bb18"
+        },
+        {
+          "photoId": "R278",
+          "timestamp": "14:20.860",
+          "lens": 1,
+          "pitch": "+0",
+          "sourcePath": "dense/flat-768/frame_0430_lens1_pitch+0.jpg",
+          "photoSha256": "46a035ed6b43c72a7d6be8b9657ef4d137a07cd3ed9d193a4ef0e264a7b58ba5",
+          "originalSourceSha256": "573781b5c1fe5ccaf951c4077b137d2303dfaa0c755e5247915620e63c6ff0a2"
+        },
+        {
+          "photoId": "R295",
+          "timestamp": "15:24.924",
+          "lens": 0,
+          "pitch": "+0",
+          "sourcePath": "dense/flat-768/frame_0462_lens0_pitch+0.jpg",
+          "photoSha256": "fb85cc1e7141dd98ef5742ef6064908cd6d41b801faa14a92f2f18a24d33b179",
+          "originalSourceSha256": "59533ef5a274bc77f0f6f6751c441082559565c4df6e0f8a9edac0358866fa35"
+        }
+      ],
+      "matchStatus": "Definite ordered-photo/current-footprint correspondence corroborated by official building footprint and civic parcel association; no photographic GPS",
+      "observed": [
+        "Red brick lower/main floors, broad pale front gable with three small attic panes.",
+        "Two tall upper sashes and a broad projecting porch canopy with pale trim/posts.",
+        "It is the first full north-side house after the driveway east of the blank corner wall."
+      ],
+      "estimatedOrDeferred": [
+        "Keep it distinct from the immediately adjacent hip-roof house to its east.",
+        "Gable color and three attic panes require a bounded gable-aware treatment; two standard main-floor rows alone are not an exact reconstruction.",
+        "No address numerals are read from the photograph."
+      ],
+      "minimumRendererDependencies": "Low facade cues; gable/attic treatment depends on supported roof/gable authoring.",
+      "currentProfileStatus": "No same-ID record found in current profile/appearance modules at review; retain any concurrent additions",
+      "sourceAssociations": {
+        "id": "way/1015118647",
+        "centroidLonLat": [
+          -78.3115946195612,
+          44.30729294201737
+        ],
+        "parcels": [
+          {
+            "objectId": 4380,
+            "address": "14 CRICKET PL"
+          }
+        ],
+        "municipalFootprints": [
+          {
+            "objectId": 8829,
+            "location": "CITY"
+          }
+        ]
+      },
+      "frontages": [
+        {
+          "role": "primary-implementation-face",
+          "vertexIndices": [
+            3,
+            2
+          ],
+          "coordinatesLonLat": [
+            [
+              -78.3116186,
+              44.3072269
+            ],
+            [
+              -78.3115205,
+              44.30725
+            ]
+          ],
+          "adjacentCurrentRingVertices": true,
+          "sourceEdgeLengthMetres": 8.227,
+          "sourceEdgeLengthStatus": "Source-model length only; not a surveyed or photographically measured facade dimension",
+          "qa": {
+            "cameraLonLat": [
+              -78.31150779336134,
+              44.307099552071385
+            ],
+            "targetLonLat": [
+              -78.31156955,
+              44.30723845
+            ],
+            "headingCompassDegrees": 342.35,
+            "headingConvention": "0 north,90 east,180 south,270 west",
+            "mappedRoadId": "way/33960427",
+            "distanceToFaceMetres": 16.23,
+            "eyeAboveSampledRoadMetres": 2.1,
+            "targetAboveSampledBuildingBaseMetres": 2.5,
+            "poseStatus": "Estimated review camera on current mapped road centerline, not recovered recording pose; sample ground at runtime"
+          }
+        }
+      ],
+      "sourceTags": {
+        "building": "yes"
+      },
+      "footprintLonLat": [
+        [
+          -78.3116687,
+          44.3073359
+        ],
+        [
+          -78.3115707,
+          44.307359
+        ],
+        [
+          -78.3115205,
+          44.30725
+        ],
+        [
+          -78.3116186,
+          44.3072269
+        ],
+        [
+          -78.3116687,
+          44.3073359
+        ]
+      ]
+    },
+    {
+      "priority": 7,
+      "id": "way/1015118648",
+      "name": "Red hip-roof neighbor, north side / parcel 16",
+      "street": "Cricket Place",
+      "photos": [
+        {
+          "photoId": "R276",
+          "timestamp": "14:18.858",
+          "lens": 1,
+          "pitch": "+0",
+          "sourcePath": "dense/flat-768/frame_0429_lens1_pitch+0.jpg",
+          "photoSha256": "8478e1cf36e69942b17295b2305d5072ff43f6b12d09f345eb09075deba1a964",
+          "originalSourceSha256": "605f452b645b62ab8693e85ee859a5501a9451b3b4112d9cff1a14ab02f7bb18"
+        },
+        {
+          "photoId": "R278",
+          "timestamp": "14:20.860",
+          "lens": 1,
+          "pitch": "+0",
+          "sourcePath": "dense/flat-768/frame_0430_lens1_pitch+0.jpg",
+          "photoSha256": "46a035ed6b43c72a7d6be8b9657ef4d137a07cd3ed9d193a4ef0e264a7b58ba5",
+          "originalSourceSha256": "573781b5c1fe5ccaf951c4077b137d2303dfaa0c755e5247915620e63c6ff0a2"
+        },
+        {
+          "photoId": "R295",
+          "timestamp": "15:24.924",
+          "lens": 0,
+          "pitch": "+0",
+          "sourcePath": "dense/flat-768/frame_0462_lens0_pitch+0.jpg",
+          "photoSha256": "fb85cc1e7141dd98ef5742ef6064908cd6d41b801faa14a92f2f18a24d33b179",
+          "originalSourceSha256": "59533ef5a274bc77f0f6f6751c441082559565c4df6e0f8a9edac0358866fa35"
+        }
+      ],
+      "matchStatus": "Definite ordered-photo/current-footprint correspondence corroborated by official building footprint and civic parcel association; no photographic GPS",
+      "observed": [
+        "Red brick two-storey house with shallow gray-green hip roof.",
+        "Two pale upper sash groups and a deep porch with pale posts.",
+        "It follows the white-gable14 and precedes the narrow pale-gable22 in the actual west-to-east row."
+      ],
+      "estimatedOrDeferred": [
+        "This is not the green-gabled house in R277/R294; that house is across the street at way/1015118660.",
+        "Keep the hip silhouette and separate source footprint.",
+        "Ground openings are partly hidden by vegetation."
+      ],
+      "minimumRendererDependencies": "Low: current house facade/porch; preserve simple hip silhouette.",
+      "currentProfileStatus": "No same-ID record found in current profile/appearance modules at review; retain any concurrent additions",
+      "sourceAssociations": {
+        "id": "way/1015118648",
+        "centroidLonLat": [
+          -78.31151245,
+          44.30735845
+        ],
+        "parcels": [
+          {
+            "objectId": 4381,
+            "address": "16 CRICKET PL"
+          }
+        ],
+        "municipalFootprints": [
+          {
+            "objectId": 6424,
+            "location": "CITY"
+          }
+        ]
+      },
+      "frontages": [
+        {
+          "role": "primary-implementation-face",
+          "vertexIndices": [
+            2,
+            1
+          ],
+          "coordinatesLonLat": [
+            [
+              -78.3115232,
+              44.3072711
+            ],
+            [
+              -78.3114313,
+              44.3072928
+            ]
+          ],
+          "adjacentCurrentRingVertices": true,
+          "sourceEdgeLengthMetres": 7.709,
+          "sourceEdgeLengthStatus": "Source-model length only; not a surveyed or photographically measured facade dimension",
+          "qa": {
+            "cameraLonLat": [
+              -78.31140641548077,
+              44.30712263485252
+            ],
+            "targetLonLat": [
+              -78.31147725,
+              44.307281950000004
+            ],
+            "headingCompassDegrees": 342.35,
+            "headingConvention": "0 north,90 east,180 south,270 west",
+            "mappedRoadId": "way/33960427",
+            "distanceToFaceMetres": 18.61,
+            "eyeAboveSampledRoadMetres": 2.1,
+            "targetAboveSampledBuildingBaseMetres": 2.5,
+            "poseStatus": "Estimated review camera on current mapped road centerline, not recovered recording pose; sample ground at runtime"
+          }
+        }
+      ],
+      "sourceTags": {
+        "building": "yes"
+      },
+      "footprintLonLat": [
+        [
+          -78.3115017,
+          44.3074458
+        ],
+        [
+          -78.3114313,
+          44.3072928
+        ],
+        [
+          -78.3115232,
+          44.3072711
+        ],
+        [
+          -78.3115936,
+          44.3074241
+        ],
+        [
+          -78.3115017,
+          44.3074458
+        ]
+      ]
+    },
+    {
+      "priority": 8,
+      "id": "way/1015118656",
+      "name": "Taupe hip-roof house, south side / parcel 9",
+      "street": "Cricket Place",
+      "photos": [
+        {
+          "photoId": "R274",
+          "timestamp": "14:12.852",
+          "lens": 0,
+          "pitch": "+0",
+          "sourcePath": "dense/flat-768/frame_0426_lens0_pitch+0.jpg",
+          "photoSha256": "cabca69d22a2987f34b44420cb75329d10e2ff0b2b260df55223158aa4646c59",
+          "originalSourceSha256": "bc8c808c9cf0791251a6c4a082f0e432ddc2c6084e474e16882e9907e669aee0"
+        },
+        {
+          "photoId": "R298",
+          "timestamp": "15:36.936",
+          "lens": 1,
+          "pitch": "+0",
+          "sourcePath": "dense/flat-768/frame_0468_lens1_pitch+0.jpg",
+          "photoSha256": "a6cf26ceb973b0424628073111c76899c6c852cc07ba9ff6c68492e327680e01",
+          "originalSourceSha256": "6f4f455246c668def0c94bc054dfe18dcc3edafc568712e699e44adc2b2611ce"
+        }
+      ],
+      "matchStatus": "Definite ordered-photo/current-footprint correspondence corroborated by official building footprint and civic parcel association; no photographic GPS",
+      "observed": [
+        "Taupe/light brown masonry, shallow dark hip roof and two tall pale upper sashes.",
+        "Small gray shallow entrance canopy; purple-leaved tree obscures much of the lower frontage.",
+        "First full narrow south-side house east of the broad corner house."
+      ],
+      "estimatedOrDeferred": [
+        "Keep ground openings conservative behind the tree.",
+        "Do not broaden the small canopy into a full-depth generic porch without further evidence.",
+        "Colors and canopy dimensions are estimates."
+      ],
+      "minimumRendererDependencies": "Low: colors, upper windows and bounded entry canopy.",
+      "currentProfileStatus": "No same-ID record found in current profile/appearance modules at review; retain any concurrent additions",
+      "sourceAssociations": {
+        "id": "way/1015118656",
+        "centroidLonLat": [
+          -78.31155579965969,
+          44.306884316298486
+        ],
+        "parcels": [
+          {
+            "objectId": 4378,
+            "address": "9 CRICKET PL"
+          }
+        ],
+        "municipalFootprints": [
+          {
+            "objectId": 11067,
+            "location": "CITY"
+          }
+        ]
+      },
+      "frontages": [
+        {
+          "role": "primary-implementation-face",
+          "vertexIndices": [
+            1,
+            2
+          ],
+          "coordinatesLonLat": [
+            [
+              -78.3116291,
+              44.3069424
+            ],
+            [
+              -78.3115413,
+              44.3069631
+            ]
+          ],
+          "adjacentCurrentRingVertices": true,
+          "sourceEdgeLengthMetres": 7.364,
+          "sourceEdgeLengthStatus": "Source-model length only; not a surveyed or photographically measured facade dimension",
+          "qa": {
+            "cameraLonLat": [
+              -78.31163735475764,
+              44.30707005217125
+            ],
+            "targetLonLat": [
+              -78.31158520000001,
+              44.306952749999994
+            ],
+            "headingCompassDegrees": 162.35,
+            "headingConvention": "0 north,90 east,180 south,270 west",
+            "mappedRoadId": "way/33960427",
+            "distanceToFaceMetres": 13.7,
+            "eyeAboveSampledRoadMetres": 2.1,
+            "targetAboveSampledBuildingBaseMetres": 2.5,
+            "poseStatus": "Estimated review camera on current mapped road centerline, not recovered recording pose; sample ground at runtime"
+          }
+        }
+      ],
+      "sourceTags": {
+        "building": "yes"
+      },
+      "footprintLonLat": [
+        [
+          -78.3115823,
+          44.3068406
+        ],
+        [
+          -78.3116291,
+          44.3069424
+        ],
+        [
+          -78.3115413,
+          44.3069631
+        ],
+        [
+          -78.3114897,
+          44.3068508
+        ],
+        [
+          -78.3114966,
+          44.3068492
+        ],
+        [
+          -78.3114863,
+          44.3068268
+        ],
+        [
+          -78.3115771,
+          44.3068054
+        ],
+        [
+          -78.3115923,
+          44.3068383
+        ],
+        [
+          -78.3115823,
+          44.3068406
+        ]
+      ]
+    },
+    {
+      "priority": 9,
+      "id": "way/1015118657",
+      "name": "Light brick with broad pale shutters, south side / parcel 13",
+      "street": "Cricket Place",
+      "photos": [
+        {
+          "photoId": "R274",
+          "timestamp": "14:12.852",
+          "lens": 0,
+          "pitch": "+0",
+          "sourcePath": "dense/flat-768/frame_0426_lens0_pitch+0.jpg",
+          "photoSha256": "cabca69d22a2987f34b44420cb75329d10e2ff0b2b260df55223158aa4646c59",
+          "originalSourceSha256": "bc8c808c9cf0791251a6c4a082f0e432ddc2c6084e474e16882e9907e669aee0"
+        },
+        {
+          "photoId": "R296",
+          "timestamp": "15:24.924",
+          "lens": 1,
+          "pitch": "+0",
+          "sourcePath": "dense/flat-768/frame_0462_lens1_pitch+0.jpg",
+          "photoSha256": "71533a61a0629f79008c094ebee7ca09ab554ab66809e9bc5e258a1673bb4e71",
+          "originalSourceSha256": "b66483787d384da7aee1ac37a5f3e77336378a4ac93a111e97a4cef4f6d41761"
+        }
+      ],
+      "matchStatus": "Definite ordered-photo/current-footprint correspondence corroborated by official building footprint and civic parcel association; no photographic GPS",
+      "observed": [
+        "Light brick house with shallow hip roof, two upper windows and broad pale shutters.",
+        "Nearly full-width dark porch canopy, pale posts/rail and vehicles partly blocking the lower front."
+      ],
+      "estimatedOrDeferred": [
+        "The registered exact edge is the outer front porch projection. It is valid for porch details, not a proof that the upper wall lies on that same plane.",
+        "Keep upper main-wall placement behind the porch; the full upper plane is not one adjacent exterior-ring edge.",
+        "Do not turn white shutters into additional glass openings."
+      ],
+      "minimumRendererDependencies": "Low porch/material cues; upper-wall/porch separation must be respected.",
+      "currentProfileStatus": "No same-ID record found in current profile/appearance modules at review; retain any concurrent additions",
+      "sourceAssociations": {
+        "id": "way/1015118657",
+        "centroidLonLat": [
+          -78.31141806046944,
+          44.30692878481557
+        ],
+        "parcels": [
+          {
+            "objectId": 4379,
+            "address": "13 CRICKET PL"
+          }
+        ],
+        "municipalFootprints": [
+          {
+            "objectId": 9367,
+            "location": "CITY"
+          }
+        ]
+      },
+      "frontages": [
+        {
+          "role": "primary-implementation-face",
+          "vertexIndices": [
+            10,
+            11
+          ],
+          "coordinatesLonLat": [
+            [
+              -78.3114867,
+              44.3069854
+            ],
+            [
+              -78.3114065,
+              44.3070043
+            ]
+          ],
+          "adjacentCurrentRingVertices": true,
+          "sourceEdgeLengthMetres": 6.726,
+          "sourceEdgeLengthStatus": "Source-model length only; not a surveyed or photographically measured facade dimension",
+          "qa": {
+            "cameraLonLat": [
+              -78.31149449843413,
+              44.30710257920012
+            ],
+            "targetLonLat": [
+              -78.31144660000001,
+              44.30699485
+            ],
+            "headingCompassDegrees": 162.35,
+            "headingConvention": "0 north,90 east,180 south,270 west",
+            "mappedRoadId": "way/33960427",
+            "distanceToFaceMetres": 12.58,
+            "eyeAboveSampledRoadMetres": 2.1,
+            "targetAboveSampledBuildingBaseMetres": 2.5,
+            "poseStatus": "Estimated review camera on current mapped road centerline, not recovered recording pose; sample ground at runtime"
+          }
+        }
+      ],
+      "sourceTags": {
+        "building": "yes"
+      },
+      "footprintLonLat": [
+        [
+          -78.3114025,
+          44.3069955
+        ],
+        [
+          -78.3113978,
+          44.3069966
+        ],
+        [
+          -78.3113465,
+          44.3068851
+        ],
+        [
+          -78.3113565,
+          44.3068828
+        ],
+        [
+          -78.3113486,
+          44.3068657
+        ],
+        [
+          -78.3113998,
+          44.3068536
+        ],
+        [
+          -78.3114077,
+          44.3068707
+        ],
+        [
+          -78.3114414,
+          44.3068628
+        ],
+        [
+          -78.3114927,
+          44.3069743
+        ],
+        [
+          -78.3114827,
+          44.3069766
+        ],
+        [
+          -78.3114867,
+          44.3069854
+        ],
+        [
+          -78.3114065,
+          44.3070043
+        ],
+        [
+          -78.3114025,
+          44.3069955
+        ]
+      ]
+    },
+    {
+      "priority": 10,
+      "id": "way/1015118659",
+      "name": "White-gable upper balcony, south side / parcel 17",
+      "street": "Cricket Place",
+      "photos": [
+        {
+          "photoId": "R296",
+          "timestamp": "15:24.924",
+          "lens": 1,
+          "pitch": "+0",
+          "sourcePath": "dense/flat-768/frame_0462_lens1_pitch+0.jpg",
+          "photoSha256": "71533a61a0629f79008c094ebee7ca09ab554ab66809e9bc5e258a1673bb4e71",
+          "originalSourceSha256": "b66483787d384da7aee1ac37a5f3e77336378a4ac93a111e97a4cef4f6d41761"
+        },
+        {
+          "photoId": "R277",
+          "timestamp": "14:20.860",
+          "lens": 0,
+          "pitch": "+0",
+          "sourcePath": "dense/flat-768/frame_0430_lens0_pitch+0.jpg",
+          "photoSha256": "ea672cc13c457393578f8f53b6bcf5df88ec8624d8c039dfbed76cca52a754a3",
+          "originalSourceSha256": "75dbfbad558f6a7fa17811b07bbb95940482cc2d114130f8d7a8442523391d13"
+        },
+        {
+          "photoId": "R294",
+          "timestamp": "15:16.916",
+          "lens": 1,
+          "pitch": "+0",
+          "sourcePath": "dense/flat-768/frame_0458_lens1_pitch+0.jpg",
+          "photoSha256": "a7eafdbf83e8d87cfad6266fb167438b2c05631ae9f2d7b4b9c6b066691947e3",
+          "originalSourceSha256": "d728d25ae7640f7868325bd63f3a4b84802bb37f59c1ae4a24b80f84e5aaf2bf"
+        }
+      ],
+      "matchStatus": "Definite ordered-photo/current-footprint correspondence corroborated by official building footprint and civic parcel association; no photographic GPS",
+      "observed": [
+        "Red-brick body, white/pale front gable and projecting dark upper balcony.",
+        "Brown slatted privacy panel at the west side of the upper balcony; pale lower porch columns/rail.",
+        "A mature tree obscures the eastern part of the front."
+      ],
+      "estimatedOrDeferred": [
+        "Existing balconyLevels/balconyWidthFraction or balcony feature can supply bounded geometry.",
+        "Upper balcony is dark while lower porch is pale; a single shared trim color is only an approximation.",
+        "Do not replace the upper balcony with a second generic row of windows."
+      ],
+      "minimumRendererDependencies": "Moderate: existing balcony primitives are available; separate upper/lower colors may require a bounded extension.",
+      "currentProfileStatus": "No same-ID record found in current profile/appearance modules at review; retain any concurrent additions",
+      "sourceAssociations": {
+        "id": "way/1015118659",
+        "centroidLonLat": [
+          -78.3112629062038,
+          44.306955612081886
+        ],
+        "parcels": [
+          {
+            "objectId": 4382,
+            "address": "17 CRICKET PL"
+          }
+        ],
+        "municipalFootprints": [
+          {
+            "objectId": 8868,
+            "location": "CITY"
+          }
+        ]
+      },
+      "frontages": [
+        {
+          "role": "primary-implementation-face",
+          "vertexIndices": [
+            2,
+            3
+          ],
+          "coordinatesLonLat": [
+            [
+              -78.3113394,
+              44.3070104
+            ],
+            [
+              -78.3112489,
+              44.3070317
+            ]
+          ],
+          "adjacentCurrentRingVertices": true,
+          "sourceEdgeLengthMetres": 7.589,
+          "sourceEdgeLengthStatus": "Source-model length only; not a surveyed or photographically measured facade dimension",
+          "qa": {
+            "cameraLonLat": [
+              -78.3113454848807,
+              44.3071365081718
+            ],
+            "targetLonLat": [
+              -78.31129415,
+              44.30702105
+            ],
+            "headingCompassDegrees": 162.35,
+            "headingConvention": "0 north,90 east,180 south,270 west",
+            "mappedRoadId": "way/33960427",
+            "distanceToFaceMetres": 13.49,
+            "eyeAboveSampledRoadMetres": 2.1,
+            "targetAboveSampledBuildingBaseMetres": 2.5,
+            "poseStatus": "Estimated review camera on current mapped road centerline, not recovered recording pose; sample ground at runtime"
+          }
+        }
+      ],
+      "sourceTags": {
+        "building": "yes"
+      },
+      "footprintLonLat": [
+        [
+          -78.3112663,
+          44.3069066
+        ],
+        [
+          -78.3112892,
+          44.3069012
+        ],
+        [
+          -78.3113394,
+          44.3070104
+        ],
+        [
+          -78.3112489,
+          44.3070317
+        ],
+        [
+          -78.3111987,
+          44.3069225
+        ],
+        [
+          -78.3112083,
+          44.3069202
+        ],
+        [
+          -78.3111937,
+          44.3068884
+        ],
+        [
+          -78.3112516,
+          44.3068748
+        ],
+        [
+          -78.3112663,
+          44.3069066
+        ]
+      ]
+    },
+    {
+      "priority": 11,
+      "id": "way/1015118660",
+      "name": "Green-gable brick house, south side / parcel 21",
+      "street": "Cricket Place",
+      "photos": [
+        {
+          "photoId": "R277",
+          "timestamp": "14:20.860",
+          "lens": 0,
+          "pitch": "+0",
+          "sourcePath": "dense/flat-768/frame_0430_lens0_pitch+0.jpg",
+          "photoSha256": "ea672cc13c457393578f8f53b6bcf5df88ec8624d8c039dfbed76cca52a754a3",
+          "originalSourceSha256": "75dbfbad558f6a7fa17811b07bbb95940482cc2d114130f8d7a8442523391d13"
+        },
+        {
+          "photoId": "R279",
+          "timestamp": "14:24.864",
+          "lens": 0,
+          "pitch": "+0",
+          "sourcePath": "dense/flat-768/frame_0432_lens0_pitch+0.jpg",
+          "photoSha256": "963b46e8e55d9ae5eb0f63aad306a1008e9c3056bcdb8243564198e816f124fa",
+          "originalSourceSha256": "a35bac4a1fd8ff6a9df613d4b606d112c0d7ef99bc76c0c95baf0d2479c9f610"
+        },
+        {
+          "photoId": "R294",
+          "timestamp": "15:16.916",
+          "lens": 1,
+          "pitch": "+0",
+          "sourcePath": "dense/flat-768/frame_0458_lens1_pitch+0.jpg",
+          "photoSha256": "a7eafdbf83e8d87cfad6266fb167438b2c05631ae9f2d7b4b9c6b066691947e3",
+          "originalSourceSha256": "d728d25ae7640f7868325bd63f3a4b84802bb37f59c1ae4a24b80f84e5aaf2bf"
+        }
+      ],
+      "matchStatus": "Definite ordered-photo/current-footprint correspondence corroborated by official building footprint and civic parcel association; no photographic GPS",
+      "observed": [
+        "Narrow red-brick house with green front gable and pale two-pane attic opening.",
+        "Two narrow pale upper sashes; a small green-trimmed entry toward the east side, lower window toward the west.",
+        "No full-width projecting porch is visible."
+      ],
+      "estimatedOrDeferred": [
+        "porch:false is safer than a generic full porch; use bounded east entry/canopy.",
+        "Keep brick body and green gable separate; old gableColor/observedRoofShape fields have no demonstrated consumer.",
+        "This corrects the old outer-recording-review suggestion that the green-gable house was north-side8648."
+      ],
+      "minimumRendererDependencies": "Low facade cues; distinct green gable needs supported gable material/roof treatment.",
+      "currentProfileStatus": "No same-ID record found in current profile/appearance modules at review; retain any concurrent additions",
+      "sourceAssociations": {
+        "id": "way/1015118660",
+        "centroidLonLat": [
+          -78.31112255406323,
+          44.306998569271684
+        ],
+        "parcels": [
+          {
+            "objectId": 4383,
+            "address": "21 CRICKET PL"
+          }
+        ],
+        "municipalFootprints": [
+          {
+            "objectId": 6614,
+            "location": "CITY"
+          }
+        ]
+      },
+      "frontages": [
+        {
+          "role": "primary-implementation-face",
+          "vertexIndices": [
+            3,
+            0
+          ],
+          "coordinatesLonLat": [
+            [
+              -78.3111904,
+              44.3070421
+            ],
+            [
+              -78.3111041,
+              44.3070624
+            ]
+          ],
+          "adjacentCurrentRingVertices": true,
+          "sourceEdgeLengthMetres": 7.237,
+          "sourceEdgeLengthStatus": "Source-model length only; not a surveyed or photographically measured facade dimension",
+          "qa": {
+            "cameraLonLat": [
+              -78.31119949239381,
+              44.3071697492753
+            ],
+            "targetLonLat": [
+              -78.31114725,
+              44.30705225
+            ],
+            "headingCompassDegrees": 162.35,
+            "headingConvention": "0 north,90 east,180 south,270 west",
+            "mappedRoadId": "way/33960427",
+            "distanceToFaceMetres": 13.73,
+            "eyeAboveSampledRoadMetres": 2.1,
+            "targetAboveSampledBuildingBaseMetres": 2.5,
+            "poseStatus": "Estimated review camera on current mapped road centerline, not recovered recording pose; sample ground at runtime"
+          }
+        }
+      ],
+      "sourceTags": {
+        "building": "yes"
+      },
+      "footprintLonLat": [
+        [
+          -78.3111041,
+          44.3070624
+        ],
+        [
+          -78.3110547,
+          44.3069551
+        ],
+        [
+          -78.311141,
+          44.3069347
+        ],
+        [
+          -78.3111904,
+          44.3070421
+        ],
+        [
+          -78.3111041,
+          44.3070624
+        ]
+      ]
+    },
+    {
+      "priority": 12,
+      "id": "way/1015118662",
+      "name": "Pale hip-roof neighbor east of green gable / parcel 25",
+      "street": "Cricket Place",
+      "photos": [
+        {
+          "photoId": "R277",
+          "timestamp": "14:20.860",
+          "lens": 0,
+          "pitch": "+0",
+          "sourcePath": "dense/flat-768/frame_0430_lens0_pitch+0.jpg",
+          "photoSha256": "ea672cc13c457393578f8f53b6bcf5df88ec8624d8c039dfbed76cca52a754a3",
+          "originalSourceSha256": "75dbfbad558f6a7fa17811b07bbb95940482cc2d114130f8d7a8442523391d13"
+        },
+        {
+          "photoId": "R279",
+          "timestamp": "14:24.864",
+          "lens": 0,
+          "pitch": "+0",
+          "sourcePath": "dense/flat-768/frame_0432_lens0_pitch+0.jpg",
+          "photoSha256": "963b46e8e55d9ae5eb0f63aad306a1008e9c3056bcdb8243564198e816f124fa",
+          "originalSourceSha256": "a35bac4a1fd8ff6a9df613d4b606d112c0d7ef99bc76c0c95baf0d2479c9f610"
+        },
+        {
+          "photoId": "R294",
+          "timestamp": "15:16.916",
+          "lens": 1,
+          "pitch": "+0",
+          "sourcePath": "dense/flat-768/frame_0458_lens1_pitch+0.jpg",
+          "photoSha256": "a7eafdbf83e8d87cfad6266fb167438b2c05631ae9f2d7b4b9c6b066691947e3",
+          "originalSourceSha256": "d728d25ae7640f7868325bd63f3a4b84802bb37f59c1ae4a24b80f84e5aaf2bf"
+        }
+      ],
+      "matchStatus": "Definite ordered-photo/current-footprint correspondence corroborated by official building footprint and civic parcel association; no photographic GPS",
+      "observed": [
+        "Pale/taupe masonry house with low gray hip roof and tall pale upper sash.",
+        "Small projecting porch with white posts/rail and dark shallow canopy.",
+        "Immediately east of the green-gable house; appears image-left when looking south."
+      ],
+      "estimatedOrDeferred": [
+        "Do not use the red-brick, tree-screened balcony house on the other side of the green gable as this source.",
+        "Windows/porch proportions are estimated; keep obscured openings conservative."
+      ],
+      "minimumRendererDependencies": "Low: current house colors, windows and bounded porch.",
+      "currentProfileStatus": "No same-ID record found in current profile/appearance modules at review; retain any concurrent additions",
+      "sourceAssociations": {
+        "id": "way/1015118662",
+        "centroidLonLat": [
+          -78.31097738081047,
+          44.3070336092963
+        ],
+        "parcels": [
+          {
+            "objectId": 4386,
+            "address": "25 CRICKET PL"
+          }
+        ],
+        "municipalFootprints": [
+          {
+            "objectId": 7796,
+            "location": "CITY"
+          }
+        ]
+      },
+      "frontages": [
+        {
+          "role": "primary-implementation-face",
+          "vertexIndices": [
+            3,
+            0
+          ],
+          "coordinatesLonLat": [
+            [
+              -78.3110448,
+              44.3070779
+            ],
+            [
+              -78.3109599,
+              44.3070979
+            ]
+          ],
+          "adjacentCurrentRingVertices": true,
+          "sourceEdgeLengthMetres": 7.12,
+          "sourceEdgeLengthStatus": "Source-model length only; not a surveyed or photographically measured facade dimension",
+          "qa": {
+            "cameraLonLat": [
+              -78.31105351938149,
+              44.30720298594464
+            ],
+            "targetLonLat": [
+              -78.31100235,
+              44.3070879
+            ],
+            "headingCompassDegrees": 162.35,
+            "headingConvention": "0 north,90 east,180 south,270 west",
+            "mappedRoadId": "way/33960427",
+            "distanceToFaceMetres": 13.44,
+            "eyeAboveSampledRoadMetres": 2.1,
+            "targetAboveSampledBuildingBaseMetres": 2.5,
+            "poseStatus": "Estimated review camera on current mapped road centerline, not recovered recording pose; sample ground at runtime"
+          }
+        }
+      ],
+      "sourceTags": {
+        "building": "yes"
+      },
+      "footprintLonLat": [
+        [
+          -78.3109599,
+          44.3070979
+        ],
+        [
+          -78.31091,
+          44.3069893
+        ],
+        [
+          -78.3109948,
+          44.3069693
+        ],
+        [
+          -78.3110448,
+          44.3070779
+        ],
+        [
+          -78.3109599,
+          44.3070979
+        ]
+      ]
+    }
+  ],
+  "existingCricketReview": [
+    {
+      "id": "way/1015118649",
+      "name": "22: narrow pale-gable house, green canopy",
+      "photoIds": [
+        "R276",
+        "R278",
+        "R281"
+      ],
+      "correction": "R281 main pale-gable house and the tree-screened middle house in R278; not the orange-toy broad-gable house in R283.",
+      "sourceAssociations": {
+        "id": "way/1015118649",
+        "centroidLonLat": [
+          -78.31134234197962,
+          44.30735335674346
+        ],
+        "parcels": [
+          {
+            "objectId": 4384,
+            "address": "22 CRICKET PL"
+          }
+        ],
+        "municipalFootprints": [
+          {
+            "objectId": 10576,
+            "location": "CITY"
+          }
+        ]
+      },
+      "action": "Preserve existing bespoke22/24 code pending focused review; do not add duplicate route profiles.28 is reference-only in this batch.",
+      "frontage": {
+        "role": "preserve-existing-or-review-only",
+        "vertexIndices": [
+          7,
+          6
+        ],
+        "coordinatesLonLat": [
+          [
+            -78.3113502,
+            44.3072879
+          ],
+          [
+            -78.3112781,
+            44.3073049
+          ]
+        ],
+        "adjacentCurrentRingVertices": true,
+        "sourceEdgeLengthMetres": 6.047,
+        "sourceEdgeLengthStatus": "Source-model length only; not a surveyed or photographically measured facade dimension",
+        "qa": {
+          "cameraLonLat": [
+            -78.31125247498082,
+            44.307157685643155
+          ],
+          "targetLonLat": [
+            -78.31131415,
+            44.3072964
+          ],
+          "headingCompassDegrees": 342.35,
+          "headingConvention": "0 north,90 east,180 south,270 west",
+          "mappedRoadId": "way/33960427",
+          "distanceToFaceMetres": 16.2,
+          "eyeAboveSampledRoadMetres": 2.1,
+          "targetAboveSampledBuildingBaseMetres": 2.5,
+          "poseStatus": "Estimated review camera on current mapped road centerline, not recovered recording pose; sample ground at runtime"
+        }
+      }
+    },
+    {
+      "id": "way/1015118651",
+      "name": "24: broad dark-shingle gable, porch pediment, orange toy",
+      "photoIds": [
+        "R278",
+        "R283",
+        "R285",
+        "R286",
+        "R288",
+        "R290",
+        "R292"
+      ],
+      "correction": "R283/R285 foreground broad cross-gable matches8651 by sequence, source width, roof form and neighboring8652. Historic user-address confirmation in old review conflicts with this image/parcel correspondence.",
+      "sourceAssociations": {
+        "id": "way/1015118651",
+        "centroidLonLat": [
+          -78.31120920931698,
+          44.30741810925653
+        ],
+        "parcels": [
+          {
+            "objectId": 4385,
+            "address": "24 CRICKET PL"
+          }
+        ],
+        "municipalFootprints": [
+          {
+            "objectId": 16714,
+            "location": "CITY"
+          }
+        ]
+      },
+      "action": "Preserve existing bespoke22/24 code pending focused review; do not add duplicate route profiles.28 is reference-only in this batch.",
+      "frontage": {
+        "role": "preserve-existing-or-review-only",
+        "vertexIndices": [
+          3,
+          2
+        ],
+        "coordinatesLonLat": [
+          [
+            -78.3112248,
+            44.3073191
+          ],
+          [
+            -78.3111084,
+            44.3073465
+          ]
+        ],
+        "adjacentCurrentRingVertices": true,
+        "sourceEdgeLengthMetres": 9.761,
+        "sourceEdgeLengthStatus": "Source-model length only; not a surveyed or photographically measured facade dimension",
+        "qa": {
+          "cameraLonLat": [
+            -78.31110379277126,
+            44.30719153917098
+          ],
+          "targetLonLat": [
+            -78.3111666,
+            44.3073328
+          ],
+          "headingCompassDegrees": 342.35,
+          "headingConvention": "0 north,90 east,180 south,270 west",
+          "mappedRoadId": "way/33960427",
+          "distanceToFaceMetres": 16.5,
+          "eyeAboveSampledRoadMetres": 2.1,
+          "targetAboveSampledBuildingBaseMetres": 2.5,
+          "poseStatus": "Estimated review camera on current mapped road centerline, not recovered recording pose; sample ground at runtime"
+        }
+      }
+    },
+    {
+      "id": "way/1015118652",
+      "name": "28: narrower pale-trim gable, white porch east of24",
+      "photoIds": [
+        "R283",
+        "R285",
+        "R286"
+      ],
+      "correction": "Immediate right/east house in R283/R285 is the next footprint8652/parcel28, not8651/24.",
+      "sourceAssociations": {
+        "id": "way/1015118652",
+        "centroidLonLat": [
+          -78.31105811260134,
+          44.30743637314441
+        ],
+        "parcels": [
+          {
+            "objectId": 4387,
+            "address": "28 CRICKET PL"
+          }
+        ],
+        "municipalFootprints": [
+          {
+            "objectId": 9362,
+            "location": "CITY"
+          }
+        ]
+      },
+      "action": "Preserve existing bespoke22/24 code pending focused review; do not add duplicate route profiles.28 is reference-only in this batch.",
+      "frontage": {
+        "role": "preserve-existing-or-review-only",
+        "vertexIndices": [
+          6,
+          5
+        ],
+        "coordinatesLonLat": [
+          [
+            -78.3110738,
+            44.3073579
+          ],
+          [
+            -78.3109921,
+            44.3073772
+          ]
+        ],
+        "adjacentCurrentRingVertices": true,
+        "sourceEdgeLengthMetres": 6.854,
+        "sourceEdgeLengthStatus": "Source-model length only; not a surveyed or photographically measured facade dimension",
+        "qa": {
+          "cameraLonLat": [
+            -78.31096839892847,
+            44.30722236706383
+          ],
+          "targetLonLat": [
+            -78.31103295,
+            44.307367549999995
+          ],
+          "headingCompassDegrees": 342.35,
+          "headingConvention": "0 north,90 east,180 south,270 west",
+          "mappedRoadId": "way/33960427",
+          "distanceToFaceMetres": 16.96,
+          "eyeAboveSampledRoadMetres": 2.1,
+          "targetAboveSampledBuildingBaseMetres": 2.5,
+          "poseStatus": "Estimated review camera on current mapped road centerline, not recovered recording pose; sample ground at runtime"
+        }
+      }
+    }
+  ],
+  "groundContext": [
+    {
+      "type": "Feature",
+      "id": "10/339",
+      "properties": {
+        "ptbo_layer": "parking_surfaces",
+        "DRIVE_ACCESS_TYPE": "Parking Lot",
+        "role": "exact-existing-ground-context",
+        "review": "Kawartha/Quaker approach parking and west service access at Cricket; keep open."
+      },
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [
+              -78.31213519728314,
+              44.30707946999166
+            ],
+            [
+              -78.31216296769419,
+              44.307081552651134
+            ],
+            [
+              -78.31218804956038,
+              44.3070771404151
+            ],
+            [
+              -78.31219472254314,
+              44.30707265211229
+            ],
+            [
+              -78.31218919051211,
+              44.30705215577483
+            ],
+            [
+              -78.31217701705584,
+              44.307025216413976
+            ],
+            [
+              -78.31220064116386,
+              44.307020055028914
+            ],
+            [
+              -78.31220491084008,
+              44.30701372488502
+            ],
+            [
+              -78.31218482765543,
+              44.306968993450724
+            ],
+            [
+              -78.31218053343494,
+              44.30696496172343
+            ],
+            [
+              -78.31217064086538,
+              44.30696365745195
+            ],
+            [
+              -78.31213086824422,
+              44.30697379792631
+            ],
+            [
+              -78.31211316168682,
+              44.306980169071394
+            ],
+            [
+              -78.312090256931,
+              44.30699991476601
+            ],
+            [
+              -78.31205386690301,
+              44.306917125408184
+            ],
+            [
+              -78.31207531161844,
+              44.30692424382777
+            ],
+            [
+              -78.31209640992422,
+              44.30692601724169
+            ],
+            [
+              -78.3121499199036,
+              44.30691688716984
+            ],
+            [
+              -78.31215590002446,
+              44.30691378878745
+            ],
+            [
+              -78.31215784694383,
+              44.30690602202481
+            ],
+            [
+              -78.31213452442584,
+              44.30685013909095
+            ],
+            [
+              -78.31238760802026,
+              44.306788925887474
+            ],
+            [
+              -78.3124040557224,
+              44.3068253053423
+            ],
+            [
+              -78.3124104863089,
+              44.3068296664481
+            ],
+            [
+              -78.31241927941495,
+              44.30683036503327
+            ],
+            [
+              -78.31243909157666,
+              44.30681804846912
+            ],
+            [
+              -78.31244882218,
+              44.306800988646195
+            ],
+            [
+              -78.31244733714199,
+              44.30677219972081
+            ],
+            [
+              -78.3124386239145,
+              44.30674226740944
+            ],
+            [
+              -78.3123026199047,
+              44.30644892102713
+            ],
+            [
+              -78.31226254508529,
+              44.30634578962479
+            ],
+            [
+              -78.31227444361156,
+              44.306324989793744
+            ],
+            [
+              -78.31229395802507,
+              44.306300795184136
+            ],
+            [
+              -78.31230427294507,
+              44.306292820326505
+            ],
+            [
+              -78.31231909563577,
+              44.30632782732214
+            ],
+            [
+              -78.31233285854222,
+              44.306342443285324
+            ],
+            [
+              -78.31234750348383,
+              44.30634878035686
+            ],
+            [
+              -78.31252037965996,
+              44.3067410836442
+            ],
+            [
+              -78.3125275615288,
+              44.30674944705957
+            ],
+            [
+              -78.31254112935846,
+              44.3067557902562
+            ],
+            [
+              -78.31255498187339,
+              44.30675754603803
+            ],
+            [
+              -78.31257084117776,
+              44.306754753149036
+            ],
+            [
+              -78.31258004140142,
+              44.30675087349306
+            ],
+            [
+              -78.3127878842108,
+              44.30661212019364
+            ],
+            [
+              -78.31287800541152,
+              44.30652729837155
+            ],
+            [
+              -78.3128765657884,
+              44.30652250021312
+            ],
+            [
+              -78.31285254064538,
+              44.30650377243848
+            ],
+            [
+              -78.31282342981211,
+              44.30649653671325
+            ],
+            [
+              -78.31280542025753,
+              44.30649441841929
+            ],
+            [
+              -78.31277661543949,
+              44.30642987012008
+            ],
+            [
+              -78.31292970560317,
+              44.30639393295154
+            ],
+            [
+              -78.31292831321937,
+              44.306324524791314
+            ],
+            [
+              -78.31318808596794,
+              44.30583875774398
+            ],
+            [
+              -78.31335426428622,
+              44.30587596502655
+            ],
+            [
+              -78.31348646968708,
+              44.30592600180127
+            ],
+            [
+              -78.31360875167654,
+              44.30595599697381
+            ],
+            [
+              -78.31344023481188,
+              44.30626416790772
+            ],
+            [
+              -78.31344689617679,
+              44.30627885516828
+            ],
+            [
+              -78.31343650048244,
+              44.30629945281981
+            ],
+            [
+              -78.31341813046738,
+              44.30630462828968
+            ],
+            [
+              -78.31323378542521,
+              44.30665139487463
+            ],
+            [
+              -78.31319935501467,
+              44.30664986963253
+            ],
+            [
+              -78.3131816468344,
+              44.30665993384404
+            ],
+            [
+              -78.31312876910644,
+              44.30678636382741
+            ],
+            [
+              -78.31280972017821,
+              44.30671710694381
+            ],
+            [
+              -78.3128395728417,
+              44.306689779579365
+            ],
+            [
+              -78.3128725645679,
+              44.30666437977492
+            ],
+            [
+              -78.31291201363813,
+              44.30663899242796
+            ],
+            [
+              -78.31293748965288,
+              44.306626490409
+            ],
+            [
+              -78.31296891987357,
+              44.3066192826357
+            ],
+            [
+              -78.31300183115869,
+              44.306617613113865
+            ],
+            [
+              -78.31302775208538,
+              44.30662030112599
+            ],
+            [
+              -78.31306888659469,
+              44.30663052246098
+            ],
+            [
+              -78.3130806674512,
+              44.306631519995
+            ],
+            [
+              -78.31309624269109,
+              44.30662805504111
+            ],
+            [
+              -78.31310806673814,
+              44.306619427822405
+            ],
+            [
+              -78.31311267008176,
+              44.306606966506216
+            ],
+            [
+              -78.3131016107876,
+              44.30655679389972
+            ],
+            [
+              -78.31309447138352,
+              44.30654461524364
+            ],
+            [
+              -78.31308147005291,
+              44.30653456820197
+            ],
+            [
+              -78.31306575713975,
+              44.30652871834336
+            ],
+            [
+              -78.3130482503656,
+              44.30652684599501
+            ],
+            [
+              -78.31297125182925,
+              44.30653087986842
+            ],
+            [
+              -78.31295274480824,
+              44.30653663721818
+            ],
+            [
+              -78.31293393234824,
+              44.30654905753044
+            ],
+            [
+              -78.3128362170531,
+              44.306625840299525
+            ],
+            [
+              -78.31257589425304,
+              44.30680205205541
+            ],
+            [
+              -78.31253493214625,
+              44.306838247503805
+            ],
+            [
+              -78.31245776546388,
+              44.30688337833576
+            ],
+            [
+              -78.31244257903913,
+              44.30689562375952
+            ],
+            [
+              -78.31243902314803,
+              44.30690447168899
+            ],
+            [
+              -78.31243952859313,
+              44.306915203192645
+            ],
+            [
+              -78.31246540447827,
+              44.30698636987273
+            ],
+            [
+              -78.31246798987071,
+              44.307030709087705
+            ],
+            [
+              -78.31239701610183,
+              44.30731592400967
+            ],
+            [
+              -78.31230090986217,
+              44.30733200248221
+            ],
+            [
+              -78.31228432757767,
+              44.30729195211608
+            ],
+            [
+              -78.31227586864595,
+              44.30728829947652
+            ],
+            [
+              -78.31226036809409,
+              44.30728995921967
+            ],
+            [
+              -78.31223714580409,
+              44.30729727363866
+            ],
+            [
+              -78.3122265275118,
+              44.30730831849348
+            ],
+            [
+              -78.31219720238516,
+              44.307242293952804
+            ],
+            [
+              -78.31220871130448,
+              44.30724702492584
+            ],
+            [
+              -78.31221953732486,
+              44.307248233237395
+            ],
+            [
+              -78.31225674167108,
+              44.30724129486427
+            ],
+            [
+              -78.31226130500359,
+              44.30723674337886
+            ],
+            [
+              -78.31225773839365,
+              44.30722646915866
+            ],
+            [
+              -78.31221829144248,
+              44.3071290179808
+            ],
+            [
+              -78.31220548086833,
+              44.3071262153624
+            ],
+            [
+              -78.31218277088803,
+              44.307133184423655
+            ],
+            [
+              -78.31215704528675,
+              44.30715185719856
+            ],
+            [
+              -78.31212376583325,
+              44.30707622809357
+            ],
+            [
+              -78.31213519728314,
+              44.30707946999166
+            ]
+          ]
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "id": "10/341",
+      "properties": {
+        "ptbo_layer": "parking_surfaces",
+        "DRIVE_ACCESS_TYPE": "Parking Lot",
+        "role": "exact-existing-ground-context",
+        "review": "Kawartha north/east parking and open setback seen R271."
+      },
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [
+              -78.3119061854628,
+              44.306581707298804
+            ],
+            [
+              -78.31192228604893,
+              44.30658411748369
+            ],
+            [
+              -78.31193949284675,
+              44.30658352608366
+            ],
+            [
+              -78.3119681602448,
+              44.30657820622598
+            ],
+            [
+              -78.31197921872177,
+              44.30657198824414
+            ],
+            [
+              -78.31198330046865,
+              44.30656562757459
+            ],
+            [
+              -78.31198365718129,
+              44.30655828340887
+            ],
+            [
+              -78.31196740638383,
+              44.30652056441512
+            ],
+            [
+              -78.31227174292083,
+              44.30645691768265
+            ],
+            [
+              -78.31228977451676,
+              44.306498088815395
+            ],
+            [
+              -78.31229742534414,
+              44.30650304493417
+            ],
+            [
+              -78.3123080633767,
+              44.30650364472472
+            ],
+            [
+              -78.31232949533702,
+              44.30655046683253
+            ],
+            [
+              -78.31232410769681,
+              44.30655912398347
+            ],
+            [
+              -78.3123243254282,
+              44.30656860543051
+            ],
+            [
+              -78.31236109514245,
+              44.306650826568195
+            ],
+            [
+              -78.31236790472227,
+              44.30665646959233
+            ],
+            [
+              -78.3123779528435,
+              44.30665939080636
+            ],
+            [
+              -78.31240288907144,
+              44.3067066249101
+            ],
+            [
+              -78.31239479265003,
+              44.30671505083401
+            ],
+            [
+              -78.31239294755393,
+              44.30672520123223
+            ],
+            [
+              -78.31241142491302,
+              44.30676545465397
+            ],
+            [
+              -78.31213000045447,
+              44.306835517390155
+            ],
+            [
+              -78.31212047025433,
+              44.30683459706293
+            ],
+            [
+              -78.31211255655622,
+              44.30683067456292
+            ],
+            [
+              -78.3120974421375,
+              44.306802797172324
+            ],
+            [
+              -78.31208782171977,
+              44.30679575373183
+            ],
+            [
+              -78.31207538434347,
+              44.30679156175593
+            ],
+            [
+              -78.31206049912637,
+              44.30679084122414
+            ],
+            [
+              -78.31204572783895,
+              44.30679429705937
+            ],
+            [
+              -78.31202563139875,
+              44.306802102772856
+            ],
+            [
+              -78.31200782767296,
+              44.30681238692006
+            ],
+            [
+              -78.31197659160269,
+              44.306741381997895
+            ],
+            [
+              -78.31199420799183,
+              44.30674327059628
+            ],
+            [
+              -78.31201107469485,
+              44.30674123253342
+            ],
+            [
+              -78.31204097956338,
+              44.30673311312659
+            ],
+            [
+              -78.31205351373194,
+              44.30672285883319
+            ],
+            [
+              -78.312055466286,
+              44.306710027244
+            ],
+            [
+              -78.31203216509171,
+              44.30665079845882
+            ],
+            [
+              -78.31201659698256,
+              44.30663821058825
+            ],
+            [
+              -78.31199382141699,
+              44.30663421088844
+            ],
+            [
+              -78.31196219913188,
+              44.30664013097441
+            ],
+            [
+              -78.31193820716254,
+              44.30665513448328
+            ],
+            [
+              -78.3119061854628,
+              44.306581707298804
+            ]
+          ]
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "id": "10/349",
+      "properties": {
+        "ptbo_layer": "parking_surfaces",
+        "DRIVE_ACCESS_TYPE": "Parking Lot",
+        "role": "exact-existing-ground-context",
+        "review": "Driscoll paved forecourt. Old parking row starts inside building755554027; old origin is not a verified stripe endpoint."
+      },
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [
+              -78.31176993829553,
+              44.30653341997821
+            ],
+            [
+              -78.31175401614,
+              44.30652523689362
+            ],
+            [
+              -78.3117345316008,
+              44.306523846228444
+            ],
+            [
+              -78.31156500757405,
+              44.30656426253316
+            ],
+            [
+              -78.31154951924188,
+              44.30656044337936
+            ],
+            [
+              -78.31151339835723,
+              44.30648108844075
+            ],
+            [
+              -78.3114534491078,
+              44.3064952512457
+            ],
+            [
+              -78.31131372396054,
+              44.306189016789475
+            ],
+            [
+              -78.3111855548496,
+              44.30621992919648
+            ],
+            [
+              -78.3111675797852,
+              44.306170184077196
+            ],
+            [
+              -78.31136361629082,
+              44.3061261219277
+            ],
+            [
+              -78.31135164894486,
+              44.30610708816593
+            ],
+            [
+              -78.31133267274473,
+              44.30609800303042
+            ],
+            [
+              -78.31145838571427,
+              44.306069006915195
+            ],
+            [
+              -78.31145194162504,
+              44.30608591449312
+            ],
+            [
+              -78.31145684934802,
+              44.30610352067778
+            ],
+            [
+              -78.31147979145159,
+              44.30609769337724
+            ],
+            [
+              -78.31149978124323,
+              44.30613967599383
+            ],
+            [
+              -78.3115539165336,
+              44.30612598211669
+            ],
+            [
+              -78.3116783037739,
+              44.30640289492827
+            ],
+            [
+              -78.31169354402532,
+              44.30639529090331
+            ],
+            [
+              -78.31170321931228,
+              44.306383919593934
+            ],
+            [
+              -78.31176993829553,
+              44.30653341997821
+            ]
+          ]
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "id": "10/364",
+      "properties": {
+        "ptbo_layer": "parking_surfaces",
+        "DRIVE_ACCESS_TYPE": "Parking Lot",
+        "role": "exact-existing-ground-context",
+        "review": "Kawartha front parking. Existing polygon; do not import old stall count/bearing without current paint review."
+      },
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [
+              -78.31220802103572,
+              44.3059529309739
+            ],
+            [
+              -78.31275518822454,
+              44.30583174706803
+            ],
+            [
+              -78.31278664785556,
+              44.30598826811
+            ],
+            [
+              -78.31263005749246,
+              44.30602221859713
+            ],
+            [
+              -78.31260735654831,
+              44.30597452130571
+            ],
+            [
+              -78.3126038425307,
+              44.30597158019295
+            ],
+            [
+              -78.31259984329738,
+              44.30597196228444
+            ],
+            [
+              -78.31193169808361,
+              44.306125715282526
+            ],
+            [
+              -78.31190286985144,
+              44.30606401018583
+            ],
+            [
+              -78.31191769324289,
+              44.30605757027539
+            ],
+            [
+              -78.31190405129794,
+              44.306022877320814
+            ],
+            [
+              -78.3120707024642,
+              44.305984521112585
+            ],
+            [
+              -78.3120913229732,
+              44.306029859408525
+            ],
+            [
+              -78.31209841394633,
+              44.30602807548393
+            ],
+            [
+              -78.31211166339807,
+              44.30601796766625
+            ],
+            [
+              -78.31211490730934,
+              44.306004283310926
+            ],
+            [
+              -78.31208091411098,
+              44.30593087276445
+            ],
+            [
+              -78.31218894771861,
+              44.30590509034763
+            ],
+            [
+              -78.31220802103572,
+              44.3059529309739
+            ]
+          ]
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "id": "10/1371",
+      "properties": {
+        "ptbo_layer": "parking_surfaces",
+        "DRIVE_ACCESS_TYPE": "Parking Lot",
+        "role": "exact-existing-ground-context",
+        "review": "Shell fuel forecourt surrounding independent canopy and store."
+      },
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [
+              -78.31157186296568,
+              44.30592237941109
+            ],
+            [
+              -78.3115954977604,
+              44.30589784352949
+            ],
+            [
+              -78.31157499704321,
+              44.305838610380846
+            ],
+            [
+              -78.31157022941383,
+              44.305834213671126
+            ],
+            [
+              -78.31156390856052,
+              44.30583409630942
+            ],
+            [
+              -78.31149490192085,
+              44.305851718046156
+            ],
+            [
+              -78.31144300081381,
+              44.305743302260495
+            ],
+            [
+              -78.31140328458164,
+              44.30565045026091
+            ],
+            [
+              -78.31126576089646,
+              44.30568365509978
+            ],
+            [
+              -78.31124309380667,
+              44.30563524351297
+            ],
+            [
+              -78.31118588745875,
+              44.305645805759674
+            ],
+            [
+              -78.31116615307464,
+              44.30559126932998
+            ],
+            [
+              -78.31121969203312,
+              44.305581096952906
+            ],
+            [
+              -78.31119909947223,
+              44.305530828335634
+            ],
+            [
+              -78.31136438662443,
+              44.305492560763184
+            ],
+            [
+              -78.31134125142914,
+              44.30543985014672
+            ],
+            [
+              -78.31138149311391,
+              44.305430316976775
+            ],
+            [
+              -78.31142270754012,
+              44.3055215180547
+            ],
+            [
+              -78.31144448775551,
+              44.3055399429792
+            ],
+            [
+              -78.31146825336428,
+              44.30554421548448
+            ],
+            [
+              -78.31147238296437,
+              44.30555415368403
+            ],
+            [
+              -78.31202102575475,
+              44.30554108727178
+            ],
+            [
+              -78.31202425778353,
+              44.30565054440375
+            ],
+            [
+              -78.31201114100499,
+              44.30563979410469
+            ],
+            [
+              -78.31200638447586,
+              44.30563880522501
+            ],
+            [
+              -78.31196674343727,
+              44.305639714596644
+            ],
+            [
+              -78.31195647030015,
+              44.30564224643011
+            ],
+            [
+              -78.31192539348375,
+              44.3056589097607
+            ],
+            [
+              -78.31185946743514,
+              44.30570785559906
+            ],
+            [
+              -78.31179474535453,
+              44.305794370425716
+            ],
+            [
+              -78.31173599886218,
+              44.3058139480674
+            ],
+            [
+              -78.31171811090042,
+              44.305822101931156
+            ],
+            [
+              -78.31170864555929,
+              44.30583178836631
+            ],
+            [
+              -78.3116958682522,
+              44.305855878663905
+            ],
+            [
+              -78.31169561211541,
+              44.305867306156046
+            ],
+            [
+              -78.31170984902977,
+              44.305880980864984
+            ],
+            [
+              -78.31172653727876,
+              44.30588704473968
+            ],
+            [
+              -78.31157186296568,
+              44.30592237941109
+            ]
+          ]
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "id": "context-way/1015118616",
+      "properties": {
+        "sourceId": "way/1015118616",
+        "role": "exact-existing-ground-context",
+        "tags": {
+          "highway": "footway"
+        },
+        "review": "Driscoll garden footpath centerline, not a garden-bed polygon. Surface/width are estimates."
+      },
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
+          [
+            -78.3118568,
+            44.3059969
+          ],
+          [
+            -78.3118357,
+            44.3060667
+          ],
+          [
+            -78.3117182,
+            44.3061331
+          ]
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "id": "context-way/1020094081",
+      "properties": {
+        "sourceId": "way/1020094081",
+        "role": "exact-existing-ground-context",
+        "tags": {
+          "leisure": "park",
+          "name": "Quaker Park"
+        },
+        "review": "OSM Quaker Park, west/northwest of Cricket service access. Municipal park32/70 is a different remote geometry; do not conflate by name."
+      },
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [
+              -78.3126381,
+              44.3067987
+            ],
+            [
+              -78.3127208,
+              44.3068839
+            ],
+            [
+              -78.3125398,
+              44.3074012
+            ],
+            [
+              -78.3124043,
+              44.3077495
+            ],
+            [
+              -78.3125545,
+              44.3078541
+            ],
+            [
+              -78.3126417,
+              44.3079635
+            ],
+            [
+              -78.3127382,
+              44.3080038
+            ],
+            [
+              -78.3131774,
+              44.3075954
+            ],
+            [
+              -78.3135677,
+              44.3071535
+            ],
+            [
+              -78.3142644,
+              44.306018
+            ],
+            [
+              -78.3137075,
+              44.305924
+            ],
+            [
+              -78.3132841,
+              44.3066689
+            ],
+            [
+              -78.3130802,
+              44.3066219
+            ],
+            [
+              -78.3129394,
+              44.3066027
+            ],
+            [
+              -78.3127538,
+              44.3067232
+            ],
+            [
+              -78.3126381,
+              44.3067987
+            ]
+          ]
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "id": "context-way/628059320",
+      "properties": {
+        "sourceId": "way/628059320",
+        "role": "exact-existing-ground-context",
+        "tags": {
+          "leisure": "park",
+          "name": "James Stevenson Park",
+          "source": "CanVec 6.0 - NRCan"
+        },
+        "review": "James Stevenson Park at Hunter/Burnham shared boundary with Water/Hunter review. Preserve open context; north boundary differs from municipal32/50."
+      },
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [
+              -78.3142644,
+              44.306018
+            ],
+            [
+              -78.3144036,
+              44.3057781
+            ],
+            [
+              -78.3148564,
+              44.304907
+            ],
+            [
+              -78.3151129,
+              44.3041532
+            ],
+            [
+              -78.3151665,
+              44.3035337
+            ],
+            [
+              -78.3149405,
+              44.3031524
+            ],
+            [
+              -78.3143985,
+              44.3025583
+            ],
+            [
+              -78.3143006,
+              44.3026706
+            ],
+            [
+              -78.3141813,
+              44.3027511
+            ],
+            [
+              -78.3140294,
+              44.3028223
+            ],
+            [
+              -78.3138909,
+              44.3028137
+            ],
+            [
+              -78.3137524,
+              44.3027726
+            ],
+            [
+              -78.3137347,
+              44.3027685
+            ],
+            [
+              -78.3135536,
+              44.3028568
+            ],
+            [
+              -78.3131493,
+              44.3030098
+            ],
+            [
+              -78.3132691,
+              44.3033403
+            ],
+            [
+              -78.3131781,
+              44.3035661
+            ],
+            [
+              -78.3130759,
+              44.3038017
+            ],
+            [
+              -78.3130277,
+              44.3039128
+            ],
+            [
+              -78.3131433,
+              44.3039665
+            ],
+            [
+              -78.3132153,
+              44.3040611
+            ],
+            [
+              -78.3132086,
+              44.304215
+            ],
+            [
+              -78.3132016,
+              44.3043396
+            ],
+            [
+              -78.3131987,
+              44.3047396
+            ],
+            [
+              -78.3122057,
+              44.3047718
+            ],
+            [
+              -78.312248,
+              44.3056758
+            ],
+            [
+              -78.3122719,
+              44.3056892
+            ],
+            [
+              -78.3123117,
+              44.3057004
+            ],
+            [
+              -78.312354,
+              44.3056874
+            ],
+            [
+              -78.3127329,
+              44.3056238
+            ],
+            [
+              -78.3127879,
+              44.3057447
+            ],
+            [
+              -78.3128434,
+              44.3057683
+            ],
+            [
+              -78.312959,
+              44.3058176
+            ],
+            [
+              -78.313146,
+              44.3058293
+            ],
+            [
+              -78.3135706,
+              44.3059009
+            ],
+            [
+              -78.3137075,
+              44.305924
+            ],
+            [
+              -78.3142644,
+              44.306018
+            ]
+          ]
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "id": "context-way/1033243651",
+      "properties": {
+        "sourceId": "way/1033243651",
+        "role": "exact-existing-ground-context",
+        "tags": {
+          "area": "yes",
+          "highway": "pedestrian",
+          "surface": "concrete"
+        },
+        "review": "Exact mapped James Stevenson pedestrian apron at southwest Burnham/Hunter corner."
+      },
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [
+              -78.312475,
+              44.3055717
+            ],
+            [
+              -78.3124707,
+              44.3055893
+            ],
+            [
+              -78.312466,
+              44.3056039
+            ],
+            [
+              -78.3124318,
+              44.3056055
+            ],
+            [
+              -78.3123953,
+              44.3056147
+            ],
+            [
+              -78.3123607,
+              44.3056247
+            ],
+            [
+              -78.3123282,
+              44.305625
+            ],
+            [
+              -78.312294,
+              44.3056187
+            ],
+            [
+              -78.3122689,
+              44.305601
+            ],
+            [
+              -78.3122561,
+              44.3055801
+            ],
+            [
+              -78.3122538,
+              44.3055163
+            ],
+            [
+              -78.3122497,
+              44.305506
+            ],
+            [
+              -78.312268,
+              44.3054984
+            ],
+            [
+              -78.3122839,
+              44.3054925
+            ],
+            [
+              -78.3123101,
+              44.3055187
+            ],
+            [
+              -78.312353,
+              44.3055415
+            ],
+            [
+              -78.3124013,
+              44.305559
+            ],
+            [
+              -78.3124439,
+              44.3055691
+            ],
+            [
+              -78.312475,
+              44.3055717
+            ]
+          ]
+        ]
+      }
+    }
+  ],
+  "gardenPlacementReview": [
+    {
+      "candidate": "garden-marker",
+      "coordinateStatus": "old patch estimate, not measured photo location",
+      "lonLat": [
+        -78.311862,
+        44.30614
+      ],
+      "ellipseAxesMetres": null,
+      "roadSampledMinimumMetres": 11.708,
+      "roadNearestId": "11/3052",
+      "parkingSampledMinimumMetres": 5.77,
+      "parkingNearestId": "10/364",
+      "municipalSidewalkSampledMinimumMetres": 9.295,
+      "municipalSidewalkNearestId": "9/877",
+      "renderedFootwaySampledMinimumMetres": 6.902,
+      "renderedFootwayNearestId": "way/1015118616"
+    },
+    {
+      "candidate": "garden-bed1",
+      "coordinateStatus": "old patch estimate, not measured photo location",
+      "lonLat": [
+        -78.311881,
+        44.306092
+      ],
+      "ellipseAxesMetres": [
+        2.9,
+        2.5
+      ],
+      "roadSampledMinimumMetres": 9.204,
+      "roadNearestId": "11/333",
+      "parkingSampledMinimumMetres": 0,
+      "parkingNearestId": "10/364",
+      "municipalSidewalkSampledMinimumMetres": 6.911,
+      "municipalSidewalkNearestId": "9/760",
+      "renderedFootwaySampledMinimumMetres": 1.039,
+      "renderedFootwayNearestId": "way/1015118616"
+    },
+    {
+      "candidate": "garden-bed2",
+      "coordinateStatus": "old patch estimate, not measured photo location",
+      "lonLat": [
+        -78.311842,
+        44.306117
+      ],
+      "ellipseAxesMetres": [
+        4,
+        2.4
+      ],
+      "roadSampledMinimumMetres": 7.087,
+      "roadNearestId": "11/3052",
+      "parkingSampledMinimumMetres": 2.6,
+      "parkingNearestId": "10/364",
+      "municipalSidewalkSampledMinimumMetres": 4.682,
+      "municipalSidewalkNearestId": "9/877",
+      "renderedFootwaySampledMinimumMetres": 0.792,
+      "renderedFootwayNearestId": "way/1015118616"
+    },
+    {
+      "candidate": "cricket-evergreen1",
+      "coordinateStatus": "old patch estimate, not measured photo location",
+      "lonLat": [
+        -78.311881,
+        44.306908
+      ],
+      "ellipseAxesMetres": null,
+      "roadSampledMinimumMetres": 4.212,
+      "roadNearestId": "11/3052",
+      "parkingSampledMinimumMetres": 13.808,
+      "parkingNearestId": "10/339",
+      "municipalSidewalkSampledMinimumMetres": 2.695,
+      "municipalSidewalkNearestId": "9/879",
+      "renderedFootwaySampledMinimumMetres": 2.696,
+      "renderedFootwayNearestId": "35/4509"
+    },
+    {
+      "candidate": "cricket-evergreen2",
+      "coordinateStatus": "old patch estimate, not measured photo location",
+      "lonLat": [
+        -78.311866,
+        44.30692
+      ],
+      "ellipseAxesMetres": null,
+      "roadSampledMinimumMetres": 5.18,
+      "roadNearestId": "11/2466",
+      "parkingSampledMinimumMetres": 14.969,
+      "parkingNearestId": "10/339",
+      "municipalSidewalkSampledMinimumMetres": 3.656,
+      "municipalSidewalkNearestId": "9/334",
+      "renderedFootwaySampledMinimumMetres": 2.951,
+      "renderedFootwayNearestId": "35/731"
+    }
+  ],
+  "globalLimits": [
+    "All appearance colors, dimensions, heights, window fractions, porch/roof reconstruction are visual estimates. Source-ring decimals are map precision only.",
+    "No source geometry, source IDs, collision or bespoke profiles are modified by this audit.",
+    "Do not infer physical addresses from unreadable door numerals; civic parcel association is separate evidence.",
+    "No rendered-game QA is claimed.",
+    "Current generic business directory already supplies Kawartha/Circle K/Shell names; avoid duplicate signs.",
+    "Shell canopy555868063 is tagged building=retail, so current open-sided-roof predicate does not select it; an appearance-only facade record does not create its observed open underside."
+  ]
+}

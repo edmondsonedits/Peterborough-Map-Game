@@ -55,19 +55,15 @@ jobs:
       matrix:
         profile: [balanced, lite]
         capture:
-          - { variant: current, cohort: chemong-north }
-          - { variant: current, cohort: chemong-south }
-          - { variant: current, cohort: reid-controls }
-          - { variant: current, cohort: sherbrooke }
-          - { variant: current, cohort: water-hunter }
-          - { variant: baseline, cohort: chemong-north }
-          - { variant: baseline, cohort: chemong-south }
-          - { variant: baseline, cohort: reid-controls }
-          - { variant: baseline, cohort: sherbrooke }
-          - { variant: baseline, cohort: water-hunter }
-          - { variant: procedural, cohort: procedural-controls }
+          - { variant: current, cohort: east-north }
+          - { variant: current, cohort: east-south }
+          - { variant: current, cohort: regression }
+          - { variant: baseline, cohort: east-north }
+          - { variant: baseline, cohort: east-south }
+          - { variant: baseline, cohort: regression }
     env:
-      VISUAL_REFRESH_BASELINE: 4da1b86bad3f14b27abb05392c44e5c38fc6bef7
+      VISUAL_REFRESH_BASELINE: f7d96109db18058c425a767976899a5f34a5f55c
+      PTBO_CAPTURE_PLAN: route-205
       PTBO_QA_ARTIFACT_DIR: artifacts/visual-refresh
       PTBO_CAPTURE_COHORT: ${{ matrix.capture.cohort }}
     steps:
@@ -116,10 +112,9 @@ jobs:
         timeout-minutes: 30
         env:
           CAPTURE_VARIANT: ${{ matrix.capture.variant }}
-          PTBO_CAPTURE_DRIVER: ${{ matrix.capture.variant == 'baseline' && '0' || '1' }}
-          PTBO_CAPTURE_DRIVE_SMOKE: ${{ matrix.capture.variant == 'current' && matrix.capture.cohort == 'chemong-south' && '1' || '0' }}
-          PTBO_CAPTURE_GROUND_STREAM: ${{ matrix.capture.variant == 'current' && matrix.capture.cohort == 'chemong-north' && '1' || '0' }}
-          PTBO_CAPTURE_QUERY: ${{ matrix.capture.variant == 'procedural' && 'wallMaterials=procedural' || '' }}
+          PTBO_CAPTURE_DRIVER: '1'
+          PTBO_CAPTURE_DRIVE_SMOKE: ${{ matrix.capture.variant == 'current' && matrix.capture.cohort == 'regression' && '1' || '0' }}
+          PTBO_CAPTURE_GROUND_STREAM: ${{ matrix.capture.variant == 'current' && matrix.capture.cohort == 'regression' && '1' || '0' }}
         run: node tools/capture-visual-refresh.cjs http://127.0.0.1:4174 "$CAPTURE_VARIANT" ${{ matrix.profile }}
       - name: Stop capture server
         if: always()
@@ -158,7 +153,8 @@ jobs:
       - name: Match camera transforms and write the comparison index
         env:
           PTBO_QA_ARTIFACT_DIR: artifacts/visual-refresh
-        run: node tools/capture-visual-refresh.cjs --compare baseline current procedural
+          PTBO_CAPTURE_PLAN: route-205
+        run: node tools/capture-visual-refresh.cjs --compare baseline current
       - name: Preserve the combined review index and evidence
         if: always()
         uses: actions/upload-artifact@v4

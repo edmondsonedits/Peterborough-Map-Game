@@ -3,14 +3,14 @@
 // Bounded, reproducible camera evidence. A successful run means actual scene
 // frames were captured; it deliberately does not claim a visual-quality pass.
 // Run against an untouched baseline and the current checkout with this same
-// harness. The baseline has raised fly cameras, not the newer cab QA hook.
+// harness. Each plan declares whether its frozen baseline supports cab views.
 const fs = require('node:fs');
 const path = require('node:path');
 const assert = require('node:assert/strict');
 const { createHash } = require('node:crypto');
 const { execFileSync } = require('node:child_process');
 
-const SOURCE_IDS = ['176908280','755556771','176908281','446343896','383393878','446339024','77717331','446339099','446343895','176910551','1002815290','446366842','1002815291','1002815295','1002815296','1002815324','446339087','1002680974','1002680975','1002680782','1005415712','1002680800','1006594206','1006575786','1006575766','1006594188','1006575767','1006594168','1006575755','755554888','1006243552','1006243558','1006243559','1006243553','1006243555','1006243541','1031042883'].map(id => `way/${id}`);
+const SOURCE_IDS = ['176908280','755556771','176908281','446343896','383393878','446339024','77717331','446339099','446343895','176910551','1002815290','446366842','1002815291','1002815295','1002815296','1002815324','446339087','1002680974','1002680975','1002680782','1005415712','1002680800','1006594206','1006575786','1006575766','1006594188','1006575767','1006594168','1006575755','755554888','1006243552','1006243558','1006243559','1006243553','1006243555','1006243541','1031042883','1015118634','755554027','755554019','1015118609','1015118646','1015118647','1015118648','1015118656','1015118657','1015118659','1015118660','1015118662','1015118649','1015118651'].map(id => `way/${id}`);
 const WALMART_FACILITY_ID = 'reconstruction-way-176908280';
 // Targets are mapped frontage midpoints from map-match-register.csv. Camera
 // positions are nearest points on the repository's named OSM road centerlines.
@@ -63,6 +63,22 @@ const SITES = [
   // are approximate points across the south parapet, not surveyed lamp bases.
   ['bridge-r253-west','Hunter bridge western lamps','12/73',44.3060142,-78.31605,44.3060742,-78.31605,180,6.7],
   ['bridge-r257-middle','Hunter bridge central lamps','12/73',44.3058924,-78.3148,44.3059524,-78.3148,180,6.7],
+  ['east-r262-1015118634-f0','Kawartha building on Hunter Street East','way/1015118634',44.30603935,-78.31242715,44.305813456667735,-78.31231559726204,340.537,26.67],
+  ['east-r265-755554027-f0','Tan building on Driscoll Terrace','way/755554027',44.3063443,-78.3113836,44.30627139964086,-78.31169717116182,72.002,26.26],
+  ['east-r265-755554027-f1','Tan building on Driscoll Terrace return','way/755554027',44.3065283,-78.31152635,44.306467757408086,-78.31178633039072,71.974,21.78],
+  ['east-r264-755554019-f0','Circle K on Hunter Street East','way/755554019',44.3058769,-78.3113994,44.306006216094104,-78.31145848474303,161.894,15.15],
+  ['east-r270-1015118609-f0','Pale house at Cricket and Driscoll','way/1015118609',44.306903,-78.31179535,44.30702202826866,-78.3118482722131,162.35,13.9],
+  ['east-r270-1015118609-f1','Pale house at Cricket and Driscoll return','way/1015118609',44.30684205,-78.3118557,44.30682198768867,-78.31194823962772,73.146,7.7],
+  ['east-r273-1015118646-f0','Red side wall at Cricket and Driscoll','way/1015118646',44.30711015,-78.31191765,44.30701578472078,-78.31187569341715,342.35,11.02],
+  ['east-r275-1015118647-f0','Red house with white gable, north Cricket','way/1015118647',44.30723845,-78.31156955,44.307099552071385,-78.31150779336134,342.35,16.23],
+  ['east-r276-1015118648-f0','Red hip-roof house, north Cricket','way/1015118648',44.30728195,-78.31147725,44.30712263485252,-78.31140641548077,342.35,18.61],
+  ['east-r274-1015118656-f0','Taupe hip-roof house, south Cricket','way/1015118656',44.30695275,-78.3115852,44.30707005217125,-78.31163735475764,162.35,13.7],
+  ['east-r274-1015118657-f0','Pale shuttered house porch, south Cricket','way/1015118657',44.30699485,-78.3114466,44.30710257920012,-78.31149449843413,162.35,12.58],
+  ['east-r296-1015118659-f0','Upper-balcony house, south Cricket','way/1015118659',44.30702105,-78.31129415,44.3071365081718,-78.3113454848807,162.35,13.49],
+  ['east-r277-1015118660-f0','Green-trimmed brick house, south Cricket','way/1015118660',44.30705225,-78.31114725,44.3071697492753,-78.31119949239381,162.35,13.73],
+  ['east-r277-1015118662-f0','Pale hip-roof house east of green gable','way/1015118662',44.3070879,-78.31100235,44.30720298594464,-78.31105351938149,162.35,13.44],
+  ['cricket-22-1015118649','22 Cricket Place corrected frontage','way/1015118649',44.3072964,-78.31131415,44.30715767,-78.31125256,342.362,16.21],
+  ['cricket-24-1015118651','24 Cricket Place corrected frontage','way/1015118651',44.3073328,-78.3111666,44.30719152,-78.31110388,342.362,16.5],
   // These camera positions lie inside municipal lot10/1429, outside all holes.
   // Their framing remains an estimate to inspect in the resulting PNGs.
   ['walmart-ground-h1','Walmart H1 northwest tree cap','10/1429',44.32352368,-78.33443304,44.323426,-78.33448,18.98,11.5],
@@ -73,15 +89,30 @@ const SITES = [
   ['sherbrooke','Sherbrooke blue-house control','way/1006575702',44.30062,-78.32122,44.30073974,-78.32122964,176.7,13.4],
 ].map(([id,name,sourceId,lat,lon,eyeLat,eyeLon,bearing,distance]) => ({
   id,name,sourceIds:[sourceId],target:{lat,lon},eye:{lat:eyeLat,lon:eyeLon,bearing},distance,
+  frontageIndex:/-f\d+$/.test(id)?Number(id.match(/-f(\d+)$/)[1]):undefined,
   locationBasis:id.includes('r014')?'approximate Walmart lot position':id.startsWith('walmart-ground-')?'mapped municipal parking footprint; estimated framing':'mapped road centerline',
 }));
-const COHORTS = ['chemong-north','chemong-south','reid-controls','sherbrooke','water-hunter'];
+const COHORTS = ['chemong-north','chemong-south','reid-controls','sherbrooke','water-hunter','east-north','east-south'];
 const PROCEDURAL_CONTROLS = ['chemong-r058-1002815291','generic-residential','generic-commercial','station-1','sherbrooke'];
+const CHANGED_POSES_205 = SITES.filter(site=>/^(?:east-|cricket-)/.test(site.id)).map(site=>site.id);
+const REGRESSION_POSES_205 = ['generic-residential','generic-commercial','station-1','sherbrooke','chemong-r026-176908281',
+  'chemong-r014-176908280','walmart-ground-h1','walmart-ground-rows','water-r231-1006243558'];
 for(const site of SITES){
   const chemongIndex=SITES.filter(item=>item.id.startsWith('chemong-')).findIndex(item=>item.id===site.id);
+  const changedIndex=CHANGED_POSES_205.indexOf(site.id);
   site.cohort=site.id.startsWith('walmart-ground-')?'chemong-north':chemongIndex>=0?(chemongIndex<8?'chemong-north':'chemong-south')
-    :site.id.startsWith('sherbrooke-r')?'sherbrooke':/^(?:water-|bridge-)/.test(site.id)?'water-hunter':'reid-controls';
+    :changedIndex>=0?(changedIndex<8?'east-north':'east-south'):site.id.startsWith('sherbrooke-r')?'sherbrooke':/^(?:water-|bridge-)/.test(site.id)?'water-hunter':'reid-controls';
 }
+function capturePlan(id=process.env.PTBO_CAPTURE_PLAN || 'full') {
+  assert.ok(['full','route-205'].includes(id),'Unknown capture plan');
+  if(id==='route-205')return {id,cohorts:{'east-north':CHANGED_POSES_205.slice(0,8),'east-south':CHANGED_POSES_205.slice(8),regression:REGRESSION_POSES_205},
+    baselineRevision:'f7d96109db18058c425a767976899a5f34a5f55c',baselineCab:true,materialControls:'prior-revision',
+    materialReference:{revision:'f7d96109db18058c425a767976899a5f34a5f55c',version:'1.6.204',runId:42855146899,
+      url:'https://github.com/edmondsonedits/Peterborough-Map-Game/actions/runs/42855146899',
+      status:'Separate prior-revision artifact review required; no fresh procedural A/B is claimed by this run.'}};
+  return {id,cohorts:Object.fromEntries(COHORTS.map(cohort=>[cohort,SITES.filter(site=>site.cohort===cohort).map(site=>site.id)])),baselineCab:false,materialControls:'fresh'};
+}
+const planSiteIds=plan=>Object.values(plan.cohorts).flat();
 
 const json = (file, value) => fs.writeFileSync(file, `${JSON.stringify(value,null,2)}\n`);
 const sha256 = buffer => createHash('sha256').update(buffer).digest('hex');
@@ -97,7 +128,7 @@ function validateConfiguration(sourceRoot=process.cwd()) {
   const covered=new Set(SITES.flatMap(site=>site.sourceIds));
   assert.ok(SOURCE_IDS.every(id=>covered.has(id)),'Every enabled route source needs a dedicated camera');
   const registryIds=[];
-  for(const name of ['landmark','corner','street','reid','sherbrooke','water']){
+  for(const name of ['landmark','corner','street','reid','sherbrooke','water','east-city']){
     const file=path.join(sourceRoot,`city-explorer/route-${name}-appearances.js`);
     if(fs.existsSync(file))for(const match of fs.readFileSync(file,'utf8').matchAll(/^  ['"](way\/\d+)['"]:\s*\{/gm))registryIds.push(match[1]);
   }
@@ -105,8 +136,30 @@ function validateConfiguration(sourceRoot=process.cwd()) {
   for(const site of SITES)assert.ok([site.target.lat,site.target.lon,site.eye.lat,site.eye.lon,site.eye.bearing,site.distance].every(Number.isFinite),`Invalid camera: ${site.id}`);
   assert.equal(COHORTS.flatMap(cohort=>SITES.filter(site=>site.cohort===cohort)).length,SITES.length,'Every site must have exactly one capture cohort');
   assert.ok(PROCEDURAL_CONTROLS.every(id=>SITES.some(site=>site.id===id)),'Missing procedural control');
+  assert.equal(CHANGED_POSES_205.length,16,'205 requires14 supplied East City faces plus two corrected Cricket poses');
+  for(const id of ['full','route-205']){
+    const ids=planSiteIds(capturePlan(id));assert.equal(new Set(ids).size,ids.length,`${id}: duplicate plan poses`);
+    assert.ok(ids.every(key=>SITES.some(site=>site.id===key)),`${id}: unknown plan pose`);
+  }
+  const plan=capturePlan();
   return {sites:SITES.length,routeSources:SOURCE_IDS.length,registrySources:new Set(registryIds).size,walmartRuntimeId:walmart.id,
-    cohorts:Object.fromEntries(COHORTS.map(cohort=>[cohort,SITES.filter(site=>site.cohort===cohort).length]))};
+    plan:plan.id,selectedSites:planSiteIds(plan).length,cohorts:Object.fromEntries(Object.entries(plan.cohorts).map(([name,ids])=>[name,ids.length]))};
+}
+
+function materialReuseProof(plan) {
+  const files=['city-explorer/station2-neighborhood-facades.mjs','city-explorer/city-material-library.js','city-explorer/vertical-slice-quality.js',
+    'city-explorer/assets/shared-wall-materials/manifest.json','city-explorer/assets/shared-wall-materials/Bricks101_1K-JPG_Color.jpg',
+    'city-explorer/assets/shared-wall-materials/Concrete034_1K-JPG_Color.jpg'];
+  const normalized=(file,data)=>/\.(?:mjs|js)$/.test(file)?data.toString('utf8').replace(/\?v=\d+\.\d+\.\d+/g,'?v=BUILD'):data;
+  const proof=files.map(file=>{
+    const before=execFileSync('git',['show',`${plan.baselineRevision}:${file}`],{maxBuffer:8*1024*1024});
+    const current=fs.readFileSync(path.join(process.cwd(),file));
+    const beforeHash=sha256(normalized(file,before)),currentHash=sha256(normalized(file,current));
+    return {file,beforeSha256:beforeHash,currentSha256:currentHash,unchanged:beforeHash===currentHash,
+      normalization:/\.(?:mjs|js)$/.test(file)?'Version query strings only':'None'};
+  });
+  assert.ok(proof.every(item=>item.unchanged),'Shared wall source/shader changed: prior-revision material A/B cannot be reused');
+  return {...plan.materialReference,files:proof,scope:'Material implementation/source hashes, not a claim that scene visibility or draw cost is unchanged.'};
 }
 
 function sourceIdentity(sourceRoot) {
@@ -230,7 +283,7 @@ async function waitForWalmartGround(page) {
   return page.evaluate(()=>globalThis.__PTBO_CITY_QA__.metrics().routeGround);
 }
 
-async function auditRenderedSigns(page) {
+async function auditRenderedSigns(page,requiredSourceIds=SOURCE_IDS) {
   return page.evaluate(required=>{
     const qa=globalThis.__PTBO_CITY_QA__,footage=qa.metrics().footage;
     const normalized=value=>String(value||'').toLowerCase().replace(/[^a-z0-9]/g,'');
@@ -244,7 +297,7 @@ async function auditRenderedSigns(page) {
       unsettledPhotos:footage.filter(front=>required.includes(front.sourceId) && [front.photoStatus,front.facadePhotoStatus].includes('loading')),
       failedPhotos:footage.filter(front=>required.includes(front.sourceId) && [front.photoStatus,front.facadePhotoStatus].includes('failed')),
       meaning:'Created signage after photo readiness, not proof that lettering is unoccluded/readable in every image.'};
-  },SOURCE_IDS.filter(id=>id!=='way/176908280'));
+  },requiredSourceIds.filter(id=>id!=='way/176908280'));
 }
 
 async function imagePixels(page, png) {
@@ -387,26 +440,31 @@ async function groundStreamSmoke(page,out) {
 async function run(base,label,profile) {
   assert.ok(['balanced','lite'].includes(profile),'Profile must be balanced or lite');
   assert.match(label,/^[a-zA-Z0-9_-]+$/,'Artifact label must be a plain filename');
+  const plan=capturePlan(),expectedSiteIds=planSiteIds(plan);
   const cohort=process.env.PTBO_CAPTURE_COHORT;
-  if(cohort)assert.ok([...COHORTS,'procedural-controls'].includes(cohort),'Unknown capture cohort');
+  if(cohort)assert.ok([...Object.keys(plan.cohorts),...(plan.materialControls==='fresh'?['procedural-controls']:[])].includes(cohort),'Unknown capture cohort for this plan');
   const selected = process.env.PTBO_CAPTURE_SITES?.split(',').filter(Boolean);
   assert.ok(!cohort || !selected,'Choose a cohort or explicit sites, not both');
   const sites = selected?SITES.filter(site=>selected.includes(site.id)):cohort==='procedural-controls'?SITES.filter(site=>PROCEDURAL_CONTROLS.includes(site.id))
-    :cohort?SITES.filter(site=>site.cohort===cohort):SITES;
+    :SITES.filter(site=>(cohort?plan.cohorts[cohort]:expectedSiteIds).includes(site.id));
   assert.ok(sites.length>0,'No capture sites selected');
   if(selected)assert.equal(sites.length,new Set(selected).size,'Unknown or duplicate selected site');
   const cab = process.env.PTBO_CAPTURE_DRIVER !== '0';
   const out=path.join(root,label,profile,...(cohort?[cohort]:[]));fs.mkdirSync(out,{recursive:true});
   const identity=sourceIdentity(path.resolve(process.env.PTBO_QA_SOURCE_ROOT || '.'));
-  const report={schemaVersion:2,status:'running',capturedAt:new Date().toISOString(),base,label,profile,cohort,identity,
+  const report={schemaVersion:3,status:'running',capturedAt:new Date().toISOString(),base,label,profile,cohort,identity,capturePlan:plan,
     viewport:{width:1280,height:800},requestedSites:sites,requiredSourceIds:SOURCE_IDS,
     coverageSemantics:'One dedicated measured-height fly camera for each enabled profile; only actual gameplay cab views prove driver-seat framing. Actual target visibility/occlusion must be inspected in the PNGs.',
-    limitations:['Fly views obey the runtime minimum clearance (5 metres in the baseline), even when 2.5 metres is requested. They are raised fly views, not driver-height proof.','Baseline lacks QA truck placement, so its cab images are intentionally absent.',
+    limitations:['Fly views obey the runtime minimum clearance (5 metres in the baseline), even when 2.5 metres is requested. They are raised fly views, not driver-height proof.',
+      plan.baselineCab?'Before and current variants support actual cab placement; matched cab transforms are checked in the comparison.':'Baseline lacks QA truck placement, so its cab images are intentionally absent.',
+      plan.materialControls==='prior-revision'?'This targeted run reuses separately identified prior-revision material A/B; it contains no new procedural-wall control captures.':'Same-head source/procedural material controls are required.',
       'Stationary cab viewpoints face frontages; these are not a replay of the reference drive.','Browser automation is not physical-phone certification.','Timing samples are rAF wall intervals, not measured GPU execution time.'],
     errors:{page:[],console:[],failedRequests:[],http:[]},views:[]};
   json(path.join(out,'report.json'),report);
   let browser,page;
   try{
+    if(label==='baseline' && plan.baselineRevision)assert.equal(identity.revision,plan.baselineRevision,'Targeted baseline must be the frozen reviewed checkpoint');
+    if(plan.materialControls==='prior-revision')report.materialEvidence=materialReuseProof(plan);
     const {chromium}=require('playwright');
     browser=await chromium.launch({headless:true,...(process.env.BROWSER_EXECUTABLE?{executablePath:process.env.BROWSER_EXECUTABLE}:{}),
       args:process.platform==='win32'?['--use-angle=d3d11']:[]});
@@ -449,7 +507,7 @@ async function run(base,label,profile) {
     if(process.env.PTBO_CAPTURE_GROUND_STREAM==='1')report.groundStreamSmoke=await groundStreamSmoke(page,out);
     report.final=await snapshot(page);
     if(cab){
-      report.signage=await auditRenderedSigns(page);
+      report.signage=await auditRenderedSigns(page,label==='baseline'?[]:SOURCE_IDS);
       assert.equal(report.signage.unmatchedClaims.length,0,`Directory names suppressed without matching created sign: ${JSON.stringify(report.signage.unmatchedClaims)}`);
       assert.equal(report.signage.missingRouteFrontages.length,0,`Essential route fronts absent: ${report.signage.missingRouteFrontages.join(', ')}`);
       assert.equal(report.signage.unsettledPhotos.length,0,'Route frontage photo readiness still pending');
@@ -466,7 +524,9 @@ async function run(base,label,profile) {
     assert.equal(report.errors.criticalRequests.length,0,JSON.stringify(report.errors.criticalRequests));
     assert.equal(report.errors.http.length,0,JSON.stringify(report.errors.http));
     const covered=new Set(report.views.filter(view=>view.kind==='eye').flatMap(view=>view.site.sourceIds));
-    report.requestedCoverage={capturedSourceIds:[...covered],missingEnabledSourceIds:SOURCE_IDS.filter(id=>!covered.has(id)),partialSelection:Boolean(selected || cohort)};
+    const planSources=[...new Set(SITES.filter(site=>expectedSiteIds.includes(site.id)).flatMap(site=>site.sourceIds))];
+    report.requestedCoverage={capturedSourceIds:[...covered],missingPlanSourceIds:planSources.filter(id=>!covered.has(id)),partialSelection:Boolean(selected || cohort),
+      retainedPriorEvidence:plan.id==='route-205'?'Unchanged204 cameras outside this targeted plan retain their204 source attribution and are not claimed as fresh205 captures.':null};
     const required=sites.flatMap(site=>site.sourceIds);
     assert.ok(required.every(id=>covered.has(id)),'A selected source lacks a dedicated raised-fly view');
     if(cab){const drivers=new Set(report.views.filter(view=>view.kind==='cab').flatMap(view=>view.site.sourceIds));
@@ -502,16 +562,19 @@ function readVariant(label,profile) {
   if(!parts.length)return null;
   const identity=parts[0].identity;
   assert.ok(parts.every(part=>part.identity.revision===identity.revision && part.identity.sourceHash===identity.sourceHash),'A variant mixes different source revisions');
+  assert.ok(parts.every(part=>part.capturePlan?.id===parts[0].capturePlan?.id),'A variant mixes capture plans');
   const views=parts.flatMap(part=>part.views);
   assert.equal(new Set(views.map(view=>view.key)).size,views.length,'Duplicate camera key across capture cohorts');
-  return {label,profile,identity,parts:parts.map(part=>({cohort:part.cohort,status:part.status,viewCount:part.views.length,failure:part.failure?.message})),
+  return {label,profile,identity,capturePlan:parts[0].capturePlan,materialEvidence:parts[0].materialEvidence,
+    parts:parts.map(part=>({cohort:part.cohort,status:part.status,viewCount:part.views.length,failure:part.failure?.message})),
     status:parts.every(part=>part.status==='captured-awaiting-visual-review')?'captured-awaiting-visual-review':'incomplete-or-failed',views};
 }
 
 function compare(labels) {
-  assert.equal(labels.length,3,'Provide baseline, current and procedural artifact labels');
+  const plan=capturePlan(),expectedSiteIds=planSiteIds(plan),expectedSites=SITES.filter(site=>expectedSiteIds.includes(site.id));
+  assert.equal(labels.length,plan.materialControls==='fresh'?3:2,'Provide the artifact labels required by this capture plan');
   const escape=value=>String(value).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
-  const rows=[];const comparison={labels,profiles:{},visualReview:'pending'};
+  const rows=[];const comparison={labels,capturePlan:plan,profiles:{},visualReview:'pending'};
   for(const profile of ['balanced','lite']){
     const reports=labels.map(label=>readVariant(label,profile));
     if(!reports.some(Boolean))continue;
@@ -534,14 +597,17 @@ function compare(labels) {
         triangles:{before:before.state.metrics.triangles,after:after.state.metrics.triangles},
         medianRafMs:{before:before.performance.medianFrameMs,after:after.performance.medianFrameMs}});
     }
-    const requiredStaticKeys=SITES.flatMap(site=>['eye','oblique'].map(kind=>`${site.id}-${kind}`));
+    const requiredStaticKeys=expectedSites.flatMap(site=>['eye','oblique',...(plan.baselineCab?['cab']:[])].map(kind=>`${site.id}-${kind}`));
     const currentCabSources=new Set(reports[1]?.views.filter(view=>view.kind==='cab').flatMap(view=>view.site.sourceIds));
     comparison.profiles[profile]={variants:reports.map(report=>report?{label:report.label,status:report.status,revision:report.identity.revision,viewCount:report.views.length,parts:report.parts}:null),pairs,
+      capturePlansMatch:reports.every(report=>report?.capturePlan?.id===plan.id),
+      baselineRevisionMatches:!plan.baselineRevision || reports[0]?.identity.revision===plan.baselineRevision,
       missingStaticPairs:requiredStaticKeys.filter(key=>!pairs.some(pair=>pair.key===key)),
-      missingCurrentCabKeys:SITES.map(site=>`${site.id}-cab`).filter(key=>!reports[1]?.views.some(view=>view.key===key)),
-      missingCurrentCabSources:[...new Set(SITES.flatMap(site=>site.sourceIds))].filter(id=>!currentCabSources.has(id)),
-      missingProceduralKeys:PROCEDURAL_CONTROLS.flatMap(id=>['eye','oblique','cab'].map(kind=>`${id}-${kind}`))
-        .filter(key=>!reports[2]?.views.some(view=>view.key===key)),
+      missingCurrentCabKeys:expectedSites.map(site=>`${site.id}-cab`).filter(key=>!reports[1]?.views.some(view=>view.key===key)),
+      missingCurrentCabSources:[...new Set(expectedSites.flatMap(site=>site.sourceIds))].filter(id=>!currentCabSources.has(id)),
+      missingProceduralKeys:plan.materialControls==='fresh'?PROCEDURAL_CONTROLS.flatMap(id=>['eye','oblique','cab'].map(kind=>`${id}-${kind}`))
+        .filter(key=>!reports[2]?.views.some(view=>view.key===key)):[],
+      materialEvidence:plan.materialControls==='prior-revision'?reports.map(report=>report?.materialEvidence):undefined,
       unmatchedCameras:pairs.filter(pair=>!pair.camerasMatch).map(pair=>pair.key)};
     const keys=[...new Set(reports.flatMap(report=>report?.views.map(view=>view.key)||[]))];
     rows.push(`<h2>${escape(profile)}</h2>`);
@@ -554,7 +620,10 @@ function compare(labels) {
     }
   }
   fs.mkdirSync(root,{recursive:true});
-  fs.writeFileSync(path.join(root,'comparison.html'),`<!doctype html><meta charset="utf-8"><title>Visual refresh capture evidence</title><style>body{font:15px system-ui;background:#12161d;color:#eef2f6;margin:24px}a{color:#a8d5ff}.row{display:grid;grid-template-columns:repeat(${labels.length},minmax(0,1fr));gap:16px}img{width:100%;display:block}section{border-top:1px solid #52606e;padding:16px 0}h3{font-size:15px}p{line-height:1.5}@media(max-width:900px){.row{grid-template-columns:1fr}}</style><h1>Visual refresh camera evidence</h1><p>Actual browser render captures, awaiting visual review. Baseline raised-fly/oblique cameras are matched; fly cameras obey the runtime minimum clearance and do not prove driver-seat framing. Baseline has no cab-placement API. Procedural is the same current code with wallMaterials=procedural. Source and measured camera receipts accompany every image. rAF intervals are not GPU timings; narrow or Lite rendering is not physical-phone testing.</p>${rows.join('\n')}`);
+  const scope=plan.baselineCab?'Matched before/current raised-fly, oblique and actual cab cameras.':'Matched raised-fly and oblique cameras; this baseline has no cab-placement API.';
+  const materialScope=plan.materialControls==='fresh'?'Procedural is the same current code with wallMaterials=procedural.':
+    `No new procedural A/B was captured. Material implementation/source hashes are checked against <a href="${plan.materialReference.url}">v${plan.materialReference.version} material evidence</a>; that separate evidence still requires its own artifact review. Unchanged views outside this targeted plan remain attributed to their earlier revision.`;
+  fs.writeFileSync(path.join(root,'comparison.html'),`<!doctype html><meta charset="utf-8"><title>Visual refresh capture evidence</title><style>body{font:15px system-ui;background:#12161d;color:#eef2f6;margin:24px}a{color:#a8d5ff}.row{display:grid;grid-template-columns:repeat(${labels.length},minmax(0,1fr));gap:16px}img{width:100%;display:block}section{border-top:1px solid #52606e;padding:16px 0}h3{font-size:15px}p{line-height:1.5}@media(max-width:900px){.row{grid-template-columns:1fr}}</style><h1>Visual refresh camera evidence</h1><p>Actual browser render captures, awaiting visual review. ${scope} Fly cameras obey the runtime minimum clearance and do not prove driver-seat framing. ${materialScope} Source and measured camera receipts accompany every image. rAF intervals are not GPU timings; narrow or Lite rendering is not physical-phone testing.</p>${rows.join('\n')}`);
   json(path.join(root,'comparison.json'),comparison);
   for(const [profile,result]of Object.entries(comparison.profiles)){
     assert.equal(result.missingStaticPairs.length,0,`${profile}: missing baseline/current static camera pairs`);
@@ -563,6 +632,9 @@ function compare(labels) {
     assert.equal(result.missingProceduralKeys.length,0,`${profile}: missing matched procedural-wall controls`);
     assert.equal(result.unmatchedCameras.length,0,`${profile}: before/after cameras do not match`);
     assert.ok(result.variants.every(variant=>variant?.status==='captured-awaiting-visual-review'),`${profile}: a capture variant failed or is incomplete`);
+    assert.equal(result.capturePlansMatch,true,`${profile}: evidence came from a different capture plan`);
+    assert.equal(result.baselineRevisionMatches,true,`${profile}: evidence used the wrong baseline revision`);
+    if(plan.materialControls==='prior-revision')assert.ok(result.materialEvidence.every(proof=>proof?.files.length===6 && proof.files.every(file=>file.unchanged)),`${profile}: reused material evidence lacks matching implementation/source hashes`);
   }
   assert.deepEqual(Object.keys(comparison.profiles).sort(),['balanced','lite'],'Both graphics profiles require render evidence');
 }
@@ -570,7 +642,7 @@ function compare(labels) {
 if(require.main===module){
   const [first='http://127.0.0.1:4174',label='current',profile='balanced',...rest]=process.argv.slice(2);
   if(first==='--validate-config')console.log(JSON.stringify(validateConfiguration()));
-  else if(first==='--describe')console.log(JSON.stringify({sites:SITES,sourceIds:SOURCE_IDS,cohorts:COHORTS,proceduralControls:PROCEDURAL_CONTROLS,views:['eye','oblique','cab']},null,2));
+  else if(first==='--describe')console.log(JSON.stringify({sites:SITES,sourceIds:SOURCE_IDS,capturePlan:capturePlan(),cohorts:COHORTS,proceduralControls:PROCEDURAL_CONTROLS,views:['eye','oblique','cab']},null,2));
   else if(first==='--compare')compare([label,profile,...rest]);
   else run(first,label,profile).catch(error=>{console.error(error);process.exitCode=1;});
 }

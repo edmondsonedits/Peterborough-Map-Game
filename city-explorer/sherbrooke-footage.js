@@ -1,5 +1,5 @@
-import { glazingIntensity } from './city-visual-settings.js?v=1.6.204';
-import { createRecordedEnclosedBays } from './recorded-enclosed-bays.js?v=1.6.204';
+import { glazingIntensity } from './city-visual-settings.js?v=1.6.205';
+import { createRecordedEnclosedBays } from './recorded-enclosed-bays.js?v=1.6.205';
 // Ground-level frontage details for the existing Sherbrooke building masses.
 // These objects add neither walls/roofs nor collision geometry.
 const clamp = (v, lo, hi) => Math.max(lo, Math.min(hi, v));

@@ -1,11 +1,12 @@
-// Active photo route: Walmart lot → Chemong → Reid → Sherbrooke → Water/Hunter.
+// Active photo route: Walmart lot → Chemong → Reid → Sherbrooke → Water/Hunter → East City.
 // Observations are from the supplied October 18, 2026 drive; numeric dimensions are estimates.
 // Unresolved matches and open-canopy records remain absent.
-import {ROUTE_CORNER_APPEARANCES} from './route-corner-appearances.js?v=1.6.204';
-import {ROUTE_STREET_APPEARANCES} from './route-street-appearances.js?v=1.6.204';
-import {ROUTE_REID_APPEARANCES} from './route-reid-appearances.js?v=1.6.204';
-import {ROUTE_SHERBROOKE_APPEARANCES} from './route-sherbrooke-appearances.js?v=1.6.204';
-import {ROUTE_WATER_APPEARANCES} from './route-water-appearances.js?v=1.6.204';
+import {ROUTE_CORNER_APPEARANCES} from './route-corner-appearances.js?v=1.6.205';
+import {ROUTE_STREET_APPEARANCES} from './route-street-appearances.js?v=1.6.205';
+import {ROUTE_REID_APPEARANCES} from './route-reid-appearances.js?v=1.6.205';
+import {ROUTE_SHERBROOKE_APPEARANCES} from './route-sherbrooke-appearances.js?v=1.6.205';
+import {ROUTE_WATER_APPEARANCES} from './route-water-appearances.js?v=1.6.205';
+import {ROUTE_EAST_CITY_APPEARANCES} from './route-east-city-appearances.js?v=1.6.205';
 
 export const ROUTE_LANDMARK_APPEARANCES = {
   "way/755556771": {
@@ -267,7 +268,7 @@ export const ROUTE_LANDMARK_APPEARANCES = {
 export function addRouteLandmarkAppearances(base, enabled = true) {
   if (!enabled) return base;
   const result = {...base};
-  for (const records of [ROUTE_LANDMARK_APPEARANCES, ROUTE_CORNER_APPEARANCES, ROUTE_STREET_APPEARANCES, ROUTE_REID_APPEARANCES, ROUTE_SHERBROOKE_APPEARANCES, ROUTE_WATER_APPEARANCES]) {
+  for (const records of [ROUTE_LANDMARK_APPEARANCES, ROUTE_CORNER_APPEARANCES, ROUTE_STREET_APPEARANCES, ROUTE_REID_APPEARANCES, ROUTE_SHERBROOKE_APPEARANCES, ROUTE_WATER_APPEARANCES, ROUTE_EAST_CITY_APPEARANCES]) {
     for (const [id, {appearance, profile}] of Object.entries(records)) {
       if (result[id]) result[id] = {...result[id], ...appearance, reviewedWallMaterial: true};
       else if (profile) result[id] = {...profile, ...appearance, id, appearanceOnly: true, preserveMappedMassing: true, reviewedWallMaterial: true};
