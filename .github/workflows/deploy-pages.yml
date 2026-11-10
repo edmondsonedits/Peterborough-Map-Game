@@ -56,6 +56,11 @@ jobs:
           npm ci --prefix city-explorer/multiplayer/server --ignore-scripts --no-audit
           node --test tests/multiplayer-*.test.mjs tests/road-gzip-normalization.test.mjs
 
+      - name: Check lifecycle inventory, account ownership and restored HUD
+        run: |
+          node tools/check-state-inventory.mjs
+          node --test tests/feedback-account-lifecycle.test.mjs tests/driving-ui.test.cjs tests/driving-ui-lifecycle.test.cjs
+
       - name: Check gameplay regressions
         run: |
           node --test tests/feedback-location-corrections.test.cjs tests/dispatch-catalog-migration.test.cjs tests/dispatch-arrival-access.test.cjs tests/route-practice.test.cjs

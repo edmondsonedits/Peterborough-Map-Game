@@ -1,5 +1,5 @@
-import {decodeRoadTile,PackedRoadSurfaceIndex} from './road-tile-pack.js?v=1.6.201';
-import {RoadTileStream} from './road-tile-stream.js?v=1.6.201';
+import {decodeRoadTile,PackedRoadSurfaceIndex} from './road-tile-pack.js?v=1.6.202';
+import {RoadTileStream} from './road-tile-stream.js?v=1.6.202';
 /** One owner for resident road geometry, contact and resource lifetime. */
 export function createRoadTileLayer({THREE,parent,materials,manifest,baseUrl,load=fetch,
   materialFactory=material=>material.clone(),onRanges=()=>{},onReleaseRanges=()=>{},onError=()=>{},radius=1000,retainRadius=1500}) {
