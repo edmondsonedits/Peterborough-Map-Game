@@ -5,7 +5,7 @@ import vm from 'node:vm';
 import * as THREE from '../city-explorer/vendor/three-r180/build/three.module.min.js';
 import * as wall from '../city-explorer/station2-neighborhood-facades.mjs';
 import * as city from '../city-explorer/citywide-building-facades.mjs';
-import {buildStation2NeighborhoodGableRoof} from '../city-explorer/station2-neighborhood-roofs.mjs';
+import {buildStation2NeighborhoodGableRoof,resolveRecordedRoofHeights,buildRecordedFrontRoof} from '../city-explorer/station2-neighborhood-roofs.mjs';
 import {mappedBuildingDimensions} from '../city-explorer/mapped-building-dimensions.js';
 import {captureBatchLengths,collectBatchRanges} from '../city-explorer/editor/feature-batch-binding.js';
 import {stableHash,deterministicNumber,pointInPolygon} from '../city-explorer/feature-utils.js';
@@ -15,7 +15,7 @@ import {applyReviewedPhotoAppearance} from '../city-explorer/reviewed-photo-appe
 // Execute the real app assembly functions without starting its browser/UI.
 // Terrain, bookkeeping, and separate facade-detail generation are controlled;
 // material selection, dimensions, roof inference, buffers, and gables stay real.
-function appHarness({profiles={},mode='source'}={}) {
+function appHarness({profiles={},mode='source',project=(lat,lon)=>new THREE.Vector2(lon,lat)}={}) {
   const app=readFileSync(new URL('../city-explorer/app.js',import.meta.url),'utf8');
   const names=['buildingDimensions','buildingMaterialKey','roofMaterialKey','cleanRing','polygonCentroid',
     'renderTileCoordinates','batchPositions','batchRecord','appendUvQuad','appendTriangle','appendQuad',
@@ -29,13 +29,13 @@ function appHarness({profiles={},mode='source'}={}) {
     return app.slice(start,end+2);
   };
   const noop=()=>{};
-  const context={THREE,...wall,...city,buildStation2NeighborhoodGableRoof,mappedBuildingDimensions,
+  const context={THREE,...wall,...city,buildStation2NeighborhoodGableRoof,resolveRecordedRoofHeights,buildRecordedFrontRoof,mappedBuildingDimensions,
     stableHash,deterministicNumber,pointInPolygon,captureBatchLengths,applyReviewedPhotoAppearance,
     FOOTAGE_PROFILES:profiles,REVIEWED_BUILDING_STYLES:{},LANDMARK_BUILDING_HEIGHT_OVERRIDES:{},
     wallSourceMode:mode,stationThreeAssetReady:false,STATION2_FACADES_ENABLED:false,CITY_FACADES_MODE:'all',
     graphicsQuality:{name:'balanced',optionalScenery:true},cityVisuals:{mode:'improved'},
     CITY:{worldBounds:{minX:-10000,minZ:-10000}},RENDER_TILE_SIZE:1000,
-    terrainHeightAtWorld:()=>0,project:(lat,lon)=>new THREE.Vector2(lon,lat),unproject:(x,y)=>({lon:x,lat:y}),
+    terrainHeightAtWorld:()=>0,project,unproject:(x,y)=>({lon:x,lat:y}),
     beginCityFacadePart:()=>({}),excludeCityFacadePart:noop,markCityFacadeEligible:noop,
     coverCityFacadePart:noop,recordCityFacadeOpenings:noop,cityRoadCandidatesForRing:()=>[],
     station2PilotRoadSegments:[],batchSetId:()=>1,namespacedRanges:(batches,starts)=>collectBatchRanges(batches,starts),
@@ -125,5 +125,33 @@ test('source and procedural modes retain reviewed precedence while unknown gener
     assert.ok(unknown.byMaterial.get('station2-wall-brick')?.positions.length);
     const tagged=build(appHarness({mode}),'generic',{building:'house','building:colour':'red','building:material':'plaster',height:'5','roof:height':'0'});
     assert.ok(tagged.byMaterial.get(mode==='source'?'station2-wall-render':'station2-wall-brick')?.positions.length);
+  }
+});
+
+test('actual recorded Chemong roofs integrate as one complete bounded roof with source top preserved',()=>{
+  const osm=JSON.parse(readFileSync(new URL('../city-explorer/data/peterborough-osm.json',import.meta.url),'utf8'));
+  const profiles=addRouteLandmarkAppearances({});
+  const project=(lat,lon)=>new THREE.Vector2((lon+78.3197)*111320*Math.cos(44.3091*Math.PI/180),-(lat-44.3091)*111320);
+  for(const id of ['way/1002815290','way/446339099']) {
+    const source=osm.elements.find(element=>`way/${element.id}`===id);
+    const dimensions=mappedBuildingDimensions(source.tags,id);
+    const context=appHarness({profiles,project});
+    const ring=source.geometry.map(point=>project(point.lat,point.lon).toArray());
+    const result=build(context,id,source.tags,ring);
+    assert.equal(context.cityAppearanceStats.details.recordedRoofs,1,`${id} uses the integrated opt-in builder`);
+    const roof=result.byMaterial.get(`footage-roof-${id}`).positions;
+    assert.ok(roof.length>0);
+    const ys=roof.filter((_,index)=>index%3===1);
+    assert.ok(Math.abs(Math.max(...ys)-dimensions.height-dimensions.roofHeight)<1e-5,'maximum source top is retained');
+    const xs=ring.map(point=>point[0]),zs=ring.map(point=>point[1]);
+    for(let i=0;i<roof.length;i+=3) {
+      assert.ok(roof[i]>=Math.min(...xs)-1e-6&&roof[i]<=Math.max(...xs)+1e-6);
+      assert.ok(roof[i+2]>=Math.min(...zs)-1e-6&&roof[i+2]<=Math.max(...zs)+1e-6);
+    }
+    const wall=result.byMaterial.get(`footage-wall-${id}`);
+    assert.equal(wall.positions.length/3,wall.uvs.length/2);
+    assert.equal(wall.positions.length,wall.colors.length);
+    assert.ok(result.byMaterial.get('windowGlass')?.positions.length,'roof glazing resolves into the shared glass batch');
+    assert.equal(context.cityAppearanceStats.details.flattenedCommercialRoofs,0,'the recorded roof is not flattened afterward');
   }
 });

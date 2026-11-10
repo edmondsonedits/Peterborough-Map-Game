@@ -1,0 +1,414 @@
+{
+  "type": "FeatureCollection",
+  "features": [
+    {
+      "type": "Feature",
+      "properties": {
+        "featureId": "way/1006243552",
+        "kind": "verifiedFrontage",
+        "photoIds": [
+          "R228"
+        ],
+        "title": "Lime-fronted shop row north of 364 Water"
+      },
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
+          [
+            -78.3187307,
+            44.3050673
+          ],
+          [
+            -78.3187398,
+            44.3051732
+          ]
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "featureId": "way/1006243552",
+        "kind": "cabReviewCamera",
+        "bearingDegrees": 87.7,
+        "status": "Nearest current OSM road centreline; runtime collision/occlusion unverified. Fly setView altitude2.5 is clamped to5m AGL and is NOT a cab-height proof."
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -78.3188765,
+          44.3051161
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "featureId": "way/1006243558",
+        "kind": "verifiedFrontage",
+        "photoIds": [
+          "R231",
+          "R233"
+        ],
+        "title": "Southern cream enclosed-bay building"
+      },
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
+          [
+            -78.3190059,
+            44.3051683
+          ],
+          [
+            -78.319009,
+            44.3052438
+          ]
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "featureId": "way/1006243558",
+        "kind": "cabReviewCamera",
+        "bearingDegrees": 267.7,
+        "status": "Nearest current OSM road centreline; runtime collision/occlusion unverified. Fly setView altitude2.5 is clamped to5m AGL and is NOT a cab-height proof."
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -78.3188818,
+          44.3052097
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "featureId": "way/1006243559",
+        "kind": "verifiedFrontage",
+        "photoIds": [
+          "R231",
+          "R233"
+        ],
+        "title": "Northern cream enclosed-bay building"
+      },
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
+          [
+            -78.319009,
+            44.3052438
+          ],
+          [
+            -78.3190123,
+            44.3053222
+          ]
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "featureId": "way/1006243559",
+        "kind": "cabReviewCamera",
+        "bearingDegrees": 267.7,
+        "status": "Nearest current OSM road centreline; runtime collision/occlusion unverified. Fly setView altitude2.5 is clamped to5m AGL and is NOT a cab-height proof."
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -78.3188861,
+          44.3052866
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "featureId": "way/1006243553",
+        "kind": "verifiedFrontage",
+        "photoIds": [
+          "R232"
+        ],
+        "title": "Six-arch brick shopfront on east side of Water"
+      },
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
+          [
+            -78.3187398,
+            44.3051732
+          ],
+          [
+            -78.3187506,
+            44.3052993
+          ]
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "featureId": "way/1006243553",
+        "kind": "cabReviewCamera",
+        "bearingDegrees": 87.7,
+        "status": "Nearest current OSM road centreline; runtime collision/occlusion unverified. Fly setView altitude2.5 is clamped to5m AGL and is NOT a cab-height proof."
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -78.3188831,
+          44.3052323
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "featureId": "way/1006243555",
+        "kind": "verifiedFrontage",
+        "photoIds": [
+          "R235",
+          "R236",
+          "R238",
+          "R242"
+        ],
+        "title": "Scotiabank Water return and Hunter corner"
+      },
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
+          [
+            -78.3187806,
+            44.3058618
+          ],
+          [
+            -78.3187638,
+            44.3056137
+          ]
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "featureId": "way/1006243555",
+        "kind": "cabReviewCamera",
+        "bearingDegrees": 87.7,
+        "status": "Nearest current OSM road centreline; runtime collision/occlusion unverified. Fly setView altitude2.5 is clamped to5m AGL and is NOT a cab-height proof."
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -78.3189114,
+          44.3057337
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "featureId": "way/1006243541",
+        "kind": "verifiedFrontage",
+        "photoIds": [
+          "R248"
+        ],
+        "title": "Smiles to You Hunter storefront"
+      },
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
+          [
+            -78.3173248,
+            44.3059282
+          ],
+          [
+            -78.3172063,
+            44.3059341
+          ]
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "featureId": "way/1006243541",
+        "kind": "cabReviewCamera",
+        "bearingDegrees": 175.8,
+        "status": "Nearest current OSM road centreline; runtime collision/occlusion unverified. Fly setView altitude2.5 is clamped to5m AGL and is NOT a cab-height proof."
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -78.3172751,
+          44.3060233
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "featureId": "way/1031042883",
+        "kind": "constrainedExactFrontage",
+        "name": "West main Water face, south to north"
+      },
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
+          [
+            -78.3187296,
+            44.3048752
+          ],
+          [
+            -78.3187307,
+            44.3050673
+          ]
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "featureId": "way/1031042883",
+        "kind": "constrainedExactFrontage",
+        "name": "West short southwest corner face, south to north"
+      },
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
+          [
+            -78.3187263,
+            44.3048169
+          ],
+          [
+            -78.3187296,
+            44.3048752
+          ]
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "featureId": "way/1031042883",
+        "kind": "constrainedExactFrontage",
+        "name": "South short southwest corner face, west to east"
+      },
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
+          [
+            -78.3187263,
+            44.3048169
+          ],
+          [
+            -78.3186508,
+            44.3048196
+          ]
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "featureId": "way/1031042883",
+        "kind": "constrainedExactFrontage",
+        "name": "South main Simcoe face, west to east"
+      },
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
+          [
+            -78.3186508,
+            44.3048196
+          ],
+          [
+            -78.3183448,
+            44.3048305
+          ]
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "featureId": "12/73",
+        "kind": "bridgeCabReviewCamera",
+        "name": "westSouth",
+        "bearingDegrees": 180
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -78.31605,
+          44.3060742
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "featureId": "12/73",
+        "kind": "bridgeCabReviewCamera",
+        "name": "quakerNorth",
+        "bearingDegrees": 0
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -78.31572,
+          44.306081
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "featureId": "12/73",
+        "kind": "bridgeCabReviewCamera",
+        "name": "middleSouth",
+        "bearingDegrees": 180
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -78.3148,
+          44.3059524
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "featureId": "12/73",
+        "kind": "bridgeCabReviewCamera",
+        "name": "middleNorth",
+        "bearingDegrees": 0
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -78.3148,
+          44.3059524
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "featureId": "12/73",
+        "kind": "bridgeCabReviewCamera",
+        "name": "eastNorth",
+        "bearingDegrees": 0
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -78.31382,
+          44.3057927
+        ]
+      }
+    }
+  ]
+}

@@ -6,6 +6,7 @@ import {createFootageFacade, frontageFrame} from '../city-explorer/sherbrooke-fo
 import {createEmergencyFacilityLayer} from '../city-explorer/emergency-facilities.js';
 import {createBusinessSignLayer} from '../city-explorer/business-signs.js';
 import {createGeneratedRegistry} from '../city-explorer/editor/generated-registry.js';
+import {mappedBuildingDimensions} from '../city-explorer/mapped-building-dimensions.js';
 import {installCityMaterialDetail} from '../city-explorer/city-material-library.js';
 import {FOOTAGE_PROFILES as BASE} from '../city-explorer/sherbrooke-footage-profiles.js';
 
@@ -81,7 +82,8 @@ test('reviewed frontages stay on mapped edges and produce finite non-collision d
    assert.ok(Math.abs(endpoints[0]-endpoints[1])===1||Math.abs(endpoints[0]-endpoints[1])===coords.length-1,`${id} frontage follows one mapped edge`);
    const f=frontageFrame({profile:face,ring,project});assert.ok(f.length>1&&Number.isFinite(f.yaw));
   }
-  const group=createFootageFacade({THREE,profile,ring,base:100,top:110,project});
+  const wallHeight=mappedBuildingDimensions(source.tags,id).height;
+  const group=createFootageFacade({THREE,profile,ring,base:100,top:100+wallHeight,project});
   assert.equal(group.userData.collision,false);
   group.traverse(node=>{if(node.isInstancedMesh){assert.ok([...node.instanceMatrix.array].every(Number.isFinite),`${id} instance matrix`);}if(node.geometry)assert.ok([...node.geometry.attributes.position.array].every(Number.isFinite),`${id} geometry`);});
  }
@@ -105,8 +107,13 @@ test('verified signs on an additional storefront suppress duplicate directory la
  const generatedId=registry.registerEditableObject(new THREE.Object3D(),{sourceType:'building',sourceId,batchBinding:{setVisible(){},restore(){},cloneGeometry:()=>new THREE.Group()}});
  const feature={sourceId,generatedId,sourceGeometry:[[[[0,0],[12,0],[12,-8],[0,-8],[0,0]]]],partHeights:[{base:0,wallTop:5}],minY:0,maxY:5};
  const businesses=['Pizza Pizza','Tim Hortons','Another shop'].map((name,i)=>({id:String(i),name,buildingSourceId:sourceId,placementStatus:'approved',placementMode:'street-facing-wall',frontage:[{lat:0,lon:0},{lat:0,lon:12}],fraction:(i+.5)/3,widthMetres:2}));
- const profile={style:'retail',signText:'PIZZA PIZZA',additionalFrontages:[{signText:'TIM HORTONS'}]};
- const layer=createBusinessSignLayer({THREE,parent,features:[feature],directory:{schemaVersion:1,businesses},project:(lat,lon)=>({x:lon,z:-lat}),generatedRegistry:registry,canvasFactory,profiles:{[sourceId]:profile}});
+ const profile={id:sourceId,confidence:'observed',style:'retail',height:5,levels:1,signText:'PIZZA PIZZA',frontLatLon:[{lat:0,lon:0},{lat:0,lon:6}],additionalFrontages:[{signText:'TIM HORTONS',frontLatLon:[{lat:0,lon:6},{lat:0,lon:12}]}]};
+ const previousDocument=globalThis.document;let detail;
+ try{globalThis.document={createElement:()=>canvasFactory()};detail=createFootageFacade({THREE,profile,ring:[{x:0,z:0},{x:12,z:0},{x:12,z:8},{x:0,z:8}],base:0,top:5,project:(lat,lon)=>({x:lon,z:-lat}),lite:true});}
+ finally{if(previousDocument===undefined)delete globalThis.document;else globalThis.document=previousDocument;}
+ parent.add(detail);
+ const renderedSignsBySourceId=new Map([[sourceId,detail.userData.renderedSigns]]);
+ const layer=createBusinessSignLayer({THREE,parent,features:[feature],directory:{schemaVersion:1,businesses},project:(lat,lon)=>({x:lon,z:-lat}),generatedRegistry:registry,canvasFactory,profiles:{[sourceId]:profile},renderedSignsBySourceId});
  assert.equal(layer.stats().existingProfileSigns,2);assert.equal(layer.stats().newSignPanels,1);
  assert.equal(layer.samples().find(x=>x.name==='Tim Hortons').existingProfileSign,true);
  layer.dispose();

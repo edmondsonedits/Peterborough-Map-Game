@@ -71,7 +71,7 @@ export const ROUTE_CORNER_APPEARANCES = {
           "lon": -78.3323566
         }
       ],
-      "detailHeightMetres": 3.4
+      "detailHeightMetres": 2.6
     },
     "appearance": {
       "wallColor": "#c7bdab",
@@ -82,18 +82,19 @@ export const ROUTE_CORNER_APPEARANCES = {
         {
           "fraction": 0.5,
           "widthFraction": 0.97,
-          "bottomMetres": 2.66,
-          "heightMetres": 0.44,
+          "bottomMetres": 2.12,
+          "heightMetres": 0.38,
           "color": "#6a6659",
           "outsetMetres": 0.31
         }
-      ]
+      ],
+      "windowHeightMetres": 1.28
     },
     "photoIds": [
       "R033",
       "R035"
     ],
-    "estimated": "Dimensions, opening spacing, colors and surface roughness are visual estimates. Source footprint, height and roof geometry are retained."
+    "estimated": "Dimensions, opening spacing, colors and surface roughness are visual estimates. Source footprint, height and roof geometry are retained. Decorative openings, fascia and signs are fitted to the current 2.60 m rendered source wall; this is not a measured physical building height. Correcting the inferred roof and storey height is a separate geometry review."
   },
   "way/383393878": {
     "street": "Chemong Road",
@@ -116,15 +117,16 @@ export const ROUTE_CORNER_APPEARANCES = {
           "lat": 44.3192059,
           "lon": -78.3322188
         }
-      ]
+      ],
+      "detailHeightMetres": 2.6
     },
     "appearance": {
       "wallColor": "#b9ad95",
       "trimColor": "#3e3b37",
       "signText": "PIZZA PIZZA",
       "signWidthMetres": 4,
-      "signHeightMetres": 2.75,
-      "signBoardHeightMetres": 0.53,
+      "signHeightMetres": 2.3,
+      "signBoardHeightMetres": 0.4,
       "signOutsetMetres": 0.45,
       "signBoardColor": "#a73632",
       "signBackgroundColor": "#a73632",
@@ -133,8 +135,8 @@ export const ROUTE_CORNER_APPEARANCES = {
         {
           "fraction": 0.5,
           "widthFraction": 0.98,
-          "bottomMetres": 2.27,
-          "heightMetres": 0.68,
+          "bottomMetres": 2.08,
+          "heightMetres": 0.48,
           "color": "#3e3b37",
           "outsetMetres": 0.35
         }
@@ -157,7 +159,7 @@ export const ROUTE_CORNER_APPEARANCES = {
           "windowColumns": 4,
           "signText": "TIM HORTONS",
           "signFraction": 0.52,
-          "signHeightMetres": 2.74,
+          "signHeightMetres": 2.3,
           "signWidthMetres": 4.65,
           "signBoardColor": "#444038",
           "signBackgroundColor": "#444038",
@@ -166,20 +168,21 @@ export const ROUTE_CORNER_APPEARANCES = {
             {
               "fraction": 0.5,
               "widthFraction": 0.98,
-              "bottomMetres": 2.3,
-              "heightMetres": 0.67,
+              "bottomMetres": 2.14,
+              "heightMetres": 0.42,
               "color": "#443f38",
               "outsetMetres": 0.35
             },
             {
               "fraction": 0.5,
               "widthFraction": 0.94,
-              "bottomMetres": 2.11,
-              "heightMetres": 0.16,
+              "bottomMetres": 2.045,
+              "heightMetres": 0.07,
               "color": "#b7a889",
               "outsetMetres": 0.36
             }
-          ]
+          ],
+          "signBoardHeightMetres": 0.3
         }
       ],
       "signFont": "700 46px Arial,sans-serif"
@@ -187,7 +190,7 @@ export const ROUTE_CORNER_APPEARANCES = {
     "photoIds": [
       "R037"
     ],
-    "estimated": "Dimensions, opening spacing, colors and surface roughness are visual estimates. Source footprint, height and roof geometry are retained."
+    "estimated": "Dimensions, opening spacing, colors and surface roughness are visual estimates. Source footprint, height and roof geometry are retained. Decorative openings, fascia and signs are fitted to the current 2.60 m rendered source wall; this is not a measured physical building height. Correcting the inferred roof and storey height is a separate geometry review."
   },
   "way/77717331": {
     "street": "Chemong Road",
@@ -220,7 +223,7 @@ export const ROUTE_CORNER_APPEARANCES = {
         0
       ],
       "glazedLevelHeights": {
-        "0": 2.08
+        "0": 1.8
       },
       "additionalFrontages": [
         {
@@ -305,7 +308,33 @@ export const ROUTE_CORNER_APPEARANCES = {
           "outsetMetres": 0.32
         }
       ],
-      "signFont": "700 46px Arial,sans-serif"
+      "signFont": "700 46px Arial,sans-serif",
+      "windowOverrides": [
+        {
+          "level": 0,
+          "column": 0,
+          "bottomMetres": 0.25,
+          "heightMetres": 1.8
+        },
+        {
+          "level": 0,
+          "column": 1,
+          "bottomMetres": 0.25,
+          "heightMetres": 1.8
+        },
+        {
+          "level": 0,
+          "column": 2,
+          "bottomMetres": 0.25,
+          "heightMetres": 1.8
+        },
+        {
+          "level": 0,
+          "column": 3,
+          "bottomMetres": 0.25,
+          "heightMetres": 1.8
+        }
+      ]
     },
     "photoIds": [
       "R055"

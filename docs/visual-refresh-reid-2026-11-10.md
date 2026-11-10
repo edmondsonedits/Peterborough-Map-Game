@@ -36,3 +36,13 @@ The new `route-reid-appearances.js` exports only these six records. `route-landm
 The independent Reid reference reviewer inspected the candidate records and found no blocking observation mismatch: N→S orientation, the Parkhill northern entry, the enclosed-porch restraint, the single occlusion-limited Edinburgh SE upper opening and the two-door duplex treatment agree with the supplied photos. The review does not approve a roof reconstruction or lower-return correction, neither of which this batch performs.
 
 The focused impacted suite passed 37/37 tests, and `node --test tests/*.test.*` passed 1,590/1,590 tests. Syntax and whitespace checks passed. Browser/cab screenshots are tracked separately; source matching and geometry tests do not establish a final rendered visual match.
+
+## Jiffy source-height correction
+
+The source-height integration review found that Jiffy's one-level `building=yes` source resolves to a 2.60 m wall, despite this appearance record's former 3.60 m decoration cap. The original fascia request at 2.70 m collapsed to a 0.05 m strip at the roof; the earlier 10 m geometry fixture did not expose it.
+
+The west fascia now occupies 2.14–2.56 m (0.42 m tall), with the sign centered at 2.30 m on a 0.30 m board. The two service panes and entry remain distinct and each is 2.05 m tall; the panes start at 0.08 m. These are closed decorative cues, not asserted vehicle-access clearances. The current low inferred height and roof require a separate geometry review before claiming the photographic scale is reproduced.
+
+The five Reid geometry/behavior tests now render the actual mapped source height. A shared four-test route source-height regression covers all 22 active source profiles, fascia visibility, panel/window bounds, practical entry height, named sign bounds/occlusion, and the separate Walmart fallback/GLB scales. The data correction does not change the six-source match decisions, frontage orientation, collision or model massing.
+
+Correction verification: 41/41 focused tests and 1,600/1,600 full-suite tests passed; the three route suites passed all 17 source-height/default/geometry assertions.

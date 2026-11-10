@@ -3,6 +3,7 @@ import assert from 'node:assert/strict';
 import {readFile} from 'node:fs/promises';
 import * as THREE from '../city-explorer/vendor/three-r180/build/three.module.min.js';
 import {createFootageFacade,frontageFrame} from '../city-explorer/sherbrooke-footage.js';
+import {mappedBuildingDimensions} from '../city-explorer/mapped-building-dimensions.js';
 import {installCityMaterialDetail} from '../city-explorer/city-material-library.js';
 import {addRouteLandmarkAppearances} from '../city-explorer/route-landmark-appearances.js';
 
@@ -16,7 +17,7 @@ async function registry(){
  assert.ok(module,'the six verified Reid profiles are available');
  return module.ROUTE_REID_APPEARANCES;
 }
-function render(profile){const ring=ways.get(profile.id).geometry.slice(0,-1).map(({lat,lon})=>project(lat,lon));return createFootageFacade({THREE,profile,ring,base:100,top:110,project});}
+function render(profile){const source=ways.get(profile.id),ring=source.geometry.slice(0,-1).map(({lat,lon})=>project(lat,lon)),height=mappedBuildingDimensions(source.tags,profile.id).height;return createFootageFacade({THREE,profile,ring,base:100,top:100+height,project});}
 function instances(group,name){const mesh=group.getObjectByName(name);if(!mesh)return[];const matrix=new THREE.Matrix4();return Array.from({length:mesh.count},(_,i)=>{mesh.getMatrixAt(i,matrix);const position=new THREE.Vector3(),scale=new THREE.Vector3();matrix.decompose(position,new THREE.Quaternion(),scale);return{position,scale};});}
 
 test('Reid composition adds only six verified sources and preserves existing source geometry/default opt-out',async()=>{
@@ -41,7 +42,7 @@ test('Reid faces follow exact current ring edges toward the street and emit fini
   }
   const group=render(profile);assert.equal(group.userData.collision,false);
   group.traverse(node=>{if(node.isInstancedMesh)assert.ok([...node.instanceMatrix.array].every(Number.isFinite),id);if(node.geometry)assert.ok([...node.geometry.attributes.position.array].every(Number.isFinite),id);});
-  group.updateMatrixWorld(true);const bounds=new THREE.Box3().setFromObject(group);assert.ok(bounds.min.y>=99.99&&bounds.max.y<=110.01,`${id} details stay within supplied mass height`);
+  group.updateMatrixWorld(true);const bounds=new THREE.Box3().setFromObject(group);const wallHeight=mappedBuildingDimensions(source.tags,id).height;assert.ok(bounds.min.y>=99.99&&bounds.max.y<=100+wallHeight+.01,`${id} details stay within actual mapped mass height`);
   const material=new THREE.MeshStandardMaterial({color:profile.wallColor});assert.equal(installCityMaterialDetail(material,{kind:profile.wallSurface,quality:'full'}),true,`${id} uses supported surface`);
   assert.ok(records[id].observation&&records[id].estimated&&records[id].photoIds.length);
  }

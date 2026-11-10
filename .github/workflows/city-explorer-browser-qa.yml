@@ -38,23 +38,38 @@ permissions:
   contents: read
 
 concurrency:
-  group: city-explorer-browser-qa-${{ github.ref }}
+  # A docs/generated-data follow-up must not cancel an immutable render capture.
+  group: city-explorer-browser-qa-${{ github.event.pull_request.head.sha || github.sha }}
   cancel-in-progress: true
 
 jobs:
   visual-refresh-captures:
-    # Both snapshots belong to this repository. Do not run a fork's proposed
-    # workflow/runtime with credentials or expand this to pull_request_target.
+    # Only same-repository source, with read-only permissions and no persisted
+    # credentials. Each variant/cohort gets an independent time budget/upload.
     if: github.event_name != 'pull_request' || github.event.pull_request.head.repo.full_name == github.repository
     runs-on: ubuntu-24.04
-    timeout-minutes: 50
+    timeout-minutes: 35
     strategy:
       fail-fast: false
+      max-parallel: 4
       matrix:
         profile: [balanced, lite]
+        capture:
+          - { variant: current, cohort: chemong-north }
+          - { variant: current, cohort: chemong-south }
+          - { variant: current, cohort: reid-controls }
+          - { variant: current, cohort: sherbrooke }
+          - { variant: current, cohort: water-hunter }
+          - { variant: baseline, cohort: chemong-north }
+          - { variant: baseline, cohort: chemong-south }
+          - { variant: baseline, cohort: reid-controls }
+          - { variant: baseline, cohort: sherbrooke }
+          - { variant: baseline, cohort: water-hunter }
+          - { variant: procedural, cohort: procedural-controls }
     env:
       VISUAL_REFRESH_BASELINE: 4da1b86bad3f14b27abb05392c44e5c38fc6bef7
       PTBO_QA_ARTIFACT_DIR: artifacts/visual-refresh
+      PTBO_CAPTURE_COHORT: ${{ matrix.capture.cohort }}
     steps:
       - name: Check out the exact proposed source
         uses: actions/checkout@v4
@@ -73,55 +88,82 @@ jobs:
           npm init -y >/dev/null 2>&1
           npm install --no-save --no-package-lock playwright@1.62.1
           npx --yes playwright@1.62.1 install --with-deps chromium
-      - name: Prepare an untouched baseline archive and both servers
-        id: visual-servers
+      - name: Prepare the immutable source and server
+        id: visual-server
+        env:
+          CAPTURE_VARIANT: ${{ matrix.capture.variant }}
         run: |
-          mkdir -p "$RUNNER_TEMP/ptbo-visual-baseline" artifacts/visual-refresh/server
-          git cat-file -e "$VISUAL_REFRESH_BASELINE^{commit}"
-          git archive "$VISUAL_REFRESH_BASELINE" | tar -x -C "$RUNNER_TEMP/ptbo-visual-baseline"
-          python3 -m http.server 4174 --bind 127.0.0.1 > artifacts/visual-refresh/server/current-http.log 2>&1 &
-          echo $! > "$RUNNER_TEMP/ptbo-visual-current.pid"
-          python3 -m http.server 4175 --bind 127.0.0.1 --directory "$RUNNER_TEMP/ptbo-visual-baseline" > artifacts/visual-refresh/server/baseline-http.log 2>&1 &
-          echo $! > "$RUNNER_TEMP/ptbo-visual-baseline.pid"
+          mkdir -p artifacts/visual-refresh/server
+          capture_source="$GITHUB_WORKSPACE"
+          capture_revision=$(git rev-parse HEAD)
+          if test "$CAPTURE_VARIANT" = baseline; then
+            capture_source="$RUNNER_TEMP/ptbo-visual-baseline"
+            mkdir -p "$capture_source"
+            git cat-file -e "$VISUAL_REFRESH_BASELINE^{commit}"
+            git archive "$VISUAL_REFRESH_BASELINE" | tar -x -C "$capture_source"
+            capture_revision="$VISUAL_REFRESH_BASELINE"
+          fi
+          echo "PTBO_QA_SOURCE_ROOT=$capture_source" >> "$GITHUB_ENV"
+          echo "PTBO_QA_REVISION=$capture_revision" >> "$GITHUB_ENV"
+          python3 -m http.server 4174 --bind 127.0.0.1 --directory "$capture_source" > "artifacts/visual-refresh/server/${CAPTURE_VARIANT}-${PTBO_CAPTURE_COHORT}-${{ matrix.profile }}-http.log" 2>&1 &
+          echo $! > "$RUNNER_TEMP/ptbo-visual.pid"
           for attempt in $(seq 1 30); do
-            if curl --fail --silent http://127.0.0.1:4174/city-explorer/ >/dev/null && curl --fail --silent http://127.0.0.1:4175/city-explorer/ >/dev/null; then
-              exit 0
-            fi
+            if curl --fail --silent http://127.0.0.1:4174/city-explorer/ >/dev/null; then exit 0; fi
             sleep 1
           done
-          cat artifacts/visual-refresh/server/current-http.log artifacts/visual-refresh/server/baseline-http.log
           exit 1
-      - name: Capture unchanged baseline eye-height and oblique views
+      - name: Capture measured raised-fly, oblique and supported cab views
+        timeout-minutes: 30
         env:
-          PTBO_CAPTURE_DRIVER: '0'
-          PTBO_QA_REVISION: ${{ env.VISUAL_REFRESH_BASELINE }}
-          PTBO_QA_SOURCE_ROOT: ${{ runner.temp }}/ptbo-visual-baseline
-        run: node tools/capture-visual-refresh.cjs http://127.0.0.1:4175 baseline ${{ matrix.profile }}
-      - name: Capture current eye-height, oblique, and actual cab views
-        if: ${{ !cancelled() && steps.visual-servers.outcome == 'success' }}
-        env:
-          PTBO_CAPTURE_DRIVE_SMOKE: '1'
-        run: node tools/capture-visual-refresh.cjs http://127.0.0.1:4174 current ${{ matrix.profile }}
-      - name: Capture matched current procedural-wall controls
-        if: ${{ !cancelled() && steps.visual-servers.outcome == 'success' }}
-        env:
-          PTBO_CAPTURE_QUERY: wallMaterials=procedural
-          PTBO_CAPTURE_SITES: chemong-r058-1002815291,generic-residential,generic-commercial,station-1,sherbrooke
-        run: node tools/capture-visual-refresh.cjs http://127.0.0.1:4174 procedural ${{ matrix.profile }}
-      - name: Create the evidence comparison index
-        if: always()
-        run: node tools/capture-visual-refresh.cjs --compare baseline current procedural
-      - name: Stop capture servers
+          CAPTURE_VARIANT: ${{ matrix.capture.variant }}
+          PTBO_CAPTURE_DRIVER: ${{ matrix.capture.variant == 'baseline' && '0' || '1' }}
+          PTBO_CAPTURE_DRIVE_SMOKE: ${{ matrix.capture.variant == 'current' && matrix.capture.cohort == 'chemong-south' && '1' || '0' }}
+          PTBO_CAPTURE_GROUND_STREAM: ${{ matrix.capture.variant == 'current' && matrix.capture.cohort == 'chemong-north' && '1' || '0' }}
+          PTBO_CAPTURE_QUERY: ${{ matrix.capture.variant == 'procedural' && 'wallMaterials=procedural' || '' }}
+        run: node tools/capture-visual-refresh.cjs http://127.0.0.1:4174 "$CAPTURE_VARIANT" ${{ matrix.profile }}
+      - name: Stop capture server
         if: always()
         run: |
-          for pidfile in "$RUNNER_TEMP/ptbo-visual-current.pid" "$RUNNER_TEMP/ptbo-visual-baseline.pid"; do
-            if test -f "$pidfile"; then kill "$(cat "$pidfile")" 2>/dev/null || true; fi
-          done
-      - name: Preserve actual render evidence and failures
+          if test -f "$RUNNER_TEMP/ptbo-visual.pid"; then kill "$(cat "$RUNNER_TEMP/ptbo-visual.pid")" 2>/dev/null || true; fi
+      - name: Preserve this cohort's actual render evidence and failures
         if: always()
         uses: actions/upload-artifact@v4
         with:
-          name: visual-refresh-${{ matrix.profile }}-${{ github.run_id }}-${{ github.run_attempt }}
+          name: visual-refresh-part-${{ matrix.capture.variant }}-${{ matrix.profile }}-${{ matrix.capture.cohort }}-${{ github.run_id }}-${{ github.run_attempt }}
+          path: artifacts/visual-refresh/
+          if-no-files-found: error
+          retention-days: 14
+
+  visual-refresh-comparison:
+    needs: visual-refresh-captures
+    if: ${{ always() && (github.event_name != 'pull_request' || github.event.pull_request.head.repo.full_name == github.repository) }}
+    runs-on: ubuntu-24.04
+    timeout-minutes: 10
+    steps:
+      - name: Check out the exact proposed comparison harness
+        uses: actions/checkout@v4
+        with:
+          ref: ${{ github.event.pull_request.head.sha || github.sha }}
+          persist-credentials: false
+      - name: Set up Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 22
+      - name: Collect completed and partial cohort evidence
+        uses: actions/download-artifact@v4
+        with:
+          pattern: visual-refresh-part-*-${{ github.run_id }}-${{ github.run_attempt }}
+          path: artifacts/visual-refresh
+          merge-multiple: true
+      - name: Match camera transforms and write the comparison index
+        env:
+          PTBO_QA_ARTIFACT_DIR: artifacts/visual-refresh
+        run: node tools/capture-visual-refresh.cjs --compare baseline current procedural
+      - name: Preserve the combined review index and evidence
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: visual-refresh-comparison-${{ github.run_id }}-${{ github.run_attempt }}
           path: artifacts/visual-refresh/
           if-no-files-found: error
           retention-days: 14

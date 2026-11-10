@@ -1,0 +1,113 @@
+{
+  "base": "52a5f404f622a59a1cbed61af579a3ea13ea9cab",
+  "patchedTree": "e592e3a3dcc4389472ddee5cc0c145ab44292e9d",
+  "baseline": "4da1b86",
+  "candidate": "51da803",
+  "rows": [
+    {
+      "path": "city-explorer/app.js",
+      "baseline": "different/newer",
+      "candidate": "selective/newer changes"
+    },
+    {
+      "path": "city-explorer/business-signs.js",
+      "baseline": "same as old base (ignoring cache pins)",
+      "candidate": "selective/newer changes"
+    },
+    {
+      "path": "city-explorer/emergency-facilities.js",
+      "baseline": "same as old base (ignoring cache pins)",
+      "candidate": "selective/newer changes"
+    },
+    {
+      "path": "city-explorer/hunter-bridge-appearance.js",
+      "baseline": "same as old base (ignoring cache pins)",
+      "candidate": "original base retained"
+    },
+    {
+      "path": "city-explorer/landmark-models.js",
+      "baseline": "same as old base (ignoring cache pins)",
+      "candidate": "original base retained"
+    },
+    {
+      "path": "city-explorer/recording-appearance.js",
+      "baseline": "same as old base (ignoring cache pins)",
+      "candidate": "original base retained"
+    },
+    {
+      "path": "city-explorer/sherbrooke-footage.js",
+      "baseline": "same as old base (ignoring cache pins)",
+      "candidate": "selective/newer changes"
+    },
+    {
+      "path": "scripts/normalize-release.cjs",
+      "baseline": "different/newer",
+      "candidate": "selective/newer changes"
+    },
+    {
+      "path": "tests/business-sign-renderer.test.mjs",
+      "baseline": "same as old base (ignoring cache pins)",
+      "candidate": "original base retained"
+    },
+    {
+      "path": "tests/cricket-runtime-integration.test.mjs",
+      "baseline": "same as old base (ignoring cache pins)",
+      "candidate": "original base retained"
+    },
+    {
+      "path": "tests/emergency-facilities.test.mjs",
+      "baseline": "same as old base (ignoring cache pins)",
+      "candidate": "original base retained"
+    },
+    {
+      "path": "tests/hunter-bridge-appearance.test.mjs",
+      "baseline": "same as old base (ignoring cache pins)",
+      "candidate": "original base retained"
+    },
+    {
+      "path": "city-explorer/route-corner-appearances.js",
+      "baseline": "absent",
+      "candidate": "selective/newer changes"
+    },
+    {
+      "path": "city-explorer/route-landmark-appearances.js",
+      "baseline": "absent",
+      "candidate": "selective/newer changes"
+    },
+    {
+      "path": "city-explorer/route-open-ground.js",
+      "baseline": "absent",
+      "candidate": "absent"
+    },
+    {
+      "path": "city-explorer/route-street-appearances.js",
+      "baseline": "absent",
+      "candidate": "selective/newer changes"
+    },
+    {
+      "path": "city-explorer/route-streetscape.js",
+      "baseline": "absent",
+      "candidate": "absent"
+    },
+    {
+      "path": "tests/route-corner-appearances.test.mjs",
+      "baseline": "absent",
+      "candidate": "absent"
+    },
+    {
+      "path": "tests/route-landmark-appearances.test.mjs",
+      "baseline": "absent",
+      "candidate": "absent"
+    },
+    {
+      "path": "tests/route-open-ground.test.mjs",
+      "baseline": "absent",
+      "candidate": "absent"
+    },
+    {
+      "path": "tests/route-street-appearances.test.mjs",
+      "baseline": "absent",
+      "candidate": "absent"
+    }
+  ]
+}

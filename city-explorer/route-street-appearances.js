@@ -24,7 +24,7 @@ export const ROUTE_STREET_APPEARANCES = {
           "lon": -78.3335276
         }
       ],
-      "detailHeightMetres": 5.3
+      "detailHeightMetres": 3.15
     },
     "appearance": {
       "wallColor": "#b4b6b4",
@@ -33,28 +33,28 @@ export const ROUTE_STREET_APPEARANCES = {
       "glassColor": "#4b626e",
       "signText": "Walmart",
       "signBusinessName": "Walmart Supercentre",
-      "signHeightMetres": 3.95,
+      "signHeightMetres": 2.5,
       "signWidthMetres": 14,
       "signFraction": 0.66,
       "signBackgroundColor": "#294765",
       "signBoardColor": "#294765",
       "signTextColor": "#f5f2e9",
-      "signBoardHeightMetres": 1.35,
+      "signBoardHeightMetres": 0.72,
       "signOutsetMetres": 0.36,
       "facadePanels": [
         {
           "fraction": 0.468,
           "widthFraction": 0.936,
           "bottomMetres": 0.12,
-          "heightMetres": 5.15,
+          "heightMetres": 2.98,
           "color": "#29435f",
           "outsetMetres": 0.17
         },
         {
           "fraction": 0.64,
           "widthFraction": 0.21,
-          "bottomMetres": 2.6,
-          "heightMetres": 2.2,
+          "bottomMetres": 2,
+          "heightMetres": 1.03,
           "color": "#2e506e",
           "outsetMetres": 0.225
         },
@@ -93,7 +93,7 @@ export const ROUTE_STREET_APPEARANCES = {
               "fraction": 0.5,
               "widthFraction": 0.97,
               "bottomMetres": 0.15,
-              "heightMetres": 4.95,
+              "heightMetres": 2.95,
               "color": "#b9bbb7",
               "outsetMetres": 0.18
             }
@@ -121,7 +121,7 @@ export const ROUTE_STREET_APPEARANCES = {
               "fraction": 0.5,
               "widthFraction": 0.98,
               "bottomMetres": 0.35,
-              "heightMetres": 3.92,
+              "heightMetres": 2.75,
               "color": "#a4a6a0",
               "outsetMetres": 0.18
             }
@@ -223,7 +223,7 @@ export const ROUTE_STREET_APPEARANCES = {
     "photoIds": [
       "R014"
     ],
-    "estimated": "Dimensions, opening spacing, colors and surface roughness are visual estimates. Source footprint, height and roof geometry are retained. The replacementFrontage height matches the existing authored GLB wall (10.15 m), not a measurement from R014. The dark glazing field is a broad color cue only; entry count, doors and glass subdivisions are unresolved and are omitted."
+    "estimated": "Dimensions, opening spacing, colors and surface roughness are visual estimates. Source footprint, height and roof geometry are retained. The replacementFrontage height matches the existing authored GLB wall (10.15 m), not a measurement from R014. The dark glazing field is a broad color cue only; entry count, doors and glass subdivisions are unresolved and are omitted. Fallback decoration is separately fitted to the current 3.15 m generated shell. Its smaller sign and panels do not alter the successful GLB decoration, which keeps the authored 10.15 m wall scale."
   },
   "way/446339024": {
     "street": "Chemong Road",
@@ -247,7 +247,7 @@ export const ROUTE_STREET_APPEARANCES = {
           "lon": -78.3310899
         }
       ],
-      "detailHeightMetres": 3.5
+      "detailHeightMetres": 2.6
     },
     "appearance": {
       "wallColor": "#b4b6ad",
@@ -258,29 +258,29 @@ export const ROUTE_STREET_APPEARANCES = {
         {
           "fraction": 0.5,
           "widthFraction": 0.98,
-          "bottomMetres": 2.63,
-          "heightMetres": 0.68,
+          "bottomMetres": 2.14,
+          "heightMetres": 0.42,
           "color": "#747b77",
-          "outsetMetres": 0.2
+          "outsetMetres": 0.3
         }
       ],
       "groundWindows": [
         {
           "t": 0.19,
-          "bottom": 0.24,
-          "height": 2.33,
+          "bottom": 0.08,
+          "height": 2.05,
           "width": 3.32
         },
         {
           "t": 0.46,
-          "bottom": 0.24,
-          "height": 2.33,
+          "bottom": 0.08,
+          "height": 2.05,
           "width": 3.32
         },
         {
           "t": 0.73,
-          "bottom": 0.24,
-          "height": 2.33,
+          "bottom": 0.08,
+          "height": 2.05,
           "width": 3.32
         }
       ],
@@ -289,7 +289,7 @@ export const ROUTE_STREET_APPEARANCES = {
     "photoIds": [
       "R041"
     ],
-    "estimated": "Dimensions, opening spacing, colors and surface roughness are visual estimates. Source footprint, height and roof geometry are retained."
+    "estimated": "Dimensions, opening spacing, colors and surface roughness are visual estimates. Source footprint, height and roof geometry are retained. Decorative openings, fascia and signs are fitted to the current 2.60 m rendered source wall; this is not a measured physical building height. Correcting the inferred roof and storey height is a separate geometry review. The 2.05 m panes are decorative closed service-door cues, not clearance dimensions or vehicle-access openings."
   },
   "way/1002815290": {
     "street": "Chemong Road",
@@ -318,6 +318,14 @@ export const ROUTE_STREET_APPEARANCES = {
     },
     "appearance": {
       "wallColor": "#d2cec0",
+      "recordedRoof": {
+        "shape": "gabled",
+        "eaveHeightMetres": 3.25,
+        "dormers": [
+          {"fraction": 0.28, "widthMetres": 1.4, "frontInsetMetres": 0.85, "wallHeightMetres": 0.95, "roofRiseMetres": 0.4, "glassWidthMetres": 0.92, "glassHeightMetres": 0.72},
+          {"fraction": 0.72, "widthMetres": 1.4, "frontInsetMetres": 0.85, "wallHeightMetres": 0.95, "roofRiseMetres": 0.4, "glassWidthMetres": 0.92, "glassHeightMetres": 0.72}
+        ]
+      },
       "trimColor": "#dcd9cb",
       "roofColor": "#46504f",
       "glassColor": "#546b67",
@@ -345,7 +353,7 @@ export const ROUTE_STREET_APPEARANCES = {
     "photoIds": [
       "R056"
     ],
-    "estimated": "Dimensions, opening spacing, colors and surface roughness are visual estimates. Source footprint, height and roof geometry are retained. The two visible dormers and slope/ridge relationship are documented but not reconstructed in this appearance-only batch."
+    "estimated": "Dimensions, opening spacing, colors and surface roughness are visual estimates. The exact footprint and existing maximum roof height are retained. The visual eave is estimated at 3.25 m; two 1.4 m wide dormers at frontage fractions 0.28/0.72 follow R056. Their inset, shoulder height, glazing and roof rise are rendering estimates. Explicit source height/roof/level tags disable this eave adjustment."
   },
   "way/1002815291": {
     "street": "Chemong Road",

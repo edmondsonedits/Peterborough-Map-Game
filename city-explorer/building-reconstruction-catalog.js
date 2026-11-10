@@ -1,4 +1,4 @@
-import manifest from './assets/building-reconstruction/batch-001/catalog.json?v=1.6.203' with {type:'json'};
+import manifest from './assets/building-reconstruction/batch-001/catalog.json?v=1.6.204' with {type:'json'};
 
 // Only reviewed, individually sourced Blender assets are added to this manifest.
 // The loader retains each original mapped shell until the replacement validates.
