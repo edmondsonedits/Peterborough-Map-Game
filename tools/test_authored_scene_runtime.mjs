@@ -28,6 +28,28 @@ assert.match(bootstrapSource, /__PTBO_AUTHORED_SCENE__\?\.status\?\.\(\)\.bridge
 assert.doesNotMatch(bootstrapSource, /dataset\.(?:firefighterAsset|pumperAsset)/,
   'optional authored details must not wait on asynchronous actor appearance assets');
 
+const appSource = await fs.readFile(path.resolve(here, '../city-explorer/app.js'), 'utf8');
+const setupStart = appSource.indexOf('  buildLandmarkMapLabels();');
+const setupEnd = appSource.indexOf('  initializeGameplay();', setupStart) + '  initializeGameplay();'.length;
+assert.ok(setupStart >= 0 && setupEnd > setupStart, 'base-world startup section exists');
+for (const optionalScenery of [false, true]) {
+  const calls = [], bridge = { THREE: {}, scene: {}, project() {}, terrainHeightAtWorld() {} };
+  await runInNewContext(`(async()=>{${appSource.slice(setupStart, setupEnd)}})()`, {
+    ...bridge, graphicsQuality: { optionalScenery },
+    buildLandmarkMapLabels() {},
+    initializeSemanticSurvey() { calls.push('survey'); },
+    initializeCapturedDetailLayer() { calls.push('captured'); },
+    generatedEditorProxyGroup: { updateMatrixWorld() {} }, footageFacadeGroups: new Map(),
+    registerAuthoredSceneWorldBridge(value) {
+      for (const key of Object.keys(bridge)) assert.equal(value[key], bridge[key]);
+      calls.push('bridge');
+    },
+    initializeGameplay() { assert.equal(calls.at(-1), 'bridge'); calls.push('gameplay'); },
+  });
+  assert.deepEqual(calls, optionalScenery ? ['survey', 'captured', 'bridge', 'gameplay'] : ['bridge', 'gameplay'],
+    'Lite retains authored world registration without loading optional scenery');
+}
+
 const duplicate = structuredClone(fixture);
 duplicate.sourceScene.objects.push(structuredClone(duplicate.sourceScene.objects[0]));
 assert.match(runtime.validateAuthoredSceneHandoff(duplicate).errors.join(' '), /duplicate id/i);

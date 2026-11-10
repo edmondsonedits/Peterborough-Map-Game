@@ -117,9 +117,9 @@ for (const file of canonicalSurfaces) {
 }
 
 // These imports share module identity with versioned entrypoints. Keep the
-// authored-scene bridge and main renderer on the same CitySplatLayer instance.
+// authored-scene bridge and startup on the same runtime instance.
 for (const file of ['city-explorer/app.js', 'city-explorer/business-signs.js', 'city-explorer/authored-scene-bootstrap.js', 'city-explorer/road-orientation-fix.js', 'city-explorer/editor/city-editor.js']) {
-  const source = replaceRequired(file, read(file), /(\.\/(?:editor\/)?(?:business-signs|business-sign-layout|mapped-building-dimensions|city-splat-layer|authored-scene-bootstrap|draft-store|city-editor|version-saver|recovery-prompt|authored-runtime|ai-editor-tools|ai-editor-camera|ai-editor-panel|ai-editor-bounds)\.js\?v=)\d+\.\d+\.\d+/g, `$1${VERSION}`, 'shared versioned module import');
+  const source = replaceRequired(file, read(file), /(\.\/(?:editor\/)?(?:business-signs|business-sign-layout|mapped-building-dimensions|city-splat-layer|authored-scene-bootstrap|authored-scene-runtime|site-surface-materials|draft-store|city-editor|version-saver|recovery-prompt|authored-runtime|ai-editor-tools|ai-editor-camera|ai-editor-panel|ai-editor-bounds)\.js\?v=)\d+\.\d+\.\d+/g, `$1${VERSION}`, 'shared versioned module import');
   write(file, source);
 }
 

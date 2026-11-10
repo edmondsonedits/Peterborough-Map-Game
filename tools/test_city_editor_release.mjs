@@ -35,13 +35,13 @@ const canonicalVersion = buildSource.match(/const VERSION = '(\d+\.\d+\.\d+)'/)?
 assert.equal(canonicalVersion, releaseVersion, 'HTML entrypoints must match the canonical source release');
 const appSplatImport = appSource.match(/from ['"](\.\/city-splat-layer\.js\?[^'"]+)['"]/)
   ?.[1];
-const bootstrapSplatImport = bootstrapSource.match(/from ['"](\.\/city-splat-layer\.js\?[^'"]+)['"]/)
-  ?.[1];
-assert.ok(appSplatImport && bootstrapSplatImport, 'both editor modules must import CitySplatLayer');
+assert.ok(appSplatImport, 'the editor must import CitySplatLayer');
 const appSplatUrl = new URL(appSplatImport, pathToFileURL(path.join(city, 'app.js')));
-const bootstrapSplatUrl = new URL(bootstrapSplatImport, pathToFileURL(path.join(city, 'authored-scene-bootstrap.js')));
-assert.equal(appSplatUrl.href, bootstrapSplatUrl.href, 'the authored-scene hook and editor must share the same CitySplatLayer module identity');
 assert.equal(appSplatUrl.searchParams.get('v'), canonicalVersion, 'CitySplatLayer cache key should match the active release');
+const authoredImports = [appSource, bootstrapSource].map(source => source.match(/from ['"](\.\/authored-scene-runtime\.js\?[^'"]+)['"]/)?.[1]);
+assert.ok(authoredImports.every(Boolean), 'app and bootstrap must import the authored runtime');
+assert.equal(authoredImports[0], authoredImports[1], 'explicit world registration and startup must share one authored runtime module');
+assert.doesNotMatch(bootstrapSource, /CitySplatLayer/, 'authored startup must not depend on optional captured scenery');
 const bootstrapImport = roadOrientationSource.match(/import\(['"](\.\/authored-scene-bootstrap\.js\?[^'"]+)['"]\)/)?.[1];
 assert.ok(bootstrapImport, 'the explorer loader must version its authored-scene bootstrap import');
 const bootstrapUrl = new URL(bootstrapImport, pathToFileURL(path.join(city, 'road-orientation-fix.js')));

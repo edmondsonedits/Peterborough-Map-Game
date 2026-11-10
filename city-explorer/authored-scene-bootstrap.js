@@ -1,27 +1,10 @@
-import { CitySplatLayer } from './city-splat-layer.js?v=1.6.201';
 import {
   authoredSceneDiagnostics,
   initializeAuthoredScene,
-  registerAuthoredSceneWorldBridge,
-} from './authored-scene-runtime.js?v=1.6.79';
+} from './authored-scene-runtime.js?v=1.6.201';
 
-const PATCH_FLAG = Symbol.for('ptbo.authored-scene.city-splat-bridge.v1');
 function authoredSceneStartupReady({ gameplayReady, bridgeReady }) {
   return gameplayReady === true && bridgeReady === true;
-}
-
-if (!CitySplatLayer.prototype[PATCH_FLAG]) {
-  const originalInitialize = CitySplatLayer.prototype.initialize;
-  CitySplatLayer.prototype.initialize = async function patchedInitialize(...args) {
-    registerAuthoredSceneWorldBridge({
-      THREE: this.THREE,
-      scene: this.scene,
-      project: this.project,
-      terrainHeightAtWorld: this.terrainHeightAtWorld,
-    });
-    return originalInitialize.apply(this, args);
-  };
-  Object.defineProperty(CitySplatLayer.prototype, PATCH_FLAG, { value: true });
 }
 
 function authoredEnabled() {

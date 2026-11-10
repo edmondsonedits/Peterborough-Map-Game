@@ -21,7 +21,24 @@ export function installStationApron(material, project) {
   const cacheKey = previousKey();
   material.onBeforeCompile = (shader, renderer) => {
     previous.call(material, shader, renderer);
-    // Existing asphalt decorator provides the world-space varying/hash.
+    // Lite mode skips optional surface detail, so the apron must also work alone.
+    const worldPositionDeclaration = /\bvarying\s+vec3\s+vAaaWorldPosition\s*;/;
+    if (!worldPositionDeclaration.test(shader.vertexShader)) {
+      shader.vertexShader = shader.vertexShader
+        .replace('#include <common>', '#include <common>\nvarying vec3 vAaaWorldPosition;')
+        .replace('#include <project_vertex>', `#include <project_vertex>
+vec4 stationApronWorldPosition = vec4(transformed, 1.0);
+#ifdef USE_BATCHING
+  stationApronWorldPosition = batchingMatrix * stationApronWorldPosition;
+#endif
+#ifdef USE_INSTANCING
+  stationApronWorldPosition = instanceMatrix * stationApronWorldPosition;
+#endif
+vAaaWorldPosition = (modelMatrix * stationApronWorldPosition).xyz;`);
+    }
+    if (!worldPositionDeclaration.test(shader.fragmentShader)) {
+      shader.fragmentShader = shader.fragmentShader.replace('#include <common>', '#include <common>\nvarying vec3 vAaaWorldPosition;');
+    }
     const fragments = zones.map((zone) => {
     const points = zone.points.map(([lon, lat]) => project(lat, lon));
     const edges = points.map((a, index) => {
@@ -37,6 +54,6 @@ export function installStationApron(material, project) {
     }).join('\n');
     shader.fragmentShader = shader.fragmentShader.replace('#include <color_fragment>', '#include <color_fragment>\nvec2 p = vAaaWorldPosition.xz;\n' + fragments);
   };
-  material.customProgramCacheKey = () => `${cacheKey}-station-surfaces-2`;
+  material.customProgramCacheKey = () => `${cacheKey}-station-surfaces-3`;
   material.needsUpdate = true;
 }

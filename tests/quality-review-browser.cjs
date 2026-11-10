@@ -257,7 +257,7 @@ function disjoint(a, b, label) {
       await page.locator('#loading-screen').waitFor({ state: 'hidden' });
       await page.waitForFunction(() => ['ready', 'failed'].includes(globalThis.__PTBO_AUTHORED_SCENE__?.status().status));
       const authoredScene = await page.evaluate(() => __PTBO_AUTHORED_SCENE__.status());
-      assert.equal(authoredScene.bridgeReady, true, 'authored bridge patches the running CitySplatLayer class');
+      assert.equal(authoredScene.bridgeReady, true, 'authored bridge is registered against the running simulator world');
       assert.equal(authoredScene.status, 'ready', authoredScene.error || 'authored layer initializes');
       const notice = page.locator('#ptbo-training-use-notice');
       disjoint(await rect(notice), await rect(page.locator('#mobile-action-button')), 'notice leaves touch action clear');

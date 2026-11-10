@@ -65,9 +65,10 @@ import { createStation2WallMaterials, isStation2PilotBuilding, station2BoundaryC
 import { loadVegetationAssets } from './vegetation-assets.js?v=sherbrooke-20260915';
 import { createVegetationVariant, stationOneVegetationPalette } from './vegetation-variants.js?v=streetscape-1';
 import { installStationStreetscape } from './streetscape-assets.js?v=streetscape-2';
-import { installStationApron } from './site-surface-materials.js?v=1.6.56';
+import { installStationApron } from './site-surface-materials.js?v=1.6.201';
 import { mergeGeometries } from 'three/addons/utils/BufferGeometryUtils.js';
 import { createAuthoredRuntime, startOptionalTask } from './editor/authored-runtime.js?v=1.6.201';
+import { registerAuthoredSceneWorldBridge } from './authored-scene-runtime.js?v=1.6.201';
 import { createCatalogObject } from './editor/asset-catalog.js';
 import { createCommandHistory } from './editor/command-history.js';
 import { createDraftStore } from './editor/draft-store.js?v=1.6.201';
@@ -5872,6 +5873,8 @@ async function buildCity() {
   generatedEditorProxyGroup.updateMatrixWorld(true);
   // Settle optional photographic geometry before editor source-copy replacements are loaded.
   await Promise.all([...footageFacadeGroups.values()].map(group => group.userData.photoReady));
+  // Authored details use the base world even when Lite omits captured scenery.
+  registerAuthoredSceneWorldBridge({ THREE, scene, project, terrainHeightAtWorld });
   initializeGameplay();
   const roadResume=readRoadResume(location.search,CITY.worldBounds);
   if(roadResume){
