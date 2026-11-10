@@ -20,6 +20,9 @@ Date: 2026-11-10. Baseline: `094b465931dd7174b8cf75621b28637e3f33f7c0` (v1.6.201
 | Whole-change independent code review | Completed: no unresolved introduced defect or blocking finding. Two additional preexisting feedback error races were reproduced and fixed; an obsolete inventory event was corrected. Reviewer independently checked all source line hints and Markdown IDs, plus 20 feedback workflow tests. |
 | Local Playwright/Chromium | Attempted; launch failed at required socket creation with `Operation not permitted`. No browser rendering assertions ran. |
 | Separate cloud browser / local preview | Attempted; `net::ERR_CONNECTION_REFUSED` for local preview. |
+| GitHub source parity | Runtime commit `8b8721dd3f3f33dd9e847cdffa3db050cffca48b` has tree `337aac1ebf1beed8ad39145d9116ddc38014afd1`, exactly matching the locally tested tree. |
+| Remote browser QA and asset checks | The existing workflows were triggered for [PR #81](https://github.com/edmondsonedits/Peterborough-Map-Game/pull/81/checks). Consult the check tied to the relevant commit for its outcome; this document does not treat a queued or running check as a pass. |
+| Publication | PR #81 is a review branch. Main was unchanged at preparation time; no production deployment is claimed. |
 
 The audit uses first-party source, deterministic asynchronous ordering and real DOM
 handlers. It does not establish actual BFcache eligibility in every browser,

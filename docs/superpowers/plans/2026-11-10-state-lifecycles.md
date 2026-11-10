@@ -76,7 +76,7 @@ machine-readable companion; the inventory is not a second runtime authority.
 - [x] Bump canonical version and run `node scripts/normalize-release.cjs`.
 - [x] Run complete Node suite and world export consistency; attempt targeted browser checks and record the environment blockers.
 - [x] Review the full diff independently, fix material findings, and record outcomes.
-- [ ] Commit and provide a GitHub review link with verified release status.
+- [x] Commit and provide [GitHub PR #81](https://github.com/edmondsonedits/Peterborough-Map-Game/pull/81) with verified release status: review branch, not merged to production.
 
 Execution record: an isolated fresh clone/feature branch was used. Baseline with
 installed repository test dependencies passed 1,564 tests; 71 additional city
