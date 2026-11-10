@@ -1,39 +1,44 @@
-# Publish handoff: City Explorer v1.6.201
+# Release record: City Explorer v1.6.201
 
-Status: NOT PUBLISHED. This is a resumable source checkpoint, not a deployment-ready artifact.
+Status: PUBLISHED and verified on 10 November 2026. The interrupted source checkpoint described below has been completed.
 
-Repository: https://github.com/edmondsonedits/Peterborough-Map-Game
-Branch: codex/driving-upgrade-20261109
-Local checkout: H:\ChatGPT\City-Explorer-Multiplayer-20261105
+- Play: https://edmondsonedits.github.io/Peterborough-Map-Game/city-explorer/
+- Published commit: `e4319a16d7f471b06a9843dad5904cd5d563cab1`.
+- World: `6a591732d8f63f37a15c7a93`; multiplayer protocol: `2`.
+- Render service `city-explorer-multiplayer`: deploy `dep-dbp77m3rjlhs73f2et2g` observed Live at that commit. Public `/healthz` returned ready with the matching world and protocol.
+- [Pages run 42736259572](https://github.com/edmondsonedits/Peterborough-Map-Game/actions/runs/42736259572), attempt 2, job `129567525550`: successful deployment after the compatibility gate passed.
+- Nine public release resources matched the final local commit byte-for-byte. Reloading the canonical public URL displayed v1.6.201 in the browser title.
 
-## Completed
+Live backend verification passed with two real Colyseus WebSocket clients on Render using protocol 2 and the expected world. The clients became distinct authoritative drivers of Pump 1 and Car 1; their peers observed movement of 1.077 m (31 input acknowledgements) and 1.983 m (30 acknowledgements), respectively. The temporary QA room was explicitly closed, both clients disconnected, and the room was confirmed absent from the directory.
 
-- Original driving upgrade was committed as 37dd265f: multiplayer jitter smoothing and immediate local preview, vehicle tuning, cab/bonnet views, Lite, map entities/map driving, and a City Hall training call from all three halls.
-- Merged origin/main through 0dd33ca3 (v1.6.200). All conflicts resolved. Preserve its four-seat crews, aerial actions, vehicle selection, Rescue 1/Car 1, latest solo steering, and location/route changes.
-- Canonical version is now 1.6.201; normalize-release.cjs was run.
-- Protocol is 2. Server /healthz now reports protocolVersion; the Pages deployment gate requires the matching protocol AND world hash. Do not bypass either check.
-- Crew map labels now include passengers, with a focused regression.
-- Merged full suite: 1555/1556 passed. Only tests/city-call-catalogues.test.cjs:21 fails at line49 due an unchanged Toronto provenance hash mismatch. Two older roster failures were resolved by newer main.
-- Focused merged multiplayer checks:82/82. Vehicle checks:16/16. Protocol deployment gate:4/4. Crew map:3/3.
-- Merged desktop/touch browser smoke passed: cab/chase, map driving, Lite and training-call start from halls1/2/3. Local report artifacts are not pushed.
+Live 3D interaction was not verified in the cloud browser: both the canonical URL and `?lite=1` failed to create a WebGL context, with `GL_VENDOR=Disabled` and `GL_RENDERER=Disabled`. The same environment error occurred with v1.6.200 before deployment. Successful CI rendering and playtests below are separate evidence, not live browser playtests.
 
-## Remaining work
+## Release content and validation
 
-1. Fetch current main and preserve newer work. Check the checkpoint diff and docs/driving-upgrade-2026-11-09.md plus docs/deployment-recovery.md.
-2. Finish the road/world artifact build. The local compiler was deliberately stopped at source mesh2250/3603 for the user's PC shutdown. It had not reached the tile-writing stage, so checked-in road/world assets are still stale for the new source. Do not change expected hashes to conceal this.
-3. Follow the existing build/CI setup for Playwright and serve the checkout. tools/build-road-pack.cjs uses ROAD_BUILD_URL or http://127.0.0.1:4186. Then run tools/normalize-road-gzip.mjs, tools/export-multiplayer-world.mjs, tools/verify-road-pack.mjs and tools/verify-road-markings.mjs. Commit the generated assets. Inspect branch/push behavior before using a cloud geospatial workflow.
-4. Start the matching local multiplayer server and rerun tools/check-multiplayer-driving-upgrade.mjs on the merged release/world. The completed earlier two-client browser run predates the main merge; the merged unit tests and solo/touch smoke passed.
-5. Deploy a matching pair: Render city-explorer-multiplayer and GitHub Pages. User explicitly authorized publishing. No paid plan changes, billing changes or new hosting migration. Existing GitHub access worked; no Render CLI/token/deploy-hook was available. Dashboard browser initially timed out, then opened signed out. User's login attempt reached a temporary rate limit. User could not sign in before leaving. Successful authenticated Render access remains required.
-6. Record the final SHA and world hash. Account for the automatic geospatial workflow after a main push; use the final matching artifacts or cancel only a provably redundant rebuild after local validation, preserving current work. Pages must retain its protocol/world gate. An additional Cloudflare Workers Builds check is connected to this repo; inspect it before pushing main because it may auto-publish a mirror.
-7. Wait for successful backend readiness and Pages deployment, compare live versions and relevant asset hashes, then run desktop/touch and two-client live smoke. tools/check-driving-upgrade.mjs and tools/check-multiplayer-driving-upgrade.mjs accept MAP_QA_URL and MULTIPLAYER_QA_SERVER. Report only observed results.
+The driving upgrade includes cab/bonnet views, Lite graphics, map entities and map driving, a City Hall training call from all three halls, multiplayer jitter smoothing and immediate local preview, and vehicle tuning. The merged v1.6.200 work was preserved, including four-seat crews, aerial actions, vehicle selection, Rescue 1/Car 1, latest solo steering, and location/route changes. Crew map labels include passengers.
 
-## Last live observations before checkpoint
+Release completion also fixed issues found during browser QA:
 
-- Frontend: https://edmondsonedits.github.io/Peterborough-Map-Game/city-explorer/
-- Build marker:1.6.200
-- Public world hash:42e7a6191e02736c34910091
-- Backend:https://city-explorer-multiplayer.onrender.com/healthz returned ready with the same world hash; no protocolVersion field.
-- Main's later geospatial bot revision0dd33ca3 contains worldc4d8187719c9114d8eb90893. Its Pages run42512611687 failed because backend42e7... did not matchc4d8.... Keep this distinction; main is not proof of the live artifact.
-- No remote branch/main update or new production deployment occurred before this checkpoint push.
+- Lite startup now registers the authored-scene world bridge explicitly, independently of the optional captured-detail layer. The station-apron shader supplies its required world-position varying in Lite.
+- On-foot reset now selects a collision-checked vehicle exit. The old fixed world-X offset placed the firefighter inside Car 1's measured body. Regression tests cover measured dimensions, rotated bays, the active vehicle's previous position, and a fully blocked reset.
+- Changed module imports use the correct release cache tokens. Road/world assets were rebuilt from the final runtime source; source/world checks and the Pages protocol/world gate were retained.
+- Browser harnesses support Linux software rendering while preserving Windows behavior, wait for observable movement/readiness, retain failure diagnostics, and run solo and two-client checks independently. Balanced rendering and Lite functional coverage are both tested. Geometry fixtures extract only their intended app functions.
 
-If Render authentication remains unavailable, preserve the prepared release and request only the necessary sign-in. Do not claim publication or publish an incompatible client by removing the gate.
+Validation:
+
+- All 1,564 Node tests passed after the reset fix.
+- [Browser QA run 42735115744](https://github.com/edmondsonedits/Peterborough-Map-Game/actions/runs/42735115744), final [PR #79](https://github.com/edmondsonedits/Peterborough-Map-Game/pull/79) head `b1b393c9173e00bc1395ae7bd2bc97f0a31efb22`: all four jobs passed, including station, vehicle/multiplayer regressions, solo upgrade, and two-client upgrade.
+- All 12 multitouch combinations passed: portrait/landscape, on-foot/driving/fly, and movement-first/look-first. Focus-loss and mouse/keyboard checks also passed.
+- Solo browser checks covered balanced desktop, Lite desktop/touch, camera views, map driving, and training calls from halls 1/2/3. Two-client Lite checks covered crew seats, separate vehicles, walking/driving, remote motion observation, map controls, and restoring solo mode after leaving. These used matching local frontend/server instances in CI.
+
+## Historical checkpoint: 9 November 2026
+
+The interrupted branch was `codex/driving-upgrade-20261109`. Original upgrade commit `37dd265f` had been merged with main through `0dd33ca3` (v1.6.200), then normalized to v1.6.201. The local road compiler was deliberately stopped at source mesh 2250/3603 for PC shutdown, before tile writing; its checked-in road/world assets were stale at that point.
+
+At that checkpoint, 1,555/1,556 merged tests passed; the remaining Toronto provenance-hash failure was recorded in `tests/city-call-catalogues.test.cjs`. The earlier two-client browser run predated the main merge. Neither result is the final release validation above.
+
+Publishing was authorized, but no authenticated Render deployment was available: the dashboard first timed out, then opened signed out, and a login attempt reached a temporary rate limit. No production deployment had occurred at that checkpoint.
+
+The last observed public frontend then was v1.6.200 with world `42e7a6191e02736c34910091`; Render reported that same world without a `protocolVersion` field. Main's later geospatial commit `0dd33ca3` contained world `c4d8187719c9114d8eb90893`, and Pages run `42512611687` failed because it did not match the backend. Main was not proof of the live artifact. The completed publication above supersedes that state.
+
+For future releases, follow [deployment-recovery.md](deployment-recovery.md). Never bypass the protocol/world gate or substitute expected hashes for a real rebuild.
