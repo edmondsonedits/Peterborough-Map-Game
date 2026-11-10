@@ -45,6 +45,22 @@ async function pageFor(viewport, mobile = false) {
 }
 const runtimeState = page => page.evaluate(() => __PTBO_MULTIPLAYER__.state);
 let report = { result: 'incomplete', errors: [], failedRequests: [], screenshots: [] };
+async function selectDriverVehicle(page, vehicleId, mobile = false) {
+  await page.keyboard.press('Escape');
+  await page.evaluate(() => document.exitPointerLock());
+  await page.waitForFunction(() => !document.pointerLockElement, null, { timeout: 5000 });
+  if (mobile) await page.locator('.ce-roomui-toggle').tap();
+  else await page.locator('.ce-roomui-toggle').click();
+  await page.getByLabel('Choose a vehicle').selectOption(vehicleId);
+  await page.waitForFunction(id => {
+    const state = __PTBO_MULTIPLAYER__.state;
+    const vehicle = state.snapshot?.vehicles.find(entry => entry.id === id);
+    return state.mode === 'driving' && state.vehicleId === id && vehicle?.driverPlayerId === state.snapshot.player.id;
+  }, vehicleId, { timeout: 15000 });
+  if (mobile) await page.locator('.ce-roomui-close').tap();
+  else await page.locator('.ce-roomui-close').click();
+  return runtimeState(page);
+}
 async function openMap(page, mobile = false) {
   await page.keyboard.press('Escape');
   await page.evaluate(() => document.exitPointerLock());
@@ -84,8 +100,9 @@ try {
   await host.locator('.ce-roomui-close').click();
   await mobile.locator('.ce-roomui-close').tap();
 
-  // Enter the desktop truck, then verify the map shows the phone player and vehicles.
-  progress('desktop walk and vehicle entry');
+  // Verify walking on the open apron, then use the normal fleet selector. Spawn
+  // headings face out of the bay; forward walking does not approach its trucks.
+  progress('desktop walk and fleet selection');
   await host.locator('#city-canvas').click({ position: { x: 640, y: 400 } });
   const beforeWalk = await runtimeState(host);
   motion.desktopWalk = { input: 'KeyW', before: beforeWalk.renderedPose };
@@ -93,20 +110,19 @@ try {
   try {
     await host.waitForFunction(({ x, z }) => {
       const pose = __PTBO_MULTIPLAYER__.state.renderedPose;
-      return pose && Math.hypot(pose.x - x, pose.z - z) > .2 && /Enter/i.test(document.querySelector('#interaction-prompt')?.textContent || '');
+      return pose && Math.hypot(pose.x - x, pose.z - z) > .2;
     }, beforeWalk.renderedPose, { timeout: 60000 });
   } finally { await host.keyboard.up('w'); }
   const afterWalk = await runtimeState(host);
   motion.desktopWalk.after = afterWalk.renderedPose;
-  assert.ok(Math.hypot(afterWalk.renderedPose.x - beforeWalk.renderedPose.x, afterWalk.renderedPose.z - beforeWalk.renderedPose.z) > 0.2, 'desktop player reached the nearby vehicle');
-  await host.keyboard.press('e');
-  await host.waitForFunction(() => __PTBO_MULTIPLAYER__.state.mode === 'driving', null, { timeout: 15000 });
-  const drivingState = await runtimeState(host), vehicleId = drivingState.vehicleId;
+  assert.ok(Math.hypot(afterWalk.renderedPose.x - beforeWalk.renderedPose.x, afterWalk.renderedPose.z - beforeWalk.renderedPose.z) > 0.2, 'desktop walking input moves player');
+  const drivingState = await selectDriverVehicle(host, 'pump-1'), vehicleId = drivingState.vehicleId;
   assert.ok(vehicleId, 'desktop player owns a vehicle');
   await openMap(host);
 
-  // Use the phone joystick to reach and enter its truck.
-  progress('phone walk and vehicle entry');
+  // Exercise the phone joystick before selecting a separate truck. Crew members
+  // may share a vehicle, but this scenario needs two independent drivers.
+  progress('phone walk and fleet selection');
   const cdp = await phone.context.newCDPSession(mobile);
   const touch = (type, point) => cdp.send('Input.dispatchTouchEvent', { type, touchPoints: point ? [{ x: point.x, y: point.y, id: 1 }] : [] });
   let box = await mobile.locator('#movement-joystick').boundingBox();
@@ -118,7 +134,7 @@ try {
   try {
     await mobile.waitForFunction(({ x, z }) => {
       const pose = __PTBO_MULTIPLAYER__.state.renderedPose;
-      return pose && Math.hypot(pose.x - x, pose.z - z) > .2 && document.querySelector('#mobile-action-button')?.disabled === false;
+      return pose && Math.hypot(pose.x - x, pose.z - z) > .2;
     }, beforeTouchWalk.renderedPose, { timeout: 60000 });
   } finally { await touch('touchEnd'); }
   motion.phoneWalk.after = (await runtimeState(mobile)).renderedPose;
@@ -128,9 +144,8 @@ try {
     players: document.querySelectorAll('#tactical-map-markers [data-kind="player"]').length,
   }));
   assert.ok(markerCounts.trucks >= 1 && markerCounts.players >= 1, `map markers missing: ${JSON.stringify(markerCounts)}`);
-  await mobile.waitForFunction(() => document.querySelector('#mobile-action-button')?.disabled === false, null, { timeout: 15000 });
-  await mobile.locator('#mobile-action-button').tap();
-  await mobile.waitForFunction(() => __PTBO_MULTIPLAYER__.state.mode === 'driving', null, { timeout: 15000 });
+  const phoneDrivingState = await selectDriverVehicle(mobile, 'car-1', true);
+  assert.notEqual(phoneDrivingState.vehicleId, vehicleId, 'phone and desktop own separate vehicles');
   await openMap(mobile, true);
   const mapState = await host.evaluate(() => ({ gameplay: __PTBO_GAMEPLAY__.state(), map: __PTBO_MAP_VIEW__.state() }));
   assert.equal(mapState.gameplay.mode, 'map');
@@ -193,7 +208,7 @@ try {
   assert.deepEqual(errors, []);
   assert.deepEqual(consoleErrors, []);
   progress('passed');
-  report = { result: 'pass', protocolVersion: drivingState.snapshot.protocolVersion, preJoinMode, restoredMode, seats: [hostSession.seat, (await mobile.evaluate(() => __PTBO_MULTIPLAYER__.session)).seat], vehicleId, markerCounts, desktopMapDriveMetres: Math.hypot(afterDrive.renderedPose.x - beforeDrive.renderedPose.x, afterDrive.renderedPose.z - beforeDrive.renderedPose.z), phoneObservedHostSpeed: phoneObserved.pose.speed, mobileMapMode: await mobile.evaluate(() => __PTBO_GAMEPLAY__.state().mode), mobileMapDriving: await mobile.evaluate(() => document.documentElement.dataset.mapDriving), errors, consoleErrors, failedRequests, screenshots: [path.join(output, 'desktop-map-driving.png'), path.join(output, 'phone-observing-drive.png')] };
+  report = { result: 'pass', protocolVersion: drivingState.snapshot.protocolVersion, preJoinMode, restoredMode, seats: [hostSession.seat, (await mobile.evaluate(() => __PTBO_MULTIPLAYER__.session)).seat], vehicleId, phoneVehicleId: phoneDrivingState.vehicleId, markerCounts, desktopMapDriveMetres: Math.hypot(afterDrive.renderedPose.x - beforeDrive.renderedPose.x, afterDrive.renderedPose.z - beforeDrive.renderedPose.z), phoneObservedHostSpeed: phoneObserved.pose.speed, mobileMapMode: await mobile.evaluate(() => __PTBO_GAMEPLAY__.state().mode), mobileMapDriving: await mobile.evaluate(() => document.documentElement.dataset.mapDriving), errors, consoleErrors, failedRequests, screenshots: [path.join(output, 'desktop-map-driving.png'), path.join(output, 'phone-observing-drive.png')] };
 } catch (error) {
   const failureStates = {};
   for (const [name, entry] of [['desktop', desktop], ['phone', phone]]) {
@@ -201,7 +216,7 @@ try {
     failureStates[name] = await entry.page.evaluate(() => {
       const multiplayer = globalThis.__PTBO_MULTIPLAYER__?.state;
       return { gameplay: globalThis.__PTBO_GAMEPLAY__?.state(), input: globalThis.__PTBO_CITY_QA__?.input(), dataset: { ...document.documentElement.dataset }, focused: document.activeElement?.id, loading: document.querySelector('#loading-screen')?.innerText,
-        multiplayer: multiplayer && { mode: multiplayer.mode, renderedPose: multiplayer.renderedPose, authoritativePose: multiplayer.authoritativePose, compatible: multiplayer.compatible, pausedForWorld: multiplayer.pausedForWorld, pendingInputs: multiplayer.pendingInputs, tick: multiplayer.tick } };
+        multiplayer: multiplayer && { mode: multiplayer.mode, vehicleId: multiplayer.vehicleId, driverPlayerId: multiplayer.snapshot?.vehicles.find(vehicle => vehicle.id === multiplayer.vehicleId)?.driverPlayerId, renderedPose: multiplayer.renderedPose, authoritativePose: multiplayer.authoritativePose, compatible: multiplayer.compatible, pausedForWorld: multiplayer.pausedForWorld, pendingInputs: multiplayer.pendingInputs, tick: multiplayer.tick } };
     }).catch(() => null);
     await entry.page.screenshot({ path: path.join(output, `${name}-failure.png`), timeout: 10000 }).catch(() => {});
   }
