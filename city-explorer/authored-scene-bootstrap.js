@@ -1,7 +1,7 @@
 import {
   authoredSceneDiagnostics,
   initializeAuthoredScene,
-} from './authored-scene-runtime.js?v=1.6.206';
+} from './authored-scene-runtime.js?v=1.6.207';
 
 function authoredSceneStartupReady({ gameplayReady, bridgeReady }) {
   return gameplayReady === true && bridgeReady === true;

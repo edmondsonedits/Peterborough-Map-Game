@@ -1,5 +1,5 @@
-import { RECORDED_CANOPIES, buildRecordedCanopy } from './recorded-canopies.js?v=1.6.206';
-import { ULTRAMAR_PAVEMENT_CORRECTION as CORRECTION } from './reviewed-route-surfaces.js?v=1.6.206';
+import { RECORDED_CANOPIES, buildRecordedCanopy } from './recorded-canopies.js?v=1.6.207';
+import { ULTRAMAR_PAVEMENT_CORRECTION as CORRECTION } from './reviewed-route-surfaces.js?v=1.6.207';
 
 const SOURCE_ID = CORRECTION.canopySourceId;
 const SAMPLE_COUNT = 25;

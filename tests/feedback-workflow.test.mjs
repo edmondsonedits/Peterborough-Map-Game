@@ -93,3 +93,64 @@ test('players and guests never receive developer controls and identity changes c
  const g=setup();await g.show();document.querySelector('#feedback-unread').click();g.service.change('player');await g.show();
  assert.equal(document.querySelector('#feedback-heading').textContent,'Feedback & messages');assert.equal(document.querySelector('#feedback-new').hidden,false);assert.equal(document.querySelector('#feedback-unread'),null);assert.equal(document.querySelector('.fb-inbox-tools'),null);assert.ok(document.querySelector('[data-thread-id="report"]'));g.close();
 });
+
+const deferred=()=>{let resolve,reject;const promise=new Promise((yes,no)=>{resolve=yes;reject=no;});return{promise,resolve,reject};};
+const typeNote=(input,value)=>{input.value=value;input.dispatchEvent(new window.Event('input'));};
+test('private note completion preserves a newer draft typed during submission',async t=>{
+ const g=setup();t.after(()=>g.close());await g.show();await g.openThread();
+ const pending=deferred(),calls=[];g.service.addNote=(...args)=>{calls.push(args);return pending.promise;};
+ const input=document.querySelector('#feedback-note'),button=document.querySelector('#feedback-add-note');
+ typeNote(input,'First note');const save=button.onclick({currentTarget:button});
+ typeNote(input,'New unsent note');pending.resolve();await save;
+ assert.equal(calls[0][1],'First note');assert.equal(input.value,'New unsent note');assert.equal(button.disabled,false);
+});
+test('private note failure retains its draft and retries the same submission identity',async t=>{
+ const g=setup();t.after(()=>g.close());await g.show();await g.openThread();const calls=[];
+ g.service.addNote=async(...args)=>{calls.push(args);if(calls.length===1)throw new Error('Connection lost');};
+ const input=document.querySelector('#feedback-note'),button=document.querySelector('#feedback-add-note');typeNote(input,'Retry this note');
+ await button.onclick({currentTarget:button});assert.equal(input.value,'Retry this note');
+ await button.onclick({currentTarget:button});assert.equal(input.value,'');assert.equal(calls[0][2],calls[1][2]);
+});
+test('editing a pending note away and back preserves the new draft identity',async t=>{
+ const g=setup();t.after(()=>g.close());await g.show();await g.openThread();const pending=deferred();g.service.addNote=()=>pending.promise;
+ const input=document.querySelector('#feedback-note'),button=document.querySelector('#feedback-add-note');typeNote(input,'Same text');
+ const save=button.onclick({currentTarget:button});typeNote(input,'Changed');typeNote(input,'Same text');pending.resolve();await save;
+ assert.equal(input.value,'Same text','new input is a new draft even when its body matches');
+});
+test('retired note failure does not show an error in a reopened conversation',async t=>{
+ const g=setup();t.after(()=>g.close());await g.show();await g.openThread();const pending=deferred();g.service.addNote=()=>pending.promise;
+ const input=document.querySelector('#feedback-note'),button=document.querySelector('#feedback-add-note');typeNote(input,'Old draft');
+ const save=button.onclick({currentTarget:button});g.api.close();await g.show();await g.openThread();
+ typeNote(document.querySelector('#feedback-note'),'Current draft');pending.reject(new Error('Old note failure'));await save;
+ assert.equal(document.querySelector('#feedback-note').value,'Current draft');assert.doesNotMatch(document.querySelector('#ptbo-feedback-dialog').textContent,/Old note failure/);
+});
+test('failed status edit rolls back to the latest subscribed status, not the opening snapshot',async t=>{
+ const g=setup();t.after(()=>g.close());await g.show();await g.openThread();const pending=deferred();g.service.updateThread=()=>pending.promise;
+ const select=document.querySelector('#feedback-status');select.value='resolved';const save=select.onchange();
+ g.service.emit(thread('report',{status:'reviewing'}));pending.reject(new Error('Save failed'));await save;
+ assert.equal(select.value,'reviewing');assert.match(document.querySelector('.fb-detail-header').textContent,/Under review/);
+});
+
+for(const retired of [true,false])test(`earlier-message failure ${retired?'cannot affect a reopened conversation':'remains visible to its owning conversation'}`,async t=>{
+ const g=setup();t.after(()=>g.close());const pending=deferred(),watchMessages=g.service.watchMessages;
+ g.service.watchMessages=(id,next)=>watchMessages(id,page=>next({...page,more:true,cursor:'older'}));
+ g.service.loadMessages=()=>pending.promise;
+ await g.show();await g.openThread();const button=document.querySelector('.fb-messages button'),load=button.onclick();
+ if(retired){g.api.close();await g.show();await g.openThread();}
+ pending.reject(new Error('Earlier messages unavailable'));await load;
+ assert.equal(document.querySelector('.fb-detail .fb-error').textContent,retired?'':'Earlier messages unavailable');
+ assert.equal(button.disabled,false);
+});
+
+for(const retired of [true,false])test(`reply failure ${retired?'cannot affect a different conversation':'remains visible and retains its draft'}`,async t=>{
+ const g=setup({pages:[{rows:[thread('other',{title:'Other conversation'})],more:false,cursor:'page1'}]});t.after(()=>g.close());
+ const pending=deferred();g.service.send=()=>pending.promise;await g.show();await g.openThread();
+ const input=document.querySelector('#feedback-reply');input.value='Keep my reply';input.dispatchEvent(new window.Event('input'));
+ const save=document.querySelector('.fb-compose').onsubmit({preventDefault(){}});
+ if(retired)await g.openThread('other');
+ pending.reject(new Error('Reply unavailable'));await save;
+ assert.equal(document.querySelector('.fb-detail .fb-error').textContent,retired?'':'Reply unavailable');
+ if(retired)await g.openThread('report');
+ assert.equal(document.querySelector('#feedback-reply').value,'Keep my reply');
+ assert.equal(document.querySelector('#feedback-send').disabled,false);
+});

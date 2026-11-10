@@ -1,4 +1,4 @@
-import { drapePaintPolygon } from './road-paint-geometry.js?v=1.6.206';
+import { drapePaintPolygon } from './road-paint-geometry.js?v=1.6.207';
 import { pointInPolygon, pointInRing } from './feature-utils.js';
 
 export const WALMART_PARKING_SOURCE_ID = '10/1429';
