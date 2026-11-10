@@ -1,4 +1,4 @@
-import {planBusinessWallSigns,businessOpeningTop,signVisibilityChanged,wrapSignText} from './business-sign-layout.js?v=1.6.201';
+import {planBusinessWallSigns,businessOpeningTop,signVisibilityChanged,wrapSignText} from './business-sign-layout.js?v=1.6.202';
 
 export async function loadBusinessDirectory(fetcher=fetch,url=new URL('./data/business-directory.json',import.meta.url)){
  const controller=new AbortController(),timer=setTimeout(()=>controller.abort(),8000);
@@ -30,7 +30,16 @@ export function createBusinessSignLayer({THREE,parent,features,directory,project
  const seenSources=new Set();
  for(const feature of features){const rows=byBuilding.get(feature.sourceId);if(!rows?.length||!feature.generatedId||seenSources.has(feature.sourceId))continue;seenSources.add(feature.sourceId);
   const polygons=feature.sourceGeometry.map((rings,i)=>({rings:rings.map(r=>r.map(([lon,lat])=>{const p=project(lat,lon);return{x:p.x,z:p.y??p.z}})),base:feature.partHeights?.[i]?.base??feature.minY,wallTop:feature.partHeights?.[i]?.wallTop??feature.maxY-.2}));
-  const remaining=rows.filter(row=>{const profile=profiles[feature.sourceId];if(profile?.signText&&(normalized(row.name)===normalized(profile.signText)||(normalized(profile.signText).length>=5&&normalized(row.name).startsWith(normalized(profile.signText))))&&(!row.frontageIndex||row.frontageIndex===0)){existing++;samples.push({id:row.id,name:row.name,buildingSourceId:feature.sourceId,existingProfileSign:true});return false}return true});
+  const remaining=rows.filter(row=>{
+   const profile=profiles[feature.sourceId];
+   const faces=profile?[profile,...(profile.additionalFrontages||[])]:[];
+   const name=normalized(row.name);
+   const supplied=faces.some((face,index)=>face.signText&&
+    (row.frontageIndex==null||row.frontageIndex===index)&&
+    [face.signText,face.signBusinessName].filter(Boolean).some(text=>{const label=normalized(text);return name===label||(label.length>=5&&name.startsWith(label));}));
+   if(supplied){existing++;samples.push({id:row.id,name:row.name,buildingSourceId:feature.sourceId,existingProfileSign:true});return false;}
+   return true;
+  });
   const profile=profiles[feature.sourceId];
   const openingTop=businessOpeningTop(feature.properties||{},Math.min(...polygons.map(p=>p.wallTop-p.base)),profile);
   const adjusted=remaining.map(row=>({...row,openingTopMetres:Math.max(row.openingTopMetres||0,openingTop),...(profile?{outsetMetres:row.outsetMetres??.34}:{})}));

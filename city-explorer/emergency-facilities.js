@@ -7,7 +7,7 @@ export function suppressFacilitySource(registry, authoredRuntime, id) {
 // Original Blender facility scenery; GIS roads, terrain and gameplay remain authoritative.
 const canonicalSource = value => String(value || '').replace(/^city-building\/(way\/)/, '$1').replace(/^(?:way\/)+/, 'way/');
 
-export function createEmergencyFacilityLayer({ THREE, scene, loader, entries, project, baseSurface, records, hide }) {
+export function createEmergencyFacilityLayer({ THREE, scene, loader, entries, project, baseSurface, records, hide, decorate }) {
   const states = new Map(entries.map(entry => [entry.id, { status: 'loading', error: null }]));
   const ready = new Map();
   const runtimeOwners = new Set();
@@ -110,6 +110,21 @@ export function createEmergencyFacilityLayer({ THREE, scene, loader, entries, pr
       wrapper = new THREE.Group();wrapper.name = `Facility_${entry.id}`;
       wrapper.position.set(anchor.x,datum(entry,anchor,yaw),anchor.z);wrapper.rotation.y=yaw;
       wrapper.add(gltf.scene);
+      // Decoration is authored in world coordinates, then follows this wrapper's
+      // visibility and runtime ownership without changing the validated model.
+      if (typeof decorate === 'function') {
+        try {
+          const ring = entry.footprint.map(([x,z]) => worldPoint(x,z,anchor,yaw));
+          const detail = decorate(entry, {ring, base:wrapper.position.y});
+          if (detail?.isObject3D) {
+            wrapper.attach(detail);
+            states.get(entry.id).decoration = 'ready';
+          }
+        } catch (error) {
+          states.get(entry.id).decoration = 'unavailable';
+          states.get(entry.id).decorationError = String(error?.message || error);
+        }
+      }
       addFoundations(entry,wrapper,anchor,yaw);
       addTerrainFoundation(entry,wrapper,anchor,yaw);
       if (entry.terrainChild) {

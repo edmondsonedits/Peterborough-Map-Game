@@ -19,6 +19,18 @@ Research: official Three.js color-management, textures and Optimize Lots of Obje
 
 ## Baseline
 
+## Candidate v1.6.202 — 2026-11-10 15:17 UTC
+
+First code candidate: 16 Walmart/Chemong/Mason records (15 newly active profiles), optional façade renderer details, Walmart replacement decoration, deduplicated verified shop names, two CC0 wall color sources and matched baseline/current capture tooling. Root owns integration; first-batch writers have released their files. Reid reference review is preparing the next bounded batch. Production is still v1.6.201 until review and deployment succeed.
+
+Independent review corrected unsupported pale-wall recipes, uninitialized appearance-only roof materials, random tint overriding reviewed walls, roof/HVAC classification leaking from appearance keys, gable-wall color assignment, unnecessary Lite source downloads and Walmart screenshot readiness. Geometry/collision paths remain unchanged except for moving existing reviewed gable triangles into the correct wall material batch. No new road-side obstruction is placed.
+
+Checks: full suite passed 1,581 tests before the final gable/helper integration; 52 focused integration/appearance tests passed afterward. New integration tests execute the actual app assembly with source and annotated profiles to compare roof/HVAC geometry and verify material/UV resolution. Final whole-suite and CI browser captures are pending. No visual approval yet.
+
+The source texture opt-out is `?wallMaterials=procedural`. Lite uses the procedural mode without downloading unused wall sources. Source mode retains four shared 256-square GPU maps. The new `?qa` API can place the actual active vehicle for cab review; it is guarded against multiplayer, editor and station transitions.
+
+## Original baseline notes
+
 - Production v1.6.201; dedicated fresh clone, clean before work.
 - Existing ordinary buildings use four shared 256-square canvas wall textures, meter-scale UVs, deterministic tinting and spatial/material batches.
 - Reviewed/user-photo facades and custom facilities have existing precedence and suppression paths; preserve these.

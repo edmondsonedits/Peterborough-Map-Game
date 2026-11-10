@@ -1,4 +1,4 @@
-import {projectMarkingTriangles} from './road-marking-projection.js?v=1.6.201';
+import {projectMarkingTriangles} from './road-marking-projection.js?v=1.6.202';
 const DEFAULT_SPACING = 1.5;
 const DEFAULT_MAX_TRIANGLES = 4096;
 const DEFAULT_MAX_DEPTH = 12;
