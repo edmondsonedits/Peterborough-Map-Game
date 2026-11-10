@@ -22,7 +22,19 @@ export function createFeedbackService(config) {
       account = null;
       changed();
     }
-    const claims = user ? await user.getIdTokenResult() : null;
+    let claims;
+    try {
+      claims = user ? await user.getIdTokenResult() : null;
+    } catch (error) {
+      // Rejections belong to the same refresh generation as successful claims.
+      // A retired request cannot sign out a newer account or drop its listeners.
+      if (generation === epoch) {
+        clearSubscriptions();
+        account = null;
+        changed();
+      }
+      throw error;
+    }
     if (generation !== epoch) return;
     const isDeveloper = claims?.claims.feedbackAdmin === true;
     if (account && account.isDeveloper !== isDeveloper) clearSubscriptions();
@@ -84,11 +96,7 @@ export function createFeedbackService(config) {
     await auth.authStateReady();
     await refreshAccount(auth.currentUser);
     api.onIdTokenChanged(auth, (user) => {
-      void refreshAccount(user).catch(() => {
-        clearSubscriptions();
-        account = null;
-        changed();
-      });
+      void refreshAccount(user).catch(() => { /* refreshAccount owns failure cleanup */ });
     });
     await recoverTransfers();
   })();

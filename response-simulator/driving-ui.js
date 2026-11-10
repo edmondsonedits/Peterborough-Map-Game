@@ -208,7 +208,14 @@
   }
   window.PTBO_DRIVING_UI=Object.freeze({managesLayout:true,refresh,setEnabled(value){checkbox.checked=Boolean(value);checkbox.dispatchEvent(new Event('change'));}});
   [root,hostDoc.documentElement].forEach(el=>{el.classList.add('ptbo-driving-ui');el.classList.remove('ptbo-ui-compact','ptbo-ui-tools-open');});
-  refresh();
-  const timer=setInterval(refresh,160);
-  addEventListener('pagehide',()=>clearInterval(timer),{once:true});
+  let timer=null;
+  function startRefresh() {
+    if(timer!==null)return;
+    refresh();
+    timer=setInterval(refresh,160);
+  }
+  function stopRefresh() { clearInterval(timer);timer=null; }
+  startRefresh();
+  addEventListener('pagehide',stopRefresh);
+  addEventListener('pageshow',startRefresh);
 })();
