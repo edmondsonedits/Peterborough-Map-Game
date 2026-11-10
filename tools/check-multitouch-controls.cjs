@@ -7,6 +7,7 @@ const { chromium } = require('playwright');
 const [base = 'http://127.0.0.1:8870', label = 'multitouch'] = process.argv.slice(2);
 const output = path.resolve(process.env.PTBO_QA_ARTIFACT_DIR || 'test-artifacts/multitouch', label);
 const reports = [];
+let page, scenario, beforeMovement;
 (async () => {
   fs.mkdirSync(output, { recursive: true });
   const browser = await chromium.launch({ headless: true,
@@ -17,7 +18,7 @@ const reports = [];
     const context = await browser.newContext({ viewport: { width: 390, height: 844 },
       deviceScaleFactor: 1, isMobile: true, hasTouch: true });
     await context.addInitScript(() => localStorage.setItem('ptbo-emergency-stats-mode', 'enabled'));
-    const page = await context.newPage();
+    page = await context.newPage();
     const errors = [];
     page.on('pageerror', error => errors.push(error.message));
     await page.goto(`${base.replace(/\/$/, '')}/city-explorer/?qa=1&lite=1&analytics=off`, { waitUntil: 'domcontentloaded' });
@@ -50,6 +51,7 @@ const reports = [];
       await page.setViewportSize(viewport);
       for (const mode of ['onFoot', 'driving', 'fly']) {
         for (const lookFirst of [false, true]) {
+          scenario = { mode, viewport, lookFirst };
           await page.evaluate(() => window.__PTBO_GAMEPLAY__.reset());
           await page.locator('#city-canvas').focus();
           if (mode === 'driving') await page.keyboard.press('KeyE');
@@ -83,6 +85,7 @@ const reports = [];
           assert.equal((await snapshot()).direction, 'back', 'extra finger release stopped movement');
           await touch('touchMove', 1, cx, cy-r);
           const beforeMove = await snapshot();
+          beforeMovement = beforeMove;
           await page.waitForFunction(({mode, before}) => {
             const input = window.__PTBO_CITY_QA__.input();
             const current = mode === 'onFoot' ? Object.values(window.__PTBO_GAMEPLAY__.state().player) : input.position;
@@ -153,7 +156,13 @@ const reports = [];
     const version = await page.evaluate(() => window.PTBO_CITY_EXPLORER_BUILD?.version);
     fs.writeFileSync(path.join(output, 'report.json'), JSON.stringify({ version, reports, errors }, null, 2));
   } catch (error) {
-    fs.writeFileSync(path.join(output, 'failure.json'), JSON.stringify({ reports, error: error.stack }, null, 2));
+    const failure = await page?.evaluate(() => ({
+      input: window.__PTBO_CITY_QA__?.input(), gameplay: window.__PTBO_GAMEPLAY__?.state(),
+      dataset: { ...document.documentElement.dataset }, activeElement: document.activeElement?.id,
+      joystick: { ...document.querySelector('#movement-joystick')?.dataset },
+    })).catch(() => null);
+    await page?.screenshot({ path: path.join(output, 'failure.png') }).catch(() => {});
+    fs.writeFileSync(path.join(output, 'failure.json'), JSON.stringify({ reports, scenario, beforeMovement, failure, error: error.stack }, null, 2));
     throw error;
   } finally { await browser.close(); }
 })().catch(error => { console.error(error); process.exitCode = 1; });

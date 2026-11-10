@@ -57,11 +57,15 @@ jobs:
           npm ci --prefix tools/location-report-tests --ignore-scripts --no-audit
           npm ci --prefix city-explorer/multiplayer/server --ignore-scripts --no-audit
       - name: Run vehicle handling and multiplayer regression suite
-        run: node --test tests/vehicle-handling.test.mjs tests/vehicle-fleet.test.mjs tests/multiplayer-*.test.mjs
+        run: node --test tests/gameplay-reset-spawn.test.mjs tests/vehicle-handling.test.mjs tests/vehicle-fleet.test.mjs tests/multiplayer-*.test.mjs
 
   driving-upgrade-smoke:
     runs-on: ubuntu-24.04
     timeout-minutes: 35
+    strategy:
+      fail-fast: false
+      matrix:
+        scenario: [solo, multiplayer]
     env:
       MAP_QA_URL: http://127.0.0.1:4199
       MULTIPLAYER_QA_SERVER: http://127.0.0.1:2569
@@ -110,9 +114,10 @@ jobs:
           cat artifacts/driving-upgrade-ci/http.log artifacts/driving-upgrade-ci/multiplayer.log
           exit 1
       - name: Check desktop and touch driving upgrade
+        if: matrix.scenario == 'solo'
         run: node tools/check-driving-upgrade.mjs
       - name: Check two-client multiplayer driving upgrade
-        if: ${{ !cancelled() && steps.servers.outcome == 'success' }}
+        if: ${{ matrix.scenario == 'multiplayer' && !cancelled() && steps.servers.outcome == 'success' }}
         run: node tools/check-multiplayer-driving-upgrade.mjs
       - name: Stop local test servers
         if: always()
@@ -124,7 +129,7 @@ jobs:
         if: always()
         uses: actions/upload-artifact@v4
         with:
-          name: driving-upgrade-smoke-${{ github.run_id }}-${{ github.run_attempt }}
+          name: driving-upgrade-smoke-${{ matrix.scenario }}-${{ github.run_id }}-${{ github.run_attempt }}
           path: |
             artifacts/driving-upgrade/
             artifacts/multiplayer-driving-upgrade/

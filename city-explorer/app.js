@@ -7080,15 +7080,19 @@ function resetGameplay({mode='onFoot',stationSwitch=false} = {}) {
   if(multiplayer?.active)return false;
   if (!gameplayReady || (stationSwitchBusy() && !stationSwitch)) return false;
   const entry=fleetRuntime?.fleet.active;
+  const home=entry?.spawn;
+  const spawn=home?{truckPoint:{x:home.x,y:home.z},truckHeading:home.heading}:gameplaySpawnPoints();
+  const { truckPoint } = spawn;
+  const truckHeading = spawn.heading ?? spawn.truckHeading;
+  const truckSurface = gameplaySurfaceAt(truckPoint.x, truckPoint.y);
+  const resetPose = { x:truckPoint.x, z:truckPoint.y, y:truckSurface.height+.035, heading:truckHeading };
+  const exit = home ? findClearVehicleExit(resetPose,activeVehicleTuning(),null,entry.definition.id) : null;
+  if(home&&!exit){showToast('No clear space to reset beside this vehicle');return false;}
+  const playerPoint = exit ? { x:exit.x, y:exit.z } : spawn.playerPoint;
   aerialRuntime?.dismiss();
   if(entry?.aerial)Object.assign(entry.aerial,createAerialState());
-  const home=entry?.spawn;
-  const spawn=home?{truckPoint:{x:home.x,y:home.z},playerPoint:{x:home.x+3,y:home.z},truckHeading:home.heading}:gameplaySpawnPoints();
-  const { playerPoint, truckPoint } = spawn;
-  const truckHeading = spawn.heading ?? spawn.truckHeading;
   const spawnPlayerHeading = spawn.playerHeading ?? ((STATION_ONE_SELECTED || STATION_TWO_SELECTED) ? truckHeading + Math.PI : Math.PI);
   const playerSurface = gameplaySurfaceAt(playerPoint.x, playerPoint.y);
-  const truckSurface = gameplaySurfaceAt(truckPoint.x, truckPoint.y);
   playerActor.position.set(playerPoint.x, playerSurface.height + 0.025, playerPoint.y);
   playerVelocity.set(0, 0, 0);
   playerSpeed = 0;
@@ -7671,17 +7675,7 @@ function enterOrExitVehicle() {
   }
   const aerial=fleetRuntime?.fleet.active.aerial;
   const rearAccess=aerial&&aerial.phase!=='travel'?aerialRuntime?.rearExitPoint():null;
-  const exits=vehicleExitCandidates(truckState,activeVehicleTuning(),rearAccess);
-  const exit=exits.find(point=>{
-    if(!citySceneryReadyAt(point.x,point.z,false))return false;
-    const y=gameplaySurfaceAt(point.x,point.z,truckState.y).height;
-    const water=fleetHydroIndex?.heightAt(point.x,point.z);
-    if(Math.abs(y-truckState.y)>1.4||(Number.isFinite(water)&&y<water+.08))return false;
-    const player={x:point.x,z:point.z,y,heading:0};
-    return ![stationOneRuntime,stationTwoRuntime].some(r=>r?.collides(player,{player:true}))&&
-      !stationThreeBlocksMove(player,player,{player:true})&&
-      !fleetRuntime?.blocked(player,{length:.7,width:.7},null);
-  });
+  const exit=findClearVehicleExit(truckState,activeVehicleTuning(),rearAccess);
   if(!exit){showToast('No clear space to exit');return;}
   aerialRuntime?.clearInput();
   const exitX = exit.x;
@@ -7695,6 +7689,19 @@ function enterOrExitVehicle() {
   state.gameplayPitch = -0.19;
   setMode('onFoot', true);
   if(fleetRuntime?.fleet.active.aerial)showToast('Walk to the rear of the aerial to use its controls');
+}
+
+function findClearVehicleExit(pose,dimensions,rearAccess=null,excludeId=null) {
+  return vehicleExitCandidates(pose,dimensions,rearAccess).find(point=>{
+    if(!citySceneryReadyAt(point.x,point.z,false))return false;
+    const y=gameplaySurfaceAt(point.x,point.z,pose.y).height;
+    const water=fleetHydroIndex?.heightAt(point.x,point.z);
+    if(Math.abs(y-pose.y)>1.4||(Number.isFinite(water)&&y<water+.08))return false;
+    const player={x:point.x,z:point.z,y,heading:0};
+    return ![stationOneRuntime,stationTwoRuntime].some(r=>r?.collides(player,{player:true}))&&
+      !stationThreeBlocksMove(player,player,{player:true})&&
+      !fleetRuntime?.blocked(player,{length:.7,width:.7},excludeId);
+  });
 }
 
 function updateLocation() {
