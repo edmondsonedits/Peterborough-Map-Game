@@ -117,7 +117,7 @@ test('photo loading keeps supported porch depth visible and tags only glazing fo
   const profile = {
     id: 'fixture:house', label: 'FIXTURE', confidence: 'observed', style: 'house',
     frontLatLon: [{lat: 0, lon: 0}, {lat: 0, lon: 0.0001}], height: 6, eaveHeight: 6,
-    detailHeightMetres: 3.6, levels: 1, windowColumns: 1, porchWidthFraction: 0.6,
+    detailHeightMetres: 3.6, levels: 1, windowColumns: 2, porchWidthFraction: 0.6,
     porchDepthMetres: 1, porchHeightMetres: 2.4,
     facadePhoto: {file: './fixture.jpg', widthFraction: 1, bottomMetres: 0, heightMetres: 3.6, gableHeightMetres: 1,
       silhouette: [[0, 0], [1, 0], [1, 0.78], [0.5, 1], [0, 0.78]]}

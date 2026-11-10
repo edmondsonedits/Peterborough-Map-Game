@@ -61,6 +61,76 @@
       "id": "osm:node/7854664943",
       "reason": "Dated Planet pin occupies current Food Shop frontage; current 374 Water listing takes precedence.",
       "sourceUrl": "https://kawarthanow.com/venue/5781/the-food-shop/"
+    },
+    {
+      "id": "osm:node/462351260",
+      "reason": "Historical Husky name conflicts with the October 18 owner recording and the official Parkland 2025 Bellevue Ultramar station roster at 852 Chemong Road. Suppress this placement; Husky is not an Ultramar alias. The OSM observedAt field records retrieval, not physical sign observation.",
+      "checkedAt": "2026-11-10",
+      "supersededBy": "reviewed:ultramar-852-chemong",
+      "sourceUrl": "https://assets.ctfassets.net/yc16dpnaxmku/7cBkzEJYtwkAG2BWaVx7qr/078c3ea6d40859fc9ef285524000bba1/L-Aventure_Canadienne_Ultime_2025-_R%C3%A8glement_Officiel_du_Concours_2025_-_FRANCAIS.pdf",
+      "originalRecord": {
+        "id": "osm:node/462351260",
+        "osmElementId": "node/462351260",
+        "name": "Husky",
+        "address": "",
+        "unit": "",
+        "street": "CHEMONG RD",
+        "lat": 44.3189572,
+        "lon": -78.3311334,
+        "category": "fuel",
+        "sourceUrl": "https://www.openstreetmap.org/node/462351260",
+        "website": "",
+        "observedAt": "2026-10-25T00:46:44.147576+00:00",
+        "sourceKind": "osm",
+        "level": null,
+        "indoor": false,
+        "parcelAddress": "852 CHEMONG RD",
+        "frontageEvidence": "municipal-parcel-address",
+        "addressSourceUrl": "https://citymaps.peterborough.ca/arcgis/rest/services/Basedata/MapServer/4/query?f=pjson&objectIds=4326&outFields=ADDRESS&returnGeometry=false",
+        "sourceIds": [
+          "osm:node/462351260"
+        ],
+        "nameEvidence": [
+          {
+            "sourceUrl": "https://www.openstreetmap.org/node/462351260",
+            "sourceKind": "osm",
+            "observedAt": "2026-10-25T00:46:44.147576+00:00"
+          }
+        ],
+        "placementStatus": "approved",
+        "matchMethod": "point-containment",
+        "matchDistanceMetres": 0,
+        "buildingSourceId": "way/446339023",
+        "openingTopMetres": 2.44,
+        "frontage": [
+          {
+            "lat": 44.3189701,
+            "lon": -78.331231
+          },
+          {
+            "lat": 44.318917,
+            "lon": -78.3311783
+          }
+        ],
+        "fraction": 0.7874613058602299,
+        "placementMode": "street-facing-wall",
+        "frontageMethod": "municipal-parcel-address-street-wall",
+        "frontageStreet": "Chemong Road",
+        "openingEvidence": "inferred-ground-floor-opening-band"
+      },
+      "photoEvidence": {
+        "recordedOn": "2026-10-18",
+        "reviewedOn": "2026-11-10",
+        "photoIds": [
+          "R041",
+          "R043",
+          "R049"
+        ],
+        "primaryPhoto": "R041",
+        "sourcePath": "Peterborough-Building-References-20261024/dense/flat-768/frame_0057_lens1_pitch+0.jpg",
+        "sourceSha256": "4bb30b281516cf9defd538691a59d71b4d46296070504e4977e6066678847d17",
+        "observation": "White Ultramar lettering on the navy southwest short canopy fascia; a separate roadside pylon also reads Ultramar."
+      }
     }
   ],
   "additions": [
@@ -102,6 +172,53 @@
       "sourceKind": "reviewed-current-name",
       "sourceUrl": "https://curateandco.ca/",
       "observedAt": "2026-10-24"
+    },
+    {
+      "id": "reviewed:ultramar-852-chemong",
+      "name": "Ultramar",
+      "address": "852 Chemong Road",
+      "street": "Chemong Road",
+      "lat": 44.3189572,
+      "lon": -78.3311334,
+      "buildingSourceId": "way/446339023",
+      "reviewedBuildingMatch": true,
+      "category": "fuel",
+      "sourceKind": "reviewed-current-name",
+      "sourceBusinessId": "parkland:43406",
+      "sourceUrl": "https://assets.ctfassets.net/yc16dpnaxmku/7cBkzEJYtwkAG2BWaVx7qr/078c3ea6d40859fc9ef285524000bba1/L-Aventure_Canadienne_Ultime_2025-_R%C3%A8glement_Officiel_du_Concours_2025_-_FRANCAIS.pdf",
+      "website": "https://journie.ca/ultramar/on-en",
+      "observedAt": "2026-11-10",
+      "parcelAddress": "852 CHEMONG RD",
+      "frontageEvidence": "municipal-parcel-address",
+      "addressSourceUrl": "https://citymaps.peterborough.ca/arcgis/rest/services/Basedata/MapServer/4/query?f=pjson&objectIds=4326&outFields=ADDRESS&returnGeometry=false",
+      "openingTopMetres": 4.7,
+      "heightAboveBaseMetres": 4.95,
+      "heightMetres": 0.35,
+      "widthMetres": 4.1,
+      "fraction": 0.5,
+      "photoEvidence": {
+        "recordedOn": "2026-10-18",
+        "reviewedOn": "2026-11-10",
+        "photoIds": [
+          "R041",
+          "R043",
+          "R049"
+        ],
+        "primaryPhoto": "R041",
+        "sourcePath": "Peterborough-Building-References-20261024/dense/flat-768/frame_0057_lens1_pitch+0.jpg",
+        "sourceSha256": "4bb30b281516cf9defd538691a59d71b4d46296070504e4977e6066678847d17",
+        "observation": "White Ultramar lettering on the navy southwest short canopy fascia; a separate roadside pylon also reads Ultramar."
+      },
+      "reviewEvidence": {
+        "checkedAt": "2026-11-10",
+        "operatorRosterPeriod": "2025 contest, May 21-July 15",
+        "operatorRosterPage": 19,
+        "operatorRosterStationName": "BELLEVUE ULTRAMAR",
+        "operatorRosterSha256": "bd1c42e4959564348f75506dd6679a4f68c23aa134ac358dd9e8087fcd17b0e3",
+        "dateMeaning": "observedAt is the combined source review date, not an on-site visit or the publication date of the 2025 roster. The physical sign is observed in the October 18 recording.",
+        "scope": "Station display brand and exact address are corroborated. No current legal operator, opening hours or prices are asserted.",
+        "placement": "The explicit southwest fascia dimensions are reviewed estimates. The existing planner must reject them if the rendered canopy has insufficient vertical clearance."
+      }
     }
   ]
 }

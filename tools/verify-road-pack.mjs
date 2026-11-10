@@ -3,7 +3,8 @@ import fs from 'node:fs';
 import path from 'node:path';
 import zlib from 'node:zlib';
 import { fileURLToPath } from 'node:url';
-import { decodeRoadTile, MAX_ROAD_TILE_BYTES } from '../city-explorer/road-tile-pack.js';
+import { decodeRoadTile, MAX_ROAD_TILE_BYTES, PackedRoadSurfaceIndex } from '../city-explorer/road-tile-pack.js';
+import { validateReviewedCanopyGroundRecord, verifyReviewedCanopyGroundProof } from '../city-explorer/reviewed-canopy-ground.js';
 
 const MAX_GZIP_TILE_BYTES = MAX_ROAD_TILE_BYTES + 64 * 1024;
 const sha256 = value => crypto.createHash('sha256').update(value).digest('hex');
@@ -89,6 +90,9 @@ export function verifyRoadPack(repositoryRoot = path.resolve(path.dirname(fileUR
   if (!version) fail('ROAD_PACK_ID is missing or invalid');
   if (version[1] !== manifest.buildId) fail(`ROAD_PACK_ID mismatch: module ${version[1]}, manifest ${manifest.buildId}`);
   verifySourceIdentity(manifest, root);
+  const needsCanopyProof = Boolean(manifest.sources['city-explorer/reviewed-route-surfaces.js']);
+  const canopyIndex = needsCanopyProof ? new PackedRoadSurfaceIndex() : null;
+  if (needsCanopyProof) validateReviewedCanopyGroundRecord(manifest);
   if(manifest.sources?.['city-explorer/water-street-paint.js']){
     const water=manifest.markings?.quality?.waterStreet;
     if(!water?.coreAccepted||!water.coverageComplete||!(water.paintPaths>0)||!(water.validSamples>=50)||!(water.supportCoverage?.checked>0)||water.supportCoverage.missing!==0)fail('Reviewed Water Street paint is missing or uncalibrated');
@@ -141,6 +145,8 @@ export function verifyRoadPack(repositoryRoot = path.resolve(path.dirname(fileUR
     const triangles = decoded.groups.reduce((sum, group) => sum + group.positions.length / 9, 0);
     if (triangles !== tile.triangles) fail(`Tile ${tile.id} triangle count mismatch: manifest ${tile.triangles}, decoded ${triangles}`);
     verifyBounds(tile, decoded.groups);
+    if (canopyIndex && manifest.reviewedCanopyGround.samples.some(p => p.x >= tile.bounds.minX && p.x <= tile.bounds.maxX
+      && p.z >= tile.bounds.minZ && p.z <= tile.bounds.maxZ)) canopyIndex.addTile(tile.id, decoded.groups);
     totalBytes += compressed.byteLength;
     totalRawBytes += raw.byteLength;
     totalTriangles += triangles;
@@ -150,6 +156,7 @@ export function verifyRoadPack(repositoryRoot = path.resolve(path.dirname(fileUR
       fail(`Road pack ${field} mismatch: manifest ${manifest[field]}, verified ${actual}`);
     }
   }
+  if (canopyIndex) verifyReviewedCanopyGroundProof({ manifest, samplePacked: (x, z) => canopyIndex.sample(x, z, null, { contact: 'official' }) });
   return { buildId: manifest.buildId, tiles: manifest.tiles.length, totalBytes, totalRawBytes, totalTriangles };
 }
 

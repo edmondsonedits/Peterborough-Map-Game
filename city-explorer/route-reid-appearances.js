@@ -1,6 +1,7 @@
 // Six verified sources on the southbound Reid route, R073–R083.
 // Frontages are exact adjacent vertices in the current source rings. Appearance
-// dimensions/colors are estimates; no source height, roof or collision is replaced.
+// dimensions/colors are estimates. Two reviewed visual envelopes correct the
+// R077 silhouette and R078 display datum; source heights and physics stay intact.
 export const ROUTE_REID_APPEARANCES = {
   'way/446339087': {
     street: 'Reid Street', intersection: 'Reid Street / Edinburgh Street', corner: 'northeast',
@@ -71,7 +72,7 @@ export const ROUTE_REID_APPEARANCES = {
     street: 'Reid Street', intersection: 'Reid Street / Edinburgh Street', corner: 'northwest',
     photoIds: ['R077'], source: 'dense/flat-768/frame_0110_lens0_pitch+0.jpg',
     observation: 'The northwest Edinburgh bungalow has muted tan walls, a broad shallow dark roof, a pale-framed window group and a rough gray-brown lower entry wall. Shrubs partly hide the north end.',
-    estimated: 'One broad window group and the entrance cue are bounded estimates; the partly obscured north end gains no extra windows. The lower wall is represented by a simple color band, not claimed as exact stonework. Existing roof shape/height and yard remain unchanged.',
+    estimated: 'One broad window group and the entrance cue are bounded estimates; the partly obscured north end gains no extra windows. The lower wall is represented by a simple color band, not exact stonework. A reviewed visual-only 3.2 m eave and 1.1 m shallow hip rise replace the untagged 6.10053 m wall plus 2.07907 m inferred roof silhouette. Heights and hip form are estimates from R077 and orthophoto, not surveyed values. Exact source footprint, source/physics dimensions, terrain and yard remain unchanged.',
     profile: {
       label: 'REID-EDINBURGH-NW', name: 'Tan bungalow at Edinburgh', confidence: 'observed',
       frontLatLon: [{lat: 44.3132339, lon: -78.3285525}, {lat: 44.3131668, lon: -78.3285482}],
@@ -79,6 +80,7 @@ export const ROUTE_REID_APPEARANCES = {
     },
     appearance: {
       wallColor: '#b6aa94', wallSurface: 'render', roofColor: '#4d514a', trimColor: '#d7d8ca', glassColor: '#4e6462',
+      reviewedEnvelope: {datum: 'source', wallHeightMetres: 3.2, roofRiseMetres: 1.1, roofShape: 'hipped'},
       porch: false, skipGroundWindows: true,
       plinthColor: '#8b8273', plinthHeight: .86,
       groundWindows: [{t: .63, bottom: .95, width: 2.4, height: 1.38}],
@@ -89,7 +91,7 @@ export const ROUTE_REID_APPEARANCES = {
     street: 'Reid Street', intersection: 'Reid Street / Edinburgh Street', corner: 'southeast',
     photoIds: ['R078'], source: 'dense/flat-768/frame_0110_lens1_pitch+0.jpg',
     observation: 'Across Edinburgh from Jiffy Lube, a raised red-brick house has pale upper trim, a pale enclosed/screened porch and a gray base. Trees obscure much of the front. The complex footprint includes a visibly lower south return.',
-    estimated: 'Only the main mapped west edge receives restrained opening/porch-panel cues. Upper-window visibility, porch subdivision, colors and dimensions are estimated. The enclosed porch is not replaced by a generic open porch. No massing zones, full-ring gable or new upper windows are applied to the lower south return; its existing source geometry remains unchanged.',
+    estimated: 'Only the main mapped west edge receives restrained opening/porch-panel cues. Upper-window visibility, porch subdivision, colors and dimensions are estimated. The enclosed porch is not replaced by a generic open porch. The visual foundation uses the higher of the two exact west-front terrain samples instead of the remote whole-ring maximum, which lifted these details 2.62–2.87 m above local grade. Terrain and source/physics dimensions are unchanged. No new massing zones, full-ring gable or upper openings are applied to the lower south return; exact return heights and the retaining wall remain a separate review.',
     profile: {
       label: 'REID-EDINBURGH-SE', name: 'Raised brick house at Edinburgh', confidence: 'observed',
       frontLatLon: [{lat: 44.3130103, lon: -78.3281834}, {lat: 44.3129525, lon: -78.3281821}],
@@ -97,6 +99,7 @@ export const ROUTE_REID_APPEARANCES = {
     },
     appearance: {
       wallColor: '#875749', wallSurface: 'brick', roofColor: '#494d44', trimColor: '#d9cfba', glassColor: '#46554f',
+      reviewedEnvelope: {datum: 'frontage'},
       porch: false, entryDoor: null, skipGroundWindows: true, windowWidthMetres: .8, windowHeightMetres: 1.4,
       windowOverrides: [{level: 1, column: 0, skip: true}],
       plinthColor: '#817f74', plinthHeight: .68,

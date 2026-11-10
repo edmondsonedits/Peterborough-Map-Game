@@ -2423,13 +2423,22 @@
         "packaged data ready",
         "official data ready",
         "source fallback",
-        "offline fallback"
+        "offline fallback",
+        "reviewed canopy awaiting-ground",
+        "reviewed canopy deferred until final source pavement",
+        "reviewed canopy ground-verified",
+        "reviewed canopy rendered",
+        "reviewed canopy withheld with generic fallback"
       ],
       "events": [
         "source-fetch completion/timeout",
         "parse conversion error",
         "official terrain compatibility",
-        "fallback generation"
+        "fallback generation",
+        "packed ground receipt validates against the current build → ground-verified; missing, stale or rejected proof → withheld",
+        "source canopy encountered before corrected pavement finishes → deferred by source ID",
+        "final source pavement completes → ground proof and one drain of deferred source jobs",
+        "runtime canopy build accepts the verified samples → rendered; invalid samples → generic fallback"
       ],
       "authority": [
         "cachedOsmText",
@@ -2438,11 +2447,26 @@
         "terrain.available",
         "terrain.source",
         "state.loadedSource",
-        "roadTileLayer"
+        "roadTileLayer",
+        "roadTileManifest",
+        "reviewedRouteSurfaceDiagnostics",
+        "reviewedCanopySourceRings",
+        "reviewedCanopyGroundReceipt",
+        "deferredReviewedCanopies",
+        "reviewedCanopyStatus",
+        "state.finishedRoadSurfaces",
+        "state.renderedPavementIndex",
+        "state.officialDrivableSurfaceIndex"
       ],
       "invariants": [
         "Road packs must match source and terrain identity",
-        "A failed source must leave a defined fallback path"
+        "A failed source must leave a defined fallback path",
+        "The existing source-loading owner controls canopy receipt, deferred jobs and status; documentation adds no runtime controller or duplicate authority",
+        "Reviewed visual replacement requires a valid current packed-ground receipt or proof sampled from finished corrected source pavement; terrain and unfinished contacts cannot authorize it",
+        "Packed canopy proof must match correction, build, sample coordinates, bound tile hashes and source-to-packed grade; missing, old or rejected proof preserves the generic building",
+        "Source jobs wait for final pavement and are cleared from deferredReviewedCanopies before rebuilding, so a repeated drain cannot duplicate them; rejected source proof still builds the generic fallback",
+        "The ground receipt authorizes visual support heights, not live streaming readiness; vehicle contact continues to use the live pavement index",
+        "Recording-reference opt-out and ROAD_PACK_BUILD do not activate the reviewed canopy"
       ],
       "sources": [
         {
@@ -2453,18 +2477,48 @@
         {
           "path": "city-explorer/app.js",
           "anchor": "async function loadTerrain() {",
-          "line": 1203
+          "line": 1228
         },
         {
           "path": "city-explorer/app.js",
           "anchor": "async function buildCity() {",
-          "line": 5694
+          "line": 5889
+        },
+        {
+          "path": "city-explorer/app.js",
+          "anchor": "function runtimeReviewedCanopy(featureId, outer, holes) {",
+          "line": 2260
+        },
+        {
+          "path": "city-explorer/app.js",
+          "anchor": "function appendBufferedBuilding(rings, tags, featureId, batches, sourceId = featureId) {",
+          "line": 2273
+        },
+        {
+          "path": "city-explorer/app.js",
+          "anchor": "async function tryLoadRoadTilePack(){",
+          "line": 4656
+        },
+        {
+          "path": "city-explorer/app.js",
+          "anchor": "function sourceReviewedCanopyGround() {",
+          "line": 5845
+        },
+        {
+          "path": "city-explorer/app.js",
+          "anchor": "function finishReviewedCanopySource() {",
+          "line": 5867
         }
       ],
-      "inspect": [],
+      "inspect": [
+        "__PTBO_CITY_QA__.metrics().reviewedCanopy",
+        "__PTBO_ROAD_BUILD__.report().reviewedCanopyGround (roadPack=build only)"
+      ],
       "tests": [
         "tests/road-tile-layer.test.mjs",
-        "tests/critical-gameplay.test.cjs"
+        "tests/critical-gameplay.test.cjs",
+        "tests/reviewed-canopy-app.test.mjs",
+        "tests/shared-wall-integration.test.mjs"
       ],
       "followUp": null
     },

@@ -1,5 +1,15 @@
 const PROVENANCE = 'original procedural';
 const VERSION = 'ptbo-city-materials-v1';
+// Rendering estimates, not dimensions measured from the October route photos.
+// A separate opt-in keeps every existing city material and its cache key intact.
+export const REVIEWED_BRICK_DETAIL = Object.freeze({
+  version: 'reviewed-brick-v1',
+  scaleMeters: Object.freeze({width: .24, height: .075, mortar: .008}),
+  mortarContrast: 1.2,
+  brickVariation: .025,
+  projection: 'horizontal-wall-tangent',
+  provenance: PROVENANCE,
+});
 const defineMaterial = (kind, intendedUse, scaleMeters, roughness, metalness, projection = 'world-axis') => Object.freeze({
   kind,
   intendedUse,
@@ -176,6 +186,52 @@ const EFFECTS = Object.freeze({
   ].join('\n'),
 });
 
+const REVIEWED_BRICK_PREAMBLE = `
+float cityReviewedIntervalIntegral(float position, float width) {
+  return floor(position) * width + min(fract(position), width);
+}
+// Exact box coverage of a repeating interval. Wrapping the centre first keeps
+// nearby subtraction stable even when the wall is kilometres from the origin.
+float cityReviewedIntervalCoverage(float position, float span, float width) {
+  float centre = fract(position);
+  float halfSpan = max(span, 0.0001) * 0.5;
+  return clamp((cityReviewedIntervalIntegral(centre + halfSpan, width)
+    - cityReviewedIntervalIntegral(centre - halfSpan, width)) / (2.0 * halfSpan), 0.0, 1.0);
+}`;
+
+const REVIEWED_BRICK_EFFECT = `
+vec2 reviewedBrickNormal = vCityWorldNormal.xz;
+vec2 reviewedBrickTangent = length(reviewedBrickNormal) > 0.001
+  ? normalize(vec2(reviewedBrickNormal.y, -reviewedBrickNormal.x)) : vec2(1.0, 0.0);
+vec2 reviewedBrickUv = vec2(dot(vAaaWorldPosition.xz, reviewedBrickTangent), vAaaWorldPosition.y);
+vec2 reviewedBrickGrid = reviewedBrickUv / vec2(${REVIEWED_BRICK_DETAIL.scaleMeters.width}, ${REVIEWED_BRICK_DETAIL.scaleMeters.height});
+vec2 reviewedBrickFootprint = max(fwidth(reviewedBrickGrid), vec2(0.0001));
+vec2 reviewedBrickJoint = vec2(${REVIEWED_BRICK_DETAIL.scaleMeters.mortar}) / vec2(${REVIEWED_BRICK_DETAIL.scaleMeters.width}, ${REVIEWED_BRICK_DETAIL.scaleMeters.height});
+// Integrate both staggered row interiors separately, including at subpixel size.
+// Merely smoothing fract(grid) loses joint area as a course becomes smaller.
+float reviewedBrickEvenRow = cityReviewedIntervalCoverage(
+  (reviewedBrickGrid.y - reviewedBrickJoint.y * 0.5) * 0.5,
+  reviewedBrickFootprint.y * 0.5, (1.0 - reviewedBrickJoint.y) * 0.5);
+float reviewedBrickOddRow = cityReviewedIntervalCoverage(
+  (reviewedBrickGrid.y - 1.0 - reviewedBrickJoint.y * 0.5) * 0.5,
+  reviewedBrickFootprint.y * 0.5, (1.0 - reviewedBrickJoint.y) * 0.5);
+float reviewedBrickEvenHead = cityReviewedIntervalCoverage(
+  reviewedBrickGrid.x + reviewedBrickJoint.x * 0.5, reviewedBrickFootprint.x, reviewedBrickJoint.x);
+float reviewedBrickOddHead = cityReviewedIntervalCoverage(
+  reviewedBrickGrid.x + 0.5 + reviewedBrickJoint.x * 0.5, reviewedBrickFootprint.x, reviewedBrickJoint.x);
+float reviewedBrickMortar = clamp(1.0 - reviewedBrickEvenRow * (1.0 - reviewedBrickEvenHead)
+  - reviewedBrickOddRow * (1.0 - reviewedBrickOddHead), 0.0, 1.0);
+float reviewedBrickMeanMortar = 1.0 - (1.0 - reviewedBrickJoint.x) * (1.0 - reviewedBrickJoint.y);
+float reviewedBrickTone = cityHash21(floor(vec2(
+  reviewedBrickGrid.x + floor(reviewedBrickGrid.y) * 0.5, reviewedBrickGrid.y))) * 2.0 - 1.0;
+float reviewedBrickToneFade = 1.0 - smoothstep(0.35, 1.5, max(reviewedBrickFootprint.x, reviewedBrickFootprint.y));
+// Zero-mean scalar modulation preserves the supplied wall's average linear RGB
+// and hue. It does not multiply a second coloured brick image into that tint.
+float reviewedBrickShade = 1.0 + ${REVIEWED_BRICK_DETAIL.mortarContrast} * (reviewedBrickMortar - reviewedBrickMeanMortar)
+  + reviewedBrickTone * ${REVIEWED_BRICK_DETAIL.brickVariation} * reviewedBrickToneFade * (1.0 - reviewedBrickMortar);
+diffuseColor.rgb *= reviewedBrickShade;
+`;
+
 function materialHasClone(material) {
   return material && typeof material === 'object' && typeof material.clone === 'function';
 }
@@ -241,7 +297,10 @@ export function installCityMaterialDetail(material, options = {}) {
   const baseCacheKey = String(originalCacheKey.call(material) || '');
   const strength = quality === 'lite' ? '0.52' : '1.00';
   const asphaltStyle = kind === 'asphalt' ? options.asphaltStyle === 'legacy' ? 'legacy' : 'improved' : null;
-  const effectSource = asphaltStyle === 'legacy' ? LEGACY_ASPHALT_EFFECT : EFFECTS[kind];
+  const reviewedBrick = kind === 'brick' && options.reviewedBrick === true;
+  const reviewedMetadata = reviewedBrick ? {reviewedBrick: REVIEWED_BRICK_DETAIL.version} : {};
+  const scaleMeters = reviewedBrick ? REVIEWED_BRICK_DETAIL.scaleMeters : profile.scaleMeters;
+  const effectSource = reviewedBrick ? REVIEWED_BRICK_EFFECT : asphaltStyle === 'legacy' ? LEGACY_ASPHALT_EFFECT : EFFECTS[kind];
   const effect = effectSource.replaceAll('__CITY_STRENGTH__', strength);
 
   material.onBeforeCompile = (shader, renderer) => {
@@ -256,13 +315,14 @@ export function installCityMaterialDetail(material, options = {}) {
           id,
           quality,
           ...(asphaltStyle ? { asphaltStyle } : {}),
-          scaleMeters: profile.scaleMeters,
+          ...reviewedMetadata,
+          scaleMeters,
           provenance: profile.provenance,
           version: VERSION,
           renderer: rendererInfo,
           shaderDetailFallback: true,
         },
-        cityMaterialDetail: { kind, id, quality, ...(asphaltStyle ? { asphaltStyle } : {}), provenance: profile.provenance },
+        cityMaterialDetail: { kind, id, quality, ...(asphaltStyle ? { asphaltStyle } : {}), ...reviewedMetadata, provenance: profile.provenance },
       };
       return;
     }
@@ -290,7 +350,7 @@ export function installCityMaterialDetail(material, options = {}) {
       .replace('#include <defaultnormal_vertex>', normalInjection)
       .replace('#include <begin_vertex>', positionInjection);
     shader.fragmentShader = shader.fragmentShader
-      .replace('#include <common>', '#include <common>\n' + SHADER_PREAMBLE)
+      .replace('#include <common>', '#include <common>\n' + SHADER_PREAMBLE + (reviewedBrick ? '\n' + REVIEWED_BRICK_PREAMBLE : ''))
       .replace('vec4 diffuseColor = vec4( diffuse, opacity );', 'vec4 diffuseColor = vec4( diffuse, opacity );\n' + effect);
 
     material.userData = {
@@ -301,17 +361,18 @@ export function installCityMaterialDetail(material, options = {}) {
         id,
         quality,
         ...(asphaltStyle ? { asphaltStyle } : {}),
-        scaleMeters: profile.scaleMeters,
+        ...reviewedMetadata,
+        scaleMeters,
         provenance: profile.provenance,
         version: VERSION,
         renderer: rendererInfo,
         shaderDetailFallback: false,
       },
-      cityMaterialDetail: { kind, id, quality, ...(asphaltStyle ? { asphaltStyle } : {}), provenance: profile.provenance },
+      cityMaterialDetail: { kind, id, quality, ...(asphaltStyle ? { asphaltStyle } : {}), ...reviewedMetadata, provenance: profile.provenance },
     };
   };
 
-  material.customProgramCacheKey = () => baseCacheKey + '|' + VERSION + ':' + kind + ':' + quality + (asphaltStyle === 'legacy' ? ':legacy' : '');
+  material.customProgramCacheKey = () => baseCacheKey + '|' + VERSION + ':' + kind + ':' + quality + (asphaltStyle === 'legacy' ? ':legacy' : '') + (reviewedBrick ? ':' + REVIEWED_BRICK_DETAIL.version : '');
   material.userData = {
     ...(material.userData || {}),
     cityMaterial: {
@@ -320,16 +381,25 @@ export function installCityMaterialDetail(material, options = {}) {
       id,
       quality,
       ...(asphaltStyle ? { asphaltStyle } : {}),
-      scaleMeters: profile.scaleMeters,
+      ...reviewedMetadata,
+      scaleMeters,
       provenance: profile.provenance,
       version: VERSION,
       renderer: null,
       shaderDetailFallback: false,
     },
-    cityMaterialDetail: { kind, id, quality, ...(asphaltStyle ? { asphaltStyle } : {}), provenance: profile.provenance },
+    cityMaterialDetail: { kind, id, quality, ...(asphaltStyle ? { asphaltStyle } : {}), ...reviewedMetadata, provenance: profile.provenance },
   };
   material.needsUpdate = true;
   return true;
+}
+
+/** Explicitly reviewed brick only. Call before the optional-scenery early return
+ * so actual Lite retains this bounded surface cue. Generic walls use the existing
+ * installCityMaterialDetail path. Base colors, geometry and UVs stay unchanged.
+ */
+export function installReviewedBrickDetail(material, {id = 'reviewed-brick', quality = 'full'} = {}) {
+  return installCityMaterialDetail(material, {kind: 'brick', id, quality, reviewedBrick: true});
 }
 
 /**

@@ -1,5 +1,6 @@
-import { glazingIntensity } from './city-visual-settings.js?v=1.6.205';
-import { createRecordedEnclosedBays } from './recorded-enclosed-bays.js?v=1.6.205';
+import { glazingIntensity } from './city-visual-settings.js?v=1.6.208';
+import { createRecordedEnclosedBays } from './recorded-enclosed-bays.js?v=1.6.208';
+import { fitFacadeSignText } from './facade-sign-text.js?v=1.6.208';
 // Ground-level frontage details for the existing Sherbrooke building masses.
 // These objects add neither walls/roofs nor collision geometry.
 const clamp = (v, lo, hi) => Math.max(lo, Math.min(hi, v));
@@ -100,12 +101,13 @@ export function mapPhotoPatchUV(quad, x, y) {
   return [(h[0] * x + h[1] * y + h[2]) / d, (h[3] * x + h[4] * y + h[5]) / d];
 }
 
-export function createFootageFacade({ THREE, profile, ring, base, top, project, terrainHeightAtWorld, gardenClear, visuals = 'improved', lite = false, glassEnvironment, frontageIndex = 0 }) {
+export function createFootageFacade({ THREE, profile, ring, base, top, project, terrainHeightAtWorld, gardenClear, visuals = 'improved', lite = false, optionalAssets = !lite, glassEnvironment, frontageIndex = 0 }) {
   if (!THREE?.Group || !THREE?.InstancedMesh) throw new TypeError("Three.js runtime is required");
   if (!profile || !Number.isFinite(base) || !Number.isFinite(top) || top <= base) throw new TypeError("Profile and finite building base/top are required");
   // Omit optional downloads and gardens before deriving openings, so an absent
-  // photo patch cannot leave a blank facade in Lite. Never mutate the profile.
-  if (lite) profile = { ...profile, facadePhoto: undefined, texturePatch: undefined, frontGarden: undefined };
+  // photo patch cannot leave a blank facade. Balanced keeps the low-power
+  // geometry cap but may retain reviewed assets. Never mutate the profile.
+  if (!optionalAssets) profile = { ...profile, facadePhoto: undefined, texturePatch: undefined, frontGarden: undefined };
   const root = new THREE.Group(); root.name = `SherbrookeFootage-${profile.label || profile.id || "building"}`;
   root.userData = { type: "reference-frontage-details", profileId: profile.id, confidence: profile.confidence, collision: false, photoStatus: "not-needed", frontageCount: 1, renderedSigns: [] };
   // Station 1 already has a separately reviewed five-door frontage in the game.
@@ -120,9 +122,9 @@ export function createFootageFacade({ THREE, profile, ring, base, top, project, 
       signBusinessName: Object.hasOwn(face, 'signBusinessName') ? face.signBusinessName
         : Object.hasOwn(face, 'signText') ? undefined : primary.signBusinessName,
       additionalFrontages: undefined, facadePhoto: face.facadePhoto, texturePatch: undefined, frontGarden: undefined,
-      enclosedBays: face.enclosedBays,
+      enclosedBays: face.enclosedBays, appliedLettering: face.appliedLettering,
     }))];
-    for (const [index, face] of faces.entries()) root.add(createFootageFacade({THREE, profile: face, ring, base, top, project, terrainHeightAtWorld, gardenClear, visuals, lite, glassEnvironment, frontageIndex: index}));
+    for (const [index, face] of faces.entries()) root.add(createFootageFacade({THREE, profile: face, ring, base, top, project, terrainHeightAtWorld, gardenClear, visuals, lite, optionalAssets, glassEnvironment, frontageIndex: index}));
     root.userData.frontageCount = faces.length;
     const collectSigns = () => root.userData.renderedSigns.splice(0, root.userData.renderedSigns.length,
       ...root.children.flatMap(child => child.userData.renderedSigns || []));
@@ -175,32 +177,41 @@ export function createFootageFacade({ THREE, profile, ring, base, top, project, 
       box(t + side * (w / 2 + .18) / f.length, y, .28, ht, .052, profile.shutterColor, .218);
     }
   }
-  function sign(text, t, y, w) {
-    const boardHeight = clamp(Number(profile.signBoardHeightMetres) || .5, .3, 1.5);
-    const signOutset = clamp(Number(profile.signOutsetMetres) || .3, .3, .6);
-    const applied = profile.signStyle === 'applied', drawnText = String(text || '').trim().slice(0, 38);
-    if (!applied) box(t, y, w, boardHeight, .09, profile.signBoardColor || "trim", signOutset - .06);
+  function sign(text, t, y, w, options = {}) {
+    const config = { ...profile, ...options };
+    const boardHeight = clamp(Number(config.signBoardHeightMetres) || .5, .3, 1.5);
+    const applied = config.signStyle === 'applied', drawnText = String(text || '').trim().slice(0, 38);
+    const signOutset = clamp(Number(config.signOutsetMetres) || .3, applied ? .01 : .3, .6);
+    if (!applied) box(t, y, w, boardHeight, .09, config.signBoardColor || "trim", signOutset - .06);
     if (typeof document === "undefined" || !drawnText) return;
     let texture, geometry, signMaterial;
     try {
-      const canvas = document.createElement("canvas"); canvas.width = 768; canvas.height = 96; const ctx = canvas.getContext("2d");
+      const canvas = document.createElement("canvas"), ctx = canvas.getContext("2d");
       if (!ctx) return;
-      if (!applied) { ctx.fillStyle = profile.signBackgroundColor || "#eee8dc"; ctx.fillRect(0, 0, canvas.width, canvas.height); }
-      ctx.fillStyle = profile.signTextColor || "#293c3c";
-      ctx.font = profile.signFont || "700 46px Georgia,serif"; ctx.textAlign = "center"; ctx.textBaseline = "middle";
-      ctx.fillText(drawnText, canvas.width / 2, canvas.height / 2);
+      const fit = fitFacadeSignText({context:ctx,text:drawnText,font:config.signFont || "700 46px Georgia,serif",
+        widthMetres:w*.9,heightMetres:boardHeight*.9});
+      if (!fit) return;
+      canvas.width = fit.canvasWidth; canvas.height = fit.canvasHeight;
+      if (!applied) { ctx.fillStyle = config.signBackgroundColor || "#eee8dc"; ctx.fillRect(0, 0, canvas.width, canvas.height); }
+      ctx.fillStyle = config.signTextColor || "#293c3c";
+      ctx.font = fit.font; ctx.textAlign = "left"; ctx.textBaseline = "alphabetic";
+      ctx.fillText(drawnText, fit.x, fit.y);
       texture = new THREE.CanvasTexture(canvas); if (THREE.SRGBColorSpace) texture.colorSpace = THREE.SRGBColorSpace;
-      geometry = new THREE.PlaneGeometry(w * .9, boardHeight * .68);
+      geometry = new THREE.PlaneGeometry(fit.planeWidthMetres, fit.planeHeightMetres);
       signMaterial = new THREE.MeshBasicMaterial({ map: texture, side: THREE.DoubleSide,
         ...(applied ? { transparent: true, alphaTest: .02, depthWrite: false } : {}) });
       const plate = new THREE.Mesh(geometry, signMaterial), p = at(t, y, signOutset);
       plate.name = applied ? 'frontage-applied-sign' : 'frontage-business-sign';
       plate.position.set(p.x, p.y, p.z); plate.rotation.y = Math.atan2(f.outward.x, f.outward.z);
-      const record = { sourceId: profile.id, frontageIndex, name: profile.signBusinessName || String(text).trim(),
-        text: drawnText, frontage: profile.frontLatLon.map(point => ({ ...point })) };
+      const record = { sourceId: profile.id, frontageIndex, name: options.deferIdentity ? null : config.signBusinessName || String(text).trim(),
+        text: drawnText, frontage: profile.frontLatLon.map(point => ({ ...point })),
+        textFit:{metrics:fit.metrics,canvasWidth:fit.canvasWidth,canvasHeight:fit.canvasHeight,
+          panelWidthMetres:w,panelHeightMetres:boardHeight,planeWidthMetres:fit.planeWidthMetres,planeHeightMetres:fit.planeHeightMetres,
+          inkWidthMetres:fit.inkWidthMetres,inkHeightMetres:fit.inkHeightMetres} };
       plate.userData = { type: 'reference-business-sign', collision: false, ...record };
       frontageDetails.add(plate);
-      root.userData.renderedSigns.push(record);
+      if (!options.deferIdentity) root.userData.renderedSigns.push(record);
+      return { plate, record };
     } catch {
       texture?.dispose(); geometry?.dispose(); signMaterial?.dispose();
     }
@@ -212,6 +223,10 @@ export function createFootageFacade({ THREE, profile, ring, base, top, project, 
   const wideGlass = style === "office" && profile.largeGlazedFront;
   const entry = profile.entryDoor && typeof profile.entryDoor === 'object' ? profile.entryDoor : null;
   const entryFraction = entry ? clamp(Number.isFinite(entry.fraction) ? entry.fraction : .5, .02, .98) : null;
+  const implicitDoor = !entry && profile.entryDoor !== null && (style === 'house'
+    || (style === 'office' && levels > 1 && !profile.blankFacade && !profile.skipGroundWindows))
+    ? { fraction: Number.isFinite(profile.doorFraction) ? profile.doorFraction : .5,
+      width: style === 'house' ? .86 : .9, bottom: .025, top: 2.075 } : null;
   if (Number(profile.plinthHeight) > 0 && profile.plinthColor) {
     const band = clamp(Number(profile.plinthHeight), .1, Math.min(h, 4));
     box(.5, band / 2, f.length, band, .12, profile.plinthColor, .1);
@@ -238,6 +253,12 @@ export function createFootageFacade({ THREE, profile, ring, base, top, project, 
       const height = clamp(Number(override?.heightMetres) || defaultHeight, .2, h);
       const centerY = Number.isFinite(override?.bottomMetres)
         ? clamp(override.bottomMetres, 0, h - height) + height / 2 : (retailGround ? floor * .43 : y);
+      // The fallback house/office door is already emitted below. Do not also
+      // infer a window and foreground sill across it. Explicit authored window
+      // overrides and separate ground-window records retain their own intent.
+      if (level === 0 && !override && implicitDoor
+        && Math.abs(t - implicitDoor.fraction) * f.length < (width + .025 + implicitDoor.width) / 2
+        && centerY - height / 2 < implicitDoor.top && centerY + height / 2 > implicitDoor.bottom) continue;
       const arched = visuals !== 'legacy' && (override?.shape === 'arch' || (level > 0 && profile.archedWindowLevels?.includes(level)));
       window(t, centerY, width, height, arched);
     }
@@ -345,6 +366,40 @@ export function createFootageFacade({ THREE, profile, ring, base, top, project, 
     box(fraction, height * .54, Math.max(.2, width - .18), height * .75, .035, 'glass', .34);
   }
   if (profile.signText) sign(profile.signText, Number.isFinite(profile.signFraction) ? profile.signFraction : .5, Number.isFinite(profile.signHeightMetres) ? clamp(profile.signHeightMetres, .5, h - .3) : Math.min(h - .48, Math.max(2.8, patch ? (Number(patch.bottomMetres) || .18) + h * (Number(patch.heightFraction) || .55) + .45 : h - .7)), Math.min(f.length * .76, Number(profile.signWidthMetres) || 8, style === "house" ? 3.6 : Infinity));
+
+  // A photographed name may be split by real piers or glass panels. Bound the
+  // group before drawing and advertise its identity only after every field attaches.
+  const lettering = profile.appliedLettering, letteringFields = lettering?.fields;
+  if (Array.isArray(letteringFields) && letteringFields.length > 0 && letteringFields.length <= 4
+    && typeof lettering.businessName === 'string' && lettering.businessName.trim()
+    && letteringFields.every(field => field && typeof field.text === 'string' && field.text.trim() && field.text.trim().length <= 38
+      && [field.fraction, field.heightMetres, field.widthMetres, field.panelHeightMetres, field.outsetMetres].every(Number.isFinite)
+      && field.widthMetres > 0 && field.widthMetres <= 20 && field.panelHeightMetres >= .3 && field.panelHeightMetres <= 1.5
+      && field.fraction * f.length - field.widthMetres / 2 >= .02 && field.fraction * f.length + field.widthMetres / 2 <= f.length - .02
+      && field.heightMetres - field.panelHeightMetres / 2 >= 0 && field.heightMetres + field.panelHeightMetres / 2 <= h
+      && field.outsetMetres >= .01 && field.outsetMetres <= .6)) {
+    const attached = letteringFields.map(field => {
+      const result = sign(field.text, field.fraction, field.heightMetres, field.widthMetres, {
+        signStyle: 'applied', signBoardHeightMetres: field.panelHeightMetres,
+        signFont: field.font || '700 46px Arial,sans-serif', signTextColor: field.color || '#ffffff',
+        signOutsetMetres: field.outsetMetres, deferIdentity: true,
+      });
+      if (!result) return null;
+      const fragment = { text: result.record.text, fraction: field.fraction, heightMetres: field.heightMetres,
+        widthMetres: field.widthMetres, panelHeightMetres: field.panelHeightMetres,
+        outsetMetres: field.outsetMetres, textFit: result.record.textFit };
+      result.plate.userData = { type: 'reference-applied-lettering-fragment', collision: false,
+        sourceId: profile.id, frontageIndex, groupName: lettering.businessName.trim(), ...fragment };
+      return { ...result, fragment };
+    });
+    if (attached.every(Boolean)) root.userData.renderedSigns.push({ sourceId: profile.id, frontageIndex,
+      name: lettering.businessName.trim(), text: attached.map(item => item.fragment.text).join(' '),
+      frontage: profile.frontLatLon.map(point => ({ ...point })), kind: 'applied-lettering-group',
+      fragments: attached.map(item => item.fragment) });
+    else for (const item of attached.filter(Boolean)) {
+      item.plate.removeFromParent(); item.plate.geometry.dispose(); item.plate.material.map?.dispose(); item.plate.material.dispose();
+    }
+  }
 
   // Reuse one opening shape and two material batches per reviewed dimension pair.
   const archGroups = new Map();

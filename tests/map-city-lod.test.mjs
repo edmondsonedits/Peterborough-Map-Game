@@ -88,3 +88,15 @@ test('street LOD revisits a nearby cell before a 600 m cache interval leaves its
   h.camera.position.x=900;h.c.updateCityVisualLod(h.camera);
   assert.equal(wall.visible,true,'approached cell is now 900 m away, within the 1050 m wall range');
 });
+
+test('reviewed canopy keeps its roof silhouette in map overview and restores supports in the street',()=>{
+  const h=harness();h.c.CITY.worldBounds={minX:0,minZ:0};h.c.state.mapLayer='3d';
+  const roof={visible:true,userData:{type:'building-batch',material:'reviewed-canopy-roof',tile:{x:0,z:0},tileSize:1800}};
+  const supports={visible:true,userData:{...roof.userData,material:'reviewed-canopy-pale'}};
+  h.c.buildingGroup.children.push(roof,supports);
+  Object.assign(h.camera.position,{x:500,y:1500,z:500});h.c.updateCityVisualLod(h.camera);
+  assert.equal(roof.visible,true,'open canopy still has a distant/map silhouette');
+  assert.equal(supports.visible,false,'overview does not retain unnecessary near-detail columns');
+  h.c.state.mode='driving';h.camera.position.y=3;h.c.updateCityVisualLod(h.camera);
+  assert.equal(roof.visible,true);assert.equal(supports.visible,true);
+});

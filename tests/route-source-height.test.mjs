@@ -51,7 +51,7 @@ test('named sign text stays within the actual wall and ahead of overlapping glas
    const geometry=text.geometry.parameters,w=geometry.width,h=geometry.height,p=text.position;
    const sx=(p.x-frame.start.x)*frame.tangent.x+(p.z-frame.start.z)*frame.tangent.z,sy=p.y,so=(p.x-frame.start.x)*frame.outward.x+(p.z-frame.start.z)*frame.outward.z;
    assert.ok(sy-h/2>=0&&sy+h/2<=wallHeight+.001,`${id}/${index}: text below roof`);
-   const board=boxes(group,frame).find(box=>box.name===`frontage-${profile.signBoardColor||'trim'}`&&Math.abs(box.w-w/.9)<.02&&Math.abs(box.y-sy)<.001);
+   const board=boxes(group,frame).find(box=>box.name===`frontage-${profile.signBoardColor||'trim'}`&&Math.abs(box.w-text.userData.textFit.panelWidthMetres)<.02&&Math.abs(box.y-sy)<.001);
    assert.ok(board,`${id}/${index}: text has a backing board`);assert.ok(board.y+board.h/2<=wallHeight+.001,`${id}/${index}: board below roof`);
    for(const box of boxes(group,frame)){
     const overlaps=Math.min(sx+w/2,box.x+box.w/2)-Math.max(sx-w/2,box.x-box.w/2)>.01&&Math.min(sy+h/2,box.y+box.h/2)-Math.max(sy-h/2,box.y-box.h/2)>.01;

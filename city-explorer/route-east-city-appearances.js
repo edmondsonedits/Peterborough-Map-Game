@@ -1,6 +1,7 @@
 // Twelve verified East City source buildings, R262–R298. Exact adjacent mapped
 // frontages are retained; numeric appearance values and QA camera poses are
-// estimates. This registry changes no source footprint, roof, height or collision.
+// estimates. Reviewed display envelopes correct three inferred silhouettes;
+// source footprint/dimensions, terrain and collision remain unchanged.
 // Source-photo directions follow the turn on Driscoll and reversal on Cricket.
 export const ROUTE_EAST_CITY_APPEARANCES = {
   "way/1015118634": {
@@ -188,7 +189,7 @@ export const ROUTE_EAST_CITY_APPEARANCES = {
       status: "Ordered photo continuity, current ring and municipal parcel/building association; no photographic GPS or surveyed facade dimensions."
     },
     observation: "Red-brown brick/glazed storefront under broad pale blue-gray metal fascia. A raised pale entry portal is toward the west half of the short Hunter-facing wall. Circle K name/logo is directly legible in R264; Shell canopy is a separate mapped object west of the store.",
-    estimated: "The CIRCLE K name is readable in R264; other lettering is omitted. Colors, storefront divisions, portal fraction and all dimensions are estimates. The pale portal and blue-gray fascia are bounded to the current 2.60 m source wall; the real raised portal silhouette and taller storefront need separate massing review. The generic retail fascia is suppressed so it cannot cross the pale portal. The separate Shell canopy, parking and roadside pylon are untouched.",
+    estimated: "The CIRCLE K name is readable in R264; other lettering is omitted. Colors, storefront divisions, portal fraction and all dimensions are estimates. A reviewed flat 0.10 m visual cap replaces the untagged 1.5646 m inferred gable; the flat roof is visible in the orthophoto and its low fascia in R263/R264. The source one-storey 2.60 m wall and foundation are retained exactly. The pale portal and blue-gray fascia remain bounded to that wall; the real raised portal silhouette and taller storefront need separate massing review. The generic retail fascia is suppressed so it cannot cross the pale portal. The separate Shell canopy, parking and roadside pylon are untouched.",
     camera: {
       lat: 44.306006216094104,
       lon: -78.31145848474303,
@@ -217,6 +218,7 @@ export const ROUTE_EAST_CITY_APPEARANCES = {
       wallColor: "#915e50",
       wallSurface: "brick",
       roofColor: "#7e8f92",
+      reviewedEnvelope: {datum: "source", wallHeightMetres: 2.6, roofRiseMetres: 0.10, roofShape: "flat"},
       trimColor: "#9baeb0",
       glassColor: "#48605c",
       blankFacade: true,
@@ -361,7 +363,7 @@ export const ROUTE_EAST_CITY_APPEARANCES = {
       status: "Ordered photo continuity, current ring and municipal parcel/building association; no photographic GPS or surveyed facade dimensions."
     },
     observation: "Broad mostly blank red-brick south side wall with a shallow dark eave. One dark-trimmed upper sash and a vertically aligned lower opening are near the east end. No entrance or porch is visible on this exposed Cricket wall; the home faces Driscoll on its west side.",
-    estimated: "One aligned upper/lower pair near the east end is visible; colors, pane dimensions, eave strip and fractions are estimated. The large western wall stays blank, with no Cricket-facing door or porch. The Driscoll-facing front and actual shallow roof form are outside this wall-only treatment.",
+    estimated: "One aligned upper/lower pair near the east end is visible; colors, pane dimensions, eave strip and fractions are estimated. The large western wall stays blank, with no Cricket-facing door or porch. The source 5.12056 m wall is retained; a reviewed 0.55 m shallow hip rise replaces its untagged 2.2884 m inferred gable. R273/R299 show the shallow eave silhouette and the orthophoto confirms longitudinal hips. The rise is a visual estimate, not a surveyed dimension. The unseen Driscoll-facing openings remain unverified; footprint, source/physics dimensions and terrain are unchanged.",
     camera: {
       lat: 44.30701578472078,
       lon: -78.31187569341715,
@@ -390,6 +392,7 @@ export const ROUTE_EAST_CITY_APPEARANCES = {
       wallColor: "#9e594b",
       wallSurface: "brick",
       roofColor: "#4b5147",
+      reviewedEnvelope: {datum: "source", wallHeightMetres: 5.12056, roofRiseMetres: 0.55, roofShape: "hipped"},
       trimColor: "#6c7066",
       glassColor: "#4f6462",
       blankFacade: true,
@@ -487,7 +490,7 @@ export const ROUTE_EAST_CITY_APPEARANCES = {
       status: "Ordered photo continuity, current ring and municipal parcel/building association; no photographic GPS or surveyed facade dimensions."
     },
     observation: "Red brick two-storey house with shallow gray-green hip roof. Two pale upper sash groups and a deep porch with pale posts. It follows the white-gable14 and precedes the narrow pale-gable22 in the actual west-to-east row.",
-    estimated: "Two upper sash groups and the broad pale-post porch are visible. Colors, sash dimensions and porch dimensions/fractions are estimates; shutter and frame subdivisions are simplified. The source currently infers a gable although the photograph shows a shallow hip, and its 7.071 m wall is not re-scaled here. This is not the green-gabled house south of Cricket. Ground entry remains hidden and is omitted.",
+    estimated: "Two upper sash groups and the broad pale-post porch are visible. Colors, sash dimensions and porch dimensions/fractions are estimates; shutter and frame subdivisions are simplified. A reviewed visual 5.6 m wall and 0.9 m shallow hip rise replace the untagged 7.07074 m wall/1.70958 m gable inference. R276/R295 support the two-storey proportions and shallow hip, also confirmed by the orthophoto; exact heights are estimates. Source footprint, source/physics dimensions and terrain are retained. This is not the green-gabled house south of Cricket. Ground entry remains hidden and is omitted.",
     camera: {
       lat: 44.30712263485252,
       lon: -78.31140641548077,
@@ -516,6 +519,7 @@ export const ROUTE_EAST_CITY_APPEARANCES = {
       wallColor: "#925b4b",
       wallSurface: "brick",
       roofColor: "#5d695b",
+      reviewedEnvelope: {datum: "source", wallHeightMetres: 5.6, roofRiseMetres: 0.9, roofShape: "hipped"},
       trimColor: "#dfdeca",
       glassColor: "#61746a",
       blankFacade: true,

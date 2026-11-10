@@ -4,6 +4,7 @@ import {readFile} from 'node:fs/promises';
 import * as THREE from '../city-explorer/vendor/three-r180/build/three.module.min.js';
 import {createFootageFacade, frontageFrame} from '../city-explorer/sherbrooke-footage.js';
 import {mappedBuildingDimensions} from '../city-explorer/mapped-building-dimensions.js';
+import {resolveReviewedBuildingEnvelope} from '../city-explorer/reviewed-building-envelope.js';
 import {FOOTAGE_PROFILES} from '../city-explorer/sherbrooke-footage-profiles.js';
 import {addRouteLandmarkAppearances} from '../city-explorer/route-landmark-appearances.js';
 import {applyRecordingAppearance, recordingReferencesEnabled} from '../city-explorer/recording-appearance.js';
@@ -61,7 +62,8 @@ function render(id, profile, lite = false) {
   const dimensions = dimensionsFor(ways.get(id).tags, id);
   const ring = ways.get(id).geometry.slice(0, -1).map(point => project(point.lat, point.lon));
   const frame = frontageFrame({profile, ring, project});
-  return {dimensions, frame, group: createFootageFacade({THREE, profile, ring, base: 100, top: 100 + dimensions.height, project, lite})};
+  const envelope = resolveReviewedBuildingEnvelope({profile, sourceId: id, ring, groundHeights: ring.map(() => 100), dimensions, project, tags: ways.get(id).tags});
+  return {dimensions, visualDimensions: envelope.dimensions, frame, group: createFootageFacade({THREE, profile, ring, base: envelope.foundationTop, top: envelope.wallTop, project, lite})};
 }
 function boxes(group, frame, name) {
   const result = [], matrix = new THREE.Matrix4();
@@ -168,9 +170,9 @@ test('all fourteen East City frontages use the photographed adjacent edge and ro
   }
 });
 
-test('East City decoration fits real mapped wall heights in full and Lite rendering without clipped panels or overlapping glass', async () => {
+test('East City decoration fits resolved visual walls in full and Lite rendering without clipped panels or overlapping glass', async () => {
   for (const [id, record] of Object.entries(await records())) for (const face of faces(profileFor(id))) for (const lite of [false, true]) {
-    const {group, dimensions, frame} = render(id, face, lite);
+    const {group, visualDimensions: dimensions, frame} = render(id, face, lite);
     assert.equal(group.userData.collision, false);
     group.traverse(node => {
       if (node.isInstancedMesh) assert.ok([...node.instanceMatrix.array].every(Number.isFinite), `${id} finite transforms`);
@@ -254,7 +256,12 @@ test('the upper balcony privacy panel stays on the west side without a duplicate
 // Facade meshes, rendered-sign metadata, directory row, source footprint,
 // generated registry and deduplication all use their real production code/data.
 const canvasFactory = () => ({width: 0, height: 0, getContext: () => ({
-  fillRect() {}, strokeRect() {}, fillText() {}, measureText: text => ({width: text.length * 10}),
+  fillRect() {}, strokeRect() {}, fillText() {},
+  measureText(text) {
+    const size = Number(this.font?.match(/([\d.]+)px/)?.[1] || 16), width = text.length * size * .55;
+    return {width, actualBoundingBoxLeft: 0, actualBoundingBoxRight: width,
+      actualBoundingBoxAscent: size * .75, actualBoundingBoxDescent: size * .05};
+  },
 })});
 
 for (const lite of [false, true]) test(`Circle K's actual ${lite ? 'Lite' : 'full'} facade sign replaces its approved directory label on the real source wall`, () => {
@@ -281,10 +288,19 @@ for (const lite of [false, true]) test(`Circle K's actual ${lite ? 'Lite' : 'ful
   assert.ok(bounds.min.y >= 100 && bounds.max.y <= 102.6, 'rendered lettering fits below the actual roof line');
   const t = ((sign.position.x - frame.start.x) * frame.tangent.x + (sign.position.z - frame.start.z) * frame.tangent.z) / frame.length;
   assert.ok(t > .55 && t < .85, 'sign stays on the west-half pale entry portal');
-  assert.deepEqual(group.userData.renderedSigns, [{
+  assert.equal(group.userData.renderedSigns.length, 1);
+  const {textFit, ...identity} = group.userData.renderedSigns[0];
+  assert.deepEqual(identity, {
     sourceId: id, frontageIndex: 0, name: 'Circle K', text: 'CIRCLE K',
     frontage: [{lat: 44.3058945, lon: -78.3113204}, {lat: 44.3058593, lon: -78.3114784}],
-  }]);
+  });
+  assert.equal(textFit.metrics, 'measured');
+  assert.ok(textFit.canvasWidth > 0 && textFit.canvasWidth <= 1024 && textFit.canvasHeight > 0 && textFit.canvasHeight <= 256);
+  assert.ok(textFit.inkWidthMetres > 0 && textFit.inkWidthMetres <= textFit.planeWidthMetres && textFit.planeWidthMetres <= 1.6);
+  assert.ok(textFit.inkHeightMetres >= .21 && textFit.inkHeightMetres <= textFit.planeHeightMetres && textFit.planeHeightMetres <= .3);
+  assert.equal(textFit.panelWidthMetres, 1.6); assert.equal(textFit.panelHeightMetres, .3);
+  assert.equal(sign.geometry.parameters.width, textFit.planeWidthMetres);
+  assert.equal(sign.geometry.parameters.height, textFit.planeHeightMetres);
 
   const parent = new THREE.Group(), generatedRegistry = createGeneratedRegistry(THREE);
   const sourceObject = new THREE.Group();
