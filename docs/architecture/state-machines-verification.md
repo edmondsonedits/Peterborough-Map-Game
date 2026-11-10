@@ -28,3 +28,10 @@ The audit uses first-party source, deterministic asynchronous ordering and real 
 handlers. It does not establish actual BFcache eligibility in every browser,
 mobile touch/keyboard appearance, live Firebase/Render behavior, or a production
 deployment. Those are separate verification boundaries.
+
+Publication preparation: the successful geospatial run refreshed only timestamps
+and derived IDs, with identical road tiles. Restored the tested generated assets.
+After generation AND validation finish, the pipeline now preserves the committed
+manifest bytes when only generated_at differs. Real metadata changes remain intact;
+the road compiler continues to hash actual source assets separately. Browser QA
+passed all four jobs in run 42846691844.
