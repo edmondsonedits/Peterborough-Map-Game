@@ -8,7 +8,7 @@ import { fileURLToPath } from 'node:url';
 const require = createRequire(import.meta.url);
 let chromium;
 try { ({ chromium } = require('playwright')); }
-catch { ({ chromium } = createRequire(path.join("C:\\Users\\Danny's Ultimate PC\\.cache\\codex-runtimes\\codex-primary-runtime\\dependencies\\node\\node_modules", 'package.json'))('playwright')); }
+catch (error) { if (process.platform !== 'win32') throw error; ({ chromium } = createRequire(path.join("C:\\Users\\Danny's Ultimate PC\\.cache\\codex-runtimes\\codex-primary-runtime\\dependencies\\node\\node_modules", 'package.json'))('playwright')); }
 const root = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..');
 const output = path.join(root, 'artifacts', 'multiplayer-driving-upgrade');
 await mkdir(output, { recursive: true });
@@ -16,7 +16,9 @@ const reportPath = path.join(output, 'report.json');
 const base = process.env.MAP_QA_URL || 'http://127.0.0.1:4199';
 const backend = process.env.MULTIPLAYER_QA_SERVER || 'http://127.0.0.1:2569';
 const url = `${base}/city-explorer/?station=1&quality=balanced&qaMultiplayerWorld=1&multiplayerServer=${encodeURIComponent(backend)}`;
-const browser = await chromium.launch({ channel: 'msedge', headless: true, args: ['--use-angle=d3d11'] });
+const browser = await chromium.launch({ headless: true, ...(process.platform === 'win32'
+  ? { channel: 'msedge', args: ['--use-angle=d3d11'] }
+  : { args: ['--use-gl=angle', '--use-angle=swiftshader', '--enable-webgl', '--enable-unsafe-swiftshader'] }) });
 const errors = [], failedRequests = [];
 const safeUrl = value => { try { const parsed = new URL(value); parsed.search = ''; return parsed.href; } catch { return '[invalid-url]'; } };
 async function pageFor(viewport, mobile = false) {

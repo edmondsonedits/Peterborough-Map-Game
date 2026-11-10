@@ -80,9 +80,13 @@ assert.equal(junctionIndex.sample(0, 0)?.id, 'test-junction');
 assert.equal(junctionIndex.sample(200, 200), null);
 
 const appSource = readFileSync(new URL('../city-explorer/app.js', import.meta.url), 'utf8');
-const gameplayStart = appSource.indexOf('function gameplaySurfaceBaseAt(');
-const gameplayEnd = appSource.indexOf('function syncGameplayRootClasses()', gameplayStart);
-const gameplayFunctions = gameplayStart >= 0 && gameplayEnd > gameplayStart ? appSource.slice(gameplayStart, gameplayEnd) : '';
+// Extract only the two top-level surface functions; adjacent UI initialization
+// requires a browser and must not become part of this geometry-only VM fixture.
+const gameplayFunctions = ['gameplaySurfaceBaseAt', 'gameplaySurfaceAt'].map(name => {
+  const match = appSource.match(new RegExp(`^function ${name}\\([^\\n]*\\) \\{\\n[\\s\\S]*?^\\}`, 'm'));
+  assert.ok(match, `${name} has a complete top-level function declaration`);
+  return match[0];
+}).join('\n');
 assert.match(gameplayFunctions, /function gameplaySurfaceBaseAt\(/, 'base gameplay surface function exists');
 assert.match(gameplayFunctions, /function gameplaySurfaceAt\(/, 'gameplay integration function exists');
 assert.match(appSource, /junctionPrototype/);

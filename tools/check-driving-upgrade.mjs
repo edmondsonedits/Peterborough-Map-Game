@@ -3,9 +3,11 @@ import {createRequire} from 'node:module';
 import {mkdir,writeFile} from 'node:fs/promises';
 import path from 'node:path';
 const require=createRequire(import.meta.url);
-let chromium;try{({chromium}=require('playwright'));}catch{({chromium}=createRequire("C:/Users/Danny's Ultimate PC/.cache/codex-runtimes/codex-primary-runtime/dependencies/node/node_modules/package.json")('playwright'));}
+let chromium;try{({chromium}=require('playwright'));}catch(error){if(process.platform!=='win32')throw error;({chromium}=createRequire("C:/Users/Danny's Ultimate PC/.cache/codex-runtimes/codex-primary-runtime/dependencies/node/node_modules/package.json")('playwright'));}
 const dir=path.resolve('artifacts/driving-upgrade');await mkdir(dir,{recursive:true});
-const browser=await chromium.launch({channel:'msedge',headless:true,args:['--use-angle=d3d11']});
+const browser=await chromium.launch({headless:true,...(process.platform==='win32'
+  ?{channel:'msedge',args:['--use-angle=d3d11']}
+  :{args:['--use-gl=angle','--use-angle=swiftshader','--enable-webgl','--enable-unsafe-swiftshader']})});
 const base=(process.env.MAP_QA_URL||'http://127.0.0.1:4199').replace(/\/$/,'');
 const backend=process.env.MULTIPLAYER_QA_SERVER||'http://127.0.0.1:2569';
 const errors=[],report={};

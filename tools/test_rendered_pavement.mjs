@@ -96,11 +96,13 @@ close(scalarMax, 1, 'Synthetic scalar maximum mismatch');
 close(triangleMax, 0, 'Rendered-triangle maximum mismatch');
 
 // Exercise the actual gameplay integration without creating a WebGL renderer.
-// Keep this extraction tied to a top-level function boundary, not its internals.
+// Extract only the two top-level surface functions, excluding adjacent UI setup.
 const appSource = readFileSync(new URL('../city-explorer/app.js', import.meta.url), 'utf8');
-const gameplayStart = appSource.indexOf('function gameplaySurfaceBaseAt(');
-const gameplayEnd = appSource.indexOf('function syncGameplayRootClasses()', gameplayStart);
-const gameplayFunctions = gameplayStart >= 0 && gameplayEnd > gameplayStart ? appSource.slice(gameplayStart, gameplayEnd) : '';
+const gameplayFunctions = ['gameplaySurfaceBaseAt', 'gameplaySurfaceAt'].map(name => {
+  const match = appSource.match(new RegExp(`^function ${name}\\([^\\n]*\\) \\{\\n[\\s\\S]*?^\\}`, 'm'));
+  assert.ok(match, `${name} has a complete top-level function declaration`);
+  return match[0];
+}).join('\n');
 assert.match(gameplayFunctions, /function gameplaySurfaceBaseAt\(/, 'base gameplay surface function exists');
 assert.match(gameplayFunctions, /function gameplaySurfaceAt\(/, 'Gameplay surface entry point exists');
 let terrainHeight = 90;

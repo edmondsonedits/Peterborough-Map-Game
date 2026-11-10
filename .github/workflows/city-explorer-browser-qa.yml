@@ -14,6 +14,8 @@ on:
       - 'tools/check-mobile-controls.cjs'
       - 'tools/check-multitouch-controls.cjs'
       - 'tools/check-authored-scene.cjs'
+      - 'tools/check-driving-upgrade.mjs'
+      - 'tools/check-multiplayer-driving-upgrade.mjs'
       - 'tools/test_authored_scene_runtime.mjs'
       - 'tools/test_street_*.mjs'
       - 'city-explorer/app.js'
@@ -56,6 +58,79 @@ jobs:
           npm ci --prefix city-explorer/multiplayer/server --ignore-scripts --no-audit
       - name: Run vehicle handling and multiplayer regression suite
         run: node --test tests/vehicle-handling.test.mjs tests/vehicle-fleet.test.mjs tests/multiplayer-*.test.mjs
+
+  driving-upgrade-smoke:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 35
+    env:
+      MAP_QA_URL: http://127.0.0.1:4199
+      MULTIPLAYER_QA_SERVER: http://127.0.0.1:2569
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@v4
+      - name: Set up Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 22
+      - name: Install browser and multiplayer runtime
+        run: |
+          npm ci --prefix city-explorer/multiplayer/server --ignore-scripts --no-audit
+          npm init -y >/dev/null 2>&1
+          npm install --no-save --no-package-lock playwright@1.62.1
+          npx --yes playwright@1.62.1 install --with-deps chromium
+      - name: Start matching local simulator and multiplayer server
+        id: servers
+        env:
+          NODE_ENV: development
+          HOST: 127.0.0.1
+          PORT: 2569
+          EXPLORER_WORLD_CONFIG: ./city-explorer/multiplayer/server/src/world-config.mjs
+        run: |
+          mkdir -p artifacts/driving-upgrade-ci
+          python3 -m http.server 4199 --bind 127.0.0.1 > artifacts/driving-upgrade-ci/http.log 2>&1 &
+          echo $! > /tmp/ptbo-upgrade-http.pid
+          node city-explorer/multiplayer/server/src/index.mjs > artifacts/driving-upgrade-ci/multiplayer.log 2>&1 &
+          echo $! > /tmp/ptbo-upgrade-multiplayer.pid
+          for attempt in $(seq 1 60); do
+            if curl --fail --silent "$MAP_QA_URL/city-explorer/" >/dev/null && curl --fail --silent "$MULTIPLAYER_QA_SERVER/healthz" > artifacts/driving-upgrade-ci/health.json; then
+              node --input-type=module <<'NODE'
+          import assert from 'node:assert/strict';
+          import {readFileSync} from 'node:fs';
+          import {PROTOCOL_VERSION} from './city-explorer/multiplayer/protocol.mjs';
+          const health=JSON.parse(readFileSync('artifacts/driving-upgrade-ci/health.json','utf8'));
+          const world=JSON.parse(readFileSync('city-explorer/multiplayer/world-data/v1/world-manifest.json','utf8'));
+          assert.equal(health.status,'ready');
+          assert.equal(health.protocolVersion,PROTOCOL_VERSION);
+          assert.equal(health.worldVersion,world.worldVersion);
+          NODE
+              exit 0
+            fi
+            sleep 1
+          done
+          cat artifacts/driving-upgrade-ci/http.log artifacts/driving-upgrade-ci/multiplayer.log
+          exit 1
+      - name: Check desktop and touch driving upgrade
+        run: node tools/check-driving-upgrade.mjs
+      - name: Check two-client multiplayer driving upgrade
+        if: ${{ !cancelled() && steps.servers.outcome == 'success' }}
+        run: node tools/check-multiplayer-driving-upgrade.mjs
+      - name: Stop local test servers
+        if: always()
+        run: |
+          for pidfile in /tmp/ptbo-upgrade-http.pid /tmp/ptbo-upgrade-multiplayer.pid; do
+            if test -f "$pidfile"; then kill "$(cat "$pidfile")" 2>/dev/null || true; fi
+          done
+      - name: Preserve driving upgrade evidence
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: driving-upgrade-smoke-${{ github.run_id }}-${{ github.run_attempt }}
+          path: |
+            artifacts/driving-upgrade/
+            artifacts/multiplayer-driving-upgrade/
+            artifacts/driving-upgrade-ci/
+          if-no-files-found: warn
+          retention-days: 14
 
   station-1-driving:
     runs-on: ubuntu-24.04
