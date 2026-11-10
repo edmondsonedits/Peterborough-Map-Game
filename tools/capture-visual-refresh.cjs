@@ -10,7 +10,8 @@ const assert = require('node:assert/strict');
 const { createHash } = require('node:crypto');
 const { execFileSync } = require('node:child_process');
 
-const SOURCE_IDS = ['176908280','755556771','176908281','446343896','383393878','446339024','77717331','446339099','446343895','176910551','1002815290','446366842','1002815291','1002815295','1002815296','1002815324'].map(id => `way/${id}`);
+const SOURCE_IDS = ['176908280','755556771','176908281','446343896','383393878','446339024','77717331','446339099','446343895','176910551','1002815290','446366842','1002815291','1002815295','1002815296','1002815324','446339087','1002680974','1002680975','1002680782','1005415712','1002680800'].map(id => `way/${id}`);
+const WALMART_FACILITY_ID = 'reconstruction-way-176908280';
 // Targets are mapped frontage midpoints from map-match-register.csv. Camera
 // positions are nearest points on the repository's named OSM road centerlines.
 // Walmart is an explicitly approximate parking-lot viewpoint. No geographic
@@ -32,6 +33,14 @@ const SITES = [
   ['chemong-r059-1002815295','Pale gable house','way/1002815295',44.31597175,-78.32885875,44.3160895,-78.328624,234.96,22.8],
   ['chemong-r061-1002815296','Mason north corner house','way/1002815296',44.31575715,-78.3286427,44.315873,-78.3284118,234.95,22.5],
   ['chemong-r061-1002815324','Mason south corner house','way/1002815324',44.3154,-78.3284729,44.3155236,-78.3281334,243.03,30.3],
+  // Reid poses use the independently checked qa-camera-table.json. These are
+  // mapped street viewpoints, not reconstructed recording camera poses.
+  ['reid-r074-446339087','Jiffy Lube at Edinburgh','way/446339087',44.3133562,-78.3281465,44.3133462,-78.3284428,87.3,23.6],
+  ['reid-r073-1002680974','Sage house south of Parkhill','way/1002680974',44.3135218,-78.3285738,44.3135245,-78.3284523,268.2,9.7],
+  ['reid-r073-1002680975','Pale enclosed-porch house','way/1002680975',44.313406,-78.3285617,44.3134098,-78.3284469,267.3,9.2],
+  ['reid-r077-1002680782','Tan bungalow at Edinburgh','way/1002680782',44.3132004,-78.3285504,44.3132043,-78.3284334,267.3,9.3],
+  ['reid-r078-1005415712','Raised brick house at Edinburgh','way/1005415712',44.3129814,-78.3281827,44.3129734,-78.3284179,87.3,18.8],
+  ['reid-r083-1002680800','Brick gable north of McDonnel','way/1002680800',44.3119843,-78.3286115,44.311993,-78.328353,267.3,20.6],
   ['generic-residential','576 Stewart Street generic house','way/1005416086',44.311073914,-78.325782836,44.3110668,-78.3260183,87.57,18.8],
   ['generic-commercial','166 McDonnel Street generic commercial','way/1005415935',44.3097383,-78.321056125,44.3095889,-78.3210452,357,16.7],
   ['station-1','Station 1 control','way/1009651229',44.300893,-78.322265,44.30069675,-78.32224908,356.68,21.9],
@@ -47,7 +56,19 @@ const percentile = (values, fraction) => [...values].sort((a,b) => a-b)[Math.flo
 const root = path.resolve(process.env.PTBO_QA_ARTIFACT_DIR || 'artifacts/visual-refresh');
 const criticalError = /\b(?:uncaught|typeerror|referenceerror|syntaxerror|rangeerror|webgl|shader|context\s*lost|failed to load module)\b/i;
 
+function validateConfiguration(sourceRoot=process.cwd()) {
+  const catalog=JSON.parse(fs.readFileSync(path.join(sourceRoot,'city-explorer/assets/building-reconstruction/batch-001/catalog.json'),'utf8'));
+  const walmart=catalog.entries.find(entry=>entry.sourceIds?.includes('way/176908280'));
+  assert.equal(walmart?.id,WALMART_FACILITY_ID,'Walmart readiness must use the runtime catalog ID, not the GLB/layout filename');
+  assert.equal(new Set(SITES.map(site=>site.id)).size,SITES.length,'Duplicate camera IDs');
+  const covered=new Set(SITES.flatMap(site=>site.sourceIds));
+  assert.ok(SOURCE_IDS.every(id=>covered.has(id)),'Every enabled route source needs a dedicated camera');
+  for(const site of SITES)assert.ok([site.target.lat,site.target.lon,site.eye.lat,site.eye.lon,site.eye.bearing,site.distance].every(Number.isFinite),`Invalid camera: ${site.id}`);
+  return {sites:SITES.length,routeSources:SOURCE_IDS.length,walmartRuntimeId:walmart.id};
+}
+
 function sourceIdentity(sourceRoot) {
+  validateConfiguration(sourceRoot);
   const revision = process.env.PTBO_QA_REVISION || execFileSync('git',['-C',sourceRoot,'rev-parse','HEAD'],{encoding:'utf8'}).trim();
   const files = fs.readdirSync(path.join(sourceRoot,'city-explorer')).filter(name => /\.(?:js|mjs|html|css)$/.test(name)).map(name => `city-explorer/${name}`);
   for (const name of ['manifest.json','editor/peterborough-details.json']) files.push(`city-explorer/data/${name}`);
@@ -184,12 +205,12 @@ async function capture(page, out, site, kind) {
   if(site.sourceIds.includes('way/176908280')){
     // Full city readiness does not await the facility GLB layer. A successful
     // generic city frame is not evidence of the intended Walmart replacement.
-    await page.waitForFunction(()=>{
-      const entry=globalThis.__PTBO_GAMEPLAY__.state().emergencyFacilities['way-176908280'];
+    await page.waitForFunction(facilityId=>{
+      const entry=globalThis.__PTBO_GAMEPLAY__.state().emergencyFacilities[facilityId];
       return entry && entry.status!=='loading';
-    },null,{timeout:180000});
-    const facility=await page.evaluate(()=>({entry:globalThis.__PTBO_GAMEPLAY__.state().emergencyFacilities['way-176908280'],
-      current:typeof globalThis.__PTBO_CITY_QA__.setDriverView==='function',quality:document.documentElement.dataset.graphicsQuality}));
+    },WALMART_FACILITY_ID,{timeout:180000});
+    const facility=await page.evaluate(facilityId=>({entry:globalThis.__PTBO_GAMEPLAY__.state().emergencyFacilities[facilityId],
+      current:typeof globalThis.__PTBO_CITY_QA__.setDriverView==='function',quality:document.documentElement.dataset.graphicsQuality}),WALMART_FACILITY_ID);
     assert.equal(facility.entry.status,'ready',`Walmart replacement failed: ${JSON.stringify(facility.entry)}`);
     if(facility.current && facility.quality!=='lite')assert.equal(facility.entry.decoration,'ready','Walmart route frontage decoration did not load');
     if(facility.current && facility.quality==='lite')assert.equal(facility.entry.decoration,undefined,'Lite unexpectedly added optional Walmart decoration');
@@ -367,7 +388,8 @@ function compare(labels) {
 
 if(require.main===module){
   const [first='http://127.0.0.1:4174',label='current',profile='balanced',...rest]=process.argv.slice(2);
-  if(first==='--describe')console.log(JSON.stringify({sites:SITES,sourceIds:SOURCE_IDS,views:['eye','oblique','cab']},null,2));
+  if(first==='--validate-config')console.log(JSON.stringify(validateConfiguration()));
+  else if(first==='--describe')console.log(JSON.stringify({sites:SITES,sourceIds:SOURCE_IDS,views:['eye','oblique','cab']},null,2));
   else if(first==='--compare')compare([label,profile,...rest]);
   else run(first,label,profile).catch(error=>{console.error(error);process.exitCode=1;});
 }

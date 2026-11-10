@@ -1,8 +1,9 @@
-// Active photo route: Walmart lot → Chemong Road → Mason Avenue.
+// Active photo route: Walmart lot → Chemong Road → Mason Avenue, plus six reviewed Reid buildings.
 // Observations are from the supplied October 18, 2026 drive; numeric dimensions are estimates.
-// Deferred Reid, Hunter, Cricket and open-canopy records are deliberately absent.
-import {ROUTE_CORNER_APPEARANCES} from './route-corner-appearances.js?v=1.6.202';
-import {ROUTE_STREET_APPEARANCES} from './route-street-appearances.js?v=1.6.202';
+// Unresolved Reid matches, Hunter, Cricket and open-canopy records remain absent.
+import {ROUTE_CORNER_APPEARANCES} from './route-corner-appearances.js?v=1.6.203';
+import {ROUTE_STREET_APPEARANCES} from './route-street-appearances.js?v=1.6.203';
+import {ROUTE_REID_APPEARANCES} from './route-reid-appearances.js?v=1.6.203';
 
 export const ROUTE_LANDMARK_APPEARANCES = {
   "way/755556771": {
@@ -237,7 +238,7 @@ export const ROUTE_LANDMARK_APPEARANCES = {
 export function addRouteLandmarkAppearances(base, enabled = true) {
   if (!enabled) return base;
   const result = {...base};
-  for (const records of [ROUTE_LANDMARK_APPEARANCES, ROUTE_CORNER_APPEARANCES, ROUTE_STREET_APPEARANCES]) {
+  for (const records of [ROUTE_LANDMARK_APPEARANCES, ROUTE_CORNER_APPEARANCES, ROUTE_STREET_APPEARANCES, ROUTE_REID_APPEARANCES]) {
     for (const [id, {appearance, profile}] of Object.entries(records)) {
       if (result[id]) result[id] = {...result[id], ...appearance, reviewedWallMaterial: true};
       else if (profile) result[id] = {...profile, ...appearance, id, appearanceOnly: true, preserveMappedMassing: true, reviewedWallMaterial: true};

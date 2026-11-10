@@ -51,3 +51,9 @@ The source texture opt-out is `?wallMaterials=procedural`. Lite uses the procedu
 - Maintain original source image files; use the existing canvas/material mechanism to bound GPU map resolution.
 - Full validation and independent review precede quality approval; passing unit tests alone is insufficient for a visual upgrade.
 
+
+## Candidate v1.6.203 — 2026-11-10 15:32 UTC
+
+Adds six independently matched Reid profiles (Jiffy Lube, two Parkhill houses, Edinburgh NW/SE and the duplex north of Dublin). The full suite passed 1,590 tests. The first browser run reached Chromium rendering but its harness waited on the wrong Walmart runtime key; the catalog-key mistake is corrected and checked by the new `--validate-config` command. It was a capture failure, not visual approval or a confirmed scene failure. New capture plan covers 26 sites, all 22 active route IDs, unchanged controls, both graphics qualities and actual cab views.
+
+Later work remains separate: the old Walmart island/row coordinates are being corrected against owner photos and provincial aerial imagery; the two distinctive Chemong roof proposals are under implementation. The Ontario mosaic acquisition date is unknown and the 2026 owner photos take precedence where the visible scene changed. No production release yet.

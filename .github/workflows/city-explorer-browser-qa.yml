@@ -66,6 +66,8 @@ jobs:
         uses: actions/setup-node@v4
         with:
           node-version: 22
+      - name: Verify capture configuration against the runtime catalog
+        run: node tools/capture-visual-refresh.cjs --validate-config
       - name: Install the same browser runtime for all variants
         run: |
           npm init -y >/dev/null 2>&1
