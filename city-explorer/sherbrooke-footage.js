@@ -1,5 +1,6 @@
-import { glazingIntensity } from './city-visual-settings.js?v=1.6.205';
-import { createRecordedEnclosedBays } from './recorded-enclosed-bays.js?v=1.6.205';
+import { glazingIntensity } from './city-visual-settings.js?v=1.6.206';
+import { createRecordedEnclosedBays } from './recorded-enclosed-bays.js?v=1.6.206';
+import { fitFacadeSignText } from './facade-sign-text.js?v=1.6.206';
 // Ground-level frontage details for the existing Sherbrooke building masses.
 // These objects add neither walls/roofs nor collision geometry.
 const clamp = (v, lo, hi) => Math.max(lo, Math.min(hi, v));
@@ -100,12 +101,13 @@ export function mapPhotoPatchUV(quad, x, y) {
   return [(h[0] * x + h[1] * y + h[2]) / d, (h[3] * x + h[4] * y + h[5]) / d];
 }
 
-export function createFootageFacade({ THREE, profile, ring, base, top, project, terrainHeightAtWorld, gardenClear, visuals = 'improved', lite = false, glassEnvironment, frontageIndex = 0 }) {
+export function createFootageFacade({ THREE, profile, ring, base, top, project, terrainHeightAtWorld, gardenClear, visuals = 'improved', lite = false, optionalAssets = !lite, glassEnvironment, frontageIndex = 0 }) {
   if (!THREE?.Group || !THREE?.InstancedMesh) throw new TypeError("Three.js runtime is required");
   if (!profile || !Number.isFinite(base) || !Number.isFinite(top) || top <= base) throw new TypeError("Profile and finite building base/top are required");
   // Omit optional downloads and gardens before deriving openings, so an absent
-  // photo patch cannot leave a blank facade in Lite. Never mutate the profile.
-  if (lite) profile = { ...profile, facadePhoto: undefined, texturePatch: undefined, frontGarden: undefined };
+  // photo patch cannot leave a blank facade. Balanced keeps the low-power
+  // geometry cap but may retain reviewed assets. Never mutate the profile.
+  if (!optionalAssets) profile = { ...profile, facadePhoto: undefined, texturePatch: undefined, frontGarden: undefined };
   const root = new THREE.Group(); root.name = `SherbrookeFootage-${profile.label || profile.id || "building"}`;
   root.userData = { type: "reference-frontage-details", profileId: profile.id, confidence: profile.confidence, collision: false, photoStatus: "not-needed", frontageCount: 1, renderedSigns: [] };
   // Station 1 already has a separately reviewed five-door frontage in the game.
@@ -122,7 +124,7 @@ export function createFootageFacade({ THREE, profile, ring, base, top, project, 
       additionalFrontages: undefined, facadePhoto: face.facadePhoto, texturePatch: undefined, frontGarden: undefined,
       enclosedBays: face.enclosedBays,
     }))];
-    for (const [index, face] of faces.entries()) root.add(createFootageFacade({THREE, profile: face, ring, base, top, project, terrainHeightAtWorld, gardenClear, visuals, lite, glassEnvironment, frontageIndex: index}));
+    for (const [index, face] of faces.entries()) root.add(createFootageFacade({THREE, profile: face, ring, base, top, project, terrainHeightAtWorld, gardenClear, visuals, lite, optionalAssets, glassEnvironment, frontageIndex: index}));
     root.userData.frontageCount = faces.length;
     const collectSigns = () => root.userData.renderedSigns.splice(0, root.userData.renderedSigns.length,
       ...root.children.flatMap(child => child.userData.renderedSigns || []));
@@ -177,27 +179,34 @@ export function createFootageFacade({ THREE, profile, ring, base, top, project, 
   }
   function sign(text, t, y, w) {
     const boardHeight = clamp(Number(profile.signBoardHeightMetres) || .5, .3, 1.5);
-    const signOutset = clamp(Number(profile.signOutsetMetres) || .3, .3, .6);
     const applied = profile.signStyle === 'applied', drawnText = String(text || '').trim().slice(0, 38);
+    const signOutset = clamp(Number(profile.signOutsetMetres) || .3, applied ? .01 : .3, .6);
     if (!applied) box(t, y, w, boardHeight, .09, profile.signBoardColor || "trim", signOutset - .06);
     if (typeof document === "undefined" || !drawnText) return;
     let texture, geometry, signMaterial;
     try {
-      const canvas = document.createElement("canvas"); canvas.width = 768; canvas.height = 96; const ctx = canvas.getContext("2d");
+      const canvas = document.createElement("canvas"), ctx = canvas.getContext("2d");
       if (!ctx) return;
+      const fit = fitFacadeSignText({context:ctx,text:drawnText,font:profile.signFont || "700 46px Georgia,serif",
+        widthMetres:w*.9,heightMetres:boardHeight*.9});
+      if (!fit) return;
+      canvas.width = fit.canvasWidth; canvas.height = fit.canvasHeight;
       if (!applied) { ctx.fillStyle = profile.signBackgroundColor || "#eee8dc"; ctx.fillRect(0, 0, canvas.width, canvas.height); }
       ctx.fillStyle = profile.signTextColor || "#293c3c";
-      ctx.font = profile.signFont || "700 46px Georgia,serif"; ctx.textAlign = "center"; ctx.textBaseline = "middle";
-      ctx.fillText(drawnText, canvas.width / 2, canvas.height / 2);
+      ctx.font = fit.font; ctx.textAlign = "left"; ctx.textBaseline = "alphabetic";
+      ctx.fillText(drawnText, fit.x, fit.y);
       texture = new THREE.CanvasTexture(canvas); if (THREE.SRGBColorSpace) texture.colorSpace = THREE.SRGBColorSpace;
-      geometry = new THREE.PlaneGeometry(w * .9, boardHeight * .68);
+      geometry = new THREE.PlaneGeometry(fit.planeWidthMetres, fit.planeHeightMetres);
       signMaterial = new THREE.MeshBasicMaterial({ map: texture, side: THREE.DoubleSide,
         ...(applied ? { transparent: true, alphaTest: .02, depthWrite: false } : {}) });
       const plate = new THREE.Mesh(geometry, signMaterial), p = at(t, y, signOutset);
       plate.name = applied ? 'frontage-applied-sign' : 'frontage-business-sign';
       plate.position.set(p.x, p.y, p.z); plate.rotation.y = Math.atan2(f.outward.x, f.outward.z);
       const record = { sourceId: profile.id, frontageIndex, name: profile.signBusinessName || String(text).trim(),
-        text: drawnText, frontage: profile.frontLatLon.map(point => ({ ...point })) };
+        text: drawnText, frontage: profile.frontLatLon.map(point => ({ ...point })),
+        textFit:{metrics:fit.metrics,canvasWidth:fit.canvasWidth,canvasHeight:fit.canvasHeight,
+          panelWidthMetres:w,panelHeightMetres:boardHeight,planeWidthMetres:fit.planeWidthMetres,planeHeightMetres:fit.planeHeightMetres,
+          inkWidthMetres:fit.inkWidthMetres,inkHeightMetres:fit.inkHeightMetres} };
       plate.userData = { type: 'reference-business-sign', collision: false, ...record };
       frontageDetails.add(plate);
       root.userData.renderedSigns.push(record);
@@ -212,6 +221,10 @@ export function createFootageFacade({ THREE, profile, ring, base, top, project, 
   const wideGlass = style === "office" && profile.largeGlazedFront;
   const entry = profile.entryDoor && typeof profile.entryDoor === 'object' ? profile.entryDoor : null;
   const entryFraction = entry ? clamp(Number.isFinite(entry.fraction) ? entry.fraction : .5, .02, .98) : null;
+  const implicitDoor = !entry && profile.entryDoor !== null && (style === 'house'
+    || (style === 'office' && levels > 1 && !profile.blankFacade && !profile.skipGroundWindows))
+    ? { fraction: Number.isFinite(profile.doorFraction) ? profile.doorFraction : .5,
+      width: style === 'house' ? .86 : .9, bottom: .025, top: 2.075 } : null;
   if (Number(profile.plinthHeight) > 0 && profile.plinthColor) {
     const band = clamp(Number(profile.plinthHeight), .1, Math.min(h, 4));
     box(.5, band / 2, f.length, band, .12, profile.plinthColor, .1);
@@ -238,6 +251,12 @@ export function createFootageFacade({ THREE, profile, ring, base, top, project, 
       const height = clamp(Number(override?.heightMetres) || defaultHeight, .2, h);
       const centerY = Number.isFinite(override?.bottomMetres)
         ? clamp(override.bottomMetres, 0, h - height) + height / 2 : (retailGround ? floor * .43 : y);
+      // The fallback house/office door is already emitted below. Do not also
+      // infer a window and foreground sill across it. Explicit authored window
+      // overrides and separate ground-window records retain their own intent.
+      if (level === 0 && !override && implicitDoor
+        && Math.abs(t - implicitDoor.fraction) * f.length < (width + .025 + implicitDoor.width) / 2
+        && centerY - height / 2 < implicitDoor.top && centerY + height / 2 > implicitDoor.bottom) continue;
       const arched = visuals !== 'legacy' && (override?.shape === 'arch' || (level > 0 && profile.archedWindowLevels?.includes(level)));
       window(t, centerY, width, height, arched);
     }

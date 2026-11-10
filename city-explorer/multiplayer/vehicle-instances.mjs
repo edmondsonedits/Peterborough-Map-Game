@@ -1,5 +1,5 @@
 import { FIRE_STATION_THREE } from '../gameplay-systems-1.6.69.js';
-import { FLEET_DEFINITIONS, CAR_ONE_BAY, RESCUE_ONE_BAY } from '../vehicle-fleet.mjs?v=1.6.205';
+import { FLEET_DEFINITIONS, CAR_ONE_BAY, RESCUE_ONE_BAY } from '../vehicle-fleet.mjs?v=1.6.206';
 
 export const MULTIPLAYER_VEHICLE_SLOTS = Object.freeze([
   { id: 'car-1', templateId: 'medi', name: 'Car 1', ...CAR_ONE_BAY },

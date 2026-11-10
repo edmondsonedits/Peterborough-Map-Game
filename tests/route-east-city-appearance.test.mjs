@@ -254,7 +254,12 @@ test('the upper balcony privacy panel stays on the west side without a duplicate
 // Facade meshes, rendered-sign metadata, directory row, source footprint,
 // generated registry and deduplication all use their real production code/data.
 const canvasFactory = () => ({width: 0, height: 0, getContext: () => ({
-  fillRect() {}, strokeRect() {}, fillText() {}, measureText: text => ({width: text.length * 10}),
+  fillRect() {}, strokeRect() {}, fillText() {},
+  measureText(text) {
+    const size = Number(this.font?.match(/([\d.]+)px/)?.[1] || 16), width = text.length * size * .55;
+    return {width, actualBoundingBoxLeft: 0, actualBoundingBoxRight: width,
+      actualBoundingBoxAscent: size * .75, actualBoundingBoxDescent: size * .05};
+  },
 })});
 
 for (const lite of [false, true]) test(`Circle K's actual ${lite ? 'Lite' : 'full'} facade sign replaces its approved directory label on the real source wall`, () => {
@@ -281,10 +286,19 @@ for (const lite of [false, true]) test(`Circle K's actual ${lite ? 'Lite' : 'ful
   assert.ok(bounds.min.y >= 100 && bounds.max.y <= 102.6, 'rendered lettering fits below the actual roof line');
   const t = ((sign.position.x - frame.start.x) * frame.tangent.x + (sign.position.z - frame.start.z) * frame.tangent.z) / frame.length;
   assert.ok(t > .55 && t < .85, 'sign stays on the west-half pale entry portal');
-  assert.deepEqual(group.userData.renderedSigns, [{
+  assert.equal(group.userData.renderedSigns.length, 1);
+  const {textFit, ...identity} = group.userData.renderedSigns[0];
+  assert.deepEqual(identity, {
     sourceId: id, frontageIndex: 0, name: 'Circle K', text: 'CIRCLE K',
     frontage: [{lat: 44.3058945, lon: -78.3113204}, {lat: 44.3058593, lon: -78.3114784}],
-  }]);
+  });
+  assert.equal(textFit.metrics, 'measured');
+  assert.ok(textFit.canvasWidth > 0 && textFit.canvasWidth <= 1024 && textFit.canvasHeight > 0 && textFit.canvasHeight <= 256);
+  assert.ok(textFit.inkWidthMetres > 0 && textFit.inkWidthMetres <= textFit.planeWidthMetres && textFit.planeWidthMetres <= 1.6);
+  assert.ok(textFit.inkHeightMetres >= .21 && textFit.inkHeightMetres <= textFit.planeHeightMetres && textFit.planeHeightMetres <= .3);
+  assert.equal(textFit.panelWidthMetres, 1.6); assert.equal(textFit.panelHeightMetres, .3);
+  assert.equal(sign.geometry.parameters.width, textFit.planeWidthMetres);
+  assert.equal(sign.geometry.parameters.height, textFit.planeHeightMetres);
 
   const parent = new THREE.Group(), generatedRegistry = createGeneratedRegistry(THREE);
   const sourceObject = new THREE.Group();

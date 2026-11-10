@@ -104,13 +104,22 @@ for(const site of SITES){
     :changedIndex>=0?(changedIndex<8?'east-north':'east-south'):site.id.startsWith('sherbrooke-r')?'sherbrooke':/^(?:water-|bridge-)/.test(site.id)?'water-hunter':'reid-controls';
 }
 function capturePlan(id=process.env.PTBO_CAPTURE_PLAN || 'full') {
-  assert.ok(['full','route-205'].includes(id),'Unknown capture plan');
+  assert.ok(['full','route-205','review-206'].includes(id),'Unknown capture plan');
+  if(id==='review-206')return {id,cohorts:{
+    'signs-north':['chemong-r014-176908280','chemong-r026-755556771','chemong-r057-446366842','chemong-r053-446343895'],
+    'frontage-controls':['east-r264-755554019-f0','sherbrooke','generic-commercial','station-1'],
+    'masonry-reid':['chemong-r058-1002815291','reid-r083-1002680800','reid-r077-1002680782','reid-r078-1005415712']},
+    views:['oblique','cab'],baselineRevision:'1311f758366b1031b10a287cdf473a27b8bfd678',baselineCab:true,materialControls:'before-after',
+    photoExpectation:{sourceId:'way/1006575702',currentBalanced:'loaded',currentLite:'not-needed',baseline:'record-only'},
+    materialReference:{revision:'1311f758366b1031b10a287cdf473a27b8bfd678',version:'1.6.205',runId:42859272929,
+      url:'https://github.com/edmondsonedits/Peterborough-Map-Game/actions/runs/42859272929',
+      status:'Changed reviewed-brick shader is evaluated with matched before/current scene frames; no same-head procedural A/B or unchanged-shader claim.'}};
   if(id==='route-205')return {id,cohorts:{'east-north':CHANGED_POSES_205.slice(0,8),'east-south':CHANGED_POSES_205.slice(8),regression:REGRESSION_POSES_205},
-    baselineRevision:'f7d96109db18058c425a767976899a5f34a5f55c',baselineCab:true,materialControls:'prior-revision',
+    views:['eye','oblique','cab'],baselineRevision:'f7d96109db18058c425a767976899a5f34a5f55c',baselineCab:true,materialControls:'prior-revision',
     materialReference:{revision:'f7d96109db18058c425a767976899a5f34a5f55c',version:'1.6.204',runId:42855146899,
       url:'https://github.com/edmondsonedits/Peterborough-Map-Game/actions/runs/42855146899',
       status:'Separate prior-revision artifact review required; no fresh procedural A/B is claimed by this run.'}};
-  return {id,cohorts:Object.fromEntries(COHORTS.map(cohort=>[cohort,SITES.filter(site=>site.cohort===cohort).map(site=>site.id)])),baselineCab:false,materialControls:'fresh'};
+  return {id,cohorts:Object.fromEntries(COHORTS.map(cohort=>[cohort,SITES.filter(site=>site.cohort===cohort).map(site=>site.id)])),views:['eye','oblique','cab'],baselineCab:false,materialControls:'fresh'};
 }
 const planSiteIds=plan=>Object.values(plan.cohorts).flat();
 
@@ -137,16 +146,17 @@ function validateConfiguration(sourceRoot=process.cwd()) {
   assert.equal(COHORTS.flatMap(cohort=>SITES.filter(site=>site.cohort===cohort)).length,SITES.length,'Every site must have exactly one capture cohort');
   assert.ok(PROCEDURAL_CONTROLS.every(id=>SITES.some(site=>site.id===id)),'Missing procedural control');
   assert.equal(CHANGED_POSES_205.length,16,'205 requires14 supplied East City faces plus two corrected Cricket poses');
-  for(const id of ['full','route-205']){
-    const ids=planSiteIds(capturePlan(id));assert.equal(new Set(ids).size,ids.length,`${id}: duplicate plan poses`);
+  for(const id of ['full','route-205','review-206']){
+    const plan=capturePlan(id),ids=planSiteIds(plan);assert.equal(new Set(ids).size,ids.length,`${id}: duplicate plan poses`);
     assert.ok(ids.every(key=>SITES.some(site=>site.id===key)),`${id}: unknown plan pose`);
+    assert.ok(plan.views.includes('cab') && plan.views.every(kind=>['eye','oblique','cab'].includes(kind)),`${id}: invalid view plan`);
   }
   const plan=capturePlan();
   return {sites:SITES.length,routeSources:SOURCE_IDS.length,registrySources:new Set(registryIds).size,walmartRuntimeId:walmart.id,
     plan:plan.id,selectedSites:planSiteIds(plan).length,cohorts:Object.fromEntries(Object.entries(plan.cohorts).map(([name,ids])=>[name,ids.length]))};
 }
 
-function materialReuseProof(plan) {
+function materialComparisonProof(plan) {
   const files=['city-explorer/station2-neighborhood-facades.mjs','city-explorer/city-material-library.js','city-explorer/vertical-slice-quality.js',
     'city-explorer/assets/shared-wall-materials/manifest.json','city-explorer/assets/shared-wall-materials/Bricks101_1K-JPG_Color.jpg',
     'city-explorer/assets/shared-wall-materials/Concrete034_1K-JPG_Color.jpg'];
@@ -158,8 +168,8 @@ function materialReuseProof(plan) {
     return {file,beforeSha256:beforeHash,currentSha256:currentHash,unchanged:beforeHash===currentHash,
       normalization:/\.(?:mjs|js)$/.test(file)?'Version query strings only':'None'};
   });
-  assert.ok(proof.every(item=>item.unchanged),'Shared wall source/shader changed: prior-revision material A/B cannot be reused');
-  return {...plan.materialReference,files:proof,scope:'Material implementation/source hashes, not a claim that scene visibility or draw cost is unchanged.'};
+  if(plan.materialControls==='prior-revision')assert.ok(proof.every(item=>item.unchanged),'Shared wall source/shader changed: prior-revision material A/B cannot be reused');
+  return {...plan.materialReference,mode:plan.materialControls,files:proof,scope:'Material implementation/source hashes, not a claim that scene visibility or draw cost is unchanged.'};
 }
 
 function sourceIdentity(sourceRoot) {
@@ -454,17 +464,18 @@ async function run(base,label,profile) {
   const identity=sourceIdentity(path.resolve(process.env.PTBO_QA_SOURCE_ROOT || '.'));
   const report={schemaVersion:3,status:'running',capturedAt:new Date().toISOString(),base,label,profile,cohort,identity,capturePlan:plan,
     viewport:{width:1280,height:800},requestedSites:sites,requiredSourceIds:SOURCE_IDS,
-    coverageSemantics:'One dedicated measured-height fly camera for each enabled profile; only actual gameplay cab views prove driver-seat framing. Actual target visibility/occlusion must be inspected in the PNGs.',
+    coverageSemantics:'Each selected pose receives the views declared by its capture plan. Only actual gameplay cab views prove driver-seat framing; target visibility/occlusion must be inspected in the PNGs.',
     limitations:['Fly views obey the runtime minimum clearance (5 metres in the baseline), even when 2.5 metres is requested. They are raised fly views, not driver-height proof.',
       plan.baselineCab?'Before and current variants support actual cab placement; matched cab transforms are checked in the comparison.':'Baseline lacks QA truck placement, so its cab images are intentionally absent.',
-      plan.materialControls==='prior-revision'?'This targeted run reuses separately identified prior-revision material A/B; it contains no new procedural-wall control captures.':'Same-head source/procedural material controls are required.',
+      plan.materialControls==='prior-revision'?'This targeted run reuses separately identified prior-revision material A/B; it contains no new procedural-wall control captures.'
+        :plan.materialControls==='before-after'?'Changed materials are compared between the stated revisions; no same-head procedural A/B or unchanged-material claim is made.':'Same-head source/procedural material controls are required.',
       'Stationary cab viewpoints face frontages; these are not a replay of the reference drive.','Browser automation is not physical-phone certification.','Timing samples are rAF wall intervals, not measured GPU execution time.'],
     errors:{page:[],console:[],failedRequests:[],http:[]},views:[]};
   json(path.join(out,'report.json'),report);
   let browser,page;
   try{
     if(label==='baseline' && plan.baselineRevision)assert.equal(identity.revision,plan.baselineRevision,'Targeted baseline must be the frozen reviewed checkpoint');
-    if(plan.materialControls==='prior-revision')report.materialEvidence=materialReuseProof(plan);
+    if(plan.materialControls!=='fresh')report.materialEvidence=materialComparisonProof(plan);
     const {chromium}=require('playwright');
     browser=await chromium.launch({headless:true,...(process.env.BROWSER_EXECUTABLE?{executablePath:process.env.BROWSER_EXECUTABLE}:{}),
       args:process.platform==='win32'?['--use-angle=d3d11']:[]});
@@ -499,13 +510,20 @@ async function run(base,label,profile) {
     assert.equal(report.initial.readiness.graphicsQuality,profile,'Requested graphics profile was not applied');
     // Keep all fly captures before cab views: older setView intentionally retains
     // the current FOV, and the gameplay cab has a different 68-degree FOV.
-    for(const site of sites)for(const kind of ['eye','oblique']){
+    for(const site of sites)for(const kind of plan.views.filter(kind=>kind!=='cab')){
       report.views.push(await capture(page,out,site,kind));json(path.join(out,'report.json'),report);
     }
-    if(cab)for(const site of sites){report.views.push(await capture(page,out,site,'cab'));json(path.join(out,'report.json'),report);}
+    if(cab && plan.views.includes('cab'))for(const site of sites){report.views.push(await capture(page,out,site,'cab'));json(path.join(out,'report.json'),report);}
     if(process.env.PTBO_CAPTURE_DRIVE_SMOKE==='1')report.driveSmoke=await driveSmoke(page,out);
     if(process.env.PTBO_CAPTURE_GROUND_STREAM==='1')report.groundStreamSmoke=await groundStreamSmoke(page,out);
     report.final=await snapshot(page);
+    if(plan.photoExpectation && sites.some(site=>site.sourceIds.includes(plan.photoExpectation.sourceId))){
+      const state=report.final.metrics.footage.find(front=>front.sourceId===plan.photoExpectation.sourceId);
+      const expected=label==='baseline'?'record-only':profile==='balanced'?plan.photoExpectation.currentBalanced:plan.photoExpectation.currentLite;
+      report.reviewedPhoto={sourceId:plan.photoExpectation.sourceId,expected,state};
+      assert.ok(state?.objects>0,'S10 photo/fallback group is absent');
+      if(expected!=='record-only')assert.equal(state.photoStatus,expected,`S10 ${profile} photo/fallback status`);
+    }
     if(cab){
       report.signage=await auditRenderedSigns(page,label==='baseline'?[]:SOURCE_IDS);
       assert.equal(report.signage.unmatchedClaims.length,0,`Directory names suppressed without matching created sign: ${JSON.stringify(report.signage.unmatchedClaims)}`);
@@ -523,12 +541,13 @@ async function run(base,label,profile) {
     assert.equal(report.errors.criticalConsole.length,0,report.errors.criticalConsole.join('\n'));
     assert.equal(report.errors.criticalRequests.length,0,JSON.stringify(report.errors.criticalRequests));
     assert.equal(report.errors.http.length,0,JSON.stringify(report.errors.http));
-    const covered=new Set(report.views.filter(view=>view.kind==='eye').flatMap(view=>view.site.sourceIds));
+    const coverageKind=plan.views.find(kind=>kind!=='cab') || 'cab';
+    const covered=new Set(report.views.filter(view=>view.kind===coverageKind).flatMap(view=>view.site.sourceIds));
     const planSources=[...new Set(SITES.filter(site=>expectedSiteIds.includes(site.id)).flatMap(site=>site.sourceIds))];
     report.requestedCoverage={capturedSourceIds:[...covered],missingPlanSourceIds:planSources.filter(id=>!covered.has(id)),partialSelection:Boolean(selected || cohort),
-      retainedPriorEvidence:plan.id==='route-205'?'Unchanged204 cameras outside this targeted plan retain their204 source attribution and are not claimed as fresh205 captures.':null};
+      retainedPriorEvidence:plan.id!=='full'?'Views outside this targeted plan retain their original source-revision attribution and are not claimed as fresh captures.':null};
     const required=sites.flatMap(site=>site.sourceIds);
-    assert.ok(required.every(id=>covered.has(id)),'A selected source lacks a dedicated raised-fly view');
+    assert.ok(required.every(id=>covered.has(id)),`A selected source lacks its required ${coverageKind} view`);
     if(cab){const drivers=new Set(report.views.filter(view=>view.kind==='cab').flatMap(view=>view.site.sourceIds));
       assert.ok(required.every(id=>drivers.has(id)),'A selected source lacks an actual cab view');}
     report.status='captured-awaiting-visual-review';
@@ -597,7 +616,7 @@ function compare(labels) {
         triangles:{before:before.state.metrics.triangles,after:after.state.metrics.triangles},
         medianRafMs:{before:before.performance.medianFrameMs,after:after.performance.medianFrameMs}});
     }
-    const requiredStaticKeys=expectedSites.flatMap(site=>['eye','oblique',...(plan.baselineCab?['cab']:[])].map(kind=>`${site.id}-${kind}`));
+    const requiredStaticKeys=expectedSites.flatMap(site=>plan.views.filter(kind=>kind!=='cab'||plan.baselineCab).map(kind=>`${site.id}-${kind}`));
     const currentCabSources=new Set(reports[1]?.views.filter(view=>view.kind==='cab').flatMap(view=>view.site.sourceIds));
     comparison.profiles[profile]={variants:reports.map(report=>report?{label:report.label,status:report.status,revision:report.identity.revision,viewCount:report.views.length,parts:report.parts}:null),pairs,
       capturePlansMatch:reports.every(report=>report?.capturePlan?.id===plan.id),
@@ -607,7 +626,7 @@ function compare(labels) {
       missingCurrentCabSources:[...new Set(expectedSites.flatMap(site=>site.sourceIds))].filter(id=>!currentCabSources.has(id)),
       missingProceduralKeys:plan.materialControls==='fresh'?PROCEDURAL_CONTROLS.flatMap(id=>['eye','oblique','cab'].map(kind=>`${id}-${kind}`))
         .filter(key=>!reports[2]?.views.some(view=>view.key===key)):[],
-      materialEvidence:plan.materialControls==='prior-revision'?reports.map(report=>report?.materialEvidence):undefined,
+      materialEvidence:plan.materialControls!=='fresh'?reports.map(report=>report?.materialEvidence):undefined,
       unmatchedCameras:pairs.filter(pair=>!pair.camerasMatch).map(pair=>pair.key)};
     const keys=[...new Set(reports.flatMap(report=>report?.views.map(view=>view.key)||[]))];
     rows.push(`<h2>${escape(profile)}</h2>`);
@@ -620,9 +639,11 @@ function compare(labels) {
     }
   }
   fs.mkdirSync(root,{recursive:true});
-  const scope=plan.baselineCab?'Matched before/current raised-fly, oblique and actual cab cameras.':'Matched raised-fly and oblique cameras; this baseline has no cab-placement API.';
+  const viewNames=plan.views.map(kind=>({eye:'raised-fly',oblique:'oblique',cab:'actual cab'}[kind])).join(', ');
+  const scope=plan.baselineCab?`Matched before/current ${viewNames} cameras.`:'Matched raised-fly and oblique cameras; this baseline has no cab-placement API.';
   const materialScope=plan.materialControls==='fresh'?'Procedural is the same current code with wallMaterials=procedural.':
-    `No new procedural A/B was captured. Material implementation/source hashes are checked against <a href="${plan.materialReference.url}">v${plan.materialReference.version} material evidence</a>; that separate evidence still requires its own artifact review. Unchanged views outside this targeted plan remain attributed to their earlier revision.`;
+    plan.materialControls==='prior-revision'?`No new procedural A/B was captured. Material implementation/source hashes are checked against <a href="${plan.materialReference.url}">v${plan.materialReference.version} material evidence</a>; that separate evidence still requires its own artifact review. Unchanged views outside this targeted plan remain attributed to their earlier revision.`
+      :`Changed materials are compared against exact v${plan.materialReference.version} before frames. The JSON records implementation/source hash differences; no same-head procedural A/B or unchanged-shader claim is made. Views outside this targeted plan remain attributed to their earlier revision.`;
   fs.writeFileSync(path.join(root,'comparison.html'),`<!doctype html><meta charset="utf-8"><title>Visual refresh capture evidence</title><style>body{font:15px system-ui;background:#12161d;color:#eef2f6;margin:24px}a{color:#a8d5ff}.row{display:grid;grid-template-columns:repeat(${labels.length},minmax(0,1fr));gap:16px}img{width:100%;display:block}section{border-top:1px solid #52606e;padding:16px 0}h3{font-size:15px}p{line-height:1.5}@media(max-width:900px){.row{grid-template-columns:1fr}}</style><h1>Visual refresh camera evidence</h1><p>Actual browser render captures, awaiting visual review. ${scope} Fly cameras obey the runtime minimum clearance and do not prove driver-seat framing. ${materialScope} Source and measured camera receipts accompany every image. rAF intervals are not GPU timings; narrow or Lite rendering is not physical-phone testing.</p>${rows.join('\n')}`);
   json(path.join(root,'comparison.json'),comparison);
   for(const [profile,result]of Object.entries(comparison.profiles)){
@@ -635,6 +656,7 @@ function compare(labels) {
     assert.equal(result.capturePlansMatch,true,`${profile}: evidence came from a different capture plan`);
     assert.equal(result.baselineRevisionMatches,true,`${profile}: evidence used the wrong baseline revision`);
     if(plan.materialControls==='prior-revision')assert.ok(result.materialEvidence.every(proof=>proof?.files.length===6 && proof.files.every(file=>file.unchanged)),`${profile}: reused material evidence lacks matching implementation/source hashes`);
+    if(plan.materialControls==='before-after')assert.ok(result.materialEvidence.every(proof=>proof?.mode==='before-after' && proof.files.length===6),`${profile}: before/after material hash receipts are missing`);
   }
   assert.deepEqual(Object.keys(comparison.profiles).sort(),['balanced','lite'],'Both graphics profiles require render evidence');
 }

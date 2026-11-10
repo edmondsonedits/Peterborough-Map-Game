@@ -5,12 +5,13 @@ let activeBrowser=null;
 const sha=value=>crypto.createHash('sha256').update(value).digest('hex');
 async function main(){
 /* BEGIN PACK PAINT FINISH */
- const {finalizeRoadMarkings,finishExistingPack,pruneOwnedPackets}=await import('./finalize-road-markings.mjs');
+ const {finalizeRoadMarkings,finishExistingPack,pruneOwnedPackets,packLoader}=await import('./finalize-road-markings.mjs');
  if(process.argv.includes('--finish-existing'))return finishExistingPack(root);
 /* END PACK PAINT FINISH */
  const {partitionRoadGeometry}=await import('../city-explorer/road-pack-build.js');
  const {collectRoadGridNodes,optimizeRoadGeometry}=await import('../city-explorer/road-pack-optimize.js');
- const {encodeRoadTile}=await import('../city-explorer/road-tile-pack.js');
+ const {encodeRoadTile,PackedRoadSurfaceIndex}=await import('../city-explorer/road-tile-pack.js');
+ const {validateReviewedRouteSurfaceProof,validateReviewedCanopyGroundSource,createReviewedCanopyGroundProof}=await import('../city-explorer/reviewed-canopy-ground.js');
  const manifest=JSON.parse(fs.readFileSync(path.join(root,'city-explorer/data/manifest.json')));
  const metadataPath='city-explorer/data/'+(manifest.terrain?.official?.metadata_file||'terrain/peterborough-dtm-2025.json');
  const terrain=JSON.parse(fs.readFileSync(path.join(root,metadataPath)));
@@ -18,6 +19,7 @@ async function main(){
 /* BEGIN PACK PAINT FINISH */
  files.push('city-explorer/road-marking-pack-finish.js','tools/finalize-road-markings.mjs');
 /* END PACK PAINT FINISH */
+ files.push('city-explorer/reviewed-route-surfaces.js','city-explorer/recorded-canopies.js','city-explorer/reviewed-canopy-ground.js');
  const sources=Object.fromEntries(files.map(file=>{let content=fs.readFileSync(path.join(root,file));if(/\.(?:js|mjs|cjs|json|geojson)$/.test(file))content=Buffer.from(content.toString('utf8').replace(/\r\n/g,'\n').replace(/\?v=\d+\.\d+\.\d+/g,'?v=release'));return[file,sha(content)];}));
  const buildId=sha(JSON.stringify(sources)).slice(0,20);
  const {chromium}=require('playwright');const browser=activeBrowser=await chromium.launch({headless:true,args:['--use-gl=angle','--use-angle=swiftshader','--enable-webgl']});
@@ -30,6 +32,8 @@ async function main(){
   await page.waitForFunction(()=>Boolean(window.__PTBO_ROAD_BUILD__)||document.documentElement.dataset.explorerBoot==='failed',null,{timeout:720000});
   if(errors.length)throw new Error('Road compiler page errors: '+errors.join('; '));
   report=await page.evaluate(()=>window.__PTBO_ROAD_BUILD__.report());
+  validateReviewedRouteSurfaceProof(report.reviewedRouteSurfaces);
+  validateReviewedCanopyGroundSource(report.reviewedCanopyGround,report.projection);
   if(report.terrain?.source!=='ontario-lidar-2025'||report.terrain.segments!==Math.max(192,Math.min(340,Math.ceil(report.terrain.size/56))))throw new Error('Compiler requires canonical official terrain: '+JSON.stringify(report.terrain));
   const terrainFixture=JSON.parse(fs.readFileSync(path.join(root,'tests/fixtures/road-terrain-clearance.json')));
   report.terrainProbes=await page.evaluate(points=>window.__PTBO_ROAD_BUILD__.terrainProbes(points),terrainFixture.points);
@@ -72,11 +76,20 @@ async function main(){
  }
  await browser.close();activeBrowser=null;
  for(const [file,expected] of Object.entries(sources)){let content=fs.readFileSync(path.join(root,file));if(/\.(?:js|mjs|cjs|json|geojson)$/.test(file))content=Buffer.from(content.toString('utf8').replace(/\r\n/g,'\n').replace(/\?v=\d+\.\d+\.\d+/g,'?v=release'));if(sha(content)!==expected)throw new Error('Source changed during road optimization: '+file+'; rerun required');}
- const pack={schemaVersion:1,buildId,sourceGeneratedAt:report.sourceGeneratedAt,tileSize:512,sources,inventory:report.inventory,terrain:report.terrain,terrainProbes:report.terrainProbes,connected:report.connected,finish:report.finish,markings:report.markings,projection:report.projection,tiles:entries,totalBytes,totalRawBytes,totalTriangles,optimization,method:'Precomputed from finished source renderer; same Float32 faces for all graphics profiles.'};
+ const pack={schemaVersion:1,buildId,sourceGeneratedAt:report.sourceGeneratedAt,tileSize:512,sources,inventory:report.inventory,terrain:report.terrain,terrainProbes:report.terrainProbes,connected:report.connected,finish:report.finish,markings:report.markings,projection:report.projection,reviewedRouteSurfaces:report.reviewedRouteSurfaces,tiles:entries,totalBytes,totalRawBytes,totalTriangles,optimization,method:'Precomputed from finished source renderer; same Float32 faces for all graphics profiles.'};
 /* BEGIN PACK PAINT FINISH */
  const sourceStageEntries=await finalizeRoadMarkings(root,pack);
  entries.length=0;entries.push(...pack.tiles);totalBytes=pack.totalBytes;totalRawBytes=pack.totalRawBytes;totalTriangles=pack.totalTriangles;
 /* END PACK PAINT FINISH */
+ // Sample only the actual final packets. The source report demonstrates the
+ // repaired polygon; these samples pin future canopy bases independently of
+ // runtime tile residency, without creating a second contact surface.
+ const canopyIndex=new PackedRoadSurfaceIndex(),loadFinal=packLoader(root,pack);
+ for(const tile of pack.tiles)if(report.reviewedCanopyGround.samples.some(p=>p.x>=tile.bounds.minX&&p.x<=tile.bounds.maxX&&p.z>=tile.bounds.minZ&&p.z<=tile.bounds.maxZ)){
+  const packet=loadFinal(tile);canopyIndex.addTile(tile.id,packet.groups);
+ }
+ pack.reviewedCanopyGround=createReviewedCanopyGroundProof({surfaceProof:report.reviewedRouteSurfaces,sourceProof:report.reviewedCanopyGround,manifest:pack,
+  samplePacked:(x,z)=>canopyIndex.sample(x,z,null,{contact:'official'})});
  fs.writeFileSync(path.join(output,'manifest.json'),JSON.stringify(pack));
 /* BEGIN PACK PAINT FINISH */
  pruneOwnedPackets(root,sourceStageEntries,entries);

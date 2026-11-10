@@ -10,6 +10,9 @@ import {mappedBuildingDimensions} from '../city-explorer/mapped-building-dimensi
 import {captureBatchLengths,collectBatchRanges} from '../city-explorer/editor/feature-batch-binding.js';
 import {stableHash,deterministicNumber,pointInPolygon} from '../city-explorer/feature-utils.js';
 import {addRouteLandmarkAppearances} from '../city-explorer/route-landmark-appearances.js';
+import {installReviewedBrickDetail} from '../city-explorer/city-material-library.js';
+import {resolveReviewedBuildingEnvelope} from '../city-explorer/reviewed-building-envelope.js';
+import {appendFootageRoof} from '../city-explorer/sherbrooke-footage-roofs.js';
 import {applyReviewedPhotoAppearance} from '../city-explorer/reviewed-photo-appearance.js';
 
 // Execute the real app assembly functions without starting its browser/UI.
@@ -31,6 +34,7 @@ function appHarness({profiles={},mode='source',project=(lat,lon)=>new THREE.Vect
   const noop=()=>{};
   const context={THREE,...wall,...city,buildStation2NeighborhoodGableRoof,resolveRecordedRoofHeights,buildRecordedFrontRoof,mappedBuildingDimensions,
     stableHash,deterministicNumber,pointInPolygon,captureBatchLengths,applyReviewedPhotoAppearance,
+    installReviewedBrickDetail,resolveReviewedBuildingEnvelope,appendFootageRoof,
     FOOTAGE_PROFILES:profiles,REVIEWED_BUILDING_STYLES:{},LANDMARK_BUILDING_HEIGHT_OVERRIDES:{},
     wallSourceMode:mode,stationThreeAssetReady:false,STATION2_FACADES_ENABLED:false,CITY_FACADES_MODE:'all',
     graphicsQuality:{name:'balanced',optionalScenery:true},cityVisuals:{mode:'improved'},
@@ -154,4 +158,22 @@ test('actual recorded Chemong roofs integrate as one complete bounded roof with 
     assert.ok(result.byMaterial.get('windowGlass')?.positions.length,'roof glazing resolves into the shared glass batch');
     assert.equal(context.cityAppearanceStats.details.flattenedCommercialRoofs,0,'the recorded roof is not flattened afterward');
   }
+});
+
+test('actual app assembly emits the reviewed low bungalow hip and keeps the source footprint',()=>{
+  const id='way/1002680782', profiles=addRouteLandmarkAppearances({});
+  const source=JSON.parse(readFileSync(new URL('../city-explorer/data/peterborough-osm.json',import.meta.url)));
+  const way=source.elements.find(item=>item.type==='way'&&item.id===1002680782);
+  const project=(lat,lon)=>new THREE.Vector2((lon+78.3197)*111320*Math.cos(44.3091*Math.PI/180),-(lat-44.3091)*110540);
+  const context=appHarness({profiles,project});
+  const coordinates=way.geometry.slice(0,-1).map(({lat,lon})=>project(lat,lon).toArray());
+  const result=build(context,id,way.tags,coordinates);
+  const feature=[...context.generatedBuildingFeatures.values()][0];
+  assert.ok(Math.abs(feature.maxY-4.3)<1e-9,'source 8.18 m apex is replaced only in display geometry');
+  assert.ok(Math.abs(feature.partHeights[0].wallTop-3.2)<1e-9);
+  assert.equal(context.cityComplexRoofDiagnostics.built,1,'clipped hip builder is actually reached');
+  const roof=result.byMaterial.get(`footage-roof-${id}`).positions;
+  const heights=roof.filter((_,index)=>index%3===1);
+  assert.ok(Math.max(...heights)>3.2&&Math.max(...heights)<=4.3+1e-9);
+  assert.equal(feature.sourceGeometry[0][0].length,coordinates.length,'all original footprint vertices remain registered');
 });

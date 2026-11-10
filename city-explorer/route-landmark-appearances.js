@@ -1,12 +1,12 @@
 // Active photo route: Walmart lot → Chemong → Reid → Sherbrooke → Water/Hunter → East City.
 // Observations are from the supplied October 18, 2026 drive; numeric dimensions are estimates.
 // Unresolved matches and open-canopy records remain absent.
-import {ROUTE_CORNER_APPEARANCES} from './route-corner-appearances.js?v=1.6.205';
-import {ROUTE_STREET_APPEARANCES} from './route-street-appearances.js?v=1.6.205';
-import {ROUTE_REID_APPEARANCES} from './route-reid-appearances.js?v=1.6.205';
-import {ROUTE_SHERBROOKE_APPEARANCES} from './route-sherbrooke-appearances.js?v=1.6.205';
-import {ROUTE_WATER_APPEARANCES} from './route-water-appearances.js?v=1.6.205';
-import {ROUTE_EAST_CITY_APPEARANCES} from './route-east-city-appearances.js?v=1.6.205';
+import {ROUTE_CORNER_APPEARANCES} from './route-corner-appearances.js?v=1.6.206';
+import {ROUTE_STREET_APPEARANCES} from './route-street-appearances.js?v=1.6.206';
+import {ROUTE_REID_APPEARANCES} from './route-reid-appearances.js?v=1.6.206';
+import {ROUTE_SHERBROOKE_APPEARANCES} from './route-sherbrooke-appearances.js?v=1.6.206';
+import {ROUTE_WATER_APPEARANCES} from './route-water-appearances.js?v=1.6.206';
+import {ROUTE_EAST_CITY_APPEARANCES} from './route-east-city-appearances.js?v=1.6.206';
 
 export const ROUTE_LANDMARK_APPEARANCES = {
   "way/755556771": {

@@ -24,7 +24,7 @@ test('both corner street faces stay on their matched footprint and share editor 
  }
 });
 test('arched attic detail is separate from rectangular main floors and bank bands stay broad',()=>{
- const commerce=make(ids[0]);for(const [faceIndex,count]of [[0,6],[1,16]]){const face=commerce.children[faceIndex],arches=face.getObjectByName('frontage-arched-trim');assert.equal(arches?.count,count);assert.ok(face.getObjectByName('frontage-glass').count>=9,'main floor windows remain rectangular');const m=new THREE.Matrix4();arches.getMatrixAt(0,m);assert.ok(m.elements[13]>109,'attic arches remain above main floors')}
+ const commerce=make(ids[0]);for(const [faceIndex,count]of [[0,6],[1,16]]){const face=commerce.children[faceIndex],arches=face.getObjectByName('frontage-arched-trim');assert.equal(arches?.count,count);const glass=face.getObjectByName('frontage-glass');assert.equal(glass.geometry.type,'BoxGeometry','main floor windows remain rectangular');const m=new THREE.Matrix4();let upperWindows=0;for(let index=0;index<glass.count;index++){glass.getMatrixAt(index,m);if(m.elements[13]>103.1)upperWindows++;}assert.ok(upperWindows>=6,'both main upper window tiers remain below the attic');arches.getMatrixAt(0,m);assert.ok(m.elements[13]>109,'attic arches remain above main floors')}
  const bank=make(ids[1]);for(const face of bank.children){const glass=face.getObjectByName('frontage-glass');assert.equal(glass.count,2,'one broad glazing band per observed level');const m=new THREE.Matrix4();glass.getMatrixAt(0,m);assert.ok(m.elements[0]!==0||m.elements[2]!==0)}
  const shop=make(ids[2]);assert.ok(shop.getObjectByName('frontage-#c32732'),'red brand band is geometry, without photo downloads');
 });

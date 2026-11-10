@@ -1,6 +1,6 @@
 // Small, photo-supported projecting window bays. Dimensions are appearance
 // estimates; this geometry never changes the mapped shell or collision model.
-import { glazingIntensity } from './city-visual-settings.js?v=1.6.205';
+import { glazingIntensity } from './city-visual-settings.js?v=1.6.206';
 const clamp = (value, low, high) => Math.max(low, Math.min(high, value));
 const finite = value => Number.isFinite(value);
 const dimension = (value, fallback, low, high) => clamp(finite(value) ? value : fallback, low, high);
