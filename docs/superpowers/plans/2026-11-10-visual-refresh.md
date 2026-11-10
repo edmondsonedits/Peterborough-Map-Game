@@ -7,6 +7,10 @@
 **Tech stack:** Existing static JavaScript modules, Three.js r180, Node tests, existing Playwright camera harness and GitHub CI.
 **Spec:** Danny's November 10 request in this conversation; focus beyond already-worked Sherbrooke and Hunter bridge, use own images plus the verified free materials, iterate with agents and a strong independent reviewer.
 
+## Current scope amendment
+
+User renewed work at 2026-11-10 14:57 UTC for four hours. Use recovered 300-photo handoff in route order, starting Walmart/Chemong through Mason, then Reid. Match correct mapped footprint, corner and viewing side before adding named signs. Record estimated colors/dimensions separately. Previous unfinished code was lost to workspace maintenance; recheck actual branch state. Review and test each bounded batch before acceptance.
+
 ## Global constraints
 
 - Work branch: `codex/visual-refresh-20261110`; starting production version v1.6.201. Increment one patch for each completed update; do not call a branch deployed.
