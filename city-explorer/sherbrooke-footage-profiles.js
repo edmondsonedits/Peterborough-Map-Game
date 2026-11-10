@@ -1,7 +1,7 @@
 // Reviewed visual profiles; original map footprints and collision remain authoritative.
 import { VIDEO_BUILDING_PROFILES } from './video-building-profiles.js';
 import { ROUTE_BUILDING_PROFILES } from './route-building-profiles.js';
-import { WEB_BUILDING_PROFILES } from './web-building-profiles.js?v=1.6.202';
+import { WEB_BUILDING_PROFILES } from './web-building-profiles.js?v=1.6.205';
 export const FOOTAGE_PROFILES = Object.fromEntries([
   {
     "id": "way/1009651251",
@@ -155,6 +155,7 @@ export const FOOTAGE_PROFILES = Object.fromEntries([
     "frontSource": "Ordered frontage endpoints converted from reference block.json to geographic coordinates for the existing project() transform.",
     "facadePhoto": {
       "file": "./assets/sherbrooke-frontages/n03.jpg",
+      "verifiedSignTexts": ["LCBO"],
       "widthFraction": 1,
       "centerFraction": 0.5,
       "bottomMetres": 1.15,

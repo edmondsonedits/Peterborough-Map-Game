@@ -1,4 +1,5 @@
-import { glazingIntensity } from './city-visual-settings.js?v=1.6.202';
+import { glazingIntensity } from './city-visual-settings.js?v=1.6.205';
+import { createRecordedEnclosedBays } from './recorded-enclosed-bays.js?v=1.6.205';
 // Ground-level frontage details for the existing Sherbrooke building masses.
 // These objects add neither walls/roofs nor collision geometry.
 const clamp = (v, lo, hi) => Math.max(lo, Math.min(hi, v));
@@ -99,11 +100,14 @@ export function mapPhotoPatchUV(quad, x, y) {
   return [(h[0] * x + h[1] * y + h[2]) / d, (h[3] * x + h[4] * y + h[5]) / d];
 }
 
-export function createFootageFacade({ THREE, profile, ring, base, top, project, terrainHeightAtWorld, gardenClear, visuals = 'improved', lite = false, glassEnvironment }) {
+export function createFootageFacade({ THREE, profile, ring, base, top, project, terrainHeightAtWorld, gardenClear, visuals = 'improved', lite = false, glassEnvironment, frontageIndex = 0 }) {
   if (!THREE?.Group || !THREE?.InstancedMesh) throw new TypeError("Three.js runtime is required");
   if (!profile || !Number.isFinite(base) || !Number.isFinite(top) || top <= base) throw new TypeError("Profile and finite building base/top are required");
+  // Omit optional downloads and gardens before deriving openings, so an absent
+  // photo patch cannot leave a blank facade in Lite. Never mutate the profile.
+  if (lite) profile = { ...profile, facadePhoto: undefined, texturePatch: undefined, frontGarden: undefined };
   const root = new THREE.Group(); root.name = `SherbrookeFootage-${profile.label || profile.id || "building"}`;
-  root.userData = { type: "reference-frontage-details", profileId: profile.id, confidence: profile.confidence, collision: false, photoStatus: "not-needed", frontageCount: 1 };
+  root.userData = { type: "reference-frontage-details", profileId: profile.id, confidence: profile.confidence, collision: false, photoStatus: "not-needed", frontageCount: 1, renderedSigns: [] };
   // Station 1 already has a separately reviewed five-door frontage in the game.
   if (profile.style === "station" || profile.id === "way/1009651229") { root.userData.stationFacadeSuppliedByGame = true; return root; }
   // Keep rear/inferred masses conservative; do not imply observed doors or windows.
@@ -111,15 +115,22 @@ export function createFootageFacade({ THREE, profile, ring, base, top, project, 
 
   if (Array.isArray(profile.additionalFrontages) && profile.additionalFrontages.length) {
     const {additionalFrontages, ...primary} = profile;
-    const faces = [primary, ...additionalFrontages.slice(0, 2).map((face, i) => ({
+    const faces = [primary, ...additionalFrontages.slice(0, 3).map((face, i) => ({
       ...primary, ...face, id: profile.id, label: `${profile.label}-face-${i + 2}`,
+      signBusinessName: Object.hasOwn(face, 'signBusinessName') ? face.signBusinessName
+        : Object.hasOwn(face, 'signText') ? undefined : primary.signBusinessName,
       additionalFrontages: undefined, facadePhoto: face.facadePhoto, texturePatch: undefined, frontGarden: undefined,
+      enclosedBays: face.enclosedBays,
     }))];
-    for (const face of faces) root.add(createFootageFacade({THREE, profile: face, ring, base, top, project, terrainHeightAtWorld, gardenClear, visuals, lite, glassEnvironment}));
+    for (const [index, face] of faces.entries()) root.add(createFootageFacade({THREE, profile: face, ring, base, top, project, terrainHeightAtWorld, gardenClear, visuals, lite, glassEnvironment, frontageIndex: index}));
     root.userData.frontageCount = faces.length;
+    const collectSigns = () => root.userData.renderedSigns.splice(0, root.userData.renderedSigns.length,
+      ...root.children.flatMap(child => child.userData.renderedSigns || []));
+    collectSigns();
     root.userData.photoReady = Promise.all(root.children.map(child => child.userData.photoReady)).then(() => {
       const statuses = root.children.map(child => child.userData.photoStatus);
       root.userData.photoStatus = statuses.includes('loaded') ? 'loaded' : statuses.includes('failed') ? 'failed' : 'not-needed';
+      collectSigns();
       return root.userData.photoStatus;
     });
     return root;
@@ -129,12 +140,12 @@ export function createFootageFacade({ THREE, profile, ring, base, top, project, 
   const frontageDetails = new THREE.Group(); frontageDetails.name = "frontage-procedural-details"; root.add(frontageDetails);
   const unitBox = new THREE.BoxGeometry(1, 1, 1), mats = new Map(), instances = new Map(), depthInstances = new Map(), photoOverlapInstances = new Map(), dummy = new THREE.Object3D();
   const archedWindows = [];
-  const palette = { trim: profile.trimColor || "#eee8dc", wall: profile.wallColor || "#a8907a", brick: profile.wallColor || "#a8907a", glass: "#33494e", shade: "#322f2c", door: "#53443a", metal: "#343a39", accent: profile.trimColor || "#eee8dc" };
+  const palette = { trim: profile.trimColor || "#eee8dc", wall: profile.wallColor || "#a8907a", brick: profile.wallColor || "#a8907a", glass: "#33494e", shade: "#322f2c", door: profile.doorColor || "#53443a", metal: "#343a39", accent: profile.trimColor || "#eee8dc" };
   function material(key) {
     if (!mats.has(key)) {
       const glaze = key === 'glass', improvedGlaze = glaze && visuals !== 'legacy';
       const mat = new THREE.MeshStandardMaterial({
-        color: improvedGlaze && glassEnvironment ? '#314b56' : palette[key] || key,
+        color: improvedGlaze && profile.glassColor ? profile.glassColor : improvedGlaze && glassEnvironment ? '#314b56' : palette[key] || key,
         roughness: glaze ? (improvedGlaze ? .42 : .34) : .88,
         metalness: glaze && !improvedGlaze ? .12 : 0,
         transparent: glaze && (!improvedGlaze || !glassEnvironment),
@@ -160,24 +171,47 @@ export function createFootageFacade({ THREE, profile, ring, base, top, project, 
     if (arched) archedWindows.push({t, y, w, ht});
     else { box(t, y, w, ht, .07, "trim", .19); box(t, y, Math.max(.16, w - .13), Math.max(.2, ht - .13), .035, "glass", .24); }
     box(t, y - ht * .39, w + .025, .045, .055, "accent", .28);
+    if (profile.shutterColor) for (const side of [-1, 1]) {
+      box(t + side * (w / 2 + .18) / f.length, y, .28, ht, .052, profile.shutterColor, .218);
+    }
   }
   function sign(text, t, y, w) {
     const boardHeight = clamp(Number(profile.signBoardHeightMetres) || .5, .3, 1.5);
     const signOutset = clamp(Number(profile.signOutsetMetres) || .3, .3, .6);
-    box(t, y, w, boardHeight, .09, profile.signBoardColor || "trim", signOutset - .06);
-    if (typeof document === "undefined" || !text) return;
-    const canvas = document.createElement("canvas"); canvas.width = 768; canvas.height = 96; const ctx = canvas.getContext("2d");
-    ctx.fillStyle = profile.signBackgroundColor || "#eee8dc"; ctx.fillRect(0, 0, canvas.width, canvas.height); ctx.fillStyle = profile.signTextColor || "#293c3c";
-    ctx.font = "700 46px Georgia,serif"; ctx.textAlign = "center"; ctx.textBaseline = "middle"; ctx.fillText(String(text).slice(0, 38), canvas.width / 2, canvas.height / 2);
-    const tex = new THREE.CanvasTexture(canvas); if (THREE.SRGBColorSpace) tex.colorSpace = THREE.SRGBColorSpace;
-    const plate = new THREE.Mesh(new THREE.PlaneGeometry(w * .9, boardHeight * .68), new THREE.MeshBasicMaterial({ map: tex, side: THREE.DoubleSide }));
-    const p = at(t, y, signOutset); plate.position.set(p.x, p.y, p.z); plate.rotation.y = Math.atan2(f.outward.x, f.outward.z); frontageDetails.add(plate);
+    const applied = profile.signStyle === 'applied', drawnText = String(text || '').trim().slice(0, 38);
+    if (!applied) box(t, y, w, boardHeight, .09, profile.signBoardColor || "trim", signOutset - .06);
+    if (typeof document === "undefined" || !drawnText) return;
+    let texture, geometry, signMaterial;
+    try {
+      const canvas = document.createElement("canvas"); canvas.width = 768; canvas.height = 96; const ctx = canvas.getContext("2d");
+      if (!ctx) return;
+      if (!applied) { ctx.fillStyle = profile.signBackgroundColor || "#eee8dc"; ctx.fillRect(0, 0, canvas.width, canvas.height); }
+      ctx.fillStyle = profile.signTextColor || "#293c3c";
+      ctx.font = profile.signFont || "700 46px Georgia,serif"; ctx.textAlign = "center"; ctx.textBaseline = "middle";
+      ctx.fillText(drawnText, canvas.width / 2, canvas.height / 2);
+      texture = new THREE.CanvasTexture(canvas); if (THREE.SRGBColorSpace) texture.colorSpace = THREE.SRGBColorSpace;
+      geometry = new THREE.PlaneGeometry(w * .9, boardHeight * .68);
+      signMaterial = new THREE.MeshBasicMaterial({ map: texture, side: THREE.DoubleSide,
+        ...(applied ? { transparent: true, alphaTest: .02, depthWrite: false } : {}) });
+      const plate = new THREE.Mesh(geometry, signMaterial), p = at(t, y, signOutset);
+      plate.name = applied ? 'frontage-applied-sign' : 'frontage-business-sign';
+      plate.position.set(p.x, p.y, p.z); plate.rotation.y = Math.atan2(f.outward.x, f.outward.z);
+      const record = { sourceId: profile.id, frontageIndex, name: profile.signBusinessName || String(text).trim(),
+        text: drawnText, frontage: profile.frontLatLon.map(point => ({ ...point })) };
+      plate.userData = { type: 'reference-business-sign', collision: false, ...record };
+      frontageDetails.add(plate);
+      root.userData.renderedSigns.push(record);
+    } catch {
+      texture?.dispose(); geometry?.dispose(); signMaterial?.dispose();
+    }
   }
 
   const style = profile.style || "office", patch = profile.texturePatch?.target;
   const patchCenter = patch ? Number(patch.centerFraction) || .5 : .5, patchWidth = patch ? clamp(Number(patch.widthFraction) || 1, .05, 1) : 0;
   const openingUnderPatch = t => !!patch && Math.abs(t - patchCenter) < patchWidth / 2 + .025;
   const wideGlass = style === "office" && profile.largeGlazedFront;
+  const entry = profile.entryDoor && typeof profile.entryDoor === 'object' ? profile.entryDoor : null;
+  const entryFraction = entry ? clamp(Number.isFinite(entry.fraction) ? entry.fraction : .5, .02, .98) : null;
   if (Number(profile.plinthHeight) > 0 && profile.plinthColor) {
     const band = clamp(Number(profile.plinthHeight), .1, Math.min(h, 4));
     box(.5, band / 2, f.length, band, .12, profile.plinthColor, .1);
@@ -192,7 +226,8 @@ export function createFootageFacade({ THREE, profile, ring, base, top, project, 
     }
     for (let i = 0; i < columns; i++) {
       const t = (i + .5) / columns;
-      if (level === 0 && (profile.skipGroundWindows || openingUnderPatch(t))) continue;
+      if (level === 0 && (profile.skipGroundWindows || openingUnderPatch(t) ||
+        (entry && i === Math.min(columns - 1, Math.floor(entryFraction * columns))))) continue;
       const override = visuals !== 'legacy' && Array.isArray(profile.windowOverrides)
         ? profile.windowOverrides.find(item => item.level === level && item.column === i) : null;
       if (override?.skip === true) continue;
@@ -275,7 +310,7 @@ export function createFootageFacade({ THREE, profile, ring, base, top, project, 
 
   if (style === "house") {
     const t = Number.isFinite(profile.doorFraction) ? profile.doorFraction : .5;
-    box(t, 1.05, .86, 2.05, .09, "door", .24);
+    if (profile.entryDoor !== null && !entry) box(t, 1.05, .86, 2.05, .09, "door", .24);
     if (profile.porch !== false) {
       const hasReviewedWidth = profile.porchWidthFraction != null && Number.isFinite(Number(profile.porchWidthFraction));
       const widthFraction = hasReviewedWidth ? clamp(Number(profile.porchWidthFraction), .1, 1) : .56;
@@ -300,7 +335,14 @@ export function createFootageFacade({ THREE, profile, ring, base, top, project, 
   } else if (style === "office" && levels > 1 && !profile.blankFacade) {
     // A modest entry marks office frontages without implying storefront signage where none is listed.
     const t = Number.isFinite(profile.doorFraction) ? profile.doorFraction : .5;
-    if (!profile.skipGroundWindows) box(t, 1.05, .9, 2.05, .1, "door", .23);
+    if (!profile.skipGroundWindows && profile.entryDoor !== null && !entry) box(t, 1.05, .9, 2.05, .1, "door", .23);
+  }
+  if (entry) {
+    const width = clamp(Number(entry.widthMetres) || 1.15, .65, Math.min(2.4, f.length * .8));
+    const height = clamp(Number(entry.heightMetres) || 2.15, .8, h - .1);
+    const fraction = clamp(entryFraction, width / (2 * f.length), 1 - width / (2 * f.length));
+    box(fraction, height / 2, width, height, .09, entry.color || 'trim', .28);
+    box(fraction, height * .54, Math.max(.2, width - .18), height * .75, .035, 'glass', .34);
   }
   if (profile.signText) sign(profile.signText, Number.isFinite(profile.signFraction) ? profile.signFraction : .5, Number.isFinite(profile.signHeightMetres) ? clamp(profile.signHeightMetres, .5, h - .3) : Math.min(h - .48, Math.max(2.8, patch ? (Number(patch.bottomMetres) || .18) + h * (Number(patch.heightFraction) || .55) + .45 : h - .7)), Math.min(f.length * .76, Number(profile.signWidthMetres) || 8, style === "house" ? 3.6 : Infinity));
 
@@ -351,14 +393,15 @@ export function createFootageFacade({ THREE, profile, ring, base, top, project, 
     }
     root.add(overlapDetails); root.userData.photoOverlapDetails = overlapDetails;
   }
+  if (profile.enclosedBays?.length) root.add(createRecordedEnclosedBays({ THREE, frame: f, base, height: h, specs: profile.enclosedBays, lite, glassEnvironment }));
   if (profile.texturePatch?.quad && profile.label === "N07") addMuralPhoto(THREE, root, profile, f, base, h, at);
-  if (profile.facadePhoto) addFacadePhoto(THREE, root, frontageDetails, profile, f, base, h, top - base);
+  if (profile.facadePhoto) addFacadePhoto(THREE, root, frontageDetails, profile, f, base, h, top - base, frontageIndex);
   if (profile.frontGarden) addFrontGarden(THREE, root, profile.frontGarden, f, base, terrainHeightAtWorld, gardenClear);
   root.userData.frontage = { length: f.length, outward: f.outward, estimatedHeight: h, style, openingCount: [...instances.values(), ...depthInstances.values(), ...photoOverlapInstances.values()].reduce((n, a) => n + a.length, 0) };
   return root;
 }
 
-function addFacadePhoto(THREE, root, frontageDetails, profile, f, base, wallHeight, buildingHeight) {
+function addFacadePhoto(THREE, root, frontageDetails, profile, f, base, wallHeight, buildingHeight, frontageIndex) {
   const photo = profile.facadePhoto;
   const center = clamp(Number(photo.centerFraction) || .5, 0, 1), width = clamp(Number(photo.widthFraction) || 1, .01, 1);
   const left = clamp(center - width / 2, 0, 1 - width), bottom = Math.max(0, Number(photo.bottomMetres) || 0);
@@ -397,10 +440,22 @@ function addFacadePhoto(THREE, root, frontageDetails, profile, f, base, wallHeig
         texture.anisotropy = 2;
         const mesh = new THREE.Mesh(geometry, new THREE.MeshStandardMaterial({ map: texture, color: 0xffffff, roughness: .9, metalness: 0, transparent: false, side: THREE.DoubleSide }));
         mesh.name = "reviewed-facade-photo";
-        if (photo.keepProceduralDetails !== true) frontageDetails.visible = false;
+        if (photo.keepProceduralDetails !== true) {
+          frontageDetails.visible = false;
+          root.userData.renderedSigns.length = 0;
+        }
         if (profile.hidePhotoDuplicatedMembers && root.userData.photoOverlapDetails) root.userData.photoOverlapDetails.visible = false;
         // Only profile-supported porch/balcony members live outside the photo-backed wall group.
-        root.add(mesh); settled = true; clearTimeout(timer); root.userData.facadePhotoStatus = "loaded"; root.userData.photoStatus = "loaded"; resolve("loaded");
+        root.add(mesh);
+        // Only lettering explicitly checked in this image may replace a
+        // directory sign. The profile's procedural signText is not evidence.
+        const verifiedTexts = Array.isArray(photo.verifiedSignTexts)
+          ? [...new Set(photo.verifiedSignTexts.filter(text => typeof text === 'string' && text.trim()).map(text => text.trim()))] : [];
+        const photoSigns = verifiedTexts.map(text => ({ kind: 'photo', sourceId: profile.id, frontageIndex,
+          name: text, text, frontage: profile.frontLatLon.map(point => ({ ...point })) }));
+        mesh.userData.renderedSigns = photoSigns;
+        root.userData.renderedSigns.push(...photoSigns);
+        settled = true; clearTimeout(timer); root.userData.facadePhotoStatus = "loaded"; root.userData.photoStatus = "loaded"; resolve("loaded");
       } catch { texture.dispose?.(); fail(); }
     };
     timer = setTimeout(fail, PHOTO_LOAD_TIMEOUT_MS);

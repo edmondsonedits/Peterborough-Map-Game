@@ -38,10 +38,132 @@ permissions:
   contents: read
 
 concurrency:
-  group: city-explorer-browser-qa-${{ github.ref }}
+  # A docs/generated-data follow-up must not cancel an immutable render capture.
+  group: city-explorer-browser-qa-${{ github.event.pull_request.head.sha || github.sha }}
   cancel-in-progress: true
 
 jobs:
+  visual-refresh-captures:
+    # Only same-repository source, with read-only permissions and no persisted
+    # credentials. Each variant/cohort gets an independent time budget/upload.
+    if: github.event_name != 'pull_request' || github.event.pull_request.head.repo.full_name == github.repository
+    runs-on: ubuntu-24.04
+    timeout-minutes: 35
+    strategy:
+      fail-fast: false
+      max-parallel: 4
+      matrix:
+        profile: [balanced, lite]
+        capture:
+          - { variant: current, cohort: east-north }
+          - { variant: current, cohort: east-south }
+          - { variant: current, cohort: regression }
+          - { variant: baseline, cohort: east-north }
+          - { variant: baseline, cohort: east-south }
+          - { variant: baseline, cohort: regression }
+    env:
+      VISUAL_REFRESH_BASELINE: f7d96109db18058c425a767976899a5f34a5f55c
+      PTBO_CAPTURE_PLAN: route-205
+      PTBO_QA_ARTIFACT_DIR: artifacts/visual-refresh
+      PTBO_CAPTURE_COHORT: ${{ matrix.capture.cohort }}
+    steps:
+      - name: Check out the exact proposed source
+        uses: actions/checkout@v4
+        with:
+          ref: ${{ github.event.pull_request.head.sha || github.sha }}
+          fetch-depth: 0
+          persist-credentials: false
+      - name: Set up Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 22
+      - name: Verify capture configuration against the runtime catalog
+        run: node tools/capture-visual-refresh.cjs --validate-config
+      - name: Install the same browser runtime for all variants
+        run: |
+          npm init -y >/dev/null 2>&1
+          npm install --no-save --no-package-lock playwright@1.62.1
+          npx --yes playwright@1.62.1 install --with-deps chromium
+      - name: Prepare the immutable source and server
+        id: visual-server
+        env:
+          CAPTURE_VARIANT: ${{ matrix.capture.variant }}
+        run: |
+          mkdir -p artifacts/visual-refresh/server
+          capture_source="$GITHUB_WORKSPACE"
+          capture_revision=$(git rev-parse HEAD)
+          if test "$CAPTURE_VARIANT" = baseline; then
+            capture_source="$RUNNER_TEMP/ptbo-visual-baseline"
+            mkdir -p "$capture_source"
+            git cat-file -e "$VISUAL_REFRESH_BASELINE^{commit}"
+            git archive "$VISUAL_REFRESH_BASELINE" | tar -x -C "$capture_source"
+            capture_revision="$VISUAL_REFRESH_BASELINE"
+          fi
+          echo "PTBO_QA_SOURCE_ROOT=$capture_source" >> "$GITHUB_ENV"
+          echo "PTBO_QA_REVISION=$capture_revision" >> "$GITHUB_ENV"
+          python3 -m http.server 4174 --bind 127.0.0.1 --directory "$capture_source" > "artifacts/visual-refresh/server/${CAPTURE_VARIANT}-${PTBO_CAPTURE_COHORT}-${{ matrix.profile }}-http.log" 2>&1 &
+          echo $! > "$RUNNER_TEMP/ptbo-visual.pid"
+          for attempt in $(seq 1 30); do
+            if curl --fail --silent http://127.0.0.1:4174/city-explorer/ >/dev/null; then exit 0; fi
+            sleep 1
+          done
+          exit 1
+      - name: Capture measured raised-fly, oblique and supported cab views
+        timeout-minutes: 30
+        env:
+          CAPTURE_VARIANT: ${{ matrix.capture.variant }}
+          PTBO_CAPTURE_DRIVER: '1'
+          PTBO_CAPTURE_DRIVE_SMOKE: ${{ matrix.capture.variant == 'current' && matrix.capture.cohort == 'regression' && '1' || '0' }}
+          PTBO_CAPTURE_GROUND_STREAM: ${{ matrix.capture.variant == 'current' && matrix.capture.cohort == 'regression' && '1' || '0' }}
+        run: node tools/capture-visual-refresh.cjs http://127.0.0.1:4174 "$CAPTURE_VARIANT" ${{ matrix.profile }}
+      - name: Stop capture server
+        if: always()
+        run: |
+          if test -f "$RUNNER_TEMP/ptbo-visual.pid"; then kill "$(cat "$RUNNER_TEMP/ptbo-visual.pid")" 2>/dev/null || true; fi
+      - name: Preserve this cohort's actual render evidence and failures
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: visual-refresh-part-${{ matrix.capture.variant }}-${{ matrix.profile }}-${{ matrix.capture.cohort }}-${{ github.run_id }}-${{ github.run_attempt }}
+          path: artifacts/visual-refresh/
+          if-no-files-found: error
+          retention-days: 14
+
+  visual-refresh-comparison:
+    needs: visual-refresh-captures
+    if: ${{ always() && (github.event_name != 'pull_request' || github.event.pull_request.head.repo.full_name == github.repository) }}
+    runs-on: ubuntu-24.04
+    timeout-minutes: 10
+    steps:
+      - name: Check out the exact proposed comparison harness
+        uses: actions/checkout@v4
+        with:
+          ref: ${{ github.event.pull_request.head.sha || github.sha }}
+          persist-credentials: false
+      - name: Set up Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 22
+      - name: Collect completed and partial cohort evidence
+        uses: actions/download-artifact@v4
+        with:
+          pattern: visual-refresh-part-*-${{ github.run_id }}-${{ github.run_attempt }}
+          path: artifacts/visual-refresh
+          merge-multiple: true
+      - name: Match camera transforms and write the comparison index
+        env:
+          PTBO_QA_ARTIFACT_DIR: artifacts/visual-refresh
+          PTBO_CAPTURE_PLAN: route-205
+        run: node tools/capture-visual-refresh.cjs --compare baseline current
+      - name: Preserve the combined review index and evidence
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: visual-refresh-comparison-${{ github.run_id }}-${{ github.run_attempt }}
+          path: artifacts/visual-refresh/
+          if-no-files-found: error
+          retention-days: 14
+
   vehicle-multiplayer-regressions:
     runs-on: ubuntu-24.04
     timeout-minutes: 15

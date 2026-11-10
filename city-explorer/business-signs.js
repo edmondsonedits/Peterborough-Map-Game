@@ -1,4 +1,4 @@
-import {planBusinessWallSigns,businessOpeningTop,signVisibilityChanged,wrapSignText} from './business-sign-layout.js?v=1.6.202';
+import {planBusinessWallSigns,businessOpeningTop,signVisibilityChanged,wrapSignText} from './business-sign-layout.js?v=1.6.205';
 
 export async function loadBusinessDirectory(fetcher=fetch,url=new URL('./data/business-directory.json',import.meta.url)){
  const controller=new AbortController(),timer=setTimeout(()=>controller.abort(),8000);
@@ -24,13 +24,36 @@ function makeAtlas(THREE,canvasFactory){
  return{pages,add,finish(){for(const p of pages)p.texture.needsUpdate=true},dispose(){for(const p of pages){p.material.dispose();p.texture.dispose()}}};
 }
 const normalized=s=>String(s||'').toLowerCase().replace(/[^a-z0-9]/g,'');
-export function createBusinessSignLayer({THREE,parent,features,directory,project,generatedRegistry,profiles={},lowPower=false,canvasFactory=()=>document.createElement('canvas')}){
+// Older directory rows identify their wall by coordinates rather than a
+// frontage index. Compare against actual rendered-sign geometry, never a
+// profile which may have been omitted, failed or hidden by a loaded photo.
+function sameRenderedFrontage(row,sign,project){
+ if(!Number.isInteger(sign.frontageIndex)||sign.frontageIndex<0)return false;
+ if(row.frontageIndex!=null)return row.frontageIndex===sign.frontageIndex;
+ if(row.frontage?.length!==2||sign.frontage?.length!==2)return false;
+ let a,b,c,d;
+ try{[a,b,c,d]=[...sign.frontage,...row.frontage].map(p=>{const q=project(p.lat,p.lon);return{x:q.x,z:q.y??q.z}})}catch{return false}
+ if(![a.x,a.z,b.x,b.z,c.x,c.z,d.x,d.z].every(Number.isFinite))return false;
+ const dx=b.x-a.x,dz=b.z-a.z,length=Math.hypot(dx,dz);if(length<1)return false;
+ const along=p=>((p.x-a.x)*dx+(p.z-a.z)*dz)/length;
+ const side=p=>Math.abs((p.x-a.x)*dz-(p.z-a.z)*dx)/length;
+ const cAlong=along(c),dAlong=along(d);
+ return side(c)<=.25&&side(d)<=.25&&Math.min(length,Math.max(cAlong,dAlong))-Math.max(0,Math.min(cAlong,dAlong))>.1;
+}
+export function createBusinessSignLayer({THREE,parent,features,directory,project,generatedRegistry,profiles={},renderedSignsBySourceId,lowPower=false,canvasFactory=()=>document.createElement('canvas')}){
  const byBuilding=new Map(),roots=[],samples=[],rejected=[],atlas=makeAtlas(THREE,canvasFactory);let existing=0,meshes=0,last=null,lastMode=null;
  for(const row of directory.businesses||[]){if(row.placementStatus!=='approved')continue;if(!byBuilding.has(row.buildingSourceId))byBuilding.set(row.buildingSourceId,[]);byBuilding.get(row.buildingSourceId).push(row)}
  const seenSources=new Set();
  for(const feature of features){const rows=byBuilding.get(feature.sourceId);if(!rows?.length||!feature.generatedId||seenSources.has(feature.sourceId))continue;seenSources.add(feature.sourceId);
   const polygons=feature.sourceGeometry.map((rings,i)=>({rings:rings.map(r=>r.map(([lon,lat])=>{const p=project(lat,lon);return{x:p.x,z:p.y??p.z}})),base:feature.partHeights?.[i]?.base??feature.minY,wallTop:feature.partHeights?.[i]?.wallTop??feature.maxY-.2}));
-  const remaining=rows.filter(row=>{const profile=profiles[feature.sourceId];if(profile?.signText&&(normalized(row.name)===normalized(profile.signText)||(normalized(profile.signText).length>=5&&normalized(row.name).startsWith(normalized(profile.signText))))&&(!row.frontageIndex||row.frontageIndex===0)){existing++;samples.push({id:row.id,name:row.name,buildingSourceId:feature.sourceId,existingProfileSign:true});return false}return true});
+  const actualSigns=renderedSignsBySourceId?.get?.(feature.sourceId);
+  const remaining=rows.filter(row=>{
+   const name=normalized(row.name);
+   const supplied=Array.isArray(actualSigns)&&actualSigns.find(sign=>sign?.sourceId===feature.sourceId&&typeof sign.text==='string'&&sign.text.trim()
+    &&sameRenderedFrontage(row,sign,project)&&name&&[sign.name,sign.text].some(text=>normalized(text)===name));
+   if(supplied){existing++;samples.push({id:row.id,name:row.name,buildingSourceId:feature.sourceId,frontageIndex:supplied.frontageIndex,existingProfileSign:true});return false;}
+   return true;
+  });
   const profile=profiles[feature.sourceId];
   const openingTop=businessOpeningTop(feature.properties||{},Math.min(...polygons.map(p=>p.wallTop-p.base)),profile);
   const adjusted=remaining.map(row=>({...row,openingTopMetres:Math.max(row.openingTopMetres||0,openingTop),...(profile?{outsetMetres:row.outsetMetres??.34}:{})}));

@@ -108,7 +108,7 @@ test('builds a continuous sloped walkway against the parapet and keeps medallion
   }
 });
 
-test('spaces lamp piers along connected physical ways and does not restart at segment joints', () => {
+test('spaces lamp posts along connected physical ways and does not restart at segment joints', () => {
   const pairedNorthSideMarks = create().userData.lampMarks.filter(mark => mark.z > 0).sort((a, b) => a.x - b.x);
   assert.ok(pairedNorthSideMarks.length >= 2);
   assert.equal(new Set(pairedNorthSideMarks.map(mark => mark.x.toFixed(3))).size, pairedNorthSideMarks.length,
@@ -129,6 +129,23 @@ test('spaces lamp piers along connected physical ways and does not restart at se
     assert.ok(Math.abs(northSideMarks[i].x - northSideMarks[i - 1].x - 33) < 1e-5,
       'lamp spacing is cumulative across source-segment joints');
   }
+});
+
+test('photo-matched lamps use dark slender stems without concrete towers above the parapet',()=>{
+  const flat=[{a:{x:0,y:0},b:{x:100,y:0},aY:3,bY:3,width:7.15,lineId:'way/33954231'}];
+  const group=createHunterBridgeAppearance({THREE,segments:flat,bridgeRing:ring});
+  const concrete=group.getObjectByName('HunterBridgeConcrete').geometry.attributes.position.array;
+  const heights=Array.from(concrete).filter((_,index)=>index%3===1);
+  assert.ok(Math.max(...heights)<=4.121,'stone ends at the existing parapet cap');
+  for(const mark of group.userData.lampMarks){
+    assert.equal(mark.baseY,4.12);
+    assert.equal(mark.globeY,6.75,'existing globe elevation is retained');
+  }
+  group.updateMatrixWorld(true);
+  const mark=group.userData.lampMarks[0];
+  const ray=new THREE.Raycaster(new THREE.Vector3(mark.x,5,0),new THREE.Vector3(0,0,Math.sign(mark.z)));
+  assert.ok(ray.intersectObject(group.getObjectByName('HunterBridgeLampStems')).length,'continuous slender stem spans the former pedestal height');
+  assert.equal(ray.intersectObject(group.getObjectByName('HunterBridgeConcrete')).length,0,'no unsupported stone pier remains at lamp height');
 });
 
 

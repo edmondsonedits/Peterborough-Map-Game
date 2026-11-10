@@ -183,3 +183,182 @@ export function buildStation2NeighborhoodGableRoof({
   }
   return {valid:true,reason:null,roofTriangles,gableTriangles,ridgeAxis:axis,spanMetres:{ridge:spanU,perpendicular:spanV},wallTop:Number(wallTop),roofTop:Number(roofTop)};
 }
+
+/** Repartition only an untagged visual envelope; source dimensions stay owned by the caller. */
+export function resolveRecordedRoofHeights({foundationTop,wallTop,roofTop,eaveHeightMetres,tags={}}={}) {
+  const unchanged={wallTop,roofTop,applied:false};
+  if(![foundationTop,wallTop,roofTop,eaveHeightMetres].every(Number.isFinite))return unchanged;
+  if(['height','roof:height','roof:shape','building:roof:shape','building:levels'].some(key=>tags[key]!=null&&tags[key]!==''))return unchanged;
+  const candidate=foundationTop+eaveHeightMetres;
+  if(eaveHeightMetres<2.6||candidate>=roofTop-.25||candidate>=wallTop)return unchanged;
+  return {wallTop:candidate,roofTop,applied:true};
+}
+
+const roofPlaneY=(plane,p)=>plane.a*p.x+plane.b*p.z+plane.c;
+function roofPlane(points) {
+  const [a,b,c]=points,dx=b.x-a.x,dz=b.z-a.z,ex=c.x-a.x,ez=c.z-a.z,det=dx*ez-ex*dz;
+  if(Math.abs(det)<1e-10)return null;
+  const u=((b.y-a.y)*ez-(c.y-a.y)*dz)/det,v=(dx*(c.y-a.y)-ex*(b.y-a.y))/det;
+  return {a:u,b:v,c:a.y-u*a.x-v*a.z};
+}
+function containsRoofPoint(p,polygon) {
+  let sign=0;
+  for(let i=0;i<polygon.length;i++){
+    const a=polygon[i],b=polygon[(i+1)%polygon.length],cross=(b.x-a.x)*(p.z-a.z)-(b.z-a.z)*(p.x-a.x);
+    if(Math.abs(cross)<1e-7)continue;
+    if(sign&&Math.sign(cross)!==sign)return false;
+    sign=Math.sign(cross);
+  }
+  return true;
+}
+const patchHeight=(patches,p)=>{
+  let height=-Infinity;
+  for(const patch of patches)if(containsRoofPoint(p,patch.polygon))height=Math.max(height,roofPlaneY(patch.plane,p));
+  return height;
+};
+function clippedRoofPiece(polygon,value,inside=true) {
+  const piece=clipPlaneComparison(polygon,inside?value:p=>-value(p),()=>0);
+  return piece.length>=3&&polygonArea(piece)>1e-9?piece:[];
+}
+// Overlay only the portion of a convex plane domain above the current roof.
+// The rejected pieces retain their prior plane, so no hidden duplicate roof or
+// open slot is introduced in the visible surface.
+function overlayRoofPlane(patches,plane,boundaries,maxPatches) {
+  const result=[];
+  for(const patch of patches){
+    let remaining=patch.polygon;
+    for(const boundary of [...boundaries,p=>roofPlaneY(patch.plane,p)-roofPlaneY(plane,p)]){
+      if(!remaining.length)break;
+      const rejected=clippedRoofPiece(remaining,boundary,false);
+      if(rejected.length)result.push({polygon:rejected,plane:patch.plane});
+      remaining=clippedRoofPiece(remaining,boundary);
+    }
+    if(remaining.length)result.push({polygon:remaining,plane});
+    if(result.length>maxPatches)return null;
+  }
+  return result;
+}
+function roofEdgeCuts(a,b,patches) {
+  const cuts=[0,1],dx=b.x-a.x,dz=b.z-a.z;
+  for(const patch of patches)for(let i=0;i<patch.polygon.length;i++){
+    const p=patch.polygon[i],q=patch.polygon[(i+1)%patch.polygon.length],ex=q.x-p.x,ez=q.z-p.z,denom=dx*ez-dz*ex;
+    if(Math.abs(denom)<1e-10)continue;
+    const t=((p.x-a.x)*ez-(p.z-a.z)*ex)/denom,s=((p.x-a.x)*dz-(p.z-a.z)*dx)/denom;
+    if(t>1e-8&&t<1-1e-8&&s>=-1e-8&&s<=1+1e-8)cuts.push(t);
+  }
+  cuts.sort((a,b)=>a-b);
+  return cuts.filter((value,index)=>!index||value-cuts[index-1]>1e-7);
+}
+function appendRoofWallTriangle(target,a,b,c,outward) {
+  const ab=[b.x-a.x,b.y-a.y,b.z-a.z],ac=[c.x-a.x,c.y-a.y,c.z-a.z];
+  const nx=ab[1]*ac[2]-ab[2]*ac[1],ny=ab[2]*ac[0]-ab[0]*ac[2],nz=ab[0]*ac[1]-ab[1]*ac[0];
+  if(Math.hypot(nx,ny,nz)<1e-8)return;
+  if(outward&&nx*outward.x+nz*outward.z<0)[b,c]=[c,b];
+  for(const p of [a,b,c])target.push(p.x,p.y,p.z);
+}
+
+/**
+ * Opt-in recorded roof details for a single source outline without courtyards.
+ * `frontage` contains two projected X/Z (or Three Vector2 X/Y) endpoints.
+ * `spec.shape` is gabled/hipped; `dormers` and `frontGables` are estimated,
+ * non-overlapping frontage projections, at most four in total. Returned roof
+ * triangles replace the main roof; wall/glass arrays join existing batches.
+ * Invalid detail requests return no partial geometry, allowing the old roof.
+ */
+export function buildRecordedFrontRoof({ring:sourceRing,frontage,triangles,wallTop,roofTop,spec,maxRoofTriangles=1024,maxDetailTriangles=256}={}) {
+  const fail=reason=>({valid:false,reason,roofTriangles:[],wallTriangles:[],glassTriangles:[],projections:[]});
+  if(!spec||!['gabled','hipped'].includes(spec.shape))return fail('unsupported-recorded-roof');
+  if((spec.dormers!=null&&!Array.isArray(spec.dormers))||(spec.frontGables!=null&&!Array.isArray(spec.frontGables)))return fail('invalid-projection-list');
+  const requested=[...(spec.dormers||[]).map(value=>({...value,kind:'dormer'})),...(spec.frontGables||[]).map(value=>({...value,kind:'front-gable'}))];
+  if(!requested.length||requested.length>4)return fail('projection-count');
+  if(!Array.isArray(frontage)||frontage.length!==2||!Array.isArray(sourceRing))return fail('invalid-frontage');
+  const ring=sourceRing.map(asPoint),[start,end]=frontage.map(asPoint),length=Math.hypot(end.x-start.x,end.z-start.z);
+  if(!(length>3)||ring.some(p=>!Number.isFinite(p.x+p.z)))return fail('invalid-frontage');
+  const tangent={x:(end.x-start.x)/length,z:(end.z-start.z)/length},inward={x:-tangent.z,z:tangent.x};
+  const centroid=ring.reduce((sum,p)=>({x:sum.x+p.x/ring.length,z:sum.z+p.z/ring.length}),{x:0,z:0});
+  if((centroid.x-start.x)*inward.x+(centroid.z-start.z)*inward.z<0){inward.x*=-1;inward.z*=-1;}
+  const local=p=>({x:(p.x-start.x)*tangent.x+(p.z-start.z)*tangent.z,z:(p.x-start.x)*inward.x+(p.z-start.z)*inward.z});
+  const world=(p,y)=>({x:start.x+tangent.x*p.x+inward.x*p.z,y,z:start.z+tangent.z*p.x+inward.z*p.z});
+  const base=buildStation2NeighborhoodGableRoof({ring:sourceRing,wallTop,roofTop,triangles,roofShape:spec.shape,maxRoofTriangles,maxGableTriangles:maxDetailTriangles});
+  if(!base.valid)return fail(base.reason);
+  // Keep the existing ridge. Its true line, not a frontage-axis bounding box,
+  // supplies the rear intersection even for slightly skewed mapped rectangles.
+  const side={x:-base.ridgeAxis.z,z:base.ridgeAxis.x},sideValues=ring.map(p=>dot(p,side)),ridgeSide=(Math.min(...sideValues)+Math.max(...sideValues))/2,denom=dot(inward,side);
+  if(Math.abs(denom)<.9)return fail('frontage-not-roof-slope');
+  const ridgeDepth=u=>(ridgeSide-dot(start,side)-u*dot(tangent,side))/denom;
+  const basePatches=[];
+  for(let i=0;i<base.roofTriangles.length;i+=9){
+    const points=[0,3,6].map(j=>({...local({x:base.roofTriangles[i+j],z:base.roofTriangles[i+j+2]}),y:base.roofTriangles[i+j+1]})),plane=roofPlane(points);
+    if(plane)basePatches.push({polygon:points.map(({x,z})=>({x,z})),plane});
+  }
+  let patches=basePatches;
+  const projections=[];
+  for(const request of requested){
+    const fraction=request.fraction,width=request.widthMetres,center=fraction*length,half=width/2,frontDepth=request.frontInsetMetres??(request.kind==='dormer'?.85:.04),left=center-half,right=center+half;
+    if(![fraction,width,frontDepth].every(Number.isFinite)||width<.5||width>length*.4||fraction<=0||fraction>=1||left<.04||right>length-.04||frontDepth<.025||ridgeDepth(left)<=frontDepth+.2||ridgeDepth(right)<=frontDepth+.2)return fail('invalid-projection');
+    if(projections.some(p=>left<p.right-1e-7&&right>p.left+1e-7))return fail('overlapping-projections');
+    const baseY=patchHeight(basePatches,{x:center,z:frontDepth});
+    if(!Number.isFinite(baseY))return fail('projection-outside-roof');
+    let shoulderY,peakY;
+    if(request.kind==='dormer'){
+      if(![request.wallHeightMetres,request.roofRiseMetres].every(Number.isFinite)||request.wallHeightMetres<.3||request.roofRiseMetres<.15)return fail('invalid-dormer-height');
+      shoulderY=baseY+request.wallHeightMetres;peakY=shoulderY+request.roofRiseMetres;
+    }else{
+      const rise=request.riseFraction!=null?(roofTop-wallTop)*request.riseFraction:request.riseMetres;
+      if(!Number.isFinite(rise)||rise<.25)return fail('invalid-gable-height');
+      shoulderY=wallTop;peakY=wallTop+rise;
+    }
+    if(peakY>roofTop+1e-7||shoulderY>=peakY)return fail('projection-exceeds-roof-top');
+    const rise=peakY-shoulderY,front={x:left,z:frontDepth},back={x:right,z:ridgeDepth(right)};
+    const polygon=[front,{x:right,z:frontDepth},back,{x:left,z:ridgeDepth(left)}];
+    // Restrict every side of a projection to an existing roof surface. This
+    // intentionally rejects courtyards/notches instead of bridging a gap.
+    for(let edge=0;edge<4;edge++)for(const t of roofEdgeCuts(polygon[edge],polygon[(edge+1)%4],basePatches)){
+      if(!Number.isFinite(patchHeight(basePatches,mix(polygon[edge],polygon[(edge+1)%4],t))))return fail('projection-outside-roof');
+    }
+    const baseBoundaries=[p=>left-p.x,p=>p.x-right,p=>frontDepth-p.z,p=>p.z-ridgeDepth(p.x)];
+    for(const [a,c,boundary] of [[rise/half,peakY-rise*center/half,p=>p.x-center],[-rise/half,peakY+rise*center/half,p=>center-p.x]]){
+      patches=overlayRoofPlane(patches,{a,b:0,c},[...baseBoundaries,boundary],maxRoofTriangles);
+      if(!patches)return fail('triangle-budget');
+    }
+    projections.push({...request,left,right,frontDepth,center,half,polygon,baseY,shoulderY,peakY});
+  }
+  const roofTriangles=[],wallTriangles=[...base.gableTriangles],glassTriangles=[];
+  for(const patch of patches)for(let i=1;i+1<patch.polygon.length;i++){
+    if(polygonArea([patch.polygon[0],patch.polygon[i],patch.polygon[i+1]])<1e-9)continue;
+    appendUpTriangle(roofTriangles,...[patch.polygon[0],patch.polygon[i],patch.polygon[i+1]].map(p=>world(p,roofPlaneY(patch.plane,p))));
+    if(roofTriangles.length/9>maxRoofTriangles)return fail('triangle-budget');
+  }
+  for(const projection of projections){
+    const {polygon,frontDepth,center,half,baseY,shoulderY,peakY,kind}=projection;
+    for(let edge=0;edge<4;edge++){
+      const a=polygon[edge],b=polygon[(edge+1)%4],cuts=roofEdgeCuts(a,b,[...basePatches,...patches]);
+      const outward={x:tangent.x*(b.z-a.z)-inward.x*(b.x-a.x),z:tangent.z*(b.z-a.z)-inward.z*(b.x-a.x)};
+      for(let i=0;i+1<cuts.length;i++){
+        const p=mix(a,b,cuts[i]),q=mix(a,b,cuts[i+1]),mid=mix(p,q,.5),loP=patchHeight(basePatches,p),loQ=patchHeight(basePatches,q),hiP=patchHeight(patches,p),hiQ=patchHeight(patches,q);
+        if(![loP,loQ,hiP,hiQ,patchHeight(basePatches,mid)].every(Number.isFinite))return fail('projection-outside-roof');
+        if(edge===2&&Math.max(hiP-loP,hiQ-loQ)>1e-6)return fail('unmerged-projection-back');
+        if(Math.max(hiP-loP,hiQ-loQ)<1e-7)continue;
+        const A=world(p,loP),B=world(q,loQ),C=world(q,hiQ),D=world(p,hiP);
+        appendRoofWallTriangle(wallTriangles,A,B,C,outward);appendRoofWallTriangle(wallTriangles,A,C,D,outward);
+      }
+    }
+    const paneAt=(u,y,offset=.018)=>world({x:u,z:frontDepth-offset},y);
+    const frontOutward={x:-inward.x,z:-inward.z};
+    if(kind==='dormer'){
+      const width=projection.glassWidthMetres??projection.widthMetres*.65,height=projection.glassHeightMetres??.72,bottom=baseY+.12;
+      if(![width,height].every(Number.isFinite)||width<=.1||width>projection.widthMetres-.12||height<=.1||bottom+height>shoulderY-.06)return fail('invalid-dormer-glazing');
+      const A=paneAt(center-width/2,bottom),B=paneAt(center+width/2,bottom),C=paneAt(center+width/2,bottom+height),D=paneAt(center-width/2,bottom+height);
+      appendRoofWallTriangle(glassTriangles,A,B,C,frontOutward);appendRoofWallTriangle(glassTriangles,A,C,D,frontOutward);
+    }else if(projection.glazed){
+      const bottom=baseY+.12,top=peakY-.12,paneHalf=half*(peakY-bottom)/(peakY-shoulderY)-.12;
+      if(top<=bottom+.1||paneHalf<=.1)return fail('invalid-gable-glazing');
+      appendRoofWallTriangle(glassTriangles,paneAt(center-paneHalf,bottom),paneAt(center+paneHalf,bottom),paneAt(center,top),frontOutward);
+      // The central cream mullion remains in the existing reviewed wall batch.
+      const A=paneAt(center-.035,bottom,.023),B=paneAt(center+.035,bottom,.023),C=paneAt(center+.035,top-.04,.023),D=paneAt(center-.035,top-.04,.023);
+      appendRoofWallTriangle(wallTriangles,A,B,C,frontOutward);appendRoofWallTriangle(wallTriangles,A,C,D,frontOutward);
+    }
+    if((wallTriangles.length+glassTriangles.length)/9>maxDetailTriangles)return fail('detail-triangle-budget');
+  }
+  return {valid:true,reason:null,roofTriangles,wallTriangles,glassTriangles,wallTop,roofTop,projections:projections.map(p=>({kind:p.kind,fraction:p.fraction,widthMetres:p.widthMetres,frontInsetMetres:p.frontDepth,baseY:p.baseY,shoulderY:p.shoulderY,peakY:p.peakY,mergedAtBack:true}))};
+}

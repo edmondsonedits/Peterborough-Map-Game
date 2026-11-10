@@ -363,15 +363,15 @@ export function createHunterBridgeAppearance({ THREE, segments = [], bridgeRing,
         const n = { x: normal.x * sign, z: normal.z * sign };
         const center = { x: point.x + n.x * (edgeDistance - BRIDGE_EDGE_MARGIN_ESTIMATE - RAILING_HALF_WIDTH_ESTIMATE), y: point.y, z: point.z + n.z * (edgeDistance - BRIDGE_EDGE_MARGIN_ESTIMATE - RAILING_HALF_WIDTH_ESTIMATE) };
         if (lampMarks.some(mark => Math.hypot(mark.x - center.x, mark.z - center.z) < 1.1)) continue;
-        const pierBase = 0.72, shaftHeight = 1.62, capHeight = 0.18;
-        addOrientedBox(buckets, 'concrete', center, tangent, n, pierBase / 2, 0.43, point.y + CURB_REVEAL_ESTIMATE, point.y + CURB_REVEAL_ESTIMATE + 0.28);
-        addOrientedBox(buckets, 'concrete', center, tangent, n, 0.25, 0.27, point.y + 0.4, point.y + 0.4 + shaftHeight);
-        addOrientedBox(buckets, 'concrete', center, tangent, n, 0.37, 0.38, point.y + 0.4 + shaftHeight, point.y + 0.4 + shaftHeight + capHeight);
-        const lampTop = point.y + 0.4 + shaftHeight + capHeight;
-        addOrientedBox(buckets, 'dark', { x: center.x, y: point.y, z: center.z }, tangent, n, 0.055, 0.055, lampTop, lampTop + 1.55);
+        // R251–R260 show slender dark posts on the parapet, not tall stone
+        // pedestals. Retain existing positions and globe height; dimensions
+        // of this modest base and stem are visual estimates.
+        const lampTop = point.y + 2.2, baseY = point.y + RAILING_HEIGHT_ESTIMATE;
+        addOrientedBox(buckets, 'dark', center, tangent, n, 0.13, 0.13, baseY, baseY + 0.22);
+        addOrientedBox(buckets, 'dark', center, tangent, n, 0.055, 0.055, baseY + 0.2, lampTop + 1.55);
         addOrientedBox(buckets, 'dark', { x: center.x, y: point.y, z: center.z }, tangent, n, 0.2, 0.06, lampTop + 1.35, lampTop + 1.46);
         addGlobe(buckets, { x: center.x, y: lampTop + 1.55, z: center.z }, 0.17);
-        lampMarks.push({ x: center.x, z: center.z, y: lampTop });
+        lampMarks.push({ x: center.x, z: center.z, y: lampTop, baseY, globeY:lampTop+1.55 });
       }
     }
   });

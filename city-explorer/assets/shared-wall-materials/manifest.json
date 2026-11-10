@@ -1,0 +1,76 @@
+{
+  "description": "Two unmodified ambientCG colour JPEGs used by the four shared wall families. Runtime canvases are 256 x 256; these add no material family, normal map, roughness map, or displacement map.",
+  "licence": "CC0 1.0 Universal",
+  "licence_url": "https://docs.ambientcg.com/license/",
+  "licence_deed_url": "https://creativecommons.org/publicdomain/zero/1.0/",
+  "licence_verified_date": "2026-11-10",
+  "assets": [
+    {
+      "id": "Bricks101",
+      "family": "brick",
+      "file": "Bricks101_1K-JPG_Color.jpg",
+      "provider": "ambientCG",
+      "author": null,
+      "author_note": "No individual author is credited on the asset page.",
+      "source_url": "https://ambientcg.com/view?id=Bricks101",
+      "download_url": "https://ambientcg.com/get?file=Bricks101_1K-JPG.zip",
+      "licence": "CC0 1.0 Universal",
+      "modifications": "None; byte-identical colour JPEG extracted from the provider archive. Runtime resamples into the existing 256-square canvas budget.",
+      "source_dimensions_pixels": [
+        1024,
+        1024
+      ],
+      "size_bytes": 1326374,
+      "sha256": "41eb9155a0e4b141b79ec21c5797f10468324827d0d2bea0b28ed44f4240f203",
+      "archive_sha256": "0de30f3f5e78086a6b475c38b138ae116945eb61144b51aea1e892deb9233199",
+      "runtime_tile_metres": [
+        1.8,
+        1.8
+      ],
+      "tile_scale_basis": "Estimated rendering calibration: 24 visible brick courses at 0.075 m per course; square texture aspect. The provider does not publish a physical tile dimension.",
+      "source_mean_srgb_0_255": [
+        161.4032,
+        111.8945,
+        87.8221
+      ]
+    },
+    {
+      "id": "Concrete034",
+      "family": "render",
+      "file": "Concrete034_1K-JPG_Color.jpg",
+      "provider": "ambientCG",
+      "author": null,
+      "author_note": "No individual author is credited on the asset page.",
+      "source_url": "https://ambientcg.com/view?id=Concrete034",
+      "download_url": "https://ambientcg.com/get?file=Concrete034_1K-JPG.zip",
+      "licence": "CC0 1.0 Universal",
+      "modifications": "None; byte-identical colour JPEG extracted from the provider archive. Runtime resamples into the existing 256-square canvas budget.",
+      "source_dimensions_pixels": [
+        1024,
+        512
+      ],
+      "size_bytes": 269501,
+      "sha256": "8ceb9186d990b31fce785e06fdc6974c160f1d27c43f6160266f164deba713aa",
+      "archive_sha256": "5839d284d94ffb8d2a56df742ec522b13dd311c52dbd42b8fd33f0409ceedb81",
+      "runtime_tile_metres": [
+        1.1,
+        0.55
+      ],
+      "tile_scale_basis": "Physical tile width 1.1 m and height 0.55 m published by ambientCG.",
+      "source_mean_srgb_0_255": [
+        184.321,
+        184.321,
+        184.321
+      ]
+    }
+  ],
+  "total_source_bytes": 1595875,
+  "runtime_notes": [
+    "Bricks101 replaces only the brick-family canvas; Concrete034 replaces only the render-family canvas. Siding and stone remain the original procedural canvases.",
+    "All four maps remain sRGB, repeating, mipmapped, and 256 x 256. Source success changes the texture repeat transform, never UV periods already baked into geometry.",
+    "Both source load or drawing failures and sourceMode=procedural retain the original procedural map and repeat transform.",
+    "Source albedo is not brightened, desaturated, or multiply-tinted during sampling; existing per-building vertex tint still applies in the renderer.",
+    "Bricks003 was inspected but not selected as a citywide base because its broad mottling and much darker mean sRGB [90.2797, 79.4914, 70.0430] would over-darken generic brick with existing vertex tints.",
+    "The licensed Kenneth 1206 local reference was viewed to compare general brick character. No pixels from that photograph are included in these material assets, and no exact building match is claimed."
+  ]
+}

@@ -80,8 +80,27 @@ export function station2WallPattern(wallMaterialKey,featureId='') {
   return ['station2-wall-brick','station2-wall-render','station2-wall-siding','station2-wall-stone'][stableHash(`${featureId}:station2-wall-style`)%4];
 }
 
-/** One original, repeatable metre-scale canvas tile per shared wall family. */
-export function createStation2WallMaterials(THREE) {
+/** Apply explicit wall evidence at the wall batch, never to the upstream roof key. */
+export function station2WallPatternForTags(wallMaterialKey,featureId='',tags={}) {
+  const material=String(tags?.['building:material']||'').trim().toLowerCase();
+  if(/^(brick|bricks)$/.test(material))return 'station2-wall-brick';
+  if(/^(plaster|render|concrete|stucco)$/.test(material))return 'station2-wall-render';
+  if(/^(wood|timber)$/.test(material))return 'station2-wall-siding';
+  if(/^(stone|sandstone|limestone)$/.test(material))return 'station2-wall-stone';
+  return station2WallPattern(wallMaterialKey,featureId);
+}
+
+const SHARED_WALL_SOURCES = [
+  // Bricks101 has 24 visible courses. The 1.8 m square is a rendering estimate
+  // calibrated to 75 mm courses, not a dimension published by the provider.
+  {family:'brick',id:'Bricks101',repeatMetres:[1.8,1.8]},
+  {family:'render',id:'Concrete034',repeatMetres:[1.1,.55]},
+];
+
+/** Four shared 256-square maps, immediately usable with exact procedural fallbacks.
+ * `ready` settles after both optional colour sources, including load/draw errors.
+ */
+export function createStation2WallMaterials(THREE,{sourceMode='source'}={}) {
   const draw=(family)=>{
     const canvas=document.createElement('canvas');canvas.width=256;canvas.height=256;
     const ctx=canvas.getContext('2d');
@@ -109,7 +128,37 @@ export function createStation2WallMaterials(THREE) {
     material.userData.station2RepeatMetres=family==='brick'?[.96,1.2]:family==='stone'?[.84,1.2]:family==='siding'?[1,1.2]:[1,1];
     return material;
   };
-  return new Map(['brick','render','siding','stone'].map(family=>[`station2-wall-${family}`,draw(family)]));
+  const materials=new Map(['brick','render','siding','stone'].map(family=>[`station2-wall-${family}`,draw(family)]));
+  const mode=sourceMode==='procedural'?'procedural':'source';
+  materials.ready=Promise.all(SHARED_WALL_SOURCES.map(source=>{
+    const result=status=>({family:source.family,id:source.id,status});
+    if(mode==='procedural')return result('procedural');
+    return new Promise(resolve=>{
+      const fallback=()=>resolve(result('fallback'));
+      try {
+        const url=new URL(`./assets/shared-wall-materials/${source.id}_1K-JPG_Color.jpg`,import.meta.url).href;
+        new THREE.ImageLoader().load(url,image=>{
+          try {
+            if(!(image.naturalWidth>0&&image.naturalHeight>0)){fallback();return;}
+            // Prepare off-texture so failed decoding/drawing cannot damage the
+            // original canvas. This adds no GPU texture or material instance.
+            const canvas=document.createElement('canvas');canvas.width=256;canvas.height=256;
+            const ctx=canvas.getContext('2d');
+            ctx.drawImage(image,0,0,256,256);
+            const material=materials.get(`station2-wall-${source.family}`);
+            const bakedRepeat=material.userData.station2RepeatMetres;
+            material.map.image=canvas;
+            // Geometry may already be batched. Transform the existing UVs on
+            // source success; keep both old UVs and repeats intact on failure.
+            material.map.repeat.set(bakedRepeat[0]/source.repeatMetres[0],bakedRepeat[1]/source.repeatMetres[1]);
+            material.map.needsUpdate=true;
+            resolve(result('source'));
+          }catch{fallback();}
+        },undefined,fallback);
+      }catch{fallback();}
+    });
+  })).then(sources=>({mode,sources}));
+  return materials;
 }
 
 /** Build representative wall and opening quads for deterministic offline review. */
@@ -130,7 +179,7 @@ export function station2FacadeLayout(building,{wallHeight=3.1,lite=false,visuals
     });
     const facade=role==='front'||role==='rear';
     const plan=buildingFacadePlan({tags,featureId:id,edgeLength:length,wallHeight,edgeIndex:edge.index,footprintArea:Math.abs(signedArea),lite:lite||role!=='front',front:facade,visuals});
-    const wallPattern=station2WallPattern(building.wallMaterialKey||station2SourceWallKey(tags,id),id);
+    const wallPattern=station2WallPatternForTags(building.wallMaterialKey||station2SourceWallKey(tags,id),id,tags);
     const wallA=[a.x+nx*.014,0,a.z+nz*.014],wallB=[b.x+nx*.014,0,b.z+nz*.014],wallC=[b.x+nx*.014,wallHeight,b.z+nz*.014],wallD=[a.x+nx*.014,wallHeight,a.z+nz*.014];
     const wall={positions:signedArea>=0?[wallA,wallD,wallC,wallB]:[wallA,wallB,wallC,wallD],uv:signedArea>=0?[[0,0],[0,wallHeight],[length,wallHeight],[length,0]]:[[0,0],[length,0],[length,wallHeight],[0,wallHeight]],materialKey:wallPattern,repeatMetres:1};
     const quads=plan.panels.map(panel=>{
@@ -154,4 +203,4 @@ function station2SourceWallKey(tags,id){
   if(/grey|gray|blue|slate/.test(colour))return 'residentialSlate';
   const variant=stableHash(id)%10;return variant<4?'residentialBrick':variant<7?'residentialPale':variant===7?'residentialSlate':'residential';
 }
-import {buildingFacadePlan} from './building-archetypes.js?v=1.6.202';
+import {buildingFacadePlan} from './building-archetypes.js?v=1.6.205';
