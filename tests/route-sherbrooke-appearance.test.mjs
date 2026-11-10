@@ -4,6 +4,7 @@ import {readFile} from 'node:fs/promises';
 import * as THREE from '../city-explorer/vendor/three-r180/build/three.module.min.js';
 import {createFootageFacade, frontageFrame} from '../city-explorer/sherbrooke-footage.js';
 import {mappedBuildingDimensions} from '../city-explorer/mapped-building-dimensions.js';
+import {resolveReviewedBuildingEnvelope} from '../city-explorer/reviewed-building-envelope.js';
 import {FOOTAGE_PROFILES} from '../city-explorer/sherbrooke-footage-profiles.js';
 import {applyRecordingAppearance, recordingReferencesEnabled} from '../city-explorer/recording-appearance.js';
 import {addRouteLandmarkAppearances} from '../city-explorer/route-landmark-appearances.js';
@@ -26,18 +27,25 @@ async function registry() {
   return module.ROUTE_SHERBROOKE_APPEARANCES;
 }
 
-function sourceHeight(id, profile) {
+function renderedHeight(id, profile) {
   // Match app.js buildingDimensions and the non-appearanceOnly roof allowance.
-  // No Frills keeps its existing 5.2 m reviewed wall; the seven new records use OSM.
+  // No Frills keeps its existing reviewed wall. Opted-in Sherbrooke estimates
+  // resolve against actual source geometry before facade dimensions are checked.
   if (!profile.appearanceOnly && !profile.preserveMappedMassing && profile.eaveHeight) {
     return profile.eaveHeight + (profile.roof === 'flat' ? .2 : profile.roofRise);
   }
-  return mappedBuildingDimensions(ways.get(id).tags, id).height;
+  const source = ways.get(id), dimensions = mappedBuildingDimensions(source.tags, id);
+  const ring = source.geometry.slice(0, -1).map(({lat, lon}) => project(lat, lon));
+  const resolved = resolveReviewedBuildingEnvelope({profile, sourceId: id, ring, groundHeights: ring.map(() => 100), dimensions, project, tags: source.tags});
+  // The reviewed south-facing gable carries its observed upper sash above the
+  // eave; the separate envelope test checks every frame against the roof planes.
+  return resolved.applied && resolved.dimensions.roofShape === 'gabled'
+    ? resolved.roofTop - resolved.foundationTop : resolved.dimensions.height;
 }
 
 function render(id, profile, {lite = false} = {}) {
   const ring = ways.get(id).geometry.slice(0, -1).map(({lat, lon}) => project(lat, lon));
-  const height = sourceHeight(id, profile);
+  const height = renderedHeight(id, profile);
   return {group: createFootageFacade({THREE, profile, ring, base: 100, top: 100 + height, project, lite}), height, ring};
 }
 
@@ -66,7 +74,7 @@ async function composed() {
   return addRouteLandmarkAppearances(base);
 }
 
-test('Sherbrooke composition preserves existing geometry, the No Frills west photograph and the default opt-out', async () => {
+test('Sherbrooke composition preserves source-height inputs, the No Frills west photograph and the default opt-out', async () => {
   const records = await registry();
   assert.deepEqual(Object.keys(records).sort(), [...expected].sort());
   const base = { 'way/755554888': applyRecordingAppearance(FOOTAGE_PROFILES['way/755554888']) }, snapshot = structuredClone(base);
@@ -103,7 +111,7 @@ test('Sherbrooke faces use the exact current source edges and point toward the p
   }
 });
 
-test('Sherbrooke details remain finite and uncollapsed at actual source wall heights in balanced and Lite rendering', async () => {
+test('Sherbrooke details remain finite and uncollapsed at resolved wall heights in balanced and Lite rendering', async () => {
   const profiles = await composed();
   for (const id of expected) for (const lite of [false, true]) {
     const profile = profiles[id], face = id === 'way/755554888' ? {...profile, ...profile.additionalFrontages[0], additionalFrontages: undefined, facadePhoto: undefined} : profile;
@@ -115,7 +123,7 @@ test('Sherbrooke details remain finite and uncollapsed at actual source wall hei
     });
     group.updateMatrixWorld(true);
     const bounds = new THREE.Box3().setFromObject(group), frame = frontageFrame({profile: face, ring, project});
-    assert.ok(bounds.min.y >= 99.99 && bounds.max.y <= 100 + height + .01, `${id} stays within its actual ${height.toFixed(5)} m source height`);
+    assert.ok(bounds.min.y >= 99.99 && bounds.max.y <= 100 + height + .01, `${id} stays within its resolved ${height.toFixed(5)} m display wall`);
     for (const panel of face.facadePanels || []) {
       const matching = instances(group, `frontage-${panel.color}`, frame).filter(box => Math.abs(box.bottom - panel.bottomMetres) < .01 && Math.abs(box.scale.y - panel.heightMetres) < .01);
       assert.ok(matching.length, `${id} ${panel.color} panel is emitted at intended height, without top-edge collapse`);
@@ -196,7 +204,7 @@ test('Thrive tall glazing leaves no space for the stale automatically placed din
   const id = 'way/1006594168', profile = (await composed())[id], source = ways.get(id);
   const directory = JSON.parse(await readFile(new URL('../city-explorer/data/business-directory.json', import.meta.url), 'utf8'));
   const rows = directory.businesses.filter(row => row.buildingSourceId === id && row.placementStatus === 'approved');
-  const height = mappedBuildingDimensions(source.tags, id).height;
+  const height = renderedHeight(id, profile);
   const openingTopMetres = businessOpeningTop(source.tags, height, profile);
   const result = planBusinessWallSigns({
     building: {sourceId: id, polygons: [{base: 100, wallTop: 100 + height, rings: [source.geometry.map(({lat, lon}) => project(lat, lon))]}]},

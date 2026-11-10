@@ -1,25 +1,73 @@
 // Small, photo-supported projecting window bays. Dimensions are appearance
 // estimates; this geometry never changes the mapped shell or collision model.
-import { glazingIntensity } from './city-visual-settings.js?v=1.6.207';
+import { glazingIntensity } from './city-visual-settings.js?v=1.6.208';
 const clamp = (value, low, high) => Math.max(low, Math.min(high, value));
 const finite = value => Number.isFinite(value);
 const dimension = (value, fallback, low, high) => clamp(finite(value) ? value : fallback, low, high);
 const colorValue = (value, fallback) => typeof value === 'string' && /^#[\da-f]{6}$/i.test(value) ? value : fallback;
 
-export function createRecordedEnclosedBays({ THREE, frame, base, height, specs = [], lite = false, glassEnvironment }) {
-  if (!THREE?.Group || !THREE?.BufferGeometry) throw new TypeError('Three.js geometry runtime is required');
-  const root = new THREE.Group();
-  root.name = 'recorded-enclosed-bays';
-  root.userData = { type: 'recorded-enclosed-bays', collision: false, enclosedBays: [], enclosedBayJoins: [], rejectedCount: 0 };
+// The renderer and directory constraints share this exact finite, clamped plan.
+// Local x follows the recorded frontage; out is measured away from its wall.
+export function planRecordedEnclosedBays({ frame, base = 0, height, specs = [] }) {
+  const result = { bays: [], joins: [], rejectedCount: 0 };
   const components = [frame?.start?.x, frame?.start?.z, frame?.tangent?.x, frame?.tangent?.z,
     frame?.outward?.x, frame?.outward?.z, frame?.length, base, height];
   if (!components.every(finite) || frame.length < .8 || height < .8
     || Math.abs(Math.hypot(frame.tangent.x, frame.tangent.z) - 1) > .001
     || Math.abs(Math.hypot(frame.outward.x, frame.outward.z) - 1) > .001
     || Math.abs(frame.tangent.x * frame.outward.x + frame.tangent.z * frame.outward.z) > .001) {
-    root.userData.rejectedCount = Array.isArray(specs) ? specs.length : 0;
-    return root;
+    result.rejectedCount = Array.isArray(specs) ? specs.length : 0;
+    return result;
   }
+  const sourceSpecs = Array.isArray(specs) ? specs : [];
+  result.rejectedCount = Math.max(0, sourceSpecs.length - 4);
+  for (const spec of sourceSpecs.slice(0, 4)) {
+    if (!spec || !finite(spec.fraction) || !finite(spec.bottomMetres) || spec.bottomMetres < 0 || spec.bottomMetres > height - .7) {
+      result.rejectedCount++; continue;
+    }
+    const width = dimension(spec.widthMetres, 2.25, .7, Math.min(4, frame.length - .1));
+    const fraction = clamp(spec.fraction, (width / 2 + .025) / frame.length, 1 - (width / 2 + .025) / frame.length);
+    const bottom = spec.bottomMetres, bayHeight = dimension(spec.heightMetres, 2.55, .7, height - bottom);
+    const depth = dimension(spec.depthMetres, .55, .12, 1.2);
+    const frontFraction = dimension(spec.frontWidthFraction, .58, .35, .8);
+    const waist = dimension(spec.baseHeightMetres, .42, .1, bayHeight * .4);
+    const cap = dimension(spec.capHeightMetres, .12, .05, bayHeight * .15);
+    const center = fraction * frame.length;
+    // A tiny wall outset avoids fighting the source wall at the two rear seams.
+    const outline = [
+      { x: center - width / 2, out: .045 },
+      { x: center - width * frontFraction / 2, out: depth },
+      { x: center + width * frontFraction / 2, out: depth },
+      { x: center + width / 2, out: .045 },
+    ];
+    const summary = { fraction, widthMetres: width, bottomMetres: bottom,
+      heightMetres: bayHeight, depthMetres: depth, frontWidthFraction: frontFraction,
+      baseHeightMetres: waist, capHeightMetres: cap, faceCount: 3 };
+    result.bays.push({ summary, outline, joinToNext: spec.joinToNext === true,
+      wallColor: colorValue(spec.wallColor, '#d4c9ae'), trimColor: colorValue(spec.trimColor, '#a68d66'),
+      glassColor: colorValue(spec.glassColor, '#687976') });
+  }
+  for (const [lowerIndex, lower] of result.bays.entries()) {
+    if (!lower.joinToNext) continue;
+    const bottom = lower.summary.bottomMetres + lower.summary.heightMetres;
+    const candidates = result.bays.map((bay, index) => ({ bay, index })).filter(({bay}) => bay.summary.bottomMetres > bottom + .001
+      && bay.summary.bottomMetres - bottom <= 1.5
+      && ['fraction', 'widthMetres', 'depthMetres', 'frontWidthFraction'].every(key => Math.abs(bay.summary[key] - lower.summary[key]) < 1e-5))
+      .sort((a, b) => a.bay.summary.bottomMetres - b.bay.summary.bottomMetres);
+    if (candidates.length) result.joins.push({ lowerIndex, upperIndex: candidates[0].index,
+      bottomMetres: bottom, heightMetres: candidates[0].bay.summary.bottomMetres - bottom, faceCount: 3 });
+  }
+  return result;
+}
+
+export function createRecordedEnclosedBays({ THREE, frame, base, height, specs = [], lite = false, glassEnvironment }) {
+  if (!THREE?.Group || !THREE?.BufferGeometry) throw new TypeError('Three.js geometry runtime is required');
+  const root = new THREE.Group();
+  root.name = 'recorded-enclosed-bays';
+  root.userData = { type: 'recorded-enclosed-bays', collision: false, enclosedBays: [], enclosedBayJoins: [], rejectedCount: 0 };
+  const plan = planRecordedEnclosedBays({ frame, base, height, specs });
+  root.userData.rejectedCount = plan.rejectedCount;
+  if (!plan.bays.length) return root;
   const batches = new Map(), accepted = [];
   const world = (x, y, out) => ({
     x: frame.start.x + frame.tangent.x * x + frame.outward.x * out,
@@ -40,30 +88,13 @@ export function createRecordedEnclosedBays({ THREE, frame, base, height, specs =
   function quad(batch, a, b, c, d, normal) {
     triangle(batch, a, b, c, normal); triangle(batch, a, c, d, normal);
   }
-  const sourceSpecs = Array.isArray(specs) ? specs : [];
-  root.userData.rejectedCount = Math.max(0, sourceSpecs.length - 4);
-  for (const spec of sourceSpecs.slice(0, 4)) {
-    if (!spec || !finite(spec.fraction) || !finite(spec.bottomMetres) || spec.bottomMetres < 0 || spec.bottomMetres > height - .7) {
-      root.userData.rejectedCount++; continue;
-    }
-    const width = dimension(spec.widthMetres, 2.25, .7, Math.min(4, frame.length - .1));
-    const fraction = clamp(spec.fraction, (width / 2 + .025) / frame.length, 1 - (width / 2 + .025) / frame.length);
-    const bottom = spec.bottomMetres, bayHeight = dimension(spec.heightMetres, 2.55, .7, height - bottom);
-    const depth = dimension(spec.depthMetres, .55, .12, 1.2);
-    const frontFraction = dimension(spec.frontWidthFraction, .58, .35, .8);
-    const waist = dimension(spec.baseHeightMetres, .42, .1, bayHeight * .4);
-    const cap = dimension(spec.capHeightMetres, .12, .05, bayHeight * .15);
-    const center = fraction * frame.length, top = bottom + bayHeight;
-    // A tiny wall outset avoids fighting the source wall at the two rear seams.
-    const outline = [
-      { x: center - width / 2, out: .045 },
-      { x: center - width * frontFraction / 2, out: depth },
-      { x: center + width * frontFraction / 2, out: depth },
-      { x: center + width / 2, out: .045 },
-    ];
-    const wall = batchFor('wall', colorValue(spec.wallColor, '#d4c9ae'));
-    const trim = batchFor('trim', colorValue(spec.trimColor, '#a68d66'));
-    const glass = batchFor('glass', colorValue(spec.glassColor, '#687976'));
+  for (const record of plan.bays) {
+    const { summary, outline } = record;
+    const bottom = summary.bottomMetres, top = bottom + summary.heightMetres;
+    const waist = summary.baseHeightMetres, cap = summary.capHeightMetres;
+    const wall = batchFor('wall', record.wallColor);
+    const trim = batchFor('trim', record.trimColor);
+    const glass = batchFor('glass', record.glassColor);
     // Three outward faces, each with an enclosed sash, a solid lower waist,
     // head and jambs. There is no balcony deck, railing or exposed support.
     for (let faceIndex = 0; faceIndex < 3; faceIndex++) {
@@ -90,23 +121,13 @@ export function createRecordedEnclosedBays({ THREE, frame, base, height, specs =
     const topPoints = pointsAt(top), bottomPoints = pointsAt(bottom);
     quad(trim, ...topPoints, { x: 0, y: 1, z: 0 });
     quad(wall, ...bottomPoints, { x: 0, y: -1, z: 0 });
-    const summary = { fraction, widthMetres: width, bottomMetres: bottom,
-      heightMetres: bayHeight, depthMetres: depth, frontWidthFraction: frontFraction,
-      baseHeightMetres: waist, capHeightMetres: cap, faceCount: 3 };
-    accepted.push({ spec, summary, outline, wall });
+    accepted.push({ summary, outline, wall });
     root.userData.enclosedBays.push(summary);
   }
   // A photographed stacked bay can retain a solid projecting spandrel through
   // the floor gap. Never connect unrelated locations or unmatched silhouettes.
-  for (const [index, lower] of accepted.entries()) {
-    if (lower.spec.joinToNext !== true) continue;
-    const low = lower.summary.bottomMetres + lower.summary.heightMetres;
-    const upper = accepted.filter(candidate => candidate.summary.bottomMetres > low + .001
-      && candidate.summary.bottomMetres - low <= 1.5
-      && ['fraction', 'widthMetres', 'depthMetres', 'frontWidthFraction'].every(key => Math.abs(candidate.summary[key] - lower.summary[key]) < 1e-5))
-      .sort((a, b) => a.summary.bottomMetres - b.summary.bottomMetres)[0];
-    if (!upper) continue;
-    const high = upper.summary.bottomMetres;
+  for (const join of plan.joins) {
+    const lower = accepted[join.lowerIndex], low = join.bottomMetres, high = low + join.heightMetres;
     for (let faceIndex = 0; faceIndex < 3; faceIndex++) {
       const a = lower.outline[faceIndex], b = lower.outline[faceIndex + 1];
       const dx = b.x - a.x, dz = b.out - a.out;
@@ -115,8 +136,7 @@ export function createRecordedEnclosedBays({ THREE, frame, base, height, specs =
       quad(lower.wall, world(a.x, low, a.out), world(b.x, low, b.out),
         world(b.x, high, b.out), world(a.x, high, a.out), normal);
     }
-    root.userData.enclosedBayJoins.push({ lowerIndex: index, upperIndex: accepted.indexOf(upper),
-      bottomMetres: low, heightMetres: high - low, faceCount: 3 });
+    root.userData.enclosedBayJoins.push({ ...join });
   }
   for (const { kind, color, positions } of batches.values()) {
     if (!positions.length) continue;

@@ -4,6 +4,7 @@ import {readFile} from 'node:fs/promises';
 import * as THREE from '../city-explorer/vendor/three-r180/build/three.module.min.js';
 import {createFootageFacade, frontageFrame} from '../city-explorer/sherbrooke-footage.js';
 import {mappedBuildingDimensions} from '../city-explorer/mapped-building-dimensions.js';
+import {resolveReviewedBuildingEnvelope} from '../city-explorer/reviewed-building-envelope.js';
 import {FOOTAGE_PROFILES} from '../city-explorer/sherbrooke-footage-profiles.js';
 import {addRouteLandmarkAppearances} from '../city-explorer/route-landmark-appearances.js';
 import {applyRecordingAppearance, recordingReferencesEnabled} from '../city-explorer/recording-appearance.js';
@@ -61,7 +62,8 @@ function render(id, profile, lite = false) {
   const dimensions = dimensionsFor(ways.get(id).tags, id);
   const ring = ways.get(id).geometry.slice(0, -1).map(point => project(point.lat, point.lon));
   const frame = frontageFrame({profile, ring, project});
-  return {dimensions, frame, group: createFootageFacade({THREE, profile, ring, base: 100, top: 100 + dimensions.height, project, lite})};
+  const envelope = resolveReviewedBuildingEnvelope({profile, sourceId: id, ring, groundHeights: ring.map(() => 100), dimensions, project, tags: ways.get(id).tags});
+  return {dimensions, visualDimensions: envelope.dimensions, frame, group: createFootageFacade({THREE, profile, ring, base: envelope.foundationTop, top: envelope.wallTop, project, lite})};
 }
 function boxes(group, frame, name) {
   const result = [], matrix = new THREE.Matrix4();
@@ -168,9 +170,9 @@ test('all fourteen East City frontages use the photographed adjacent edge and ro
   }
 });
 
-test('East City decoration fits real mapped wall heights in full and Lite rendering without clipped panels or overlapping glass', async () => {
+test('East City decoration fits resolved visual walls in full and Lite rendering without clipped panels or overlapping glass', async () => {
   for (const [id, record] of Object.entries(await records())) for (const face of faces(profileFor(id))) for (const lite of [false, true]) {
-    const {group, dimensions, frame} = render(id, face, lite);
+    const {group, visualDimensions: dimensions, frame} = render(id, face, lite);
     assert.equal(group.userData.collision, false);
     group.traverse(node => {
       if (node.isInstancedMesh) assert.ok([...node.instanceMatrix.array].every(Number.isFinite), `${id} finite transforms`);

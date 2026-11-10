@@ -11,7 +11,7 @@ async function main(){
  const {partitionRoadGeometry}=await import('../city-explorer/road-pack-build.js');
  const {collectRoadGridNodes,optimizeRoadGeometry}=await import('../city-explorer/road-pack-optimize.js');
  const {encodeRoadTile,PackedRoadSurfaceIndex}=await import('../city-explorer/road-tile-pack.js');
- const {validateReviewedRouteSurfaceProof,validateReviewedCanopyGroundSource,createReviewedCanopyGroundProof}=await import('../city-explorer/reviewed-canopy-ground.js');
+ const {validateReviewedRouteSurfaceProof,validateReviewedCanopyGroundSource,createReviewedCanopyGroundProof,summarizeReviewedCanopyGroundSource}=await import('../city-explorer/reviewed-canopy-ground.js');
  const manifest=JSON.parse(fs.readFileSync(path.join(root,'city-explorer/data/manifest.json')));
  const metadataPath='city-explorer/data/'+(manifest.terrain?.official?.metadata_file||'terrain/peterborough-dtm-2025.json');
  const terrain=JSON.parse(fs.readFileSync(path.join(root,metadataPath)));
@@ -32,6 +32,11 @@ async function main(){
   await page.waitForFunction(()=>Boolean(window.__PTBO_ROAD_BUILD__)||document.documentElement.dataset.explorerBoot==='failed',null,{timeout:720000});
   if(errors.length)throw new Error('Road compiler page errors: '+errors.join('; '));
   report=await page.evaluate(()=>window.__PTBO_ROAD_BUILD__.report());
+  // Persist source evidence before validation so a rejected build retains the
+  // actual failure reason and contact metadata, without publishing a pack.
+  fs.mkdirSync(path.join(root,'artifacts/road-rebuild'),{recursive:true});
+  fs.writeFileSync(path.join(root,'artifacts/road-rebuild/source-report.json'),JSON.stringify(report,null,2));
+  console.log('Roadbuild: reviewed canopy source '+JSON.stringify(summarizeReviewedCanopyGroundSource(report.reviewedCanopyGround)));
   validateReviewedRouteSurfaceProof(report.reviewedRouteSurfaces);
   validateReviewedCanopyGroundSource(report.reviewedCanopyGround,report.projection);
   if(report.terrain?.source!=='ontario-lidar-2025'||report.terrain.segments!==Math.max(192,Math.min(340,Math.ceil(report.terrain.size/56))))throw new Error('Compiler requires canonical official terrain: '+JSON.stringify(report.terrain));

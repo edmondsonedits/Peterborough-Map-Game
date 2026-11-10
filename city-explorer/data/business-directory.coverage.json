@@ -5,8 +5,8 @@
     "sourceRecords": 2528,
     "excludedNonEstablishments": 13,
     "uniqueBusinesses": 2264,
-    "supersededSourceRecords": 1,
-    "reviewedAdditions": 3,
+    "supersededSourceRecords": 2,
+    "reviewedAdditions": 4,
     "duplicateRecords": 253,
     "approved": 900,
     "ambiguous": 27,
@@ -15,7 +15,7 @@
     "directory-member": 32,
     "placementCandidates": 932,
     "directoryPanels": 4,
-    "runtimeVerified": true,
+    "runtimeVerified": false,
     "municipalCivicAddressMatches": 27,
     "inferredNamedStreetWalls": 26,
     "municipalAddressFrontages": 635,
@@ -54,6 +54,11 @@
       ],
       "atlasBytes": 20971520,
       "physicalPhoneTested": false
+    },
+    "runtimeVerificationInvalidated": {
+      "checkedAt": "2026-11-10",
+      "reason": "The historical Husky row was replaced by a reviewed Ultramar candidate with canopy-fascia placement. The retained v1.6.129 receipt and rendered-name metrics are historical; current runtime placement/deduplication must be checked again.",
+      "changedSourceId": "way/446339023"
     }
   },
   "unresolved": [

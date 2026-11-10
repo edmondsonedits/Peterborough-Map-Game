@@ -1,6 +1,7 @@
-// Eight facade-only records verified against R137–R190 and adjacent current OSM
-// vertices. Metric dimensions/colors are visual estimates. Source massing, roofs,
-// yards and collision remain authoritative; game-view approval is still pending.
+// Eight records verified against R137–R190 and adjacent current OSM vertices.
+// Bounded reviewedEnvelope entries correct untagged inferred silhouettes only;
+// dimensions/colors remain visual estimates. Source footprints, measured tags,
+// yards and collision stay authoritative. Fresh game-view approval is pending.
 export const ROUTE_SHERBROOKE_APPEARANCES = {
   'way/1006594206': {
     street: 'Sherbrooke Street', intersection: 'Sherbrooke Street / Rubidge Street', corner: 'northwest',
@@ -67,7 +68,7 @@ export const ROUTE_SHERBROOKE_APPEARANCES = {
     street: 'Sherbrooke Street', intersection: 'Sherbrooke Street / Stewart Street', corner: 'southwest',
     photoIds: ['R141'], source: 'dense/flat-768/frame_0200_lens0_pitch+0.jpg',
     observation: 'The north-facing side wall is pale painted masonry with a dark green eave and exactly two white-framed upper windows. The ground wall is blank. A lower side/rear addition and black fence are visible to the west.',
-    estimated: 'Upper-window dimensions/elevations and colors are estimates bounded by the actual 4.24778 m mapped wall. The two observed side-wall windows gain no guessed ground openings, porch or entrance. Lower rear geometry and roof remain unchanged.',
+    estimated: 'Upper-window dimensions/elevations and colors are visual estimates. A 4.24 m wall and 0.12 m low flat cap are a conservative display simplification of the observed nearly horizontal north eave, replacing the unsupported inferred 2.24198 m front gable. This does not assert that the entire physical roof is flat: the visible stepped side/rear volumes and their roof topology remain unmodeled. The exact source outline and ground datum remain; no guessed ground openings, porch or entrance are added.',
     profile: {
       label: 'SHER-STEWART-SW', name: 'Pale sidewall southwest of Stewart', confidence: 'observed',
       frontLatLon: [{lat: 44.3004602, lon: -78.325474}, {lat: 44.3004643, lon: -78.3253949}],
@@ -75,6 +76,7 @@ export const ROUTE_SHERBROOKE_APPEARANCES = {
     },
     appearance: {
       wallColor: '#d1cbb7', wallSurface: 'render', trimColor: '#e2e3d4', glassColor: '#677974',
+      reviewedEnvelope: {datum: 'source', wallHeightMetres: 4.24, roofRiseMetres: .12, roofShape: 'flat'},
       blankFacade: true, porch: false, entryDoor: null,
       groundWindows: [{t: .30, bottom: 2.56, width: .84, height: 1.2}, {t: .70, bottom: 2.56, width: .84, height: 1.2}],
       facadePanels: [{fraction: .5, widthFraction: .99, bottomMetres: 4.0, heightMetres: .16, color: '#344d3c', outsetMetres: .28}],
@@ -84,7 +86,7 @@ export const ROUTE_SHERBROOKE_APPEARANCES = {
     street: 'Sherbrooke Street', intersection: 'Sherbrooke Street / Stewart Street', corner: 'northwest',
     photoIds: ['R142'], source: 'dense/flat-768/frame_0200_lens1_pitch+0.jpg',
     observation: 'The south gable-end wall has pale grey horizontal siding, two larger lower windows, two upper windows and a tiny fifth opening just west of the central warm-grey chimney. There is no street-facing door.',
-    estimated: 'Opening sizes, elevations, chimney width and colors are visual estimates within the actual 5.75801 m mapped wall. Render approximates the siding color. The narrow vertical panel is a chimney-face cue; the projecting chimney, exact gable and all roof work remain deferred.',
+    estimated: 'Opening sizes, elevations, chimney width and colors are visual estimates. An estimated 4.10 m eave and 2.50 m gable rise replace the untagged inferred wall/roof. The two large upper sash cross into the gable as observed; their full frames fit below its planes. The ridge runs perpendicular to the exact south frontage and stays clipped to the source ring, with no rear projection. Render approximates siding color. The narrow panel is only a chimney-face cue; the projecting chimney above the ridge and unseen rear details remain deferred. These metre values are not a measured height or pitch.',
     profile: {
       label: 'SHER-STEWART-NW', name: 'Pale gable-end house northwest of Stewart', confidence: 'observed',
       frontLatLon: [{lat: 44.3006282, lon: -78.3256001}, {lat: 44.3006358, lon: -78.3254326}],
@@ -92,6 +94,7 @@ export const ROUTE_SHERBROOKE_APPEARANCES = {
     },
     appearance: {
       wallColor: '#bbbdb6', wallSurface: 'render', trimColor: '#e1e3d6', glassColor: '#61706c',
+      reviewedEnvelope: {datum: 'source', wallHeightMetres: 4.10, roofRiseMetres: 2.50, roofShape: 'gabled'},
       blankFacade: true, porch: false, entryDoor: null,
       groundWindows: [
         {t: .24, bottom: .55, width: 1.12, height: 1.65}, {t: .73, bottom: .55, width: 1.12, height: 1.65},
@@ -105,7 +108,7 @@ export const ROUTE_SHERBROOKE_APPEARANCES = {
     street: 'Sherbrooke Street', intersection: 'Sherbrooke Street / Stewart Street', corner: 'southeast',
     photoIds: ['R143', 'R144'], source: 'dense/flat-768/frame_0201_lens0_pitch+0.jpg',
     observation: 'The corner red-brick house has one principal wall storey with two shallow-arched windows flanking a central door, a dark hip roof, one small dormer and a garden setback. R144 repeats this corner at photo right.',
-    estimated: 'Window/door dimensions, colors and fractions are estimates. Two supported arched window shapes flank a rectangular entry; the exact arched door head is omitted. The currently taller 6.34727 m mapped wall and gabled roof are retained as known massing mismatches. No second window tier, dormer, roof or yard change is introduced.',
+    estimated: 'Window/door dimensions, colors and fractions are estimates. Two shallow-arched windows flank a rectangular entry; the exact arched door head is omitted. An estimated 3.35 m wall and 1.35 m hip rise replace the untagged inferred 6.34727 m wall and gable. The hip stays clipped to the exact notched footprint; hidden rear roof topology remains uncertain. The photographed dormer and chimney remain deferred, with no added window tier or yard geometry.',
     profile: {
       label: 'SHER-STEWART-SE', name: 'Low brick house southeast of Stewart', confidence: 'observed',
       frontLatLon: [{lat: 44.3004521, lon: -78.3251287}, {lat: 44.3004595, lon: -78.3249834}],
@@ -113,6 +116,7 @@ export const ROUTE_SHERBROOKE_APPEARANCES = {
     },
     appearance: {
       wallColor: '#925e50', wallSurface: 'brick', trimColor: '#b9ad92', glassColor: '#46534b', porch: false,
+      reviewedEnvelope: {datum: 'source', wallHeightMetres: 3.35, roofRiseMetres: 1.35, roofShape: 'hipped'},
       windowOverrides: [
         {level: 0, column: 0, shape: 'arch', widthMetres: 1.15, heightMetres: 1.8, bottomMetres: .7},
         {level: 0, column: 2, shape: 'arch', widthMetres: 1.15, heightMetres: 1.8, bottomMetres: .7},
@@ -124,7 +128,7 @@ export const ROUTE_SHERBROOKE_APPEARANCES = {
     street: 'Sherbrooke Street', intersection: 'Sherbrooke Street / Aylmer Street approach',
     photoIds: ['R157', 'R158'], source: 'dense/flat-768/frame_0222_lens1_pitch+0.jpg',
     observation: 'Thrive Health stands west of the immediate northwest Aylmer corner, with open parking on both sides. Its south end has two tall glass fields separated by a broad grey pier, fine dark mullions, white THRIVE HEALTH / PTBO lettering on the glass, and green tree-shaped lower screening.',
-    estimated: 'Glazing dimensions, mullion divisions, pier width and colors are estimated within the actual 4.22003 m mapped wall. Plain green fields approximate the lower screening; exact tree silhouettes and transparent lettering need a dedicated asset. No opaque sign plaque is added. Existing roof geometry and both parking gaps remain unchanged.',
+    estimated: 'Glazing dimensions, mullion divisions, pier width and colors are visual estimates. An estimated 4.20 m wall and 0.10 m flat roof cap replace the untagged inferred gable, matching the flat-topped glazed street silhouette without claiming hidden roof-deck detail. Three white transparent lettering fields reproduce the observed THRIVE / HEALTH / PTBO arrangement; font, size and placement are estimates. Each field stays within its glazed half, ahead of the glass and behind structural mullions, with no opaque plaque. This records the supplied footage identity only, not a current directory listing or an alias for another tenant. Plain green fields still approximate the tree-shaped screening. The exact footprint, source datum and both parking gaps remain unchanged.',
     profile: {
       label: 'SHER-THRIVE', name: 'Thrive Health west of Aylmer', confidence: 'observed',
       frontLatLon: [{lat: 44.3007347, lon: -78.3237849}, {lat: 44.3007443, lon: -78.3236052}],
@@ -132,7 +136,16 @@ export const ROUTE_SHERBROOKE_APPEARANCES = {
     },
     appearance: {
       wallColor: '#92958d', wallSurface: 'render', trimColor: '#343d38', glassColor: '#51656a',
+      reviewedEnvelope: {datum: 'source', wallHeightMetres: 4.20, roofRiseMetres: .10, roofShape: 'flat'},
       largeGlazedFront: true, entryDoor: null, signText: null, signBusinessName: 'Thrive Health',
+      appliedLettering: {
+        businessName: 'Thrive Health',
+        fields: [
+          {text: 'THRIVE', fraction: .28, heightMetres: 2.45, widthMetres: 4.3, panelHeightMetres: .6, color: '#ffffff', outsetMetres: .255, font: '700 46px Arial,sans-serif'},
+          {text: 'HEALTH', fraction: .71, heightMetres: 2.45, widthMetres: 4.3, panelHeightMetres: .6, color: '#ffffff', outsetMetres: .255, font: '700 46px Arial,sans-serif'},
+          {text: 'PTBO', fraction: .79, heightMetres: 1.98, widthMetres: 1.45, panelHeightMetres: .3, color: '#ffffff', outsetMetres: .255, font: '700 46px Arial,sans-serif'},
+        ],
+      },
       facadePanels: [
         {fraction: .5, widthFraction: .06, bottomMetres: .15, heightMetres: 3.85, color: '#92958d', outsetMetres: .32},
         {fraction: .025, widthFraction: .04, bottomMetres: .15, heightMetres: 3.85, color: '#92958d', outsetMetres: .32},
@@ -147,7 +160,7 @@ export const ROUTE_SHERBROOKE_APPEARANCES = {
     street: 'Sherbrooke Street', intersection: 'Sherbrooke Street / Aylmer Street', corner: 'southwest',
     photoIds: ['R159', 'R161', 'R162', 'R164'], source: 'dense/flat-768/frame_0228_lens0_pitch+0.jpg',
     observation: 'The red-brick north end has two tall upper arched dark openings, pale sills/keystones and two substantial rectangular glass-block fields below. A grey stone/concrete base and flat parapet are visible. No front entry is visible.',
-    estimated: 'Opening dimensions, elevations, colors and keystone fractions are estimates. Lower fields are approximately 1.9 m wide by 1.95 m tall, not small sash. Fine glass-block divisions and exact arch masonry remain simplified. A thin face band suggests the parapet; mapped wall/roof geometry is unchanged.',
+    estimated: 'Opening dimensions, elevations, colors and keystone fractions are visual estimates. Lower fields are approximately 1.9 m wide by 1.95 m tall. Fine glass-block divisions and exact arch masonry remain simplified. An estimated 6.40 m wall and 0.10 m flat roof cap replace the untagged inferred pitched roof; the existing thin face band approximates the photographed parapet/cornice. Hidden roof-deck and rear-parapet details remain uncertain. Source footprint, ground datum and measured tags remain authoritative.',
     profile: {
       label: 'SHER-AYLMER-SW', name: 'Arched brick block southwest of Aylmer', confidence: 'observed',
       frontLatLon: [{lat: 44.3005471, lon: -78.3233108}, {lat: 44.3005534, lon: -78.3231628}],
@@ -155,6 +168,7 @@ export const ROUTE_SHERBROOKE_APPEARANCES = {
     },
     appearance: {
       wallColor: '#975b50', wallSurface: 'brick', trimColor: '#b8af96', glassColor: '#424c47',
+      reviewedEnvelope: {datum: 'source', wallHeightMetres: 6.40, roofRiseMetres: .10, roofShape: 'flat'},
       skipGroundWindows: true, entryDoor: null, plinthColor: '#929389', plinthHeight: .65,
       windowOverrides: [
         {level: 1, column: 0, shape: 'arch', widthMetres: 1.65, heightMetres: 1.85, bottomMetres: 3.75},

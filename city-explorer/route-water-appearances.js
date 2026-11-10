@@ -58,6 +58,8 @@ export const ROUTE_WATER_APPEARANCES = {
         {t: .22, bottom: .65, width: 2.0, height: 1.8}, {t: .76, bottom: .65, width: 2.05, height: 1.8},
       ],
       entryDoor: {fraction: .5, widthMetres: .9, heightMetres: 2.35, color: '#9b2d31'},
+      // Verified identity only: this clear fascia marker is an estimate, not the photographed sign.
+      directoryMarkerBands: [{"directoryId": "osm:node/7854664939", "businessName": "Amandala's", "bottomMetres": 2.55, "topMetres": 2.95, "heightMetres": 0.35, "photoIds": ["R231", "R233"], "classification": "estimated-educational-marker"}],
       enclosedBays: [
         {fraction: .78, widthMetres: 2.25, bottomMetres: 3.15, heightMetres: 2.55, depthMetres: .55, frontWidthFraction: .58, baseHeightMetres: .42, capHeightMetres: .12, wallColor: '#d4c9ae', trimColor: '#a68d66', glassColor: '#687976', joinToNext: true},
         {fraction: .78, widthMetres: 2.25, bottomMetres: 6.25, heightMetres: 2.55, depthMetres: .55, frontWidthFraction: .58, baseHeightMetres: .42, capHeightMetres: .12, wallColor: '#d4c9ae', trimColor: '#a68d66', glassColor: '#687976'},
@@ -89,6 +91,8 @@ export const ROUTE_WATER_APPEARANCES = {
         {t: .24, bottom: .7, width: 2.6, height: 1.85}, {t: .78, bottom: .7, width: 2.3, height: 1.85},
       ],
       entryDoor: {fraction: .52, widthMetres: .95, heightMetres: 2.45, color: '#252e2b'},
+      // Verified identity only: this clear fascia marker is an estimate, not the photographed sign.
+      directoryMarkerBands: [{"directoryId": "osm:node/7854664940", "businessName": "Faculty Bar & Small Plates", "bottomMetres": 2.6, "topMetres": 3.0, "heightMetres": 0.35, "photoIds": ["R231", "R233"], "classification": "estimated-educational-marker"}],
       enclosedBays: [
         {fraction: .78, widthMetres: 2.25, bottomMetres: 3.25, heightMetres: 2.55, depthMetres: .55, frontWidthFraction: .58, baseHeightMetres: .42, capHeightMetres: .12, wallColor: '#d4c9ae', trimColor: '#a68d66', glassColor: '#687976', joinToNext: true},
         {fraction: .78, widthMetres: 2.25, bottomMetres: 6.55, heightMetres: 2.55, depthMetres: .55, frontWidthFraction: .58, baseHeightMetres: .42, capHeightMetres: .12, wallColor: '#d4c9ae', trimColor: '#a68d66', glassColor: '#687976'},

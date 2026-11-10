@@ -46,8 +46,14 @@ export function resolveReviewedBuildingEnvelope({profile, sourceId, ring, ground
   if (!sourceId || profile.id !== sourceId || profile.confidence !== 'observed' || profile.appearanceOnly !== true
     || profile.preserveMappedMassing !== true || profile.reviewedWallMaterial !== true) return unchanged('unreviewed-profile');
   if (profile.massing || profile.recordedRoof) return unchanged('conflicting-reviewed-massing');
-  if (['height', 'building:levels', 'roof:height', 'roof:shape', 'building:roof:shape', 'roof:levels', 'min_height', 'building:min_level']
+  if (['height', 'roof:height', 'roof:shape', 'building:roof:shape', 'roof:levels', 'min_height', 'building:min_level']
     .some(key => tags[key] != null && tags[key] !== '')) return unchanged('explicit-source-dimensions');
+  // A mapped storey count remains authoritative for the wall and base. It does
+  // not establish an otherwise untagged inferred roof: permit only a reviewed
+  // roof replacement that leaves the resolved source wall and datum unchanged.
+  if (tags['building:levels'] != null && tags['building:levels'] !== ''
+    && !(spec.wallHeightMetres === dimensions?.height && (spec.datum == null || spec.datum === 'source')))
+    return unchanged('explicit-source-dimensions');
   if (!dimensions || ![dimensions.height, dimensions.roofHeight, dimensions.minHeight].every(finite)
     || dimensions.height < 2.6 || dimensions.roofHeight < 0 || dimensions.minHeight < 0) return unchanged('invalid-source-dimensions');
   if (!Array.isArray(ring) || !Array.isArray(groundHeights) || ring.length !== groundHeights.length || sourceBase == null) return unchanged('invalid-terrain-samples');

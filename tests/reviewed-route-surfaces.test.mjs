@@ -9,7 +9,10 @@ import { applyReviewedRouteSurfaceCorrections, ULTRAMAR_PAVEMENT_CORRECTION } fr
 import { OfficialDrivableSurfaceIndex, RenderedPavementIndex } from '../city-explorer/official-road-surfaces.js';
 import { officialRoadMeshEdgeLength } from '../city-explorer/citywide-road-quality.js';
 import { finishRoadSurfaces } from '../city-explorer/road-surface-finish.js';
-import { exportRoadScene } from '../city-explorer/road-pack-export.js';
+import { collectRoadSourceRanges, exportRoadScene } from '../city-explorer/road-pack-export.js';
+import { collectBatchRanges } from '../city-explorer/editor/feature-batch-binding.js';
+import { RECORDED_CANOPIES, buildRecordedCanopy } from '../city-explorer/recorded-canopies.js';
+import { validateReviewedCanopyGroundSource } from '../city-explorer/reviewed-canopy-ground.js';
 import { partitionRoadGeometry } from '../city-explorer/road-pack-build.js';
 import { optimizeRoadGeometry } from '../city-explorer/road-pack-optimize.js';
 import { encodeRoadTile, decodeRoadTile, PackedRoadSurfaceIndex } from '../city-explorer/road-tile-pack.js';
@@ -114,35 +117,43 @@ test('missing, duplicate or malformed source collections are unchanged and repor
 
 const app = readFileSync(new URL('../city-explorer/app.js', import.meta.url), 'utf8');
 const sourceFunctions = ['polygonCentroid', 'coordinatesToLandRing', 'cleanRing', 'roadRenderTileCoordinates',
-  'roadBatchPositions', 'appendRoadTriangle', 'cachedOfficialRoadHeightAt', 'appendDrapedOfficialRoadTriangle', 'appendOfficialRoadPolygon']
+  'roadBatchPositions', 'appendRoadTriangle', 'cachedOfficialRoadHeightAt', 'appendDrapedOfficialRoadTriangle', 'appendOfficialRoadPolygon', 'buildBufferedRoadBatches']
   .map(name => {
     const body = app.match(new RegExp(`^function ${name}\\([^]*?^\\}`, 'm'))?.[0];
     assert.ok(body, `production renderer function ${name} exists`);
     return body;
   }).join('\n');
 const terrainHeight = (x, z) => 12 + .018 * (x - canopy.x) - .027 * (z - canopy.y);
-function emittedSource(feature, lowPowerProfile = false) {
-  const state = { renderedPavementIndex: new RenderedPavementIndex() }, batches = new Map();
-  const append = runInNewContext(`${sourceFunctions}\nappendOfficialRoadPolygon`, {
+const batchFunctions = app.slice(app.indexOf('const batchSetIds ='), app.indexOf('const generatedProxyGeometry ='));
+function emittedSources(features, lowPowerProfile = false) {
+  const state = { renderedPavementIndex: new RenderedPavementIndex(), roadPaintRanges: new Map() }, batches = new Map();
+  const roadGroup = new THREE.Group(), generatedRoadMeshes = new Map(), featureProbes = new Map();
+  const renderer = runInNewContext(`${batchFunctions}\n${sourceFunctions}\n({appendOfficialRoadPolygon,buildBufferedRoadBatches})`, {
     THREE, project, state, lowPowerProfile, hunterBridgeSurface: null, pavementQA: null,
     CITY_ROAD_MESH_LEGACY: false, officialRoadMeshEdgeLength,
     CITY: { worldBounds: { minX: -10000, minZ: -10000 } }, ROAD_RENDER_TILE_SIZE: 420,
     officialRoadHeightAt: (x, z) => terrainHeight(x, z) + .144,
+    roadGroup, generatedRoadMeshes, collectBatchRanges,
+    cityVisuals: {mode:'legacy'}, materials: {parking:new THREE.MeshBasicMaterial()},
+    reviewedRouteSurfaceDiagnostics: applyReviewedRouteSurfaceCorrections(makeCollection()).diagnostics,
+    ULTRAMAR_PAVEMENT_CORRECTION,
     console,
   });
-  const count = append(feature.geometry.coordinates, 'parking_surfaces', batches, new Map(),
-    { id: source.id, layer: 'parking_surfaces', parking: true, drivable: false, properties: feature.properties });
-  const roadGroup = new THREE.Group();
-  for (const batch of batches.values()) {
-    const geometry = new THREE.BufferGeometry();
-    geometry.setAttribute('position', new THREE.Float32BufferAttribute(batch.positions, 3)); geometry.computeVertexNormals();
-    const mesh = new THREE.Mesh(geometry);
-    mesh.userData = { type: 'road-official-parking_surfaces-batch', material: 'parking' };
-    roadGroup.add(mesh);
+  let count=0;
+  for(const feature of features) {
+    count += renderer.appendOfficialRoadPolygon(feature.geometry.coordinates, 'parking_surfaces', batches, new Map(),
+      { id: feature.id, layer: 'parking_surfaces', parking: true, drivable: false, properties: feature.properties });
+    for(const batch of batches.values()) {
+      const p=batch.positions.slice(-9),x=(p[0]+p[3]+p[6])/3,z=(p[2]+p[5]+p[8])/3;
+      if(state.renderedPavementIndex.sample(x,z)?.id===feature.id) featureProbes.set(feature.id,{x,z});
+    }
   }
+  renderer.buildBufferedRoadBatches(batches);
   assert.equal(state.renderedPavementIndex.triangleCount, count);
-  return { roadGroup, index: state.renderedPavementIndex };
+  return { roadGroup, index: state.renderedPavementIndex, state, generatedRoadMeshes, featureProbes,
+    sourceRangesByMesh:collectRoadSourceRanges(generatedRoadMeshes,state.roadPaintRanges) };
 }
+const emittedSource=(feature,lowPowerProfile=false)=>emittedSources([feature],lowPowerProfile);
 function semanticIndex(feature) {
   const index = new OfficialDrivableSurfaceIndex();
   index.add(feature.geometry.coordinates.map(ring => ring.slice(0, -1).map(([lon, lat]) => project(lat, lon))),
@@ -217,8 +228,9 @@ test('finished source faces export through the actual pack codec and give browse
   const sourceScene = emittedSource(fixed), semantic = semanticIndex(fixed);
   const finished = finishRoadSurfaces({ THREE, roadGroup: sourceScene.roadGroup,
     roadIndex: { sampleAll: () => [] }, officialIndex: semantic, terrainHeight, Index: RenderedPavementIndex,
-    renderedOfficialIndex: sourceScene.index });
-  const exported = exportRoadScene({ THREE, roadGroup: sourceScene.roadGroup, streetscapeGroup: new THREE.Group() });
+    renderedOfficialIndex: sourceScene.index, sourceRangesByMesh:sourceScene.sourceRangesByMesh });
+  const exported = exportRoadScene({ THREE, roadGroup: sourceScene.roadGroup, streetscapeGroup: new THREE.Group(),
+    sourceRangesByMesh:finished.sourceRangesByMesh });
   const actualFaces = sourceScene.roadGroup.children[0].geometry.attributes.position.array;
   assert.deepEqual(exported[0].positions, [...actualFaces], 'the pack starts with the exact Float32 faces sent to WebGL');
   const tiles = partitionRoadGeometry(exported).map(tile => ({ ...tile,
@@ -236,6 +248,8 @@ test('finished source faces export through the actual pack codec and give browse
   for (const point of probes) {
     const sourceHit = finished.officialIndex.sample(point.x, point.y), browserHit = packed.sample(point.x, point.y), serverHit = world.sampleSurface(point.x, point.y);
     assert.ok(sourceHit && browserHit);
+    assert.equal(sourceHit.sourceId,'10/99');
+    assert.equal(browserHit.sourceId,'10/99');
     assert.equal(browserHit.layer, 'parking_surfaces');
     assert.equal(serverHit.surfaceLayer, 'parking_surfaces');
     assert.equal(serverHit.onRoad, true);
@@ -247,4 +261,50 @@ test('finished source faces export through the actual pack codec and give browse
   assert.equal(world.sampleSurface(garage.x, garage.y).onRoad, false);
   for (const tile of tiles) packed.removeTile(tile.id);
   assert.equal(packed.sample(canopy.x, canopy.y), null, 'unloaded pavement cannot leave stale contact');
+});
+
+test('reviewed municipal ownership survives append, finish and codec without claiming same-batch neighbors',()=>{
+  const fixed=applyReviewedRouteSurfaceCorrections(makeCollection()).collection.features[0];
+  const neighbors=['10/92','10/93'].map(id=>roadData.features.find(feature=>feature.id===id));
+  const sourceScene=emittedSources([neighbors[0],fixed,neighbors[1]]);
+  assert.equal(sourceScene.roadGroup.children.length,1,'real neighboring lots share the same render batch');
+  assert.deepEqual([...sourceScene.state.roadPaintRanges.keys()],['10/99']);
+  const semantic=semanticIndex(fixed);
+  const reportBody=app.match(/^function sourceReviewedCanopyGround\([^]*?^\}/m)?.[0];
+  const sourceRing=RECORDED_CANOPIES['way/446339023'].sourceRingLonLat.map(([lon,lat])=>project(lat,lon));
+  const sourceReport=index=>runInNewContext(`${reportBody}\nsourceReviewedCanopyGround()`,{
+    reviewedRouteSurfaceDiagnostics:applyReviewedRouteSurfaceCorrections(makeCollection()).diagnostics,
+    reviewedCanopySourceRings:new Map([['way/446339023',{ring:sourceRing,holes:[]}]]),
+    state:{finishedRoadSurfaces:true,officialDrivableSurfaceIndex:semantic,renderedPavementIndex:index},
+    ULTRAMAR_PAVEMENT_CORRECTION,buildRecordedCanopy,project,
+  });
+  const finish=(scene,ranges)=>finishRoadSurfaces({THREE,roadGroup:scene.roadGroup,
+    roadIndex:{sampleAll:()=>[]},officialIndex:semantic,terrainHeight,Index:RenderedPavementIndex,
+    renderedOfficialIndex:scene.index,sourceRangesByMesh:ranges});
+  // This is the207 failure: valid geometry enters finish without source ranges.
+  const legacy=emittedSource(fixed),legacyFinished=finish(legacy,new Map());
+  assert.equal(legacyFinished.officialIndex.sample(canopy.x,canopy.y).sourceId,'');
+  const rejected=sourceReport(legacyFinished.officialIndex);
+  assert.equal(rejected.valid,false);
+  assert.ok(rejected.diagnostics.contacts.every(hit=>hit.reason==='rendered-source'));
+  assert.throws(()=>validateReviewedCanopyGroundSource(rejected,{center}),/Invalid source canopy ground report/);
+  const finished=finish(sourceScene,sourceScene.sourceRangesByMesh),report=sourceReport(finished.officialIndex);
+  assert.equal(validateReviewedCanopyGroundSource(report,{center}).valid,true);
+  assert.equal(report.samples.length,25);
+  const exported=exportRoadScene({THREE,roadGroup:sourceScene.roadGroup,streetscapeGroup:new THREE.Group(),sourceRangesByMesh:finished.sourceRangesByMesh});
+  const packed=new PackedRoadSurfaceIndex();
+  for(const tile of partitionRoadGeometry(exported)) {
+    const groups=optimizeRoadGeometry(tile.groups,{heightAt:finished.heightAt}).groups;
+    packed.addTile(tile.id,decodeRoadTile(encodeRoadTile({...tile,groups})).groups);
+  }
+  for(const point of report.samples) {
+    const hit=packed.sample(point.x,point.z);
+    assert.equal(hit.sourceId,'10/99');assert.equal(hit.contact,'official');
+    assert.equal(hit.height,point.height);
+  }
+  for(const neighbor of neighbors) {
+    const point=sourceScene.featureProbes.get(neighbor.id);assert.ok(point);
+    assert.equal(finished.officialIndex.sample(point.x,point.z).sourceId,'');
+    assert.equal(packed.sample(point.x,point.z).sourceId??'','','ownership is a triangle range, never an entire municipal batch');
+  }
 });

@@ -4,7 +4,7 @@ import { readFileSync } from 'node:fs';
 import { applyReviewedRouteSurfaceCorrections } from '../city-explorer/reviewed-route-surfaces.js';
 import { RECORDED_CANOPIES, buildRecordedCanopy } from '../city-explorer/recorded-canopies.js';
 import { validateReviewedRouteSurfaceProof, validateReviewedCanopyGroundSource,
-  createReviewedCanopyGroundProof, verifyReviewedCanopyGroundProof } from '../city-explorer/reviewed-canopy-ground.js';
+  createReviewedCanopyGroundProof, verifyReviewedCanopyGroundProof, summarizeReviewedCanopyGroundSource } from '../city-explorer/reviewed-canopy-ground.js';
 
 import { encodeRoadTile, decodeRoadTile, PackedRoadSurfaceIndex } from '../city-explorer/road-tile-pack.js';
 
@@ -46,6 +46,33 @@ test('source report requires the exact correction, source identity and finite co
     const proof = structuredClone(sourceProof); change(proof);
     assert.throws(() => validateReviewedCanopyGroundSource(proof, projection), /canopy ground/i);
   }
+});
+
+test('source failure diagnostics expose the missing ownership without changing rejection or manufacturing samples',()=>{
+  const record={...sourceProof,valid:false,reason:'ground-not-ready',samples:[],diagnostics:{
+    sourceRingVertices:4,sourceHoleCount:0,finishedRoadSurfaces:true,
+    contacts:[{x:1,z:2,reason:'rendered-source',semanticId:'10/99',renderedSourceId:'',
+      layer:'parking_surfaces',contact:'official',heightSource:'rendered-pavement-triangle',height:13}],
+  }};
+  const before=structuredClone(record),summary=summarizeReviewedCanopyGroundSource(record);
+  assert.equal(summary.sampleCount,0);assert.equal(summary.reason,'ground-not-ready');
+  assert.equal(summary.contacts[0].reason,'rendered-source');assert.equal(summary.contacts[0].renderedSourceId,'');
+  assert.throws(()=>validateReviewedCanopyGroundSource(record,projection),error=>
+    /Invalid source canopy ground report/.test(error.message)&&error.message.includes('rendered-source')&&error.message.includes('ground-not-ready'));
+  assert.deepEqual(record,before);
+  record.diagnostics.contacts=Array.from({length:100},()=>({reason:'x'.repeat(500),height:NaN,ignored:{large:true}}));
+  const bounded=summarizeReviewedCanopyGroundSource(record);
+  assert.equal(bounded.contacts.length,25);assert.equal(bounded.contactCount,100);
+  assert.equal(bounded.contacts[0].reason.length,160);assert.equal(bounded.contacts[0].height,null);
+  assert.equal('ignored' in bounded.contacts[0],false);
+});
+
+test('compiler saves source evidence before strict validation and never substitutes it for a completed pack',()=>{
+  const compiler=readFileSync(new URL('../tools/build-road-pack.cjs',import.meta.url),'utf8');
+  const sourceWrite=compiler.indexOf("'artifacts/road-rebuild/source-report.json'");
+  const validate=compiler.indexOf('validateReviewedCanopyGroundSource(report.reviewedCanopyGround');
+  const packWrite=compiler.indexOf("path.join(output,'manifest.json'),JSON.stringify(pack)");
+  assert.ok(sourceWrite>0&&sourceWrite<validate&&validate<packWrite);
 });
 
 test('a missing or old pack never acquires an apparent valid canopy proof', () => {

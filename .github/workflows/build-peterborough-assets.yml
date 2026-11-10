@@ -294,6 +294,7 @@ jobs:
           path: |
             city-explorer/data
             city-explorer/ROAD-VALIDATION.md
+            artifacts/road-rebuild/source-report.json
           retention-days: 14
 
       - name: Fail when complete validation failed

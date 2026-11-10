@@ -55,15 +55,17 @@ jobs:
       matrix:
         profile: [balanced, lite]
         capture:
-          - { variant: current, cohort: signs-north }
-          - { variant: current, cohort: frontage-controls }
-          - { variant: current, cohort: masonry-reid }
-          - { variant: baseline, cohort: signs-north }
-          - { variant: baseline, cohort: frontage-controls }
-          - { variant: baseline, cohort: masonry-reid }
+          - { variant: current, cohort: canopy-ground }
+          - { variant: current, cohort: sherbrooke-envelope }
+          - { variant: current, cohort: water-bridge }
+          - { variant: current, cohort: east-envelope }
+          - { variant: baseline, cohort: canopy-ground }
+          - { variant: baseline, cohort: sherbrooke-envelope }
+          - { variant: baseline, cohort: water-bridge }
+          - { variant: baseline, cohort: east-envelope }
     env:
-      VISUAL_REFRESH_BASELINE: 1311f758366b1031b10a287cdf473a27b8bfd678
-      PTBO_CAPTURE_PLAN: review-206
+      VISUAL_REFRESH_BASELINE: 496849126466f24e8e832f95e3878910524d3e45
+      PTBO_CAPTURE_PLAN: review-208
       PTBO_QA_ARTIFACT_DIR: artifacts/visual-refresh
       PTBO_CAPTURE_COHORT: ${{ matrix.capture.cohort }}
     steps:
@@ -151,7 +153,7 @@ jobs:
       - name: Match camera transforms and write the comparison index
         env:
           PTBO_QA_ARTIFACT_DIR: artifacts/visual-refresh
-          PTBO_CAPTURE_PLAN: review-206
+          PTBO_CAPTURE_PLAN: review-208
         run: node tools/capture-visual-refresh.cjs --compare baseline current
       - name: Preserve the combined review index and evidence
         if: always()

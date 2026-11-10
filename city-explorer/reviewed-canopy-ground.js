@@ -1,5 +1,5 @@
-import { RECORDED_CANOPIES, buildRecordedCanopy } from './recorded-canopies.js?v=1.6.207';
-import { ULTRAMAR_PAVEMENT_CORRECTION as CORRECTION } from './reviewed-route-surfaces.js?v=1.6.207';
+import { RECORDED_CANOPIES, buildRecordedCanopy } from './recorded-canopies.js?v=1.6.208';
+import { ULTRAMAR_PAVEMENT_CORRECTION as CORRECTION } from './reviewed-route-surfaces.js?v=1.6.208';
 
 const SOURCE_ID = CORRECTION.canopySourceId;
 const SAMPLE_COUNT = 25;
@@ -10,6 +10,20 @@ const MAX_SOURCE_PACKED_DIFFERENCE = .003;
 const finite = Number.isFinite;
 const samePoint = (a, b) => Math.abs(a.x - b.x) <= COORDINATE_TOLERANCE && Math.abs(a.z - b.z) <= COORDINATE_TOLERANCE;
 const reject = message => { throw new Error(message); };
+
+/** Bounded source-build evidence for compiler failures. This describes a
+ * rejected report; it never supplies missing ownership or ground samples. */
+export function summarizeReviewedCanopyGroundSource(record) {
+  const diagnostics=record?.diagnostics, contacts=Array.isArray(diagnostics?.contacts)?diagnostics.contacts:[];
+  const scalar=value=>typeof value==='string'?value.slice(0,160):typeof value==='boolean'||finite(value)?value:null;
+  return {sourceId:scalar(record?.sourceId),valid:record?.valid===true,reason:scalar(record?.reason),
+    sampleCount:Array.isArray(record?.samples)?record.samples.length:0,
+    sourceRingVertices:scalar(diagnostics?.sourceRingVertices),sourceHoleCount:scalar(diagnostics?.sourceHoleCount),
+    finishedRoadSurfaces:diagnostics?.finishedRoadSurfaces===true,contactCount:contacts.length,
+    contacts:contacts.slice(0,SAMPLE_COUNT).map(contact=>Object.fromEntries(
+      ['x','z','reason','semanticId','renderedSourceId','layer','contact','heightSource','height']
+        .map(key=>[key,scalar(contact?.[key])])))};
+}
 
 export function validateReviewedRouteSurfaceProof(proof) {
   const expected = { schemaVersion: 1, correctionId: CORRECTION.id, featureId: CORRECTION.featureId,
@@ -34,7 +48,9 @@ export function validateReviewedCanopyGroundSource(record, projection) {
   if (!record || record.schemaVersion !== 1 || record.valid !== true || record.sourceId !== SOURCE_ID
     || record.parkingFeatureId !== CORRECTION.featureId || record.correctionId !== CORRECTION.id
     || record.heightSource !== 'rendered-pavement-triangle' || !Array.isArray(record.samples)
-    || record.samples.length !== SAMPLE_COUNT || record.samples.some(p => ![p?.x, p?.z, p?.height].every(finite))) reject('Invalid source canopy ground report');
+    || record.samples.length !== SAMPLE_COUNT || record.samples.some(p => ![p?.x, p?.z, p?.height].every(finite))) {
+    reject('Invalid source canopy ground report: '+JSON.stringify(summarizeReviewedCanopyGroundSource(record)));
+  }
   const project = projectFor(projection), definition = RECORDED_CANOPIES[SOURCE_ID], used = new Set();
   const result = buildRecordedCanopy({ sourceId: SOURCE_ID, project,
     ring: definition.sourceRingLonLat.map(([lon, lat]) => project(lat, lon)),

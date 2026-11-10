@@ -1,7 +1,7 @@
 import { createDemoRequests } from './demo-requests.mjs?v=full-version-20261030';
 import { editorUrlForReport, exportFeedback } from "./agent-tools.mjs?v=feedback-workflow-20261028";
 import { feedbackConfig } from "./config.mjs?v=feedback-workflow-20261028";
-import { createFeedbackService } from "./service.mjs?v=1.6.207";
+import { createFeedbackService } from "./service.mjs?v=1.6.208";
 import { normalizeLocationReport, locationReportIdentity, locationReportGroupKey } from './location-report.mjs';
 import { mountLocationReportComposer, mountLocationReportDetails } from './location-report-ui.mjs?v=compact-feedback-20261028';
 import {
